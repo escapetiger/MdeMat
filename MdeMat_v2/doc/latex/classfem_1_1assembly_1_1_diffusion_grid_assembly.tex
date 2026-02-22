@@ -1,0 +1,309 @@
+\doxysection{fem\+::assembly\+::Diffusion\+Grid\+Assembly Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly}{}\label{classfem_1_1assembly_1_1_diffusion_grid_assembly}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+
+
+Grid-\/based assembly for diffusion operators.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a43854909adf0a91d808f4dde8c512a18}{Diffusion\+Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}, Input\+Type aux\+Flux, Input\+Type prm\+Flux, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a13ef424fa01bfd33d7dfe61052041535}{jump\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_ae4809d4f7a3ed15c618d9d3d93b99f27}{hessian}} (Input\+Type obj, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble diffusion Hessian operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a161ac11ba73a37bffaade454bafd84dc}{hessian\+Bc}} (Input\+Type obj, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble boundary condition vector for diffusion operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_abf06f3bbb5541b15d5743897fd7522ad}{partial\+Bc}} (Input\+Type obj, Input\+Type i, Input\+Type j, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble partial boundary condition contribution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_ad918c35d7bffdf55e985b05b1783300a}{Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembly}{Grid\+Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}{Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_afd52b67ebb6f78f761393cb124652e87}{aux}}
+\begin{DoxyCompactList}\small\item\em Auxiliary variable assembly structure. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a7f373f79bb19af906f23f93d7ef793e4}{prm}}
+\begin{DoxyCompactList}\small\item\em Primal variable assembly structure. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a13ef424fa01bfd33d7dfe61052041535}{jump\+Type}}
+\begin{DoxyCompactList}\small\item\em Jump treatment type (1=implicit, 2=explicit) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type (0=periodic, 1=Dirichlet) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a5665273508dad4e9455064dfc6cb114c}{assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6f43fe1c88de27345a4c96d026ef94c8}{assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6b9ffe199b1b0ecc4e7b0e8340d99723}{assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_abc21312f9531f69774d7a8dc3d826e99}{assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grid-\/based assembly for diffusion operators. 
+
+\doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly} provides assembly methods for diffusion-\/type operators on structured grid meshes. This class combines auxiliary and primal variable assemblys to construct complete diffusion operators with various jump treatments and boundary conditions.
+
+The assembly supports both implicit and explicit jump treatments for handling discontinuities at element interfaces, which is essential for discontinuous Galerkin and mixed finite element methods.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ diffusion\ assembly\ with\ implicit\ jumps}
+\DoxyCodeLine{assembly\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembly_a43854909adf0a91d808f4dde8c512a18}{DiffusionGridAssembly}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ 1,\ 2,\ 1,\ 1);}
+\DoxyCodeLine{\%\ Assemble\ isotropic\ diffusion\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{diffusionMatrix\ =\ assembly.hessian(eye(2));}
+\DoxyCodeLine{\%\ Assemble\ anisotropic\ diffusion\ with\ boundary\ conditions}
+\DoxyCodeLine{anisotropyTensor\ =\ [2.0,\ 0.1;\ 0.1,\ 0.5];}
+\DoxyCodeLine{bcVector\ =\ assembly.hessianBc(anisotropyTensor,\ @bcFunc,\ @jumpFunc);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_grid_assembly}{fem.\+assembly.\+Grid\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_auxiliary_grid_assembly}{fem.\+assembly.\+Auxiliary\+Grid\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_primal_grid_assembly}{fem.\+assembly.\+Primal\+Grid\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_diffusion_grid_assembly_8m_source_l00032}{32}} of file \mbox{\hyperlink{_diffusion_grid_assembly_8m_source}{Diffusion\+Grid\+Assembly.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_a43854909adf0a91d808f4dde8c512a18}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!DiffusionGridAssembly@{DiffusionGridAssembly}}
+\index{DiffusionGridAssembly@{DiffusionGridAssembly}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{DiffusionGridAssembly()}{DiffusionGridAssembly()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_a43854909adf0a91d808f4dde8c512a18} 
+function fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::\+Diffusion\+Grid\+Assembly (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{op}{, }\item[{Input\+Type}]{bc\+Type}{, }\item[{Input\+Type}]{aux\+Flux}{, }\item[{Input\+Type}]{prm\+Flux}{, }\item[{Input\+Type}]{jump\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly}. 
+
+obj = Diffusion\+Grid\+Assembly(fe, mesh, op, bc\+Type, aux\+Flux, prm\+Flux, jump\+Type) creates an assembly for diffusion operators using mixed formulations with auxiliary and primal variables.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object \\
+\hline
+{\em mesh} & -\/ Grid mesh object (must be \doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid}) \\
+\hline
+{\em op} & -\/ Finite element operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type (0=periodic, 1=Dirichlet) \\
+\hline
+{\em aux\+Flux} & -\/ Flux type for auxiliary variables (1=left, 2=right, 3=central) \\
+\hline
+{\em prm\+Flux} & -\/ Flux type for primal variables (1=left, 2=right, 3=central) \\
+\hline
+{\em jump\+Type} & -\/ Jump treatment (1=implicit, 2=explicit) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_ae4809d4f7a3ed15c618d9d3d93b99f27}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!hessian@{hessian}}
+\index{hessian@{hessian}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{hessian()}{hessian()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_ae4809d4f7a3ed15c618d9d3d93b99f27} 
+function fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::hessian (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})}
+
+
+
+Assemble diffusion Hessian operator. 
+
+A = hessian(obj, c) assembles the complete diffusion operator matrix using the specified diffusion tensor. The method combines auxiliary and primal variable contributions with appropriate jump terms based on the jump type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly} object \\
+\hline
+{\em c} & -\/ Diffusion tensor (n\+Dims×n\+Dims matrix)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Assembled diffusion operator sparse matrix\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Isotropic\ diffusion}
+\DoxyCodeLine{isotropicMatrix\ =\ assembly.hessian(eye(2));}
+\DoxyCodeLine{\%\ Anisotropic\ diffusion}
+\DoxyCodeLine{tensor\ =\ [2.0,\ 0.5;\ 0.5,\ 1.0];}
+\DoxyCodeLine{anisotropicMatrix\ =\ assembly.hessian(tensor);}
+
+\end{DoxyCode}
+ \Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_a161ac11ba73a37bffaade454bafd84dc}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!hessianBc@{hessianBc}}
+\index{hessianBc@{hessianBc}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{hessianBc()}{hessianBc()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_a161ac11ba73a37bffaade454bafd84dc} 
+function fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::hessian\+Bc (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{g}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Assemble boundary condition vector for diffusion operator. 
+
+b = hessian\+Bc(obj, c, f, g) assembles the boundary condition contribution vector for the diffusion operator with specified boundary functions and diffusion tensor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly} object \\
+\hline
+{\em c} & -\/ Diffusion tensor (n\+Dims×n\+Dims matrix) \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em g} & -\/ Extraction function handle (optional for explicit jumps) \\
+\hline
+{\em varargin} & -\/ Additional arguments for boundary functions\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em b} & -\/ Assembled boundary condition sparse vector\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Simple\ Dirichlet\ boundary\ conditions}
+\DoxyCodeLine{bcVector\ =\ assembly.hessianBc(eye(2),\ @(x)\ sin(x),\ []);}
+\DoxyCodeLine{\%\ With\ \textcolor{keyword}{explicit}\ jump\ treatment}
+\DoxyCodeLine{bcVector\ =\ assembly.hessianBc(tensor,\ @bcFunc,\ @jumpFunc,\ param1);}
+
+\end{DoxyCode}
+ \Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_abf06f3bbb5541b15d5743897fd7522ad}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!partialBc@{partialBc}}
+\index{partialBc@{partialBc}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{partialBc()}{partialBc()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_abf06f3bbb5541b15d5743897fd7522ad} 
+function fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::partial\+Bc (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{j}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{g}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Assemble partial boundary condition contribution. 
+
+b = partial\+Bc(obj, i, j, c, f, g) assembles the boundary condition contribution for a specific component of the diffusion tensor, handling both Dirichlet conditions and jump terms as appropriate.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_diffusion_grid_assembly}{Diffusion\+Grid\+Assembly} object \\
+\hline
+{\em i} & -\/ First tensor index (row) \\
+\hline
+{\em j} & -\/ Second tensor index (column) \\
+\hline
+{\em c} & -\/ Tensor component value \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em g} & -\/ Jump function handle (for explicit jumps) \\
+\hline
+{\em varargin} & -\/ Additional arguments for boundary functions\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em b} & -\/ Boundary condition contribution sparse vector \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_afd52b67ebb6f78f761393cb124652e87}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!aux@{aux}}
+\index{aux@{aux}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{aux}{aux}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_afd52b67ebb6f78f761393cb124652e87} 
+Property fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::aux}
+
+
+
+Auxiliary variable assembly structure. 
+
+
+
+Definition at line \mbox{\hyperlink{_diffusion_grid_assembly_8m_source_l00036}{36}} of file \mbox{\hyperlink{_diffusion_grid_assembly_8m_source}{Diffusion\+Grid\+Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_a13ef424fa01bfd33d7dfe61052041535}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!jumpType@{jumpType}}
+\index{jumpType@{jumpType}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{jumpType}{jumpType}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_a13ef424fa01bfd33d7dfe61052041535} 
+Property fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::jump\+Type}
+
+
+
+Jump treatment type (1=implicit, 2=explicit) 
+
+
+
+Definition at line \mbox{\hyperlink{_diffusion_grid_assembly_8m_source_l00042}{42}} of file \mbox{\hyperlink{_diffusion_grid_assembly_8m_source}{Diffusion\+Grid\+Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_diffusion_grid_assembly_a7f373f79bb19af906f23f93d7ef793e4}\index{fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}!prm@{prm}}
+\index{prm@{prm}!fem::assembly::DiffusionGridAssembly@{fem::assembly::DiffusionGridAssembly}}
+\doxysubsubsection{\texorpdfstring{prm}{prm}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_diffusion_grid_assembly_a7f373f79bb19af906f23f93d7ef793e4} 
+Property fem\+::assembly\+::\+Diffusion\+Grid\+Assembly\+::prm}
+
+
+
+Primal variable assembly structure. 
+
+
+
+Definition at line \mbox{\hyperlink{_diffusion_grid_assembly_8m_source_l00039}{39}} of file \mbox{\hyperlink{_diffusion_grid_assembly_8m_source}{Diffusion\+Grid\+Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_diffusion_grid_assembly_8m}{Diffusion\+Grid\+Assembly.\+m}}\end{DoxyCompactItemize}

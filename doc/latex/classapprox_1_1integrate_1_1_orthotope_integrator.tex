@@ -1,0 +1,139 @@
+\doxysection{approx\+::integrate\+::Orthotope\+Integrator Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator}{}\label{classapprox_1_1integrate_1_1_orthotope_integrator}\index{approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}}
+
+
+Numerical integration over orthotope domains.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{Orthotope\+Integrator}} (Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the orthotope integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{set\+Points}} (Input\+Type obj, Input\+Type n, Input\+Type a, Input\+Type b)
+\begin{DoxyCompactList}\small\item\em Generate integration points for the orthotope. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd414c1c0277de51e60053049f95778e}{add\+Weight\+Function}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Add weight function for integral. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Evaluate the integral of function f. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a0cc3c5b16fc07142a86693864f265beb}{set\+Points}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set integration points using the underlying rule. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}
+\begin{DoxyCompactList}\small\item\em Integration rule object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a90ad5b80bdf0daaed818c2cad28bef47}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Numerical integration over orthotope domains. 
+
+\doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} provides specialized integration capabilities for functions defined on multidimensional orthotopes (hyperrectangles). It uses separable integration rules that construct multidimensional quadrature by tensor products of univariate rules.
+
+Examples\+: \% Create integrator with Gauss-\/\+Legendre rule for 3D orthotope integrator = \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator}(3, \textquotesingle{}gauss\+\_\+legendre\textquotesingle{});
+
+\% Create integrator with Gauss-\/\+Lobatto rule for 2D rectangle integrator = \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator}(2, \textquotesingle{}gauss\+\_\+lobatto\textquotesingle{});
+
+\% Using existing rule object rule = approx.\+integrate.\+Separable\+Rule.\+gauss\+Legendre(4); integrator = Orthotope\+Integrator(rule);
+
+\begin{DoxyNote}{Note}
+Orthotopes are multidimensional generalizations of rectangles. 
+
+The separable rules are most efficient for functions that can 
+
+be expressed as products of univariate functions.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integrator}{approx.\+integrate.\+Integrator} 
+
+\doxylink{classapprox_1_1integrate_1_1_separable_rule}{approx.\+integrate.\+Separable\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_orthotope_face_integrator}{approx.\+integrate.\+Orthotope\+Face\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_orthotope_integrator_8m_source_l00033}{33}} of file \mbox{\hyperlink{_orthotope_integrator_8m_source}{Orthotope\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}\index{approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}!OrthotopeIntegrator@{OrthotopeIntegrator}}
+\index{OrthotopeIntegrator@{OrthotopeIntegrator}!approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}}
+\doxysubsubsection{\texorpdfstring{OrthotopeIntegrator()}{OrthotopeIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2} 
+function approx\+::integrate\+::\+Orthotope\+Integrator\+::\+Orthotope\+Integrator (\begin{DoxyParamCaption}\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator}. 
+
+obj = Orthotope\+Integrator(rule) creates an integrator using the specified separable integration rule.
+
+obj = Orthotope\+Integrator(n\+Dims, rule\+Id) creates an integrator for the specified dimension and rule type.
+
+Inputs\+: varargin -\/ Input arguments
+
+Outputs\+: obj -\/ Constructed \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} object 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}\index{approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}!copy@{copy}}
+\index{copy@{copy}!approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72} 
+function approx\+::integrate\+::\+Orthotope\+Integrator\+::copy (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Create a deep copy of the orthotope integrator. 
+
+new\+Obj = copy(obj) creates a new \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} object with the same rule, nodes, and weights as the original object.
+
+Inputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} object to copy
+
+Outputs\+: new\+Obj -\/ Deep copy of the original integrator \Hypertarget{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}\index{approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!approx::integrate::OrthotopeIntegrator@{approx::integrate::OrthotopeIntegrator}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11} 
+function approx\+::integrate\+::\+Orthotope\+Integrator\+::set\+Points (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n}{, }\item[{Input\+Type}]{a}{, }\item[{Input\+Type}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Generate integration points for the orthotope. 
+
+obj = set\+Points(obj, n) generates integration points with {\itshape n} points per dimension for the unit orthotope \mbox{[}0,1\mbox{]}\texorpdfstring{$^\wedge$}{\string^}d.
+
+obj = set\+Points(obj, n, a, b) generates points for a custom orthotope \mbox{[}{\itshape a}, {\itshape b}\mbox{]}.
+
+Inputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} object n -\/ Number of points per dimension (vector or scalar) a -\/ Lower bounds vector (optional, default\+: zeros) b -\/ Upper bounds vector (optional, default\+: ones)
+
+Outputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{Orthotope\+Integrator} object 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_orthotope_integrator_8m}{Orthotope\+Integrator.\+m}}\end{DoxyCompactItemize}

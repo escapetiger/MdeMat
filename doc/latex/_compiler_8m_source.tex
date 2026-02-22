@@ -1,0 +1,330 @@
+\doxysection{Compiler.\+m}
+\hypertarget{_compiler_8m_source}{}\label{_compiler_8m_source}\index{+core/+symbolic/Compiler.m@{+core/+symbolic/Compiler.m}}
+\mbox{\hyperlink{_compiler_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00001}00001\ classdef\ Compiler\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00002}00002\ \ \ \ \ \%\ COMPILER\ Base\ \textcolor{keyword}{class\ }for\ all\ symbolic\ compilers.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Compiler\ provides\ a\ unified\ \textcolor{keyword}{interface\ }for\ generating,\ compiling,}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ and\ storing\ basis\ matrices\ from\ various\ symbolic\ function\ types.\ It}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ manages\ a\ centralized\ repository\ of\ pre-\/computed\ basis\ matrices\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ efficient\ reuse\ across\ the\ core\ package.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ compiler\ creates\ function\ handle\ matrices\ \textcolor{keywordflow}{for}\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ and\ their\ derivatives,\ stores\ them\ with\ metadata\ \textcolor{keywordflow}{for}\ later\ retrieval,}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ and\ provides\ utilities\ \textcolor{keywordflow}{for}\ managing\ the\ compiled\ function\ repository.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00013}00013\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ core.symbolic.InterpolationPolynomialBasisCompiler,}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ core.symbolic.OrthogonalPolynomialBasisCompiler,}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ core.symbolic.FourierBasisCompiler}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00018}00018\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ METADATA\_DIR\ =\ \textcolor{stringliteral}{'config/functions'}\ \%\ Directory\ \textcolor{keywordflow}{for}\ storing\ compiled\ matrices}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ FILE\_EXTENSION\ =\ \textcolor{stringliteral}{'.mat'}\ \%\ File\ extension\ \textcolor{keywordflow}{for}\ compiled\ matrices}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00023}00023\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ variables\ \%\ Cell\ array\ of\ symbolic\ variables}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ funcs\ \%\ Object\ array\ of\ SymbolicFunction\ instances}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ Compiler(variables)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPILER\ Constructor\ \textcolor{keywordflow}{for}\ Compiler.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ Compiler()\ creates\ a\ new\ Compiler\ \textcolor{keywordtype}{object}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ default\ variable\ \{sym(\textcolor{charliteral}{'x'})\}.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ Compiler(variables)\ creates\ a\ \textcolor{keyword}{new}\ Compiler\ \textcolor{keywordtype}{object}\ with}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ symbolic\ variables\ and\ ensures\ the\ metadata}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ directory\ exists\ \textcolor{keywordflow}{for}\ storing\ compiled\ basis\ matrices.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ variables\ -\/\ (Optional)\ Cell\ array\ of\ symbolic\ variables,\ \textcolor{keywordflow}{default}:\ \{sym(\textcolor{charliteral}{'x'})\}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~exist(obj.METADATA\_DIR,\ \textcolor{stringliteral}{'dir'})}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [success,\ message]\ =\ mkdir(obj.METADATA\_DIR);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(success,\ \textcolor{stringliteral}{'DirectoryCreationFailed'},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Failed\ to\ create\ metadata\ directory\ \%s:\ \%s'},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.METADATA\_DIR,\ message);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 1}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables\ =\ \{sym(\textcolor{charliteral}{'x'})\};}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ obj.variables\ =\ variables;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ obj.funcs\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ function\ filename\ =\ compile(obj,\ fileName,\ basisName,\ maxOrder)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPILE\ Compiles\ polynomial\ basis\ matrix\ with\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ =\ compile(obj,\ fileName,\ basisName,\ maxOrder)\ creates}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ handle\ matrices\ \textcolor{keywordflow}{for}\ basis\ functions\ and\ their}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivatives\ up\ to\ the\ specified\ order.\ Saves\ the\ result}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ metadata\ \textcolor{keywordflow}{for}\ later\ retrieval.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fileName\ -\/\ Filename\ \textcolor{keywordflow}{for}\ the\ compiled\ matrix\ (without\ extension)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basisName\ -\/\ Name/type\ of\ the\ basis\ functions\ \textcolor{keywordflow}{for}\ documentation}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ maxOrder\ -\/\ Maximum\ derivative\ order\ to\ compute\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ Generated\ filename\ \textcolor{keywordflow}{for}\ the\ stored\ matrix}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~isempty(obj.funcs),\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidState'},\ \textcolor{stringliteral}{'No\ basis\ functions\ set.\ Call\ setFunctions\ first.'});}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(maxOrder\ >=\ 0\ \&\&\ isscalar(maxOrder)\ \&\&\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxOrder\ ==\ floor(maxOrder),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Maximum\ order\ must\ be\ a\ non-\/negative\ integer.'});}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ handles\ =\ obj.createHandles(maxOrder);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ metadata\ =\ obj.createMetadata(lower(basisName));}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.basisName\ =\ basisName;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.numFunctions\ =\ length(obj.funcs);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.maxOrder\ =\ maxOrder;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.size\ =\ [length(obj.funcs),\ maxOrder\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.description\ =\ sprintf(\textcolor{stringliteral}{'\%s\ basis\ matrix\ with\ \%d\ funcs,\ max\ order\ \%d'},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basisName,\ length(obj.funcs),\ maxOrder);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ metadata.handles\ =\ handles;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ obj.save(fileName,\ metadata);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'Compiled\ \%s\ basis\ matrix:\ \%s\(\backslash\)n'},\ basisName,\ fileName);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ filename\ =\ fileName;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ function\ metadata\ =\ load(obj,\ filename)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOAD\ Loads\ a\ previously\ compiled\ basis\ matrix.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ =\ load(obj,\ filename)\ retrieves\ a\ compiled\ basis}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ from\ the\ metadata\ directory\ and\ returns\ the\ metadata}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ structure\ containing\ function\ handles\ and\ compilation\ information.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ Filename\ of\ the\ stored\ matrix\ (without\ extension)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ -\/\ Metadata\ structure\ containing\ handles\ and\ compilation\ info}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ fullPath\ =\ obj.getFullPath(filename);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(exist(fullPath,\ \textcolor{stringliteral}{'file'})\ ==\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'FileNotFound'},\ \textcolor{stringliteral}{'Basis\ matrix\ file\ not\ found:\ \%s'},\ fullPath);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ data\ =\ load(fullPath);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ metadata\ =\ data.metadata;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ function\ fileList\ =\ list(obj)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LIST\ Lists\ all\ compiled\ basis\ matrices.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fileList\ =\ list(obj)\ returns\ a\ list\ of\ all\ available}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ compiled\ basis\ matrices\ in\ the\ metadata\ directory.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fileList\ -\/\ Cell\ array\ of\ compiled\ matrix\ filenames\ (without\ extension)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~exist(obj.METADATA\_DIR,\ \textcolor{stringliteral}{'dir'})}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileList\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ files\ =\ dir(fullfile(obj.METADATA\_DIR,\ [\textcolor{charliteral}{'*'},\ obj.FILE\_EXTENSION]));}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ fileList\ =\ cell(length(files),\ 1);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(files)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ name,\ \string~]\ =\ fileparts(files(i).name);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileList\{i\}\ =\ name;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ function\ obj\ =\ \textcolor{keyword}{delete}(obj,\ filename)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DELETE\ Deletes\ a\ compiled\ basis\ matrix.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \textcolor{keyword}{delete}(obj,\ filename)\ removes\ the\ specified\ compiled}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ matrix\ file\ from\ the\ metadata\ directory.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ File\ name\ without\ extension}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ fullPath\ =\ obj.getFullPath(filename);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ exist(fullPath,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{try}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ delete(fullPath);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('Deleted\ compiled\ matrix:\ \%s\(\backslash\)n',\ filename);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ catch\ ME}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ 'DeletionFailed',\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Failed\ to\ delete\ file\ \%s:\ \%s',\ fullPath,\ ME.message);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ 'FileNotFound',\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'File\ not\ found:\ \%s',\ fullPath);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ function\ obj\ =\ clear(obj)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CLEAR\ Deletes\ all\ compiled\ basis\ matrices.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ clear(obj)\ removes\ all\ compiled\ basis\ matrix\ files}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ the\ metadata\ directory.\ Useful\ for\ cleanup\ or\ when}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ starting\ fresh\ with\ a\ new\ compilation\ session.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ fileList\ =\ obj.list();}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(fileList)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.delete(fileList\{i\});}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'Cleared\ \%d\ compiled\ matrices.\(\backslash\)n'},\ length(fileList));}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00199}00199\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00201}00201\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \%\ SETFUNCTIONS\ Abstract\ method\ \textcolor{keywordflow}{for}\ setting\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ obj\ =\ setFunctions(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00204}00204\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00206}00206\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ function\ obj\ =\ save(obj,\ filename,\ metadata)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SAVE\ Saves\ metadata\ to\ file.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ save(obj,\ filename,\ metadata)\ stores\ the\ compiled}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ matrix\ metadata\ to\ a\ MAT\ file\ in\ the\ metadata}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ directory\ using\ MATLAB\ v7.3\ format\ for\ large\ data}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ compatibility.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ Filename\ for\ the\ saved\ matrix}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ -\/\ Metadata\ structure\ to\ save}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ fullPath\ =\ obj.getFullPath(filename);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ try}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ save(fullPath,\ 'metadata',\ '-\/v7.3');}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ catch\ ME}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(0,\ 'SaveFailed',\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Failed\ to\ save\ basis\ matrix\ to\ \%s:\ \%s',\ fullPath,\ ME.message);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ function\ fullPath\ =\ getFullPath(obj,\ filename)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GETFULLPATH\ Constructs\ full\ file\ path\ from\ filename.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fullPath\ =\ getFullPath(obj,\ filename)\ creates\ the\ complete}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ file\ path\ by\ combining\ the\ metadata\ directory\ with\ the}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ and\ appropriate\ extension\ if\ not\ already\ present.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ Base\ filename}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fullPath\ -\/\ Full\ file\ path\ with\ extension}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~endsWith(filename,\ obj.FILE\_EXTENSION)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ =\ [filename,\ obj.FILE\_EXTENSION];}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ fullPath\ =\ fullfile(obj.METADATA\_DIR,\ filename);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ function\ B\ =\ createHandles(obj,\ maxOrder)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CREATEHANDLES\ Creates\ basis\ matrix\ from\ stored\ functions.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ B\ =\ createHandles(obj,\ maxOrder)\ converts\ symbolic\ basis}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ functions\ to\ function\ handles\ and\ computes\ derivatives\ up}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ the\ specified\ order.\ Returns\ a\ cell\ matrix\ of\ function}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ handles\ for\ efficient\ numerical\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ maxOrder\ -\/\ Maximum\ derivative\ order}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ B\ -\/\ Cell\ matrix\ of\ function\ handles\ [nFunctions\ x\ (maxOrder+1)]}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~isempty(obj.funcs),\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidState',\ 'No\ basis\ functions\ available.');}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.funcs);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ maxOrder\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ obj.variables;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ cell(n,\ m);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ cell(n,\ m);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\{i,\ 1\}\ =\ obj.funcs(i).expression;}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ S\{i,\ 1\};}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:(m\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\{i,\ j+1\}\ =\ simplify(diff(expr,\ x,\ j));}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ S\{i,\ j\};}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(expr)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\{i,\ j\}\ =\ matlabFunction(expr,\ \textcolor{stringliteral}{'Vars'},\ x);}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ function\ metadata\ =\ createMetadata(obj,\ basisType)}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CREATEMETADATA\ Creates\ base\ metadata\ structure.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ =\ createMetadata(obj,\ basisType)\ generates\ the}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ base\ metadata\ structure\ with\ common\ fields\ \textcolor{keywordflow}{for}\ all\ compiled}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ matrices\ including\ timestamp,\ version\ information,}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ compilation\ details.}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Compiler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basisType\ -\/\ Type\ of\ basis\ function}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ -\/\ Base\ metadata\ structure}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ metadata\ =\ \textcolor{keyword}{struct}(\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'type'},\ basisType,\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'variables'},\ \{obj.variables\},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'timestamp'},\ datetime(\textcolor{stringliteral}{'now'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'matlabVersion'},\ version(),\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'generator'},\ \textcolor{keyword}{class}(obj)\ ...}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00322}00322\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00323}00323\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiler_8m_source_l00324}00324\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,51 @@
+\doxysection{to\+String.\+m}
+\hypertarget{to_string_8m_source}{}\label{to_string_8m_source}\index{+core/+data/toString.m@{+core/+data/toString.m}}
+\mbox{\hyperlink{to_string_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00001}00001\ function\ s\ =\ \mbox{\hyperlink{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9}{toString}}(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00002}00002\ \%\ TOSTRING\ Convert\ a\ variable\ to\ a\ formatted\ \textcolor{keywordtype}{string}.}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00004}00004\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9}{toString}}(x)\ returns\ a\ formatted\ \textcolor{keywordtype}{string}\ representing\ runtime}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00005}00005\ \%\ \ \ variable\ @a\ x.}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00007}00007\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00008}00008\ \%\ \ \ x\ -\/\ Variable}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00009}00009\ \%}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00010}00010\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00011}00011\ \%\ \ \ s\ -\/\ String\ representation}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00013}00013\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00014}00014\ \%\ \ \ \%\ Basic\ usage}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00015}00015\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString([]);\ \%\ Returns\ \textcolor{stringliteral}{'[]'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00016}00016\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(1);\ \%\ Returns\ \textcolor{charliteral}{'1'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00017}00017\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{keyword}{true});\ \%\ Returns\ \textcolor{stringliteral}{'true'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00018}00018\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{charliteral}{'F'});\ \%\ Returns\ \textcolor{charliteral}{'''}F\textcolor{charliteral}{'''}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00019}00019\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\{1,\ 2,\ 3\});\ \%\ Returns\ \textcolor{stringliteral}{'cell'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00020}00020\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{keyword}{struct}(\textcolor{charliteral}{'a'},\ 1));\ \%\ Returns\ \textcolor{stringliteral}{'struct'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00021}00021\ \%\ \ \ s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(@(z)\ sin(z));\ \%\ Returns\ \textcolor{stringliteral}{'@(z)sin(z)'}}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00023}00023\ \textcolor{keywordflow}{if}\ isempty(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00024}00024\ \ \ \ \ s\ =\ \textcolor{stringliteral}{'[]'};}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00025}00025\ elseif\ isnumeric(x)\ \&\&\ isscalar(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00026}\mbox{\hyperlink{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9}{00026}}\ \ \ \ \ s\ =\ num2str(x);}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00027}00027\ elseif\ islogical(x)\ \&\&\ isscalar(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00028}00028\ \ \ \ \ if\ x}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ s\ =\ 'true';}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00030}00030\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ s\ =\ 'false';}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00032}00032\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00033}00033\ elseif\ ischar(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00034}00034\ \ \ \ \ s\ =\ [\textcolor{charliteral}{'''}',\ x,\ \textcolor{charliteral}{'''}'];}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00035}00035\ elseif\ iscell(x)\ \&\&\ length(x)\ <=\ 3}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00036}00036\ \ \ \ \ s\ =\ 'cell';}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00037}00037\ elseif\ isstruct(x)}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00038}00038\ \ \ \ \ s\ =\ 'struct';}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00039}00039\ elseif\ isa(x,\ 'function\_handle')}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00040}00040\ \ \ \ \ s\ =\ func2str(x);}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00041}00041\ else}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00042}00042\ \ \ \ \ s\ =\ class(x);}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00043}00043\ end}
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{to_string_8m_source_l00045}00045\ end}
+
+\end{DoxyCode}

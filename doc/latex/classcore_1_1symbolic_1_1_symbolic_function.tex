@@ -1,0 +1,205 @@
+\doxysection{core\+::symbolic\+::Symbolic\+Function Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_symbolic_function}{}\label{classcore_1_1symbolic_1_1_symbolic_function}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+
+
+Base class for all symbolic functions.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis}{core\+::symbolic\+::\+Fourier\+Basis}}, \mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis}{core\+::symbolic\+::\+Lagrange\+Basis}}, \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis}}, and \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis}{core\+::symbolic\+::\+Spherical\+Harmonic\+Basis}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function}} (Input\+Type variables)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}} (Input\+Type obj, Input\+Type max\+Deriv\+Order)
+\begin{DoxyCompactList}\small\item\em Compile symbolic function as function handles. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e}{save}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Save symbolic function metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74}{load}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Load symbolic function metadata from file and update object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d}{Meta\+Ext}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Metadata file extension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic expressions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04}{Handles}}
+\begin{DoxyCompactList}\small\item\em Cell array of function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of input dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of output dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all symbolic functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} represents a symbolic function with expressions and variables. It provides the foundation for all symbolic basis functions with compilation capabilities and dimension properties.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_lagrange_basis}{core.\+symbolic.\+Lagrange\+Basis} 
+
+\doxylink{classcore_1_1symbolic_1_1_legendre_basis}{core.\+symbolic.\+Legendre\+Basis} 
+
+\doxylink{classcore_1_1symbolic_1_1_chebyshev_basis}{core.\+symbolic.\+Chebyshev\+Basis} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00016}{16}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!SymbolicFunction@{SymbolicFunction}}
+\index{SymbolicFunction@{SymbolicFunction}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{SymbolicFunction()}{SymbolicFunction()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::\+Symbolic\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. 
+
+obj = Symbolic\+Function(variables) creates a symbolic function with the specified {\itshape variables}. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!compile@{compile}}
+\index{compile@{compile}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{compile()}{compile()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::compile (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{max\+Deriv\+Order}{}\end{DoxyParamCaption})}
+
+
+
+Compile symbolic function as function handles. 
+
+obj = compile(obj) creates function handles with default derivative order 0.
+
+obj = compile(obj, max\+Order) creates function handles up to the specified {\itshape max\+Deriv\+Order}. \Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!load@{load}}
+\index{load@{load}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Load symbolic function metadata from file and update object. 
+
+obj = load(file\+Name) loads the symbolic function metadata from the specified {\itshape file\+Name} and updates the current object properties with the loaded data. \Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!save@{save}}
+\index{save@{save}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::save (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Save symbolic function metadata to file. 
+
+obj = save(file\+Name) saves the symbolic function metadata to the specified {\itshape file\+Name}. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!Expressions@{Expressions}}
+\index{Expressions@{Expressions}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{Expressions}{Expressions}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::\+Expressions}
+
+
+
+Object array of symbolic expressions. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00026}{26}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!Handles@{Handles}}
+\index{Handles@{Handles}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{Handles}{Handles}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::\+Handles}
+
+
+
+Cell array of function handles. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00032}{32}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!MetaExt@{MetaExt}}
+\index{MetaExt@{MetaExt}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{MetaExt}{MetaExt}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d} 
+Constant Property core\+::symbolic\+::\+Symbolic\+Function\+::\+Meta\+Ext = \textquotesingle{}.mat\textquotesingle{}}
+
+
+
+Metadata file extension. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00020}{20}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!NCodims@{NCodims}}
+\index{NCodims@{NCodims}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{NCodims}{NCodims}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::\+NCodims}
+
+
+
+Number of output dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00041}{41}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!NDims@{NDims}}
+\index{NDims@{NDims}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::\+NDims}
+
+
+
+Number of input dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00038}{38}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!Variables@{Variables}}
+\index{Variables@{Variables}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{Variables}{Variables}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::\+Variables}
+
+
+
+Object array of symbolic variables. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00029}{29}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_symbolic_function_8m}{Symbolic\+Function.\+m}}\end{DoxyCompactItemize}

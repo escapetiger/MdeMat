@@ -1,0 +1,35 @@
+\doxysection{set\+Color\+Limits.\+m}
+\hypertarget{set_color_limits_8m_source}{}\label{set_color_limits_8m_source}\index{+profilers/+visual/private/setColorLimits.m@{+profilers/+visual/private/setColorLimits.m}}
+\mbox{\hyperlink{set_color_limits_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00001}00001\ function\ \mbox{\hyperlink{namespaceprofilers_1_1visual_ac9e779126cd629b5f5dab9b5c4961cbb}{setColorLimits}}(ax,\ u)}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00002}00002\ \%\ SETCOLORLIMITS\ Sets\ color\ axis\ limits\ based\ on\ data\ values.}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00004}00004\ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00005}00005\ \%\ \ \ \mbox{\hyperlink{namespaceprofilers_1_1visual_ac9e779126cd629b5f5dab9b5c4961cbb}{setColorLimits}}(ax,\ u)}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00007}00007\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00008}00008\ \%\ \ \ ax\ -\/\ Axes\ handle\ to\ set\ color\ limits\ on}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00009}00009\ \%\ \ \ u\ -\/\ Data\ array\ used\ to\ determine\ limits}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00011}00011\ uMin\ =\ min(u(:));}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00012}00012\ uMax\ =\ max(u(:));}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00013}00013\ absMax\ =\ max(abs(uMin),\ abs(uMax));}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00014}\mbox{\hyperlink{namespaceprofilers_1_1visual_ac9e779126cd629b5f5dab9b5c4961cbb}{00014}}\ }
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00015}00015\ \textcolor{keywordflow}{if}\ uMin\ <\ 0\ \&\&\ uMax\ >\ 0}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00016}00016\ \ \ \ \ cLimits\ =\ [-\/absMax,\ absMax];}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00017}00017\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00018}00018\ \ \ \ \ padding\ =\ 0.05\ *\ (uMax\ -\/\ uMin);}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}\ padding\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ padding\ =\ 0.1\ *\ abs(uMin);}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ padding\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ padding\ =\ 0.1;}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00024}00024\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00025}00025\ \ \ \ \ cLimits\ =\ [uMin\ -\/\ padding,\ uMax\ +\ padding];}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00028}00028\ caxis(ax,\ cLimits);}
+\DoxyCodeLine{\Hypertarget{set_color_limits_8m_source_l00029}00029\ end}
+
+\end{DoxyCode}

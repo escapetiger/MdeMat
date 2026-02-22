@@ -1,0 +1,166 @@
+\doxysection{physics\+::visual\+::Dataset Class Reference}
+\hypertarget{classphysics_1_1visual_1_1_dataset}{}\label{classphysics_1_1visual_1_1_dataset}\index{physics::visual::Dataset@{physics::visual::Dataset}}
+
+
+Data container for visualization datasets.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_afa92867448b90427368699f9285c52a4}{Dataset}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1visual_1_1_dataset}{Dataset}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a1f94f86671b1d94ccfd9f9e97899fe80}{set\+Data}} (Input\+Type obj, Input\+Type field\+Name, Input\+Type field\+Data)
+\begin{DoxyCompactList}\small\item\em Set data for a specific field. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a4c223390e24ea7dc857483be1b34ceb1}{get\+Data}} (Input\+Type obj, Input\+Type field\+Name)
+\begin{DoxyCompactList}\small\item\em Get data for a specific field. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a37a785c820b326ca5766ffda0ec916a0}{has\+Field}} (Input\+Type obj, Input\+Type field\+Name)
+\begin{DoxyCompactList}\small\item\em Check if dataset contains a specific field. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a05b039a05b769d16783c32f9c912f830}{get\+Field\+Names}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Get list of available field names. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a052aa73ccfca95889b62fa92c06d39fa}{clear\+Data}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Remove all data from the dataset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_a28612d4eff663f888be08ff6868aa997}{Type}}
+\begin{DoxyCompactList}\small\item\em Type of dataset (0\+: FIXED, 1\+: EXACT, 2\+: NUMERIC) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset_af058a998455b6685edd286330a33d775}{Data}}
+\begin{DoxyCompactList}\small\item\em Struct containing field data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data container for visualization datasets. 
+
+\doxylink{classphysics_1_1visual_1_1_dataset}{Dataset} provides a simple container for visualization data with type information. This class encapsulates the data structure and type classification used throughout the visualization system.
+
+The {\itshape Type} property determines how the data is rendered\+:
+\begin{DoxyItemize}
+\item Type 0 (FIXED)\+: Fixed or reference data
+\item Type 1 (EXACT)\+: Exact analytical solution data
+\item Type 2 (NUMERICAL)\+: Numerical solution data
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1visual_1_1_database}{physics.\+visual.\+Database} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_dataset_8m_source_l00019}{19}} of file \mbox{\hyperlink{_dataset_8m_source}{Dataset.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_afa92867448b90427368699f9285c52a4}\index{physics::visual::Dataset@{physics::visual::Dataset}!Dataset@{Dataset}}
+\index{Dataset@{Dataset}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{Dataset()}{Dataset()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_afa92867448b90427368699f9285c52a4} 
+function physics\+::visual\+::\+Dataset\+::\+Dataset (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classphysics_1_1visual_1_1_dataset}{Dataset}. 
+
+obj = \doxylink{classphysics_1_1visual_1_1_dataset_afa92867448b90427368699f9285c52a4}{Dataset()} creates an empty dataset with default type and empty data structure.
+
+obj = \doxylink{classphysics_1_1visual_1_1_dataset}{Dataset}(type=type) creates a dataset with specified {\itshape type} and empty data structure.
+
+obj = \doxylink{classphysics_1_1visual_1_1_dataset}{Dataset}(type=type, data=data) creates a dataset with specified {\itshape type} and {\itshape data} structure. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_a052aa73ccfca95889b62fa92c06d39fa}\index{physics::visual::Dataset@{physics::visual::Dataset}!clearData@{clearData}}
+\index{clearData@{clearData}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{clearData()}{clearData()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a052aa73ccfca95889b62fa92c06d39fa} 
+function physics\+::visual\+::\+Dataset\+::clear\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Remove all data from the dataset. 
+
+obj = clear\+Data(obj) removes all field data from the dataset while preserving the {\itshape Type}. \Hypertarget{classphysics_1_1visual_1_1_dataset_a4c223390e24ea7dc857483be1b34ceb1}\index{physics::visual::Dataset@{physics::visual::Dataset}!getData@{getData}}
+\index{getData@{getData}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a4c223390e24ea7dc857483be1b34ceb1} 
+function physics\+::visual\+::\+Dataset\+::get\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{field\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Get data for a specific field. 
+
+field\+Data = get\+Data(obj, field\+Name) retrieves the {\itshape field\+Data} for the specified {\itshape field\+Name} from the dataset. Returns empty array if field does not exist. \Hypertarget{classphysics_1_1visual_1_1_dataset_a05b039a05b769d16783c32f9c912f830}\index{physics::visual::Dataset@{physics::visual::Dataset}!getFieldNames@{getFieldNames}}
+\index{getFieldNames@{getFieldNames}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{getFieldNames()}{getFieldNames()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a05b039a05b769d16783c32f9c912f830} 
+function physics\+::visual\+::\+Dataset\+::get\+Field\+Names (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Get list of available field names. 
+
+field\+Names = get\+Field\+Names(obj) returns a cell array of field names available in this dataset. \Hypertarget{classphysics_1_1visual_1_1_dataset_a37a785c820b326ca5766ffda0ec916a0}\index{physics::visual::Dataset@{physics::visual::Dataset}!hasField@{hasField}}
+\index{hasField@{hasField}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{hasField()}{hasField()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a37a785c820b326ca5766ffda0ec916a0} 
+function physics\+::visual\+::\+Dataset\+::has\+Field (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{field\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Check if dataset contains a specific field. 
+
+TF = has\+Field(obj, field\+Name) returns true if the dataset contains data for the specified {\itshape field\+Name}. \Hypertarget{classphysics_1_1visual_1_1_dataset_a1f94f86671b1d94ccfd9f9e97899fe80}\index{physics::visual::Dataset@{physics::visual::Dataset}!setData@{setData}}
+\index{setData@{setData}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a1f94f86671b1d94ccfd9f9e97899fe80} 
+function physics\+::visual\+::\+Dataset\+::set\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{field\+Name}{, }\item[{Input\+Type}]{field\+Data}{}\end{DoxyParamCaption})}
+
+
+
+Set data for a specific field. 
+
+obj = set\+Data(obj, field\+Name, field\+Data) sets the {\itshape field\+Data} for the specified {\itshape field\+Name} in the dataset. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_dataset_af058a998455b6685edd286330a33d775}\index{physics::visual::Dataset@{physics::visual::Dataset}!Data@{Data}}
+\index{Data@{Data}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{Data}{Data}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_af058a998455b6685edd286330a33d775} 
+Property physics\+::visual\+::\+Dataset\+::\+Data}
+
+
+
+Struct containing field data. 
+
+
+
+Definition at line \mbox{\hyperlink{_dataset_8m_source_l00026}{26}} of file \mbox{\hyperlink{_dataset_8m_source}{Dataset.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_dataset_a28612d4eff663f888be08ff6868aa997}\index{physics::visual::Dataset@{physics::visual::Dataset}!Type@{Type}}
+\index{Type@{Type}!physics::visual::Dataset@{physics::visual::Dataset}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_dataset_a28612d4eff663f888be08ff6868aa997} 
+Property physics\+::visual\+::\+Dataset\+::\+Type}
+
+
+
+Type of dataset (0\+: FIXED, 1\+: EXACT, 2\+: NUMERIC) 
+
+
+
+Definition at line \mbox{\hyperlink{_dataset_8m_source_l00023}{23}} of file \mbox{\hyperlink{_dataset_8m_source}{Dataset.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+visual/\mbox{\hyperlink{_dataset_8m}{Dataset.\+m}}\end{DoxyCompactItemize}

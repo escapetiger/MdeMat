@@ -1,0 +1,94 @@
+\doxysection{Legendre\+Basis.\+m}
+\hypertarget{_09symbolic_2_legendre_basis_8m_source}{}\label{_09symbolic_2_legendre_basis_8m_source}\index{+core/+symbolic/LegendreBasis.m@{+core/+symbolic/LegendreBasis.m}}
+\mbox{\hyperlink{_09symbolic_2_legendre_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00001}00001\ classdef\ LegendreBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{OrthogonalPolynomialBasis}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00002}00002\ \ \ \ \ \%\ LEGENDREBASIS\ Legendre\ orthogonal\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ LegendreBasis\ generates\ Legendre\ polynomial\ basis\ functions\ up\ to}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ a\ specified\ maximum\ degree.\ The\ basis\ functions\ are\ orthogonal\ on}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ the\ interval\ [-\/1,\ 1]\ with\ uniform\ weight\ function.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ The\ Legendre\ polynomials\ satisfy\ the\ three-\/term\ recurrence}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ relation:}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \ \ \ \ P\_\{n+1\}(x)\ =\ \(\backslash\)frac\{(2n+1)x\ \(\backslash\)cdot\ P\_n(x)\ -\/\ n\ \(\backslash\)cdot}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \ \ \ \ P\_\{n-\/1\}(x)\}\{n+1\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00016}00016\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{OrthogonalPolynomialBasis}},}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis}{ChebyshevBasis}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00020}00020\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ Lower\ \%\ Lower\ bound}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ Upper\ \%\ Upper\ bound}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00023}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis}{00023}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00025}00025\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa4f3c6795102432dec5d4eb607429592}{LegendreBasis}}(variables,\ maxDegree,\ options)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00027}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a787a0b46b5e30c1b45ee06f47f87c772}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LEGENDREBASIS\ Construct\ Legendre\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa4f3c6795102432dec5d4eb607429592}{LegendreBasis}}(variables,\ maxDegree)\ creates\ Legendre}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00030}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa14e5aad43f24c7f9de7a0006bd47346}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ functions\ \textcolor{keyword}{using\ }the\ specified\ @a\ variables\ up\ to\ @a}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ maxDegree\ on\ the\ domain\ \(\backslash\)f\$[-\/1,\ 1]\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa4f3c6795102432dec5d4eb607429592}{LegendreBasis}}(variables,\ maxDegree,}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ isNormalized=\textcolor{keyword}{true})\ creates\ orthonormal\ Legendre\ basis}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa4f3c6795102432dec5d4eb607429592}{LegendreBasis}}(variables,\ maxDegree,\ lower=a,\ upper=b)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ basis\ functions\ on\ the\ domain\ \(\backslash\)f\$[a,\ b]\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables\ \{mustBeA(variables,\ \textcolor{stringliteral}{'sym'})\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxDegree\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.isNormalized\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.isMonic\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.lower\ \{mustBeNumeric,\ mustBeFinite\}\ =\ -\/1}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.upper\ \{mustBeNumeric,\ mustBeFinite\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{OrthogonalPolynomialBasis}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables,\ maxDegree,\ options);\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00051}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa4f3c6795102432dec5d4eb607429592}{00051}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00052}00052\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00054}00054\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a1a329c0ac01bca0a789405fcbb424736}{initialize}}(obj,\ options)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ optional\ properties.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a1a329c0ac01bca0a789405fcbb424736}{initialize}}@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a6a12e0bdd45a871a72324b1899e13a13}{OrthogonalPolynomialBasis}}(obj,\ options);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a787a0b46b5e30c1b45ee06f47f87c772}{Lower}}\ =\ options.lower;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa14e5aad43f24c7f9de7a0006bd47346}{Upper}}\ =\ options.upper;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ [a,\ b,\ c]\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a3609e5c7c0ca4b24bf9aba32f3f47e0f}{computeCoefficients}}(\string~,\ n)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTECOEFFICIENTS\ Compute\ Legendre\ recurrence\ coefficients.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ (2\ *\ n\ +\ 1)\ /\ (n\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ -\/n\ /\ (n\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ normalizer\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a7066eb15942639f9bab3c95faec9cedb}{computeNormalizer}}(obj,\ n)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00072}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a1a329c0ac01bca0a789405fcbb424736}{00072}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTENORMALIZER\ Compute\ Legendre\ normalizer.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sqrt(2*n+1)\ /\ sqrt(obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa14e5aad43f24c7f9de7a0006bd47346}{Upper}}-\/obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a787a0b46b5e30c1b45ee06f47f87c772}{Lower}});}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ x\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a7e0cb2f93b2b4356a340507430e5fda4}{transform}}(obj,\ x)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ TRANSFORM\ Transform\ variable\ to\ polynomial's\ canonical\ domain.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a7e0cb2f93b2b4356a340507430e5fda4}{transform}}(x)\ transforms\ @a\ x\ to\ the\ canonical\ domain}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ the\ specific\ polynomial\ family.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00083}\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a3609e5c7c0ca4b24bf9aba32f3f47e0f}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa14e5aad43f24c7f9de7a0006bd47346}{Upper}}\ -\/\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a787a0b46b5e30c1b45ee06f47f87c772}{Lower}};}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ (obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_aa14e5aad43f24c7f9de7a0006bd47346}{Upper}}\ +\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis_a787a0b46b5e30c1b45ee06f47f87c772}{Lower}})\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ (2\ *\ x\ -\/\ c)\ /\ l;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00087}00087\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_legendre_basis_8m_source_l00088}00088\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,140 @@
+\doxysection{approx\+::linear\+::Nodal\+Approximator Class Reference}
+\hypertarget{classapprox_1_1linear_1_1_nodal_approximator}{}\label{classapprox_1_1linear_1_1_nodal_approximator}\index{approx::linear::NodalApproximator@{approx::linear::NodalApproximator}}
+
+
+Linear approximator based on nodal information.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_nodal_approximator_aa443b9e7362f6c03c6a823fa3ae5c653}{set\+Design}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Set up the design operator using nodal points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_nodal_approximator_a6525b810d3620264349640ebe49252c3}{embed}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Embed function values at nodal points into the latent space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_aa5e9862dc4a0d5b46f087bd9615e4468}{Linear\+Approximator}} (Input\+Type basis)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1linear_1_1_linear_approximator}{Linear\+Approximator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_ae265e1dd03ca9b82902e5aada4d95e91}{set\+Mass}} (Input\+Type obj, Input\+Type X, Input\+Type w)
+\begin{DoxyCompactList}\small\item\em Set up the mass operator using numerical integration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a9e5649f2daf3d4fe7d0bb7f540f91601}{set\+Design}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set up the design operator for fitting. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a2a6d6b281c88dae6fd8a0cb5e3cac213}{embed}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a53d636fab92463c1ae98a45019ad861c}{eval}} (Input\+Type obj, Input\+Type X, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Evaluate linear approximations at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a2337b45d413595a6994d796d2796f8ae}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type C, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Differentiate linear approximations at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a53519092cc27621995d4bec60c5a9a63}{fit}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Fit data within the linear approximation space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_aa813b8668ab6866b7bafd35caa9913a3}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data onto the linear approximation space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1linear_1_1_nodal_approximator_a96fbace7181e8eeadae1826853725f28}{Type}} = \textquotesingle{}nodal\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Approximator type identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a4c5452d59939ce653587a33977088ec8}{Basis}}
+\begin{DoxyCompactList}\small\item\em Basis functions that span the approximation space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_abba30cf5b204924586306c727ff1e008}{Mass}}
+\begin{DoxyCompactList}\small\item\em Mass matrix for projection operations (square matrix) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a7eb255454102e8260f7f82130d02598a}{Design}}
+\begin{DoxyCompactList}\small\item\em Design matrix for fitting operations (matrix) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a7fae395f127ae51397264608f682e276}{NDofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (scalar) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_af1bb5211781b4b188af647a5def528cc}{is\+Well\+Posed}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents a well-\/posed system. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a275e3e5f80ea32233c72acdfb4554fd4}{is\+Overdetermined}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents an overdetermined system. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a9d2186e282078cf980869182d9ca2d4b}{is\+Underdetermined}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents an underdetermined system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Linear approximator based on nodal information. 
+
+\doxylink{classapprox_1_1linear_1_1_nodal_approximator}{Nodal\+Approximator} implements a linear approximation method that uses interpolation basis functions, such as Lagrange polynomials.
+
+Let $x_j$ denote the nodal points, $p_i$ basis functions, and $c_i$ the coefficients to be determined. The projection system is defined as\+:
+
+\[\sum_i\sum_kw_kc_ip_i(x_k)p_j(x_k) = f_j(x_k), \forall j.
+\]
+
+This implies that the mass matrix is $M=diag(w_k)$. The fitting system is defined as\+:
+
+\[u(x_j) = \sum_i c_i p_i(x_j), \forall j.
+\]
+
+The design matrix $D_{ji} = p_i(x_j)$ represents the evaluation of basis functions at nodal points. For Lagrangian polynomial, $D$ reduces to the identity matrix.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1linear_1_1_linear_approximator}{approx.\+linear.\+Linear\+Approximator} 
+
+\doxylink{classapprox_1_1linear_1_1_modal_approximator}{approx.\+linear.\+Modal\+Approximator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_nodal_approximator_8m_source_l00033}{33}} of file \mbox{\hyperlink{_nodal_approximator_8m_source}{Nodal\+Approximator.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1linear_1_1_nodal_approximator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1linear_1_1_nodal_approximator_a6525b810d3620264349640ebe49252c3}\index{approx::linear::NodalApproximator@{approx::linear::NodalApproximator}!embed@{embed}}
+\index{embed@{embed}!approx::linear::NodalApproximator@{approx::linear::NodalApproximator}}
+\doxysubsubsection{\texorpdfstring{embed()}{embed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_nodal_approximator_a6525b810d3620264349640ebe49252c3} 
+function approx\+::linear\+::\+Nodal\+Approximator\+::embed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{}\end{DoxyParamCaption})}
+
+
+
+Embed function values at nodal points into the latent space. 
+
+F = embed(obj, U) embeds function values at nodal points into the latent space. For nodal embedding, this operation is essentially the identity transformation since the latent space directly corresponds to function values at nodes. \Hypertarget{classapprox_1_1linear_1_1_nodal_approximator_aa443b9e7362f6c03c6a823fa3ae5c653}\index{approx::linear::NodalApproximator@{approx::linear::NodalApproximator}!setDesign@{setDesign}}
+\index{setDesign@{setDesign}!approx::linear::NodalApproximator@{approx::linear::NodalApproximator}}
+\doxysubsubsection{\texorpdfstring{setDesign()}{setDesign()}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_nodal_approximator_aa443b9e7362f6c03c6a823fa3ae5c653} 
+function approx\+::linear\+::\+Nodal\+Approximator\+::set\+Design (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Set up the design operator using nodal points. 
+
+obj = set\+Design(obj, X) constructs the design matrix as the evaluation of basis functions at the nodal points. The design matrix $D_{ji} = p_i(x_j)$ where $x_j$ are nodal points and $p_i$ are basis functions. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1linear_1_1_nodal_approximator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1linear_1_1_nodal_approximator_a96fbace7181e8eeadae1826853725f28}\index{approx::linear::NodalApproximator@{approx::linear::NodalApproximator}!Type@{Type}}
+\index{Type@{Type}!approx::linear::NodalApproximator@{approx::linear::NodalApproximator}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_nodal_approximator_a96fbace7181e8eeadae1826853725f28} 
+Constant Property approx\+::linear\+::\+Nodal\+Approximator\+::\+Type = \textquotesingle{}nodal\textquotesingle{}}
+
+
+
+Approximator type identifier. 
+
+
+
+Definition at line \mbox{\hyperlink{_nodal_approximator_8m_source_l00037}{37}} of file \mbox{\hyperlink{_nodal_approximator_8m_source}{Nodal\+Approximator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+linear/\mbox{\hyperlink{_nodal_approximator_8m}{Nodal\+Approximator.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,252 @@
+\doxysection{physics\+::radiation\+::Macro\+Micro\+Scheme Class Reference}
+\hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme}{}\label{classphysics_1_1radiation_1_1_macro_micro_scheme}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_aa5d83ae3ff13c6da33e7e30899e6a52c}{Macro\+Micro\+Scheme}} (Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}, Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{t\+Disc}}, Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}, Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}, Input\+Type \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}})
+\begin{DoxyCompactList}\small\item\em Initialize the macro-\/micro DG scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the scheme and solution state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5f48e934ff00c42cd01ff8bb8066db0f}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one upwind DG time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a}{finalize}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Finalize simulation with error analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a7a24ac6dad1ce81e05435e8face449d6}{Scheme}} (Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a8848877ce06f8a8b9ea45186687b6e2a}{set\+Timer}} (Input\+Type obj, Input\+Type verbose)
+\begin{DoxyCompactList}\small\item\em Set performance timer with specified verbosity. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_acdb6478e56a463b3ac88c1530602fef9}{set\+Time\+Discretization}} (Input\+Type obj, Input\+Type t\+Disc\+Id, Input\+Type t\+Final)
+\begin{DoxyCompactList}\small\item\em Set temporal discretization method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab046345780aa4bbc86e9b79d70c26714}{set\+Analyzer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set analysis component for error assessment. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a77f6eeace68f8d6da5803ba08cfee56a}{set\+Visualizer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set visualization component for solution output. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{run}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute the complete time integration loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}{assembler}}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{operator}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb}{RECORDS}} = \{\textquotesingle{}Integration\textquotesingle{}, \textquotesingle{}Visualization\textquotesingle{}, \textquotesingle{}Analysis\textquotesingle{}\}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}
+\begin{DoxyCompactList}\small\item\em Timer record categories. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{t\+Disc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization object for time integration. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}
+\begin{DoxyCompactList}\small\item\em Performance timer for monitoring execution phases. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}
+\begin{DoxyCompactList}\small\item\em Visualization object for solution plotting and output. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}
+\begin{DoxyCompactList}\small\item\em Analysis object for error computation and assessment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413}{compute\+Mass\+Operator}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em linear operator sparse matrix \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a2e8d8e264e4ea0f7e5d7df535ac4e4d9}{compute\+Linear\+Operator}} (Input\+Type obj, Input\+Type state)
+\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a78500d5b2ac4c28ee74e3d44a182edc2}{compute\+Free\+Streaming\+Operator}} (Input\+Type obj, Input\+Type state, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em streaming operator \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a137bcd0be2992af15f5e6b873066a591}{compute\+Collision\+Operator}} (Input\+Type obj, Input\+Type state, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Macro-\/macro streaming. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_macro_micro_scheme_8m_source_l00007}{7}} of file \mbox{\hyperlink{_macro_micro_scheme_8m_source}{Macro\+Micro\+Scheme.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_aa5d83ae3ff13c6da33e7e30899e6a52c}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!MacroMicroScheme@{MacroMicroScheme}}
+\index{MacroMicroScheme@{MacroMicroScheme}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{MacroMicroScheme()}{MacroMicroScheme()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_aa5d83ae3ff13c6da33e7e30899e6a52c} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::\+Macro\+Micro\+Scheme (\begin{DoxyParamCaption}\item[{Input\+Type}]{config}{, }\item[{Input\+Type}]{t\+Disc}{, }\item[{Input\+Type}]{visualizer}{, }\item[{Input\+Type}]{analyzer}{, }\item[{Input\+Type}]{pattern}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the macro-\/micro DG scheme. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a137bcd0be2992af15f5e6b873066a591}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!computeCollisionOperator@{computeCollisionOperator}}
+\index{computeCollisionOperator@{computeCollisionOperator}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{computeCollisionOperator()}{computeCollisionOperator()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a137bcd0be2992af15f5e6b873066a591} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::compute\+Collision\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Macro-\/macro streaming. 
+
+Macro-\/micro streaming
+
+Micro-\/macro streaming
+
+Micro-\/micro streaming
+
+Scattering \Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a78500d5b2ac4c28ee74e3d44a182edc2}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!computeFreeStreamingOperator@{computeFreeStreamingOperator}}
+\index{computeFreeStreamingOperator@{computeFreeStreamingOperator}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{computeFreeStreamingOperator()}{computeFreeStreamingOperator()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a78500d5b2ac4c28ee74e3d44a182edc2} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::compute\+Free\+Streaming\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+streaming operator 
+
+collision operator
+
+streaming part of linear operator \Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a2e8d8e264e4ea0f7e5d7df535ac4e4d9}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!computeLinearOperator@{computeLinearOperator}}
+\index{computeLinearOperator@{computeLinearOperator}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{computeLinearOperator()}{computeLinearOperator()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a2e8d8e264e4ea0f7e5d7df535ac4e4d9} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::compute\+Linear\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!computeMassOperator@{computeMassOperator}}
+\index{computeMassOperator@{computeMassOperator}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{computeMassOperator()}{computeMassOperator()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::compute\+Mass\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+linear operator sparse matrix 
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!finalize@{finalize}}
+\index{finalize@{finalize}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::finalize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Finalize simulation with error analysis. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!initialize@{initialize}}
+\index{initialize@{initialize}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::initialize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialize the scheme and solution state. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!postStep@{postStep}}
+\index{postStep@{postStep}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{postStep()}{postStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::post\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Postprocess operations after time step. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a5f48e934ff00c42cd01ff8bb8066db0f}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!preStep@{preStep}}
+\index{preStep@{preStep}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{preStep()}{preStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a5f48e934ff00c42cd01ff8bb8066db0f} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::pre\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Preprocess operations before time step. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!step@{step}}
+\index{step@{step}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb} 
+function physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Perform one upwind DG time step. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{physics\+::\+Scheme}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!assembler@{assembler}}
+\index{assembler@{assembler}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{assembler}{assembler}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c} 
+Property physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::assembler}
+
+
+
+Definition at line \mbox{\hyperlink{_macro_micro_scheme_8m_source_l00014}{14}} of file \mbox{\hyperlink{_macro_micro_scheme_8m_source}{Macro\+Micro\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!operator@{operator}}
+\index{operator@{operator}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{operator}{operator}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0} 
+Property physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::operator}
+
+
+
+Definition at line \mbox{\hyperlink{_macro_micro_scheme_8m_source_l00017}{17}} of file \mbox{\hyperlink{_macro_micro_scheme_8m_source}{Macro\+Micro\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}\index{physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}!pattern@{pattern}}
+\index{pattern@{pattern}!physics::radiation::MacroMicroScheme@{physics::radiation::MacroMicroScheme}}
+\doxysubsubsection{\texorpdfstring{pattern}{pattern}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab} 
+Property physics\+::radiation\+::\+Macro\+Micro\+Scheme\+::pattern}
+
+
+
+Definition at line \mbox{\hyperlink{_macro_micro_scheme_8m_source_l00011}{11}} of file \mbox{\hyperlink{_macro_micro_scheme_8m_source}{Macro\+Micro\+Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+radiation/\mbox{\hyperlink{_macro_micro_scheme_8m}{Macro\+Micro\+Scheme.\+m}}\end{DoxyCompactItemize}

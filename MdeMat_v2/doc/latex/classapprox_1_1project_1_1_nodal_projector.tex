@@ -1,0 +1,144 @@
+\doxysection{approx\+::project\+::Nodal\+Projector Class Reference}
+\hypertarget{classapprox_1_1project_1_1_nodal_projector}{}\label{classapprox_1_1project_1_1_nodal_projector}\index{approx::project::NodalProjector@{approx::project::NodalProjector}}
+
+
+Galerkin projector based on nodal embedding.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector}{approx\+::project\+::\+Galerkin\+Projector}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector_a861fa7c1e8683d0805362323f94f8284}{set\+Mass}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Set up the mass operator using nodal points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector_a347db6e8b153c6a28b65480487c31948}{embed}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Embed function values at nodal points into the latent space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector}{approx\+::project\+::\+Galerkin\+Projector}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{Galerkin\+Projector}} (Input\+Type \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the approximation space at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a8ea850a603a417da7fe712fc6978b065}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data onto the function space. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}{set\+Mass}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab45e01409af3e30ebd6dab36c5fbfd19}{embed}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector}{approx\+::project\+::\+Galerkin\+Projector}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}
+\begin{DoxyCompactList}\small\item\em Basis functions that span the approximation space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}
+\begin{DoxyCompactList}\small\item\em Mass operator matrix for the Galerkin system. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}{is\+Well\+Posed}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is well-\/posed. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}{is\+Overdetermined}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is overdetermined. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}{is\+Underdetermined}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is underdetermined. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Galerkin projector based on nodal embedding. 
+
+\doxylink{classapprox_1_1project_1_1_nodal_projector}{Nodal\+Projector} implements a Galerkin projection method that enforces exact interpolation at specified nodal points. This approach is particularly suitable for interpolation basis functions such as Lagrange polynomials.
+
+The Galerkin system is defined as\+:   \[u(x_j) = \sum_{i=1}^{n} c_i p_i(x_j), \forall j = 1, ..., m,
+\] where $x_j$ are the nodal points, $p_i$ are basis functions, and $c_i$ are the coefficients to be determined. The mass matrix $M_{ji} = p_i(x_j)$ represents the evaluation of basis functions at nodal points.
+
+This method is exact for interpolation problems and provides a direct relationship between function values at nodes and basis coefficients.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ nodal\ projector\ with\ Lagrange\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}\ =\ InterpolationBasisFunction(5,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_legendre'});}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}.autoLoad();}
+\DoxyCodeLine{projector\ =\ NodalProjector(\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}});}
+\DoxyCodeLine{\%\ Set\ up\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ \textcolor{keyword}{operator}\ with\ nodal\ points}
+\DoxyCodeLine{X\ =\ linspace(0,\ 1,\ 5);\ \ \%\ 5\ nodal\ points}
+\DoxyCodeLine{projector.setMass(X);}
+\DoxyCodeLine{\%\ Project\ function\ data}
+\DoxyCodeLine{U\ =\ sin(pi\ *\ X);\ \ \%\ Function\ values\ at\ nodal\ points}
+\DoxyCodeLine{F\ =\ projector.embed(U);}
+\DoxyCodeLine{coeffs\ =\ projector.project(F);}
+\DoxyCodeLine{\%\ For\ Lagrange\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}},\ coeffs\ should\ equal\ U\ \textcolor{keywordflow}{for}\ exact\ interpolation}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1project_1_1_galerkin_projector}{approx.\+project.\+Galerkin\+Projector} 
+
+\doxylink{classapprox_1_1project_1_1_modal_projector}{approx.\+project.\+Modal\+Projector} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_nodal_projector_8m_source_l00044}{44}} of file \mbox{\hyperlink{_nodal_projector_8m_source}{Nodal\+Projector.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1project_1_1_nodal_projector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1project_1_1_nodal_projector_a347db6e8b153c6a28b65480487c31948}\index{approx::project::NodalProjector@{approx::project::NodalProjector}!embed@{embed}}
+\index{embed@{embed}!approx::project::NodalProjector@{approx::project::NodalProjector}}
+\doxysubsubsection{\texorpdfstring{embed()}{embed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_nodal_projector_a347db6e8b153c6a28b65480487c31948} 
+function approx\+::project\+::\+Nodal\+Projector\+::embed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{}\end{DoxyParamCaption})}
+
+
+
+Embed function values at nodal points into the latent space. 
+
+F = embed(obj, U) embeds function values at nodal points into the latent space. For nodal embedding, this simply reshapes the input values since the latent space directly corresponds to function values at nodes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1project_1_1_nodal_projector}{Nodal\+Projector} object \\
+\hline
+{\em U} & -\/ Function values at nodal points (m x q)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em F} & -\/ Latent space representation (m x q), same as input U \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1project_1_1_nodal_projector_a861fa7c1e8683d0805362323f94f8284}\index{approx::project::NodalProjector@{approx::project::NodalProjector}!setMass@{setMass}}
+\index{setMass@{setMass}!approx::project::NodalProjector@{approx::project::NodalProjector}}
+\doxysubsubsection{\texorpdfstring{setMass()}{setMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_nodal_projector_a861fa7c1e8683d0805362323f94f8284} 
+function approx\+::project\+::\+Nodal\+Projector\+::set\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Set up the mass operator using nodal points. 
+
+obj = set\+Mass(obj, X) constructs the mass matrix as the evaluation of basis functions at the nodal points. The mass matrix $M_{ji} = p_i(x_j)$ where $x_j$ are nodal points and $p_i$ are basis functions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1project_1_1_nodal_projector}{Nodal\+Projector} object \\
+\hline
+{\em X} & -\/ Nodal points (n x q)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1project_1_1_nodal_projector}{Nodal\+Projector} object \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+project/\mbox{\hyperlink{_nodal_projector_8m}{Nodal\+Projector.\+m}}\end{DoxyCompactItemize}

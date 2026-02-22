@@ -1,0 +1,38 @@
+\doxysection{Assembly.\+m}
+\hypertarget{_assembly_8m_source}{}\label{_assembly_8m_source}\index{+approx/+assembly/Assembly.m@{+approx/+assembly/Assembly.m}}
+\mbox{\hyperlink{_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00001}00001\ classdef\ Assembly\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1assembly}{00002}}\ \ \ \ \ \%\ ASSEMBLY\ Base\ \textcolor{keyword}{class\ }for\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ operations.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}\ provides\ the\ foundation\ \textcolor{keywordflow}{for}\ assembling\ discrete\ operators}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ from\ finite-\/dimensional\ function\ spaces.\ The\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ process}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ involves\ iterating\ over\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ elements,\ computing\ local\ data,\ and}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ accumulating\ contributions\ into\ global\ sparse\ data\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00008}00008\ \textcolor{keyword}{\ \ \ \ }\%\ \ \ appropriate\ connectivity\ information\ from\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00012}00012\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00013}00013\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ Space\ \%\ Mesh-\/based\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00015}00015\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00016}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{00016}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00017}00017\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_ac1f41e78aa3166dba92d931e9b51852f}{Assembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}})}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLY\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_ac1f41e78aa3166dba92d931e9b51852f}{Assembly}}\ base\ \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00020}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{00020}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_ac1f41e78aa3166dba92d931e9b51852f}{Assembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}})\ creates\ an\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ \textcolor{keywordtype}{object}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\ The\ constructor\ validates\ that\ the}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ provided\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ is\ a\ valid\ MeshSpace\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Space\ =\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}};}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00031}00031\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00032}00032\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,234 @@
+\doxysection{core\+::geometry\+::Line\+Segment\+By\+Line\+Segment\+Intersector Class Reference}
+\hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{}\label{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}\index{core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}}
+
+
+Computes intersections between line segments.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{core\+::geometry\+::\+Intersector}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40}{Line\+Segment\+By\+Line\+Segment\+Intersector}} (Input\+Type \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for intersector. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a2f40376db5ab8bdb0f765f2d0f9e70ad}{intersect}} (Input\+Type obj, Input\+Type X1, Input\+Type X2, Input\+Type X3, Input\+Type X4, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Computes intersection between line segments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{core\+::geometry\+::\+Intersector}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_a8bb9fde6a25b1ef937168208a8287562}{Intersector}} (Input\+Type \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} object. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_aa08c79188fdc79bcf4776a959a19ecd3}{intersect}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Computes the intersection between geometric objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ab42edc025a51b26b14d922a2c1607f45}{intersect\+ND}} (Input\+Type obj, Input\+Type X1, Input\+Type X2, Input\+Type X3, Input\+Type X4, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Internal method for n-\/dimensional intersection computation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ad34efe6d936e23f81471c4d6439b1e61}{point\+On\+Line\+Segment}} (Input\+Type obj, Input\+Type point, Input\+Type line\+Start, Input\+Type line\+End, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Determines if a point lies on a line segment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{core\+::geometry\+::\+Intersector}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Dimension of the space (positive integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Computes intersections between line segments. 
+
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{Line\+Segment\+By\+Line\+Segment\+Intersector} computes intersection points between pairs of line segments in n-\/dimensional space (n \texorpdfstring{$>$}{>}= 2). The line segments are defined by their endpoints, and intersections are computed using a least-\/squares approach.
+
+The line segments are parameterized as\+: L1(s) = X1 + s\texorpdfstring{$\ast$}{*}(X2 -\/ X1) L2(t) = X3 + t\texorpdfstring{$\ast$}{*}(X4 -\/ X3)
+
+An intersection is considered valid only when\+:
+\begin{DoxyEnumerate}
+\item Two non-\/collinear line segments intersect at exactly one point
+\item Two collinear line segments intersect at exactly one point (e.\+g., at an endpoint)
+\end{DoxyEnumerate}
+
+If line segments would have more than one intersection point (e.\+g., they overlap), an error is thrown.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ a\ 2D\ line-\/line\ intersector}
+\DoxyCodeLine{intersector\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40}{LineSegmentByLineSegmentIntersector}}(2);}
+\DoxyCodeLine{\%\ Define\ two\ line\ segments}
+\DoxyCodeLine{X1\ =\ [0;\ 0];\ \ \ \%\ First\ endpoint\ of\ first\ line}
+\DoxyCodeLine{X2\ =\ [1;\ 1];\ \ \ \%\ Second\ endpoint\ of\ first\ line}
+\DoxyCodeLine{X3\ =\ [0;\ 1];\ \ \ \%\ First\ endpoint\ of\ second\ line}
+\DoxyCodeLine{X4\ =\ [1;\ 0];\ \ \ \%\ Second\ endpoint\ of\ second\ line}
+\DoxyCodeLine{\%\ Compute\ intersection}
+\DoxyCodeLine{[intersectionPoint,\ isValid]\ =\ intersector.intersect(X1,\ X2,\ X3,\ X4);}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+For collinear overlapping segments, the method throws an error 
+
+since there would be infinitely many intersection points.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1geometry_1_1_intersector}{core.\+geometry.\+Intersector} 
+
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{core.\+geometry.\+Line\+Segment\+By\+Plane\+Intersector} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_line_segment_by_line_segment_intersector_8m_source_l00043}{43}} of file \mbox{\hyperlink{_line_segment_by_line_segment_intersector_8m_source}{Line\+Segment\+By\+Line\+Segment\+Intersector.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40}\index{core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}!LineSegmentByLineSegmentIntersector@{LineSegmentByLineSegmentIntersector}}
+\index{LineSegmentByLineSegmentIntersector@{LineSegmentByLineSegmentIntersector}!core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}}
+\doxysubsubsection{\texorpdfstring{LineSegmentByLineSegmentIntersector()}{LineSegmentByLineSegmentIntersector()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for intersector. 
+
+obj = Line\+Segment\+By\+Line\+Segment\+Intersector(n\+Dims) creates an intersector for line segment intersections in n\+Dims-\/ dimensional space.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Dimension of the space (must be \texorpdfstring{$>$}{>}= 2)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ intersector\ \textcolor{keywordflow}{for}\ 2D\ space}
+\DoxyCodeLine{intersector\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40}{LineSegmentByLineSegmentIntersector}}(2);}
+\DoxyCodeLine{\%\ Create\ intersector\ \textcolor{keywordflow}{for}\ 3D\ space}
+\DoxyCodeLine{intersector\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a3c0441ec609f0ca6fcc004a39bd4ff40}{LineSegmentByLineSegmentIntersector}}(3);}
+
+\end{DoxyCode}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a2f40376db5ab8bdb0f765f2d0f9e70ad}\index{core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}!intersect@{intersect}}
+\index{intersect@{intersect}!core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_a2f40376db5ab8bdb0f765f2d0f9e70ad} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector\+::intersect (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X1}{, }\item[{Input\+Type}]{X2}{, }\item[{Input\+Type}]{X3}{, }\item[{Input\+Type}]{X4}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})}
+
+
+
+Computes intersection between line segments. 
+
+\mbox{[}X, TF\mbox{]} = intersect(obj, X1, X2, X3, X4) computes the intersection between line segments X1-\/\+X2 and X3-\/\+X4.
+
+\mbox{[}X, TF\mbox{]} = intersect(obj, X1, X2, X3, X4, tol) uses the specified numerical tolerance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{Line\+Segment\+By\+Line\+Segment\+Intersector} object \\
+\hline
+{\em X1} & -\/ d×m matrix of first endpoints of first line segments \\
+\hline
+{\em X2} & -\/ d×m matrix of second endpoints of first line segments \\
+\hline
+{\em X3} & -\/ d×m matrix of first endpoints of second line segments \\
+\hline
+{\em X4} & -\/ d×m matrix of second endpoints of second line segments \\
+\hline
+{\em tol} & -\/ Numerical tolerance (default\+: sqrt(eps))\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em X} & -\/ d×k matrix of intersection points \\
+\hline
+{\em TF} & -\/ 1×m logical vector indicating valid intersections\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ intersection\ computation}
+\DoxyCodeLine{[point,\ hasIntersection]\ =\ intersector.intersect(X1,\ X2,\ X3,\ X4);}
+\DoxyCodeLine{\%\ With\ custom\ tolerance}
+\DoxyCodeLine{[point,\ hasIntersection]\ =\ intersector.intersect(X1,\ X2,\ X3,\ X4,\ 1e-\/10);}
+
+\end{DoxyCode}
+ \Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ab42edc025a51b26b14d922a2c1607f45}\index{core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}!intersectND@{intersectND}}
+\index{intersectND@{intersectND}!core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}}
+\doxysubsubsection{\texorpdfstring{intersectND()}{intersectND()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ab42edc025a51b26b14d922a2c1607f45} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector\+::intersect\+ND (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X1}{, }\item[{Input\+Type}]{X2}{, }\item[{Input\+Type}]{X3}{, }\item[{Input\+Type}]{X4}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal method for n-\/dimensional intersection computation. 
+
+\mbox{[}X, TF\mbox{]} = intersect\+ND(obj, X1, X2, X3, X4, tol) performs the actual intersection computation for n-\/dimensional line segments using vectorized operations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{Line\+Segment\+By\+Line\+Segment\+Intersector} object \\
+\hline
+{\em X1} & -\/ d×m matrix of first endpoints of first line segments \\
+\hline
+{\em X2} & -\/ d×m matrix of second endpoints of first line segments \\
+\hline
+{\em X3} & -\/ d×m matrix of first endpoints of second line segments \\
+\hline
+{\em X4} & -\/ d×m matrix of second endpoints of second line segments \\
+\hline
+{\em tol} & -\/ Numerical tolerance\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em X} & -\/ d×k matrix of intersection points \\
+\hline
+{\em TF} & -\/ 1×m logical vector indicating valid intersections \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ad34efe6d936e23f81471c4d6439b1e61}\index{core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}!pointOnLineSegment@{pointOnLineSegment}}
+\index{pointOnLineSegment@{pointOnLineSegment}!core::geometry::LineSegmentByLineSegmentIntersector@{core::geometry::LineSegmentByLineSegmentIntersector}}
+\doxysubsubsection{\texorpdfstring{pointOnLineSegment()}{pointOnLineSegment()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector_ad34efe6d936e23f81471c4d6439b1e61} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector\+::point\+On\+Line\+Segment (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{point}{, }\item[{Input\+Type}]{line\+Start}{, }\item[{Input\+Type}]{line\+End}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Determines if a point lies on a line segment. 
+
+\mbox{[}on\+Line, t\mbox{]} = point\+On\+Line\+Segment(obj, point, line\+Start, line\+End, tol) checks if a point lies on the line segment from line\+Start to line\+End.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{Line\+Segment\+By\+Line\+Segment\+Intersector} object \\
+\hline
+{\em point} & -\/ Point to check for inclusion on line segment \\
+\hline
+{\em line\+Start} & -\/ Start point of line segment \\
+\hline
+{\em line\+End} & -\/ End point of line segment \\
+\hline
+{\em tol} & -\/ Tolerance for numerical comparisons\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em on\+Line} & -\/ True if point lies on the line segment \\
+\hline
+{\em t} & -\/ Parameter value where point = line\+Start + t\texorpdfstring{$\ast$}{*}(line\+End-\/line\+Start) \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+geometry/\mbox{\hyperlink{_line_segment_by_line_segment_intersector_8m}{Line\+Segment\+By\+Line\+Segment\+Intersector.\+m}}\end{DoxyCompactItemize}

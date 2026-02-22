@@ -1,0 +1,121 @@
+\doxysection{ex02\+\_\+dirichlet.\+m}
+\hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source}{}\label{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source}\index{+physics/+diffusion/+scripts/ex02\_dirichlet.m@{+physics/+diffusion/+scripts/ex02\_dirichlet.m}}
+\mbox{\hyperlink{_09diffusion_2_09scripts_2ex02__dirichlet_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00002}00002\ \%\ FileName:\ ex02\_dirichlet}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00006}00006\ \%\ \ \ Solving\ diffusion\ equation\ with\ Dirichlet\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1diffusion_1_1scripts_abf4e448b64574479774dfbc3d21c6dfd}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00009}00009\ clc,\ clear,\ close\ all;}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00011}00011\ \%\%\ CONFIGURATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00013}00013\ \%\ Common\ configuration\ file}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00014}00014\ common\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00016}00016\ \%\ Experiment-\/specific\ configuration\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00017}00017\ config\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00018}00018\ config.schemeName\ =\ \textcolor{stringliteral}{'ldg'};}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00019}00019\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00020}00020\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00021}00021\ config.xBBox\ =\ repmat([0,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00022}00022\ config.tFinal\ =\ 0.5;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00023}00023\ \textcolor{keywordflow}{if}\ config.nDims\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00024}00024\ \ \ \ \ config.diffusion\ =\ 0.1;}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00025}00025\ elseif\ config.nDims\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00026}00026\ \ \ \ \ config.diffusion\ =\ [0.06,\ 0.01;\ 0.02,\ 0.07];\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00027}00027\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00028}00028\ \ \ \ \ config.diffusion\ =\ [0.05,\ -\/0.01,\ 0.01;\ 0.01,\ 0.06,\ 0.01;0.01,\ 0.01,\ 0.07];}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00029}00029\ end\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00030}00030\ config.omega\ =\ repmat(pi\ /\ config.L,\ 1,\ config.nDims);\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00031}00031\ config.lambda\ =\ config.omega\ *\ config.diffusion\ *\ config.omega.\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00032}00032\ \textcolor{stringliteral}{config.ic\ =\ u0(config.omega);\ \%\ Initial\ condition}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00033}00033\ \textcolor{stringliteral}{config.bc\ =\ uBc(config.lambda,\ config.omega);\ \%\ Boundary\ condition}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00034}00034\ \textcolor{stringliteral}{config.exact\ =\ uExact(config.lambda,\ config.omega);\ \%\ Exact\ solution}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00035}00035\ \textcolor{stringliteral}{config.nx\ =\ repmat(4,\ 1,\ config.nDims);\ \%\ Grid\ resolution}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00036}00036\ \textcolor{stringliteral}{config.verbose\ =\ 1;\ \%\ Verbose\ flag}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00037}00037\ \textcolor{stringliteral}{config.eId\ =\ sprintf('}PA\%d\textcolor{stringliteral}{',\ config.nDims);\ \%\ Experiment\ ID}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00038}00038\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00039}00039\ \textcolor{stringliteral}{\%\ Construct\ and\ configure\ scheme}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00040}00040\ \textcolor{stringliteral}{switch\ config.schemeName}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ case\ '}ldg\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ scheme\ =\ physics.diffusion.LdgScheme(\ ...}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ file\ =\ common,\ config\ =\ config);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00044}00044\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00045}00045\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00046}00046\ \textcolor{stringliteral}{\%\ Configure\ visualizer}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00047}00047\ \textcolor{stringliteral}{visualizer\ =\ scheme.getConfig('}visualizer\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00048}00048\ \textcolor{stringliteral}{visualizer.setDensity(1);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00049}00049\ \textcolor{stringliteral}{visualizer.setTimeline(scheme.getConfig('}tFinal\textcolor{stringliteral}{'),\ 10);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00050}00050\ \textcolor{stringliteral}{visualizer.addDataset('}REF\textcolor{stringliteral}{',\ '}exact\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00051}00051\ \textcolor{stringliteral}{visualizer.addDataset(scheme.getConfig('}xId\textcolor{stringliteral}{'),\ '}numeric\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00052}00052\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00053}00053\ \textcolor{stringliteral}{switch\ config.nDims}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ case\ 1}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ visualizer.addPlotter('}profile\textcolor{stringliteral}{',\ '}1d\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ case\ 2}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ visualizer.addPlotter('}profile\textcolor{stringliteral}{',\ '}2d\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ visualizer.addPlotter('}slice\textcolor{stringliteral}{',\ '}slice1d\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ case\ 3}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ visualizer.addPlotter('}profile\textcolor{stringliteral}{',\ '}3d\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ visualizer.addPlotter('}slice\textcolor{stringliteral}{',\ '}slice1d\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00062}00062\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00064}00064\ \textcolor{stringliteral}{\%\ Configure\ analyzer}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00065}00065\ \textcolor{stringliteral}{analyzer\ =\ scheme.getConfig('}analyzer\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00066}00066\ \textcolor{stringliteral}{analyzer.setNLevels(5);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00067}00067\ \textcolor{stringliteral}{analyzer.setDensity(4\string^config.nDims);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00068}00068\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00069}00069\ \textcolor{stringliteral}{\%\%\ SIMULATION\ EXECUTION}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00070}00070\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00071}00071\ \textcolor{stringliteral}{xElement\ =\ approx.element.L2OrthotopeElement(config.nDims,\ ...}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ scheme.getConfig('}xBasisOrder\textcolor{stringliteral}{'),\ scheme.getConfig('}xBasisType\textcolor{stringliteral}{'),\ scheme.getConfig('}xBasisPattern\textcolor{stringliteral}{'));}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00073}00073\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00074}00074\ \textcolor{stringliteral}{if\ \string~analyzer.HasExact}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \%<\ Mesh\ initialization}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ xMesh\ =\ approx.mesh.UniformGrid(config.xBBox,\ config.nx/2);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ xDisc\ =\ approx.space.FiniteElementSpace(xMesh,\ xElement);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ state\ =\ physics.state.SpatialState(xDisc);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ state\ =\ scheme.converge(state);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00080}00080\ \textcolor{stringliteral}{else}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \%<\ Mesh\ initialization}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ xMesh\ =\ approx.mesh.UniformGrid(config.xBBox,\ config.nx);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ xDisc\ =\ approx.space.FiniteElementSpace(xMesh,\ xElement);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ state\ =\ physics.state.SpatialState(xDisc);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ state\ =\ scheme.converge(state);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00086}00086\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00087}00087\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00088}00088\ \textcolor{stringliteral}{\%\%\ HELPER\ FUNCTIONS}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00089}00089\ \textcolor{stringliteral}{function\ h\ =\ u0(omega)}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00090}00090\ \textcolor{stringliteral}{h\ =\ @(x)\ u0Impl(x,\ omega);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00091}00091\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00092}00092\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00093}00093\ \textcolor{stringliteral}{function\ f\ =\ u0Impl(x,\ omega)}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00094}00094\ \textcolor{stringliteral}{z\ =\ omega(:).'}\ *\ x;}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00095}00095\ f\ =\ sin(z);}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00096}00096\ end}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00098}00098\ function\ h\ =\ uExact(lambda,\ omega)}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00099}00099\ h\ =\ @(x,\ varargin)\ uExactImpl(lambda,\ omega,\ x,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00100}00100\ end}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00102}00102\ function\ f\ =\ uExactImpl(lambda,\ omega,\ x,\ options)}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00103}00103\ arguments}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00104}00104\ \ \ \ \ lambda}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00105}00105\ \ \ \ \ omega}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00106}00106\ \ \ \ \ x}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00107}00107\ \ \ \ \ options.t}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00108}00108\ end}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00109}00109\ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00110}00110\ \textcolor{stringliteral}{f\ =\ exp(-\/lambda\ *\ options.t)\ *\ sin(z);}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00111}00111\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00112}00112\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00113}00113\ \textcolor{stringliteral}{function\ h\ =\ uBc(lambda,\ omega)}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00114}00114\ \textcolor{stringliteral}{h\ =\ @(x,\ varargin)\ uExactImpl(lambda,\ omega,\ x,\ varargin\{:\});}}
+\DoxyCodeLine{\Hypertarget{_09diffusion_2_09scripts_2ex02__dirichlet_8m_source_l00115}00115\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

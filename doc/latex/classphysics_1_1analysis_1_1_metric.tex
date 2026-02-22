@@ -1,0 +1,99 @@
+\doxysection{physics\+::analysis\+::Metric Class Reference}
+\hypertarget{classphysics_1_1analysis_1_1_metric}{}\label{classphysics_1_1analysis_1_1_metric}\index{physics::analysis::Metric@{physics::analysis::Metric}}
+
+
+Base class for error and distance metrics.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_absolute_metric}{physics\+::analysis\+::\+Finite\+Element\+Absolute\+Metric}}, and \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_a378a1b9eb568dd1eabafcdb814f48f1a}{Metric}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1analysis_1_1_metric}{Metric}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_ae80b2988db60a898d079ea838a8b2c31}{add\+Reduction}} (Input\+Type obj, Input\+Type reduction)
+\begin{DoxyCompactList}\small\item\em Add error reduction type to the metric. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_a5fdeefb7c7d71dab886f209f29342a3b}{Reductions}}
+\begin{DoxyCompactList}\small\item\em Cell array of reduction types to compute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for error and distance metrics. 
+
+\doxylink{classphysics_1_1analysis_1_1_metric}{Metric} defines the interface for computing distances and errors between abstract mathematical objects such as functions, solutions, or data sets. This class serves as the foundation for all specific metric implementations used in numerical analysis and error computation.
+
+All concrete metric classes must inherit from this base class and implement the abstract evaluate method to define how errors are computed for their specific use case. The class supports various error reduction types commonly used in numerical analysis. 
+
+Definition at line \mbox{\hyperlink{_metric_8m_source_l00019}{19}} of file \mbox{\hyperlink{_metric_8m_source}{Metric.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_a378a1b9eb568dd1eabafcdb814f48f1a}\index{physics::analysis::Metric@{physics::analysis::Metric}!Metric@{Metric}}
+\index{Metric@{Metric}!physics::analysis::Metric@{physics::analysis::Metric}}
+\doxysubsubsection{\texorpdfstring{Metric()}{Metric()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_metric_a378a1b9eb568dd1eabafcdb814f48f1a} 
+function physics\+::analysis\+::\+Metric\+::\+Metric (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classphysics_1_1analysis_1_1_metric}{Metric}. 
+
+obj = \doxylink{classphysics_1_1analysis_1_1_metric_a378a1b9eb568dd1eabafcdb814f48f1a}{Metric()} creates a metric with empty reductions list.
+
+obj = \doxylink{classphysics_1_1analysis_1_1_metric}{Metric}(reductions=reductions) creates a metric with the specified {\itshape reductions} cell array of error reduction types.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1analysis_1_1_finite_element_absolute_metric}{physics.\+analysis.\+Finite\+Element\+Absolute\+Metric} 
+\end{DoxySeeAlso}
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_ae80b2988db60a898d079ea838a8b2c31}\index{physics::analysis::Metric@{physics::analysis::Metric}!addReduction@{addReduction}}
+\index{addReduction@{addReduction}!physics::analysis::Metric@{physics::analysis::Metric}}
+\doxysubsubsection{\texorpdfstring{addReduction()}{addReduction()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_metric_ae80b2988db60a898d079ea838a8b2c31} 
+function physics\+::analysis\+::\+Metric\+::add\+Reduction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{reduction}{}\end{DoxyParamCaption})}
+
+
+
+Add error reduction type to the metric. 
+
+obj = add\+Reduction(obj, reduction) adds the specified error reduction type {\itshape reduction} to the metric\textquotesingle{}s list of reductions to compute during error evaluation. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_metric_a5fdeefb7c7d71dab886f209f29342a3b}\index{physics::analysis::Metric@{physics::analysis::Metric}!Reductions@{Reductions}}
+\index{Reductions@{Reductions}!physics::analysis::Metric@{physics::analysis::Metric}}
+\doxysubsubsection{\texorpdfstring{Reductions}{Reductions}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_metric_a5fdeefb7c7d71dab886f209f29342a3b} 
+Property physics\+::analysis\+::\+Metric\+::\+Reductions}
+
+
+
+Cell array of reduction types to compute. 
+
+
+
+Definition at line \mbox{\hyperlink{_metric_8m_source_l00023}{23}} of file \mbox{\hyperlink{_metric_8m_source}{Metric.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+analysis/\mbox{\hyperlink{_metric_8m}{Metric.\+m}}\end{DoxyCompactItemize}

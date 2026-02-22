@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['data_0',['Data',['../classphysics_1_1visual_1_1_dataset.html#af058a998455b6685edd286330a33d775',1,'physics::visual::Dataset']]],
+  ['database_1',['Database',['../classphysics_1_1visual_1_1_visualizer.html#ae2df65daa16bd0f727061bc7482ebaa5',1,'physics::visual::Visualizer']]],
+  ['datasetnames_2',['DatasetNames',['../classphysics_1_1visual_1_1_database.html#a1075cced665b9279051317d2df234ccf',1,'physics::visual::Database']]],
+  ['datasets_3',['Datasets',['../classphysics_1_1visual_1_1_database.html#a7b4c4253162dac09fee9417b0bb84810',1,'physics::visual::Database']]],
+  ['decomposition_4',['decomposition',['../classphysics_1_1radiation_1_1_macro_micro_pattern.html#abf544a3376fb11ff6d62384309dbfbbd',1,'physics::radiation::MacroMicroPattern::decomposition'],['../classphysics_1_1radiation_1_1_macro_micro_state.html#a563ebfedab44a83cd40ceda4f7ef4907',1,'physics::radiation::MacroMicroState::decomposition']]],
+  ['defaultfigureheight_5',['DefaultFigureHeight',['../classphysics_1_1visual_1_1_figure_manager.html#acbadcdbceaa5290f7c72778e90cc1f3c',1,'physics::visual::FigureManager']]],
+  ['defaultfigurewidth_6',['DefaultFigureWidth',['../classphysics_1_1visual_1_1_figure_manager.html#a227a4cc49d8d627e26ad1c5884ce462b',1,'physics::visual::FigureManager']]],
+  ['density_7',['Density',['../classphysics_1_1analysis_1_1_analyzer.html#a19f4994957d6106656f92515022b04af',1,'physics::analysis::Analyzer::Density'],['../classphysics_1_1visual_1_1_visualizer.html#a8f8ed4907800d26a169398d6fb39f4d5',1,'physics::visual::Visualizer::Density']]],
+  ['derivorder_8',['DerivOrder',['../classapprox_1_1integrate_1_1_integrator.html#aa0756a8c8a0b398a6f3fe78f32068cf4',1,'approx::integrate::Integrator']]],
+  ['descriptions_9',['Descriptions',['../classphysics_1_1analysis_1_1_analyzer.html#a6ec74a5684933d1eea9b463e993cf100',1,'physics::analysis::Analyzer']]],
+  ['design_10',['Design',['../classapprox_1_1linear_1_1_linear_approximator.html#a7eb255454102e8260f7f82130d02598a',1,'approx::linear::LinearApproximator']]],
+  ['detejacmask_11',['DetEJacMask',['../classapprox_1_1mesh_1_1_mesh.html#a24f3cf609ce8e24227c1c3c4c6269706',1,'approx::mesh::Mesh']]],
+  ['detfjacmask_12',['DetFJacMask',['../classapprox_1_1mesh_1_1_mesh.html#a7779be6d4e10806652171afdc6363375',1,'approx::mesh::Mesh']]],
+  ['direction_13',['Direction',['../classapprox_1_1mesh_1_1_mesh.html#a4e017b45e88350f63daaba874437d7b4',1,'approx::mesh::Mesh']]],
+  ['directionmask_14',['DirectionMask',['../classapprox_1_1mesh_1_1_mesh.html#af49a9affb9f88064f4440ccac7d35d02',1,'approx::mesh::Mesh']]],
+  ['dofs_15',['Dofs',['../classphysics_1_1state_1_1_state.html#ad362dfc19120942ce87d909cbe35b52c',1,'physics::state::State']]],
+  ['dual_16',['Dual',['../classphysics_1_1vlasov_1_1_dghs_scheme.html#a73ca709311cf69b330f8efa8325e1a82',1,'physics::vlasov::DghsScheme']]],
+  ['dualw_17',['DualW',['../classphysics_1_1vlasov_1_1_dghs_scheme.html#a8b542f6035a6aca25bcca35ad319ab58',1,'physics::vlasov::DghsScheme']]],
+  ['duration_18',['Duration',['../classcore_1_1chrono_1_1_record.html#a5e0af3bc6d5e530231cd280ace5f8b17',1,'core::chrono::Record']]]
+];

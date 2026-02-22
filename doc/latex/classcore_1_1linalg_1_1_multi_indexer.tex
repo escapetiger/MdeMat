@@ -1,0 +1,232 @@
+\doxysection{core\+::linalg\+::Multi\+Indexer Class Reference}
+\hypertarget{classcore_1_1linalg_1_1_multi_indexer}{}\label{classcore_1_1linalg_1_1_multi_indexer}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+
+
+Indexers handling multi-\/dimensional indexing.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{core\+::linalg\+::\+Indexer}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a61f0aef4763ff5448f3a284b61fa2cd1}{Multi\+Indexer}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}{set\+Shape}} (Input\+Type obj, Input\+Type shape)
+\begin{DoxyCompactList}\small\item\em Set tensor shape and stride for indexer. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}{generate}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Return all one-\/based multi-\/indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_aba43408268dd0b63bbc31cb92d2d3669}{multi\+To\+Linear}} (Input\+Type obj, Input\+Type M, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Convert multi-\/indices to linear indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc}{linear\+To\+Multi}} (Input\+Type obj, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Convert linear indices to multi-\/indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f}{factor\+To\+Multi}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Convert factor indices to multi-\/indices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{core\+::linalg\+::\+Indexer}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1linalg_1_1_indexer}{Indexer}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a9a7e6bcf83d75e96a58357f55722726a}{Valid\+Pads}} = \{\textquotesingle{}empty\textquotesingle{}, \textquotesingle{}wrap\textquotesingle{}, \textquotesingle{}edge\textquotesingle{}, \textquotesingle{}reflect\textquotesingle{}, \textquotesingle{}symmetric\textquotesingle{}\}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a845eec063787f46c8ea8e13fa4880732}{Shape}}
+\begin{DoxyCompactList}\small\item\em Tensor dimensions as row vector of positive integers. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad36a74e953eb6e8c189db0ceb4b9afc3}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions, derived from Shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{core\+::linalg\+::\+Indexer}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a77dfa8cc3002cd188b6192277539a149}{Style}}
+\begin{DoxyCompactList}\small\item\em Storage ordering style\+: \textquotesingle{}F\textquotesingle{} (column-\/major) or \textquotesingle{}C\textquotesingle{} (row-\/major) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a31815ab9d0a46c9e64af17d92b66b1ab}{update\+Strides}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Update tensor strides for indexer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad0cd219c0d9eec85b6959deda8cc55c1}{Strides}}
+\begin{DoxyCompactList}\small\item\em Tensor strides for linear index computation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Indexers handling multi-\/dimensional indexing. 
+
+\doxylink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer} generates multi-\/indices for tensor operations and provides methods to convert between multi-\/indices and linear indices. Supports both column-\/major (\textquotesingle{}F\textquotesingle{}) and row-\/major (\textquotesingle{}C\textquotesingle{}) storage orders with various boundary conditions for index conversion.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1linalg_1_1_indexer}{core.\+linalg.\+Indexer} 
+
+\doxylink{classcore_1_1linalg_1_1_cached_multi_indexer}{core.\+linalg.\+Cached\+Multi\+Indexer} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_multi_indexer_8m_source_l00017}{17}} of file \mbox{\hyperlink{_multi_indexer_8m_source}{Multi\+Indexer.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_a61f0aef4763ff5448f3a284b61fa2cd1}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!MultiIndexer@{MultiIndexer}}
+\index{MultiIndexer@{MultiIndexer}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{MultiIndexer()}{MultiIndexer()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_a61f0aef4763ff5448f3a284b61fa2cd1} 
+function core\+::linalg\+::\+Multi\+Indexer\+::\+Multi\+Indexer (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer}. 
+
+obj = \doxylink{classcore_1_1linalg_1_1_multi_indexer_a61f0aef4763ff5448f3a284b61fa2cd1}{Multi\+Indexer()} creates empty \doxylink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer}.
+
+obj = \doxylink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer}(Name=Value) creates with specified options. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!factorToMulti@{factorToMulti}}
+\index{factorToMulti@{factorToMulti}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{factorToMulti()}{factorToMulti()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f} 
+function core\+::linalg\+::\+Multi\+Indexer\+::factor\+To\+Multi (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{F}{}\end{DoxyParamCaption})}
+
+
+
+Convert factor indices to multi-\/indices. 
+
+M = factor\+To\+Multi(obj, F) converts factor indices {\itshape F} to multi-\/indices for tensor with specified shape.
+
+\begin{DoxyNote}{Note}
+Factor indices {\itshape F} must be a cell array with length equal to NDims. Each cell contains indices for the corresponding dimension. 
+\end{DoxyNote}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!generate@{generate}}
+\index{generate@{generate}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{generate()}{generate()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10} 
+function core\+::linalg\+::\+Multi\+Indexer\+::generate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Return all one-\/based multi-\/indices. 
+
+M = generate(obj) returns matrix where each row is multi-\/index satisfying 1 \texorpdfstring{$<$}{<}= M(i,j) \texorpdfstring{$<$}{<}= obj.\+Shape(j). \Hypertarget{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!linearToMulti@{linearToMulti}}
+\index{linearToMulti@{linearToMulti}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{linearToMulti()}{linearToMulti()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc} 
+function core\+::linalg\+::\+Multi\+Indexer\+::linear\+To\+Multi (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})}
+
+
+
+Convert linear indices to multi-\/indices. 
+
+M = linear\+To\+Multi(obj, L) converts linear indices {\itshape L} to multi-\/indices for tensor with specified shape.
+
+\begin{DoxyNote}{Note}
+Linear indices must be in range \mbox{[}1, prod(\+Shape)\mbox{]}. Returns matrix where each row represents a multi-\/index. 
+\end{DoxyNote}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_aba43408268dd0b63bbc31cb92d2d3669}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!multiToLinear@{multiToLinear}}
+\index{multiToLinear@{multiToLinear}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{multiToLinear()}{multiToLinear()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_aba43408268dd0b63bbc31cb92d2d3669} 
+function core\+::linalg\+::\+Multi\+Indexer\+::multi\+To\+Linear (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Convert multi-\/indices to linear indices. 
+
+L = multi\+To\+Linear(obj, M) converts multi-\/indices {\itshape M} to linear indices based on tensor dimensions.
+
+L = multi\+To\+Linear(obj, M, Name=Value) uses boundary condition specified by options.
+
+\begin{DoxyNote}{Note}
+Padding modes include \textquotesingle{}empty\textquotesingle{} (out-\/of-\/range set to 0), \textquotesingle{}wrap\textquotesingle{} (wraps around), \textquotesingle{}edge\textquotesingle{} (clamps to edges), \textquotesingle{}reflect\textquotesingle{} (reflects excluding edges), and \textquotesingle{}symmetric\textquotesingle{} (reflects including edges). 
+\end{DoxyNote}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!setShape@{setShape}}
+\index{setShape@{setShape}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{setShape()}{setShape()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e} 
+function core\+::linalg\+::\+Multi\+Indexer\+::set\+Shape (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{shape}{}\end{DoxyParamCaption})}
+
+
+
+Set tensor shape and stride for indexer. 
+
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_a31815ab9d0a46c9e64af17d92b66b1ab}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!updateStrides@{updateStrides}}
+\index{updateStrides@{updateStrides}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{updateStrides()}{updateStrides()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_a31815ab9d0a46c9e64af17d92b66b1ab} 
+function core\+::linalg\+::\+Multi\+Indexer\+::update\+Strides (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Update tensor strides for indexer. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_ad36a74e953eb6e8c189db0ceb4b9afc3}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!NDims@{NDims}}
+\index{NDims@{NDims}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_ad36a74e953eb6e8c189db0ceb4b9afc3} 
+Property core\+::linalg\+::\+Multi\+Indexer\+::\+NDims}
+
+
+
+Number of dimensions, derived from Shape. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_indexer_8m_source_l00033}{33}} of file \mbox{\hyperlink{_multi_indexer_8m_source}{Multi\+Indexer.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_a845eec063787f46c8ea8e13fa4880732}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!Shape@{Shape}}
+\index{Shape@{Shape}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{Shape}{Shape}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_a845eec063787f46c8ea8e13fa4880732} 
+Property core\+::linalg\+::\+Multi\+Indexer\+::\+Shape}
+
+
+
+Tensor dimensions as row vector of positive integers. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_indexer_8m_source_l00027}{27}} of file \mbox{\hyperlink{_multi_indexer_8m_source}{Multi\+Indexer.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_ad0cd219c0d9eec85b6959deda8cc55c1}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!Strides@{Strides}}
+\index{Strides@{Strides}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{Strides}{Strides}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_ad0cd219c0d9eec85b6959deda8cc55c1} 
+Property core\+::linalg\+::\+Multi\+Indexer\+::\+Strides\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tensor strides for linear index computation. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_indexer_8m_source_l00039}{39}} of file \mbox{\hyperlink{_multi_indexer_8m_source}{Multi\+Indexer.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_multi_indexer_a9a7e6bcf83d75e96a58357f55722726a}\index{core::linalg::MultiIndexer@{core::linalg::MultiIndexer}!ValidPads@{ValidPads}}
+\index{ValidPads@{ValidPads}!core::linalg::MultiIndexer@{core::linalg::MultiIndexer}}
+\doxysubsubsection{\texorpdfstring{ValidPads}{ValidPads}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_multi_indexer_a9a7e6bcf83d75e96a58357f55722726a} 
+Property core\+::linalg\+::\+Multi\+Indexer\+::\+Valid\+Pads = \{\textquotesingle{}empty\textquotesingle{}, \textquotesingle{}wrap\textquotesingle{}, \textquotesingle{}edge\textquotesingle{}, \textquotesingle{}reflect\textquotesingle{}, \textquotesingle{}symmetric\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_multi_indexer_8m_source_l00021}{21}} of file \mbox{\hyperlink{_multi_indexer_8m_source}{Multi\+Indexer.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+linalg/\mbox{\hyperlink{_multi_indexer_8m}{Multi\+Indexer.\+m}}\end{DoxyCompactItemize}

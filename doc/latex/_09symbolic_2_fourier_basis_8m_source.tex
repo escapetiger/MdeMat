@@ -1,0 +1,82 @@
+\doxysection{Fourier\+Basis.\+m}
+\hypertarget{_09symbolic_2_fourier_basis_8m_source}{}\label{_09symbolic_2_fourier_basis_8m_source}\index{+core/+symbolic/FourierBasis.m@{+core/+symbolic/FourierBasis.m}}
+\mbox{\hyperlink{_09symbolic_2_fourier_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00001}00001\ classdef\ FourierBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00002}00002\ \ \ \ \ \%\ FOURIERBASIS\ Fourier\ orthogonal\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ FourierBasis\ generates\ trigonometric\ Fourier\ basis\ functions\ up\ to}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ a\ specified\ maximum\ degree.\ The\ basis\ functions\ include\ constant,}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ sine,\ and\ cosine\ terms,\ orthogonal\ on\ the\ interval\ \(\backslash\)f\$[0,\ 2\(\backslash\)pi]\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00008}00008\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}},}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis}{SphericalHarmonicBasis}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00012}00012\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ MaxDegree\ \%\ Maximum\ degree}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ IsNormalized\ \%\ Flag\ \textcolor{keywordflow}{for}\ orthonormal\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00015}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis}{00015}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{Lower}}\ \%\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{Lower}}\ bound}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}{Upper}}\ \%\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}{Upper}}\ bound}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00017}00017\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00019}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5}{00019}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}{FourierBasis}}(variables,\ maxDegree,\ options)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FOURIERBASIS\ Construct\ Fourier\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00022}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68}{00022}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}{FourierBasis}}(variables,\ maxDegree)\ creates\ Fourier}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ functions\ \textcolor{keyword}{using\ }the\ specified\ @a\ variables\ up\ to\ @a}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00025}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ maxDegree.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}{FourierBasis}}(variables,\ maxDegree,\ isNormalized=\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00028}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}{00028}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ orthonormal\ Fourier\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables\ \{mustBeA(variables,\ \textcolor{stringliteral}{'sym'})\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxDegree\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.isNormalized\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.lower\ \{mustBeNumeric,\ mustBeFinite\}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.upper\ \{mustBeNumeric,\ mustBeFinite\}\ =\ 2\ *\ pi}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}}(variables);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj.MaxDegree\ =\ maxDegree;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.IsNormalized\ =\ options.isNormalized;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lower\ =\ options.lower;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Upper\ =\ options.upper;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ obj.computeExpressions();}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00045}\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}{00045}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00047}00047\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{private})}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ computeExpressions(obj)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEEXPRESSIONS\ Compute\ Fourier\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ expressions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}\ =\ repmat(sym([]),\ 2*obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5}{MaxDegree}}+1,\ 1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}{Upper}}\ -\/\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{Lower}};}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ 2\ *\ sym(pi)\ *\ (x\ -\/\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{Lower}})\ /\ L;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68}{IsNormalized}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(1)\ =\ sqrt(2*sym(pi))\ /\ sqrt(2*sym(pi)*L);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(1)\ =\ sym(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 1:obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5}{MaxDegree}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68}{IsNormalized}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sqrt(2*sym(pi))\ /\ sqrt(sym(pi)*L);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sym(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(2*k)\ =\ normalizer\ *\ cos(k*x);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(2*k+1)\ =\ normalizer\ *\ sin(k*x);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00075}00075\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_fourier_basis_8m_source_l00076}00076\ end}
+
+\end{DoxyCode}

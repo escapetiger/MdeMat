@@ -1,0 +1,91 @@
+\doxysection{Orthogonal\+Polynomial\+Basis.\+m}
+\hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source}{}\label{_09function_2_orthogonal_polynomial_basis_8m_source}\index{+core/+function/OrthogonalPolynomialBasis.m@{+core/+function/OrthogonalPolynomialBasis.m}}
+\mbox{\hyperlink{_09function_2_orthogonal_polynomial_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00001}00001\ classdef\ (Abstract)\ OrthogonalPolynomialBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00002}00002\ \ \ \ \ \%\ ORTHOGONALPOLYNOMIALBASIS\ Abstract\ base\ \textcolor{keyword}{class\ }for\ orthogonal}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00003}00003\ \ \ \ \ \%\ polynomial\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ OrthogonalPolynomialBasis\ provides\ a\ unified\ framework\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ generating\ orthogonal\ polynomial\ basis\ functions\ \textcolor{keyword}{using\ }three-\/term}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ recurrence\ relations.\ Concrete\ subclasses\ implement\ specific}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ polynomial\ families\ such\ as\ Legendre,\ Chebyshev,\ and\ Hermite}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ polynomials.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ three-\/term\ recurrence\ relation\ has\ the\ general\ form:}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \ \ \ \ P\_\{n+1\}(x)\ =\ (A\_n\ \(\backslash\)cdot\ x\ +\ B\_n)\ \(\backslash\)cdot\ P\_n(x)\ +\ C\_n\ \(\backslash\)cdot}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \ \ \ \ P\_\{n-\/1\}(x)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00018}00018\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.function.LegendreBasis,\ \mbox{\hyperlink{namespacecore}{core}}.function.ChebyshevBasis,}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.function.HermiteBasis}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00021}00021\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00022}00022\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ MaxDegree\ \%\ Maximum\ polynomial\ degree}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ IsNormalized\ \%\ Flag\ for\ orthonormal\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00025}\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis}{00025}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00026}00026\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00027}00027\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_af26caafc11eeae35f9d0ea071125b617}{OrthogonalPolynomialBasis}}(maxDegree,\ options)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00029}\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a57fe6745bd3c7fb0092b0408fde25192}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ORTHOGONALPOLYNOMIALBASIS\ Construct\ orthogonal\ polynomial}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00032}\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_aca9509db94294805b1fbac28eb60f6e2}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_af26caafc11eeae35f9d0ea071125b617}{OrthogonalPolynomialBasis}}(maxDegree)\ creates}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ orthogonal\ polynomial\ basis\ functions\ using\ the\ specified}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ variables\ up\ to\ @a\ maxDegree.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxDegree(1,\ 1)\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.isNormalized(1,\ 1)\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}(nDims\ =\ 1,\ nCodims\ =\ maxDegree+1);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj.MaxDegree\ =\ maxDegree;}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ obj.IsNormalized\ =\ options.isNormalized;}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00045}00045\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00046}\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_af26caafc11eeae35f9d0ea071125b617}{00046}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00047}00047\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a09bf1f2d3d6c8f8a273fad453fafc7c0}{evalImpl}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALIMPL\ Implementation\ of\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a09bf1f2d3d6c8f8a273fad453fafc7c0}{evalImpl}}(obj,\ X)\ evaluates\ the\ basis\ values\ via}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ three-\/term\ recurrence\ formula.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ size(X,\ 2);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ zeros(obj.\mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}},\ np);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ First\ term}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ Y(1,\ :)\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a52ded9d3078e6bb9298056f5698287c5}{first}}(X);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Second\ term}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ [a,\ b,\ \string~]\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_aafbe015e48921586261c28d3e68881d3}{computeCoefficients}}(0);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ Y(2,\ :)\ =\ a\ *\ X\ +\ b;}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Recurrence\ formula}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 2:obj.\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a57fe6745bd3c7fb0092b0408fde25192}{MaxDegree}}}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [a,\ b,\ c]\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_aafbe015e48921586261c28d3e68881d3}{computeCoefficients}}(k-\/1);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00067}\mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a09bf1f2d3d6c8f8a273fad453fafc7c0}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y(k+1,\ :)\ =\ (a\ *\ X\ +\ b)\ .*\ Y(k,\ :)\ +\ c\ *\ Y(k-\/1,\ :);}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00070}00070\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00071}00071\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00072}00072\ \ \ \ \ methods\ (Abstract,\ Access\ =\ protected)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \%\ FIRST\ Compute\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a52ded9d3078e6bb9298056f5698287c5}{first}}\ term.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_a52ded9d3078e6bb9298056f5698287c5}{first}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \%\ COMPUTECOEFFICIENTS\ Compute\ coefficients\ for\ three-\/term}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \%\ recurrence\ relation.}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \%\ \ \ [a,\ b,\ c]\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_orthogonal_polynomial_basis_aafbe015e48921586261c28d3e68881d3}{computeCoefficients}}(n)\ returns\ the\ coefficients}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \%\ \ \ @a\ a,\ @a\ b,\ and\ @a\ c\ for\ the\ three-\/term\ recurrence\ relation}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \%\ \ \ at\ degree\ @a\ n.\ The\ recurrence\ relation\ is:\ \(\backslash\)f\$\ P\_\{n+1\}(x)\ =}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \%\ \ \ (a*x\ +\ b)*P\_n(x)\ +\ c*P\_\{n-\/1\}(x)\ \(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ [a,\ b,\ c]\ =\ computeCoefficients(obj,\ n)}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00084}00084\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09function_2_orthogonal_polynomial_basis_8m_source_l00085}00085\ end}
+
+\end{DoxyCode}

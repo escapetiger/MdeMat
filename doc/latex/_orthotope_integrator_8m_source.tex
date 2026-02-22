@@ -1,0 +1,118 @@
+\doxysection{Orthotope\+Integrator.\+m}
+\hypertarget{_orthotope_integrator_8m_source}{}\label{_orthotope_integrator_8m_source}\index{+approx/+integrate/OrthotopeIntegrator.m@{+approx/+integrate/OrthotopeIntegrator.m}}
+\mbox{\hyperlink{_orthotope_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00001}00001\ classdef\ OrthotopeIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ ORTHOTOPEINTEGRATOR\ Numerical\ integration\ over\ orthotope\ domains.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ OrthotopeIntegrator\ provides\ specialized\ integration\ capabilities}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ functions\ defined\ on\ multidimensional\ orthotopes}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ (hyperrectangles).\ It\ uses\ separable\ integration\ rules\ that}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ construct\ multidimensional\ quadrature\ by\ tensor\ products\ of}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ univariate\ rules.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \%\ Create\ integrator\ with\ Gauss-\/Legendre\ rule\ for\ 3D\ orthotope}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ integrator\ =\ OrthotopeIntegrator(3,\ \textcolor{stringliteral}{'gauss\_legendre'});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Create\ integrator\ with\ Gauss-\/Lobatto\ rule\ \textcolor{keywordflow}{for}\ 2D\ rectangle}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ integrator\ =\ OrthotopeIntegrator(2,\ \textcolor{stringliteral}{'gauss\_lobatto'});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \%\ Using\ existing\ rule\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_adedd5245fda8c1ad7bf8370b2aa8b761}{gaussLegendre}}(4);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ integrator\ =\ OrthotopeIntegrator(rule);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ Orthotopes\ are\ multidimensional\ generalizations\ of\ rectangles.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ The\ separable\ rules\ are\ most\ efficient\ \textcolor{keywordflow}{for}\ functions\ that\ can}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ be\ expressed\ as\ products\ of\ univariate\ functions.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00025}00025\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}},}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_face_integrator}{OrthotopeFaceIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00030}00030\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ OrthotopeIntegrator(varargin)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ORTHOTOPEINTEGRATOR\ Constructor\ \textcolor{keywordflow}{for}\ OrthotopeIntegrator.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}})\ creates\ an\ integrator}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{using\ }the\ specified\ separable\ integration\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}},\ ruleId)\ creates\ an}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ \textcolor{keywordflow}{for}\ the\ specified\ dimension\ and\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ type.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ -\/\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}}\ -\/\ Number\ of\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ ruleId\ -\/\ Rule\ identifier\ string:\ \{\textcolor{stringliteral}{'gauss\_legendre'},\ \textcolor{stringliteral}{'gauss\_lobatto'}\}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{OrthotopeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rule\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ nargin\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [nDims,\ ruleId]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(ruleId,\ \textcolor{stringliteral}{'gauss\_legendre'})}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.integrate.SeparableRule.gaussLegendre(nDims);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ strcmp(ruleId,\ 'gauss\_lobatto')}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00056}\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}.gaussLobatto(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error('Invalid\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ identifier.');}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error('Invalid\ number\ of\ arguments.');}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ function\ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}}(obj)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COPY\ Create\ a\ deep\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}}\ of\ the\ orthotope\ integrator.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}}(obj)\ creates\ a\ new\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{object}\ with\ the\ same\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}},\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}},\ and\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}\ as\ the}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ original\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}\ \textcolor{keywordtype}{object}\ to\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ -\/\ Deep\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{copy}}\ of\ the\ original\ integrator}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}};}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}};}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{setPoints}}(obj,\ n,\ a,\ b)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETPOINTS\ Generate\ integration\ points\ for\ the\ orthotope.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{setPoints}}(obj,\ n)\ generates\ integration\ points\ with}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ n\ points\ per\ dimension\ for\ the\ unit\ orthotope\ [0,1]\string^d.}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00089}\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a347b9528b39f722607db71d5f099ef72}{00089}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{setPoints}}(obj,\ n,\ a,\ b)\ generates\ points\ for\ a\ custom}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ orthotope\ [@a\ a,\ @a\ b].}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ points\ per\ dimension\ (vector\ or\ scalar)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ -\/\ Lower\ bounds\ vector\ (optional,\ default:\ zeros)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Upper\ bounds\ vector\ (optional,\ default:\ ones)}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_aaa019f0884b45a65aa5b2e6492303eb2}{OrthotopeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ zeros(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ ones(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ args\ =\ arrayfun(@(k)\ \{n(k),\ a(k),\ b(k)\},\ 1:d,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ [obj.nodes,\ obj.weights]\ =\ obj.rule.generate(args\{:\});}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00111}00111\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthotope_integrator_8m_source_l00112}00112\ end}
+
+\end{DoxyCode}

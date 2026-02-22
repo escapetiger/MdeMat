@@ -1,0 +1,61 @@
+\doxysection{Sdirk2\+Integrator.\+m}
+\hypertarget{_sdirk2_integrator_8m_source}{}\label{_sdirk2_integrator_8m_source}\index{+approx/+odeint/Sdirk2Integrator.m@{+approx/+odeint/Sdirk2Integrator.m}}
+\mbox{\hyperlink{_sdirk2_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00001}00001\ classdef\ Sdirk2Integrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ SDIRK2INTEGRATOR\ Second-\/order\ SDIRK\ integrator.}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Sdirk2Integrator\ implements\ a\ second-\/order\ SDIRK\ method\ with\ two}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ stages\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ S,}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},\ and}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f\$S\(\backslash\)f\$\ is\ a\ source\ term.\ This\ method\ is\ L-\/stable\ and\ A-\/stable,}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ making\ it\ suitable\ \textcolor{keywordflow}{for}\ stiff\ problems.\ The\ diagonal\ elements\ of\ the}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ Butcher\ tableau\ are\ identical.}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ The\ method\ uses\ the\ parameter\ \(\backslash\)f\$\(\backslash\)gamma\ =\ 1\ -\/\ \(\backslash\)sqrt\{2\}/2\ \(\backslash\)\mbox{\hyperlink{namespaceapprox}{approx}}}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ 0.2928932188\(\backslash\)f\$,\ which\ ensures\ L-\/stability\ and\ optimal\ damping}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ properties\ \textcolor{keywordflow}{for}\ stiff\ systems.}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk3_integrator}{Sdirk3Integrator}},}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_esdirk3_integrator}{Esdirk3Integrator}}}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00024}00024\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ Order\ =\ 2\ \%\ Accuracy\ order\ of\ the\ SDIRK2\ method}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00027}00027\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00028}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator}{00028}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator_adbcb8f0faa68509c77362402aeae03d1}{Sdirk2Integrator}}(\textcolor{keyword}{final})}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SDIRK2INTEGRATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator_adbcb8f0faa68509c77362402aeae03d1}{Sdirk2Integrator}}.}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00032}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator_a8ca02b4102051d08caecf29090f1d259}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator_adbcb8f0faa68509c77362402aeae03d1}{Sdirk2Integrator}}(\textcolor{keyword}{final})\ creates\ a\ second-\/order\ SDIRK}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ with\ the\ specified\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ final\ \{mustBeNumeric,\ mustBeNonnegative\}}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}}(2,\ \textcolor{keyword}{final});}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ SDIRK2\ coefficients\ with\ L-\/stable\ parameter}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ gamma\ =\ 1\ -\/\ sqrt(2)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ time\ coefficients}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00045}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator_adbcb8f0faa68509c77362402aeae03d1}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a9a491a9e4153248ff20f17ce8a9360ae}{c}}\ =\ [gamma,\ 1];}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Butcher\ tableau\ coefficient\ matrix}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.A\ =\ [gamma,\ 0;\ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ -\/\ gamma,\ gamma];}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ weights\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}}}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ obj.b\ =\ [1\ -\/\ gamma,\ gamma];}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00054}00054\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk2_integrator_8m_source_l00055}00055\ end}
+
+\end{DoxyCode}

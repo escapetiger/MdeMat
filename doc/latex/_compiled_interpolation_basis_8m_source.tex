@@ -1,0 +1,51 @@
+\doxysection{Compiled\+Interpolation\+Basis.\+m}
+\hypertarget{_compiled_interpolation_basis_8m_source}{}\label{_compiled_interpolation_basis_8m_source}\index{+core/+function/CompiledInterpolationBasis.m@{+core/+function/CompiledInterpolationBasis.m}}
+\mbox{\hyperlink{_compiled_interpolation_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00001}00001\ classdef\ CompiledInterpolationBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}}}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00002}00002\ \ \ \ \ \%\ COMPILEDINTERPOLATIONBASIS\ Compiled\ interpolation\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ CompiledInterpolationBasis\ represents\ a\ set\ of\ interpolation\ basis}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ functions\ (such\ as\ Lagrange\ or\ Hermite\ polynomials)\ with\ automatic}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ metadata\ loading\ from\ the\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}\ compilation\ system.}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }automatically\ discovers\ appropriate\ metadata\ files\ based}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ on\ the\ specified\ basis\ type,\ interval\ type,\ node\ type,\ and\ number}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ of\ basis\ functions,\ providing\ efficient\ evaluation\ of\ both\ function}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ values\ and\ derivatives\ through\ precompiled\ function\ handles.}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00013}00013\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}}}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00016}00016\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ basisName\ \%\ Basis\ name}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00018}00018\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00019}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis}{00019}}\ }
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00020}00020\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_adec6183f2daf4cacf609c570bc3eea66}{CompiledInterpolationBasis}}(nCodims,\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}})}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPILEDINTERPOLATIONBASIS\ Constructor\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00023}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_adec6183f2daf4cacf609c570bc3eea66}{CompiledInterpolationBasis}}.}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_adec6183f2daf4cacf609c570bc3eea66}{CompiledInterpolationBasis}}(nCodims,\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}})}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ a\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_adec6183f2daf4cacf609c570bc3eea66}{CompiledInterpolationBasis}}\ \textcolor{keywordtype}{object}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ configuration.\ Validates\ all\ input\ parameters\ and}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ initializes\ the\ parent\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{CompiledFunction}}.}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nCodims\ (1,1)\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basisName\ \{mustBeMember(basisName,\ \{}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'unit\_gauss\_legendre\_lagrange'},\ ...}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'unit\_gauss\_lobatto\_lagrange'}\})\}}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ basisName\ =\ lower(basisName);}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00038}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_adec6183f2daf4cacf609c570bc3eea66}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ nDims\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}}\ =\ sprintf(\textcolor{stringliteral}{'\%s\_\%d'},\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}},\ nCodims);}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}}(nDims,\ nCodims,\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}});}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj.basisName\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_interpolation_basis_a6f9dff5df595a4aab6e1698a524e8b0b}{basisName}};}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00044}00044\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_interpolation_basis_8m_source_l00045}00045\ end}
+
+\end{DoxyCode}

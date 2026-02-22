@@ -1,0 +1,84 @@
+\doxysection{Vlasov\+Scheme.\+m}
+\hypertarget{_vlasov_scheme_8m_source}{}\label{_vlasov_scheme_8m_source}\index{+physics/+vlasov/VlasovScheme.m@{+physics/+vlasov/VlasovScheme.m}}
+\mbox{\hyperlink{_vlasov_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00001}00001\ classdef\ VlasovScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00002}00002\ \ \ \ \ \%\ VLASOVSCHEME\ Base\ \textcolor{keyword}{class\ }for\ all\ schemes\ solving\ Vlasov\ equations.}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ VlasovScheme\ implements\ a\ numerical\ scheme\ \textcolor{keywordflow}{for}\ solving\ Vlasov}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ equations.\ This\ base\ \textcolor{keyword}{class\ }defines\ the\ basic\ validation\ and\ parse}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ logic\ of\ configuration\ \textcolor{keyword}{struct}.}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00008}00008\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00010}00010\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00011}00011\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ function\ obj\ =\ setup(obj)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETUP\ Setup\ default\ configuration\ options\ for\ Vlasov\ schemes.}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00014}\mbox{\hyperlink{classphysics_1_1vlasov_1_1_vlasov_scheme}{00014}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ \mbox{\hyperlink{classphysics_1_1vlasov_1_1_vlasov_scheme_a2ef566926c73aa74c656c2a58ae61fd3}{setup}}}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1vlasov_1_1_vlasov_scheme_a2ef566926c73aa74c656c2a58ae61fd3}{setup}}@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.MolScheme(obj);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ Vlasov-\/specific\ required\ configuration\ options}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ic',\ default=struct(),\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isstruct(x));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('bc',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ true);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00023}\mbox{\hyperlink{classphysics_1_1vlasov_1_1_vlasov_scheme_a2ef566926c73aa74c656c2a58ae61fd3}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('cfl',\ default=0.5,\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isempty(x)\ ||\ (isscalar(x)\ \&\&\ x\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('dt',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isempty(x)\ ||\ (isscalar(x)\ \&\&\ x\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('eId',\ default='Vlasov',\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ (ischar(x)\ ||\ isstring(x)));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('errorTypes',\ default=\{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'max'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ iscell(x)\ \&\&\ all(cellfun(@(y)\ ischar(y)\ ||\ isstring(y),\ x)));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig(\textcolor{stringliteral}{'exact'},\ \textcolor{keywordflow}{default}=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ \textcolor{stringliteral}{'function\_handle'})\ ||\ isempty(x));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig(\textcolor{stringliteral}{'components'},\ \textcolor{keywordflow}{default}=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isstruct(x));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ end\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ function\ obj\ =\ configure(obj)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONFIGURE\ Generate\ Vlasov-\/specific\ configuration\ dependencies.}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ configure}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ configure@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}(obj);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ boundary\ condition\ type}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(obj.Config.bc)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setConfig('bcType',\ 'periodic');}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setConfig('bcType',\ 'dirichlet');}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ visualization\ options}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00051}\mbox{\hyperlink{classphysics_1_1vlasov_1_1_vlasov_scheme_acfdbea6e26ee526c17fdb26dbf232028}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.visualizer;}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isstruct(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.components)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.setComponents(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.components);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isstruct(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.exact)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exactNames\ =\ fieldnames(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.exact);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(exactNames)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exactName\ =\ exactNames\{i\};}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.addExact(exactName,\ obj.Config.exact.(exactName));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ \mbox{\hyperlink{namespacephysics_1_1analysis}{analysis}}\ options}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer\ =\ obj.Config.analyzer;}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.setReductions(obj.Config.errorTypes);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isstruct(obj.Config.components)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.setComponents(obj.Config.components);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isstruct(obj.Config.exact)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exactNames\ =\ fieldnames(obj.Config.exact);}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(exactNames)}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exactName\ =\ exactNames\{i\};}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.addExact(exactName,\ obj.Config.exact.(exactName));}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00077}00077\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_vlasov_scheme_8m_source_l00078}00078\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,178 @@
+\doxysection{ex04\+\_\+gaussian\+\_\+distirbution.\+m}
+\hypertarget{ex04__gaussian__distirbution_8m_source}{}\label{ex04__gaussian__distirbution_8m_source}\index{+physics/+radiation/+scripts/ex04\_gaussian\_distirbution.m@{+physics/+radiation/+scripts/ex04\_gaussian\_distirbution.m}}
+\mbox{\hyperlink{ex04__gaussian__distirbution_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00002}00002\ \%\ FileName:\ ex04\_gaussian\_distirbution}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00006}00006\ \%\ \ \ Diffusive\ scaling\ with\ Gaussian\ initial\ distribution.}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00007}00007\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00009}00009\ clc;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00010}00010\ clear;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00011}00011\ close\ all;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00013}00013\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00014}00014\ dataDir\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'ex03'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00015}00015\ \textcolor{keywordflow}{if}\ \string~exist(dataDir,\ \textcolor{stringliteral}{'dir'}),\ mkdir(dataDir);\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00016}00016\ configPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00017}00017\ config\ =\ \mbox{\hyperlink{namespacecore}{core}}.io.OptionParser().parse(configPath);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00018}00018\ config.nDims\ =\ 2;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00019}00019\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00020}00020\ config.xBBox\ =\ repmat([-\/config.L,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00021}00021\ config.tFinal\ =\ 0.5;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00022}00022\ config.epsilon\ =\ 1;\ \%\ Scaling\ parameter}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00023}00023\ config.alpha\ =\ 1;\ \%\ Time\ scale}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00024}00024\ config.beta\ =\ -\/1;\ \%\ Scattering\ scale}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00025}00025\ config.gamma\ =\ 1;\ \%\ Absorption\ scale}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00026}00026\ config.T\ =\ 3.2e-\/4;\ \%\ Variance\ of\ Gaussian\ distribution}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00027}00027\ config.nx\ =\ repmat(64,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00028}00028\ \textcolor{keywordflow}{if}\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00029}00029\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00030}00030\ \ \ \ \ config.M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00031}00031\ \ \ \ \ config.nv\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00032}00032\ elseif\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00033}00033\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00034}00034\ \ \ \ \ config.M\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00035}00035\ \ \ \ \ config.nv\ =\ max(8,\ config.M);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00036}00036\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00037}00037\ \ \ \ \ config.E\ =\ 1\ /\ (2\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00038}00038\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00039}00039\ \ \ \ \ config.nv\ =\ max(8,\ ceil((3\ *\ config.M\ +\ 2)/4)+1);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00040}00040\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00041}00041\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00042}00042\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00043}00043\ \ \ \ \ config.nv\ =\ max([4,\ 4],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00044}00044\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00045}00045\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00046}00046\ \ \ \ \ config.M\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00047}00047\ \ \ \ \ config.nv\ =\ max([4,\ 4],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00048}00048\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00049}00049\ config.N\ =\ prod(config.nv);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00050}00050\ \%\ config.N\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00051}00051\ config.ic\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}(config.T);\ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00052}00052\ config.bc\ =\ fBc(config.L);\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00053}00053\ config.exact\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00054}00054\ config.scattering\ =\ scattering();}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00055}00055\ config.absorption\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00056}00056\ config.source\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00057}00057\ \textcolor{keywordflow}{if}\ config.nDims\ <\ 3}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00058}00058\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'DSG\%dR\%d'},\ config.nDims,\ config.vReductionType);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00059}00059\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00060}00060\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'DSG\%d'},\ config.nDims);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00061}00061\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00062}00062\ config.vDiscId\ =\ sprintf(\textcolor{stringliteral}{'P\%dS\%d'},\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00063}00063\ config.tDiscId\ =\ upper(config.tDiscId);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00064}00064\ config.xDiscId\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ upper(config.xDiscName),\ config.xBasisOrder);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00065}00065\ config.schemeId\ =\ strjoin(\{config.tDiscId,\ config.xDiscId,\ config.vDiscId\},\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00066}00066\ config.schemeName\ =\ strrep(config.schemeId,\ \textcolor{charliteral}{'-\/'},\ \textcolor{charliteral}{'\_'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00067}00067\ config.saveAsRef\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00068}00068\ config.verbose\ =\ 1;\ \%\ Verbose\ flag:\ 0\ -\/\ none;\ 1\ -\/\ runtime\ render}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00070}00070\ \%\%\ SIMULATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00072}00072\ DEFAULT\_MARKERS\ =\ \{\textcolor{charliteral}{'o'},\ \textcolor{charliteral}{'s'},\ \textcolor{charliteral}{'\string^'},\ \textcolor{charliteral}{'v'},\ \textcolor{charliteral}{'d'},\ \textcolor{charliteral}{'x'},\ \textcolor{charliteral}{'+'}\};}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00073}00073\ DEFAULT\_COLORS\ =\ \{\textcolor{stringliteral}{'\#000000'},\ \textcolor{stringliteral}{'\#004488'},\ \textcolor{stringliteral}{'\#BB5566'},\ \textcolor{stringliteral}{'\#DDAA33'}\};}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00075}00075\ refFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/REF.mat'},\ config.experimentId);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00076}00076\ refPath\ =\ fullfile(dataDir,\ refFile);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00077}00077\ \textcolor{keywordflow}{if}\ exist(refPath,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00078}00078\ \ \ \ \ refDataset\ =\ load(refPath).REF;}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00079}00079\ else}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00080}00080\ \ \ \ \ refDataset\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00081}00081\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00082}00082\ schemeName\ =\ strrep(config.schemeId,\ \textcolor{charliteral}{'-\/'},\ \textcolor{charliteral}{'\_'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00084}00084\ scheme\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.radiation.MacroMicroScheme(config)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00085}00085\ \ \ \ \ .setTimeDiscretization(config.tDiscId,\ config.tFinal)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00086}00086\ \ \ \ \ .setTimer(config.verbose)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00087}00087\ \ \ \ \ .setVisualizer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00088}00088\ \ \ \ \ 'experimentId',\ config.experimentId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00089}00089\ \ \ \ \ 'schemeId',\ config.schemeId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00090}00090\ \ \ \ \ 'nDims',\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00091}00091\ \ \ \ \ 'nTimeNodes',\ 10,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00092}00092\ \ \ \ \ 'final',\ config.tFinal,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00093}00093\ \ \ \ \ 'density',\ ones(1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00094}00094\ \ \ \ \ 'components',\ struct(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []))\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00095}00095\ \ \ \ \ .setPattern(\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00096}00096\ \ \ \ \ 'epsilon',\ config.epsilon,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00097}00097\ \ \ \ \ 'timeScale',\ config.alpha,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00098}00098\ \ \ \ \ 'scatteringScale',\ config.beta,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00099}00099\ \ \ \ \ 'absorptionScale',\ config.gamma,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00100}00100\ \ \ \ \ 'reduction',\ config.vReductionType)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00101}00101\ \ \ \ \ .addDataset('REF',\ 0,\ refDataset)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00102}00102\ \ \ \ \ .addStyle('REF',\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00103}00103\ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1\},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\})\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00104}00104\ \ \ \ \ .addDataset(config.schemeName,\ 2)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00105}00105\ \ \ \ \ .addStyle(config.schemeName,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00106}00106\ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{2\},\ \textcolor{stringliteral}{'Marker'},\ DEFAULT\_MARKERS\{1\},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00108}00108\ \%\%\ SIMULATION\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00110}00110\ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.FiniteElementDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00111}00111\ \ \ \ \ .setDgOrthotopeElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00112}00112\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00113}00113\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.xBasisOrder,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00114}00114\ \ \ \ \ \textcolor{stringliteral}{'basisType'},\ config.xBasisType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00115}00115\ \ \ \ \ \textcolor{stringliteral}{'basisPattern'},\ config.xBasisPattern\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00116}00116\ \ \ \ \ )\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00117}00117\ \ \ \ \ .setElementOperator()\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00118}00118\ \ \ \ \ .setDerivativeOrder(1);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00120}00120\ vDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.AffineDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00121}00121\ \ \ \ \ .setC0SphereElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00122}00122\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00123}00123\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.M,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00124}00124\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00125}00125\ \ \ \ \ \textcolor{stringliteral}{'nPoints'},\ config.nv)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00126}00126\ \ \ \ \ .setDerivativeOrder(0)\ ...}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00127}00127\ \ \ \ \ .setScaledAffineSpace([]);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00129}00129\ xDisc\ =\ xDisc.setUniformGrid(config.nx,\ config.xBBox).setMeshSpace();}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00130}00130\ state\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_state}{MacroMicroState}}(xDisc,\ vDisc,\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00131}00131\ state\ =\ scheme.initialize(state);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00132}00132\ state\ =\ scheme.run(state);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00133}00133\ state\ =\ scheme.finalize(state);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00135}00135\ \%\%\ SAVE}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00136}00136\ \textcolor{keywordflow}{if}\ config.saveAsRef}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00137}00137\ \ \ \ \ REF\ =\ scheme.visualizer.dataset.(config.schemeName);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00138}00138\ \ \ \ \ dataFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/REF.mat'},\ config.experimentId);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00139}00139\ \ \ \ \ dataPath\ =\ fullfile(dataDir,\ dataFile);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00140}00140\ \ \ \ \ save(dataPath,\ \textcolor{stringliteral}{'REF'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00141}00141\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00142}00142\ \ \ \ \ DG\ =\ scheme.visualizer.dataset.(config.schemeName);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00143}00143\ \ \ \ \ dataFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/\%s'},\ config.experimentId,\ config.schemeId);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00144}00144\ \ \ \ \ dataPath\ =\ fullfile(dataDir,\ dataFile);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00145}00145\ \ \ \ \ save(dataPath,\ \textcolor{stringliteral}{'DG'});}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00146}00146\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00148}00148\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00150}00150\ function\ h\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}(T)}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00151}00151\ h\ =\ @(x,\ v)\ fInitImpl(x,\ v,\ T);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00152}00152\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00154}00154\ function\ f\ =\ fInitImpl(x,\ v,\ T)}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00155}00155\ f\ =\ exp(-\/sum(x.\string^2,\ 1)\ ./\ (2*T))\ ./\ sqrt(2*pi*T)\string^(size(x,\ 1));}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00156}00156\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00158}00158\ function\ h\ =\ fBc(L)}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00159}00159\ h\ =\ @(x,\ v,\ t)\ fBcImpl(x,\ v,\ t,\ L);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00160}00160\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00162}00162\ function\ f\ =\ fBcImpl(x,\ v,\ t,\ L)}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00163}00163\ f\ =\ zeros(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00164}00164\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00166}00166\ function\ h\ =\ scattering()}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00167}00167\ h\ =\ @(x)\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00168}00168\ end}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00170}00170\ function\ C\ =\ scatteringImpl(x)}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00171}00171\ C\ =\ ones(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex04__gaussian__distirbution_8m_source_l00172}00172\ end}
+
+\end{DoxyCode}

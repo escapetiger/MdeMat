@@ -1,0 +1,57 @@
+\doxysection{assert.\+m}
+\hypertarget{_09except_2assert_8m_source}{}\label{_09except_2assert_8m_source}\index{+core/+except/assert.m@{+core/+except/assert.m}}
+\mbox{\hyperlink{_09except_2assert_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00001}\mbox{\hyperlink{_09except_2assert_8m_a89050167fdd577ebfe7474bc53187742}{00001}}\ function\ \mbox{\hyperlink{_09except_2assert_8m_a89050167fdd577ebfe7474bc53187742}{assert}}(flag,\ \textcolor{keywordtype}{id},\ msg,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00002}00002\ \%\ ASSERT\ Throw\ an\ error\ with\ identifier\ and\ message\ \textcolor{keywordflow}{if}\ condition\ is\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00004}00004\ \%\ Checks\ a\ logical\ condition\ and\ \textcolor{keywordflow}{throws}\ an\ error\ with\ the}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00005}00005\ \%\ specified\ identifier\ and\ message\ \textcolor{keywordflow}{if}\ the\ condition\ is\ \textcolor{keyword}{false}.\ This\ function}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00006}00006\ \%\ provides\ a\ more\ flexible\ alternative\ to\ MATLAB\textcolor{stringliteral}{'s\ built-\/in\ assert\ by}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00007}00007\ \textcolor{stringliteral}{\%\ allowing\ custom\ error\ identifiers\ and\ formatted\ error\ msgs.}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00008}00008\ \textcolor{stringliteral}{\%}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00009}00009\ \textcolor{stringliteral}{\%\ @param\ flag\ Logical\ condition\ to\ check}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00010}00010\ \textcolor{stringliteral}{\%\ @param\ id\ Error\ identifier}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00011}00011\ \textcolor{stringliteral}{\%\ @param\ msg\ Error\ message\ format\ string}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00012}00012\ \textcolor{stringliteral}{\%\ @param\ varargin\ Optional\ variables\ for\ the\ format\ string}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00013}00013\ \textcolor{stringliteral}{\%}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00014}00014\ \textcolor{stringliteral}{\%\ @par\ Example:}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00015}00015\ \textcolor{stringliteral}{\%\ @code}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00016}00016\ \textcolor{stringliteral}{\%\ \ \ \%\ Example\ 1:\ Simple\ condition\ check}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00017}00017\ \textcolor{stringliteral}{\%\ \ \ core.except.assert(x\ >\ 0,\ '}NonPositive\textcolor{stringliteral}{',\ '}Value\ must\ be\ positive\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00018}00018\ \textcolor{stringliteral}{\%}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00019}00019\ \textcolor{stringliteral}{\%\ \ \ \%\ Example\ 2:\ With\ formatted\ msg}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00020}00020\ \textcolor{stringliteral}{\%\ \ \ core.except.assert(n\ <\ 100,\ '}TooLarge\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00021}00021\ \textcolor{stringliteral}{\%\ \ \ \ \ \ \ '}Value\ \%d\ exceeds\ maximum\ limit\textcolor{stringliteral}{',\ n);}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00022}00022\ \textcolor{stringliteral}{\%}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00023}00023\ \textcolor{stringliteral}{\%\ \ \ \%\ Example\ 3:\ Default\ assert-\/like\ behavior}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00024}00024\ \textcolor{stringliteral}{\%\ \ \ core.except.assert(isreal(x));}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00025}00025\ \textcolor{stringliteral}{\%\ @endcode}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00026}00026\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00027}00027\ \textcolor{stringliteral}{\%\ Check\ if\ only\ the\ flag\ is\ provided}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00028}00028\ \textcolor{stringliteral}{if\ nargin\ ==\ 1}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ \%\ Emulate\ MATLAB'}s\ built-\/in\ \mbox{\hyperlink{_09except_2assert_8m_a89050167fdd577ebfe7474bc53187742}{assert}}\ behavior}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~flag}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ error(\textcolor{stringliteral}{'Assertion\ failed.'});}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00032}00032\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00034}00034\ end}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00036}00036\ \%\ Otherwise,\ check\ the\ condition\ and\ \textcolor{keywordflow}{throw}\ a\ custom\ error\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00037}00037\ \textcolor{keywordflow}{if}\ \string~flag}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00038}00038\ \ \ \ \ \%\ Construct\ the\ full\ \textcolor{keywordtype}{id}\ \textcolor{keyword}{using\ }the\ \textcolor{keyword}{private}\ helper}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00039}00039\ \ \ \ \ fId\ =\ \mbox{\hyperlink{backtrack_8m_a50cf086f502c375176e5a0beebe53fc6}{backtrack}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00040}00040\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00041}00041\ \ \ \ \ \%\ Format\ the\ msg\ \textcolor{keywordflow}{if}\ varargin\ is\ provided}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(varargin)}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ fMsg\ =\ sprintf(msg,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ fMsg\ =\ msg;}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00046}00046\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00047}00047\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00048}00048\ \ \ \ \ \%\ Throw\ the\ error}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00049}00049\ \ \ \ \ error(fId,\ fMsg);}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00050}00050\ end}
+\DoxyCodeLine{\Hypertarget{_09except_2assert_8m_source_l00051}00051\ end}
+
+\end{DoxyCode}

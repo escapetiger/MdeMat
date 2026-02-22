@@ -1,0 +1,125 @@
+\doxysection{approx\+::integrate\+::Hypersphere\+Integrator Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_hypersphere_integrator}{}\label{classapprox_1_1integrate_1_1_hypersphere_integrator}\index{approx::integrate::HypersphereIntegrator@{approx::integrate::HypersphereIntegrator}}
+
+
+Numerical integration over hypersphere domains.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator_af8454135827fc4fa0c3db63d38a3838d}{Hypersphere\+Integrator}} (Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator_a6192f852737f8ffadee59b5ddfc371ef}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the integrator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd414c1c0277de51e60053049f95778e}{add\+Weight\+Function}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Add weight function for integral. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Evaluate the integral of function f. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a0cc3c5b16fc07142a86693864f265beb}{set\+Points}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set integration points using the underlying rule. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{approx\+::integrate\+::\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}
+\begin{DoxyCompactList}\small\item\em Integration rule object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a90ad5b80bdf0daaed818c2cad28bef47}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Numerical integration over hypersphere domains. 
+
+\doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator} provides specialized integration capabilities for functions defined on hyperspheres of arbitrary dimension. It supports multiple integration methods including Gauss-\/\+Trapezoidal, Lebedev (for 3D), and Monte Carlo approaches.
+
+Examples\+: \% Create integrator with Gauss-\/\+Trapezoidal rule for 3D sphere integrator = \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator}(3, \textquotesingle{}gauss\+\_\+trapezoidal\textquotesingle{});
+
+\% Create integrator with Lebedev rule for 3D sphere integrator = \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator}(3, \textquotesingle{}lebedev\textquotesingle{});
+
+\% Create integrator with Monte Carlo rule integrator = \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator}(4, \textquotesingle{}monte\+\_\+carlo\textquotesingle{}, 12345);
+
+\begin{DoxyNote}{Note}
+Lebedev rules are only available for 3D spheres and provide highly 
+
+symmetric integration points. Monte Carlo methods are suitable for 
+
+high-\/dimensional problems and discontinuous integrands.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integrator}{approx.\+integrate.\+Integrator} 
+
+\doxylink{classapprox_1_1integrate_1_1_spherical_gauss_trapezoidal_rule}{approx.\+integrate.\+Spherical\+Gauss\+Trapezoidal\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_lebedev_rule}{approx.\+integrate.\+Lebedev\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{approx.\+integrate.\+Spherical\+Monte\+Carlo\+Rule} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_hypersphere_integrator_8m_source_l00032}{32}} of file \mbox{\hyperlink{_hypersphere_integrator_8m_source}{Hypersphere\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_hypersphere_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_hypersphere_integrator_af8454135827fc4fa0c3db63d38a3838d}\index{approx::integrate::HypersphereIntegrator@{approx::integrate::HypersphereIntegrator}!HypersphereIntegrator@{HypersphereIntegrator}}
+\index{HypersphereIntegrator@{HypersphereIntegrator}!approx::integrate::HypersphereIntegrator@{approx::integrate::HypersphereIntegrator}}
+\doxysubsubsection{\texorpdfstring{HypersphereIntegrator()}{HypersphereIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_hypersphere_integrator_af8454135827fc4fa0c3db63d38a3838d} 
+function approx\+::integrate\+::\+Hypersphere\+Integrator\+::\+Hypersphere\+Integrator (\begin{DoxyParamCaption}\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator}. 
+
+obj = Hypersphere\+Integrator(rule) creates an integrator using the specified integration rule object.
+
+obj = Hypersphere\+Integrator(n\+Dims, rule\+Id) creates an integrator for the specified dimension and rule type.
+
+obj = Hypersphere\+Integrator(n\+Dims, rule\+Id, seed) creates a Monte Carlo integrator with the specified random seed.
+
+Inputs\+: varargin -\/ Input arguments
+
+Outputs\+: obj -\/ Constructed \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator} object 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_hypersphere_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_hypersphere_integrator_a6192f852737f8ffadee59b5ddfc371ef}\index{approx::integrate::HypersphereIntegrator@{approx::integrate::HypersphereIntegrator}!copy@{copy}}
+\index{copy@{copy}!approx::integrate::HypersphereIntegrator@{approx::integrate::HypersphereIntegrator}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_hypersphere_integrator_a6192f852737f8ffadee59b5ddfc371ef} 
+function approx\+::integrate\+::\+Hypersphere\+Integrator\+::copy (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Create a deep copy of the integrator. 
+
+new\+Obj = copy(obj) creates a new \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator} object with the same rule, nodes, and weights as the original object.
+
+Inputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{Hypersphere\+Integrator} object to copy
+
+Outputs\+: new\+Obj -\/ Deep copy of the original integrator 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_hypersphere_integrator_8m}{Hypersphere\+Integrator.\+m}}\end{DoxyCompactItemize}

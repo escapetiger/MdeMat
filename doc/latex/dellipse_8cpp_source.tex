@@ -1,0 +1,80 @@
+\doxysection{dellipse.\+cpp}
+\hypertarget{dellipse_8cpp_source}{}\label{dellipse_8cpp_source}\index{distmesh/dellipse.cpp@{distmesh/dellipse.cpp}}
+\mbox{\hyperlink{dellipse_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00001}00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2004-\/2012\ Per-\/Olof\ Persson.\ See\ COPYRIGHT.TXT\ for\ details.}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}mex.h"{}}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00008}00008\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00009}00009\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}\ T\ sqr(T\ x)\ \{\ \textcolor{keywordflow}{return}\ x*x;\ \}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00010}00010\ \textcolor{keyword}{typedef}\ ptrdiff\_t\ szint;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00012}00012\ \textcolor{keywordtype}{void}\ roots(\textcolor{keywordtype}{double}\ *pol,\textcolor{keywordtype}{double}\ *rr,\textcolor{keywordtype}{double}\ *ri,szint\ n);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00013}00013\ \textcolor{keywordtype}{double}\ dellipse(\textcolor{keywordtype}{double}\ x0,\textcolor{keywordtype}{double}\ y0,\textcolor{keywordtype}{double}\ a,\textcolor{keywordtype}{double}\ b);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00015}00015\ \textcolor{keywordtype}{void}\ mexFunction(\textcolor{keywordtype}{int}\ nlhs,\ mxArray\ *plhs[],\ \textcolor{keywordtype}{int}\ nrhs,\ \textcolor{keyword}{const}\ mxArray\ *prhs[])}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00017}00017\ \ \ szint\ np=mxGetM(prhs[0]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00018}00018\ \ \ \textcolor{keywordtype}{double}\ *p=mxGetPr(prhs[0]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00019}00019\ \ \ \textcolor{keywordtype}{double}\ *axes=mxGetPr(prhs[1]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00020}00020\ \ \ plhs[0]=mxCreateDoubleMatrix(np,1,mxREAL);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00021}00021\ \ \ \textcolor{keywordtype}{double}\ *d=mxGetPr(plhs[0]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00023}00023\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ ip=0;\ ip<np;\ ip++)\ \{}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00024}00024\ \ \ \ \ d[ip]=dellipse(p[ip],p[ip+np],axes[0],axes[1]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00025}00025\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00028}00028\ \textcolor{keywordtype}{double}\ dellipse(\textcolor{keywordtype}{double}\ x0,\textcolor{keywordtype}{double}\ y0,\textcolor{keywordtype}{double}\ a,\textcolor{keywordtype}{double}\ b)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00029}00029\ \{}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00030}00030\ \ \ \textcolor{keywordtype}{double}\ t1,t2,t4,t6,t8,t9,t11,t15,t16;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00031}00031\ \ \ t1=a*a;\ t2=b*b;\ t4=y0*y0;\ t6=x0*x0;\ t8=t1*t1;\ \ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00032}00032\ \ \ t9=t2*t1;\ t11=t2*t2;\ t15=t8*t2;\ t16=t11*t1;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00033}00033\ \ \ \textcolor{keywordtype}{double}\ pol[5]=\{\ 1.0,\ 2.0*t1+2.0*t2,\ -\/t2*t4-\/t1*t6+t8+4.0*t9+t11,}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/2.0*t9*t6-\/2.0*t9*t4+2.0*t15+2.0*t16,}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/t16*t6+t8*t11-\/t15*t4\ \};}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00037}00037\ \ \ \textcolor{keywordtype}{double}\ rr[4],ri[4];}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00038}00038\ \ \ roots(pol,rr,ri,4);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00040}00040\ \ \ \textcolor{keywordtype}{double}\ t=-\/HUGE\_VAL;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00041}00041\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<4;\ i++)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00042}00042\ \ \ \ \ t=max(t,rr[i]);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00044}00044\ \ \ \textcolor{keywordtype}{double}\ x=sqr(a)*x0/(t+sqr(a));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00045}00045\ \ \ \textcolor{keywordtype}{double}\ y=sqr(b)*y0/(t+sqr(b));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00046}00046\ \ \ \textcolor{keywordtype}{double}\ d=t*sqrt(sqr(x)/sqr(sqr(a))+sqr(y)/sqr(sqr(b)));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00048}00048\ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00051}00051\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{\ \textcolor{keywordtype}{void}\ dhseqr\_(\textcolor{keywordtype}{char}*,\textcolor{keywordtype}{char}*,szint*,szint*,szint*,\textcolor{keywordtype}{double}*,szint*,\textcolor{keywordtype}{double}*,}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}*,\textcolor{keywordtype}{void}*,szint*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{void}*,szint*);\ \}}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00054}00054\ \textcolor{keywordtype}{void}\ roots(\textcolor{keywordtype}{double}\ *pol,\textcolor{keywordtype}{double}\ *rr,\textcolor{keywordtype}{double}\ *ri,szint\ n)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00055}00055\ \{}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00056}00056\ \ \ \textcolor{keywordtype}{double}\ *H,*work;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00057}00057\ \ \ szint\ o=1;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00058}00058\ \ \ szint\ info;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00059}00059\ \ \ \textcolor{keywordtype}{char}\ chE=\textcolor{charliteral}{'E'},chN=\textcolor{charliteral}{'N'};}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00060}00060\ \ \ H=(\textcolor{keywordtype}{double}*)mxCalloc(n*n,\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00061}00061\ \ \ work=(\textcolor{keywordtype}{double}*)mxCalloc(n,\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00063}00063\ \ \ memset(H,0,n*n*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00064}00064\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<n-\/1;\ i++)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00065}00065\ \ \ \ \ H[1+(n+1)*i]=1.0;}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00066}00066\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<n;\ i++)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00067}00067\ \ \ \ \ H[n*i]=-\/pol[i+1]/pol[0];}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00068}00068\ \ \ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00069}00069\ \ \ dhseqr\_(\&chE,\&chN,\&n,\&o,\&n,H,\&n,rr,ri,0,\&n,work,\&n,\&info);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00071}00071\ \ \ mxFree(work);\ mxFree(H);}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00072}00072\ \ \ \textcolor{keywordflow}{if}\ (info!=0)}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00073}00073\ \ \ \ \ mexErrMsgTxt(\textcolor{stringliteral}{"{}Roots\ not\ found."{}});}
+\DoxyCodeLine{\Hypertarget{dellipse_8cpp_source_l00074}00074\ \}}
+
+\end{DoxyCode}

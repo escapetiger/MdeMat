@@ -1,0 +1,123 @@
+\doxysection{core\+::geometry\+::Geometry Class Reference}
+\hypertarget{classcore_1_1geometry_1_1_geometry}{}\label{classcore_1_1geometry_1_1_geometry}\index{core::geometry::Geometry@{core::geometry::Geometry}}
+
+
+Base class for all geometries.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{core\+::geometry\+::\+Hyperspherical\+Geometry}}, \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector}}, \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{core\+::geometry\+::\+Line\+Segment\+By\+Plane\+Intersector}}, and \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope}{core\+::geometry\+::\+Polytope}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a18e064bc2f6e005fa16f0b388c10e339}{Geometry}} (Input\+Type n\+Dims)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1geometry_1_1_geometry}{Geometry}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065}{magnitude}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Returns the measure (size) of the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c}{is\+Inside}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are inside the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11}{is\+On\+Boundary}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are on the boundary of the geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a2a54c675c734652ee442cc65a6d3cbe8}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all geometries. 
+
+\doxylink{classcore_1_1geometry_1_1_geometry}{Geometry} defines the common properties and interfaces for all geometric objects in the Mde\+Mat library. This abstract base class establishes the fundamental interface that all geometric entities must implement, including magnitude calculation and point containment testing. Concrete subclasses implement specific geometry types such as polytopes and hyperspherical geometries.
+
+This is an abstract base class that cannot be instantiated directly. All geometric objects inherit from this class and must implement the abstract methods \doxylink{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065}{magnitude()}, \doxylink{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c}{is\+Inside()}, and \doxylink{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11}{is\+On\+Boundary()}.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1geometry_1_1_polytope}{core.\+geometry.\+Polytope} 
+
+\doxylink{classcore_1_1geometry_1_1_hyperspherical_geometry}{core.\+geometry.\+Hyperspherical\+Geometry} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_geometry_8m_source_l00023}{23}} of file \mbox{\hyperlink{_geometry_8m_source}{Geometry.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_a18e064bc2f6e005fa16f0b388c10e339}\index{core::geometry::Geometry@{core::geometry::Geometry}!Geometry@{Geometry}}
+\index{Geometry@{Geometry}!core::geometry::Geometry@{core::geometry::Geometry}}
+\doxysubsubsection{\texorpdfstring{Geometry()}{Geometry()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_geometry_a18e064bc2f6e005fa16f0b388c10e339} 
+function core\+::geometry\+::\+Geometry\+::\+Geometry (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1geometry_1_1_geometry}{Geometry}. 
+
+obj = Geometry(n\+Dims) creates a geometric domain object representing an n-\/dimensional space with dimension {\itshape n\+Dims}. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c}\index{core::geometry::Geometry@{core::geometry::Geometry}!isInside@{isInside}}
+\index{isInside@{isInside}!core::geometry::Geometry@{core::geometry::Geometry}}
+\doxysubsubsection{\texorpdfstring{isInside()}{isInside()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c} 
+function core\+::geometry\+::\+Geometry\+::is\+Inside (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Determines if points are inside the geometry. 
+
+TF = is\+Inside(obj, X) tests whether specified points {\itshape X} are contained within the interior of the geometric domain, excluding its boundary. {\itshape X} should be an nd-\/by-\/np matrix where nd is the number of dimensions and np is the number of points. \Hypertarget{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11}\index{core::geometry::Geometry@{core::geometry::Geometry}!isOnBoundary@{isOnBoundary}}
+\index{isOnBoundary@{isOnBoundary}!core::geometry::Geometry@{core::geometry::Geometry}}
+\doxysubsubsection{\texorpdfstring{isOnBoundary()}{isOnBoundary()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11} 
+function core\+::geometry\+::\+Geometry\+::is\+On\+Boundary (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Determines if points are on the boundary of the geometry. 
+
+TF = is\+On\+Boundary(obj, X) tests whether specified points {\itshape X} lie exactly on the boundary of the geometric domain. {\itshape X} should be an nd-\/by-\/np matrix where nd is the number of dimensions and np is the number of points. \Hypertarget{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065}\index{core::geometry::Geometry@{core::geometry::Geometry}!magnitude@{magnitude}}
+\index{magnitude@{magnitude}!core::geometry::Geometry@{core::geometry::Geometry}}
+\doxysubsubsection{\texorpdfstring{magnitude()}{magnitude()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065} 
+function core\+::geometry\+::\+Geometry\+::magnitude (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Returns the measure (size) of the geometry. 
+
+m = magnitude(obj) returns the measure of the geometric domain, which depends on the dimension\+: length in 1D, area in 2D, volume in 3D, and hypervolume in higher dimensions. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_geometry_a2a54c675c734652ee442cc65a6d3cbe8}\index{core::geometry::Geometry@{core::geometry::Geometry}!NDims@{NDims}}
+\index{NDims@{NDims}!core::geometry::Geometry@{core::geometry::Geometry}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_geometry_a2a54c675c734652ee442cc65a6d3cbe8} 
+Property core\+::geometry\+::\+Geometry\+::\+NDims}
+
+
+
+Number of dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_geometry_8m_source_l00027}{27}} of file \mbox{\hyperlink{_geometry_8m_source}{Geometry.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+geometry/\mbox{\hyperlink{_geometry_8m}{Geometry.\+m}}\end{DoxyCompactItemize}

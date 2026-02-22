@@ -1,0 +1,367 @@
+\doxysection{ld3470.\+m}
+\hypertarget{ld3470_8m_source}{}\label{ld3470_8m_source}\index{+core/+geometry/lebedev/ld3470.m@{+core/+geometry/lebedev/ld3470.m}}
+\mbox{\hyperlink{ld3470_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00001}00001\ function\ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ac900b0ffd7d05e151f9c1c834a7a9c67}{ld3470}}\ (\ )}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00003}00003\ \%*****************************************************************************80;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00005}00005\ \%\%\ \mbox{\hyperlink{namespacecore_1_1geometry_ac900b0ffd7d05e151f9c1c834a7a9c67}{ld3470}}()\ computes\ the\ 3470\ point\ Lebedev\ angular\ grid.}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00007}00007\ \%\ \ Modified:}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00009}00009\ \%\ \ \ \ 14\ September\ 2010}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00011}00011\ \%\ \ Author:}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00013}00013\ \%\ \ \ \ Dmitri\ Laikov}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00014}00014\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00015}00015\ \%\ \ Reference:}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00017}00017\ \%\ \ \ \ Vyacheslav\ Lebedev,\ Dmitri\ Laikov,}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00018}00018\ \%\ \ \ \ A\ quadrature\ formula\ for\ the\ sphere\ of\ the\ 131st}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00019}00019\ \%\ \ \ \ algebraic\ order\ of\ accuracy,}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00020}00020\ \%\ \ \ \ Russian\ Academy\ of\ Sciences\ Doklady\ Mathematics,}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00021}00021\ \%\ \ \ \ Volume\ 59,\ Number\ 3,\ 1999,\ pages\ 477-\/481.}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00022}00022\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00023}00023\ \%\ \ Output:}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00024}00024\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00025}00025\ \%\ \ \ \ real\ X(N),\ Y(N),\ Z(N),\ W(N),\ the\ coordinates}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00026}00026\ \%\ \ \ \ and\ weights\ of\ the\ points.}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00027}00027\ \%}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00028}00028\ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00029}00029\ \ \ x\ =\ zeros(3470,1);}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00030}00030\ \ \ y\ =\ zeros(3470,1);}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00031}\mbox{\hyperlink{namespacecore_1_1geometry_ac900b0ffd7d05e151f9c1c834a7a9c67}{00031}}\ \ \ z\ =\ zeros(3470,1);}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00032}00032\ \ \ w\ =\ zeros(3470,1);}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00033}00033\ \ \ a\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00034}00034\ \ \ b\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00035}00035\ \ \ v\ =\ 0.2040382730826330E-\/04;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00036}00036\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 1,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00037}00037\ \ \ v\ =\ 0.3178149703889544E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00038}00038\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 3,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00039}00039\ \ \ a\ =\ 0.1721420832906233E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00040}00040\ \ \ v\ =\ 0.8288115128076110E-\/04;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00041}00041\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00042}00042\ \ \ a\ =\ 0.4408875374981770E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00043}00043\ \ \ v\ =\ 0.1360883192522954E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00044}00044\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00045}00045\ \ \ a\ =\ 0.7594680813878681E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00046}00046\ \ \ v\ =\ 0.1766854454542662E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00047}00047\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00048}00048\ \ \ a\ =\ 0.1108335359204799;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00049}00049\ \ \ v\ =\ 0.2083153161230153E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00050}00050\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00051}00051\ \ \ a\ =\ 0.1476517054388567;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00052}00052\ \ \ v\ =\ 0.2333279544657158E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00053}00053\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00054}00054\ \ \ a\ =\ 0.1856731870860615;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00055}00055\ \ \ v\ =\ 0.2532809539930247E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00056}00056\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00057}00057\ \ \ a\ =\ 0.2243634099428821;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00058}00058\ \ \ v\ =\ 0.2692472184211158E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00059}00059\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00060}00060\ \ \ a\ =\ 0.2633006881662727;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00061}00061\ \ \ v\ =\ 0.2819949946811885E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00062}00062\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00063}00063\ \ \ a\ =\ 0.3021340904916283;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00064}00064\ \ \ v\ =\ 0.2920953593973030E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00065}00065\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00066}00066\ \ \ a\ =\ 0.3405594048030089;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00067}00067\ \ \ v\ =\ 0.2999889782948352E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00068}00068\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00069}00069\ \ \ a\ =\ 0.3783044434007372;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00070}00070\ \ \ v\ =\ 0.3060292120496902E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00071}00071\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00072}00072\ \ \ a\ =\ 0.4151194767407910;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00073}00073\ \ \ v\ =\ 0.3105109167522192E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00074}00074\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00075}00075\ \ \ a\ =\ 0.4507705766443257;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00076}00076\ \ \ v\ =\ 0.3136902387550312E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00077}00077\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00078}00078\ \ \ a\ =\ 0.4850346056573187;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00079}00079\ \ \ v\ =\ 0.3157984652454632E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00080}00080\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00081}00081\ \ \ a\ =\ 0.5176950817792470;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00082}00082\ \ \ v\ =\ 0.3170516518425422E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00083}00083\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00084}00084\ \ \ a\ =\ 0.5485384240820989;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00085}00085\ \ \ v\ =\ 0.3176568425633755E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00086}00086\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00087}00087\ \ \ a\ =\ 0.6039117238943308;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00088}00088\ \ \ v\ =\ 0.3177198411207062E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00089}00089\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00090}00090\ \ \ a\ =\ 0.6279956655573113;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00091}00091\ \ \ v\ =\ 0.3175519492394733E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00092}00092\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00093}00093\ \ \ a\ =\ 0.6493636169568952;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00094}00094\ \ \ v\ =\ 0.3174654952634756E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00095}00095\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00096}00096\ \ \ a\ =\ 0.6677644117704504;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00097}00097\ \ \ v\ =\ 0.3175676415467654E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00098}00098\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00099}00099\ \ \ a\ =\ 0.6829368572115624;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00100}00100\ \ \ v\ =\ 0.3178923417835410E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00101}00101\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00102}00102\ \ \ a\ =\ 0.6946195818184121;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00103}00103\ \ \ v\ =\ 0.3183788287531909E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00104}00104\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00105}00105\ \ \ a\ =\ 0.7025711542057026;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00106}00106\ \ \ v\ =\ 0.3188755151918807E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00107}00107\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00108}00108\ \ \ a\ =\ 0.7066004767140119;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00109}00109\ \ \ v\ =\ 0.3191916889313849E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00110}00110\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00111}00111\ \ \ a\ =\ 0.5132537689946062E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00112}00112\ \ \ v\ =\ 0.1231779611744508E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00113}00113\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00114}00114\ \ \ a\ =\ 0.1297994661331225;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00115}00115\ \ \ v\ =\ 0.1924661373839880E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00116}00116\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00117}00117\ \ \ a\ =\ 0.2188852049401307;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00118}00118\ \ \ v\ =\ 0.2380881867403424E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00119}00119\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00120}00120\ \ \ a\ =\ 0.3123174824903457;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00121}00121\ \ \ v\ =\ 0.2693100663037885E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00122}00122\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00123}00123\ \ \ a\ =\ 0.4064037620738195;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00124}00124\ \ \ v\ =\ 0.2908673382834366E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00125}00125\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00126}00126\ \ \ a\ =\ 0.4984958396944782;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00127}00127\ \ \ v\ =\ 0.3053914619381535E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00128}00128\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00129}00129\ \ \ a\ =\ 0.5864975046021365;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00130}00130\ \ \ v\ =\ 0.3143916684147777E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00131}00131\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00132}00132\ \ \ a\ =\ 0.6686711634580175;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00133}00133\ \ \ v\ =\ 0.3187042244055363E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00134}00134\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00135}00135\ \ \ a\ =\ 0.8715738780835950E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00136}00136\ \ \ b\ =\ 0.2557175233367578E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00137}00137\ \ \ v\ =\ 0.1635219535869790E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00138}00138\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00139}00139\ \ \ a\ =\ 0.1248383123134007;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00140}00140\ \ \ b\ =\ 0.5604823383376681E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00141}00141\ \ \ v\ =\ 0.1968109917696070E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00142}00142\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00143}00143\ \ \ a\ =\ 0.1638062693383378;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00144}00144\ \ \ b\ =\ 0.8968568601900765E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00145}00145\ \ \ v\ =\ 0.2236754342249974E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00146}00146\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00147}00147\ \ \ a\ =\ 0.2035586203373176;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00148}00148\ \ \ b\ =\ 0.1254086651976279;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00149}00149\ \ \ v\ =\ 0.2453186687017181E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00150}00150\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00151}00151\ \ \ a\ =\ 0.2436798975293774;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00152}00152\ \ \ b\ =\ 0.1624780150162012;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00153}00153\ \ \ v\ =\ 0.2627551791580541E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00154}00154\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00155}00155\ \ \ a\ =\ 0.2838207507773806;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00156}00156\ \ \ b\ =\ 0.2003422342683208;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00157}00157\ \ \ v\ =\ 0.2767654860152220E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00158}00158\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00159}00159\ \ \ a\ =\ 0.3236787502217692;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00160}00160\ \ \ b\ =\ 0.2385628026255263;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00161}00161\ \ \ v\ =\ 0.2879467027765895E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00162}00162\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00163}00163\ \ \ a\ =\ 0.3629849554840691;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00164}00164\ \ \ b\ =\ 0.2767731148783578;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00165}00165\ \ \ v\ =\ 0.2967639918918702E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00166}00166\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00167}00167\ \ \ a\ =\ 0.4014948081992087;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00168}00168\ \ \ b\ =\ 0.3146542308245309;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00169}00169\ \ \ v\ =\ 0.3035900684660351E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00170}00170\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00171}00171\ \ \ a\ =\ 0.4389818379260225;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00172}00172\ \ \ b\ =\ 0.3519196415895088;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00173}00173\ \ \ v\ =\ 0.3087338237298308E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00174}00174\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00175}00175\ \ \ a\ =\ 0.4752331143674377;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00176}00176\ \ \ b\ =\ 0.3883050984023654;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00177}00177\ \ \ v\ =\ 0.3124608838860167E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00178}00178\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00179}00179\ \ \ a\ =\ 0.5100457318374018;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00180}00180\ \ \ b\ =\ 0.4235613423908649;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00181}00181\ \ \ v\ =\ 0.3150084294226743E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00182}00182\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00183}00183\ \ \ a\ =\ 0.5432238388954868;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00184}00184\ \ \ b\ =\ 0.4574484717196220;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00185}00185\ \ \ v\ =\ 0.3165958398598402E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00186}00186\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00187}00187\ \ \ a\ =\ 0.5745758685072442;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00188}00188\ \ \ b\ =\ 0.4897311639255524;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00189}00189\ \ \ v\ =\ 0.3174320440957372E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00190}00190\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00191}00191\ \ \ a\ =\ 0.1723981437592809;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00192}00192\ \ \ b\ =\ 0.3010630597881105E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00193}00193\ \ \ v\ =\ 0.2182188909812599E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00194}00194\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00195}00195\ \ \ a\ =\ 0.2149553257844597;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00196}00196\ \ \ b\ =\ 0.6326031554204694E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00197}00197\ \ \ v\ =\ 0.2399727933921445E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00198}00198\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00199}00199\ \ \ a\ =\ 0.2573256081247422;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00200}00200\ \ \ b\ =\ 0.9848566980258631E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00201}00201\ \ \ v\ =\ 0.2579796133514652E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00202}00202\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00203}00203\ \ \ a\ =\ 0.2993163751238106;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00204}00204\ \ \ b\ =\ 0.1350835952384266;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00205}00205\ \ \ v\ =\ 0.2727114052623535E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00206}00206\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00207}00207\ \ \ a\ =\ 0.3407238005148000;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00208}00208\ \ \ b\ =\ 0.1725184055442181;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00209}00209\ \ \ v\ =\ 0.2846327656281355E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00210}00210\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00211}00211\ \ \ a\ =\ 0.3813454978483264;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00212}00212\ \ \ b\ =\ 0.2103559279730725;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00213}00213\ \ \ v\ =\ 0.2941491102051334E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00214}00214\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00215}00215\ \ \ a\ =\ 0.4209848104423343;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00216}00216\ \ \ b\ =\ 0.2482278774554860;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00217}00217\ \ \ v\ =\ 0.3016049492136107E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00218}00218\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00219}00219\ \ \ a\ =\ 0.4594519699996300;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00220}00220\ \ \ b\ =\ 0.2858099509982883;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00221}00221\ \ \ v\ =\ 0.3072949726175648E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00222}00222\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00223}00223\ \ \ a\ =\ 0.4965640166185930;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00224}00224\ \ \ b\ =\ 0.3228075659915428;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00225}00225\ \ \ v\ =\ 0.3114768142886460E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00226}00226\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00227}00227\ \ \ a\ =\ 0.5321441655571562;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00228}00228\ \ \ b\ =\ 0.3589459907204151;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00229}00229\ \ \ v\ =\ 0.3143823673666223E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00230}00230\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00231}00231\ \ \ a\ =\ 0.5660208438582166;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00232}00232\ \ \ b\ =\ 0.3939630088864310;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00233}00233\ \ \ v\ =\ 0.3162269764661535E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00234}00234\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00235}00235\ \ \ a\ =\ 0.5980264315964364;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00236}00236\ \ \ b\ =\ 0.4276029922949089;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00237}00237\ \ \ v\ =\ 0.3172164663759821E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00238}00238\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00239}00239\ \ \ a\ =\ 0.2644215852350733;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00240}00240\ \ \ b\ =\ 0.3300939429072552E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00241}00241\ \ \ v\ =\ 0.2554575398967435E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00242}00242\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00243}00243\ \ \ a\ =\ 0.3090113743443063;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00244}00244\ \ \ b\ =\ 0.6803887650078501E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00245}00245\ \ \ v\ =\ 0.2701704069135677E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00246}00246\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00247}00247\ \ \ a\ =\ 0.3525871079197808;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00248}00248\ \ \ b\ =\ 0.1044326136206709;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00249}00249\ \ \ v\ =\ 0.2823693413468940E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00250}00250\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00251}00251\ \ \ a\ =\ 0.3950418005354029;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00252}00252\ \ \ b\ =\ 0.1416751597517679;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00253}00253\ \ \ v\ =\ 0.2922898463214289E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00254}00254\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00255}00255\ \ \ a\ =\ 0.4362475663430163;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00256}00256\ \ \ b\ =\ 0.1793408610504821;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00257}00257\ \ \ v\ =\ 0.3001829062162428E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00258}00258\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00259}00259\ \ \ a\ =\ 0.4760661812145854;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00260}00260\ \ \ b\ =\ 0.2170630750175722;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00261}00261\ \ \ v\ =\ 0.3062890864542953E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00262}00262\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00263}00263\ \ \ a\ =\ 0.5143551042512103;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00264}00264\ \ \ b\ =\ 0.2545145157815807;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00265}00265\ \ \ v\ =\ 0.3108328279264746E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00266}00266\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00267}00267\ \ \ a\ =\ 0.5509709026935597;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00268}00268\ \ \ b\ =\ 0.2913940101706601;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00269}00269\ \ \ v\ =\ 0.3140243146201245E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00270}00270\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00271}00271\ \ \ a\ =\ 0.5857711030329428;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00272}00272\ \ \ b\ =\ 0.3274169910910705;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00273}00273\ \ \ v\ =\ 0.3160638030977130E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00274}00274\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00275}00275\ \ \ a\ =\ 0.6186149917404392;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00276}00276\ \ \ b\ =\ 0.3623081329317265;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00277}00277\ \ \ v\ =\ 0.3171462882206275E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00278}00278\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00279}00279\ \ \ a\ =\ 0.3586894569557064;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00280}00280\ \ \ b\ =\ 0.3497354386450040E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00281}00281\ \ \ v\ =\ 0.2812388416031796E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00282}00282\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00283}00283\ \ \ a\ =\ 0.4035266610019441;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00284}00284\ \ \ b\ =\ 0.7129736739757095E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00285}00285\ \ \ v\ =\ 0.2912137500288045E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00286}00286\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00287}00287\ \ \ a\ =\ 0.4467775312332510;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00288}00288\ \ \ b\ =\ 0.1084758620193165;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00289}00289\ \ \ v\ =\ 0.2993241256502206E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00290}00290\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00291}00291\ \ \ a\ =\ 0.4883638346608543;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00292}00292\ \ \ b\ =\ 0.1460915689241772;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00293}00293\ \ \ v\ =\ 0.3057101738983822E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00294}00294\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00295}00295\ \ \ a\ =\ 0.5281908348434601;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00296}00296\ \ \ b\ =\ 0.1837790832369980;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00297}00297\ \ \ v\ =\ 0.3105319326251432E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00298}00298\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00299}00299\ \ \ a\ =\ 0.5661542687149311;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00300}00300\ \ \ b\ =\ 0.2212075390874021;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00301}00301\ \ \ v\ =\ 0.3139565514428167E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00302}00302\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00303}00303\ \ \ a\ =\ 0.6021450102031452;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00304}00304\ \ \ b\ =\ 0.2580682841160985;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00305}00305\ \ \ v\ =\ 0.3161543006806366E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00306}00306\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00307}00307\ \ \ a\ =\ 0.6360520783610050;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00308}00308\ \ \ b\ =\ 0.2940656362094121;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00309}00309\ \ \ v\ =\ 0.3172985960613294E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00310}00310\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00311}00311\ \ \ a\ =\ 0.4521611065087196;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00312}00312\ \ \ b\ =\ 0.3631055365867002E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00313}00313\ \ \ v\ =\ 0.2989400336901431E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00314}00314\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00315}00315\ \ \ a\ =\ 0.4959365651560963;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00316}00316\ \ \ b\ =\ 0.7348318468484350E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00317}00317\ \ \ v\ =\ 0.3054555883947677E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00318}00318\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00319}00319\ \ \ a\ =\ 0.5376815804038283;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00320}00320\ \ \ b\ =\ 0.1111087643812648;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00321}00321\ \ \ v\ =\ 0.3104764960807702E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00322}00322\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00323}00323\ \ \ a\ =\ 0.5773314480243768;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00324}00324\ \ \ b\ =\ 0.1488226085145408;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00325}00325\ \ \ v\ =\ 0.3141015825977616E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00326}00326\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00327}00327\ \ \ a\ =\ 0.6148113245575056;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00328}00328\ \ \ b\ =\ 0.1862892274135151;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00329}00329\ \ \ v\ =\ 0.3164520621159896E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00330}00330\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00331}00331\ \ \ a\ =\ 0.6500407462842380;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00332}00332\ \ \ b\ =\ 0.2231909701714456;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00333}00333\ \ \ v\ =\ 0.3176652305912204E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00334}00334\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00335}00335\ \ \ a\ =\ 0.5425151448707213;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00336}00336\ \ \ b\ =\ 0.3718201306118944E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00337}00337\ \ \ v\ =\ 0.3105097161023939E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00338}00338\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00339}00339\ \ \ a\ =\ 0.5841860556907931;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00340}00340\ \ \ b\ =\ 0.7483616335067346E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00341}00341\ \ \ v\ =\ 0.3143014117890550E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00342}00342\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00343}00343\ \ \ a\ =\ 0.6234632186851500;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00344}00344\ \ \ b\ =\ 0.1125990834266120;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00345}00345\ \ \ v\ =\ 0.3168172866287200E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00346}00346\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00347}00347\ \ \ a\ =\ 0.6602934551848843;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00348}00348\ \ \ b\ =\ 0.1501303813157619;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00349}00349\ \ \ v\ =\ 0.3181401865570968E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00350}00350\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00351}00351\ \ \ a\ =\ 0.6278573968375105;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00352}00352\ \ \ b\ =\ 0.3767559930245720E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00353}00353\ \ \ v\ =\ 0.3170663659156037E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00354}00354\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00355}00355\ \ \ a\ =\ 0.6665611711264577;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00356}00356\ \ \ b\ =\ 0.7548443301360158E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00357}00357\ \ \ v\ =\ 0.3185447944625510E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00358}00358\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00360}00360\ \ \ return}
+\DoxyCodeLine{\Hypertarget{ld3470_8m_source_l00361}00361\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,163 @@
+\doxysection{Hyperspherical\+Geometry.\+m}
+\hypertarget{_hyperspherical_geometry_8m_source}{}\label{_hyperspherical_geometry_8m_source}\index{+core/+geometry/HypersphericalGeometry.m@{+core/+geometry/HypersphericalGeometry.m}}
+\mbox{\hyperlink{_hyperspherical_geometry_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00001}00001\ classdef\ HypersphericalGeometry\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{Geometry}}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00002}00002\ \ \ \ \ \%\ HYPERSPHERICALGEOMETRY\ Base\ \textcolor{keyword}{class\ }for\ all\ hyperspherical\ geometries.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ HypersphericalGeometry\ provides\ common\ functionality\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ hyperspherical\ geometries\ such\ as\ hyperball\ (solid\ sphere)\ and}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ hypersphere\ (surface).\ It\ implements\ coordinate\ transformations}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ between\ Cartesian\ and\ hyperspherical\ coordinates,\ and\ provides}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ helper\ methods\ \textcolor{keywordflow}{for}\ computing\ distances\ between\ points\ in\ the}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ domain.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00011}00011\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball}{Hyperball}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00013}00013\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00014}00014\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ Center\ \%\ Center}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ Radius\ \%\ Radius}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00017}00017\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00018}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{00018}}\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00019}00019\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ade5903e26abd4ea9b71fe3be7652c30d}{BBox}}\ \%\ Bounding\ box}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00022}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_aff0857e27dbda99c0b8b426f48c8c080}{00022}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00023}00023\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a4ab47e938fde7e04dac025900d2bb08e}{HypersphericalGeometry}}(center,\ radius)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00025}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ada41f0f2f97f84dcb118a938364c17c7}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ HYPERSPHERICALGEOMETRY\ Construct\ an\ instance\ of}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a4ab47e938fde7e04dac025900d2bb08e}{HypersphericalGeometry}}.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a4ab47e938fde7e04dac025900d2bb08e}{HypersphericalGeometry}}(center,\ radius)\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ hyperspherical\ \mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}\ with\ specified\ @a\ center\ and\ @a}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ radius.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00031}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ade5903e26abd4ea9b71fe3be7652c30d}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ center\ \{mustBeVector,\ mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ radius\ (1,1)\ \{mustBeNonnegative,\ mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{Geometry}}(length(center));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Center\ =\ center(:).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Radius\ =\ radius;}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00041}00041\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ bbox\ =\ get.BBox(obj)}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.BBOX\ Returns\ the\ bounding\ box.}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00044}00044\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00045}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a4ab47e938fde7e04dac025900d2bb08e}{00045}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ bbox\ =\ [obj.Center\ -\/\ obj.Radius,\ obj.Center\ +\ obj.Radius].'};}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ S\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ac480d6d2b3bcfe5ce18610af790fe11c}{cartesianToSpherical}}(obj,\ C)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CARTESIANTOSPHERICAL\ Converts\ Cartesian\ to\ hyperspherical}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ac480d6d2b3bcfe5ce18610af790fe11c}{cartesianToSpherical}}(obj,\ C)\ converts\ points\ from}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Cartesian\ coordinates\ to\ hyperspherical\ coordinates\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00054}00054\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\%\ \ \ standard\ mathematical\ convention\ where\ the\ first\ coordinate}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ is\ the\ radius,\ followed\ by\ (n-\/1)\ angles.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a4ab47e938fde7e04dac025900d2bb08e}{HypersphericalGeometry}}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nd\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ C;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(C);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(nx(1)\ ==\ nd,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00070}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ac480d6d2b3bcfe5ce18610af790fe11c}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Point\ dimension\ must\ match\ geometry\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(C,\ nx(1),\ []);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ isInDomain\ =\ all(obj.isInside(C)\ |\ obj.isOnBoundary(C));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isInDomain,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Input\ points\ must\ be\ inside\ or\ on\ the\ boundary.'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ C\ -\/\ obj.Center(:);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ zeros(size(C));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ sqrt(sum(C.\string^2,\ 1));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ S(1,\ :)\ =\ r;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ mr\ =\ (r\ \string~=\ 0);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ any(mr)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 2:(nd\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ sqrt(sum(C((i-\/1):nd,\ mr).\string^2,\ 1));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mp\ =\ (p\ \string~=\ 0);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ any(mp)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ms\ =\ mr;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ms(mr)\ =\ mp;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(i,\ ms)\ =\ acos(C(i-\/1,\ ms)\ ./\ p(mp));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ atan2(C(nd,\ mr),\ C(nd-\/1,\ mr));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ma\ =\ (a\ <\ 0);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a(ma)\ =\ a(ma)\ +\ 2\ *\ pi;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(nd,\ mr)\ =\ a;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ reshape(S,\ nx);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ C\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a5a104b702694fce66ef4ac09a36214ff}{sphericalToCartesian}}(obj,\ S)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPHERICALTOCARTESIAN\ Converts\ hyperspherical\ to\ Cartesian}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ C\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a5a104b702694fce66ef4ac09a36214ff}{sphericalToCartesian}}(obj,\ S)\ converts\ points\ from}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ hyperspherical\ coordinates\ back\ to\ Cartesian\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ is\ the\ inverse\ of\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_ac480d6d2b3bcfe5ce18610af790fe11c}{cartesianToSpherical}}\ method.}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{HypersphericalGeometry}}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a2a54c675c734652ee442cc65a6d3cbe8}{NDims}};}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nd\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ S;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(S);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(nx(1)\ ==\ nd,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Point\ dimension\ must\ match\ geometry\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00124}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a5a104b702694fce66ef4ac09a36214ff}{00124}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ reshape(S,\ nx(1),\ []);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(S(1,\ :)\ >=\ 0),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Radius\ must\ be\ non-\/negative.'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ isAngleInRange\ =\ all(S(2:nd-\/1,\ :)\ >=\ 0\ \&\ S(2:nd-\/1,\ :)\ <=\ pi);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isAngleInRange,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'First\ nd-\/2\ angles\ must\ be\ in\ the\ range\ [0,\ pi].'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ isAngleInRange\ =\ all(S(nd,\ :)\ >=\ 0\ \&\ S(nd,\ :)\ <=\ 2*pi);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isAngleInRange,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Last\ angles\ must\ be\ in\ the\ range\ [0,\ 2*pi].'});}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ S(1,\ :);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ S(2:end,\ :);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ zeros(size(S));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:(nd-\/1)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ ones(1,\ size(S,\ 2));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:(i-\/1)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ u\ .*\ sin(A(j,\ :));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C(i,\ :)\ =\ r\ .*\ u\ .*\ cos(A(i,\ :));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ ones(1,\ size(S,\ 2));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:(nd-\/1)}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ u\ .*\ sin(A(j,\ :));}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ C(nd,\ :)\ =\ r\ .*\ u;}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ C\ +\ obj.Center(:);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(C,\ nx);}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00156}00156\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperspherical_geometry_8m_source_l00157}00157\ end}
+
+\end{DoxyCode}

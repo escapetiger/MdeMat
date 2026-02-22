@@ -1,0 +1,132 @@
+\doxysection{Composition.\+m}
+\hypertarget{_composition_8m_source}{}\label{_composition_8m_source}\index{+core/+function/Composition.m@{+core/+function/Composition.m}}
+\mbox{\hyperlink{_composition_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00001}00001\ classdef\ Composition\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00002}00002\ \ \ \ \ \%\ COMPOSITION\ Function\ representing\ the\ composition\ of\ two\ functions.}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Composition\ represents\ the\ mathematical\ composition\ of\ two}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ functions:}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \ \ \ \ (f\ \(\backslash\)circ\ g)(x)\ =\ f(g(x))}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ where\ the\ output\ dimension\ of\ the\ inner\ function\ @a\ rhs\ must\ match}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ the\ input\ dimension\ of\ the\ outer\ function\ @a\ lhs.\ The\ composition}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ maps\ from\ the\ input\ space\ of\ @a\ rhs\ to\ the\ output\ space\ of\ @a\ lhs.}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ For\ derivatives,\ the\ chain\ rule\ is\ applied:}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)frac\{d\}\{dx\}(f\ \(\backslash\)circ\ g)(x)\ =\ f\textcolor{stringliteral}{'(g(x))\ \(\backslash\)cdot\ g'}(x)}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ Higher-\/order\ derivatives\ use\ Faà\ di\ Bruno\textcolor{stringliteral}{'s\ formula\ for\ the}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ composition\ of\ functions.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ \%\ See\ also:}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ core.function.Function,\ core.function.ProductFunction}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ properties}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Lhs\ \%\ Outer\ function\ (core.function.Function)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Rhs\ \%\ Inner\ function\ (core.function.Function)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00030}\mbox{\hyperlink{classcore_1_1function_1_1_composition}{00030}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ methods}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ Composition(lhs,\ rhs)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPOSITION\ Constructor\ for\ the\ Composition\ class.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00034}\mbox{\hyperlink{classcore_1_1function_1_1_composition_a5f4e359c22a3fd3397c97c1a83945fba}{00034}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ Composition(f,\ g)\ creates\ a\ Composition\ representing}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00036}00036\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ composition\ \(\backslash\)f\$f(g(x))\(\backslash\)f\$\ where\ @a\ lhs\ is\ the\ outer}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00037}\mbox{\hyperlink{classcore_1_1function_1_1_composition_a52576f0d41ae912eb08a60ebbdff56e9}{00037}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ \(\backslash\)f\$f\(\backslash\)f\$\ and\ @a\ rhs\ is\ the\ inner\ function\ \(\backslash\)f\$g\(\backslash\)f\$.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ output\ dimension\ of\ @a\ rhs\ must\ match\ the\ input}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimension\ of\ @a\ lhs.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00040}00040\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\{mustBeA(lhs,\ "{}core.function.Function"{})\}}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\{mustBeA(rhs,\ "{}core.function.Function"{})\}}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00044}00044\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00045}00045\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00046}00046\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(rhs.NCodims\ ==\ lhs.NDims,\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}DimensionMismatch\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ['}Output\ dimension\ of\ inner\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ (\%d)\ must\ \textcolor{stringliteral}{'\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}match\ input\ dimension\ of\ outer\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ (\%d).\textcolor{stringliteral}{'],\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs.NCodims,\ lhs.NDims);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00051}00051\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nDims\ =\ rhs.NDims;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00053}\mbox{\hyperlink{classcore_1_1function_1_1_composition_a34468145d3449dfcc702a23215fc58a5}{00053}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nCodims\ =\ lhs.NCodims;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00054}00054\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj@core.function.Function(nDims\ =\ nDims,\ nCodims\ =\ nCodims);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\ =\ lhs;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ rhs;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ J\ =\ jacobian(obj,\ X)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ JACOBIAN\ Compute\ the\ Jacobian\ matrix\ at\ specified\ points.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ =\ jacobian(obj,\ X)\ computes\ the\ Jacobian\ matrix\ of\ the}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ at\ the\ specified\ points.\ For\ a\ function\ from}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$R\string^n\(\backslash\)f\$\ to\ \(\backslash\)f\$R\string^m\(\backslash\)f\$,\ the\ Jacobian\ is\ an\ \(\backslash\)f\$m\(\backslash\)times\ n\(\backslash\)f\$}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ of\ first\ partial\ derivatives.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00067}00067\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.function.Function}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00072}00072\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(obj.IsWellDefined,\ '}NotWellDefined\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}\mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}}\ is\ not\ well-\/defined.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00075}00075\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(size(X,\ 1)\ ==\ nd,\ '}InvalidInput\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Input\ dimension\ mismatch.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00079}00079\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(X);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ nd,\ []);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00083}\mbox{\hyperlink{classcore_1_1function_1_1_composition_afcc5064ee0836410ec6435a85937e8e6}{00083}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nc\ =\ obj.NCodims;}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00084}00084\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.Rhs.eval(X);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ JF\ =\ obj.Lhs.jacobian(G);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ JG\ =\ obj.Rhs.jacobian(X);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ J\ =\ pagemtimes(JF,\ JG);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00089}00089\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ length(nx)\ >\ 2}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ reshape(J,\ [nc,\ nd,\ nx(2:end)]);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00094}00094\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00096}00096\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ protected)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ Y\ =\ evalImpl(obj,\ X)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALIMPL\ Implementation\ of\ composition\ function\ evaluation.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ evalImpl(obj,\ X)\ evaluates\ the\ composition}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ f(g(X))\ by\ first\ evaluating\ the\ inner\ function\ g(X)\ and}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ then\ evaluating\ the\ outer\ function\ f\ at\ those\ points.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00104}00104\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.Rhs.eval(X);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.Lhs.eval(G);}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00108}00108\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ dY\ =\ diffImpl(obj,\ X,\ order)}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFFIMPL\ Implementation\ of\ composition\ function\ derivative.}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ =\ diffImpl(obj,\ X,\ order)\ computes\ the\ derivative\ of}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ composition\ using\ the\ chain\ rule\ for\ first-\/order}}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivatives\ and\ Faà\ di\ Bruno'}s\ formula\ \textcolor{keywordflow}{for}\ higher\ orders.}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(sum(order)\ ==\ 1,\ \textcolor{stringliteral}{'NotImplemented'},\ ...}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Higher-\/order\ derivatives\ not\ yet\ implemented\ for\ Composition.'});}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.Rhs.eval(X);}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ dF\ =\ obj.Lhs.diff(G,\ order);}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ dG\ =\ obj.Rhs.diff(X,\ order);}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ dG\ =\ reshape(dG,\ obj.Rhs.NCodims,\ 1,\ []);}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00123}\mbox{\hyperlink{classcore_1_1function_1_1_composition_a1500a3c5df77a9583806d597e3c87bd4}{00123}}\ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ pagemtimes(dF,\ dG);}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00125}00125\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_composition_8m_source_l00126}00126\ end}
+
+\end{DoxyCode}

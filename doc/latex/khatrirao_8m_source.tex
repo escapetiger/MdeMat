@@ -1,0 +1,43 @@
+\doxysection{khatrirao.\+m}
+\hypertarget{khatrirao_8m_source}{}\label{khatrirao_8m_source}\index{+core/+linalg/khatrirao.m@{+core/+linalg/khatrirao.m}}
+\mbox{\hyperlink{khatrirao_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00001}00001\ function\ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}}(U,\ varargin)}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00002}00002\ \%\ KHATRIRAO\ Compute\ Khatri-\/Rao\ product\ of\ input\ matrices.}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00004}00004\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}}(A,\ B)\ computes\ column-\/wise\ Kronecker\ product\ of\ matrices}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00005}00005\ \%\ \ \ @a\ A\ and\ @a\ B.\ For\ matrices\ A\ (I-\/by-\/K)\ and\ B\ (J-\/by-\/K),\ result\ is}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00006}00006\ \%\ \ \ (I*J)-\/by-\/K\ matrix\ where\ each\ column\ k\ is\ Kronecker\ product\ of\ k-\/th}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00007}00007\ \%\ \ \ columns\ of\ A\ and\ B.}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00009}00009\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}}(U)\ computes\ Khatri-\/Rao\ product\ when\ @a\ U\ is\ a\ cell}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00010}00010\ \%\ \ \ array\ of\ matrices.}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00011}00011\ \%}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00012}00012\ \%\ \ \ The\ Khatri-\/Rao\ product\ computes\ column-\/wise\ Kronecker\ products,}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00013}00013\ \%\ \ \ preserving\ the\ number\ of\ columns\ \textcolor{keywordflow}{while}\ expanding\ rows.\ All\ input}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00014}00014\ \%\ \ \ matrices\ must\ have\ the\ same\ number\ of\ columns.\ Operation\ proceeds}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00015}00015\ \%\ \ \ from\ right\ to\ left\ through\ the\ input\ matrices.}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00017}00017\ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00018}00018\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.kronecker}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00020}00020\ arguments}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00021}00021\ \ \ \ \ U}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00022}00022\ end}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00023}\mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{00023}}\ arguments\ (Repeating)}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00024}00024\ \ \ \ \ varargin}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00025}00025\ end}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00027}00027\ \textcolor{keywordflow}{if}\ \string~iscell(U),\ U\ =\ [\{U\},\ varargin];\ end}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00028}00028\ X\ =\ U\{end\};}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00029}00029\ J\ =\ size(X,\ 1);}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00030}00030\ \textcolor{keywordflow}{for}\ n\ =\ length(U)\ -\/\ 1:-\/1:1}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00031}00031\ \ \ \ \ A\ =\ U\{n\};}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00032}00032\ \ \ \ \ I\ =\ size(A,\ 1);}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00033}00033\ \ \ \ \ X\ =\ arrayfun(@(k)\ kron(A(:,k),\ X(:,k)),\ 1:size(U\{end\},\ 2),\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00034}00034\ \ \ \ \ X\ =\ horzcat(X\{:\});}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00035}00035\ \ \ \ \ J\ =\ I\ *\ J;}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00036}00036\ end}
+\DoxyCodeLine{\Hypertarget{khatrirao_8m_source_l00037}00037\ end}
+
+\end{DoxyCode}

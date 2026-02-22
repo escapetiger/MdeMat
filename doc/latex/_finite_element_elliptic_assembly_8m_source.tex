@@ -1,0 +1,170 @@
+\doxysection{Finite\+Element\+Elliptic\+Assembly.\+m}
+\hypertarget{_finite_element_elliptic_assembly_8m_source}{}\label{_finite_element_elliptic_assembly_8m_source}\index{+approx/+assembly/FiniteElementEllipticAssembly.m@{+approx/+assembly/FiniteElementEllipticAssembly.m}}
+\mbox{\hyperlink{_finite_element_elliptic_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00001}00001\ classdef\ FiniteElementEllipticAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_adjoint_assembly}{FiniteElementAdjointAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENTELLIPTICASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ finite\ element\ elliptic}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00003}00003\ \ \ \ \ \%\ operators.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00004}00004\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00005}00005\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00006}00006\ \ \ \ \ \ \ \ \ Cache\ \%\ Cached\ data}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00007}00007\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00008}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly}{00008}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00009}00009\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00010}00010\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a7ed29c455986761fc547487f12323bb5}{FiniteElementEllipticAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ bcType,\ penaltyType)}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINITEELEMENTELLIPTICASSEMBLY\ Constructor\ \textcolor{keywordflow}{for}\ elliptic}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00012}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_ae2f230e5f97ede58829b6bea44d1e689}{00012}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a7ed29c455986761fc547487f12323bb5}{FiniteElementEllipticAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ bcType,}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ penaltyType)\ creates\ an\ elliptic\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ \textcolor{keywordtype}{object}\ with}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ @a\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ boundary\ condition\ @a}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bcType,\ and\ penalty\ formulation\ @a\ penaltyType.\ Inherits}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_adjoint_assembly_a3c07c4d0de51ba7c7b5311cae7d74a38}{FiniteElementAdjointAssembly}}\ and\ initializes\ the\ cache}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ efficient\ matrix-\/vector\ operations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_finite_element_space}{FiniteElementSpace}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcType\{mustBeMember(bcType,\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ penaltyType(2,\ 2)\ cell}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_adjoint_assembly}{FiniteElementAdjointAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ bcType,\ penaltyType);}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ obj.reset();}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a7ed29c455986761fc547487f12323bb5}{00029}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_ae3d7d77889f1d402b55030d01b557987}{reset}}(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RESET\ Clear\ the\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ cache.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_ae3d7d77889f1d402b55030d01b557987}{reset}}(obj)\ clears\ the\ internal\ cache\ structure\ used}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ store\ intermediate\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ results\ for\ efficient}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computation.\ This\ method\ should\ be\ called\ when\ the\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ or\ boundary\ conditions\ change\ to\ ensure\ cache}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ consistency.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a7ed29c455986761fc547487f12323bb5}{FiniteElementEllipticAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_ae2f230e5f97ede58829b6bea44d1e689}{Cache}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ function\ [A,\ b]\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a8ec24a0a361468ac8e6ffc901b297881}{forceCompletion}}(obj,\ A,\ b)}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FORCECOMPLETION\ Force\ completion\ of\ singular\ elliptic\ system.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [A,\ b]\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a8ec24a0a361468ac8e6ffc901b297881}{forceCompletion}}(obj,\ A,\ b)\ augments\ the\ matrix\ @a}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00051}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_ae3d7d77889f1d402b55030d01b557987}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ and\ vector\ @a\ b\ to\ resolve\ singular\ elliptic\ systems\ that}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ arise\ with\ pure\ Neumann\ boundary\ conditions.\ Adds\ a}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ constraint\ that\ enforces\ zero\ mean\ of\ the\ solution\ by}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ appending\ a\ Lagrange\ multiplier\ equation\ to\ the\ system.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ augmented\ system\ has\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)begin\{bmatrix\}\ A\ \&\ c\ \(\backslash\)\(\backslash\)\ c\string^T\ \&\ 0\ \(\backslash\)end\{bmatrix\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)begin\{bmatrix\}\ u\ \(\backslash\)\(\backslash\)\ \(\backslash\)lambda\ \(\backslash\)end\{bmatrix\}\ =}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)begin\{bmatrix\}\ b\ \(\backslash\)\(\backslash\)\ 0\ \(\backslash\)end\{bmatrix\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$\ c\ \(\backslash\)f\$\ is\ the\ mass\ vector\ ensuring\ \(\backslash\)f\$\ c\string^T\ u\ =}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 0\ \(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly}{FiniteElementEllipticAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.Volume.Values;\ \%\ nl\ x\ nq}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.Space.Element.Volume.Weights);\ \%\ nq\ x\ nq}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ V\ *\ W\ *\ ones(length(W),\ 1);\ \%\ nl\ x\ 1}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ repmat(L,\ obj.Space.NMeshElements,\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ [A,\ c;\ c.\textcolor{stringliteral}{',\ 0];}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ b\ =\ [b;\ 0];}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00080}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a8ec24a0a361468ac8e6ffc901b297881}{00080}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ G\ =\ assembleMatrix(obj,\ field)}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIX\ Assemble\ elliptic\ operator\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ assembleMatrix(obj,\ field)\ assembles\ the\ global\ matrix}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ the\ elliptic\ operator\ \(\backslash\)f\$\ -\/\(\backslash\)nabla\ \(\backslash\)cdot\ (D\ \(\backslash\)nabla\ u)}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$\ where\ @a\ field\ represents\ the\ diffusion\ tensor\ \(\backslash\)f\$\ D}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$.\ The\ assembly\ combines\ volume\ and\ flux\ contributions}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ using\ the\ discontinuous\ Galerkin\ method\ with\ interior}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ penalty\ stabilization.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ Dirichlet\ boundary\ conditions,\ intermediate\ matrices}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ are\ cached\ in\ obj.Cache\ for\ efficient\ vector\ assembly.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ elliptic\ operator\ arises\ from\ the\ variational}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ formulation:}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ a(u,v)\ =\ \(\backslash\)sum\_K\ \(\backslash\)int\_K\ A\ \(\backslash\)nabla\ u\ \(\backslash\)cdot\ \(\backslash\)nabla\ v\ \(\backslash\),\ dx}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \(\backslash\)text\{penalty\ terms\}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ approx.assembly.FiniteElementEllipticAssembly}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.Space.NDims;}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ field\ =\ reshape(field,\ nd,\ nd,\ []);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ GV\ =\ obj.assembleConstantVolumeMatrix(field);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ GF\ =\ obj.assembleConstantFluxMatrix(field);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.createZeros();}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(obj.BcType,\ '}dirichlet\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Cache.G12\ =\ cell(1,\ nd);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ d\ =\ 1:nd}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G12\ =\ GF\{1,\ 2\}\{d\}\ -\/\ GV\{1,\ 2\}\{d\};}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00118}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a950b450044e6b89a66bd07f0d3b4390f}{00118}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G21\ =\ GF\{2,\ 1\}\{d\}\ -\/\ GV\{2,\ 1\}\{d\};}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G11\ =\ GF\{1,\ 1\}\{d\};}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ G\ +\ G12\ *\ G21\ -\/\ G11;}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(obj.BcType,\ '}dirichlet\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Cache.G12\{d\}\ =\ G12;}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ G\ =\ assembleVector(obj,\ field,\ func,\ options)}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVECTOR\ Assemble\ vector\ contribution\ for\ elliptic}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ operator.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ assembleVector(obj,\ field,\ func)\ assembles\ the\ vector}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ contribution\ for\ the\ elliptic\ operator\ with\ diffusion\ @a}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ field\ and\ boundary\ function\ @a\ func.\ Returns\ the\ assembled}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ right-\/hand\ side\ vector.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ assembleVector(obj,\ field,\ func,\ options)\ allows}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ additional\ arguments\ to\ be\ passed\ to\ the\ function}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ evaluation\ through\ @a\ options.args.}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ approx.assembly.FiniteElementEllipticAssembly}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\{mustBeA(func,\ '}function\_handle\textcolor{stringliteral}{')\}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.args\ =\ \{\}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(obj.BcType,\ '}periodic\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.createZeros(nCols=1);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.Space.NDims;}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00153}00153\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ field\ =\ reshape(field,\ nd,\ nd,\ []);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ GF\ =\ obj.assembleConstantFluxVector(field,\ func,\ options.args\{:\});}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.createZeros(nCols=1);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00159}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_elliptic_assembly_a88b71ba1fb722e9d8198292ea8f1faea}{00159}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ d\ =\ 1:nd}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00160}00160\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ G\ +\ obj.Cache.G12\{d\}\ *\ GF\{2,\ 1\}\{d\}\ -\/\ GF\{1,\ 1\}\{d\};}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00162}00162\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_elliptic_assembly_8m_source_l00164}00164\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

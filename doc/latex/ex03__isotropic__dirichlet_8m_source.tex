@@ -1,0 +1,230 @@
+\doxysection{ex03\+\_\+isotropic\+\_\+dirichlet.\+m}
+\hypertarget{ex03__isotropic__dirichlet_8m_source}{}\label{ex03__isotropic__dirichlet_8m_source}\index{+physics/+radiation/+scripts/ex03\_isotropic\_dirichlet.m@{+physics/+radiation/+scripts/ex03\_isotropic\_dirichlet.m}}
+\mbox{\hyperlink{ex03__isotropic__dirichlet_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00002}00002\ \%\ FileName:\ ex03\_isotropic\_dirichlet}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00006}00006\ \%\ \ \ Diffusive\ scaling\ with\ isotropic\ Dirichlet\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_aba60a321c7b105e57e443efd4937b490}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00009}00009\ clc;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00010}00010\ clear;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00011}00011\ close\ all;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00013}00013\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00014}00014\ dataDir\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'ex03'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00015}00015\ \textcolor{keywordflow}{if}\ \string~exist(dataDir,\ \textcolor{stringliteral}{'dir'}),\ mkdir(dataDir);\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00016}00016\ configPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00017}00017\ config\ =\ \mbox{\hyperlink{namespacecore}{core}}.io.OptionParser().parse(configPath);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00018}00018\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00019}00019\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00020}00020\ config.xBBox\ =\ repmat([0,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00021}00021\ config.tFinal\ =\ 1;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00022}00022\ config.epsilon\ =\ 1;\ \%\ Scaling\ parameter}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00023}00023\ config.alpha\ =\ 1;\ \%\ Time\ scale}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00024}00024\ config.beta\ =\ -\/1;\ \%\ Scattering\ scale}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00025}00025\ config.gamma\ =\ 1;\ \%\ Absorption\ scale}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00026}00026\ config.nx\ =\ repmat(16,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00027}00027\ \textcolor{keywordflow}{if}\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00028}00028\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00029}00029\ \ \ \ \ config.M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00030}00030\ \ \ \ \ config.nv\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00031}00031\ elseif\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00032}00032\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00033}00033\ \ \ \ \ config.M\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00034}00034\ \ \ \ \ config.nv\ =\ max(8,\ config.M);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00035}00035\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00036}00036\ \ \ \ \ config.E\ =\ 1\ /\ (2\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00037}00037\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00038}00038\ \ \ \ \ config.nv\ =\ max(8,\ ceil((3\ *\ config.M\ +\ 2)/4)+1);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00039}00039\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00040}00040\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00041}00041\ \ \ \ \ config.M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00042}00042\ \ \ \ \ config.nv\ =\ max([3,\ 3],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00043}00043\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00044}00044\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00045}00045\ \ \ \ \ config.M\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00046}00046\ \ \ \ \ config.nv\ =\ max([4,\ 4],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00047}00047\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00048}00048\ config.N\ =\ prod(config.nv);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00049}00049\ \%\ config.N\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00050}00050\ config.ic\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}();\ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00051}00051\ config.bc\ =\ fBc(config.L);\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00052}00052\ config.exact\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00053}00053\ config.scattering\ =\ scattering();}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00054}00054\ config.absorption\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00055}00055\ config.source\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00056}00056\ \textcolor{keywordflow}{if}\ config.nDims\ <\ 3}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00057}00057\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'DSID\%dR\%d'},\ config.nDims,\ config.vReductionType);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00058}00058\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00059}00059\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'DSID\%d'},\ config.nDims);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00060}00060\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00061}00061\ config.vDiscId\ =\ sprintf(\textcolor{stringliteral}{'P\%dS\%d'},\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00062}00062\ config.tDiscId\ =\ upper(config.tDiscId);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00063}00063\ config.xDiscId\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ upper(config.xDiscName),\ config.xBasisOrder);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00064}00064\ config.schemeId\ =\ strjoin(\{config.tDiscId,\ config.xDiscId,\ config.vDiscId\},\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00065}00065\ config.schemeName\ =\ strrep(config.schemeId,\ \textcolor{charliteral}{'-\/'},\ \textcolor{charliteral}{'\_'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00066}00066\ config.saveAsRef\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00067}00067\ config.verbose\ =\ 1;\ \%\ Verbose\ flag:\ 0\ -\/\ none;\ 1\ -\/\ runtime\ render}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00069}00069\ \%\%\ SIMULATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00071}00071\ DEFAULT\_MARKERS\ =\ \{\textcolor{charliteral}{'o'},\ \textcolor{charliteral}{'s'},\ \textcolor{charliteral}{'\string^'},\ \textcolor{charliteral}{'v'},\ \textcolor{charliteral}{'d'},\ \textcolor{charliteral}{'x'},\ \textcolor{charliteral}{'+'}\};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00072}00072\ DEFAULT\_COLORS\ =\ \{\textcolor{stringliteral}{'\#000000'},\ \textcolor{stringliteral}{'\#004488'},\ \textcolor{stringliteral}{'\#BB5566'},\ \textcolor{stringliteral}{'\#DDAA33'}\};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00074}00074\ refFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/REF.mat'},\ config.experimentId);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00075}00075\ refPath\ =\ fullfile(dataDir,\ refFile);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00076}00076\ \textcolor{keywordflow}{if}\ exist(refPath,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00077}00077\ \ \ \ \ refDataset\ =\ load(refPath).REF;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00078}00078\ else}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00079}00079\ \ \ \ \ refDataset\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00080}00080\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00081}00081\ schemeName\ =\ strrep(config.schemeId,\ \textcolor{charliteral}{'-\/'},\ \textcolor{charliteral}{'\_'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00083}00083\ scheme\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.radiation.MacroMicroScheme(config)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00084}00084\ \ \ \ \ .setTimeDiscretization(config.tDiscId,\ config.tFinal)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00085}00085\ \ \ \ \ .setTimer(config.verbose)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00086}00086\ \ \ \ \ .setVisualizer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00087}00087\ \ \ \ \ 'experimentId',\ config.experimentId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00088}00088\ \ \ \ \ 'schemeId',\ config.schemeId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00089}00089\ \ \ \ \ 'nDims',\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00090}00090\ \ \ \ \ 'nTimeNodes',\ 10,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00091}00091\ \ \ \ \ 'final',\ config.tFinal,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00092}00092\ \ \ \ \ 'density',\ ones(1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00093}00093\ \ \ \ \ 'components',\ struct(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []))\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00094}00094\ \ \ \ \ .setPattern(\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00095}00095\ \ \ \ \ 'epsilon',\ config.epsilon,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00096}00096\ \ \ \ \ 'timeScale',\ config.alpha,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00097}00097\ \ \ \ \ 'scatteringScale',\ config.beta,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00098}00098\ \ \ \ \ 'absorptionScale',\ config.gamma,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00099}00099\ \ \ \ \ 'reduction',\ config.vReductionType)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00100}00100\ \ \ \ \ .addDataset('REF',\ 0,\ refDataset)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00101}00101\ \ \ \ \ .addStyle('REF',\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00102}00102\ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1\},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\})\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00103}00103\ \ \ \ \ .addDataset(config.schemeName,\ 2)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00104}00104\ \ \ \ \ .addStyle(config.schemeName,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00105}00105\ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{2\},\ \textcolor{stringliteral}{'Marker'},\ DEFAULT\_MARKERS\{1\},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00107}00107\ \%\%\ SIMULATION\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00109}00109\ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.FiniteElementDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00110}00110\ \ \ \ \ .setDgOrthotopeElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00111}00111\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00112}00112\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.xBasisOrder,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00113}00113\ \ \ \ \ \textcolor{stringliteral}{'basisType'},\ config.xBasisType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00114}00114\ \ \ \ \ \textcolor{stringliteral}{'basisPattern'},\ config.xBasisPattern\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00115}00115\ \ \ \ \ )\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00116}00116\ \ \ \ \ .setElementOperator()\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00117}00117\ \ \ \ \ .setDerivativeOrder(1);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00119}00119\ vDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.AffineDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00120}00120\ \ \ \ \ .setC0SphereElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00121}00121\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00122}00122\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.M,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00123}00123\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00124}00124\ \ \ \ \ \textcolor{stringliteral}{'nPoints'},\ config.nv)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00125}00125\ \ \ \ \ .setDerivativeOrder(0)\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00126}00126\ \ \ \ \ .setScaledAffineSpace([]);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00128}00128\ xDisc\ =\ xDisc.setUniformGrid(config.nx,\ config.xBBox).setMeshSpace();}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00129}00129\ state\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_state}{MacroMicroState}}(xDisc,\ vDisc,\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00130}00130\ state\ =\ scheme.initialize(state);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00131}00131\ state\ =\ scheme.run(state);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00132}00132\ state\ =\ scheme.finalize(state);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00134}00134\ \%\%\ SAVE}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00135}00135\ \textcolor{keywordflow}{if}\ config.saveAsRef}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00136}00136\ \ \ \ \ REF\ =\ scheme.visualizer.dataset.(config.schemeName);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00137}00137\ \ \ \ \ dataFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/REF.mat'},\ config.experimentId);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00138}00138\ \ \ \ \ dataPath\ =\ fullfile(dataDir,\ dataFile);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00139}00139\ \ \ \ \ save(dataPath,\ \textcolor{stringliteral}{'REF'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00140}00140\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00141}00141\ \ \ \ \ DG\ =\ scheme.visualizer.dataset.(config.schemeName);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00142}00142\ \ \ \ \ dataFile\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/\%s'},\ config.experimentId,\ config.schemeId);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00143}00143\ \ \ \ \ dataPath\ =\ fullfile(dataDir,\ dataFile);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00144}00144\ \ \ \ \ save(dataPath,\ \textcolor{stringliteral}{'DG'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00145}00145\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00147}00147\ \%\%\ COMPARISON}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00149}00149\ \textcolor{keywordflow}{if}\ config.verbose\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00150}00150\ \ \ \ \ dataset\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00151}00151\ \ \ \ \ style\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00152}00152\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00153}00153\ \ \ \ \ dataset.REF\ =\ refDataset;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00154}00154\ \ \ \ \ style.REF\ =\ \{\textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1\},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00155}00155\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00156}00156\ \ \ \ \ candidates\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'BE'},\ 1,\ config.M,\ config.N;\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'SDIRK2'},\ 2,\ config.M,\ config.N;\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'SDIRK3'},\ 3,\ config.M,\ config.N;\};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00160}00160\ \ \ \ \ nCandidates\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00161}00161\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:size(candidates,\ 1)}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ candidateId\ =\ sprintf('\%s-\/\%s\%d-\/P\%dS\%d',\ candidates\{i,\ 1\},\ upper(config.xDiscName),\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ candidates\{i,\ 2\},\ candidates\{i,\ 3\},\ candidates\{i,\ 4\});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ candidateName\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ upper(config.xDiscName),\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ candidates\{i,\ 2\});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ candidateFile\ =\ sprintf(\textcolor{stringliteral}{'\%s.mat'},\ strjoin(\{config.experimentId,\ candidateId\},\ \textcolor{charliteral}{'-\/'}));}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ candidatePath\ =\ fullfile(dataDir,\ candidateFile);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ exist(candidatePath,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ nCandidates\ =\ nCandidates\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ candidateDataset\ =\ load(candidatePath).DG;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ candidateDataset.type\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ dataset.(candidateName)\ =\ candidateDataset;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ style.(candidateName)\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1+nCandidates\},...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Marker'},\ DEFAULT\_MARKERS\{nCandidates\},\ ...}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineWidth'},\ 1\};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00178}00178\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00180}00180\ \ \ \ \ scheme.visualizer.reset();}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00181}00181\ \ \ \ \ scheme.visualizer.render([],\ dataset,\ style,\ []);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00182}00182\ \ \ \ \ ax\ =\ gca;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00183}00183\ \ \ \ \ set(ax,\textcolor{stringliteral}{'box'},\textcolor{stringliteral}{'off'});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00184}00184\ \ \ \ \ ax.XAxis.TickValues\ =\ 0:0.1:1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00185}00185\ \ \ \ \ ax.XAxis.MinorTick\ =\ \textcolor{stringliteral}{'on'};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00186}00186\ \ \ \ \ ax.XAxis.MinorTickValues\ =\ 0:0.02:1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00187}00187\ \ \ \ \ ax.YAxis.TickValues\ =\ -\/0.2:0.2:1.4;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00188}00188\ \ \ \ \ ax.YAxis.MinorTick\ =\ \textcolor{stringliteral}{'on'};}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00189}00189\ \ \ \ \ ax.YAxis.MinorTickValues\ =\ -\/0.2:0.04:1.4;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00190}00190\ \ \ \ \ xlim([0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00191}00191\ \ \ \ \ ylim([-\/0.2,\ 1.4]);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00192}00192\ \ \ \ \ xl\ =\ xlabel(\textcolor{stringliteral}{"{}\$x\$"{}},\ \textcolor{stringliteral}{"{}Interpreter"{}},\textcolor{stringliteral}{"{}latex"{}});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00193}00193\ \ \ \ \ yl\ =\ ylabel(\textcolor{stringliteral}{"{}\$\(\backslash\)rho\$"{}},\ \textcolor{stringliteral}{"{}Interpreter"{}},\textcolor{stringliteral}{"{}latex"{}});}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00194}00194\ \ \ \ \ xl.FontSize\ =\ 16;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00195}00195\ \ \ \ \ yl.FontSize\ =\ 16;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00196}00196\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00198}00198\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00200}00200\ function\ h\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}()}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00201}00201\ h\ =\ @(x,\ v)\ fInitImpl(x,\ v);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00202}00202\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00204}00204\ function\ f\ =\ fInitImpl(x,\ v)}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00205}00205\ f\ =\ zeros(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00206}00206\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00208}00208\ function\ h\ =\ fBc(L)}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00209}00209\ h\ =\ @(x,\ v,\ t)\ fBcImpl(x,\ v,\ t,\ L);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00210}00210\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00212}00212\ function\ f\ =\ fBcImpl(x,\ v,\ t,\ L)}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00213}00213\ fL\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00214}00214\ fR\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00215}00215\ f\ =\ any(x\ ==\ 0,\ 1)\ .*\ fL\ +\ any(x\ ==\ L,\ 1)\ .*\ fR;}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00216}00216\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00218}00218\ function\ h\ =\ scattering()}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00219}00219\ h\ =\ @(x)\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00220}00220\ end}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00222}00222\ function\ C\ =\ scatteringImpl(x)}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00223}00223\ C\ =\ ones(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex03__isotropic__dirichlet_8m_source_l00224}00224\ end}
+
+\end{DoxyCode}

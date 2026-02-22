@@ -1,0 +1,152 @@
+\doxysection{core\+::symbolic\+::Fourier\+Basis Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_fourier_basis}{}\label{classcore_1_1symbolic_1_1_fourier_basis}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+
+
+Fourier orthogonal basis functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}{Fourier\+Basis}} (Input\+Type variables, Input\+Type max\+Degree, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct Fourier basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function}} (Input\+Type variables)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}} (Input\+Type obj, Input\+Type max\+Deriv\+Order)
+\begin{DoxyCompactList}\small\item\em Compile symbolic function as function handles. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e}{save}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Save symbolic function metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74}{load}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Load symbolic function metadata from file and update object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5}{Max\+Degree}}
+\begin{DoxyCompactList}\small\item\em Maximum degree. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68}{Is\+Normalized}}
+\begin{DoxyCompactList}\small\item\em Flag for orthonormal basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}{Lower}}
+\begin{DoxyCompactList}\small\item\em Lower bound. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}{Upper}}
+\begin{DoxyCompactList}\small\item\em Upper bound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d}{Meta\+Ext}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Metadata file extension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic expressions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04}{Handles}}
+\begin{DoxyCompactList}\small\item\em Cell array of function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of input dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of output dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fourier orthogonal basis functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_fourier_basis}{Fourier\+Basis} generates trigonometric Fourier basis functions up to a specified maximum degree. The basis functions include constant, sine, and cosine terms, orthogonal on the interval $[0, 2\pi]$.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_symbolic_function}{core.\+symbolic.\+Symbolic\+Function} 
+
+\doxylink{classcore_1_1symbolic_1_1_spherical_harmonic_basis}{core.\+symbolic.\+Spherical\+Harmonic\+Basis} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source_l00015}{15}} of file \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source}{Fourier\+Basis.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}!FourierBasis@{FourierBasis}}
+\index{FourierBasis@{FourierBasis}!core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+\doxysubsubsection{\texorpdfstring{FourierBasis()}{FourierBasis()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_fourier_basis_a96f51b8aa56b6b397e76e396e6578729} 
+function core\+::symbolic\+::\+Fourier\+Basis\+::\+Fourier\+Basis (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{, }\item[{Input\+Type}]{max\+Degree}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct Fourier basis functions. 
+
+obj = Fourier\+Basis(variables, max\+Degree) creates Fourier basis functions using the specified {\itshape variables} up to {\itshape max\+Degree}.
+
+obj = \doxylink{classcore_1_1symbolic_1_1_fourier_basis}{Fourier\+Basis}(variables, max\+Degree, is\+Normalized=true) creates orthonormal Fourier basis functions. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}!IsNormalized@{IsNormalized}}
+\index{IsNormalized@{IsNormalized}!core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+\doxysubsubsection{\texorpdfstring{IsNormalized}{IsNormalized}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_fourier_basis_a04bba5aa64428393255237b736160d68} 
+Property core\+::symbolic\+::\+Fourier\+Basis\+::\+Is\+Normalized}
+
+
+
+Flag for orthonormal basis functions. 
+
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source_l00022}{22}} of file \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source}{Fourier\+Basis.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}!Lower@{Lower}}
+\index{Lower@{Lower}!core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+\doxysubsubsection{\texorpdfstring{Lower}{Lower}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_fourier_basis_ac68a2a26ff699d633792ce765e317806} 
+Property core\+::symbolic\+::\+Fourier\+Basis\+::\+Lower}
+
+
+
+Lower bound. 
+
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source_l00025}{25}} of file \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source}{Fourier\+Basis.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}!MaxDegree@{MaxDegree}}
+\index{MaxDegree@{MaxDegree}!core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+\doxysubsubsection{\texorpdfstring{MaxDegree}{MaxDegree}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_fourier_basis_a0925102fd44cec9a421987d655df4cc5} 
+Property core\+::symbolic\+::\+Fourier\+Basis\+::\+Max\+Degree}
+
+
+
+Maximum degree. 
+
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source_l00019}{19}} of file \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source}{Fourier\+Basis.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442}\index{core::symbolic::FourierBasis@{core::symbolic::FourierBasis}!Upper@{Upper}}
+\index{Upper@{Upper}!core::symbolic::FourierBasis@{core::symbolic::FourierBasis}}
+\doxysubsubsection{\texorpdfstring{Upper}{Upper}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_fourier_basis_a954a070d178ebf1063da47b9ab9f2442} 
+Property core\+::symbolic\+::\+Fourier\+Basis\+::\+Upper}
+
+
+
+Upper bound. 
+
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source_l00028}{28}} of file \mbox{\hyperlink{_09symbolic_2_fourier_basis_8m_source}{Fourier\+Basis.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_09symbolic_2_fourier_basis_8m}{Fourier\+Basis.\+m}}\end{DoxyCompactItemize}

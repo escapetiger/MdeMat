@@ -1,0 +1,237 @@
+\doxysection{approx\+::integrate\+::Integration\+Data Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_integration_data}{}\label{classapprox_1_1integrate_1_1_integration_data}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+
+
+Data collection for integration.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a2080e3167f931002d65c48bac0f8dca5}{Integration\+Data}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_ae35d5f68239bfb879b09f86df28bac9f}{integrator}}, Input\+Type order, Input\+Type func)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a5c83cbac54b94dc33d622786e6e18d57}{set\+Values}} (Input\+Type obj, Input\+Type func, Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_ae1ee5d0d2e367324161bde7ee32ea92d}{nodes}})
+\begin{DoxyCompactList}\small\item\em Set the function values at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_af824523a500ca335e37f6b86279973d4}{set\+Derivatives}} (Input\+Type obj, Input\+Type func, Input\+Type order, Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_ae1ee5d0d2e367324161bde7ee32ea92d}{nodes}})
+\begin{DoxyCompactList}\small\item\em Set function derivatives at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_ae35d5f68239bfb879b09f86df28bac9f}{integrator}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a955bda36c71607016d9e0a533d1678ea}{values}}
+\begin{DoxyCompactList}\small\item\em Function values (n\+Codims x n\+Points) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a68bbf2130d796e8df90963e68d14a99e}{derivatives}}
+\begin{DoxyCompactList}\small\item\em Function derivatives (cell of n\+Codims x n\+Points x n\+Derivatives) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_ae1ee5d0d2e367324161bde7ee32ea92d}{nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_aad0e228dd91f62c4073ba31dc161e591}{weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a65366c98ca944e65072281f68ea18587}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a4aad5013210062bb2699b4f1254375b7}{n\+Derivatives}}
+\begin{DoxyCompactList}\small\item\em Number of all derivatives (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data_a271bf650e2f5458e5a9aec1d83647f2f}{derivative\+Order}}
+\begin{DoxyCompactList}\small\item\em Derivative order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data collection for integration. 
+
+\doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} stores function values and derivatives evaluated at integration nodes, along with the associated integration weights.
+
+The class manages function evaluations at integration points and supports efficient computation of integrals involving functions and their derivatives. It serves as a bridge between continuous function representations and discrete numerical computations.
+
+Function derivatives are computed using multi-\/index notation to handle arbitrary spatial dimensions and derivative orders efficiently.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integrator}{approx.\+integrate.\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00022}{22}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a2080e3167f931002d65c48bac0f8dca5}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!IntegrationData@{IntegrationData}}
+\index{IntegrationData@{IntegrationData}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{IntegrationData()}{IntegrationData()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a2080e3167f931002d65c48bac0f8dca5} 
+function approx\+::integrate\+::\+Integration\+Data\+::\+Integration\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{integrator}{, }\item[{Input\+Type}]{order}{, }\item[{Input\+Type}]{func}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data}. 
+
+obj = Integration\+Data(integrator, order) creates an integration data object with the specified integrator and derivative order. Values and
+
+obj = Integration\+Data(integrator, order) creates an integration data object with the specified integrator and derivative order.
+
+Inputs\+: integrator -\/ \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object func -\/ Function object order -\/ Derivative order
+
+Outputs\+: obj -\/ Constructed \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} object 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_af824523a500ca335e37f6b86279973d4}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!setDerivatives@{setDerivatives}}
+\index{setDerivatives@{setDerivatives}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{setDerivatives()}{setDerivatives()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_af824523a500ca335e37f6b86279973d4} 
+function approx\+::integrate\+::\+Integration\+Data\+::set\+Derivatives (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{func}{, }\item[{Input\+Type}]{order}{, }\item[{Input\+Type}]{nodes}{}\end{DoxyParamCaption})}
+
+
+
+Set function derivatives at specified points. 
+
+obj = set\+Derivatives(obj, func, order) computes derivatives of the function {\itshape func} up to order {\itshape order} at the integration points.
+
+obj = set\+Derivatives(obj, func, order, nodes) computes derivatives of the function {\itshape func} up to order {\itshape order} at the specified integration points {\itshape nodes}.
+
+Inputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} object func -\/ Function object with differentiate method order -\/ Derivative order nodes -\/ External integration nodes
+
+Outputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} object \Hypertarget{classapprox_1_1integrate_1_1_integration_data_a5c83cbac54b94dc33d622786e6e18d57}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!setValues@{setValues}}
+\index{setValues@{setValues}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{setValues()}{setValues()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a5c83cbac54b94dc33d622786e6e18d57} 
+function approx\+::integrate\+::\+Integration\+Data\+::set\+Values (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{func}{, }\item[{Input\+Type}]{nodes}{}\end{DoxyParamCaption})}
+
+
+
+Set the function values at specified points. 
+
+obj = set\+Values(obj, func) evaluates the function {\itshape func} at the integration points and stores the results in the values property.
+
+obj = set\+Values(obj, func, nodes) evaluates the function {\itshape func} at the specified integration points {\itshape nodes} and stores the results in the values property.
+
+Inputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} object func -\/ Function object with evaluate method nodes -\/ External integration nodes
+
+Outputs\+: obj -\/ The \doxylink{classapprox_1_1integrate_1_1_integration_data}{Integration\+Data} object 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a271bf650e2f5458e5a9aec1d83647f2f}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!derivativeOrder@{derivativeOrder}}
+\index{derivativeOrder@{derivativeOrder}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{derivativeOrder}{derivativeOrder}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a271bf650e2f5458e5a9aec1d83647f2f} 
+Property approx\+::integrate\+::\+Integration\+Data\+::derivative\+Order}
+
+
+
+Derivative order. 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00050}{50}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a68bbf2130d796e8df90963e68d14a99e}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!derivatives@{derivatives}}
+\index{derivatives@{derivatives}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{derivatives}{derivatives}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a68bbf2130d796e8df90963e68d14a99e} 
+Property approx\+::integrate\+::\+Integration\+Data\+::derivatives}
+
+
+
+Function derivatives (cell of n\+Codims x n\+Points x n\+Derivatives) 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00032}{32}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_ae35d5f68239bfb879b09f86df28bac9f}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!integrator@{integrator}}
+\index{integrator@{integrator}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{integrator}{integrator}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_ae35d5f68239bfb879b09f86df28bac9f} 
+Property approx\+::integrate\+::\+Integration\+Data\+::integrator}
+
+
+
+\doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object. 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00026}{26}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a4aad5013210062bb2699b4f1254375b7}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!nDerivatives@{nDerivatives}}
+\index{nDerivatives@{nDerivatives}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{nDerivatives}{nDerivatives}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a4aad5013210062bb2699b4f1254375b7} 
+Property approx\+::integrate\+::\+Integration\+Data\+::n\+Derivatives}
+
+
+
+Number of all derivatives (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00047}{47}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_ae1ee5d0d2e367324161bde7ee32ea92d}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!nodes@{nodes}}
+\index{nodes@{nodes}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_ae1ee5d0d2e367324161bde7ee32ea92d} 
+Property approx\+::integrate\+::\+Integration\+Data\+::nodes}
+
+
+
+Integration nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00038}{38}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a65366c98ca944e65072281f68ea18587}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!nPoints@{nPoints}}
+\index{nPoints@{nPoints}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{nPoints}{nPoints}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a65366c98ca944e65072281f68ea18587} 
+Property approx\+::integrate\+::\+Integration\+Data\+::n\+Points}
+
+
+
+Number of integration points (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00044}{44}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_a955bda36c71607016d9e0a533d1678ea}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!values@{values}}
+\index{values@{values}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{values}{values}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_a955bda36c71607016d9e0a533d1678ea} 
+Property approx\+::integrate\+::\+Integration\+Data\+::values}
+
+
+
+Function values (n\+Codims x n\+Points) 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00029}{29}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integration_data_aad0e228dd91f62c4073ba31dc161e591}\index{approx::integrate::IntegrationData@{approx::integrate::IntegrationData}!weights@{weights}}
+\index{weights@{weights}!approx::integrate::IntegrationData@{approx::integrate::IntegrationData}}
+\doxysubsubsection{\texorpdfstring{weights}{weights}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_data_aad0e228dd91f62c4073ba31dc161e591} 
+Property approx\+::integrate\+::\+Integration\+Data\+::weights}
+
+
+
+Integration weights. 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_data_8m_source_l00041}{41}} of file \mbox{\hyperlink{_integration_data_8m_source}{Integration\+Data.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_integration_data_8m}{Integration\+Data.\+m}}\end{DoxyCompactItemize}

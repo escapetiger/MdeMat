@@ -1,0 +1,39 @@
+\doxysection{gauss\+Legendre.\+m}
+\hypertarget{gauss_legendre_8m_source}{}\label{gauss_legendre_8m_source}\index{+core/+geometry/private/gaussLegendre.m@{+core/+geometry/private/gaussLegendre.m}}
+\mbox{\hyperlink{gauss_legendre_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00001}00001\ function\ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ad248c5e555ec6e29f040b77c8900c4e5}{gaussLegendre}}(np,\ options)}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00002}00002\ \%\ GAUSSLEGENDRE\ Generate\ 1D\ Gauss-\/Legendre\ nodes\ and\ weights.}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00004}00004\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ad248c5e555ec6e29f040b77c8900c4e5}{gaussLegendre}}(n)\ generates\ n\ Gauss-\/Legendre\ nodes}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00005}00005\ \%\ \ \ and\ corresponding\ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [0,\ 1].}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00007}00007\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ad248c5e555ec6e29f040b77c8900c4e5}{gaussLegendre}}(n,\ lower=lower,\ upper=upper)\ generates\ nodes\ and}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00008}00008\ \%\ \ \ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [lower,\ upper].}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00010}00010\ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ np\ (1,1)\ \{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ options.lower\ (1,1)\ \{mustBeReal\}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ options.upper\ (1,1)\ \{mustBeReal\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00014}\mbox{\hyperlink{namespacecore_1_1geometry_ad248c5e555ec6e29f040b77c8900c4e5}{00014}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00016}00016\ \ \ \ \ a\ =\ options.lower;}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00017}00017\ \ \ \ \ b\ =\ options.upper;}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(a\ <=\ b,\ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'a\ <=\ b\ is\ required.'});}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{if}\ a\ ==\ b}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ [x,\ w]\ =\ deal(a,\ 1);}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00024}00024\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00026}00026\ \ \ \ \ beta\ =\ 0.5\ *\ (1\ -\/\ (2\ *\ (1:np\ -\/\ 1)).\string^(-\/2)).\string^(-\/0.5);}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00027}00027\ \ \ \ \ T\ =\ diag(beta,\ 1)\ +\ diag(beta,\ -\/1);}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00028}00028\ \ \ \ \ [V,\ D]\ =\ eig(T);}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00029}00029\ \ \ \ \ x\ =\ (diag(D).\textcolor{stringliteral}{'\ +\ 1)\ /\ 2;}}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ w\ =\ V(1,\ :).\string^2;}}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ x\ =\ a\ +\ (b\ -\/\ a)\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ w\ =\ w\ *\ (b\ -\/\ a);}}
+\DoxyCodeLine{\Hypertarget{gauss_legendre_8m_source_l00033}00033\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

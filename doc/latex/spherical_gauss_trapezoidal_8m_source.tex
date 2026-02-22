@@ -1,0 +1,52 @@
+\doxysection{spherical\+Gauss\+Trapezoidal.\+m}
+\hypertarget{spherical_gauss_trapezoidal_8m_source}{}\label{spherical_gauss_trapezoidal_8m_source}\index{+core/+geometry/private/sphericalGaussTrapezoidal.m@{+core/+geometry/private/sphericalGaussTrapezoidal.m}}
+\mbox{\hyperlink{spherical_gauss_trapezoidal_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00001}00001\ function\ [X,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aaa837b12479a3d47fdb2d62912adbdae}{sphericalGaussTrapezoidal}}(np,\ nd,\ options)}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00002}00002\ \%\ SPHERICALGAUSSTRAPEZOIDAL\ Generate\ Gauss-\/Trapezoidal\ quadrature\ rule\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00003}00003\ \%\ hypersphere.}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00005}00005\ \%\ \ \ [X,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aaa837b12479a3d47fdb2d62912adbdae}{sphericalGaussTrapezoidal}}(n,\ d)\ generates\ integration\ nodes}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00006}00006\ \%\ \ \ and\ weights\ \textcolor{keywordflow}{for}\ a\ unit\ d-\/dimensional\ hypersphere\ centered\ at\ the}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00007}00007\ \%\ \ \ origin.}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00009}00009\ \%\ \ \ [X,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aaa837b12479a3d47fdb2d62912adbdae}{sphericalGaussTrapezoidal}}(n,\ d,\ center=center,\ radius=radius)}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00010}00010\ \%\ \ \ generates\ nodes\ \textcolor{keywordflow}{for}\ a\ hypersphere\ with\ specified\ parameters.}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00012}00012\ arguments}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00013}00013\ \ \ \ \ np\{mustBeVector,\ mustBePositive\}}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00014}00014\ \ \ \ \ nd(1,\ 1)\ \{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00015}\mbox{\hyperlink{namespacecore_1_1geometry_aaa837b12479a3d47fdb2d62912adbdae}{00015}}\ \ \ \ \ options.radius(1,\ 1)\ \{mustBePositive\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00016}00016\ end}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00018}00018\ r\ =\ options.radius;}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00020}00020\ \textcolor{keywordflow}{if}\ nd\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(numel(np)\ ==\ 1\ \&\&\ np\ ==\ 2,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'For\ 0-\/sphere,\ np\ must\ be\ 2.'});}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00023}00023\ \ \ \ \ X\ =\ [-\/r,\ r];}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00024}00024\ \ \ \ \ w\ =\ [1,\ 1];}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00025}00025\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00028}00028\ k\ =\ nd\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00029}00029\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(numel(np)\ ==\ k,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00030}00030\ \ \ \ \ \textcolor{stringliteral}{'np\ must\ have\ \%d\ elements\ for\ \%d-\/dimensional\ sphere.'},\ k,\ nd);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00032}00032\ X\ =\ cell(1,\ k);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00033}00033\ w\ =\ cell(1,\ k);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00035}00035\ \textcolor{keywordflow}{for}\ i\ =\ 1:k\ -\/\ 1}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00036}00036\ \ \ \ \ [X\{i\},\ w\{i\}]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ab0d3bdff3f6556f92d9ae3001d19626f}{gaussLobatto}}(np(i),\ lower\ =\ -\/1,\ upper\ =\ 1);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00037}00037\ end}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00039}00039\ [X\{k\},\ w\{k\}]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ac9425cdbb3e9a6430f996402d3751a6a}{periodicTrapezoidal}}(np(k),\ lower\ =\ 0,\ upper\ =\ 2*pi);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00041}00041\ [X\{1:k\}]\ =\ ndgrid(X\{:\});}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00042}00042\ [w\{1:k\}]\ =\ ndgrid(w\{:\});}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00043}00043\ X\ =\ reshape(cat(k+1,\ X\{:\}),\ [],\ k).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00044}00044\ \textcolor{stringliteral}{w\ =\ r\string^k\ *\ prod(reshape(cat(k+1,\ w\{:\}),\ [],\ k).'},\ 1);}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00045}00045\ w\ =\ w(:).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{spherical_gauss_trapezoidal_8m_source_l00046}00046\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

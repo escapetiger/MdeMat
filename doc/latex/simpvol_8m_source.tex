@@ -1,0 +1,37 @@
+\doxysection{simpvol.\+m}
+\hypertarget{simpvol_8m_source}{}\label{simpvol_8m_source}\index{distmesh/simpvol.m@{distmesh/simpvol.m}}
+\mbox{\hyperlink{simpvol_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00001}00001\ function\ v=simpvol(p,t)}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00002}00002\ \%SIMPVOL\ Simplex\ volume.}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00003}00003\ \%\ \ \ V=SIMPVOL(P,T)}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00005}00005\ \%\ \ \ Copyright\ (C)\ 2004-\/2012\ Per-\/Olof\ Persson.\ See\ COPYRIGHT.TXT\ \textcolor{keywordflow}{for}\ details.}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00007}00007\ switch\ size(p,2)}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00008}00008\ \ case\ 1}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00009}00009\ \ \ d12=p(t(:,2),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00010}00010\ \ \ v=d12;}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00011}00011\ \ case\ 2}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00012}00012\ \ \ d12=p(t(:,2),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00013}00013\ \ \ d13=p(t(:,3),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00014}00014\ \ \ v=(d12(:,1).*d13(:,2)-\/d12(:,2).*d13(:,1))/2;}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00015}00015\ \ case\ 3}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00016}00016\ \ \ d12=p(t(:,2),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00017}00017\ \ \ d13=p(t(:,3),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00018}00018\ \ \ d14=p(t(:,4),:)-\/p(t(:,1),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00019}00019\ \ \ v=dot(cross(d12,d13,2),d14,2)/6;}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00020}00020\ \ otherwise}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00021}00021\ \ \ v=zeros(size(t,1),1);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00022}00022\ \ \ for\ ii=1:size(t,1)}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00023}00023\ \ \ \ \ A=zeros(size(p,2)+1);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00024}00024\ \ \ \ \ A(:,1)=1;}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00025}00025\ \ \ \ \ for\ jj=1:size(p,2)+1}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00026}00026\ \ \ \ \ \ \ A(jj,2:end)=p(t(ii,jj),:);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00027}00027\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00028}00028\ \ \ \ \ v(ii)=det(A);}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00029}00029\ \ \ end}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00030}00030\ \ \ v=v/factorial(size(p,2));}
+\DoxyCodeLine{\Hypertarget{simpvol_8m_source_l00031}00031\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,168 @@
+\doxysection{test\+\_\+gauss\+\_\+hermite\+\_\+exactness.\+m}
+\hypertarget{test__gauss__hermite__exactness_8m_source}{}\label{test__gauss__hermite__exactness_8m_source}\mbox{\hyperlink{test__gauss__hermite__exactness_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00001}00001\ function\ \mbox{\hyperlink{test__gauss__hermite__exactness_8m_a5b2ac525578ec166024b1a5ff07ccbf1}{test\_gauss\_hermite\_exactness}}()}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00002}00002\ \%\ TEST\_GAUSS\_HERMITE\_EXACTNESS\ Test\ exactness\ of\ GaussHermiteRule\ implementation.}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00004}00004\ \%\ \ \ This\ function\ tests\ whether\ the\ GaussHermiteRule\ correctly\ integrates}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00005}00005\ \%\ \ \ polynomials\ up\ to\ the\ expected\ degree.\ For\ n-\/point\ Gauss-\/Hermite}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00006}00006\ \%\ \ \ quadrature,\ the\ rule\ should\ be\ exact\ \textcolor{keywordflow}{for}\ polynomials\ of\ degree\ ≤\ 2n-\/1.}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00008}00008\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Testing\ GaussHermiteRule\ Exactness\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00009}\mbox{\hyperlink{test__gauss__hermite__exactness_8m_a5b2ac525578ec166024b1a5ff07ccbf1}{00009}}\ \ \ \ \ fprintf(\textcolor{stringliteral}{'==================================\(\backslash\)n\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00011}00011\ \ \ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_hermite_rule}{GaussHermiteRule}}(1);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00012}00012\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00013}00013\ \ \ \ \ \%\ Test\ different\ numbers\ of\ points}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00014}00014\ \ \ \ \ test\_points\ =\ [1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 8,\ 10];}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00015}00015\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{for}\ np\ =\ test\_points}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'Testing\ \%d-\/point\ rule\ (should\ be\ exact\ up\ to\ degree\ \%d):\(\backslash\)n'},\ np,\ 2*np-\/1);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ test\_polynomial\_exactness(rule,\ np);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00020}00020\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00021}00021\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00022}00022\ \ \ \ \ \%\ Test\ specific\ integrals\ with\ known\ analytical\ results}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00023}00023\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Testing\ Known\ Analytical\ Integrals:\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00024}00024\ \ \ \ \ fprintf(\textcolor{stringliteral}{'==================================\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00025}00025\ \ \ \ \ test\_known\_integrals(rule);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00028}00028\ function\ test\_polynomial\_exactness(rule,\ np)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00029}00029\ \ \ \ \ \%\ Test\ exactness\ \textcolor{keywordflow}{for}\ polynomials\ up\ to\ degree\ 2*np-\/1}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00030}00030\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00031}00031\ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}([-\/inf,\ inf]);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00032}00032\ \ \ \ \ max\_exact\_degree\ =\ 2*np\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00033}00033\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00034}00034\ \ \ \ \ \%\ Generate\ quadrature\ points\ and\ weights}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00035}00035\ \ \ \ \ [x,\ w]\ =\ rule.generate(G,\ np);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00036}00036\ \ \ \ \ x\ =\ x(:)\textcolor{stringliteral}{';\ \ \%\ Row\ vector}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ w\ =\ w(:)'};\ \ \%\ Row\ vector}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00038}00038\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00039}00039\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Points:\ '});\ fprintf(\textcolor{stringliteral}{'\%.4f\ '},\ x);\ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00040}00040\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Weights:\ '});\ fprintf(\textcolor{stringliteral}{'\%.4f\ '},\ w);\ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00041}00041\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Weight\ sum:\ \%.8f\(\backslash\)n'},\ sum(w));}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00042}00042\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00043}00043\ \ \ \ \ \%\ Test\ polynomials\ x\string^k\ \textcolor{keywordflow}{for}\ k\ =\ 0,\ 1,\ 2,\ ...,\ max\_exact\_degree\ +\ 2}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00044}00044\ \ \ \ \ all\_exact\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00045}00045\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{for}\ k\ =\ 0:(max\_exact\_degree\ +\ 3)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \%\ Compute\ numerical\ integral\ of\ x\string^k\ with\ Gauss-\/Hermite\ weight}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ k\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ integrand\_vals\ =\ ones(size(x));}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ integrand\_vals\ =\ x.\string^k;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ numerical\ =\ sum(w\ .*\ integrand\_vals);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \%\ Analytical\ result\ \textcolor{keywordflow}{for}\ ∫\ x\string^k\ *\ exp(-\/x²/2)/√(2π)\ dx}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ analytical\ =\ compute\_analytical\_moment(k);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ error\ =\ abs(numerical\ -\/\ analytical);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ relative\_error\ =\ error\ /\ max(abs(analytical),\ 1e-\/16);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \%\ Determine\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{this}\ should\ be\ exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ should\_be\_exact\ =\ (k\ <=\ max\_exact\_degree);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ should\_be\_exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ tolerance\ =\ 1e-\/14;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ tolerance\ =\ 1e-\/10;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ is\_exact\ =\ error\ <\ tolerance;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ status\ =\ \textcolor{stringliteral}{''};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ should\_be\_exact\ \&\&\ is\_exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ status\ =\ \textcolor{stringliteral}{'PASS\ (exact)'};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ elseif\ should\_be\_exact\ \&\&\ \string~is\_exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ status\ =\ \textcolor{stringliteral}{'FAIL\ (should\ be\ exact)'};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ all\_exact\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ elseif\ \string~should\_be\_exact\ \&\&\ is\_exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ status\ =\ \textcolor{stringliteral}{'PASS\ (unexpectedly\ exact)'};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ status\ =\ \textcolor{stringliteral}{'PASS\ (approx)'};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ x\string^\%d:\ numerical=\%.8e,\ analytical=\%.8e,\ error=\%.2e\ [\%s]\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ k,\ numerical,\ analytical,\ error,\ status);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00085}00085\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00086}00086\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{if}\ all\_exact}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Result:\ EXACTNESS\ VERIFIED\ for\ polynomials\ up\ to\ degree\ \%d\(\backslash\)n'},\ max\_exact\_degree);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Result:\ EXACTNESS\ FAILED\ -\/\ check\ implementation\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00091}00091\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00092}00092\ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00094}00094\ function\ test\_known\_integrals(rule)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00095}00095\ \ \ \ \ \%\ Test\ specific\ integrals\ with\ known\ results}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00097}00097\ \ \ \ \ test\_cases\ =\ \{}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ 1\ dx\ (total\ probability)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ ones(size(x)),\ \textcolor{stringliteral}{'expected'},\ 1.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ x\ dx\ (mean)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ x,\ \textcolor{stringliteral}{'expected'},\ 0.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ x²\ dx\ (variance)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ x.\string^2,\ \textcolor{stringliteral}{'expected'},\ 1.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ x³\ dx\ (3rd\ moment)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ x.\string^3,\ \textcolor{stringliteral}{'expected'},\ 0.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ x⁴\ dx\ (4th\ moment)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ x.\string^4,\ \textcolor{stringliteral}{'expected'},\ 3.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ x⁶\ dx\ (6th\ moment)'},\ \textcolor{stringliteral}{'func'},\ @(x)\ x.\string^6,\ \textcolor{stringliteral}{'expected'},\ 15.0)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'∫\ exp(-\/x²/4)\ dx'},\ \textcolor{stringliteral}{'func'},\ @(x)\ exp(-\/x.\string^2/4),\ \textcolor{stringliteral}{'expected'},\ sqrt(2*pi))}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00105}00105\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00106}00106\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00107}00107\ \ \ \ \ np\ =\ 12;\ \ \%\ Use\ enough\ points\ \textcolor{keywordflow}{for}\ accuracy}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00108}00108\ \ \ \ \ [x,\ w]\ =\ rule.generate1d(np);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00109}00109\ \ \ \ \ x\ =\ x(:)\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ w\ =\ w(:)'};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00111}00111\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00112}00112\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Using\ \%d\ quadrature\ points\(\backslash\)n\(\backslash\)n'},\ np);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00113}00113\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00114}00114\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(test\_cases)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ tc\ =\ test\_cases\{i\};}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \%\ Compute\ numerical\ integral}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ integrand\_vals\ =\ tc.func(x);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ numerical\ =\ sum(w\ .*\ integrand\_vals);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \%\ Compare\ with\ expected}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ error\ =\ abs(numerical\ -\/\ tc.expected);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ relative\_error\ =\ error\ /\ max(abs(tc.expected),\ 1e-\/16);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \%s:\(\backslash\)n'},\ tc.name);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ Numerical:\ \%.8f\(\backslash\)n'},\ numerical);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ Expected:\ \ \%.8f\(\backslash\)n'},\ tc.expected);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ Error:\ \ \ \ \ \%.2e\ (rel:\ \%.2e)\(\backslash\)n'},\ error,\ relative\_error);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ error\ <\ 1e-\/12}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ Status:\ \ \ \ PASS\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ \ \ Status:\ \ \ \ FAIL\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00136}00136\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00137}00137\ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00139}00139\ function\ moment\ =\ compute\_analytical\_moment(k)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00140}00140\ \ \ \ \ \%\ Compute\ analytical\ moments\ of\ standard\ normal\ distribution}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00141}00141\ \ \ \ \ \%\ ∫\ x\string^k\ *\ exp(-\/x²/2)/√(2π)\ dx}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00142}00142\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{if}\ mod(k,\ 2)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \%\ Odd\ moments\ are\ zero}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ moment\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \%\ Even\ moments:\ (k-\/1)!!\ =\ (k-\/1)(k-\/3)(k-\/5)...3·1}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ k\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ moment\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ moment\ =\ double\_factorial(k\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00153}00153\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00154}00154\ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00156}00156\ function\ result\ =\ double\_factorial(n)}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00157}00157\ \ \ \ \ \%\ Compute\ \textcolor{keywordtype}{double}\ factorial\ n!!\ =\ n(n-\/2)(n-\/4)...}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00158}00158\ \ \ \ \ \textcolor{keywordflow}{if}\ n\ <=\ 0}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ result\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00160}00160\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ result\ =\ n\ *\ double\_factorial(n\ -\/\ 2);}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00162}00162\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{test__gauss__hermite__exactness_8m_source_l00163}00163\ end}
+
+\end{DoxyCode}

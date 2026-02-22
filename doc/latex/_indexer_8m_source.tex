@@ -1,0 +1,37 @@
+\doxysection{Indexer.\+m}
+\hypertarget{_indexer_8m_source}{}\label{_indexer_8m_source}\index{+core/+linalg/Indexer.m@{+core/+linalg/Indexer.m}}
+\mbox{\hyperlink{_indexer_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00001}00001\ classdef\ Indexer\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00002}00002\ \ \ \ \ \%\ INDEXER\ Base\ \textcolor{keyword}{class\ }for\ all\ indexers.}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Indexer\ provides\ foundation\ \textcolor{keywordflow}{for}\ classes\ that\ generate\ indices}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ based\ on\ specific\ schemes.\ Defines\ basic\ properties\ and\ validation}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ methods\ common\ to\ all\ indexers.}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00008}00008\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{MultiIndexer}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{CachedMultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00011}00011\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ Style\ \%\ Storage\ ordering\ style:\ \textcolor{charliteral}{'F'}\ (column-\/major)\ or\ \textcolor{charliteral}{'C'}\ (row-\/major)}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00013}00013\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00015}\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{00015}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}(options)}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INDEXER\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}.}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00019}\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a77dfa8cc3002cd188b6192277539a149}{00019}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}()\ creates\ a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}\ with\ @a\ style\ =\ \textcolor{charliteral}{'F'}.}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}(Name=Value)\ creates\ a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a877b1a14b1bf7500157f4bc4121873ed}{Indexer}}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ options.}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.style\{mustBeTextScalar\}\ =\ \textcolor{charliteral}{'F'}}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Style\ =\ options.style;}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00030}00030\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_indexer_8m_source_l00031}00031\ end}
+
+\end{DoxyCode}

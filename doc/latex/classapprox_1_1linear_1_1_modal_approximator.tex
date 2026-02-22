@@ -1,0 +1,135 @@
+\doxysection{approx\+::linear\+::Modal\+Approximator Class Reference}
+\hypertarget{classapprox_1_1linear_1_1_modal_approximator}{}\label{classapprox_1_1linear_1_1_modal_approximator}\index{approx::linear::ModalApproximator@{approx::linear::ModalApproximator}}
+
+
+Linear approximator based on modal information.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_modal_approximator_a32c88c7b7079b1d1d343a3e1a22b7cec}{set\+Design}} (Input\+Type obj, Input\+Type X, Input\+Type w)
+\begin{DoxyCompactList}\small\item\em Set up the design operator using numerical integration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_modal_approximator_ac27f0461253987c6e96861030671ba67}{embed}} (Input\+Type obj, Input\+Type U, Input\+Type B, Input\+Type w)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space using modal approach. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_aa5e9862dc4a0d5b46f087bd9615e4468}{Linear\+Approximator}} (Input\+Type basis)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1linear_1_1_linear_approximator}{Linear\+Approximator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_ae265e1dd03ca9b82902e5aada4d95e91}{set\+Mass}} (Input\+Type obj, Input\+Type X, Input\+Type w)
+\begin{DoxyCompactList}\small\item\em Set up the mass operator using numerical integration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a9e5649f2daf3d4fe7d0bb7f540f91601}{set\+Design}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set up the design operator for fitting. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a2a6d6b281c88dae6fd8a0cb5e3cac213}{embed}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a53d636fab92463c1ae98a45019ad861c}{eval}} (Input\+Type obj, Input\+Type X, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Evaluate linear approximations at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a2337b45d413595a6994d796d2796f8ae}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type C, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Differentiate linear approximations at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a53519092cc27621995d4bec60c5a9a63}{fit}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Fit data within the linear approximation space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_aa813b8668ab6866b7bafd35caa9913a3}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data onto the linear approximation space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1linear_1_1_modal_approximator_a5d0b34670c774ed07f16afdd953251ff}{Type}} = \textquotesingle{}modal\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Approximator type identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a4c5452d59939ce653587a33977088ec8}{Basis}}
+\begin{DoxyCompactList}\small\item\em Basis functions that span the approximation space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_abba30cf5b204924586306c727ff1e008}{Mass}}
+\begin{DoxyCompactList}\small\item\em Mass matrix for projection operations (square matrix) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a7eb255454102e8260f7f82130d02598a}{Design}}
+\begin{DoxyCompactList}\small\item\em Design matrix for fitting operations (matrix) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a7fae395f127ae51397264608f682e276}{NDofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (scalar) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator}{approx\+::linear\+::\+Linear\+Approximator}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_af1bb5211781b4b188af647a5def528cc}{is\+Well\+Posed}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents a well-\/posed system. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a275e3e5f80ea32233c72acdfb4554fd4}{is\+Overdetermined}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents an overdetermined system. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classapprox_1_1linear_1_1_linear_approximator_a9d2186e282078cf980869182d9ca2d4b}{is\+Underdetermined}} (Input\+Type A)
+\begin{DoxyCompactList}\small\item\em Check if a matrix represents an underdetermined system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Linear approximator based on modal information. 
+
+\doxylink{classapprox_1_1linear_1_1_modal_approximator}{Modal\+Approximator} implements a linear approximation method that uses modal basis functions, such as Legendre, Chebyshev, or Fourier polynomials, etc. The underlying projection and fitting operators coincide in this case. The mass matrix  $M_{ij} = \langle p_i,
+p_j\rangle$ is constructed using numerical integration with specified quadrature points and weights.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1linear_1_1_linear_approximator}{approx.\+linear.\+Linear\+Approximator} 
+
+\doxylink{classapprox_1_1linear_1_1_nodal_approximator}{approx.\+linear.\+Nodal\+Approximator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_modal_approximator_8m_source_l00018}{18}} of file \mbox{\hyperlink{_modal_approximator_8m_source}{Modal\+Approximator.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1linear_1_1_modal_approximator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1linear_1_1_modal_approximator_ac27f0461253987c6e96861030671ba67}\index{approx::linear::ModalApproximator@{approx::linear::ModalApproximator}!embed@{embed}}
+\index{embed@{embed}!approx::linear::ModalApproximator@{approx::linear::ModalApproximator}}
+\doxysubsubsection{\texorpdfstring{embed()}{embed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_modal_approximator_ac27f0461253987c6e96861030671ba67} 
+function approx\+::linear\+::\+Modal\+Approximator\+::embed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{, }\item[{Input\+Type}]{B}{, }\item[{Input\+Type}]{w}{}\end{DoxyParamCaption})}
+
+
+
+Embed data into the latent space using modal approach. 
+
+F = embed(obj, U, B, w) embeds function values into the latent space using the modal approach. Computes the weighted inner product between basis functions and function values at integration points\+:
+
+\[F_i = \langle U, p_i\rangle = \sum_k w_k U_k p_i(x_k)
+\] \Hypertarget{classapprox_1_1linear_1_1_modal_approximator_a32c88c7b7079b1d1d343a3e1a22b7cec}\index{approx::linear::ModalApproximator@{approx::linear::ModalApproximator}!setDesign@{setDesign}}
+\index{setDesign@{setDesign}!approx::linear::ModalApproximator@{approx::linear::ModalApproximator}}
+\doxysubsubsection{\texorpdfstring{setDesign()}{setDesign()}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_modal_approximator_a32c88c7b7079b1d1d343a3e1a22b7cec} 
+function approx\+::linear\+::\+Modal\+Approximator\+::set\+Design (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{w}{}\end{DoxyParamCaption})}
+
+
+
+Set up the design operator using numerical integration. 
+
+obj = set\+Design(obj, X, w) constructs the design matrix using integration points and weights. The (i,j) entry of the design matrix is $\langle p_i, p_j\rangle$ where the inner product is defined by the weighted integration\+:
+
+\[\langle f,g\rangle = \sum_k w_k f(x_k) g(x_k)
+\]. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1linear_1_1_modal_approximator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1linear_1_1_modal_approximator_a5d0b34670c774ed07f16afdd953251ff}\index{approx::linear::ModalApproximator@{approx::linear::ModalApproximator}!Type@{Type}}
+\index{Type@{Type}!approx::linear::ModalApproximator@{approx::linear::ModalApproximator}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily \label{classapprox_1_1linear_1_1_modal_approximator_a5d0b34670c774ed07f16afdd953251ff} 
+Constant Property approx\+::linear\+::\+Modal\+Approximator\+::\+Type = \textquotesingle{}modal\textquotesingle{}}
+
+
+
+Approximator type identifier. 
+
+
+
+Definition at line \mbox{\hyperlink{_modal_approximator_8m_source_l00022}{22}} of file \mbox{\hyperlink{_modal_approximator_8m_source}{Modal\+Approximator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+linear/\mbox{\hyperlink{_modal_approximator_8m}{Modal\+Approximator.\+m}}\end{DoxyCompactItemize}

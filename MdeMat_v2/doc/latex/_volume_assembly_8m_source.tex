@@ -1,0 +1,122 @@
+\doxysection{Volume\+Assembly.\+m}
+\hypertarget{_volume_assembly_8m_source}{}\label{_volume_assembly_8m_source}\index{+approx/+assembly/VolumeAssembly.m@{+approx/+assembly/VolumeAssembly.m}}
+\mbox{\hyperlink{_volume_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00001}00001\ classdef\ VolumeAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ VOLUMEASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ volume\ terms\ in\ finite\ element\ methods.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ VolumeAssembly\ handles\ the\ assembly\ of\ volume\ integral\ terms\ that}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ arise\ in\ finite\ element\ discretizations.\ These\ terms\ represent}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ the\ weak\ form\ contributions\ from\ element\ interiors,\ such\ as}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ diffusion,\ advection,\ and\ reaction\ terms\ in\ partial\ differential}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ equations.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ both\ uniform\ and\ non-\/uniform\ meshes,}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ automatically\ handling\ the\ scaling\ of\ coefficients\ based\ on\ local}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ mesh\ spacing.\ Volume\ terms\ are\ assembled\ \textcolor{keyword}{using\ }element-\/level}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ operators\ and\ accumulated\ into\ global\ sparse\ matrices\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00014}00014\ \textcolor{keyword}{\ \ \ \ }\%\ \ \ appropriate\ connectivity\ information.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ This\ assembly\ process\ is\ fundamental\ to\ finite\ element\ methods,\ as}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ volume\ integrals\ typically\ represent\ the\ dominant\ computational}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ cost\ and\ the\ primary\ source\ of\ system\ matrix\ entries\ in\ most}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ discretizations.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly}{FluxAssembly}},}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{ElementOperator}}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00025}00025\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ function\ b\ =\ scaleConstant(obj,\ dim,\ coe)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCALECONSTANT\ Scale\ constant\ coefficients\ on\ the\ mesh.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ =\ scaleConstant(obj,\ dim,\ coe)\ computes\ scaled}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00030}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ on\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ by\ dividing\ input\ coefficients\ by}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ appropriate\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ spacing\ in\ the\ specified\ dimension.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ scaling\ is\ essential\ \textcolor{keywordflow}{for}\ maintaining\ proper\ units\ and}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ numerical\ consistency\ in\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ formulations.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ scaling\ accounts\ \textcolor{keywordflow}{for}\ the\ Jacobian\ of\ the\ transformation}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ reference\ elements\ to\ physical\ elements,\ ensuring\ that}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ assembled\ operators\ have\ the\ correct\ physical}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimensions\ and\ magnitude.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{VolumeAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dim\ -\/\ Dimension\ index\ \textcolor{keywordflow}{for}\ scaling\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coe\ -\/\ Input\ coefficients\ (scalar\ or\ vector)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Scaled\ coefficient\ vector\ (nElements\ x\ 1)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ \textcolor{keyword}{class}(obj.space.mesh)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'approx.mesh.UniformGrid'}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ obj.scaleConstantOnUniformGrid(dim,\ coe);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'approx.mesh.NonuniformGrid'}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ obj.scaleConstantOnNonuniformGrid(dim,\ coe);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00055}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a331fdb11b7c01dbeda15e192cf19fe6b}{00055}}\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ function\ T\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_ae3407dfaedc91914e2eeeec8f770eaa3}{assembleVolumePartial}}(obj,\ dim,\ coe)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVOLUMEPARTIAL\ Assemble\ volume\ terms\ \textcolor{keywordflow}{for}\ partial}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \textcolor{keyword}{operator}.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_ae3407dfaedc91914e2eeeec8f770eaa3}{assembleVolumePartial}}(obj,\ dim,\ coe)\ creates\ triplets}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ the\ volume\ contribution\ of\ partial\ operators\ along\ the}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimension\ dim\ with\ the\ coefficient\ coe.\ The\ method\ extracts}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/level\ gradient\ operators\ and\ assembles\ them\ into}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ global\ sparse\ matrix\ format\ \textcolor{keyword}{using\ }triplet\ representation.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ assembled\ \textcolor{keyword}{operator}\ corresponds\ to\ the\ weak\ form\ of}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ first-\/order\ derivatives,\ commonly\ arising\ in\ advection}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ terms\ or\ as\ part\ of\ second-\/order\ operators\ like\ diffusion}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ when\ combined\ with\ appropriate\ test\ function\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{VolumeAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dim\ -\/\ Dimension\ index\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coe\ -\/\ Coefficient\ vector\ (nElements\ x\ 1)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ -\/\ Triplet\ matrix\ [row,\ col,\ val]\ \textcolor{keywordflow}{for}\ volume\ terms}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.space.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ obj.space.element.projector;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.operator.gradient;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ G.volumeData(dim).matrix;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ zeros(nl\string^2*ne,\ 3);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00086}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_ae3407dfaedc91914e2eeeec8f770eaa3}{00086}}\ \ \ \ \ \ \ \ \ \ \ \ \ [i,\ j,\ v]\ =\ find(-\/P.project(F));}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ nv\ =\ numel(v);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ 1:(nv\ *\ ne);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ T(k,\ 1)\ =\ reshape(bsxfun(@plus,\ (0:ne\ -\/\ 1)*nl,\ i(:)),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ T(k,\ 2)\ =\ reshape(bsxfun(@plus,\ (0:ne\ -\/\ 1)*nl,\ j(:)),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ T(k,\ 3)\ =\ kron(coe(:),\ v(:));}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00093}00093\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00095}00095\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{private})}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ function\ b\ =\ scaleConstantOnUniformGrid(obj,\ dim,\ coe)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCALECONSTANTONUNIFORMGRID\ Scale\ constant\ coefficients\ on}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ uniform\ grid.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.spacings\{dim\};}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ ones(1,\ ne)\ .*\ coe\ ./\ h;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ b(:);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ function\ b\ =\ scaleConstantOnNonuniformGrid(obj,\ dim,\ coe)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCALECONSTANTONNONUNIFORMGRID\ Scale\ constant\ coefficients\ on}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ non-\/uniform\ grid.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ obj.space.mesh.spacings;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ [h\{:\}]\ =\ ndgrid(h\{:\});}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ coe\ ./\ h\{dim\}(:);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ b(:);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00115}00115\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00116}00116\ end}
+
+\end{DoxyCode}

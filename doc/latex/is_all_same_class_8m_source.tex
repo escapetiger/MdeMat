@@ -1,0 +1,19 @@
+\doxysection{is\+All\+Same\+Class.\+m}
+\hypertarget{is_all_same_class_8m_source}{}\label{is_all_same_class_8m_source}\index{+core/+except/isAllSameClass.m@{+core/+except/isAllSameClass.m}}
+\mbox{\hyperlink{is_all_same_class_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00001}00001\ function\ tf\ =\ \mbox{\hyperlink{namespacecore_1_1except_a401b7383ca1b9614d973c78dc30c37a0}{isAllSameClass}}(varargin)}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00002}00002\ \%\ ISALLSAMECLASS\ Check\ \textcolor{keywordflow}{if}\ all\ inputs\ belong\ to\ the\ same\ \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00004}00004\ \%\ \ \ tf\ =\ \mbox{\hyperlink{namespacecore_1_1except_a401b7383ca1b9614d973c78dc30c37a0}{isAllSameClass}}(X1,\ X2,\ ...)\ returns\ true\ if\ all\ inputs\ belong\ to}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00005}00005\ \%\ \ \ the\ same\ class.\ For\ a\ single\ input\ argument,\ always\ returns\ true.}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00007}00007\ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00008}00008\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.isAllClass}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00010}00010\ firstClass\ =\ class(varargin\{1\});}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00011}00011\ tf\ =\ all(cellfun(@(x)\ strcmp(\textcolor{keyword}{class}(x),\ firstClass),\ varargin));}
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{is_all_same_class_8m_source_l00013}\mbox{\hyperlink{namespacecore_1_1except_a401b7383ca1b9614d973c78dc30c37a0}{00013}}\ end}
+
+\end{DoxyCode}

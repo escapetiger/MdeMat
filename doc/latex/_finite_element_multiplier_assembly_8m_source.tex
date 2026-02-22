@@ -1,0 +1,101 @@
+\doxysection{Finite\+Element\+Multiplier\+Assembly.\+m}
+\hypertarget{_finite_element_multiplier_assembly_8m_source}{}\label{_finite_element_multiplier_assembly_8m_source}\index{+approx/+assembly/FiniteElementMultiplierAssembly.m@{+approx/+assembly/FiniteElementMultiplierAssembly.m}}
+\mbox{\hyperlink{_finite_element_multiplier_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00001}00001\ classdef\ FiniteElementMultiplierAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly}{FiniteElementAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENTMULTIPLIERASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ finite\ element}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00003}00003\ \ \ \ \ \%\ multipliers.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ FiniteElementMultiplierAssembly\ provides\ functionality\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ assembling\ matrices\ from\ multipliers\ in\ finite\ element}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ formulations.\ This\ \textcolor{keyword}{class\ }handles\ both\ constant\ coefficient\ and}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ spatially\ varying\ coefficient\ multiplication\ operators.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly}{FiniteElementAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00013}00013\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ function\ G\ =\ assembleMatrix(obj,\ field,\ options)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00015}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly}{00015}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIX\ Assemble\ matrix\ with\ a\ fixed\ field.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_a0f436255e44ebf4fc299f7812659f3eb}{assembleMatrix}}(obj,\ field)\ assembles\ the\ global\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ the\ multiplication\ \textcolor{keyword}{operator}\ with\ field\ coefficients\ @a\ field.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_a0f436255e44ebf4fc299f7812659f3eb}{assembleMatrix}}(obj,\ field,\ options)\ passes\ additional}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ arguments\ through\ @a\ options.args\ to\ function\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly}{FiniteElementMultiplierAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\{mustBeA(field,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.args\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_a0f436255e44ebf4fc299f7812659f3eb}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(field,\ \textcolor{stringliteral}{'function\_handle'})}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_ac0e6384a30c3bb3e0e205b89cf02f1d4}{assemblePointwiseMatrix}}(field,\ options.args\{:\});}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleConstantMatrix(field);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00035}00035\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00037}00037\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ function\ G\ =\ assembleConstantMatrix(obj,\ field)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLECONSTANTMATRIX\ Assemble\ matrix\ with\ constant\ field.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ assembleConstantMatrix(obj,\ field)\ assembles\ the\ global}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ for\ the\ multiplication\ operator\ with\ constant\ field}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ @a\ field\ using\ a\ diagonal\ matrix\ representation.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly}{FiniteElementMultiplierAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ ng\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.Space.NLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isscalar(field)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00054}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_af1e44f5fcc265cc79fc3540923304e27}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ =\ repmat(field,\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NMeshElements,\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ spdiags(kron(field(:),\ ones(nl,\ 1)),\ 0,\ ng,\ ng);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_ac0e6384a30c3bb3e0e205b89cf02f1d4}{assemblePointwiseMatrix}}(obj,\ field,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEPOINTWISEMATRIX\ Assemble\ matrix\ with\ spatially\ varying\ field.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_ac0e6384a30c3bb3e0e205b89cf02f1d4}{assemblePointwiseMatrix}}(obj,\ field,\ varargin)\ assembles}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ global\ matrix\ for\ the\ multiplication\ operator\ with}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spatially\ varying\ field\ coefficients\ @a\ field\ using\ volume}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ with\ weighted\ mass\ matrices.}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly}{FiniteElementMultiplierAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ \{mustBeA(field,\ \textcolor{stringliteral}{'function\_handle'})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ (Repeating)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varargin}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ nq\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.Volume.NPoints;}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ obj.Space.NMeshElements;}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ xRef\ =\ obj.Space.Element.Volume.Nodes;}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ obj.Space.feval(field,\ xRef,\ args\ =\ varargin);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00080}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_multiplier_assembly_ac0e6384a30c3bb3e0e205b89cf02f1d4}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ reshape(A,\ nq,\ []);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ W0\ =\ obj.Space.Element.Volume.Weights;\ \%\ (1,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ W0\ =\ W0(:)\ .*\ A;\ \%\ (nq,\ ne)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ zeros(nq,\ nq,\ ne);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ [i,\ j]\ =\ ndgrid(1:nq,\ 1:ne);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ sub2ind([nq,\ nq,\ ne],\ i,\ i,\ j);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ W(I)\ =\ W0(:);}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.Space.Element.Volume.Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.Space.Element.Volume.Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ LA\ =\ pagemtimes(pagemtimes(V,\ W),\ U.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ LA\ =\ obj.Space.Element.Approximator.project(LA);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ LA\ =\ reshape(LA,\ size(V,\ 1),\ size(U,\ 1),\ []);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.createMatrix(LA);}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_finite_element_multiplier_assembly_8m_source_l00095}00095\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

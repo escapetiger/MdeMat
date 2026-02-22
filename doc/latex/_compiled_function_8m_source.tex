@@ -1,0 +1,131 @@
+\doxysection{Compiled\+Function.\+m}
+\hypertarget{_compiled_function_8m_source}{}\label{_compiled_function_8m_source}\index{+core/+function/CompiledFunction.m@{+core/+function/CompiledFunction.m}}
+\mbox{\hyperlink{_compiled_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00001}00001\ classdef\ CompiledFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00002}00002\ \ \ \ \ \%\ COMPILEDFUNCTION\ Base\ \textcolor{keyword}{class\ }for\ all\ compiled\ functions.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ CompiledFunction\ provides\ a\ bridge\ between\ symbolic\ function}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ definitions\ and\ efficient\ numerical\ evaluation\ by\ automatically}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ loading\ precompiled\ function\ handles\ and\ metadata\ from\ the}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ configuration\ directory.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ automatic\ metadata\ discovery,\ caching,\ and}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ efficient\ function\ evaluation\ \textcolor{keyword}{using\ }precompiled\ function\ handles}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ stored\ in\ MAT\ files.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00013}00013\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00016}00016\ \ \ \ \ properties\ (Constant,\ Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ MetaPath\ =\ '+\mbox{\hyperlink{namespacecore}{core}}/+symbolic/metadata'\ \%\ Directory\ containing\ metadata\ files}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ MetaExt\ =\ '.mat'\ \%\ File\ extension\ for\ metadata\ files}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00019}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{00019}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00021}00021\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab14cbe1bcc03237a2fc63bb5caad7893}{Metadata}}\ \%\ Loaded\ metadata\ structure\ containing\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ handles}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00023}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a0768e22cd41a7e4dffdfa9afc5703d25}{00023}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00025}00025\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00026}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a2b1da6a96d6561affc2eac03af7044f5}{00026}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{CompiledFunction}}(nDims,\ nCodims,\ metaName)}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPILEDFUNCTION\ Constructor\ for\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{CompiledFunction}}\ class.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{CompiledFunction}}(nDims,\ nCodims,\ metaName)\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{CompiledFunction}}\ with\ specified\ input\ dimension\ @a\ nDims,}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ output\ dimension\ @a\ nCodims,\ and\ metadata\ file\ @a\ metaName.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00032}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab14cbe1bcc03237a2fc63bb5caad7893}{00032}}\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nDims(1,\ 1)\ \{mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nCodims(1,\ 1)\ \{mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metaName\{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}(nDims=nDims,\ nCodims=nCodims);}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.load(metaName);}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ function\ obj\ =\ load(obj,\ fileName)}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOAD\ Load\ compiled\ metadata\ from\ specified\ file.}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00046}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a05fd058b5a7996ab4b93934e2435b26b}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab25d37973aca8ad5ceb21215fb9d6c06}{load}}(obj,\ fileName)\ loads\ precompiled\ \mbox{\hyperlink{namespacecore_1_1function}{function}}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metadata\ from\ the\ specified\ file\ and\ updates\ the\ \textcolor{keywordtype}{object}\textcolor{stringliteral}{'s}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ dimensions\ based\ on\ the\ loaded\ metadata.}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00049}00049\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.function.CompiledFunction}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileName\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00054}00054\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fileName\ =\ char(fileName);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ \string~endsWith(fileName,\ obj.MetaExt)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileName\ =\ [fileName,\ obj.MetaExt];}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fullPath\ =\ fullfile(obj.MetaPath,\ fileName);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(exist(fullPath,\ '}file\textcolor{stringliteral}{')\ ==\ 2,\ ...}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}FileNotFound\textcolor{stringliteral}{',\ '}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab14cbe1bcc03237a2fc63bb5caad7893}{Metadata}}\ file\ not\ found:\ \%s\textcolor{stringliteral}{',\ fullPath);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ data\ =\ load(fullPath,\ '}metadata\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00065}00065\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00066}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab25d37973aca8ad5ceb21215fb9d6c06}{00066}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(isfield(data,\ '}metadata\textcolor{stringliteral}{'),\ ...}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}InvalidFile\textcolor{stringliteral}{',\ '}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_ab14cbe1bcc03237a2fc63bb5caad7893}{Metadata}}\ file\ must\ contain\ a\ metadata\ field.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00068}00068\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nc\ =\ obj.NCodims;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata\ =\ data.metadata;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata.nDims\ =\ nd;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata.NCodims\ =\ nc;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata.variables\ =\ metadata.variables(1:nd);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata.expressions\ =\ metadata.expressions(1:nc);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata.handles\ =\ metadata.handles(1:nc,\ 1:max(2,\ nc));}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Metadata\ =\ metadata;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00080}00080\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ protected)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ Y\ =\ evalImpl(obj,\ X)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALIMPL\ Implementation\ of\ function\ evaluation.}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ evalImpl(obj,\ X)\ evaluates\ the\ compiled\ function}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ the\ specified\ points\ using\ the\ loaded\ metadata\ handles.}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00087}00087\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ handles\ =\ obj.Metadata.handles;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ zeros(obj.NCodims,\ size(X,\ 2));}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00090}00090\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ mat2cell(X,\ ones(1,\ size(X,\ 1)),\ size(X,\ 2));}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00092}00092\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:size(handles,\ 1)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ handles\{j,\ 1\};}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(f),\ Y(j,\ :)\ =\ f(Z\{:\});\ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00098}00098\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ dY\ =\ diffImpl(obj,\ X,\ order)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFFIMPL\ Implementation\ of\ function\ derivative}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ evaluation.}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ =\ diffImpl(obj,\ X,\ order)\ computes\ derivatives}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ the\ compiled\ function\ at\ the\ specified\ points\ using}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ precompiled\ derivative\ handles\ from\ the\ loaded\ metadata.}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00107}\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a9496a4440c81e07071d63a3c16c2c814}{00107}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ handles\ =\ obj.Metadata.handles;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00108}00108\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ maxOrder\ =\ size(handles,\ 2)\ -\/\ 1;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00110}00110\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ m\ =\ sum(order);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00112}00112\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(m\ <=\ maxOrder,\ '}InvalidInput\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Derivative\ order\ \%d\ exceeds\ maximum\ available\ order\ \%d.\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m,\ maxOrder);}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00116}00116\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ k\ =\ m\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ zeros(obj.NCodims,\ size(X,\ 2));}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:size(handles,\ 1)}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ handles\{j,\ k\};}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(f),\ dY(j,\ :)\ =\ f(X);\ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_compiled_function_8m_source_l00125}00125\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

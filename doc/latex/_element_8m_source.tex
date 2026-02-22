@@ -1,0 +1,127 @@
+\doxysection{Element.\+m}
+\hypertarget{_element_8m_source}{}\label{_element_8m_source}\index{+approx/+element/Element.m@{+approx/+element/Element.m}}
+\mbox{\hyperlink{_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00001}00001\ classdef\ Element\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00002}00002\ \ \ \ \ \%\ ELEMENT\ Base\ \textcolor{keyword}{class\ }for\ element\ representations.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Element\ encapsulates\ geometry\ information\ and\ function\ space\ used}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ in\ Galerkin\ methods.\ The\ main\ idea\ of\ Galerkin\ methods\ is\ to}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ approximate\ an\ infinite-\/dimensional\ function\ space\ by\ a}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ finite-\/dimensional\ function\ space,\ called\ the\ \textcolor{stringliteral}{"{}ansatz\ space"{}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ In\ the\ spectral\ method\ (SPM),\ the\ ansatz\ space\ consists\ of}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ high-\/order\ polynomials\ on\ an\ element.\ In\ the\ finite\ element\ method}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ (FEM),\ the\ ansatz\ space\ comprises\ piecewise\ low-\/order\ polynomials}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ over\ a\ mesh\ of\ elements.\ Element\ serves\ as\ a\ building\ block\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ both\ SPM\ and\ FEM\ to\ define\ the\ ansatz\ space.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00015}00015\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry,\ \mbox{\hyperlink{namespaceapprox}{approx}}.linear.LinearApproximator}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00018}00018\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ Geometry\ \%\ Geometry\ object}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ Approximator\ \%\ LinearApproximator\ object}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00022}\mbox{\hyperlink{classapprox_1_1element_1_1_element}{00022}}\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00023}00023\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a6e23907a17cf10f2ba8410f99d97a17a}{NDims}}\ \%\ Number\ of\ spatial\ dimensions\ (integer)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a74d6e9186f468c4254664fc1dd88dad7}{NDofs}}\ \%\ Number\ of\ degrees\ of\ freedom\ (integer)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00026}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a079c42e244e7592a188181fdd5eea250}{00026}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{00029}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{Element}}(geometry,\ approximator)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ELEMENT\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{Element}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{Element}}(geometry,\ approximator)\ creates\ an\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ @a\ geometry\ and\ @a\ approximator.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00035}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a6e23907a17cf10f2ba8410f99d97a17a}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ geometry\ \mbox{\hyperlink{namespacecore}{core}}.geometry.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a079c42e244e7592a188181fdd5eea250}{Geometry}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ approximator\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1linear}{linear}}.LinearApproximator}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00038}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a74d6e9186f468c4254664fc1dd88dad7}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a079c42e244e7592a188181fdd5eea250}{Geometry}}\ =\ geometry;}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Approximator\ =\ approximator;}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ function\ n\ =\ get.NDims(obj)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.Approximator.Basis.NDims;}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ function\ n\ =\ get.NDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00051}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Get\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.Approximator.NDofs;}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a4765a526a30fc06bae8b262a414a3e60}{eval}}(obj,\ X,\ C)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVAL\ Evaluate\ a\ function\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a4765a526a30fc06bae8b262a414a3e60}{eval}}(obj,\ X,\ C)\ evaluates\ the\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ defined\ by\ coefficients\ @a\ C\ at\ the\ evaluation}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ points\ @a\ X.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{Approximator}}.eval(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a550c4b29ead9644b43af193e7e1c56b8}{diff}}(obj,\ X,\ C,\ order)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFF\ Differentiate\ a\ function\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a550c4b29ead9644b43af193e7e1c56b8}{diff}}(obj,\ X,\ C,\ order)\ differentiates\ the}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ function\ defined\ by\ coefficients\ @a\ C\ at\ the}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ evaluation\ points\ @a\ X\ with\ derivative\ @a\ order.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00078}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a4765a526a30fc06bae8b262a414a3e60}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order\ (1,\ :)\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{Approximator}}.diff(X,\ C,\ order);}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ function\ Y\ =\ fit(obj,\ F)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FIT\ Fit\ data\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ fit(obj,\ F)\ fits\ data\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ by}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solving\ the\ fitting\ system\ \(\backslash\)f\$D*U\ =\ F\(\backslash\)f\$,\ where\ \(\backslash\)f\$D\(\backslash\)f\$\ is}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ design\ matrix.\ Handles\ well-\/posed\ and\ overdetermined}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ systems\ \textcolor{keyword}{using\ }least\ squares\ when\ necessary.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00097}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a550c4b29ead9644b43af193e7e1c56b8}{00097}}\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{Approximator}}.fit(F);}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ function\ Y\ =\ project(obj,\ F)}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PROJECT\ Project\ data\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ project(obj,\ F)\ projects\ data\ over\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ by}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solving\ the\ fitting\ system\ \(\backslash\)f\$D*U\ =\ F\(\backslash\)f\$,\ where\ \(\backslash\)f\$D\(\backslash\)f\$\ is}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ design\ matrix.\ Handles\ well-\/posed\ and\ overdetermined}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ systems\ \textcolor{keyword}{using\ }least\ squares\ when\ necessary.}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ \{mustBeNumeric,\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00118}\mbox{\hyperlink{classapprox_1_1element_1_1_element_a64f0a6d30faab544f48cf070ceddeefa}{00118}}\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{Approximator}}.project(F);}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00120}00120\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_element_8m_source_l00121}00121\ end}
+
+\end{DoxyCode}

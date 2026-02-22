@@ -1,0 +1,40 @@
+# Environment configuration
+
+# =======================================================================
+# Algorithm
+# =======================================================================
+
+OPTION=schemeName='uwdg'
+
+# -----------------------------------------------------------------------
+# Time discretization
+# -----------------------------------------------------------------------
+
+# tSplitName='lie_trotter': Lie-Trotter splitting (first-order)
+# tSplitName='strang': Strang splitting (second-order)
+OPTION=tSplitName=''
+
+# tOdeIntName='be': backward Euler scheme
+# tOdeIntName='bdf2': BDF2 scheme
+# tOdeIntName='bdf3': BDF3 scheme
+# tOdeIntName='sdirk2': SDIRK2 scheme
+# tOdeIntName='sdirk3': SDIRK3 scheme
+OPTION=tOdeIntName='sdirk3'
+
+# CFL number
+OPTION=cfl=0.5
+
+# -----------------------------------------------------------------------
+# Space discretization
+# -----------------------------------------------------------------------
+
+# spatial order
+OPTION=xBasisOrder=3
+
+# xBasisType='modal': Modal basis 
+# xBasisType='nodal': Nodal basis
+OPTION=xBasisType='modal'
+
+# xBasisPattern='Q': Qk polynomial space
+# xBasisPattern='P': Pk polynomial space
+OPTION=xBasisPattern='Q'

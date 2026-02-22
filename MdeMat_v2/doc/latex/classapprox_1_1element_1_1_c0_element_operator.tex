@@ -1,0 +1,194 @@
+\doxysection{approx\+::element\+::C0\+Element\+Operator Class Reference}
+\hypertarget{classapprox_1_1element_1_1_c0_element_operator}{}\label{classapprox_1_1element_1_1_c0_element_operator}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+
+
+Operator for continuous finite elements.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{approx\+::element\+::\+Element\+Operator}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator}{approx\+::element\+::\+L2\+Element\+Operator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a13d6c6b3495a8e7e107524684256b698}{C0\+Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a2e99a643d3b6bc28c55bc2741655ffb5}{set\+Volume\+Data}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set up bilinear form data for volume integrals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{approx\+::element\+::\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a1f9ef0925170d8b0afd257318ef54e39}{Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element_operator}{Element\+Operator}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a10990565b584acbad7a33ee65add492f}{volume\+Data}}
+\begin{DoxyCompactList}\small\item\em Array of bilinear form data for volume integrals (\doxylink{classapprox_1_1element_1_1_element_bilinear_form}{Element\+Bilinear\+Form} array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}
+\begin{DoxyCompactList}\small\item\em Gradient operator matrices (struct with volume\+Data field) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{approx\+::element\+::\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1element_1_1_element}{Element} object on which the operator acts. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a0ddf5ecb48de965748dbd3943e536ab4}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a0c889a7b3efa84e66867b73b556adde8}{extract\+Gradient}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Extract gradient matrices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Operator for continuous finite elements. 
+
+\doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator} provides differential operators such as gradient for C0 elements. It manages bilinear form data for volume integrals and constructs discrete operator matrices used in conforming finite element methods.
+
+The class computes discrete representations of differential operators by evaluating weighted inner products between basis function derivatives. These operators are fundamental for assembling system matrices in finite element discretizations of partial differential equations.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ C0\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}\ and\ its\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}\ =\ approx.element.C0Element(geometry,\ projector,\ integrator);}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}.setVolumeData(1);\ \ \%\ Include\ first\ derivatives}
+\DoxyCodeLine{\textcolor{keyword}{operator}\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a13d6c6b3495a8e7e107524684256b698}{C0ElementOperator}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}});}
+\DoxyCodeLine{\%\ Set\ up\ \textcolor{keyword}{operator}\ data\ and\ access\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}}
+\DoxyCodeLine{\textcolor{keyword}{operator}.setVolumeData();}
+\DoxyCodeLine{gradOp\ =\ \textcolor{keyword}{operator}.gradient;}
+\DoxyCodeLine{\%\ Use\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}\ components\ \textcolor{keywordflow}{for}\ stiffness\ matrix\ assembly}
+\DoxyCodeLine{gradX\ =\ gradOp.volumeData(1).matrix;\ \ \%\ x-\/derivative\ component}
+\DoxyCodeLine{gradY\ =\ gradOp.volumeData(2).matrix;\ \ \%\ y-\/derivative\ component}
+\DoxyCodeLine{\%\ Access\ complete\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}\ structure}
+\DoxyCodeLine{nDims\ =\ length(gradOp.volumeData);}
+\DoxyCodeLine{stiffnessContrib\ =\ sum(arrayfun(@(i)\ gradOp.volumeData(i).matrix,\ 1:nDims),\ 3);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1element_1_1_element_operator}{approx.\+element.\+Element\+Operator} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element_operator}{approx.\+element.\+L2\+Element\+Operator} 
+
+\doxylink{classapprox_1_1element_1_1_c0_element}{approx.\+element.\+C0\+Element} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_c0_element_operator_8m_source_l00039}{39}} of file \mbox{\hyperlink{_c0_element_operator_8m_source}{C0\+Element\+Operator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_a13d6c6b3495a8e7e107524684256b698}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}!C0ElementOperator@{C0ElementOperator}}
+\index{C0ElementOperator@{C0ElementOperator}!approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+\doxysubsubsection{\texorpdfstring{C0ElementOperator()}{C0ElementOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_operator_a13d6c6b3495a8e7e107524684256b698} 
+function approx\+::element\+::\+C0\+Element\+Operator\+::\+C0\+Element\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator}. 
+
+obj = C0\+Element\+Operator(element) creates an element operator for the specified C0 element. The element must have derivative data available for operator construction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & -\/ C0 element object (\doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element}) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_a0c889a7b3efa84e66867b73b556adde8}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}!extractGradient@{extractGradient}}
+\index{extractGradient@{extractGradient}!approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+\doxysubsubsection{\texorpdfstring{extractGradient()}{extractGradient()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_operator_a0c889a7b3efa84e66867b73b556adde8} 
+function approx\+::element\+::\+C0\+Element\+Operator\+::extract\+Gradient (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Extract gradient matrices. 
+
+G = extract\+Gradient(obj) extracts the gradient data from the volume data corresponding to first-\/order partial derivatives. The number of components equals the spatial dimension of the element.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Gradient data structure with volume\+Data field \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_a2e99a643d3b6bc28c55bc2741655ffb5}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}!setVolumeData@{setVolumeData}}
+\index{setVolumeData@{setVolumeData}!approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+\doxysubsubsection{\texorpdfstring{setVolumeData()}{setVolumeData()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_operator_a2e99a643d3b6bc28c55bc2741655ffb5} 
+function approx\+::element\+::\+C0\+Element\+Operator\+::set\+Volume\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Set up bilinear form data for volume integrals. 
+
+obj = set\+Volume\+Data(obj) creates discrete bilinear forms representing volume integrals for each derivative order. These forms are used to construct differential operators such as gradient and divergence for finite element computations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}!gradient@{gradient}}
+\index{gradient@{gradient}!approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+\doxysubsubsection{\texorpdfstring{gradient}{gradient}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89} 
+Property approx\+::element\+::\+C0\+Element\+Operator\+::gradient}
+
+
+
+Gradient operator matrices (struct with volume\+Data field) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_element_operator_8m_source_l00049}{49}} of file \mbox{\hyperlink{_c0_element_operator_8m_source}{C0\+Element\+Operator.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_c0_element_operator_a10990565b584acbad7a33ee65add492f}\index{approx::element::C0ElementOperator@{approx::element::C0ElementOperator}!volumeData@{volumeData}}
+\index{volumeData@{volumeData}!approx::element::C0ElementOperator@{approx::element::C0ElementOperator}}
+\doxysubsubsection{\texorpdfstring{volumeData}{volumeData}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_operator_a10990565b584acbad7a33ee65add492f} 
+Property approx\+::element\+::\+C0\+Element\+Operator\+::volume\+Data}
+
+
+
+Array of bilinear form data for volume integrals (\doxylink{classapprox_1_1element_1_1_element_bilinear_form}{Element\+Bilinear\+Form} array) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_element_operator_8m_source_l00043}{43}} of file \mbox{\hyperlink{_c0_element_operator_8m_source}{C0\+Element\+Operator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_c0_element_operator_8m}{C0\+Element\+Operator.\+m}}\end{DoxyCompactItemize}

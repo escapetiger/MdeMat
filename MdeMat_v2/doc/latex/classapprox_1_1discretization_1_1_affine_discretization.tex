@@ -1,0 +1,230 @@
+\doxysection{approx\+::discretization\+::Affine\+Discretization Class Reference}
+\hypertarget{classapprox_1_1discretization_1_1_affine_discretization}{}\label{classapprox_1_1discretization_1_1_affine_discretization}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+
+
+Affine discretization for function approximation.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{Affine\+Discretization}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96}{set\+C0\+Sphere\+Element}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set C0 sphere element with specified configuration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ad61fffaafb73828c91da113c7d01c77f}{set\+Affine\+Space}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set affine function space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a957af193b331d0f348c2b21604105704}{set\+Scaled\+Affine\+Space}} (Input\+Type obj, Input\+Type scales)
+\begin{DoxyCompactList}\small\item\em Set scaled affine function space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a6eccdb44120fc32475a8f52d466998d9}{set\+Derivative\+Order}} (Input\+Type obj, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Set derivative order for element data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}
+\begin{DoxyCompactList}\small\item\em Element object for spatial discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}
+\begin{DoxyCompactList}\small\item\em Function space object for approximation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Affine discretization for function approximation. 
+
+\doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} provides a framework for constructing affine function spaces on spherical and orthotopal domains. It manages element construction with various basis functions including Legendre, Fourier, and spherical harmonics, along with appropriate integration schemes.
+
+The class supports C0 sphere elements with different dimensional reductions and scaling parameters. It encapsulates the complex process of coordinating geometry, basis functions, projectors, and integrators for spherical approximation problems.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ 1D\ affine\ discretization\ with\ Legendre\ basis}
+\DoxyCodeLine{disc\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}();}
+\DoxyCodeLine{disc.setC0SphereElement(\textcolor{stringliteral}{'nDims'},\ 1,\ \textcolor{stringliteral}{'order'},\ 3,\ \textcolor{stringliteral}{'nPoints'},\ 10);}
+\DoxyCodeLine{disc.setAffineSpace();}
+\DoxyCodeLine{\%\ Create\ 2D\ spherical\ discretization\ with\ Fourier\ basis}
+\DoxyCodeLine{disc\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}();}
+\DoxyCodeLine{disc.setC0SphereElement(\textcolor{stringliteral}{'nDims'},\ 2,\ \textcolor{stringliteral}{'reduction'},\ 1,\ \textcolor{stringliteral}{'radius'},\ 2.0);}
+\DoxyCodeLine{disc.setScaledAffineSpace([1.0,\ 0.5]);}
+\DoxyCodeLine{\%\ Set\ up\ derivative\ computation}
+\DoxyCodeLine{disc.setDerivativeOrder(2);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1element_1_1_c0_element}{approx.\+element.\+C0\+Element} 
+
+\doxylink{classapprox_1_1space_1_1_affine_space}{approx.\+space.\+Affine\+Space} 
+
+\doxylink{classapprox_1_1space_1_1_scaled_affine_space}{approx.\+space.\+Scaled\+Affine\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_affine_discretization_8m_source_l00036}{36}} of file \mbox{\hyperlink{_affine_discretization_8m_source}{Affine\+Discretization.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!AffineDiscretization@{AffineDiscretization}}
+\index{AffineDiscretization@{AffineDiscretization}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{AffineDiscretization()}{AffineDiscretization()}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243} 
+function approx\+::discretization\+::\+Affine\+Discretization\+::\+Affine\+Discretization (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization}. 
+
+obj = \doxylink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{Affine\+Discretization()} creates an empty affine discretization object. Element and space must be set using the appropriate setter methods. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_ad61fffaafb73828c91da113c7d01c77f}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!setAffineSpace@{setAffineSpace}}
+\index{setAffineSpace@{setAffineSpace}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{setAffineSpace()}{setAffineSpace()}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_ad61fffaafb73828c91da113c7d01c77f} 
+function approx\+::discretization\+::\+Affine\+Discretization\+::set\+Affine\+Space (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Set affine function space. 
+
+obj = set\+Affine\+Space(obj, varargin) creates an affine function space based on the current element. The space provides the computational framework for function approximation on the configured domain.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!setC0SphereElement@{setC0SphereElement}}
+\index{setC0SphereElement@{setC0SphereElement}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{setC0SphereElement()}{setC0SphereElement()}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96} 
+function approx\+::discretization\+::\+Affine\+Discretization\+::set\+C0\+Sphere\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set C0 sphere element with specified configuration. 
+
+obj = set\+C0\+Sphere\+Element(obj, varargin) creates a C0 sphere element with the specified parameters and assigns it to the discretization. The method configures geometry, basis functions, integrators, and projectors based on dimensional and reduction parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+{\em varargin} & -\/ Name-\/value parameter pairs\+:\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Reduction parameter affects basis choice\+: 
+
+-\/ n\+Dims=1, reduction=1\+: Legendre basis on hypersphere 
+
+-\/ n\+Dims=1, reduction=2\+: Legendre basis on orthotope 
+
+-\/ n\+Dims=2, reduction=1\+: Fourier basis on circle 
+
+-\/ n\+Dims=3\+: Spherical harmonic basis on sphere 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_a6eccdb44120fc32475a8f52d466998d9}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!setDerivativeOrder@{setDerivativeOrder}}
+\index{setDerivativeOrder@{setDerivativeOrder}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{setDerivativeOrder()}{setDerivativeOrder()}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_a6eccdb44120fc32475a8f52d466998d9} 
+function approx\+::discretization\+::\+Affine\+Discretization\+::set\+Derivative\+Order (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{order}{}\end{DoxyParamCaption})}
+
+
+
+Set derivative order for element data. 
+
+obj = set\+Derivative\+Order(obj, order) configures the element to compute function data up to the specified derivative order. This is required for problems involving derivatives.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+{\em order} & -\/ Maximum derivative order (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_a957af193b331d0f348c2b21604105704}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!setScaledAffineSpace@{setScaledAffineSpace}}
+\index{setScaledAffineSpace@{setScaledAffineSpace}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{setScaledAffineSpace()}{setScaledAffineSpace()}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_a957af193b331d0f348c2b21604105704} 
+function approx\+::discretization\+::\+Affine\+Discretization\+::set\+Scaled\+Affine\+Space (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{scales}{}\end{DoxyParamCaption})}
+
+
+
+Set scaled affine function space. 
+
+obj = set\+Scaled\+Affine\+Space(obj, scales) creates a scaled affine function space with the specified scaling parameters. This allows for anisotropic scaling of the basis functions in different coordinate directions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+{\em scales} & -\/ Scaling parameter vector (positive values)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1discretization_1_1_affine_discretization}{Affine\+Discretization} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!element@{element}}
+\index{element@{element}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{element}{element}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147} 
+Property approx\+::discretization\+::\+Affine\+Discretization\+::element}
+
+
+
+Element object for spatial discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_discretization_8m_source_l00040}{40}} of file \mbox{\hyperlink{_affine_discretization_8m_source}{Affine\+Discretization.\+m}}.
+
+\Hypertarget{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}\index{approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}!space@{space}}
+\index{space@{space}!approx::discretization::AffineDiscretization@{approx::discretization::AffineDiscretization}}
+\doxysubsubsection{\texorpdfstring{space}{space}}
+{\footnotesize\ttfamily \label{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb} 
+Property approx\+::discretization\+::\+Affine\+Discretization\+::space}
+
+
+
+Function space object for approximation. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_discretization_8m_source_l00043}{43}} of file \mbox{\hyperlink{_affine_discretization_8m_source}{Affine\+Discretization.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+discretization/\mbox{\hyperlink{_affine_discretization_8m}{Affine\+Discretization.\+m}}\end{DoxyCompactItemize}

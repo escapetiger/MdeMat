@@ -1,0 +1,175 @@
+\doxysection{approx\+::assembly\+::Interior\+Flux\+Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly}{}\label{classapprox_1_1assembly_1_1_interior_flux_assembly}\index{approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for interior flux terms in DG methods.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_interior_flux_assembly_af907d659ca0c8b377453b7b651341e3c}{assemble\+Inner\+Left\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble inner left-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_interior_flux_assembly_a51a93196140189f913ebd787d165ac5e}{assemble\+Inner\+Right\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble inner right-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_interior_flux_assembly_a08c5e5a5635f6f5eae7920df879f43a5}{assemble\+Outer\+Left\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble outer left-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_interior_flux_assembly_a26e478f03990093471436bdc0bf2a3ad}{assemble\+Outer\+Right\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble outer right-\/biased flux terms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aed85b9fe2eb4a6a7e50e13608da052c6}{Assembly}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh space providing geometry and connectivity (Mesh\+Space) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}
+\begin{DoxyCompactList}\small\item\em Element operator providing local computations (Element\+Operator) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for interior flux terms in DG methods. 
+
+\doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly} handles the assembly of flux terms between neighboring elements in the interior of the computational domain. These flux terms are essential for providing inter-\/element coupling in discontinuous Galerkin (DG) methods, where the solution is allowed to be discontinuous across element boundaries.
+
+The class implements both inner and outer flux contributions\+:
+\begin{DoxyItemize}
+\item Inner fluxes\+: contributions from the current element\textquotesingle{}s boundary
+\item Outer fluxes\+: contributions from neighboring elements\textquotesingle{} boundaries
+\end{DoxyItemize}
+
+Each flux type (left-\/biased, right-\/biased) is supported, enabling the construction of upwind-\/like or downwind-\/like numerical schemes. The flux terms are assembled using triplet format for efficient sparse matrix construction.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{approx.\+assembly.\+Flux\+Assembly} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element_operator}{approx.\+element.\+L2\+Element\+Operator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_interior_flux_assembly_8m_source_l00027}{27}} of file \mbox{\hyperlink{_interior_flux_assembly_8m_source}{Interior\+Flux\+Assembly.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly_af907d659ca0c8b377453b7b651341e3c}\index{approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}!assembleInnerLeftFlux@{assembleInnerLeftFlux}}
+\index{assembleInnerLeftFlux@{assembleInnerLeftFlux}!approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFlux()}{assembleInnerLeftFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_interior_flux_assembly_af907d659ca0c8b377453b7b651341e3c} 
+function approx\+::assembly\+::\+Interior\+Flux\+Assembly\+::assemble\+Inner\+Left\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble inner left-\/biased flux terms. 
+
+T = assemble\+Inner\+Left\+Flux(obj, dim, coe) assembles the inner flux contributions for left-\/biased numerical fluxes along the specified dimension. Inner fluxes represent the contribution from the current element\textquotesingle{}s boundary to the flux integral.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly_a51a93196140189f913ebd787d165ac5e}\index{approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}!assembleInnerRightFlux@{assembleInnerRightFlux}}
+\index{assembleInnerRightFlux@{assembleInnerRightFlux}!approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFlux()}{assembleInnerRightFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_interior_flux_assembly_a51a93196140189f913ebd787d165ac5e} 
+function approx\+::assembly\+::\+Interior\+Flux\+Assembly\+::assemble\+Inner\+Right\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble inner right-\/biased flux terms. 
+
+T = assemble\+Inner\+Right\+Flux(obj, dim, coe) assembles the inner flux contributions for right-\/biased numerical fluxes along the specified dimension. The negative sign in the flux matrix extraction accounts for the directional convention in right-\/biased schemes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly_a08c5e5a5635f6f5eae7920df879f43a5}\index{approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}!assembleOuterLeftFlux@{assembleOuterLeftFlux}}
+\index{assembleOuterLeftFlux@{assembleOuterLeftFlux}!approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFlux()}{assembleOuterLeftFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_interior_flux_assembly_a08c5e5a5635f6f5eae7920df879f43a5} 
+function approx\+::assembly\+::\+Interior\+Flux\+Assembly\+::assemble\+Outer\+Left\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble outer left-\/biased flux terms. 
+
+T = assemble\+Outer\+Left\+Flux(obj, dim, coe) assembles the outer flux contributions for left-\/biased numerical fluxes along the specified dimension. Outer fluxes represent the contribution from neighboring elements\textquotesingle{} boundaries to the flux integral, providing inter-\/element coupling.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_interior_flux_assembly_a26e478f03990093471436bdc0bf2a3ad}\index{approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}!assembleOuterRightFlux@{assembleOuterRightFlux}}
+\index{assembleOuterRightFlux@{assembleOuterRightFlux}!approx::assembly::InteriorFluxAssembly@{approx::assembly::InteriorFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFlux()}{assembleOuterRightFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_interior_flux_assembly_a26e478f03990093471436bdc0bf2a3ad} 
+function approx\+::assembly\+::\+Interior\+Flux\+Assembly\+::assemble\+Outer\+Right\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble outer right-\/biased flux terms. 
+
+T = assemble\+Outer\+Right\+Flux(obj, dim, coe) assembles the outer flux contributions for right-\/biased numerical fluxes along the specified dimension. The method handles the connectivity between current elements and their neighbors in the positive coordinate direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_interior_flux_assembly_8m}{Interior\+Flux\+Assembly.\+m}}\end{DoxyCompactItemize}

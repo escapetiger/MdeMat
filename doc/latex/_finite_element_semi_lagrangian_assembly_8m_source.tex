@@ -1,0 +1,298 @@
+\doxysection{Finite\+Element\+Semi\+Lagrangian\+Assembly.\+m}
+\hypertarget{_finite_element_semi_lagrangian_assembly_8m_source}{}\label{_finite_element_semi_lagrangian_assembly_8m_source}\index{+approx/+assembly/FiniteElementSemiLagrangianAssembly.m@{+approx/+assembly/FiniteElementSemiLagrangianAssembly.m}}
+\mbox{\hyperlink{_finite_element_semi_lagrangian_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00001}00001\ classdef\ FiniteElementSemiLagrangianAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly}{FiniteElementAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENTSEMILAGRANGIANASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ finite\ element\ methods.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ FiniteElementSemiLagrangianAssembly\ implements\ assembly\ operations\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ semi-\/Lagrangian\ finite\ element\ discretizations\ of\ transport\ equations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ The\ semi-\/Lagrangian\ method\ follows\ characteristic\ curves\ backward\ in\ time}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ to\ solve\ advection-\/dominated\ problems\ with\ excellent\ stability\ properties.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ assembly\ process\ involves\ clipping\ volume\ elements\ based\ on\ the}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ advection\ field\ and\ time\ step\ to\ handle\ characteristics\ that\ may\ exit}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ the\ computational\ domain.\ Status\ flags\ track\ whether\ clipping\ has\ been}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ performed\ \textcolor{keywordflow}{for}\ matrix\ and\ vector\ assembly\ operations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ This\ implementation\ is\ specialized\ \textcolor{keywordflow}{for}\ L2\ semi-\/Lagrangian\ orthotope}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ elements\ on\ uniform\ grids,\ providing\ optimal\ efficiency\ \textcolor{keywordflow}{for}\ structured}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ transport\ problems.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ The\ assembly\ \textcolor{keyword}{requires}\ L2SLOrthotopeElement\ and\ UniformGrid\ \textcolor{keywordflow}{for}\ proper}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ functioning.\ Status\ flags\ use\ bitwise\ operations\ to\ track\ clipping\ state.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ FiniteElementAssembly,\ L2SLOrthotopeElement,\ UniformGrid}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00023}00023\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00024}00024\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ ClipMatrixMask\ =\ 0b10\ \%\ Clipped\ when\ assembling\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ ClipVectorMask\ =\ 0b01\ \%\ Clipped\ when\ assembling\ vector}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00027}00027\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00028}00028\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly}{00029}}\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a3be1559428389a7c0622da4ccb493a33}{BcType}}\ \%\ Boundary\ condition\ type}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a9c312eb45b939a75e96092e6e81e14b2}{Status}}\ \%\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a9c312eb45b939a75e96092e6e81e14b2}{Status}}\ mask}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00032}00032\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_af17eff523616081963fe6cf0ac067999}{00033}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00034}00034\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a6f0c01d3d106e472a35da9cd3aa8ae10}{FiniteElementSemiLagrangianAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ bcType)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a859da968edc5f08dfa8185e5fd12dbf7}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINITEELEMENTSEMILAGRANGIANASSEMBLY\ Constructor\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a6f0c01d3d106e472a35da9cd3aa8ae10}{FiniteElementSemiLagrangianAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ bcType)\ creates}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ semi-\/Lagrangian\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ \textcolor{keywordtype}{object}\ with\ specified\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ and\ boundary\ condition\ @a\ bcType.\ Validates\ that\ the}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ uses\ compatible\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ and\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ types,\ then\ initializes}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00042}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a3be1559428389a7c0622da4ccb493a33}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ status.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00045}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a9c312eb45b939a75e96092e6e81e14b2}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ \{mustBeL2SLUniformGridSpace\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcType\{mustBeMember(bcType,\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly}{FiniteElementAssembly}}(space);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.BcType\ =\ bcType;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ obj.reset();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ obj\ =\ setBcType(obj,\ bcType)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETBCTYPE\ Set\ boundary\ condition\ type\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ assembly.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setBcType(obj,\ bcType)\ sets\ the\ boundary\ condition\ type}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ @a\ bcType\ and\ validates\ it.\ Semi-\/Lagrangian\ methods\ support}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ both\ periodic\ and\ Dirichlet\ boundary\ conditions\ with\ different}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ handling\ of\ characteristics\ that\ exit\ the\ domain.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00061}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a6f0c01d3d106e472a35da9cd3aa8ae10}{00061}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly}{FiniteElementSemiLagrangianAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcType\ \{mustBeMember(bcType,\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a3be1559428389a7c0622da4ccb493a33}{BcType}}\ =\ bcType;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ function\ obj\ =\ reset(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RESET\ Reset\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ status\ flags.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ reset(obj)\ clears\ all\ status\ flags\ to\ indicate\ that\ no}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ clipping\ operations\ have\ been\ performed.\ This\ method\ should\ be}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ called\ when\ starting\ a\ \textcolor{keyword}{new}\ time\ step\ or\ when\ the\ advection\ field}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ changes\ to\ ensure\ proper\ clipping\ state\ management.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly}{FiniteElementSemiLagrangianAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00082}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a8588becd582d3da24604e4b9aa8e1221}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a9c312eb45b939a75e96092e6e81e14b2}{Status}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a454dc9493ef0c057ea3d7995d924d020}{assembleMatrix}}(obj,\ field,\ tBegin,\ tEnd)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIX\ Assemble\ semi-\/Lagrangian\ transport\ matrix.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a454dc9493ef0c057ea3d7995d924d020}{assembleMatrix}}(obj,\ field,\ tBegin,\ tEnd)\ assembles\ the\ mass}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ transport\ with\ advection\ @a\ field}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ time\ @a\ tBegin\ to\ @a\ tEnd.\ The\ method\ clips\ volume\ elements}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ based\ on\ characteristic\ trajectories\ and\ assembles\ contributions}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ Eulerian\ and\ upstream\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ time\ step\ \(\backslash\)f\$\ \(\backslash\)Delta\ t\ =\ tBegin\ -\/\ tEnd\ \(\backslash\)f\$\ and\ spatial}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ discretization\ determine\ the\ clipping\ parameters.\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a9c312eb45b939a75e96092e6e81e14b2}{Status}}\ flags}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ are\ updated\ to\ track\ clipping\ operations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly}{FiniteElementSemiLagrangianAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00101}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a8e93b7fd7f14de89a3b740bca2f4a09f}{00101}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tBegin\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tEnd\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NDims;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Parse\ advection\ field}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ field\ =\ reshape(field,\ nd,\ []);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Clipping}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ ht\ =\ tBegin\ -\/\ tEnd;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ hx\ =\ cellfun(@(h)\ h(1),\ obj.Space.Mesh.Spacings);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Space.Element.clipVolume(field,\ ht,\ hx);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Update\ status}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Status\ =\ bitor(obj.Status,\ obj.ClipMatrixMask);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Assemble\ global\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ obj.BcType}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'periodic'}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleMatrixPeriodic();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'dirichlet'}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleMatrixDirichlet();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00124}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a454dc9493ef0c057ea3d7995d924d020}{00124}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a7038052d84e4be317086075544b81811}{assembleVector}}(obj,\ field,\ tBegin,\ tEnd,\ func)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVECTOR\ Assemble\ semi-\/Lagrangian\ boundary\ vector.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a7038052d84e4be317086075544b81811}{assembleVector}}(obj,\ field,\ tBegin,\ tEnd,\ func)\ assembles}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ boundary\ contribution\ vector\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ transport}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ Dirichlet\ boundary\ conditions.\ Handles\ characteristics\ that}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ exit\ the\ computational\ domain\ by\ evaluating\ boundary\ function}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ func\ at\ intersection\ points.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ periodic\ boundary\ conditions,\ no\ vector\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ is\ needed.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ method\ ensures\ clipping\ consistency\ with\ matrix\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ by\ performing\ clipping\ \textcolor{keywordflow}{if}\ not\ already\ done.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly}{FiniteElementSemiLagrangianAssembly}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tBegin\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tEnd\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\ \{mustBeA(func,\ \textcolor{stringliteral}{'function\_handle'})\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ bitand(obj.Status,\ obj.ClipMatrixMask)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.Space.NDims;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Parse\ advection\ field}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field\ =\ reshape(field,\ nd,\ []);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Clipping}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ht\ =\ tBegin\ -\/\ tEnd;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hx\ =\ cellfun(@(h)\ h(1),\ obj.Space.Mesh.Spacings);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Space.Element.clipVolume(field,\ ht,\ hx);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Update\ status}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Status\ =\ bitor(obj.Status,\ obj.ClipMatrixMask);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Skip\ for\ periodic\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(obj.BcType,\ 'periodic')}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.createZeros(nCols=1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleVectorDirichlet(field,\ tBegin,\ tEnd,\ func);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00171}00171\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00172}00172\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00173}\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly_a7038052d84e4be317086075544b81811}{00173}}\ \ \ \ \ methods\ (Access\ =\ private)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ function\ G\ =\ assembleMatrixPeriodic(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIXPERIODIC\ Assemble\ matrix\ for\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_aa12a3a644c2089a47058cb22a23968b3}{createZeros}}();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.NVolumePieces}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ local\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Weights);\ \%\ (nq,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.upstream(i).Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ V\ *\ W\ *\ U.';\ \%\ nl\ x\ nl}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ contribution\ to\ global\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NMeshElements;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.linearToMulti(IE);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ ME\ +\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.indexShifts(:,\ i).';}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.multiToLinear(ME,\ pad='wrap');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GP\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_ac63e4335198e493647475c2e186be088}{createMatrix}}(L,\ TEI=IE,\ SEI=JE);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ G\ +\ GP;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ function\ G\ =\ assembleMatrixDirichlet(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIXDIRICHLET\ Assemble\ matrix\ for\ Dirichlet\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NDims;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_aa12a3a644c2089a47058cb22a23968b3}{createZeros}}();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.NVolumePieces}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ local\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Weights);\ \%\ (nq,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.upstream(i).Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ V\ *\ W\ *\ U.';\ \%\ (nl,\ nl)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ elements\ that\ have\ at\ least\ one\ interior\ upstream\ root}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.generate();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.indexShifts(:,\ i).';}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MU\ =\ ME\ +\ SE;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask1\ =\ (MU\ <\ 1)\ .*\ (2\ *\ (1:d)\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask2\ =\ (MU\ >\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Resolution)\ .*\ (2\ *\ (1:d));}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ mask1\ +\ mask2;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ sum(mask\ \string~=\ 0,\ 2)\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ ME(mask,\ :);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ contribution\ to\ global\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.multiToLinear(ME,\ pad='empty');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.multiToLinear(ME+SE,\ pad='empty');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GP\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_ac63e4335198e493647475c2e186be088}{createMatrix}}(L,\ TEI=IE,\ SEI=JE);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ G\ +\ GP;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ function\ G\ =\ assembleVectorDirichlet(obj,\ field,\ tBegin,\ tEnd,\ func)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVECTORDIRICHLET\ Assemble\ Dirichlet\ boundary\ vector.}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.NVolumePieces;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.NDims;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ ht\ =\ tBegin\ -\/\ tEnd;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_aa12a3a644c2089a47058cb22a23968b3}{createZeros}}(nCols=1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:np}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ elements\ whose\ pth\ volume\ piece\ exits\ domain}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.generate();}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.indexShifts(:,\ i).';}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MU\ =\ ME\ +\ SE;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask1\ =\ (MU\ <\ 1)\ .*\ (2\ *\ (1:nd)\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask2\ =\ (MU\ >\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Resolution)\ .*\ (2\ *\ (1:nd));}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ mask1\ +\ mask2;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ sum(mask\ \string~=\ 0,\ 2)\ >\ 0;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ ME(mask,\ :);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.Indexer.multiToLinear(ME,\ pad='empty');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ size(ME,\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ ne\ ==\ 0,\ return;\ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ up\ characteristic\ end\ points}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nq\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).NPoints;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1\ =\ zeros(nd+1,\ ne*nq);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2\ =\ zeros(nd+1,\ ne*nq);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xq\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Nodes;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2(1:nd,\ :)\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.collocate(Xq,\ IE);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2(nd+1,\ :)\ =\ tBegin;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1(1:nd,\ :)\ =\ X2(1:nd,\ :)\ -\/\ ht\ *\ field(:);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1(nd+1,\ :)\ =\ tEnd;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ boundary\ intersections\ of\ characteristics}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ intersector\ =\ \mbox{\hyperlink{namespacecore}{core}}.geometry.LineSegmentByPlaneIntersector(nd+1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bbox\ =\ reshape(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Mesh.BBox,\ 2,\ []);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bbox\ =\ -\/bbox(2*(1:nd)-\/(field\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xb\ =\ zeros(nd+1,\ nq*ne);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ d\ =\ 1:nd}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ zeros(nd+1,\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a(d)\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ TF]\ =\ intersector.intersect(X1,\ X2,\ a,\ bbox(d));}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xb(:,\ TF)\ =\ X;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ boundary\ function\ and\ project\ to\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Values;\ \%\ (nl,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a6bfbaeba6945c2729151757cc11c3224}{Space}}.Element.VolumePieces.eulerian(i).Weights);\ \%\ (nq,\ nq)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ func(Xb(1:nd,\ :),\ t=Xb(nd+1,\ :));\ \%\ (1,\ nq*ne)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ reshape(U,\ nq,\ ne);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ V\ *\ W\ *\ U;\ \%\ (nl,\ ne)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GP\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_finite_element_assembly_ad366b9ad8b72c8807e7cb4b7221d7965}{createVector}}(L,\ TEI=IE);}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ G\ +\ GP;}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00280}00280\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00281}00281\ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00283}00283\ function\ mustBeL2SLUniformGridSpace(x)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00284}00284\ if\ \string~isa(x,\ '\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.FiniteElementSpace')}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00285}00285\ \ \ \ \ error('Input\ must\ be\ a\ FiniteElementSpace\ \textcolor{keywordtype}{object}.');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00286}00286\ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00287}00287\ tf1\ =\ isa(x.Element,\ '\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.L2SLOrthotopeElement');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00288}00288\ tf2\ =\ isa(x.Mesh,\ '\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.UniformGrid');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00289}00289\ if\ \string~(tf1\ \&\&\ tf2)}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00290}00290\ \ \ \ \ error('SL\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ requires\ L2\ SL\ orthotope\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ and\ uniform\ grid.');}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00291}00291\ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_semi_lagrangian_assembly_8m_source_l00292}00292\ end}
+
+\end{DoxyCode}

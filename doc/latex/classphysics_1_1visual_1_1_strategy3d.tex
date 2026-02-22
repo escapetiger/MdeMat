@@ -1,0 +1,80 @@
+\doxysection{physics\+::visual\+::Strategy3d Class Reference}
+\hypertarget{classphysics_1_1visual_1_1_strategy3d}{}\label{classphysics_1_1visual_1_1_strategy3d}\index{physics::visual::Strategy3d@{physics::visual::Strategy3d}}
+
+
+Three-\/dimensional slice plot rendering strategy.  
+
+
+
+
+Inherits physics\+::visual\+::\+Strategy.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_strategy3d_a31e84b5bf5a5af6b10b800a8122570c2}{render}} (Input\+Type obj, Input\+Type axes, Input\+Type database, Input\+Type variable)
+\begin{DoxyCompactList}\small\item\em Render 3D slice plots with synchronized styling. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1visual_1_1_strategy3d_a05a446f5cd85297fa3a53bcc520c922a}{NDims}} = 3
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Three-\/dimensional slice plot rendering strategy. 
+
+\doxylink{classphysics_1_1visual_1_1_strategy3d}{Strategy3d} extends the base Strategy class to provide specialized rendering for 3D volumetric data using slice plots. The strategy creates cross-\/sectional views through the volume at the midpoint of each spatial dimension, providing insight into the 3D data structure.
+
+Each dataset is rendered with orthogonal slices and synchronized color limits when multiple datasets are present. The visualization uses 3D perspective with proper axis labeling and colorbar display.
+
+\begin{DoxySeeAlso}{See also}
+physics.\+visual.\+Strategy 
+
+\doxylink{classphysics_1_1visual_1_1_strategy2d}{physics.\+visual.\+Strategy2d} 
+
+\doxylink{classphysics_1_1visual_1_1_strategy_slice1d}{physics.\+visual.\+Strategy\+Slice1d} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_strategy3d_8m_source_l00022}{22}} of file \mbox{\hyperlink{_strategy3d_8m_source}{Strategy3d.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1visual_1_1_strategy3d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_strategy3d_a31e84b5bf5a5af6b10b800a8122570c2}\index{physics::visual::Strategy3d@{physics::visual::Strategy3d}!render@{render}}
+\index{render@{render}!physics::visual::Strategy3d@{physics::visual::Strategy3d}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_strategy3d_a31e84b5bf5a5af6b10b800a8122570c2} 
+function physics\+::visual\+::\+Strategy3d\+::render (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{axes}{, }\item[{Input\+Type}]{database}{, }\item[{Input\+Type}]{variable}{}\end{DoxyParamCaption})}
+
+
+
+Render 3D slice plots with synchronized styling. 
+
+obj = render(obj, axes, database, variable) creates 3D slice visualizations for each dataset using orthogonal cross-\/sections through the volume center. Each dataset receives its own subplot with consistent 3D formatting and synchronized color limits. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1visual_1_1_strategy3d_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_strategy3d_a05a446f5cd85297fa3a53bcc520c922a}\index{physics::visual::Strategy3d@{physics::visual::Strategy3d}!NDims@{NDims}}
+\index{NDims@{NDims}!physics::visual::Strategy3d@{physics::visual::Strategy3d}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_strategy3d_a05a446f5cd85297fa3a53bcc520c922a} 
+Constant Property physics\+::visual\+::\+Strategy3d\+::\+NDims = 3}
+
+
+
+Number of spatial dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_strategy3d_8m_source_l00026}{26}} of file \mbox{\hyperlink{_strategy3d_8m_source}{Strategy3d.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+visual/\mbox{\hyperlink{_strategy3d_8m}{Strategy3d.\+m}}\end{DoxyCompactItemize}

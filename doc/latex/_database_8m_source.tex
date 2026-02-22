@@ -1,0 +1,158 @@
+\doxysection{Database.\+m}
+\hypertarget{_database_8m_source}{}\label{_database_8m_source}\index{+physics/+visual/Database.m@{+physics/+visual/Database.m}}
+\mbox{\hyperlink{_database_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00001}00001\ classdef\ Database\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1visual}{00002}}\ \ \ \ \ \%\ DATABASE\ Simplified\ data\ container\ \textcolor{keywordflow}{for}\ visualization\ datasets.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1visual_1_1_database}{Database}}\ provides\ centralized\ storage\ and\ management\ of}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ visualization\ data\ \textcolor{keyword}{using\ }\mbox{\hyperlink{classphysics_1_1visual_1_1_dataset}{Dataset}}\ objects.\ The\ \textcolor{keyword}{class\ }focuses}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ purely\ on\ data\ management\ and\ provides\ grouping\ functionality}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ visualization\ components.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00009}00009\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_dataset}{Dataset}},\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_visualizer}{Visualizer}},}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_tiled_plotter}{TiledPlotter}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00012}00012\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00013}00013\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ Datasets\ \%\ Structure\ containing\ named\ \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset}{Dataset}}\ objects}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00015}00015\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00016}00016\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00017}\mbox{\hyperlink{classphysics_1_1visual_1_1_database}{00017}}\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7c636b3a103005c06dd0be127a2572c3}{NDatasets}}\ \%\ Number\ of\ datasets\ in\ the\ database}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a1075cced665b9279051317d2df234ccf}{DatasetNames}}\ \%\ Cell\ array\ of\ dataset\ names}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a420d46c0417715a6cd2930326dd884e8}{IsEmpty}}\ \%\ True\ \textcolor{keywordflow}{if}\ the\ database\ has\ no\ datasets}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00021}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7b4c4253162dac09fee9417b0bb84810}{00021}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00022}00022\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00023}00023\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{Database}}()}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DATABASE\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{Database}}.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00027}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7c636b3a103005c06dd0be127a2572c3}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{Database}}()\ creates\ an\ empty\ database\ ready\ for}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dataset\ storage.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00030}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a1075cced665b9279051317d2df234ccf}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7b4c4253162dac09fee9417b0bb84810}{Datasets}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00033}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a420d46c0417715a6cd2930326dd884e8}{00033}}\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7c636b3a103005c06dd0be127a2572c3}{NDatasets}}(obj)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDATASETS\ Get\ the\ number\ of\ datasets\ in\ the\ database.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(fieldnames(obj.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7b4c4253162dac09fee9417b0bb84810}{Datasets}}));}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ function\ names\ =\ get.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a1075cced665b9279051317d2df234ccf}{DatasetNames}}(obj)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.DATASETNAMES\ Get\ the\ names\ of\ all\ datasets\ in\ the\ database.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ names\ =\ fieldnames(obj.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7b4c4253162dac09fee9417b0bb84810}{Datasets}});}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ function\ tf\ =\ get.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a420d46c0417715a6cd2930326dd884e8}{IsEmpty}}(obj)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00046}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISEMPTY\ Check\ if\ the\ database\ is\ empty.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ obj.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a7c636b3a103005c06dd0be127a2572c3}{NDatasets}}\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a423a4f21fd84d8d8319cf8c772d46f27}{setDataset}}(obj,\ name,\ dataset)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETDATASET\ Store\ a\ dataset\ with\ the\ specified\ name.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a423a4f21fd84d8d8319cf8c772d46f27}{setDataset}}(obj,\ name,\ dataset)\ stores\ the\ @a\ dataset}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ @a\ name\ in\ the\ database.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{Database}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataset\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_dataset}{Dataset}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Datasets.(char(name))\ =\ dataset;}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ function\ dataset\ =\ getDataset(obj,\ name)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GETDATASET\ Retrieve\ a\ dataset\ by\ name.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dataset\ =\ getDataset(obj,\ name)\ retrieves\ the\ \mbox{\hyperlink{classphysics_1_1visual_1_1_dataset}{Dataset}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00070}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a423a4f21fd84d8d8319cf8c772d46f27}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{object}\ with\ the\ specified\ @a\ name.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_database}{Database}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ name\ =\ char(name);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isfield(obj.Datasets,\ name)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataset\ =\ obj.Datasets.(name);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataset\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ function\ database\ =\ groupBy(obj,\ variable)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GROUPBY\ Create\ a\ \textcolor{keyword}{new}\ database\ with\ processed\ field\ data.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00088}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a81eae47d734eecfd4a013c1f8924a87c}{00088}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ database\ =\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a48ee1deccea7e9f34c3066412284b91b}{groupBy}}(obj,\ variable)\ extracts\ and\ formats\ data}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ the\ specified\ @a\ variable\ from\ all\ datasets,\ organizing}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinates,\ values,\ and\ data\ types\ \textcolor{keywordflow}{for}\ visualization.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Returns\ a\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classphysics_1_1visual_1_1_database_a234083118677b6d46b3c7bc4f2247051}{Database}}\ instance\ with\ processed\ datasets.}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_database}{Database}}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variable\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ tokens\ =\ regexp(variable,\ \textcolor{stringliteral}{'\string^([a-\/zA-\/Z\_]+)(\(\backslash\)d+)'},\ \textcolor{stringliteral}{'tokens'});}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(tokens),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Variable\ name\ does\ not\ match\ expected\ format'});}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ fieldName\ =\ tokens\{1\}\{1\};}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ varIdx\ =\ str2double(tokens\{1\}\{2\});}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ database\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.\mbox{\hyperlink{classphysics_1_1visual_1_1_database}{Database}}();}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ datasetNames\ =\ fieldnames(obj.Datasets);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(datasetNames)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ datasetName\ =\ datasetNames\{i\};}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataset\ =\ obj.Datasets.(datasetName);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00112}\mbox{\hyperlink{classphysics_1_1visual_1_1_database_a48ee1deccea7e9f34c3066412284b91b}{00112}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~dataset.hasField(fieldName)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldData\ =\ dataset.getData(fieldName);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ size(fieldData,\ 2)\ <\ varIdx}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ componentData\ =\ fieldData(:,\ varIdx);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ dataset.getData(\textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ismatrix(x)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ size(x,\ 1);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ arrayfun(@(d)\ unique(x(d,\ :)),\ 1:nd,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ length(x);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nd\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ [1,\ length(x\{1\})];}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ cellfun(@length,\ x);}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(componentData)\ ==\ prod(n)}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ reshape(componentData,\ n(:).\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u\ =\ componentData;}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\ =\ struct();}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.x\ =\ x;}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.u\ =\ u;}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newDataset\ =\ physics.visual.Dataset(Type=dataset.Type,\ Data=data);}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ database.setDataset(datasetName,\ newDataset);}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_database_8m_source_l00152}00152\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

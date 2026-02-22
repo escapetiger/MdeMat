@@ -1,0 +1,79 @@
+\doxysection{ld0302.\+m}
+\hypertarget{ld0302_8m_source}{}\label{ld0302_8m_source}\index{+core/+geometry/lebedev/ld0302.m@{+core/+geometry/lebedev/ld0302.m}}
+\mbox{\hyperlink{ld0302_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00001}00001\ function\ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_a95832dd0014eeed02923caf75b60bdb6}{ld0302}}\ (\ )}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00003}00003\ \%*****************************************************************************80}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00005}00005\ \%\%\ \mbox{\hyperlink{namespacecore_1_1geometry_a95832dd0014eeed02923caf75b60bdb6}{ld0302}}()\ computes\ the\ 302\ point\ Lebedev\ angular\ grid.}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00007}00007\ \%\ \ Modified:}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00009}00009\ \%\ \ \ \ 14\ September\ 2010}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00011}00011\ \%\ \ Author:}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00013}00013\ \%\ \ \ \ Dmitri\ Laikov}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00014}00014\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00015}00015\ \%\ \ Reference:}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00017}00017\ \%\ \ \ \ Vyacheslav\ Lebedev,\ Dmitri\ Laikov,}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00018}00018\ \%\ \ \ \ A\ quadrature\ formula\ for\ the\ sphere\ of\ the\ 131st}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00019}00019\ \%\ \ \ \ algebraic\ order\ of\ accuracy,}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00020}00020\ \%\ \ \ \ Russian\ Academy\ of\ Sciences\ Doklady\ Mathematics,}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00021}00021\ \%\ \ \ \ Volume\ 59,\ Number\ 3,\ 1999,\ pages\ 477-\/481.}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00022}00022\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00023}00023\ \%\ \ Output:}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00024}00024\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00025}00025\ \%\ \ \ \ real\ X(N),\ Y(N),\ Z(N),\ W(N),\ the\ coordinates}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00026}00026\ \%\ \ \ \ and\ weights\ of\ the\ points.}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00027}00027\ \%}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00028}00028\ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00029}00029\ \ \ x\ =\ zeros(302,1);}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00030}00030\ \ \ y\ =\ zeros(302,1);}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00031}\mbox{\hyperlink{namespacecore_1_1geometry_a95832dd0014eeed02923caf75b60bdb6}{00031}}\ \ \ z\ =\ zeros(302,1);}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00032}00032\ \ \ w\ =\ zeros(302,1);}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00033}00033\ \ \ a\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00034}00034\ \ \ b\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00035}00035\ \ \ v\ =\ 0.8545911725128148E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00036}00036\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 1,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00037}00037\ \ \ v\ =\ 0.3599119285025571E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00038}00038\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 3,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00039}00039\ \ \ a\ =\ 0.3515640345570105;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00040}00040\ \ \ v\ =\ 0.3449788424305883E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00041}00041\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00042}00042\ \ \ a\ =\ 0.6566329410219612;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00043}00043\ \ \ v\ =\ 0.3604822601419882E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00044}00044\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00045}00045\ \ \ a\ =\ 0.4729054132581005;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00046}00046\ \ \ v\ =\ 0.3576729661743367E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00047}00047\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00048}00048\ \ \ a\ =\ 0.9618308522614784E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00049}00049\ \ \ v\ =\ 0.2352101413689164E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00050}00050\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00051}00051\ \ \ a\ =\ 0.2219645236294178;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00052}00052\ \ \ v\ =\ 0.3108953122413675E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00053}00053\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00054}00054\ \ \ a\ =\ 0.7011766416089545;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00055}00055\ \ \ v\ =\ 0.3650045807677255E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00056}00056\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00057}00057\ \ \ a\ =\ 0.2644152887060663;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00058}00058\ \ \ v\ =\ 0.2982344963171804E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00059}00059\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00060}00060\ \ \ a\ =\ 0.5718955891878961;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00061}00061\ \ \ v\ =\ 0.3600820932216460E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00062}00062\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00063}00063\ \ \ a\ =\ 0.2510034751770465;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00064}00064\ \ \ b\ =\ 0.8000727494073952;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00065}00065\ \ \ v\ =\ 0.3571540554273387E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00066}00066\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00067}00067\ \ \ a\ =\ 0.1233548532583327;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00068}00068\ \ \ b\ =\ 0.4127724083168531;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00069}00069\ \ \ v\ =\ 0.3392312205006170E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00070}00070\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_aca70359b9f127b97bd6a4565d73b5650}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00071}00071\ \ \ }
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00072}00072\ \ \ return}
+\DoxyCodeLine{\Hypertarget{ld0302_8m_source_l00073}00073\ end}
+
+\end{DoxyCode}

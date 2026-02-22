@@ -1,0 +1,90 @@
+\doxysection{Spectral\+Space.\+m}
+\hypertarget{_spectral_space_8m_source}{}\label{_spectral_space_8m_source}\index{+approx/+space/SpectralSpace.m@{+approx/+space/SpectralSpace.m}}
+\mbox{\hyperlink{_spectral_space_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00001}00001\ classdef\ SpectralSpace\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00002}00002\ \ \ \ \ \%\ SPECTRALSPACE\ Function\ space\ based\ on\ a\ single\ element.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SpectralSpace\ represents\ a\ finite-\/dimensional\ function\ space}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ defined\ by\ a\ single\ element.\ It\ serves\ as\ a\ building\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ more\ complex\ function\ space\ constructions\ through\ direct\ sum}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ operations.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Functions\ in\ \textcolor{keyword}{this}\ space\ have\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \ \ \ \ u\_h(x)\ =\ \(\backslash\)sum\_\{i=1\}\string^n\ c\_i\ \(\backslash\)phi\_i(x)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$\(\backslash\)phi\_i\(\backslash\)f\$\ are\ basis\ functions\ from\ the\ element\ and}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \(\backslash\)f\$c\_i\(\backslash\)f\$\ are\ coefficients.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00016}00016\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00018}00018\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00019}00019\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ Element\ \%\ Element\ \textcolor{keywordtype}{object}\ defining\ the\ function\ space}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00022}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space}{00022}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00023}00023\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a80fab6d762b51160aec36e1b896604cb}{NDofs}}\ \%\ Number\ of\ degrees\ of\ freedom\ (integer)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a55a79b4530818d4e7cc62cc8d8612536}{NDims}}\ \%\ Number\ of\ spatial\ dimensions\ (integer)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00026}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{00026}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00027}00027\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_af2a8b0721e0ec53c80989cc9faa13774}{SpectralSpace}}(\mbox{\hyperlink{namespaceapprox_1_1element}{element}})}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPECTRALSPACE\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_af2a8b0721e0ec53c80989cc9faa13774}{SpectralSpace}}.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00032}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a80fab6d762b51160aec36e1b896604cb}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_af2a8b0721e0ec53c80989cc9faa13774}{SpectralSpace}}(\mbox{\hyperlink{namespaceapprox_1_1element}{element}})\ creates\ a\ spectral\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ using\ the\ specified\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ as\ the\ basis\ for\ the}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ finite-\/dimensional\ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00035}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a55a79b4530818d4e7cc62cc8d8612536}{00035}}\ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{Element}}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{Element}}\ =\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}};}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a80fab6d762b51160aec36e1b896604cb}{NDofs}}(obj)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Get\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{Element}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a80fab6d762b51160aec36e1b896604cb}{NDofs}};}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_af2a8b0721e0ec53c80989cc9faa13774}{00049}}\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a55a79b4530818d4e7cc62cc8d8612536}{NDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{Element}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a55a79b4530818d4e7cc62cc8d8612536}{NDims}};}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a520d81b0e4fa700b6fac80f206d4135d}{eval}}(obj,\ X,\ C)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVAL\ Evaluate\ functions\ in\ the\ spectral\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a520d81b0e4fa700b6fac80f206d4135d}{eval}}(obj,\ X,\ C)\ evaluates\ functions\ with}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficient\ matrix\ @a\ C\ at\ evaluation\ points\ @a\ X.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_af2a8b0721e0ec53c80989cc9faa13774}{SpectralSpace}}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.Element.eval(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ function\ U\ =\ project(obj,\ C)}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PROJECT\ Project\ coefficients\ onto\ the\ spectral\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00073}\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a520d81b0e4fa700b6fac80f206d4135d}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a1b8db4ca129113e865019c21dbeb7f60}{project}}(obj,\ C)\ projects\ the\ coefficient\ matrix\ @a\ C}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ onto\ the\ spectral\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ defined\ by\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space}{SpectralSpace}}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space_a74278eae682cd481385892d883641958}{Element}}.project(C);}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00083}00083\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spectral_space_8m_source_l00084}00084\ end}
+
+\end{DoxyCode}

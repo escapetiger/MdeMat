@@ -1,0 +1,381 @@
+\doxysection{approx\+::assembly\+::Flux\+Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_flux_assembly}{}\label{classapprox_1_1assembly_1_1_flux_assembly}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for flux terms in DG methods.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a7624e331ff5ff34b5649eda882cf7d1b}{Flux\+Assembly}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a83a6a50f3a1770136a5412ff50efb829}{bc\+Type}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_abac2aabf8a2908d327836545ee3768dd}{flux\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a9abc293b509f5a6183f49a905ab39c64}{set\+Flux\+Type}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_abac2aabf8a2908d327836545ee3768dd}{flux\+Type}})
+\begin{DoxyCompactList}\small\item\em Set the flux type. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_abdd481a08db8d28270d249acb9c5696b}{set\+Flux\+Mode}} (Input\+Type obj, Input\+Type flux\+Mode)
+\begin{DoxyCompactList}\small\item\em Set the flux mode for Dirichlet boundaries. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_ad0a6537fb184b66ba95468d84d1b8b02}{assemble\+Flux\+Partial}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble flux terms for partial operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a02369d49359c7638f392d63fb93235cf}{assemble\+Implicit\+Boundary\+Jump}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble implicit boundary jump terms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aed85b9fe2eb4a6a7e50e13608da052c6}{Assembly}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a83a6a50f3a1770136a5412ff50efb829}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type\+: \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\}. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_abac2aabf8a2908d327836545ee3768dd}{flux\+Type}}
+\begin{DoxyCompactList}\small\item\em Flux type\+: \{\textquotesingle{}left\textquotesingle{}, \textquotesingle{}right\textquotesingle{}, \textquotesingle{}central\textquotesingle{}\}. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a80c4e1434cd79b025c19f38f4318b379}{interior}}
+\begin{DoxyCompactList}\small\item\em Flux assembly on the interior elements (\doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly}) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a93a2246efb8f48ccd85d166548ce69f2}{boundary}}
+\begin{DoxyCompactList}\small\item\em Flux assembly on the boundary elements (Boundary\+Flux\+Assembly) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh space providing geometry and connectivity (Mesh\+Space) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}
+\begin{DoxyCompactList}\small\item\em Element operator providing local computations (Element\+Operator) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a5783316592ae449c7333106a4b799817}{set\+Bc\+Type}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a83a6a50f3a1770136a5412ff50efb829}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Set the boundary condition type. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a5937acd200ecf15d8c9db6832f2c09f8}{assemble\+Left\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble left-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_aa7a2a6ecfab36d007dd47b766728760b}{assemble\+Right\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble right-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a18cdc7e842ffc2b2a6c3f2bd38793488}{assemble\+Central\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble central flux terms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for flux terms in DG methods. 
+
+\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} handles the assembly of flux terms that arise in discontinuous Galerkin (DG) formulations. These flux terms provide inter-\/element coupling in DG methods, where the solution is allowed to be discontinuous across element boundaries.
+
+The class supports different flux types (left-\/biased, right-\/biased, central) and boundary condition types (periodic, Dirichlet). It manages both interior flux assembly (between neighboring elements) and boundary flux assembly (at domain boundaries).
+
+Flux terms are essential for stability and accuracy in DG methods, as they control the flow of information across element interfaces and enforce appropriate boundary conditions. The choice of flux type affects the stability properties and numerical diffusion characteristics of the resulting scheme.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{approx.\+assembly.\+Volume\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{approx.\+assembly.\+Interior\+Flux\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00028}{28}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a7624e331ff5ff34b5649eda882cf7d1b}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!FluxAssembly@{FluxAssembly}}
+\index{FluxAssembly@{FluxAssembly}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{FluxAssembly()}{FluxAssembly()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a7624e331ff5ff34b5649eda882cf7d1b} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::\+Flux\+Assembly (\begin{DoxyParamCaption}\item[{Input\+Type}]{space}{, }\item[{Input\+Type}]{operator}{, }\item[{Input\+Type}]{bc\+Type}{, }\item[{Input\+Type}]{flux\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly}. 
+
+obj = Flux\+Assembly(space, operator, bc\+Type, flux\+Type) creates a flux assembly object with the specified boundary condition type and flux type. The constructor automatically creates appropriate interior and boundary flux assembly objects based on the specified boundary condition type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em space} & -\/ Mesh\+Space object \\
+\hline
+{\em operator} & -\/ Element\+Operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type\+: \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\} \\
+\hline
+{\em flux\+Type} & -\/ Flux type\+: \{\textquotesingle{}left\textquotesingle{}, \textquotesingle{}right\textquotesingle{}, \textquotesingle{}central\textquotesingle{}\} \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a18cdc7e842ffc2b2a6c3f2bd38793488}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!assembleCentralFlux@{assembleCentralFlux}}
+\index{assembleCentralFlux@{assembleCentralFlux}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleCentralFlux()}{assembleCentralFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a18cdc7e842ffc2b2a6c3f2bd38793488} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::assemble\+Central\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble central flux terms. 
+
+T = assemble\+Central\+Flux(obj, dim, coe) combines left and right flux contributions with equal weighting to create central difference-\/type operators. Central fluxes provide symmetric treatment but may require additional stabilization for convection-\/dominated problems.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for central flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_ad0a6537fb184b66ba95468d84d1b8b02}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!assembleFluxPartial@{assembleFluxPartial}}
+\index{assembleFluxPartial@{assembleFluxPartial}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleFluxPartial()}{assembleFluxPartial()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_ad0a6537fb184b66ba95468d84d1b8b02} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::assemble\+Flux\+Partial (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble flux terms for partial operator. 
+
+T = assemble\+Flux\+Partial(obj, dim, coe) creates triplets for the flux contribution of partial operators along the dimension dim with the coefficient coe. The specific flux implementation depends on the flux type (left, right, central).
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} for flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a02369d49359c7638f392d63fb93235cf}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!assembleImplicitBoundaryJump@{assembleImplicitBoundaryJump}}
+\index{assembleImplicitBoundaryJump@{assembleImplicitBoundaryJump}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleImplicitBoundaryJump()}{assembleImplicitBoundaryJump()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a02369d49359c7638f392d63fb93235cf} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::assemble\+Implicit\+Boundary\+Jump (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble implicit boundary jump terms. 
+
+T = assemble\+Implicit\+Boundary\+Jump(obj, dim, coe) creates triplets for the jump contribution of boundary flux along the dimension dim with the coefficient coe. Jump terms arise in DG formulations to handle discontinuities at domain boundaries.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} for jump terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a5937acd200ecf15d8c9db6832f2c09f8}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!assembleLeftFlux@{assembleLeftFlux}}
+\index{assembleLeftFlux@{assembleLeftFlux}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleLeftFlux()}{assembleLeftFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a5937acd200ecf15d8c9db6832f2c09f8} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::assemble\+Left\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble left-\/biased flux terms. 
+
+T = assemble\+Left\+Flux(obj, dim, coe) combines interior and boundary contributions for left-\/biased flux terms along the specified dimension. Left-\/biased fluxes provide upwind-\/like characteristics that can enhance stability for convection-\/ dominated problems.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for left flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_aa7a2a6ecfab36d007dd47b766728760b}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!assembleRightFlux@{assembleRightFlux}}
+\index{assembleRightFlux@{assembleRightFlux}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleRightFlux()}{assembleRightFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_aa7a2a6ecfab36d007dd47b766728760b} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::assemble\+Right\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble right-\/biased flux terms. 
+
+T = assemble\+Right\+Flux(obj, dim, coe) combines interior and boundary contributions for right-\/biased flux terms along the specified dimension. Right-\/biased fluxes provide downwind-\/like characteristics.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for right flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a5783316592ae449c7333106a4b799817}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!setBcType@{setBcType}}
+\index{setBcType@{setBcType}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{setBcType()}{setBcType()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a5783316592ae449c7333106a4b799817} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::set\+Bc\+Type (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{bc\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Set the boundary condition type. 
+
+obj = set\+Bc\+Type(obj, bc\+Type) sets the boundary condition type for the assembly. This determines how boundary fluxes are handled and which boundary assembly class is instantiated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type\+: \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\}\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_abdd481a08db8d28270d249acb9c5696b}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!setFluxMode@{setFluxMode}}
+\index{setFluxMode@{setFluxMode}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{setFluxMode()}{setFluxMode()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_abdd481a08db8d28270d249acb9c5696b} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::set\+Flux\+Mode (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{flux\+Mode}{}\end{DoxyParamCaption})}
+
+
+
+Set the flux mode for Dirichlet boundaries. 
+
+obj = set\+Flux\+Mode(obj, flux\+Mode) sets the flux mode for Dirichlet boundary conditions. This method is only applicable when the boundary condition type is \textquotesingle{}dirichlet\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em flux\+Mode} & -\/ Flux mode\+: \{\textquotesingle{}upwind\textquotesingle{}, \textquotesingle{}auxiliary\textquotesingle{}, \textquotesingle{}primal\textquotesingle{}\}\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a9abc293b509f5a6183f49a905ab39c64}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!setFluxType@{setFluxType}}
+\index{setFluxType@{setFluxType}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{setFluxType()}{setFluxType()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a9abc293b509f5a6183f49a905ab39c64} 
+function approx\+::assembly\+::\+Flux\+Assembly\+::set\+Flux\+Type (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{flux\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Set the flux type. 
+
+obj = set\+Flux\+Type(obj, flux\+Type) sets the flux type for the assembly. The flux type determines how numerical fluxes are computed at element interfaces, affecting stability and accuracy properties.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+{\em flux\+Type} & -\/ Flux type\+: \{\textquotesingle{}left\textquotesingle{}, \textquotesingle{}right\textquotesingle{}, \textquotesingle{}central\textquotesingle{}\}\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a83a6a50f3a1770136a5412ff50efb829}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!bcType@{bcType}}
+\index{bcType@{bcType}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{bcType}{bcType}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a83a6a50f3a1770136a5412ff50efb829} 
+Property approx\+::assembly\+::\+Flux\+Assembly\+::bc\+Type}
+
+
+
+Boundary condition type\+: \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\}. 
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00032}{32}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a93a2246efb8f48ccd85d166548ce69f2}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!boundary@{boundary}}
+\index{boundary@{boundary}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{boundary}{boundary}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a93a2246efb8f48ccd85d166548ce69f2} 
+Property approx\+::assembly\+::\+Flux\+Assembly\+::boundary}
+
+
+
+Flux assembly on the boundary elements (Boundary\+Flux\+Assembly) 
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00041}{41}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_abac2aabf8a2908d327836545ee3768dd}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!fluxType@{fluxType}}
+\index{fluxType@{fluxType}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{fluxType}{fluxType}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_abac2aabf8a2908d327836545ee3768dd} 
+Property approx\+::assembly\+::\+Flux\+Assembly\+::flux\+Type}
+
+
+
+Flux type\+: \{\textquotesingle{}left\textquotesingle{}, \textquotesingle{}right\textquotesingle{}, \textquotesingle{}central\textquotesingle{}\}. 
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00035}{35}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a80c4e1434cd79b025c19f38f4318b379}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!interior@{interior}}
+\index{interior@{interior}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{interior}{interior}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a80c4e1434cd79b025c19f38f4318b379} 
+Property approx\+::assembly\+::\+Flux\+Assembly\+::interior}
+
+
+
+Flux assembly on the interior elements (\doxylink{classapprox_1_1assembly_1_1_interior_flux_assembly}{Interior\+Flux\+Assembly}) 
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00038}{38}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_flux_assembly_8m}{Flux\+Assembly.\+m}}\end{DoxyCompactItemize}

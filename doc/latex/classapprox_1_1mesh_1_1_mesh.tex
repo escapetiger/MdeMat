@@ -1,0 +1,583 @@
+\doxysection{approx\+::mesh\+::Mesh Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_mesh}{}\label{classapprox_1_1mesh_1_1_mesh}\index{approx::mesh::Mesh@{approx::mesh::Mesh}}
+
+
+Base class for computational meshes.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac58aa483b5a792481864267a1dea11ea}{Mesh}} (Input\+Type vertices, Input\+Type elements)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a63e99a0ef31b6863de91f0a2f22223c7}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a7e2c6b2f4ac308f8916f7671dcb84b2d}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad13b129654d4d9dd445fa1b658b2a525}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4e4bfb0a28c78e152d21ad7c1fd1bde4}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a8ca49f1f81402dd26d3e0ed05c3aa865}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aaeeddb637b6130f77a89c51d5331e594}{compute\+Direction}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute a direction vector. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae5b36bc9338f2ee352725c23cc21790d}{compute\+Face\+Scaling\+Factors}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute face scaling factors. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Convert mesh to graph representation. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9f2e5da9c17f8108cd088654adc4d869}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Create refined mesh with smaller elements. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic mesh size. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all face Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all outward normal vectors. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a5bec9db471df9c895a19ca522b523afa}{compute\+Unique\+Direction}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute a unique direction vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a128c5519a73f3845a998eb69b74d0a2d}{EJac\+Mask}} = 0b100000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a24f3cf609ce8e24227c1c3c4c6269706}{Det\+EJac\+Mask}} = 0b010000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aafd6f803208218788666cca50ed132d3}{Inv\+EJac\+Mask}} = 0b001000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a7779be6d4e10806652171afdc6363375}{Det\+FJac\+Mask}} = 0b000100
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9708b39ece1379a50bf51b6a22913247}{Out\+Normal\+Mask}} = 0b000010
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af49a9affb9f88064f4440ccac7d35d02}{Direction\+Mask}} = 0b000001
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9f727e20e0f99cdc6ad9840aa0d25646}{Vertices}}
+\begin{DoxyCompactList}\small\item\em Vertex coordinates (NVertices × NDims or cell array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4321491dece6c852d5eb153f7ff2e0da}{Elements}}
+\begin{DoxyCompactList}\small\item\em Element connectivity (NElements × NVertices\+Per\+Element or cell array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af8470de3e97737309f792dd3e8633a4b}{Transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4e017b45e88350f63daaba874437d7b4}{Direction}}
+\begin{DoxyCompactList}\small\item\em Direction vector (NDims x 1) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a319c185bd054cfc21e9df934672eb443}{Status}}
+\begin{DoxyCompactList}\small\item\em Status mask. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a86920922c82ee55efd4b7ed1a804ff0d}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a096aa9ffd7827c06fb730324ab737680}{NVertices}}
+\begin{DoxyCompactList}\small\item\em Number of vertices in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_abda0d79287038fba358e06acf52dc7f2}{NElements}}
+\begin{DoxyCompactList}\small\item\em Number of elements in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a8b8be8cf29e95ab3409281183a3258f1}{NVertices\+Per\+Element}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per element (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for computational meshes. 
+
+\doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} provides foundational functionality for computational meshes in numerical approximation methods. It defines common interfaces for coordinate transformations, mesh refinement, and geometric computations while supporting efficient caching of expensive operations.
+
+The class manages coordinate transformations between reference and physical coordinate systems, computes Jacobian matrices and their determinants for integration quadrature, and provides mesh refinement capabilities for adaptive algorithms.
+
+Transformation data is cached using bitwise flags to avoid redundant computations\+:
+\begin{DoxyItemize}
+\item 0b00001\+: Outward normals computed
+\item 0b00010\+: Face Jacobian determinants computed
+\item 0b00100\+: Element inverse Jacobians computed
+\item 0b01000\+: Element Jacobian determinants computed
+\item 0b10000\+: Element Jacobians computed
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid} 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx.\+mesh.\+Polytopal\+Mesh} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00030}{30}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_ac58aa483b5a792481864267a1dea11ea}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Mesh@{Mesh}}
+\index{Mesh@{Mesh}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Mesh()}{Mesh()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_ac58aa483b5a792481864267a1dea11ea} 
+function approx\+::mesh\+::\+Mesh\+::\+Mesh (\begin{DoxyParamCaption}\item[{Input\+Type}]{vertices}{, }\item[{Input\+Type}]{elements}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. 
+
+obj = Mesh(vertices, elements) creates a mesh from vertex coordinates and element connectivity. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a9f2e5da9c17f8108cd088654adc4d869}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a9f2e5da9c17f8108cd088654adc4d869} 
+virtual function approx\+::mesh\+::\+Mesh\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{EI}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Map reference coordinates to physical coordinates. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a263d815108ecb4a2304237fdbd61a6c6}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a4638931573e6a2ec6a7fc295d6c2a686}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeAllElementInverseJacobians@{computeAllElementInverseJacobians}}
+\index{computeAllElementInverseJacobians@{computeAllElementInverseJacobians}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementInverseJacobians()}{computeAllElementInverseJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+All\+Element\+Inverse\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute all element inverse Jacobian matrices. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a3e637b6f71ea227b19ca1681bc0ab5b2}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a54b891a8df3afda76fe4f98419cae358}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}}
+\index{computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobianDeterminants()}{computeAllElementJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+All\+Element\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute all element Jacobian determinants. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a3c43bb5e0e4cc0e55db2f43755374eff}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a6826f60e2611e2d8d80aa8222683c535}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeAllElementJacobians@{computeAllElementJacobians}}
+\index{computeAllElementJacobians@{computeAllElementJacobians}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobians()}{computeAllElementJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+All\+Element\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute all element Jacobian matrices. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a73a0a24d9bb5c7a2469dd888bb849f62}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a6c6a9a0e72e0665e3c542476918fbb0f}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}}
+\index{computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeAllFaceJacobianDeterminants()}{computeAllFaceJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+All\+Face\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute all face Jacobian determinants. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a368996c0ca350defd7e9cfb00de886bb}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a5aa8ac939b0fccaa605e64ce0d10c43b}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeAllOutwardNormals@{computeAllOutwardNormals}}
+\index{computeAllOutwardNormals@{computeAllOutwardNormals}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeAllOutwardNormals()}{computeAllOutwardNormals()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+All\+Outward\+Normals (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute all outward normal vectors. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a9cfb73794f70087f342b11f5bfadefda}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ad8fd8101f741640fae7550d6b925c5e4}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_aaeeddb637b6130f77a89c51d5331e594}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeDirection@{computeDirection}}
+\index{computeDirection@{computeDirection}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeDirection()}{computeDirection()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_aaeeddb637b6130f77a89c51d5331e594} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Direction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Compute a direction vector. 
+
+v = compute\+Direction(obj) computes a unit direction vector to define the "{}plus"{} and "{}minus"{} side of a face.
+
+If n\+Dims = 1, v = 1. If n\+Dims \texorpdfstring{$>$}{>} 1, v is a unit vector that is not parallel with any normal vectors of element boundaries. \Hypertarget{classapprox_1_1mesh_1_1_mesh_ad13b129654d4d9dd445fa1b658b2a525}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeElementInverseJacobians@{computeElementInverseJacobians}}
+\index{computeElementInverseJacobians@{computeElementInverseJacobians}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeElementInverseJacobians()}{computeElementInverseJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_ad13b129654d4d9dd445fa1b658b2a525} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Element\+Inverse\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{}\end{DoxyParamCaption})}
+
+
+
+Compute element inverse Jacobian matrices. 
+
+inv\+EJac = compute\+Element\+Inverse\+Jacobians(obj) computes inverse Jacobian matrices for coordinate transformation from physical to reference coordinates for all elements.
+
+inv\+EJac = compute\+Element\+Inverse\+Jacobians(obj, EI) computes inverse Jacobian matrices only for the specified elements.
+
+The inverse Jacobian matrix appears in gradient computations\+: $\nabla_x f = J^{-T} \nabla_\xi $ where $\nabla_x$ and $\nabla_\xi$ are gradients in physical and reference coordinates respectively. \Hypertarget{classapprox_1_1mesh_1_1_mesh_a7e2c6b2f4ac308f8916f7671dcb84b2d}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeElementJacobianDeterminants@{computeElementJacobianDeterminants}}
+\index{computeElementJacobianDeterminants@{computeElementJacobianDeterminants}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeElementJacobianDeterminants()}{computeElementJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a7e2c6b2f4ac308f8916f7671dcb84b2d} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Element\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{}\end{DoxyParamCaption})}
+
+
+
+Compute element Jacobian determinants. 
+
+det\+EJac = compute\+Element\+Jacobian\+Determinants(obj) computes Jacobian determinants for coordinate transformation from reference to physical coordinates for all elements.
+
+det\+EJac = compute\+Element\+Jacobian\+Determinants(obj, EI) computes Jacobian determinants only for the specified elements.
+
+The Jacobian determinant appears in integration formulas\+:
+
+\[\int_{\Omega} f(x) dx = \int_{\hat{\Omega}} f(F(\xi))
+|det(J)| d\xi
+\]
+
+where $F$ is the coordinate transformation and $\hat{\Omega}$ is the reference element. \Hypertarget{classapprox_1_1mesh_1_1_mesh_a63e99a0ef31b6863de91f0a2f22223c7}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeElementJacobians@{computeElementJacobians}}
+\index{computeElementJacobians@{computeElementJacobians}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeElementJacobians()}{computeElementJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a63e99a0ef31b6863de91f0a2f22223c7} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Element\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{}\end{DoxyParamCaption})}
+
+
+
+Compute element Jacobian matrices. 
+
+EJac = compute\+Element\+Jacobians(obj) computes Jacobian matrices for coordinate transformation from reference to physical coordinates for all elements.
+
+EJac = compute\+Element\+Jacobians(obj, EI) computes Jacobian matrices only for the specified elements.
+
+The Jacobian matrix  $J_{ij} = \frac{\partial
+x_i}{\partial \xi_j}$ where $x$ are physical coordinates and $\xi$ are reference coordinates. For coordinate transformations\+: $dx = J d\xi$. \Hypertarget{classapprox_1_1mesh_1_1_mesh_a4e4bfb0a28c78e152d21ad7c1fd1bde4}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeFaceJacobianDeterminants@{computeFaceJacobianDeterminants}}
+\index{computeFaceJacobianDeterminants@{computeFaceJacobianDeterminants}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeFaceJacobianDeterminants()}{computeFaceJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a4e4bfb0a28c78e152d21ad7c1fd1bde4} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Face\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{, }\item[{Input\+Type}]{LFI}{}\end{DoxyParamCaption})}
+
+
+
+Compute face Jacobian determinants. 
+
+det\+FJac = compute\+Face\+Jacobian\+Determinants(obj, EI, LFI) computes Jacobian determinants for coordinate transformation on element faces for integration over boundaries.
+
+Face Jacobian determinants are used in boundary integration\+:
+
+\[\int_{\partial\Omega} f(x) dS =
+\int_{\partial\hat{\Omega}} f(F(\xi)) |det(J_F)| d\xi
+\]
+
+where $\partial\Omega$ is the boundary and $J_F$ is the face Jacobian. \Hypertarget{classapprox_1_1mesh_1_1_mesh_ae5b36bc9338f2ee352725c23cc21790d}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeFaceScalingFactors@{computeFaceScalingFactors}}
+\index{computeFaceScalingFactors@{computeFaceScalingFactors}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeFaceScalingFactors()}{computeFaceScalingFactors()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_ae5b36bc9338f2ee352725c23cc21790d} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Face\+Scaling\+Factors (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{, }\item[{Input\+Type}]{LFI}{}\end{DoxyParamCaption})}
+
+
+
+Compute face scaling factors. 
+
+ratio = compute\+Face\+Scaling\+Factors(obj, EI, LFI) computes face scaling factors for coordinate transformation on element faces for integration over boundaries. \Hypertarget{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeMeasure@{computeMeasure}}
+\index{computeMeasure@{computeMeasure}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeMeasure()}{computeMeasure()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+Measure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute characteristic mesh size. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a287953006dd275d8d6a2bc2a04c32748}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a12c792a0f1fefa7893b09fef01d30a65}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a8ca49f1f81402dd26d3e0ed05c3aa865}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeOutwardNormals@{computeOutwardNormals}}
+\index{computeOutwardNormals@{computeOutwardNormals}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeOutwardNormals()}{computeOutwardNormals()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a8ca49f1f81402dd26d3e0ed05c3aa865} 
+function approx\+::mesh\+::\+Mesh\+::compute\+Outward\+Normals (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{EI}{, }\item[{Input\+Type}]{LFI}{}\end{DoxyParamCaption})}
+
+
+
+Compute outward normal vectors. 
+
+normal = compute\+Outward\+Normals(obj, EI, LFI) computes unit outward normal vectors on element faces for boundary conditions and flux computations.
+
+Outward normals are used in boundary conditions and flux computations. The direction is defined such that the normal points away from the element interior. \Hypertarget{classapprox_1_1mesh_1_1_mesh_a5bec9db471df9c895a19ca522b523afa}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!computeUniqueDirection@{computeUniqueDirection}}
+\index{computeUniqueDirection@{computeUniqueDirection}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{computeUniqueDirection()}{computeUniqueDirection()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a5bec9db471df9c895a19ca522b523afa} 
+virtual function approx\+::mesh\+::\+Mesh\+::compute\+Unique\+Direction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute a unique direction vector. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a67a6691c36548bd7618391c717dbc890}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a234082a348c3a263510fdc7e7ec9ee3a}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!graphify@{graphify}}
+\index{graphify@{graphify}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{graphify()}{graphify()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235} 
+virtual function approx\+::mesh\+::\+Mesh\+::graphify (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Convert mesh to graph representation. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a6121aa6f88ce55cb65b5f393c75b9208}{approx\+::mesh\+::\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ab2d22b35e444d7339b83667f8842b54e}{approx\+::mesh\+::\+Triangulation}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df} 
+virtual function approx\+::mesh\+::\+Mesh\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Levels}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Create refined mesh with smaller elements. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a6ad2de89c74d354fe0ac159bc0d24bc5}{approx\+::mesh\+::\+Grid}}, \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ac6cdbb1d995da4509b07aa453aa4fd7c}{approx\+::mesh\+::\+Triangulation}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a593f06bad3f21b0f730a4974df1ada5e}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!resetTransform@{resetTransform}}
+\index{resetTransform@{resetTransform}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{resetTransform()}{resetTransform()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6} 
+function approx\+::mesh\+::\+Mesh\+::reset\+Transform (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset transformation data cache. 
+
+obj = reset\+Transform(obj) clears all cached transformation data and resets the computation flags. This method should be called whenever the mesh geometry changes. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a24f3cf609ce8e24227c1c3c4c6269706}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!DetEJacMask@{DetEJacMask}}
+\index{DetEJacMask@{DetEJacMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{DetEJacMask}{DetEJacMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a24f3cf609ce8e24227c1c3c4c6269706} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+Det\+EJac\+Mask = 0b010000}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00037}{37}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a7779be6d4e10806652171afdc6363375}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!DetFJacMask@{DetFJacMask}}
+\index{DetFJacMask@{DetFJacMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{DetFJacMask}{DetFJacMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a7779be6d4e10806652171afdc6363375} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+Det\+FJac\+Mask = 0b000100}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00043}{43}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a4e017b45e88350f63daaba874437d7b4}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Direction@{Direction}}
+\index{Direction@{Direction}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Direction}{Direction}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a4e017b45e88350f63daaba874437d7b4} 
+Property approx\+::mesh\+::\+Mesh\+::\+Direction}
+
+
+
+Direction vector (NDims x 1) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00064}{64}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_af49a9affb9f88064f4440ccac7d35d02}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!DirectionMask@{DirectionMask}}
+\index{DirectionMask@{DirectionMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{DirectionMask}{DirectionMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_af49a9affb9f88064f4440ccac7d35d02} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+Direction\+Mask = 0b000001}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00049}{49}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a128c5519a73f3845a998eb69b74d0a2d}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!EJacMask@{EJacMask}}
+\index{EJacMask@{EJacMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{EJacMask}{EJacMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a128c5519a73f3845a998eb69b74d0a2d} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+EJac\+Mask = 0b100000}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00034}{34}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a4321491dece6c852d5eb153f7ff2e0da}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Elements@{Elements}}
+\index{Elements@{Elements}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Elements}{Elements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a4321491dece6c852d5eb153f7ff2e0da} 
+Property approx\+::mesh\+::\+Mesh\+::\+Elements}
+
+
+
+Element connectivity (NElements × NVertices\+Per\+Element or cell array) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00058}{58}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_aafd6f803208218788666cca50ed132d3}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!InvEJacMask@{InvEJacMask}}
+\index{InvEJacMask@{InvEJacMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{InvEJacMask}{InvEJacMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_aafd6f803208218788666cca50ed132d3} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+Inv\+EJac\+Mask = 0b001000}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00040}{40}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a86920922c82ee55efd4b7ed1a804ff0d}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!NDims@{NDims}}
+\index{NDims@{NDims}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a86920922c82ee55efd4b7ed1a804ff0d} 
+Property approx\+::mesh\+::\+Mesh\+::\+NDims}
+
+
+
+Number of spatial dimensions (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00073}{73}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_abda0d79287038fba358e06acf52dc7f2}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!NElements@{NElements}}
+\index{NElements@{NElements}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{NElements}{NElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_abda0d79287038fba358e06acf52dc7f2} 
+Property approx\+::mesh\+::\+Mesh\+::\+NElements}
+
+
+
+Number of elements in the mesh (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00079}{79}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a096aa9ffd7827c06fb730324ab737680}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!NVertices@{NVertices}}
+\index{NVertices@{NVertices}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{NVertices}{NVertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a096aa9ffd7827c06fb730324ab737680} 
+Property approx\+::mesh\+::\+Mesh\+::\+NVertices}
+
+
+
+Number of vertices in the mesh (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00076}{76}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a8b8be8cf29e95ab3409281183a3258f1}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!NVerticesPerElement@{NVerticesPerElement}}
+\index{NVerticesPerElement@{NVerticesPerElement}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{NVerticesPerElement}{NVerticesPerElement}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a8b8be8cf29e95ab3409281183a3258f1} 
+Property approx\+::mesh\+::\+Mesh\+::\+NVertices\+Per\+Element}
+
+
+
+Number of vertices per element (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00082}{82}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a9708b39ece1379a50bf51b6a22913247}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!OutNormalMask@{OutNormalMask}}
+\index{OutNormalMask@{OutNormalMask}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{OutNormalMask}{OutNormalMask}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a9708b39ece1379a50bf51b6a22913247} 
+Constant Property approx\+::mesh\+::\+Mesh\+::\+Out\+Normal\+Mask = 0b000010}
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00046}{46}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a319c185bd054cfc21e9df934672eb443}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Status@{Status}}
+\index{Status@{Status}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Status}{Status}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a319c185bd054cfc21e9df934672eb443} 
+Property approx\+::mesh\+::\+Mesh\+::\+Status}
+
+
+
+Status mask. 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00067}{67}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_af8470de3e97737309f792dd3e8633a4b}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Transform@{Transform}}
+\index{Transform@{Transform}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Transform}{Transform}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_af8470de3e97737309f792dd3e8633a4b} 
+Property approx\+::mesh\+::\+Mesh\+::\+Transform}
+
+
+
+Transformation data cache (struct) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00061}{61}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_mesh_a9f727e20e0f99cdc6ad9840aa0d25646}\index{approx::mesh::Mesh@{approx::mesh::Mesh}!Vertices@{Vertices}}
+\index{Vertices@{Vertices}!approx::mesh::Mesh@{approx::mesh::Mesh}}
+\doxysubsubsection{\texorpdfstring{Vertices}{Vertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_mesh_a9f727e20e0f99cdc6ad9840aa0d25646} 
+Property approx\+::mesh\+::\+Mesh\+::\+Vertices}
+
+
+
+Vertex coordinates (NVertices × NDims or cell array) 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_8m_source_l00055}{55}} of file \mbox{\hyperlink{_mesh_8m_source}{Mesh.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_mesh_8m}{Mesh.\+m}}\end{DoxyCompactItemize}

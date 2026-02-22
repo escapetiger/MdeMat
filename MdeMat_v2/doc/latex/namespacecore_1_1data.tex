@@ -1,0 +1,54 @@
+\doxysection{core\+::data Namespace Reference}
+\hypertarget{namespacecore_1_1data}{}\label{namespacecore_1_1data}\index{core::data@{core::data}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct}}
+\begin{DoxyCompactList}\small\item\em Structure for multidimensional grid data. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1data_1_1_ordered_map}{Ordered\+Map}}
+\begin{DoxyCompactList}\small\item\em Key-\/value map that preserves insertion order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9}{to\+String}} (Input\+Type x)
+\begin{DoxyCompactList}\small\item\em Convert a variable to a formatted string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacecore_1_1data_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9}\index{core::data@{core::data}!toString@{toString}}
+\index{toString@{toString}!core::data@{core::data}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1data_a25f1a2f05876a54b62efd3d0a7cb3ef9} 
+function core\+::data\+::to\+String (\begin{DoxyParamCaption}\item[{Input\+Type}]{x}{}\end{DoxyParamCaption})}
+
+
+
+Convert a variable to a formatted string. 
+
+s = to\+String(x) returns a formatted string representing runtime variable {\itshape x}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & -\/ Variable\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em s} & -\/ String representation\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString([]);\ \%\ Returns\ \textcolor{stringliteral}{'[]'}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(1);\ \%\ Returns\ \textcolor{charliteral}{'1'}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{keyword}{true});\ \%\ Returns\ \textcolor{stringliteral}{'true'}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{charliteral}{'F'});\ \%\ Returns\ \textcolor{charliteral}{'''}F\textcolor{charliteral}{'''}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\{1,\ 2,\ 3\});\ \%\ Returns\ \textcolor{stringliteral}{'cell'}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(\textcolor{keyword}{struct}(\textcolor{charliteral}{'a'},\ 1));\ \%\ Returns\ \textcolor{stringliteral}{'struct'}}
+\DoxyCodeLine{s\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1data}{data}}.toString(@(z)\ sin(z));\ \%\ Returns\ \textcolor{stringliteral}{'@(z)sin(z)'}}
+
+\end{DoxyCode}
+ 

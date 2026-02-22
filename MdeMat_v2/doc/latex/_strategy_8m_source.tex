@@ -1,0 +1,156 @@
+\doxysection{Strategy.\+m}
+\hypertarget{_strategy_8m_source}{}\label{_strategy_8m_source}\index{+profilers/+visual/Strategy.m@{+profilers/+visual/Strategy.m}}
+\mbox{\hyperlink{_strategy_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00001}00001\ classdef\ Strategy\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00002}00002\ \ \ \ \ \%\ STRATEGY\ Abstract\ base\ \textcolor{keyword}{class\ }for\ data\ rendering\ strategies.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Strategy\ defines\ the\ \textcolor{keyword}{interface\ }and\ common\ functionality\ for\ all}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ rendering\ strategies\ used\ in\ data\ visualization.\ This\ \textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ provides\ mode-\/based\ rendering\ control,\ variable-\/to-\/axis\ mapping}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ capabilities,\ and\ utility\ methods\ \textcolor{keywordflow}{for}\ coordinated\ multi-\/panel}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ visualizations.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ Concrete\ strategy\ implementations\ handle\ the\ specific\ details\ of}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ rendering\ data\ in\ 1D,\ 2D,\ or\ 3D\ contexts,\ \textcolor{keywordflow}{while}\ \textcolor{keyword}{this}\ base\ \textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ manages\ the\ overall\ rendering\ workflow\ and\ variable\ organization.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00014}00014\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1visual}{visual}}.Strategy1d,\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1visual}{visual}}.Strategy2d,}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1visual}{visual}}.Strategy3d,\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1visual}{visual}}.\mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter}{TiledPlotter}}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00018}00018\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ nDims\ \ \ \%\ Number\ of\ spatial\ dimensions\ handled\ by\ \textcolor{keyword}{this}\ strategy}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ varMap\ \ \%\ Structure\ mapping\ variable\ names\ to\ axis\ indices}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ mode\ \ \ \ \%\ Rendering\ mode\ (\textcolor{stringliteral}{'sequential'}\ |\ \textcolor{stringliteral}{'map'})}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00022}00022\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00023}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy}{00023}}\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00024}00024\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}(\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{nDims}},\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}})}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STRATEGY\ Constructor\ for\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ base\ class.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00027}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}(\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{nDims}},\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}})\ creates\ a\ rendering\ strategy}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ the\ specified\ number\ of\ dimensions\ with\ the\ given}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00030}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad7afc8321819eb2b1d21c1e6a746a515}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ rendering\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00033}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{nDims}}\ -\/\ Number\ of\ spatial\ dimensions\ (1,\ 2,\ or\ 3)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}\ -\/\ Rendering\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}\ =\ 'sequential':\ Variables\ rendered\ in\ order\ of\ appearance}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}\ =\ 'map':\ Variables\ rendered\ according\ to\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{bind}}()\ mapping}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2,\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}\ =\ 'sequential';\ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(ismember(\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}},\ \{\textcolor{stringliteral}{'sequential'},\ \textcolor{stringliteral}{'map'}\}),\ ...}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Mode\ must\ be\ '}\textcolor{stringliteral}{'sequential'}\textcolor{stringliteral}{'\ or\ '}\textcolor{stringliteral}{'map'}\textcolor{stringliteral}{''});}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.nDims\ =\ nDims;}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj.varMap\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.mode\ =\ mode;}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00053}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{00053}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{bind}}(obj,\ varName,\ axisIdx)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ BIND\ Map\ a\ variable\ to\ a\ specific\ axis\ index.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{bind}}(obj,\ varName,\ axisIdx)\ creates\ a\ mapping\ from}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ variable\ name\ to\ an\ axis\ index\ \textcolor{keywordflow}{for}\ use\ in}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{stringliteral}{'map'}\ rendering\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}.\ This\ allows\ precise\ control\ over}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ which\ variables\ appear\ on\ which\ axes.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varName\ -\/\ Name\ of\ the\ variable\ to\ map\ (\textcolor{keywordtype}{string})}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ axisIdx\ -\/\ Target\ axis\ index\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ obj.varMap.(varName)\ =\ axisIdx;}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}{render}}(obj,\ axes,\ dataset,\ styleset)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RENDER\ Render\ data\ with\ variable-\/to-\/axis\ coordination.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}{render}}(obj,\ axes,\ dataset,\ styleset)\ renders\ the}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ provided\ dataset\ onto\ the\ axes\ array\ \textcolor{keyword}{using\ }either}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sequential\ or\ mapped\ variable\ placement\ based\ on\ the}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ strategy\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00080}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ axes\ -\/\ Array\ of\ axes\ handles\ \textcolor{keywordflow}{for}\ rendering}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dataset\ -\/\ Structure\ containing\ data\ fields\ to\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}{render}}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ styleset\ -\/\ Structure\ containing\ rendering\ style\ specifications}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(obj.mode,\ \textcolor{stringliteral}{'sequential'})}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varNames\ =\ fieldnames(dataset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.renderSequential(axes,\ dataset,\ styleset,\ varNames);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varNames\ =\ fieldnames(obj.\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad7afc8321819eb2b1d21c1e6a746a515}{varMap}});}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.renderMapped(axes,\ dataset,\ styleset,\ varNames);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00097}00097\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00099}00099\ \ \ \ \ methods\ (Access\ =\ private)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ function\ obj\ =\ renderSequential(obj,\ axes,\ dataset,\ styleset,\ varNames)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00101}\mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}{00101}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RENDERSEQUENTIAL\ Render\ variables\ in\ sequential\ order.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:length(varNames)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ varNames\{j\};}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nAxes\ =\ length(fieldnames(dataset))\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ =\ 1\ +\ (j\ -\/\ 1)\ *\ nAxes;}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ offset\ +\ nAxes\ -\/\ 1\ >\ length(axes)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(\textcolor{keyword}{false},\ \textcolor{stringliteral}{'NotEnoughAxes'},\ ...}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Not\ enough\ axes\ for\ all\ variables.'});}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.renderVariable(axes,\ dataset,\ styleset,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ function\ renderMapped(obj,\ axes,\ dataset,\ styleset,\ varNames)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RENDERMAPPED\ Render\ variables\ \textcolor{keyword}{using\ }explicit\ axis\ mapping.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:length(varNames)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ varNames\{j\};}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ =\ obj.varMap.(varName);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ offset\ >\ length(axes)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(\textcolor{keyword}{false},\ \textcolor{stringliteral}{'InvalidAxisIdx'},\ ...}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Axis\ index\ \%d\ exceeds\ available\ axes.'},\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.renderVariable(axes,\ dataset,\ styleset,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00135}00135\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ function\ renderVariable(obj,\ axes,\ dataset,\ styleset,\ varName,\ offset)}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RENDERVARIABLE\ Render\ a\ single\ variable\ onto\ axes.}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ obj.nDims}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderVariable1d(axes,\ dataset,\ styleset,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderVariable2d(axes,\ dataset,\ styleset,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderVariable3d(axes,\ dataset,\ styleset,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00149}00149\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strategy_8m_source_l00150}00150\ end}
+
+\end{DoxyCode}

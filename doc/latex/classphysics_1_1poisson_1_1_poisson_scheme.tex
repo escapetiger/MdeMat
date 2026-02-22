@@ -1,0 +1,155 @@
+\doxysection{physics\+::poisson\+::Poisson\+Scheme Class Reference}
+\hypertarget{classphysics_1_1poisson_1_1_poisson_scheme}{}\label{classphysics_1_1poisson_1_1_poisson_scheme}\index{physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}}
+
+
+Base class for all schemes solving poisson equations.  
+
+
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme}{physics\+::scheme\+::\+Steady\+Scheme}}.
+
+
+
+Inherited by \mbox{\hyperlink{classphysics_1_1poisson_1_1_ldg_scheme}{physics\+::poisson\+::\+Ldg\+Scheme}}.
+
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1poisson_1_1_poisson_scheme_a34ca5c0ab56068def150bd2265b72fd1}{setup}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Setup default configuration options for Poisson schemes. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1poisson_1_1_poisson_scheme_a00a4f4ce720294eeeceecf13b5256b1d}{configure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate Poisson-\/specific configuration dependencies. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1poisson_1_1_poisson_scheme_a18a2ae8221ed314fafb2e1d8856058ae}{set\+Lhs\+Term}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Assemble left-\/hand side matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1poisson_1_1_poisson_scheme_a8c7d3a7c4e99b70bc3d60d031dedcb26}{set\+Rhs\+Term}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Set up right-\/hand side vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme}{physics\+::scheme\+::\+Steady\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme_adfd7629bb249c602ca9e32ec945196b6}{setup}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Setup default configuration options for steady schemes. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme_addf3ab95253e84798c7de190b5415711}{plot}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Generate visualization for current solution state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a0318e3a4d681d6f3238361954945871e}{setup}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Setup default configuration options. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a93008252b6a8f4f434cd3fdc0e0d01ec}{configure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate configuration dependencies and validate setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme}{physics\+::scheme\+::\+Steady\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme_a46f867c1f36f519aa91717e0a545d225}{run}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute Method of Lines simulation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_steady_scheme_a7a9329389b5a30ff4f7dee79434d057f}{converge}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute convergence study with mesh refinement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a55322cfe80e67369604bbb9cfd58dc15}{Scheme}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a2e63c8f1fffcc0e9b2fc6663ae9d939c}{load}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Load configuration from file and/or struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a4533fefb6e13f6f4f76fa5c69e535ac5}{load\+From\+Struct}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Load configuration from struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a3d069ec440f52ff164e9b8a812ffee8e}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_acd05c437988563b7959fc4aaf6eedbea}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a5dac6ca9fc5c65773e6bb43833fa8916}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_aa3f9ef4a35ba1b5a479789a3820f7cdc}{finalize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Finalize scheme and solution state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{physics\+::scheme\+::\+Config\+Parser}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{Config\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9}{load\+From\+File}} (Input\+Type obj, Input\+Type file)
+\begin{DoxyCompactList}\small\item\em Load configuration from file and add options to Config. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{add\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Add configuration option with default value and validator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f}{has\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Check if configuration option exists. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308}{get\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Get configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f}{set\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type value)
+\begin{DoxyCompactList}\small\item\em Set configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Remove all MATLAB paths added during parsing operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{physics\+::scheme\+::\+Config\+Parser}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}
+\begin{DoxyCompactList}\small\item\em Struct containing all parsed configuration options. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3}{Validators}}
+\begin{DoxyCompactList}\small\item\em Struct containing validator functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all schemes solving poisson equations. 
+
+\doxylink{classphysics_1_1poisson_1_1_poisson_scheme}{Poisson\+Scheme} implements a numerical scheme for solving poisson equations. This base class defines the basic validation and parse logic of configuration struct.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1scheme_1_1_steady_scheme}{physics.\+scheme.\+Steady\+Scheme} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_poisson_scheme_8m_source_l00014}{14}} of file \mbox{\hyperlink{_poisson_scheme_8m_source}{Poisson\+Scheme.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1poisson_1_1_poisson_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1poisson_1_1_poisson_scheme_a00a4f4ce720294eeeceecf13b5256b1d}\index{physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}!configure@{configure}}
+\index{configure@{configure}!physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}}
+\doxysubsubsection{\texorpdfstring{configure()}{configure()}}
+{\footnotesize\ttfamily \label{classphysics_1_1poisson_1_1_poisson_scheme_a00a4f4ce720294eeeceecf13b5256b1d} 
+function physics\+::poisson\+::\+Poisson\+Scheme\+::configure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Generate Poisson-\/specific configuration dependencies. 
+
+\Hypertarget{classphysics_1_1poisson_1_1_poisson_scheme_a18a2ae8221ed314fafb2e1d8856058ae}\index{physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}!setLhsTerm@{setLhsTerm}}
+\index{setLhsTerm@{setLhsTerm}!physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}}
+\doxysubsubsection{\texorpdfstring{setLhsTerm()}{setLhsTerm()}}
+{\footnotesize\ttfamily \label{classphysics_1_1poisson_1_1_poisson_scheme_a18a2ae8221ed314fafb2e1d8856058ae} 
+function physics\+::poisson\+::\+Poisson\+Scheme\+::set\+Lhs\+Term (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble left-\/hand side matrix. 
+
+\Hypertarget{classphysics_1_1poisson_1_1_poisson_scheme_a8c7d3a7c4e99b70bc3d60d031dedcb26}\index{physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}!setRhsTerm@{setRhsTerm}}
+\index{setRhsTerm@{setRhsTerm}!physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}}
+\doxysubsubsection{\texorpdfstring{setRhsTerm()}{setRhsTerm()}}
+{\footnotesize\ttfamily \label{classphysics_1_1poisson_1_1_poisson_scheme_a8c7d3a7c4e99b70bc3d60d031dedcb26} 
+function physics\+::poisson\+::\+Poisson\+Scheme\+::set\+Rhs\+Term (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Set up right-\/hand side vector. 
+
+\Hypertarget{classphysics_1_1poisson_1_1_poisson_scheme_a34ca5c0ab56068def150bd2265b72fd1}\index{physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}!setup@{setup}}
+\index{setup@{setup}!physics::poisson::PoissonScheme@{physics::poisson::PoissonScheme}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{classphysics_1_1poisson_1_1_poisson_scheme_a34ca5c0ab56068def150bd2265b72fd1} 
+function physics\+::poisson\+::\+Poisson\+Scheme\+::setup (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Setup default configuration options for Poisson schemes. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+poisson/\mbox{\hyperlink{_poisson_scheme_8m}{Poisson\+Scheme.\+m}}\end{DoxyCompactItemize}

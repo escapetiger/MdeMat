@@ -1,0 +1,136 @@
+\doxysection{Spherical\+Harmonic\+Basis.\+m}
+\hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source}{}\label{_09symbolic_2_spherical_harmonic_basis_8m_source}\index{+core/+symbolic/SphericalHarmonicBasis.m@{+core/+symbolic/SphericalHarmonicBasis.m}}
+\mbox{\hyperlink{_09symbolic_2_spherical_harmonic_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00001}00001\ classdef\ SphericalHarmonicBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00002}00002\ \ \ \ \ \%\ SPHERICALHARMONICBASIS\ Spherical\ harmonic\ orthogonal\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SphericalHarmonicBasis\ generates\ spherical\ harmonic\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ up\ to\ a\ specified\ maximum\ degree.\ The\ basis\ functions\ are}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ orthogonal\ on\ the\ unit\ sphere\ with\ respect\ to\ the\ standard}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ spherical\ measure.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00009}00009\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis}{FourierBasis}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00012}00012\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ MaxDegree\ \%\ Maximum\ degree\ l}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ IsNormalized\ \%\ Flag\ \textcolor{keywordflow}{for}\ orthonormal\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00015}00015\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00016}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis}{00016}}\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00017}00017\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a350fb6209c4bb27569f7816ec50e28e1}{SphericalHarmonicBasis}}(variables,\ maxDegree,\ options)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPHERICALHARMONICBASIS\ Construct\ spherical\ harmonic\ basis}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00020}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a44cafafa294fda22666aae6441a4874b}{00020}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a350fb6209c4bb27569f7816ec50e28e1}{SphericalHarmonicBasis}}(variables,\ maxDegree)\ creates}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00023}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_adce58c2aa58769437c5f8a4bcd6168a7}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spherical\ harmonic\ basis\ functions\ \textcolor{keyword}{using\ }the\ specified}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ variables\ (mu,\ phi)\ up\ to\ @a\ maxDegree.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a350fb6209c4bb27569f7816ec50e28e1}{SphericalHarmonicBasis}}(variables,\ maxDegree,}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ isNormalized=\textcolor{keyword}{true})\ creates\ orthonormal\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables\ \{mustBeA(variables,\ \textcolor{stringliteral}{'sym'}),\ mustBeNonempty\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxDegree\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.isNormalized\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{SymbolicFunction}}(variables);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ obj.MaxDegree\ =\ maxDegree;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ obj.IsNormalized\ =\ options.isNormalized;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj.computeExpressions();}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00041}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a350fb6209c4bb27569f7816ec50e28e1}{00041}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00043}00043\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{private})}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ computeExpressions(obj)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEEXPRESSIONS\ Compute\ spherical\ harmonic\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ expressions.}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}\ =\ repmat(sym([]),\ (obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a44cafafa294fda22666aae6441a4874b}{MaxDegree}}\ +\ 1)\string^2,\ 1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ mu\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ phi\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}(2);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ for\ l\ =\ 0:obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_a44cafafa294fda22666aae6441a4874b}{MaxDegree}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ m\ =\ 0:l}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ m\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ obj.computeSphericalHarmonic(mu,\ phi,\ l,\ 0);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_adce58c2aa58769437c5f8a4bcd6168a7}{IsNormalized}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sqrt((2\ *\ l\ +\ 1)/(4\ *\ sym(pi))*\ ...}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ factorial(l-\/abs(m))/factorial(l+abs(m)));}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ simplify(normalizer*expr);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(idx)\ =\ expr;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ idx\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr1\ =\ obj.computeSphericalHarmonic(mu,\ phi,\ l,\ m);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr2\ =\ obj.computeSphericalHarmonic(mu,\ phi,\ l,\ -\/m);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_adce58c2aa58769437c5f8a4bcd6168a7}{IsNormalized}}}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sqrt((2\ *\ l\ +\ 1)/(4\ *\ sym(pi))*\ ...}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ factorial(l-\/abs(m))/factorial(l+abs(m)));}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr1\ =\ simplify(normalizer*expr1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr2\ =\ simplify(normalizer*expr2);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(idx)\ =\ (-\/1)\string^m\ *\ expr1;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}(idx+1)\ =\ (-\/1)\string^m\ *\ expr2;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ idx\ +\ 2;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ harmonic\ =\ computeSphericalHarmonic(obj,\ mu,\ phi,\ l,\ m)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTESPHERICALHARMONIC\ Compute\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Y\_l\string^m(mu,\ phi).}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ obj.computeAssociatedLegendre(mu,\ l,\ abs(m));}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ if\ m\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ cos(m\ *\ phi);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ m\ <\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ sin(abs(m)*phi);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ sym(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ harmonic\ =\ simplify(p*f);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ p\ =\ computeAssociatedLegendre(obj,\ mu,\ l,\ m)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEASSOCIATEDLEGENDRE\ Compute\ associated\ Legendre}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ polynomial\ P\_l\string^m(mu).}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ if\ m\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ obj.computeLegendre(mu,\ l);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ obj.computeLegendre(mu,\ l);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ (-\/1)\string^m\ *\ (1\ -\/\ mu\string^2)\string^(m\ /\ 2)\ *\ diff(p,\ mu,\ m);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ simplify(p);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ horner(p);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ p\ =\ computeLegendre(obj,\ mu,\ n)}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTELEGENDRE\ Compute\ Legendre\ polynomial\ P\_n(mu).}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ if\ n\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ sym(1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ n\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ mu;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p1\ =\ obj.computeLegendre(mu,\ n-\/1);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p2\ =\ obj.computeLegendre(mu,\ n-\/2);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ ((2\ *\ n\ -\/\ 1)\ *\ mu\ *\ p1\ -\/\ (n\ -\/\ 1)\ *\ p2)\ /\ n;}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ simplify(p);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ horner(p);}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00129}00129\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09symbolic_2_spherical_harmonic_basis_8m_source_l00130}00130\ end}
+
+\end{DoxyCode}

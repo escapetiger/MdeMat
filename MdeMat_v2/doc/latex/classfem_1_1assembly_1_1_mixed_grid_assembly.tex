@@ -1,0 +1,340 @@
+\doxysection{fem\+::assembly\+::Mixed\+Grid\+Assembly Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly}{}\label{classfem_1_1assembly_1_1_mixed_grid_assembly}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+
+
+Grid-\/based assembly for mixed finite element systems.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aa637c82fbb1f5d30f12f8704ed1bfded}{Mixed\+Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aec024fc593f9cf66e2b15c1212d29b4b}{flux\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_mixed_grid_assembly}{Mixed\+Grid\+Assembly}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a9a1b4bc08683f626500d834ca63e5d35}{divergence}} (Input\+Type obj, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble divergence operator with coefficients. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a4ae5ef3b4b8f7e0c1f7a84b0ea821e6a}{partial}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble partial derivative operator with coefficients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_ad918c35d7bffdf55e985b05b1783300a}{Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembly}{Grid\+Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}{Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aec024fc593f9cf66e2b15c1212d29b4b}{flux\+Type}}
+\begin{DoxyCompactList}\small\item\em Flux type (1=left-\/biased, 2=right-\/biased, 3=central) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type (0=periodic, 1=Dirichlet) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a61f1cc3b75e025c120b5ebfc1e34b698}{assemble\+Inner\+Left\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Inner contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aa7f1bb5122fe587ad778f4ec6e761c81}{assemble\+Outer\+Left\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Outer contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a4c60081af71b85e107389bf28be82fb9}{assemble\+Inner\+Right\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Inner contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_ae45b6dc19d7ad36c7f8b5c37f6294674}{assemble\+Outer\+Right\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Outer contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0c66bde5f885b204258501e02c2a3741}{assemble\+Volume\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble volume integral terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6b1aa4e325ec81b05bdc9cc0ceee98c4}{assemble\+Left\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble left-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1b65be92ff914a6e8a859a2f27122a5b}{assemble\+Right\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble right-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab8e143041b4b239082acd02412deff80}{assemble\+Central\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble central flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_aa6e49e2b998a9d6519d7d9061bcce905}{assemble\+Inner\+Left\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0efc77f0c2d2732618adc6cf7f81a7a5}{assemble\+Inner\+Right\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a940c53f22de0a366fc8ffa9ab2cac380}{assemble\+Inner\+Left\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab2db84fedb07bdc6e61119ac083026ca}{assemble\+Inner\+Right\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a369fdb2a3a237065203c421bc237766a}{assemble\+Inner\+Left\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a69f3108844adda0da04d4326e332be87}{assemble\+Inner\+Right\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a871c48a6da5ed6ca04c68922fba0ab6f}{assemble\+Outer\+Left\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a21b4720bca1523759f799adcdf01fd4d}{assemble\+Outer\+Right\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1d64b0f882711932a2036df04881a4d2}{assemble\+Outer\+Left\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab80df3bdd93000e9c2e5f3d0a048edfc}{assemble\+Outer\+Right\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5f77aa8363a7da2641a56e4ead471640}{assemble\+Inner\+Left\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a104596a1941cab05c5f9688f309d2b2c}{assemble\+Inner\+Right\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a11616405b79ee25d11c3e430cfb51dba}{assemble\+Outer\+Left\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ac7df20644eb21c4e426669f53bf47e77}{assemble\+Outer\+Right\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux periodic boundary terms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a5665273508dad4e9455064dfc6cb114c}{assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6f43fe1c88de27345a4c96d026ef94c8}{assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6b9ffe199b1b0ecc4e7b0e8340d99723}{assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_abc21312f9531f69774d7a8dc3d826e99}{assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grid-\/based assembly for mixed finite element systems. 
+
+\doxylink{classfem_1_1assembly_1_1_mixed_grid_assembly}{Mixed\+Grid\+Assembly} extends the Eulerian grid assembly with support for different flux types (left-\/biased, right-\/biased, central) used in mixed finite element methods and discontinuous Galerkin schemes.
+
+This class provides the foundation for assembling operators in mixed formulations where different variables may require different flux treatments. It supports various numerical flux choices commonly used in discontinuous methods.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ mixed\ assembly\ with\ central\ flux\ and\ Dirichlet\ BC}
+\DoxyCodeLine{assembly\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aa637c82fbb1f5d30f12f8704ed1bfded}{MixedGridAssembly}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ 1,\ 3);}
+\DoxyCodeLine{\%\ Assemble\ \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a9a1b4bc08683f626500d834ca63e5d35}{divergence}}\ \textcolor{keyword}{operator}\ with\ dimension-\/specific\ coefficients}
+\DoxyCodeLine{coeffs\ =\ [1.0,\ 0.5];\ \%\ coefficients\ \textcolor{keywordflow}{for\ each}\ dimension}
+\DoxyCodeLine{divMatrix\ =\ assembly.divergence(coeffs);}
+\DoxyCodeLine{\%\ Assemble\ \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a4ae5ef3b4b8f7e0c1f7a84b0ea821e6a}{partial}}\ derivative\ in\ specific\ dimension}
+\DoxyCodeLine{partialMatrix\ =\ assembly.partial(1,\ 2.0);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{fem.\+assembly.\+Eulerian\+Grid\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_grid_assembly}{fem.\+assembly.\+Grid\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_mixed_grid_assembly_8m_source_l00030}{30}} of file \mbox{\hyperlink{_mixed_grid_assembly_8m_source}{Mixed\+Grid\+Assembly.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_aa637c82fbb1f5d30f12f8704ed1bfded}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!MixedGridAssembly@{MixedGridAssembly}}
+\index{MixedGridAssembly@{MixedGridAssembly}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{MixedGridAssembly()}{MixedGridAssembly()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_aa637c82fbb1f5d30f12f8704ed1bfded} 
+function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::\+Mixed\+Grid\+Assembly (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{op}{, }\item[{Input\+Type}]{bc\+Type}{, }\item[{Input\+Type}]{flux\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1assembly_1_1_mixed_grid_assembly}{Mixed\+Grid\+Assembly}. 
+
+obj = Mixed\+Grid\+Assembly(fe, mesh, op, bc\+Type, flux\+Type) creates an assembly for mixed finite element systems with specified flux type for discontinuous Galerkin methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object \\
+\hline
+{\em mesh} & -\/ Grid mesh object (must be \doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid}) \\
+\hline
+{\em op} & -\/ Finite element operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type (0=periodic, 1=Dirichlet) \\
+\hline
+{\em flux\+Type} & -\/ Flux type (1=left-\/biased, 2=right-\/biased, 3=central) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_a61f1cc3b75e025c120b5ebfc1e34b698}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!assembleInnerLeftFluxDirichletBoundaryTerms@{assembleInnerLeftFluxDirichletBoundaryTerms}}
+\index{assembleInnerLeftFluxDirichletBoundaryTerms@{assembleInnerLeftFluxDirichletBoundaryTerms}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxDirichletBoundaryTerms()}{assembleInnerLeftFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_a61f1cc3b75e025c120b5ebfc1e34b698} 
+virtual function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Inner contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a55b078a689417077b5e9633b744f159f}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_aec826b4f92f6d782392b6176f1dcf5e5}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a7a72dd653a72e55f3c5536940d291d9c}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_a4c60081af71b85e107389bf28be82fb9}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!assembleInnerRightFluxDirichletBoundaryTerms@{assembleInnerRightFluxDirichletBoundaryTerms}}
+\index{assembleInnerRightFluxDirichletBoundaryTerms@{assembleInnerRightFluxDirichletBoundaryTerms}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxDirichletBoundaryTerms()}{assembleInnerRightFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_a4c60081af71b85e107389bf28be82fb9} 
+virtual function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Inner contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_afa96e50b041f318f3a9f5873cef89030}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_a5e3705003eb8f79a5940a3273a082070}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a2d561e97f1040370503d3f86c5c8e722}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_aa7f1bb5122fe587ad778f4ec6e761c81}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!assembleOuterLeftFluxDirichletBoundaryTerms@{assembleOuterLeftFluxDirichletBoundaryTerms}}
+\index{assembleOuterLeftFluxDirichletBoundaryTerms@{assembleOuterLeftFluxDirichletBoundaryTerms}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFluxDirichletBoundaryTerms()}{assembleOuterLeftFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_aa7f1bb5122fe587ad778f4ec6e761c81} 
+virtual function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::assemble\+Outer\+Left\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Outer contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6cca6f0483aa7703a3ee27851099d4ff}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_aab1f7f4087f9a49a919ed5ea79cb7e33}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a073d18dcef7e4837d387b2de266c2500}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_ae45b6dc19d7ad36c7f8b5c37f6294674}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!assembleOuterRightFluxDirichletBoundaryTerms@{assembleOuterRightFluxDirichletBoundaryTerms}}
+\index{assembleOuterRightFluxDirichletBoundaryTerms@{assembleOuterRightFluxDirichletBoundaryTerms}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFluxDirichletBoundaryTerms()}{assembleOuterRightFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_ae45b6dc19d7ad36c7f8b5c37f6294674} 
+virtual function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::assemble\+Outer\+Right\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Outer contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5ce5adf210ad68dee899b8cc81c05b85}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembly}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_a96ed324ed6cc118b982502cdd0371b4d}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_abd8c4797fb26260c66f1fe543266fea9}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_a9a1b4bc08683f626500d834ca63e5d35}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!divergence@{divergence}}
+\index{divergence@{divergence}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{divergence()}{divergence()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_a9a1b4bc08683f626500d834ca63e5d35} 
+function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::divergence (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})}
+
+
+
+Assemble divergence operator with coefficients. 
+
+A = divergence(obj, c) creates the divergence operator matrix by summing partial derivative operators across all spatial dimensions, each weighted by the corresponding coefficient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_mixed_grid_assembly}{Mixed\+Grid\+Assembly} object \\
+\hline
+{\em c} & -\/ Coefficient vector (one per spatial dimension)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Assembled divergence operator sparse matrix \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_a4ae5ef3b4b8f7e0c1f7a84b0ea821e6a}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!partial@{partial}}
+\index{partial@{partial}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{partial()}{partial()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_a4ae5ef3b4b8f7e0c1f7a84b0ea821e6a} 
+function fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::partial (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})}
+
+
+
+Assemble partial derivative operator with coefficients. 
+
+A = partial(obj, d, c) creates the partial derivative operator matrix for the specified dimension, including volume and flux contributions based on the finite element type and flux choice.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_mixed_grid_assembly}{Mixed\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient value for this dimension\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Assembled partial derivative sparse matrix \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_mixed_grid_assembly_aec024fc593f9cf66e2b15c1212d29b4b}\index{fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}!fluxType@{fluxType}}
+\index{fluxType@{fluxType}!fem::assembly::MixedGridAssembly@{fem::assembly::MixedGridAssembly}}
+\doxysubsubsection{\texorpdfstring{fluxType}{fluxType}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_mixed_grid_assembly_aec024fc593f9cf66e2b15c1212d29b4b} 
+Property fem\+::assembly\+::\+Mixed\+Grid\+Assembly\+::flux\+Type}
+
+
+
+Flux type (1=left-\/biased, 2=right-\/biased, 3=central) 
+
+
+
+Definition at line \mbox{\hyperlink{_mixed_grid_assembly_8m_source_l00034}{34}} of file \mbox{\hyperlink{_mixed_grid_assembly_8m_source}{Mixed\+Grid\+Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_mixed_grid_assembly_8m}{Mixed\+Grid\+Assembly.\+m}}\end{DoxyCompactItemize}

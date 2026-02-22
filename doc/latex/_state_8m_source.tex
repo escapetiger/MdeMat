@@ -1,0 +1,171 @@
+\doxysection{State.\+m}
+\hypertarget{_state_8m_source}{}\label{_state_8m_source}\index{+physics/+state/State.m@{+physics/+state/State.m}}
+\mbox{\hyperlink{_state_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00001}00001\ classdef\ State\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00002}00002\ \ \ \ \ \%\ STATE\ Base\ \textcolor{keyword}{class\ }for\ all\ solution\ states.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ State\ encapsulates\ the\ fundamental\ solution\ state\ components}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ including\ degrees\ of\ freedom\ and\ coefficients.\ It\ provides}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ a\ unified\ container\ and\ \textcolor{keyword}{interface\ }for\ state\ management\ operations}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ including\ reporting,\ saving,\ and\ loading.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ handle-\/based\ design\ allows\ \textcolor{keywordflow}{for}\ efficient\ passing\ of\ state}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ objects\ between\ methods\ without\ copying\ large\ arrays.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00012}00012\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_kinetic_state}{KineticState}},\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00014}00014\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00015}00015\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ Dofs\ \ \ \ \%\ Degrees\ of\ freedom\ structure}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ Coefs\ \ \ \%\ Coefficients\ structure}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ History\ \%\ Time\ series\ data\ structure}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00019}\mbox{\hyperlink{classphysics_1_1state_1_1_state}{00019}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00020}00020\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00021}00021\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}()}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00023}\mbox{\hyperlink{classphysics_1_1state_1_1_state_ad362dfc19120942ce87d909cbe35b52c}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STATE\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}()\ creates\ a\ base\ solution\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \textcolor{keywordtype}{object}\ with}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00026}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a2ed0c3e565dfa64c55a337991ff9983e}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ empty\ degrees\ of\ freedom\ and\ coefficients\ structures.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_state_ad362dfc19120942ce87d909cbe35b52c}{Dofs}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00029}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a478f929bfa3ba08a9beba098e0fcdf8b}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_state_a2ed0c3e565dfa64c55a337991ff9983e}{Coefs}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_state_a478f929bfa3ba08a9beba098e0fcdf8b}{History}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_a1c28297fc84f11df319f309427c0ef3d}{addDof}}(obj,\ name,\ value)}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDDOF\ Add\ degree\ of\ freedom\ to\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_a1c28297fc84f11df319f309427c0ef3d}{addDof}}(obj,\ name,\ value)\ adds\ a\ named\ degree\ of}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ freedom\ with\ the\ specified\ @a\ value\ to\ the\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00042}\mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ \{mustBeNumeric\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Dofs.(char(name))\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ function\ obj\ =\ addCoefficient(obj,\ name,\ value)}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDCOEFFICIENT\ Add\ coefficient\ to\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ addCoefficient(obj,\ name,\ value)\ adds\ a\ named\ coefficient}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ @a\ value\ to\ the\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00056}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a1c28297fc84f11df319f309427c0ef3d}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ \{mustBeNumeric\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_state_a2ed0c3e565dfa64c55a337991ff9983e}{Coefs}}.(char(name))\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ function\ obj\ =\ addHistory(obj,\ name,\ value)}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDHISTORY\ Add\ time\ series\ data\ to\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ history.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ addHistory(obj,\ name,\ value)\ adds\ a\ named\ time}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ series\ @a\ value\ to\ the\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\textcolor{stringliteral}{'s\ history.}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00068}00068\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.state.State}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ \{mustBeNumeric\}\ =\ []}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00074}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a595dc98d7fe20dcaea7af306e09e9ff7}{00074}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.History.(char(name))\ =\ value;}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ report(obj)}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ REPORT\ Generate\ state\ information\ report.}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ report(obj)\ displays\ the\ names\ of\ degrees\ of\ freedom}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ coefficients\ stored\ in\ the\ state.}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00083}00083\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.state.State}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[R]\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}\ Type:\ \%s\(\backslash\)n\textcolor{stringliteral}{',\ class(obj));}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dofNames\ =\ fieldnames(obj.Dofs);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(dofNames)}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00092}\mbox{\hyperlink{classphysics_1_1state_1_1_state_adfaf524e71ee40508f96bea571ee22fd}{00092}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[R]\ DOF\ Names:\ (none)\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[R]\ DOF\ Names:\ \%s\(\backslash\)n\textcolor{stringliteral}{',\ strjoin(dofNames,\ '},\ \textcolor{stringliteral}{'));}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ coefNames\ =\ fieldnames(obj.Coefs);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(coefNames)}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[R]\ Coefficient\ Names:\ (none)\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[R]\ Coefficient\ Names:\ \%s\(\backslash\)n\textcolor{stringliteral}{',\ strjoin(coefNames,\ '},\ \textcolor{stringliteral}{'));}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ save(obj,\ filename)}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ SAVE\ Save\ state\ to\ file.}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ save(obj,\ filename)\ saves\ the\ complete\ state\ object}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ a\ MAT\ file\ with\ the\ specified\ @a\ filename.\ Automatically}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00110}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a60206cded949fa838e487abfec301f2b}{00110}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ the\ directory\ if\ it\ does\ not\ exist.}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.state.State}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ [dirPath,\ \string~,\ \string~]\ =\ fileparts(filename);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(dirPath)\ \&\&\ \string~exist(dirPath,\ '}dir\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mkdir(dirPath);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[M]\ Created\ directory:\ \%s\(\backslash\)n\textcolor{stringliteral}{',\ dirPath);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ state\ =\ struct();}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ state.dofs\ =\ obj.Dofs;}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ state.coefs\ =\ obj.Coefs;}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ state.history\ =\ obj.History;}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ state.className\ =\ class(obj);}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ save(filename,\ '}\mbox{\hyperlink{namespacephysics_1_1state}{state}}\textcolor{stringliteral}{',\ '}-\/v7.3');}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ State\ saved\ to:\ \%s\(\backslash\)n'},\ filename);}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00133}00133\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00134}00134\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00135}00135\ \ \ \ \ methods\ (Static)}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_a63a68981d79ca742af60fe4ebdd46887}{load}}(filename)}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOAD\ Load\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ from\ file.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_state_abe9c8e4b1ce8329811101d69fd3dcc27}{State}}.load(filename)\ loads\ a\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \textcolor{keywordtype}{object}\ from\ the}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ MAT\ file\ and\ returns\ a\ \textcolor{keyword}{new}\ instance\ of\ the}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00141}\mbox{\hyperlink{classphysics_1_1state_1_1_state_a18c1040466d9e082dea7d0eb8a58ddcb}{00141}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ appropriate\ \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(exist(filename,\ \textcolor{stringliteral}{'file'})\ ==\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'File\ \%s\ does\ not\ exist'},\ filename);}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ load(filename).state;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isfield(\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ \textcolor{stringliteral}{'className'})}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ feval(\mbox{\hyperlink{namespacephysics_1_1state}{state}}.className);}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Dofs\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.dofs;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Coefs\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.coefs;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ obj.History\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.history;}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('[M]\ \mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}\ loaded\ from:\ \%s\(\backslash\)n',\ filename);}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00164}00164\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_state_8m_source_l00165}00165\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,234 @@
+\doxysection{Semi\+Lagrangian\+Uniform\+Grid\+Assembly.\+m}
+\hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source}{}\label{_semi_lagrangian_uniform_grid_assembly_8m_source}\index{+fem/+assembly/SemiLagrangianUniformGridAssembly.m@{+fem/+assembly/SemiLagrangianUniformGridAssembly.m}}
+\mbox{\hyperlink{_semi_lagrangian_uniform_grid_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00001}00001\ classdef\ SemiLagrangianUniformGridAssembly\ <\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{GridAssembly}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ SEMILAGRANGIANUNIFORMGRIDASSEMBLY\ Grid-\/based\ assembly\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00003}00003\ \ \ \ \ \%\ semi-\/Lagrangian\ methods.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ SemiLagrangianUniformGridAssembly\ provides\ assembly\ methods\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ semi-\/Lagrangian\ finite\ element\ operators\ on\ uniform\ structured}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ grids.\ This\ specialized\ assembly\ handles\ transport\ operators\ and}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ boundary\ conditions\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ discretizations.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ assembly\ supports\ both\ free\ transport\ operators\ and\ boundary}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ condition\ assembly,\ with\ particular\ emphasis\ on\ handling}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ characteristic\ tracing\ and\ interpolation\ required\ by}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ semi-\/Lagrangian\ methods.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00015}00015\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \%\ Create\ semi-\/Lagrangian\ assembly\ with\ periodic\ boundaries}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ assembly\ =\ SemiLagrangianUniformGridAssembly(fe,\ mesh,\ op,\ 0);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \%\ Assemble\ transport\ \textcolor{keyword}{operator}\ only}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ A\ =\ assembly.transport();}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Assemble\ both\ transport\ and\ boundary\ conditions}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ [b,\ A]\ =\ assembly.transport(t0,\ t1,\ boundaryFunction);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00024}00024\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00025}00025\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{GridAssembly}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ SemiLagrangianUniformGridAssembly(fe,\ mesh,\ op,\ bcType)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00030}\mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SEMILAGRANGIANUNIFORMGRIDASSEMBLY\ Constructor\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ semi-\/Lagrangian\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{SemiLagrangianUniformGridAssembly}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bcType}})\ creates\ an\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ finite}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ operators\ on\ uniform\ structured\ grids.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}\ -\/\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}\ -\/\ Uniform\ grid\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}\ -\/\ Semi-\/Lagrangian\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keyword}{operator}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bcType}}\ -\/\ Boundary\ condition\ type\ (0=periodic,\ 1=Dirichlet)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{SemiLagrangianUniformGridAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00047}\mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isa(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ \textcolor{stringliteral}{'fem.element.SemiLagrangianFiniteElementOperator'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Require\ a\ Semi-\/Lagrangian\ finite\ element\ operator.'})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{GridAssembly}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bcType}});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ [b,\ A]\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ TRANSPORT\ Assemble\ semi-\/Lagrangian\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ \textcolor{keyword}{operator}.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}(obj)\ assembles\ boundary\ condition\ vector\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ \textcolor{keyword}{operator}\ with\ current\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [b,\ A]\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}(obj)\ assembles\ both\ the\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ and\ the\ free\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ \textcolor{keyword}{operator}\ matrix.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [b,\ A]\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}(obj,\ tBegin,\ tEnd,\ f)\ assembles\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ components\ with\ specified\ time\ interval\ and\ boundary\ function.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{SemiLagrangianUniformGridAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ tBegin\ -\/\ Beginning\ time\ \textcolor{keywordflow}{for}\ boundary\ conditions\ (optional)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ tEnd\ -\/\ End\ time\ \textcolor{keywordflow}{for}\ boundary\ conditions\ (optional)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ f\ -\/\ Boundary\ condition\ function\ handle\ (optional)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Boundary\ condition\ vector\ (sparse\ column\ vector)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ -\/\ Free\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ \textcolor{keyword}{operator}\ matrix\ (sparse\ matrix)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ COMMON\ PARAMETERS}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00082}\mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ FREE\ TRANSPORT}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargout\ >=\ 2}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.assembleFreeTransport();}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ obj.sparseFromTriplets(T,\ n,\ n);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ BOUNDARY\ CONDITION}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargout\ >=\ 1}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.bcType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [tBegin,\ tEnd,\ f]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(tBegin\ -\/\ tEnd)\ <\ 1e-\/8,\ \textcolor{keywordflow}{return};\ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.assembleBoundaryCondition(tBegin,\ tEnd,\ f);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ obj.sparseFromTriplets(T,\ n,\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00103}00103\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00105}00105\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ function\ T\ =\ assembleFreeTransport(obj)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEFREETRANSPORT\ Assemble\ free\ transport\ operator.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ =\ assembleFreeTransport(obj)\ assembles\ the\ triplet}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ representation\ of\ the\ free\ transport\ operator\ matrix,}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ handling\ characteristic\ tracing\ and\ interpolation\ for}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ semi-\/Lagrangian\ methods.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{SemiLagrangianUniformGridAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ -\/\ Triplet\ matrix\ [row,\ col,\ value]\ for\ transport\ operator}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ obj.op.clipper.nVolumePieces;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ obj.mesh.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00123}\mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_acb26deb9ea784affa8d2747583066812}{00123}}\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ arrayfun(@(i)obj.\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}.projector.project(obj.\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}.mass(i).matrix),\ 1:np,\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ obj.\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}.clipper.volumeShifts;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ cell(np,\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ for\ p\ =\ 1:np}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}\ =\ zeros(nl\string^2*ne,\ 3);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [i,\ j,\ v]\ =\ find(M\{p\});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nv\ =\ numel(v);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.mesh.allElementMultiIndices;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.bcType\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ m\ +\ s(:,\ p).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ obj.mesh.indexer.multiToLinear(m,\ 0);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ 1:(nv\ *\ ne);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 1)\ =\ reshape(bsxfun(@plus,\ (0:ne\ -\/\ 1)*nl,\ i(:)),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 2)\ =\ reshape(bsxfun(@plus,\ (l(:).'}\ -\/\ 1)*nl,\ j(:)),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 3)\ =\ kron(ones(ne,\ 1),\ v(:));}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ m\ +\ s(:,\ p).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ (b\ <\ 1)\ .*\ (2\ *\ (1:d)\ -\/\ 1)\ +\ ...}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (b\ >\ obj.mesh.resolution)\ .*\ (2\ *\ (1:d));}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ m(sum(b\ \string~=\ 0,\ 2)\ ==\ 0,\ :);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nb\ =\ size(m,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ 1:(nv\ *\ nb);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l1\ =\ obj.mesh.indexer.multiToLinear(m,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l2\ =\ obj.mesh.indexer.multiToLinear(m\ +\ s(:,\ p).'},\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 1)\ =\ reshape(bsxfun(@plus,\ (l1(:).\textcolor{stringliteral}{'\ -\/\ 1)*nl,\ i(:)),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 2)\ =\ reshape(bsxfun(@plus,\ (l2(:).'}\ -\/\ 1)*nl,\ j(:)),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 3)\ =\ kron(ones(nb,\ 1),\ v(:));}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ vertcat(T\{:\});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00157}00157\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ function\ T\ =\ assembleBoundaryCondition(obj,\ tBegin,\ tEnd,\ f)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEBOUNDARYCONDITION\ Assemble\ boundary\ condition\ terms.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ =\ assembleBoundaryCondition(obj,\ tBegin,\ tEnd,\ f)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ assembles\ the\ boundary\ condition\ contribution\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ semi-\/Lagrangian\ transport,\ handling\ characteristic\ tracing}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ domain\ boundaries\ and\ evaluation\ of\ boundary\ data.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SemiLagrangianUniformGridAssembly\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tBegin\ -\/\ Beginning\ time\ \textcolor{keywordflow}{for}\ integration}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tEnd\ -\/\ End\ time\ \textcolor{keywordflow}{for}\ integration\ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ f\ -\/\ Boundary\ condition\ function\ handle\ f(x,\ t)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ -\/\ Triplet\ matrix\ [row,\ col,\ value]\ \textcolor{keywordflow}{for}\ boundary\ conditions}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ obj.op.clipper.nVolumePieces;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ ht\ =\ tBegin\ -\/\ tEnd;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00179}\mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a485f04fd675ba544ddc314d67994af8d}{00179}}\ \ \ \ \ \ \ \ \ \ \ \ \ v\ =\ obj.op.clipper.velocity;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ cell(1,\ np);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ p\ =\ 1:np}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ all\ elements\ whose\ pth\ volume\ piece\ goes\ outside}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ the\ computational\ region}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.mesh.allElementMultiIndices;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ obj.op.clipper.volumeShifts(:,\ p).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ (m\ +\ s\ <\ 1)\ .*\ (2\ *\ (1:nd)\ -\/\ 1)\ +\ (m\ +\ s\ >\ obj.mesh.resolution)\ .*\ (2\ *\ (1:nd));}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00188}00188\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ m(sum(b\ \string~=\ 0,\ 2)\ >\ 0,\ :);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00189}00189\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nb\ =\ size(b,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00190}00190\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ obj.mesh.indexer.multiToLinear(b,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00191}00191\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}\ =\ zeros(nb*nl,\ 3);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00192}00192\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(:,\ 1)\ =\ reshape(bsxfun(@plus,\ (k(:)-\/1).'}*nl,\ (1:nl).\textcolor{stringliteral}{'),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00193}00193\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(:,\ 2)\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00194}00194\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ nb\ ==\ 0,\ continue;\ end}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00196}00196\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ all\ quadrature\ points\ to\ evaluate}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00198}00198\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nq\ =\ obj.op.clipper.volumeEulerianData(1,\ p).nPoints;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1\ =\ zeros(nd\ +\ 1,\ nb*nq);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2\ =\ zeros(nd\ +\ 1,\ nb*nq);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00201}00201\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xq\ =\ obj.op.clipper.volumeEulerianData(1,\ p).nodes;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2(1:nd,\ :)\ =\ obj.mesh.collocate(Xq,\ b);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X2(nd+1,\ :)\ =\ tBegin;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1(1:nd,\ :)\ =\ X2(1:nd,\ :)\ -\/\ ht\ *\ v(:);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00205}00205\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1(nd+1,\ :)\ =\ tEnd;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00206}00206\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ intersection\ of\ characteristics\ and\ boundaries}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ core.geometry.LineSegmentByPlaneIntersector(nd+1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ reshape(obj.mesh.bbox,\ 2,\ []);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ -\/b(2*(1:nd)\ -\/\ (v\ >\ 0));}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xb\ =\ zeros(nd\ +\ 1,\ nb*nq);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00212}00212\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ d\ =\ 1:nd}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ zeros(nd+1,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a(d)\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00215}00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ TF]\ =\ I.intersect(X1,\ X2,\ a,\ b(d));}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Xb(:,\ TF)\ =\ X;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00218}00218\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ boundary\ function\ and\ project}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ f(Xb(1:nd,\ :),\ Xb(nd+1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ reshape(U,\ nq,\ nb);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ obj.op.volumePieceData(1,\ p).vector;}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(:,\ 3)\ =\ reshape(obj.fe.projector.project(P\ *\ U),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00225}00225\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ T\ =\ vertcat(T\{:\});}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_uniform_grid_assembly_8m_source_l00228}00228\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

@@ -1,0 +1,249 @@
+\doxysection{Integrator.\+m}
+\hypertarget{_integrator_8m_source}{}\label{_integrator_8m_source}\index{+approx/+integrate/Integrator.m@{+approx/+integrate/Integrator.m}}
+\mbox{\hyperlink{_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00001}00001\ classdef\ Integrator\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ INTEGRATOR\ Unified\ numerical\ integrator\ with\ data\ storage.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Integrator\ combines\ integration\ point\ generation,\ function}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ evaluation\ storage,\ and\ integration\ computation\ in\ a\ single}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ cohesive\ interface.\ It\ manages\ nodes,\ weights,\ function\ values,}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ and\ partial\ derivatives\ \textcolor{keywordflow}{for}\ efficient\ numerical\ integration.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{Geometry}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00012}00012\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ Rule\ \%\ Integration\ rule\ (\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ Nodes\ \%\ Integration\ nodes\ (NDims\ x\ NPoints)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00015}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{00015}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}}\ \%\ Integration\ weights\ (1\ x\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{NPoints}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}}\ \%\ Function\ values\ (\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a29cc9bcfdf77b5128fe6ab790cf5df2f}{NCodims}}\ x\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{NPoints}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}}\ \%\ Partial\ derivatives\ (cell\ of\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a29cc9bcfdf77b5128fe6ab790cf5df2f}{NCodims}}\ x\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{NPoints}}\ x\ NPartialsPerOrder)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00018}00018\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00019}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_af4e65253a659ca09bd34291215ebaa70}{00019}}\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00020}00020\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a878682258ab19613c5af2ec367dcd810}{NDims}}\ \%\ Number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00022}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa24ceae7e675d15546d7f81cda7439ab}{00022}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{NPoints}}\ \%\ Number\ of\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ac24832032cb7fa08d53c885b59be4a95}{NPartials}}\ \%\ Number\ of\ partial\ derivatives}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa0756a8c8a0b398a6f3fe78f32068cf4}{DerivOrder}}\ \%\ Maximum\ derivative\ order}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00025}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{00025}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a29cc9bcfdf77b5128fe6ab790cf5df2f}{NCodims}}\ \%\ Number\ of\ function\ components}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00028}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{00028}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}(rule)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INTEGRATOR\ Construct\ an\ integrator.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00031}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}(rule)\ creates\ an\ integrator\ with}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ pre-\/computed\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rule\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00037}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a878682258ab19613c5af2ec367dcd810}{00037}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_af4e65253a659ca09bd34291215ebaa70}{Rule}}\ =\ rule;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00040}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa24ceae7e675d15546d7f81cda7439ab}{Nodes}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00043}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ac24832032cb7fa08d53c885b59be4a95}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa0756a8c8a0b398a6f3fe78f32068cf4}{00046}}\ \ \ \ \ \ \ \ \ function\ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COPY\ Create\ a\ deep\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}}\ of\ the\ integrator.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a29cc9bcfdf77b5128fe6ab790cf5df2f}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}}(obj)\ creates\ a\ new\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}\ \textcolor{keywordtype}{object}\ with}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ same\ nodes,\ weights,\ values,\ and\ partial\ derivatives}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ as\ the\ original\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_af4e65253a659ca09bd34291215ebaa70}{Rule}});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa24ceae7e675d15546d7f81cda7439ab}{Nodes}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa24ceae7e675d15546d7f81cda7439ab}{Nodes}};}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}};}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}};}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}};}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00062}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{00062}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1392ae2e5985ba257d381412029e3575}{setPoints}}(obj,\ geometry,\ np)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETPOINTS\ Generate\ integration\ points\ using\ geometry.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1392ae2e5985ba257d381412029e3575}{setPoints}}(obj,\ geometry,\ np)\ sets\ @a\ np\ integration}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nodes\ and\ weights\ on\ the\ specified\ geometry\ @geometry.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ geometry\ \mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ np\{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ [obj.Nodes,\ obj.Weights]\ =\ obj.Rule.generate(geometry,\ np);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ function\ obj\ =\ setValues(obj,\ func,\ options)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETVALUES\ Evaluate\ function\ at\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setValues(obj,\ func)\ evaluates\ function\ at\ the\ stored}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00083}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ nodes\ and\ stores\ the\ results\ in\ the\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{property}.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_afb93a94bf5cbd479024a140c5d935ca8}{setValues}}(obj,\ func,\ nodes=nodes)\ evaluates\ function}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ the\ specified\ nodes\ instead\ of\ the\ stored\ nodes.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\{\mbox{\hyperlink{namespaceapprox_1_1integrate_a1e1279f0907a9faba7402eb17069a5e2}{mustBeFunction}}\}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.nodes\{mustBeNumeric\}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa24ceae7e675d15546d7f81cda7439ab}{Nodes}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(options.nodes),\ \textcolor{stringliteral}{'InvalidState'},\ ...}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Integration\ nodes\ must\ be\ set\ before\ evaluating\ function.'});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(func,\ \textcolor{stringliteral}{'core.function.Function'})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Values\ =\ func.eval(options.nodes);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Values\ =\ func(options.nodes);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00103}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1392ae2e5985ba257d381412029e3575}{00103}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a64098364e44f70d154703c55af6ea8ed}{setPartials}}(obj,\ func,\ order,\ options)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETPARTIALS\ Compute\ partial\ derivatives\ at\ integration}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ points.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a64098364e44f70d154703c55af6ea8ed}{setPartials}}(obj,\ func,\ order)\ computes\ partial}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivatives\ up\ to\ the\ specified\ order\ at\ the\ stored}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ nodes.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a64098364e44f70d154703c55af6ea8ed}{setPartials}}(obj,\ func,\ order,\ nodes=nodes)\ computes}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ partial\ derivatives\ at\ the\ specified\ nodes\ instead\ of\ the}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ stored\ nodes.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\{\mbox{\hyperlink{namespaceapprox_1_1integrate_a1e1279f0907a9faba7402eb17069a5e2}{mustBeFunction}}\}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order(1,\ 1)\ \{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.nodes\{mustBeNumeric\}\ =\ obj.Nodes}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(options.nodes),\ \textcolor{stringliteral}{'InvalidState'},\ ...}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00125}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_afb93a94bf5cbd479024a140c5d935ca8}{00125}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Integration\ nodes\ must\ be\ set\ before\ evaluating\ function.'});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ indexer\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer}{L1MultiIndexer}}();}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Partials\ =\ cell(1,\ order);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ k\ =\ 1:order}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indexer.setCache(nd,\ nd+k,\ minSum\ =\ nd+k);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ indexer.Cache\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ cell(1,\ size(M,\ 1));}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:size(M,\ 1)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\{j\}\ =\ func.diff(options.nodes,\ M(j,\ :));}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Partials\{k\}\ =\ cat(3,\ dY\{:\});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ function\ obj\ =\ addWeightFunction(obj,\ weightFunc)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDWEIGHTFUNCTION\ Apply\ weight\ function\ to\ integration}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ weights.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ addWeightFunction(obj,\ weightFunc)\ multiplies\ the}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ weights\ by\ the\ specified\ weight\ function}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ evaluated\ at\ the\ integration\ nodes.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weightFunc\{mustBeFunction\}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.Nodes),\ \textcolor{stringliteral}{'InvalidState'},\ ...}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00155}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a64098364e44f70d154703c55af6ea8ed}{00155}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Integration\ nodes\ must\ be\ set\ before\ applying\ weight\ function.'});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ omega\ =\ weightFunc(obj.Nodes);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ omega\ =\ reshape(omega,\ 1,\ size(obj.Weights,\ 2));}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Weights\ =\ obj.Weights\ .*\ omega;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ function\ I\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}(obj,\ func)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INTEGRATE\ Evaluate\ integral\ \textcolor{keyword}{using\ }stored\ data\ or\ function.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ I\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}(obj)\ integrates\ \textcolor{keyword}{using\ }the\ stored\ function}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ values.\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}}\ \textcolor{keyword}{property}\ must\ be\ set\ first.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ I\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{integrate}}(obj,\ func)\ evaluates\ the\ specified\ function}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ the\ integration\ nodes\ and\ computes\ the\ integral.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\{\mbox{\hyperlink{namespaceapprox_1_1integrate_a1e1279f0907a9faba7402eb17069a5e2}{mustBeFunction}}\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.Nodes),\ \textcolor{stringliteral}{'InvalidState'},\ ...}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Integration\ nodes\ must\ be\ set\ before\ integration.'});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.Weights),\ \textcolor{stringliteral}{'InvalidState'},\ ...}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Integration\ weights\ must\ be\ set\ before\ integration.'});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(func)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values\ =\ obj.Values;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(func,\ \textcolor{stringliteral}{'core.function.Function'})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values\ =\ func.eval(obj.Nodes);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values\ =\ func(obj.Nodes);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00189}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a7f827d251153f5fa3692a5969e4ad85d}{00189}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ values\ *\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}}(:);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00194}00194\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00196}00196\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a878682258ab19613c5af2ec367dcd810}{NDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Returns\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_af4e65253a659ca09bd34291215ebaa70}{Rule}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a878682258ab19613c5af2ec367dcd810}{NDims}};}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a217ce508f4600cc6f363e11ab70fc59e}{NPoints}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NPOINTS\ Returns\ the\ number\ of\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae1c9ab538975492758a728e0d2254b27}{Weights}});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ac24832032cb7fa08d53c885b59be4a95}{NPartials}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00214}\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aaa357076adca67ba605e4b0ce1dbf469}{00214}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NPARTIALS\ Returns\ the\ total\ number\ of\ partial\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ sum(cellfun(@(y)\ size(y,\ 3),\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}}));}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ function\ order\ =\ get.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_aa0756a8c8a0b398a6f3fe78f32068cf4}{DerivOrder}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.DERIVORDER\ Returns\ the\ maximum\ derivative\ order.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ac24832032cb7fa08d53c885b59be4a95}{NPartials}}\ ==\ 0\ ||\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a878682258ab19613c5af2ec367dcd810}{NDims}}\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ order\ =\ length(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a3841fd646b4db06dc21761429d92ab20}{Partials}});}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a29cc9bcfdf77b5128fe6ab790cf5df2f}{NCodims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NCODIMS\ Returns\ the\ number\ of\ function\ components.}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}})}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1d0c04e969c7a8c1478b4173ca015366}{Values}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00242}00242\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_integrator_8m_source_l00243}00243\ end}
+
+\end{DoxyCode}

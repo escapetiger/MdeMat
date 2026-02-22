@@ -1,0 +1,209 @@
+\doxysection{approx\+::element\+::L2\+Element\+Operator Class Reference}
+\hypertarget{classapprox_1_1element_1_1_l2_element_operator}{}\label{classapprox_1_1element_1_1_l2_element_operator}\index{approx::element::L2ElementOperator@{approx::element::L2ElementOperator}}
+
+
+Operator for discontinuous finite elements.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{approx\+::element\+::\+C0\+Element\+Operator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator_ae948b94d72d1c21653cc4e447fe81242}{L2\+Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator_a180cd3378a7d93746fabbc8e5caaf267}{set\+Flux\+Data}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set up bilinear form data for flux integrals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{approx\+::element\+::\+C0\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a13d6c6b3495a8e7e107524684256b698}{C0\+Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_c0_element_operator}{C0\+Element\+Operator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a2e99a643d3b6bc28c55bc2741655ffb5}{set\+Volume\+Data}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set up bilinear form data for volume integrals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{approx\+::element\+::\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a1f9ef0925170d8b0afd257318ef54e39}{Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element_operator}{Element\+Operator}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator_a5814add25a4d8ed7fc4b7f34eec619f7}{flux\+Data}}
+\begin{DoxyCompactList}\small\item\em 3D tensor of bilinear form data for flux integrals \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{approx\+::element\+::\+C0\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a10990565b584acbad7a33ee65add492f}{volume\+Data}}
+\begin{DoxyCompactList}\small\item\em Array of bilinear form data for volume integrals (\doxylink{classapprox_1_1element_1_1_element_bilinear_form}{Element\+Bilinear\+Form} array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}
+\begin{DoxyCompactList}\small\item\em Gradient operator matrices (struct with volume\+Data field) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator}{approx\+::element\+::\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1element_1_1_element}{Element} object on which the operator acts. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a0ddf5ecb48de965748dbd3943e536ab4}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator_ac9ee88adef143bfa27c04fd8b9795fab}{extract\+Gradient}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Extract gradient data with flux contributions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{approx\+::element\+::\+C0\+Element\+Operator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a0c889a7b3efa84e66867b73b556adde8}{extract\+Gradient}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Extract gradient matrices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Operator for discontinuous finite elements. 
+
+\doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator} extends C0 operators with flux contributions for L2 elements. It manages both volume and flux bilinear form data required for discontinuous Galerkin (DG) methods, where inter-\/element coupling is handled through numerical fluxes.
+
+Flux data is organized in a tensor structure to accommodate different flow directions (inflow/outflow) and derivative orders across multiple element boundaries. This organization enables efficient computation of DG operators that account for the discontinuous nature of the solution space.
+
+The operator constructs discrete representations of differential operators that include both volume integrals (as in continuous methods) and boundary flux integrals (specific to DG methods).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ L2\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}\ and\ its\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}\ =\ approx.element.L2Element(geometry,\ projector,\ volInt,\ fluxInt);}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}.setVolumeData(1);\ \ \%\ Include\ first\ derivatives}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}.setFluxData(0);\ \ \ \ \%\ Function\ values\ on\ boundaries}
+\DoxyCodeLine{\textcolor{keyword}{operator}\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator_ae948b94d72d1c21653cc4e447fe81242}{L2ElementOperator}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}});}
+\DoxyCodeLine{\%\ Set\ up\ \textcolor{keyword}{operator}\ data\ and\ access\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}}
+\DoxyCodeLine{\textcolor{keyword}{operator}.setVolumeData();}
+\DoxyCodeLine{\textcolor{keyword}{operator}.setFluxData();}
+\DoxyCodeLine{gradOp\ =\ \textcolor{keyword}{operator}.gradient;}
+\DoxyCodeLine{\%\ Access\ volume\ and\ flux\ contributions}
+\DoxyCodeLine{volGrad\ =\ gradOp.volumeData;\ \ \ \%\ Volume\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator_a46a8d36f92365190e20bb88758231a89}{gradient}}\ terms}
+\DoxyCodeLine{fluxGrad\ =\ gradOp.fluxData;\ \ \ \ \%\ Boundary\ flux\ terms}
+\DoxyCodeLine{\%\ Use\ in\ DG\ assembly}
+\DoxyCodeLine{\textcolor{keywordflow}{for}\ i\ =\ 1:\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}.nDims}
+\DoxyCodeLine{K\_vol\ =\ volGrad(i).matrix;\ \ \%\ Volume\ stiffness\ contribution}
+\DoxyCodeLine{end}
+\DoxyCodeLine{\textcolor{keywordflow}{for}\ i\ =\ 1:\mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}.nFluxes}
+\DoxyCodeLine{K\_flux\ =\ fluxGrad(:,\ i);\ \ \ \ \%\ Flux\ contributions\ \textcolor{keywordflow}{for}\ face\ i}
+\DoxyCodeLine{end}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1element_1_1_c0_element_operator}{approx.\+element.\+C0\+Element\+Operator} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element}{approx.\+element.\+L2\+Element} 
+
+\doxylink{classapprox_1_1element_1_1_element_bilinear_form}{approx.\+element.\+Element\+Bilinear\+Form} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_l2_element_operator_8m_source_l00049}{49}} of file \mbox{\hyperlink{_l2_element_operator_8m_source}{L2\+Element\+Operator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_ae948b94d72d1c21653cc4e447fe81242}\index{approx::element::L2ElementOperator@{approx::element::L2ElementOperator}!L2ElementOperator@{L2ElementOperator}}
+\index{L2ElementOperator@{L2ElementOperator}!approx::element::L2ElementOperator@{approx::element::L2ElementOperator}}
+\doxysubsubsection{\texorpdfstring{L2ElementOperator()}{L2ElementOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_operator_ae948b94d72d1c21653cc4e447fe81242} 
+function approx\+::element\+::\+L2\+Element\+Operator\+::\+L2\+Element\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator}. 
+
+obj = L2\+Element\+Operator(element) creates an operator for the specified L2 element. The element must be an \doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element} with both volume and flux data available for operator construction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & -\/ L2 element object (\doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element}) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_ac9ee88adef143bfa27c04fd8b9795fab}\index{approx::element::L2ElementOperator@{approx::element::L2ElementOperator}!extractGradient@{extractGradient}}
+\index{extractGradient@{extractGradient}!approx::element::L2ElementOperator@{approx::element::L2ElementOperator}}
+\doxysubsubsection{\texorpdfstring{extractGradient()}{extractGradient()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_operator_ac9ee88adef143bfa27c04fd8b9795fab} 
+function approx\+::element\+::\+L2\+Element\+Operator\+::extract\+Gradient (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Extract gradient data with flux contributions. 
+
+G = extract\+Gradient(obj) extracts the gradient data including both volume and flux contributions. The volume data corresponds to interior gradient terms, while the flux data represents boundary gradient contributions in discontinuous Galerkin methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Gradient data structure containing\+: \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_a180cd3378a7d93746fabbc8e5caaf267}\index{approx::element::L2ElementOperator@{approx::element::L2ElementOperator}!setFluxData@{setFluxData}}
+\index{setFluxData@{setFluxData}!approx::element::L2ElementOperator@{approx::element::L2ElementOperator}}
+\doxysubsubsection{\texorpdfstring{setFluxData()}{setFluxData()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_operator_a180cd3378a7d93746fabbc8e5caaf267} 
+function approx\+::element\+::\+L2\+Element\+Operator\+::set\+Flux\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Set up bilinear form data for flux integrals. 
+
+obj = set\+Flux\+Data(obj) creates a tensor of bilinear form matrices for flux computations, organizing data by derivative order, flux boundary, and flow direction. This structure enables efficient assembly of DG operators with proper treatment of inflow and outflow contributions.
+
+The flux data tensor accommodates\+:
+\begin{DoxyItemize}
+\item Inflow contributions\+: coupling within the same element
+\item Outflow contributions\+: coupling with neighboring elements
+\item Multiple derivative orders for higher-\/order DG methods
+\item All element boundaries for complete flux integration
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_l2_element_operator}{L2\+Element\+Operator} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_operator_a5814add25a4d8ed7fc4b7f34eec619f7}\index{approx::element::L2ElementOperator@{approx::element::L2ElementOperator}!fluxData@{fluxData}}
+\index{fluxData@{fluxData}!approx::element::L2ElementOperator@{approx::element::L2ElementOperator}}
+\doxysubsubsection{\texorpdfstring{fluxData}{fluxData}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_operator_a5814add25a4d8ed7fc4b7f34eec619f7} 
+Property approx\+::element\+::\+L2\+Element\+Operator\+::flux\+Data}
+
+
+
+3D tensor of bilinear form data for flux integrals 
+
+
+
+Definition at line \mbox{\hyperlink{_l2_element_operator_8m_source_l00053}{53}} of file \mbox{\hyperlink{_l2_element_operator_8m_source}{L2\+Element\+Operator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_l2_element_operator_8m}{L2\+Element\+Operator.\+m}}\end{DoxyCompactItemize}

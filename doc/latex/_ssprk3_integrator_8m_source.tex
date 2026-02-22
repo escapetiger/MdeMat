@@ -1,0 +1,68 @@
+\doxysection{Ssprk3\+Integrator.\+m}
+\hypertarget{_ssprk3_integrator_8m_source}{}\label{_ssprk3_integrator_8m_source}\index{+approx/+odeint/Ssprk3Integrator.m@{+approx/+odeint/Ssprk3Integrator.m}}
+\mbox{\hyperlink{_ssprk3_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00001}00001\ classdef\ Ssprk3Integrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{ExrkIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ SSPRK3INTEGRATOR\ Third-\/order\ SSPRK\ integrator.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Ssprk3Integrator\ implements\ the\ SSPRK3\ method,\ a\ third-\/order}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \textcolor{keyword}{explicit}\ scheme\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations\ of\ the}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ form:}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ F(u)\ +\ S(t),}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f\$F(u)\(\backslash\)f\$\ is\ a\ nonlinear\ \textcolor{keyword}{operator},\ and\ \(\backslash\)f\$S(t)\(\backslash\)f\$\ is\ a\ source}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ term.\ This\ method\ is\ designed\ to\ preserve\ strong\ stability}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ properties,\ making\ it\ particularly\ suitable\ \textcolor{keywordflow}{for}\ hyperbolic}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ conservation\ laws\ and\ problems\ where\ monotonicity\ preservation\ is}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ important.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00018}00018\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ SSPRK3\ maintains\ the\ total\ variation\ diminishing\ (TVD)\ \textcolor{keyword}{property}}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ under\ appropriate\ CFL\ conditions.\ The\ method\ uses\ three\ stages\ with}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ specific\ coefficients\ designed\ to\ preserve\ stability\ properties\ of}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ the\ spatial\ discretization.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ SSPRK3\ is\ particularly\ effective\ \textcolor{keywordflow}{for}\ problems\ involving}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ discontinuous\ solutions\ or\ steep\ gradients\ where\ maintaining}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ monotonicity\ and\ avoiding\ spurious\ oscillations\ is\ critical.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00028}00028\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{ExrkIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk4_integrator}{Exrk4Integrator}},}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator}{HeunIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00031}00031\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00032}00032\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ Order\ =\ 3\ \%\ Accuracy\ order\ of\ the\ SSPRK3\ method}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00034}00034\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator}{00036}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator_ae38a4dd10dda6dd3fb76fabe679d6a9d}{Ssprk3Integrator}}(\textcolor{keyword}{final})}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SSPRK3INTEGRATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator_ae38a4dd10dda6dd3fb76fabe679d6a9d}{Ssprk3Integrator}}.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00040}\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator_afd9f60ce383eb5ea470dfacdbd185c57}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator_ae38a4dd10dda6dd3fb76fabe679d6a9d}{Ssprk3Integrator}}(\textcolor{keyword}{final})\ creates\ a\ strong\ stability}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ preserving\ third-\/order\ Runge-\/Kutta\ integrator\ with\ the}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ final\ \{mustBeNumeric,\ mustBeNonnegative\}}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{ExrkIntegrator}}(3,\ \textcolor{keyword}{final});}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ SSPRK3\ coefficients\ \textcolor{keywordflow}{for}\ strong\ stability\ preservation}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1}{c}}\ =\ [0,\ 1,\ 1/2];}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Butcher\ tableau\ coefficient\ matrix}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00054}\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator_ae38a4dd10dda6dd3fb76fabe679d6a9d}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.A\ =\ [0,\ 0,\ 0;\ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1,\ 0,\ 0;\ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1/4,\ 1/4,\ 0];}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ weights\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}}}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ obj.b\ =\ [1/6,\ 1/6,\ 2/3];}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00061}00061\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ssprk3_integrator_8m_source_l00062}00062\ end}
+
+\end{DoxyCode}

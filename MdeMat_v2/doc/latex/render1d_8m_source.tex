@@ -1,0 +1,46 @@
+\doxysection{render1d.\+m}
+\hypertarget{render1d_8m_source}{}\label{render1d_8m_source}\index{+profilers/+visual/private/render1d.m@{+profilers/+visual/private/render1d.m}}
+\mbox{\hyperlink{render1d_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00001}00001\ function\ ax\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a1e91541c46f37c844e8002279d9a6205}{render1d}}(axes,\ subdata,\ styleset,\ varName,\ offset)}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00002}00002\ dataNames\ =\ fieldnames(subdata);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00003}00003\ ax\ =\ axes(offset);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00004}00004\ cla(ax);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00005}00005\ hold(ax,\ \textcolor{stringliteral}{'on'});}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00007}\mbox{\hyperlink{namespaceprofilers_1_1visual_a1e91541c46f37c844e8002279d9a6205}{00007}}\ [xmin,\ xmax,\ umin,\ umax]\ =\ deal(inf,\ -\/inf,\ inf,\ -\/inf);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00008}00008\ legends\ =\ cell(1,\ length(dataNames));}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00010}00010\ \textcolor{keywordflow}{for}\ i\ =\ 1:length(dataNames)}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00011}00011\ \ \ \ \ dataName\ =\ dataNames\{i\};}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00012}00012\ \ \ \ \ g\ =\ subdata.(dataName);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00014}00014\ \ \ \ \ xmin\ =\ min(xmin,\ min(g.x1));}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00015}00015\ \ \ \ \ xmax\ =\ max(xmax,\ max(g.x1));}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00016}00016\ \ \ \ \ umin\ =\ min(umin,\ min(g.u));}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00017}00017\ \ \ \ \ umax\ =\ max(umax,\ max(g.u));}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}\ isfield(styleset,\ dataName)}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ style\ =\ styleset.(dataName);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ style\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00023}00023\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00025}00025\ \ \ \ \ plot(ax,\ g.x1(:).\textcolor{stringliteral}{',\ g.u(:).'},\ style\{:\});}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00026}00026\ \ \ \ \ legends\{i\}\ =\ dataName;}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00027}00027\ end}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00029}00029\ xlim(ax,\ [xmin,\ xmax]);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00030}00030\ \textcolor{keywordflow}{if}\ umax\ >\ umin}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00031}00031\ \ \ \ \ ylim(ax,\ [umin,\ umax]);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00032}00032\ end}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00033}00033\ xlabel(ax,\ \textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00034}00034\ ylabel(ax,\ varName);}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00035}00035\ legend(ax,\ legends,\ \textcolor{stringliteral}{'Location'},\ \textcolor{stringliteral}{'best'});}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00037}00037\ hold(ax,\ \textcolor{stringliteral}{'off'});}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00039}00039\ end}
+\DoxyCodeLine{\Hypertarget{render1d_8m_source_l00040}00040\ }
+
+\end{DoxyCode}

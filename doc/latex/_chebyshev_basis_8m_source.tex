@@ -1,0 +1,104 @@
+\doxysection{Chebyshev\+Basis.\+m}
+\hypertarget{_chebyshev_basis_8m_source}{}\label{_chebyshev_basis_8m_source}\index{+core/+symbolic/ChebyshevBasis.m@{+core/+symbolic/ChebyshevBasis.m}}
+\mbox{\hyperlink{_chebyshev_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00001}00001\ classdef\ ChebyshevBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{OrthogonalPolynomialBasis}}}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00002}\mbox{\hyperlink{namespacecore_1_1symbolic}{00002}}\ \ \ \ \ \%\ CHEBYSHEVBASIS\ Chebyshev\ orthogonal\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis}{ChebyshevBasis}}\ generates\ Chebyshev\ polynomial\ basis\ functions\ of}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ the\ first\ kind\ up\ to\ a\ specified\ maximum\ degree.\ The\ basis}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ functions\ are\ orthogonal\ on\ the\ interval\ [-\/1,\ 1]\ with\ weight}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ function\ \(\backslash\)f\$\ 1/\(\backslash\)sqrt\{1-\/x\string^2\}\ \(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ Chebyshev\ polynomials\ of\ the\ first\ kind\ satisfy\ the\ recurrence:}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \ \ \ \ T\_\{n+1\}(x)\ =\ 2x\ \(\backslash\)cdot\ T\_n(x)\ -\/\ T\_\{n-\/1\}(x)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00015}00015\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.symbolic.OrthogonalPolynomialBasis,}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.symbolic.LegendreBasis}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00019}00019\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ Lower\ \%\ Lower\ bound}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ Upper\ \%\ Upper\ bound}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00022}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis}{00022}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00024}00024\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a93a2b34b6b4381505e6f93fa9500c5b4}{ChebyshevBasis}}(variables,\ maxDegree,\ options)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00026}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CHEBYSHEVBASIS\ Construct\ Chebyshev\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a93a2b34b6b4381505e6f93fa9500c5b4}{ChebyshevBasis}}(variables,\ maxDegree)\ creates}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00029}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Chebyshev\ basis\ functions\ using\ the\ specified\ @a\ variables}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ up\ to\ @a\ maxDegree\ on\ the\ domain\ [-\/1,\ 1].}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a93a2b34b6b4381505e6f93fa9500c5b4}{ChebyshevBasis}}(variables,\ maxDegree,\ \textcolor{stringliteral}{'IsNormalized'},}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ true)\ creates\ orthonormal\ Chebyshev\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a93a2b34b6b4381505e6f93fa9500c5b4}{ChebyshevBasis}}(variables,\ maxDegree,\ \textcolor{stringliteral}{'Lower'},\ a,}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{stringliteral}{'Upper'},\ b)\ creates\ basis\ functions\ on\ the\ domain\ [a,\ b].}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables(1,\ 1)\ sym}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxDegree(1,\ 1)\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.IsNormalized(1,\ 1)\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.IsMonic(1,\ 1)\ \{mustBeNumericOrLogical\}\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.Lower(1,\ 1)\ \{mustBeNumeric,\ mustBeFinite\}\ =\ -\/1}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.Upper(1,\ 1)\ \{mustBeNumeric,\ mustBeFinite\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{OrthogonalPolynomialBasis}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variables,\ maxDegree,\ options);}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00049}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a93a2b34b6b4381505e6f93fa9500c5b4}{00049}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00052}00052\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ac04393812c07b3966d3834856c0020db}{initialize}}(obj,\ options)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ optional\ properties.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ac04393812c07b3966d3834856c0020db}{initialize}}@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a6a12e0bdd45a871a72324b1899e13a13}{OrthogonalPolynomialBasis}}(obj,\ options);}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{Lower}}\ =\ options.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{Lower}};}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{Upper}}\ =\ options.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{Upper}};}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ [a,\ b,\ c]\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a9a4704d807cafd5b7c07d7742bd81b88}{computeCoefficients}}(obj,\ n)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTECOEFFICIENTS\ Compute\ Chebyshev\ recurrence}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ coefficients.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ if\ n\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00070}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ac04393812c07b3966d3834856c0020db}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ normalizer\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a13b142bf890b96e894e77a1705158166}{computeNormalizer}}(obj,\ n)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTENORMALIZER\ Compute\ Chebyshev\ normalizer.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{Upper}}\ -\/\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{Lower}};}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ if\ n\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00081}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a9a4704d807cafd5b7c07d7742bd81b88}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ 1\ /\ sqrt(sym(pi))\ /\ sqrt(l);}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normalizer\ =\ sqrt(2/sym(pi))\ /\ sqrt(l);}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ x\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_abcf65aa0fcdf40b2276ffe61c92f2f7a}{transform}}(obj,\ x)}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ TRANSFORM\ Transform\ variable\ to\ polynomial's\ canonical\ domain.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_abcf65aa0fcdf40b2276ffe61c92f2f7a}{transform}}(x)\ transforms\ @a\ x\ to\ the\ canonical\ domain}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ the\ specific\ polynomial\ family.}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{Upper}}\ -\/\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{Lower}};}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ (obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_ad2f798c9f54b1a4494a586a3565c9f1c}{Upper}}\ +\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_aa5d40bf8df3377409fb137ebdd4df9d2}{Lower}})\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ (2\ *\ x\ -\/\ c)\ /\ l;}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00097}00097\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_chebyshev_basis_8m_source_l00098}\mbox{\hyperlink{classcore_1_1symbolic_1_1_chebyshev_basis_a13b142bf890b96e894e77a1705158166}{00098}}\ end}
+
+\end{DoxyCode}

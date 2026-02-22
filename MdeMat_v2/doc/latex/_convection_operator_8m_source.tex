@@ -1,0 +1,157 @@
+\doxysection{Convection\+Operator.\+m}
+\hypertarget{_convection_operator_8m_source}{}\label{_convection_operator_8m_source}\index{+approx/+assembly/ConvectionOperator.m@{+approx/+assembly/ConvectionOperator.m}}
+\mbox{\hyperlink{_convection_operator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00001}00001\ classdef\ ConvectionOperator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00002}00002\ \ \ \ \ \%\ CONVECTIONOPERATOR\ Assembly\ \textcolor{keywordflow}{for}\ convection\ operators\ in\ DG\ methods.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ ConvectionOperator\ provides\ high-\/level\ assembly\ of\ convection}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ (advection)\ operators\ \textcolor{keyword}{using}\ discontinuous\ Galerkin\ discretizations.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ It\ combines\ volume\ and\ flux\ assembly\ components\ to\ create\ complete}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ convection\ operators\ with\ appropriate\ upwind\ stabilization.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{operator}\ automatically\ selects\ upwind\ flux\ directions\ based}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ on\ the\ velocity\ field,\ ensuring\ stability\ \textcolor{keywordflow}{for}\ convection-\/dominated}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ problems.\ It\ supports\ both\ periodic\ and\ Dirichlet\ boundary}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ conditions\ with\ appropriate\ flux\ treatments.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ The\ convection\ \textcolor{keyword}{operator}\ discretizes\ terms\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)nabla\ \(\backslash\)cdot\ (c\ \(\backslash\)mathbf\{v\}\ u)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \(\backslash\)f]\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00019}00019\ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$c\(\backslash\)f\$\ is\ a\ coefficient,\ \(\backslash\)f\$v\(\backslash\)f\$\ is\ the\ velocity\ field,}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ and\ \(\backslash\)f\$u\(\backslash\)f\$\ is\ the\ transported\ quantity.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00023}00023\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \%\ Create\ convection\ operator\ with\ periodic\ boundaries}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ space\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.space.MeshSpace(mesh,\ element);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator}{L2ElementOperator}}(element);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ convOp\ =\ ConvectionOperator(space,\ \textcolor{keyword}{operator},\ \textcolor{stringliteral}{'periodic'});}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Assemble\ convection\ matrix\ \textcolor{keywordflow}{for}\ constant\ velocity}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ coefficients\ =\ [1.0;\ 0.5];\ \ \%\ [c\_x;\ c\_y]}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ velocity\ =\ [2.0;\ 1.0];\ \ \ \ \ \ \%\ [v\_x;\ v\_y]}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ A\ =\ convOp.linear(coefficients,\ velocity);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \%\ Assemble\ boundary\ condition\ terms}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ boundaryFunction\ =\ @(x,\ t)\ sin(pi*x(1,:))\ .*\ cos(pi*x(2,:));}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ B\ =\ convOp.linearBc(coefficients,\ velocity,\ boundaryFunction);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00037}00037\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00038}00038\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{VolumeAssembly}},}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly}{FluxAssembly}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00042}00042\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ volume\ \%\ Volume\ assembly\ \textcolor{keywordflow}{for}\ interior\ terms\ (VolumeAssembly)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ flux\ \ \ \%\ Flux\ assembly\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{interface\ }terms\ (FluxAssembly)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00045}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator}{00045}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00047}00047\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator},\ bcType)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONVECTIONOPERATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator},\ bcType)\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00052}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ convection\ \textcolor{keyword}{operator}\ with\ the\ specified\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator},\ and\ boundary\ condition\ type.\ For\ Dirichlet}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ boundaries,\ upwind\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}\ is\ automatically\ selected.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ -\/\ MeshSpace\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator}\ -\/\ ElementOperator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bcType\ -\/\ Boundary\ condition\ type:\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator}{ConvectionOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ \textcolor{keyword}{operator});}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ obj.volume\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{VolumeAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ \textcolor{keyword}{operator});}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ obj.flux\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly}{FluxAssembly}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ \textcolor{keyword}{operator},\ bcType,\ []);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmpi(bcType,\ \textcolor{stringliteral}{'dirichlet'})}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.flux.setFluxMode('upwind');}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00071}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{00071}}\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ function\ A\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}(obj,\ coe,\ vel)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINEAR\ Assemble\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}\ convection\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ matrix.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}(obj,\ coe)\ assembles\ the\ convection\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ with\ coefficients\ coe,\ using\ coe\ as\ both}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ and\ velocity\ field.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}(obj,\ coe,\ vel)\ assembles\ the\ convection\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ with\ coefficients\ coe\ and\ velocity\ field\ vel.\ The}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}\ direction\ (left/right\ bias)\ is\ automatically\ selected}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ based\ on\ the\ velocity\ sign\ in\ each\ dimension.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coe\ -\/\ Coefficient\ vector\ for\ each\ dimension\ (nDims\ x\ 1)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vel\ -\/\ Velocity\ vector\ for\ each\ dimension\ (nDims\ x\ 1,\ optional)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ -\/\ Assembled\ convection\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ matrix\ (sparse)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3\ ||\ isempty(vel),\ vel\ =\ coe;\ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ sparse(n,\ n);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ for\ dim\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nDims}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ coe(dim)\ ==\ 0,\ continue;\ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ vel(dim)\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}.setFluxType('left');}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00100}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{00100}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}.setFluxType('right');}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}{volume}}.scaleConstant(dim,\ coe(dim));}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T1\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}{volume}}.assembleVolumePartial(dim,\ C);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T2\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}.assembleFluxPartial(dim,\ C);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ [T1;\ T2];}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespacecore}{core}}.linalg.sparseFromTriplets(T,\ n,\ n);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ A\ +\ B;}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ function\ A\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a}{linearBc}}(obj,\ coe,\ vel,\ f,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINEARBC\ Assemble\ boundary\ condition\ terms\ for\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ convection.}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a}{linearBc}}(obj,\ coe,\ vel,\ f)\ assembles\ the\ boundary}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ condition\ contribution\ matrix\ for\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}}\ convection\ with}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Dirichlet\ boundary\ conditions.\ The\ boundary\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}\ direction}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ depends\ on\ the\ velocity\ sign\ (inflow\ boundaries\ only).}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coe\ -\/\ Coefficient\ vector\ for\ each\ dimension\ (nDims\ x\ 1)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vel\ -\/\ Velocity\ vector\ for\ each\ dimension\ (nDims\ x\ 1)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ f\ -\/\ Boundary\ condition\ function\ handle}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments\ passed\ to\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ -\/\ Boundary\ condition\ contribution\ matrix\ (sparse)}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ cell(1,\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nDims);}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ for\ dim\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nDims}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ coe(dim)\ ==\ 0,\ continue;\ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}{volume}}.scaleConstant(dim,\ coe(dim));}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ vel(dim)\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}.boundary.assembleLeftTrace(dim,\ C,\ f,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00139}\mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a}{00139}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.flux.boundary.assembleRightTrace(dim,\ C,\ f,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\{dim\}\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.sparseFromTriplets(T,\ n,\ max(T(:,\ 2)));}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ dim\ =\ obj.space.nDims:-\/1:2}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\{1\}\ =\ A\{1\}\ +\ A\{dim\};}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\{dim\}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ A\{1\};}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00150}00150\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_convection_operator_8m_source_l00151}00151\ end}
+
+\end{DoxyCode}

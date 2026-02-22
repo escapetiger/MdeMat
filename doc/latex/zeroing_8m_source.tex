@@ -1,0 +1,23 @@
+\doxysection{zeroing.\+m}
+\hypertarget{zeroing_8m_source}{}\label{zeroing_8m_source}\index{+core/+linalg/zeroing.m@{+core/+linalg/zeroing.m}}
+\mbox{\hyperlink{zeroing_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00001}00001\ function\ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X,\ tol)}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00002}00002\ \%\ ZEROING\ Set\ array\ entries\ below\ threshold\ to\ zero.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00004}00004\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X)\ replaces\ values\ in\ array\ @a\ X\ smaller\ than\ the\ \textcolor{keywordflow}{default}}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00005}00005\ \%\ \ \ tolerance\ with\ zeros.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00007}00007\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X,\ tol)\ replaces\ values\ in\ array\ @a\ X\ smaller\ than\ the}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00008}00008\ \%\ \ \ specified\ tolerance\ @a\ tol\ with\ zeros.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00009}00009\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00010}00010\ \%\ \ \ This\ function\ removes\ numerical\ noise\ by\ setting\ values\ with\ absolute}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00011}00011\ \%\ \ \ magnitude\ below\ tolerance\ @a\ tol\ to\ zero.\ Uses\ \textcolor{keywordflow}{default}\ tolerance\ of}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00012}00012\ \%\ \ \ eps*1e3\ when\ @a\ tol\ is\ not\ specified.\ Operation\ is\ applied}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00013}00013\ \%\ \ \ element-\/wise\ to\ the\ entire\ array\ @a\ X.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00015}00015\ if\ nargin\ <\ 2\ ||\ isempty(tol),\ tol\ =\ eps\ *\ 1e3;\ end}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00016}00016\ X(abs(X)\ <\ tol)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00017}00017\ end}
+
+\end{DoxyCode}

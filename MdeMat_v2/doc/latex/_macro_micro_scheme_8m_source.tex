@@ -1,0 +1,320 @@
+\doxysection{Macro\+Micro\+Scheme.\+m}
+\hypertarget{_macro_micro_scheme_8m_source}{}\label{_macro_micro_scheme_8m_source}\index{+physics/+radiation/MacroMicroScheme.m@{+physics/+radiation/MacroMicroScheme.m}}
+\mbox{\hyperlink{_macro_micro_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00001}00001\ classdef\ MacroMicroScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00002}00002\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00003}00003\ \ \ \ \ \ \ \ \ pattern}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00004}00004\ \ \ \ \ \ \ \ \ assembler}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00005}00005\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00006}00006\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00007}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme}{00007}}\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00008}00008\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00009}00009\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_aa5d83ae3ff13c6da33e7e30899e6a52c}{MacroMicroScheme}}(\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}},\ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}},\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}})}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00010}00010\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}}(\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}},\ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00011}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{00011}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.pattern\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}};}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ obj.assembler\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ obj.operator\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00014}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}{00014}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4}{initialize}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00017}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{00017}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ the\ macro-\/micro\ DG\ scheme.}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.reset();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ local\ data}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.v.fe.setVolumeData(0);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe.setVolumeData(1);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe.setFluxData(0);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.op.setVolumeData();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.op.setFluxData();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ initial\ condition}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ state.macroProject(obj.config.ic.f);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.G\ =\ state.microProject(obj.config.ic.f);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ scattering\ coefficients}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(obj.config.scattering)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00035}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_aa5d83ae3ff13c6da33e7e30899e6a52c}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.CS\ =\ state.mean(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.scattering);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00037}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4}{00037}}\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ absorption\ coefficients}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.absorption)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.CA\ =\ state.mean(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.absorption);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ source\ coefficients}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.source)\ \&\&\ nargin(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.source)\ <\ 3}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.QU\ =\ state.macroProject(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.source);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.QG\ =\ state.microProject(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.source);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ free\ streaming\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}.setFreeStreamingPattern(state);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ scaling\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}.setScalingPattern(state);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ upwind\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}\ assembly}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}{assembler}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}\ =\ fem.assembly.UpwindGridAssembly(\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe,\ state.disc.x.mesh,\ state.disc.x.op,\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string~isempty(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.bc.f));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ \mbox{\hyperlink{namespacephysics_1_1diffusion}{diffusion}}\ assembly}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}{assembler}}.\mbox{\hyperlink{namespacephysics_1_1diffusion}{diffusion}}\ =\ fem.assembly.DiffusionGridAssembly(\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe,\ state.disc.x.mesh,\ state.disc.x.op,\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string~isempty(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.bc.f),\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.xDiffusionFlux(1),\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.xDiffusionFlux(2),\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.xDiffusionBoundaryJump);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ constant\ assembly}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a4241999e52b29ad30622f3238e8d181c}{assembler}}.constant\ =\ fem.assembly.ConstantAssembly(\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe,\ state.disc.x.mesh,\ state.disc.x.op);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ mass\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{operator}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{operator}}.M\ =\ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413}{computeMassOperator}}(state);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ linear\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{operator}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ae31ca5c1e3fb151219e97f104c645ec0}{operator}}.L\ =\ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a2e8d8e264e4ea0f7e5d7df535ac4e4d9}{computeLinearOperator}}(state);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ time\ discretization}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}.reset();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.reset();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.addDataset('DG',\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'b'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{charliteral}{'o'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'}\});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.hasExact}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addExact(\textcolor{charliteral}{'U'},\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(x,\ t)\ state.macroEvaluate(obj.config.exacts.f,\ x,\ [],\ t));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addExact(\textcolor{charliteral}{'G'},\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(x,\ t)\ state.microEvaluate(obj.config.exacts.f,\ x,\ [],\ t));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addDataset(\textcolor{stringliteral}{'REF'},\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{stringliteral}{'r'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'-\/'}\});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.isEnabled}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(2,\ \textcolor{stringliteral}{'[M]\ Visualization.'});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.plot(state.disc.x.space,\ state.dofs,\ obj.tDisc);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(2);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ function\ state\ =\ preStep(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PRESTEP\ Preprocess\ operations\ before\ time\ step.}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ time\ step}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ state.disc.x.mesh.measure;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.setTimeStep(h,\ obj.config.cfl);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(obj.tDisc,\ \textcolor{stringliteral}{'approx.odeint.BdfIntegrator'})}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.setCoefficients();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ history}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ [state.dofs.U(:);\ state.dofs.G(:)];}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.update(W);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ function\ state\ =\ step(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Perform\ one\ upwind\ DG\ time\ step.}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.operator.M;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00123}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5f48e934ff00c42cd01ff8bb8066db0f}{00123}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ -\/obj.operator.L;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ time-\/dependent\ source\ term}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(obj.config.source)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ @(t)\ obj.computeSourceOperator(state,\ t);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Integration\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}{step}}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ obj.tDisc.step(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ reshape(W,\ [],\ m+n);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ W(:,\ 1:m);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.G\ =\ W(:,\ m+1:m+n);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00140}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}{00140}}\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85}{postStep}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ POSTSTEP\ Postprocess\ operations\ after\ time\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}{step}}.}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.isEnabled}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(2,\ \textcolor{stringliteral}{'[M]\ Visualization.'});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.plot(state.disc.x.space,\ state.dofs,\ obj.tDisc);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(2);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.advance();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a}{finalize}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINALIZE\ Finalize\ simulation\ with\ error\ analysis.}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.analyzer.isEnabled}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(3,\ \textcolor{stringliteral}{'[M]\ Error\ Evaluation.'});}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(varargin)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.addExact(\textcolor{charliteral}{'U'},\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(x,\ t)\ state.macroEvaluate(obj.config.exacts.f,\ x,\ [],\ t));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.addExact(\textcolor{charliteral}{'G'},\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(x,\ t)\ state.microEvaluate(obj.config.exacts.f,\ x,\ [],\ t));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.absolute(state.disc.x.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.now);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [state,\ coarse]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00169}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85}{00169}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.relative(state.disc.x.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coarse.disc.x.space,\ coarse.dofs);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(3);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.report();}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00177}00177\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00179}00179\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ function\ M\ =\ \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413}{computeMassOperator}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ state.disc.x.space.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00184}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a}{00184}}\ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ obj.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_ad92b65cf93a930cb5853b5ff3d07b7ab}{pattern}}.scaling;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ cell(m\ +\ n,\ m\ +\ n);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:(m\ +\ n)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\{i,\ i\}\ =\ speye(p,\ p)\ *\ S(i,\ 1);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.block(M);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ function\ L\ =\ computeLinearOperator(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Assemble\ linear\ \textcolor{keyword}{operator}\ sparse\ matrix}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ cell(m+n,\ m+n);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Set\ streaming\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ obj.computeFreeStreamingOperator(state,\ L);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Set\ collision\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ obj.computeCollisionOperator(state,\ L);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.block(L);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ function\ L\ =\ computeFreeStreamingOperator(obj,\ state,\ L)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Assemble\ streaming\ part\ of\ linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ state.disc.x.space.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ asmAux\ =\ obj.assembler.diffusion.aux.asm;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ asmPrm\ =\ obj.assembler.diffusion.prm.asm;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ asmUw\ =\ obj.assembler.advection;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ state.microNodes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Macro-\/macro\ streaming}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ squeeze(obj.pattern.streaming(i,\ j,\ :));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ all(a\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00227}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a24b3e03f9371a612be4f93b2f31c9413}{00227}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ j\}\ =\ sparse(p,\ p);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00229}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a2e8d8e264e4ea0f7e5d7df535ac4e4d9}{00229}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ <\ j}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ asmAux.divergence(a);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ asmPrm.divergence(a);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ j\}\ =\ D\ *\ obj.pattern.scaling(i,\ 1+j);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Macro-\/micro\ streaming}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ squeeze(obj.pattern.streaming(i,\ m+j,\ :));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ all(a\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ m\ +\ j\}\ =\ sparse(p,\ p);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ asmAux.divergence(a);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ m+j\}\ =\ D\ *\ obj.pattern.scaling(i,\ 1+m+j);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00251}\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a78500d5b2ac4c28ee74e3d44a182edc2}{00251}}\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Micro-\/macro\ streaming}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ squeeze(obj.pattern.streaming(m\ +\ i,\ j,\ :));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ all(a\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{m\ +\ i,\ j\}\ =\ sparse(p,\ p);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ asmPrm.divergence(a);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{m\ +\ i,\ j\}\ =\ D\ *\ obj.pattern.scaling(m+i,\ 1+j);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Micro-\/micro\ streaming}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ squeeze(obj.pattern.streaming(m\ +\ i,\ m\ +\ j,\ :));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ all(a\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{m\ +\ i,\ m\ +\ j\}\ =\ sparse(p,\ p);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ asmUw.divergence(a,\ V(:,\ j));}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{m\ +\ i,\ m\ +\ j\}\ =\ D\ *\ obj.pattern.scaling(m+i,\ 1+m+j);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ function\ L\ =\ computeCollisionOperator(obj,\ state,\ L)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{asm}\ =\ obj.assembler.constant;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Scattering}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(state.coefs.CS)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ asm.assemble(state.coefs.CS);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:(m\ +\ n)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ i\}\ =\ L\{i,\ i\}\ +\ C\ *\ obj.pattern.scaling(i,\ m+n+2);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Absorption}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(state.coefs.CA)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ asm.assemble(state.coefs.CA);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:(m\ +\ n)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\{i,\ i\}\ =\ L\{i,\ i\}\ +\ C\ *\ obj.pattern.scaling(i,\ m+n+3);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00300}00300\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ function\ S\ =\ computeSourceOperator(obj,\ state,\ t)}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.QU\ =\ state.macroProject(obj.config.source,\ [],\ [],\ t);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ state.coefs.QG\ =\ state.microProject(obj.config.source,\ [],\ [],\ t);}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ state.nMacroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ state.nMicroModes;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ state.disc.x.fe.nDofs;}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(repmat(state.coefs.CA(:).\textcolor{stringliteral}{',\ p,\ 1),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ QU\ =\ C\ .*\ state.coefs.QU\ .*\ obj.pattern.scaling(1:m,\ m+n+3).'};}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ QG\ =\ C\ .*\ state.coefs.QG\ .*\ obj.pattern.scaling(m+1:m+n,\ m+n+3).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00310}00310\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ S\ =\ [QU(:);\ QG(:)];}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00311}00311\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_macro_micro_scheme_8m_source_l00314}00314\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

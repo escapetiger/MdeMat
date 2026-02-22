@@ -1,0 +1,55 @@
+\doxysection{gauss\+Lobatto.\+m}
+\hypertarget{gauss_lobatto_8m_source}{}\label{gauss_lobatto_8m_source}\index{+core/+geometry/private/gaussLobatto.m@{+core/+geometry/private/gaussLobatto.m}}
+\mbox{\hyperlink{gauss_lobatto_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00001}00001\ function\ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ab0d3bdff3f6556f92d9ae3001d19626f}{gaussLobatto}}(np,\ options)}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00002}00002\ \%\ GAUSSLOBATTO\ Generate\ 1D\ Gauss-\/Lobatto\ nodes\ and\ weights.}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00004}00004\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ab0d3bdff3f6556f92d9ae3001d19626f}{gaussLobatto}}(n)\ generates\ n\ Gauss-\/Lobatto\ nodes}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00005}00005\ \%\ \ \ and\ corresponding\ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [0,\ 1].}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00007}00007\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ab0d3bdff3f6556f92d9ae3001d19626f}{gaussLobatto}}(n,\ lower=lower,\ upper=upper)\ generates\ nodes\ and}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00008}00008\ \%\ \ \ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [lower,\ upper].}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00010}00010\ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ np\ (1,1)\ \{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ options.lower\ (1,1)\ \{mustBeReal\}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ options.upper\ (1,1)\ \{mustBeReal\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00014}\mbox{\hyperlink{namespacecore_1_1geometry_ab0d3bdff3f6556f92d9ae3001d19626f}{00014}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00016}00016\ \ \ \ \ a\ =\ options.lower;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00017}00017\ \ \ \ \ b\ =\ options.upper;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(a\ <=\ b,\ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'a\ <=\ b\ is\ required.'});}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{if}\ np\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ x\ =\ (a\ +\ b)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ w\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00025}00025\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{if}\ a\ ==\ b}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ [x,\ w]\ =\ deal(a,\ 1);}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00030}00030\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00032}00032\ \ \ \ \ x\ =\ cos(pi\ *\ ((np\ -\/\ 1):-\/1:0)\ /\ (np\ -\/\ 1));}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00033}00033\ \ \ \ \ P\ =\ zeros(np,\ np);}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00034}00034\ \ \ \ \ x0\ =\ 2\ *\ ones(size(x));}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{while}\ max(abs(x-\/x0))\ >\ eps(1)}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ x0\ =\ x;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ P(1,\ :)\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ P(2,\ :)\ =\ x;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ for\ k\ =\ 3:np}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ P(k,\ :)\ =\ ((2\ *\ k\ -\/\ 3)\ *\ x\ .*\ P(k-\/1,\ :)\ -\/\ (k\ -\/\ 2)\ *\ P(k-\/2,\ :))\ /\ (k\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ x\ =\ x0\ -\/\ (x\ .*\ P(np,\ :)\ -\/\ P(np-\/1,\ :))\ ./\ (np\ *\ P(np,\ :));}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00044}00044\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00045}00045\ \ \ \ \ x\ =\ (x\ +\ 1)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00046}00046\ \ \ \ \ w\ =\ 1\ ./\ ((np\ -\/\ 1)\ *\ np\ *\ P(np,\ :).\string^2);}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00047}00047\ \ \ \ \ x\ =\ a\ +\ (b\ -\/\ a)\ *\ x;}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00048}00048\ \ \ \ \ w\ =\ w\ *\ (b\ -\/\ a);}
+\DoxyCodeLine{\Hypertarget{gauss_lobatto_8m_source_l00049}00049\ end}
+
+\end{DoxyCode}

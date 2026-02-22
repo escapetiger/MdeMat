@@ -1,0 +1,243 @@
+\doxysection{Be\+Integrator.\+m}
+\hypertarget{_be_integrator_8m_source}{}\label{_be_integrator_8m_source}\index{+approx/+odeint/BeIntegrator.m@{+approx/+odeint/BeIntegrator.m}}
+\mbox{\hyperlink{_be_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00001}00001\ classdef\ BeIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ BEINTEGRATOR\ Backward\ Euler\ integrator.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ BeIntegrator\ implements\ the\ Backward\ Euler\ method,\ a\ first-\/order}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ implicit\ time\ integration\ scheme\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ equations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ S,}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},\ and}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f\$S\(\backslash\)f\$\ is\ a\ source\ term.\ Any\ of\ these\ terms\ can\ be\ empty.\ For\ mass}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator},\ it\ means\ it\ reduces\ to\ an\ identity.\ For\ linear\ and\ source}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ term,\ it\ means\ they\ vanish\ from\ the\ equation.\ The\ method\ is}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ A-\/stable\ and\ suitable\ \textcolor{keywordflow}{for}\ stiff\ problems.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ The\ Backward\ Euler\ method\ is\ the\ simplest\ implicit\ method,}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ requiring\ only\ one\ function\ evaluation\ per\ time\ step\ but\ involving}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ the\ solution\ of\ a\ linear\ system\ at\ each\ step.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Basic\ usage}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ integrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(1.0);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_ab193f9e26447f53929d5ad052fed9c0e}{step}}(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ integrator.update(U\_new);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ integrator.advance();}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Pure\ diffusion\ (only\ linear\ term)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00031}00031\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \%\ Pure\ forcing\ (only\ source\ term)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step([],\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00034}00034\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ \%\ Identity\ evolution\ (no\ dynamics)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step([],\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00037}00037\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \%\ With\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00040}00040\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00041}00041\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}},}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00045}00045\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{00046}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_ad9751e8566935d4d6f64999762990e93}{ORDER}}\ =\ 1\ \%\ Accuracy\ order\ of\ the\ Backward\ Euler\ method}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00047}00047\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00049}00049\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_ad9751e8566935d4d6f64999762990e93}{00050}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}(final)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ BEINTEGRATOR\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}(final)\ creates\ a\ Backward\ Euler}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ with\ the\ specified\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ final\ -\/\ Final\ time\ for\ integration\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{OdeIntegrator}}(1,\ 1,\ final);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00065}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{00065}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a04b643b3ddd350e9708913433e7c9372}{setLhs}}(obj,\ L,\ M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETLHS\ Set\ the\ left-\/hand\ side\ matrix\ for\ the\ Backward\ Euler}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ system.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a04b643b3ddd350e9708913433e7c9372}{setLhs}}(obj,\ L,\ M)\ constructs\ the\ left-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ as\ M\ -\/\ dt*L\ for\ the\ implicit\ Backward\ Euler\ system.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ operator\ (matrix\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}.dt;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00083}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a04b643b3ddd350e9708913433e7c9372}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ linear\ term\ contribution}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(L)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}\ -\/\ dt\ *\ L;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a633cc4d00915a4c42b33a985371dcaf5}{setRhs}}(obj,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETRHS\ Set\ the\ right-\/hand\ side\ vector\ for\ the\ Backward\ Euler}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ system.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a633cc4d00915a4c42b33a985371dcaf5}{setRhs}}(obj,\ S,\ M)\ constructs\ the\ right-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ using\ the\ mass\ operator\ and\ source\ term.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Source\ term\ (vector,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a66c33728409475792e6011be305da068}{BeIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}.dt;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}\{1\};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00109}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a633cc4d00915a4c42b33a985371dcaf5}{00109}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ mass\ term\ contribution\ from\ previous\ solution}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ iscell(M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\ =\ M\{2\}\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(M\{1\})}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\ =\ obj.rhs\ +\ M\{1\};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\ =\ M\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ source\ term\ contribution}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(S)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\ =\ obj.rhs\ +\ dt\ *\ S;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ function\ U\ =\ stage(obj,\ L,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STAGE\ Compute\ the\ single\ stage\ of\ the\ Backward\ Euler\ method.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ stage(obj,\ L,\ S,\ M)\ computes\ the\ solution\ at\ the}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ current\ time\ step\ by\ solving\ the\ implicit\ Backward\ Euler}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ system.\ For\ Backward\ Euler,\ there\ is\ only\ one\ stage\ per}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ time\ step.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ BeIntegrator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Source\ term\ (vector,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ approximation\ at\ current\ stage}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.timeline.now;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00148}\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_aa6f9aba1c25dc187c05c11cf3d5133dc}{00148}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ linear\ term\ at\ current\ time}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(L)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(L,\ \textcolor{stringliteral}{'function\_handle'})}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ L(t0\ +\ dt);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ L;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ source\ term\ at\ current\ time}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(S)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(S,\ 'function\_handle')}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ S(t0\ +\ dt);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ S;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ LHS\ matrix\ if\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_ab193f9e26447f53929d5ad052fed9c0e}{step}}\ size\ changed}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}.hasStepSizeChanged}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ LHS\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ speye(length(\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}));}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(M,\ 'function\_handle')}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}})}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin(M)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}\ =\ M(t0\ +\ dt);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ nargin(M)\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}]\ =\ M(t0\ +\ dt,\ t0\ +\ dt);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ LHS\ matrix}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator_a04b643b3ddd350e9708913433e7c9372}{setLhs}}(Le,\ Me);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ RHS\ mass\ term\ at\ previous\ time\ level}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(M,\ 'function\_handle')}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin(M)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}})}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}}\ =\ M(t0);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ nargin(M)\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ cell(1,\ 2);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}})\ ||\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}.hasStepSizeChanged\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [Me\{1:2\}]\ =\ M(t0\ +\ dt,\ t0);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.MRhs\ =\ Me\{2\};}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\{2\}\ =\ obj.MRhs;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\{1\}\ =\ M(t0\ +\ dt,\ t0);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ RHS\ vector}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setRhs(Se,\ Me);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Solve\ the\ linear\ system}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.solver.solve(obj.lhs,\ obj.rhs);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ function\ U\ =\ step(obj,\ L,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Advance\ one\ time\ step\ \textcolor{keyword}{using\ }the\ Backward\ Euler\ method.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ step(obj,\ L,\ S,\ M)\ performs\ a\ complete\ time\ step\ by}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solving\ the\ implicit\ Backward\ Euler\ system.\ For\ Backward}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Euler,\ \textcolor{keyword}{this}\ is\ equivalent\ to\ computing\ a\ single\ stage.}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ BeIntegrator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Source\ term\ (vector,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ at\ the\ next\ time\ step}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.stage(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00236}00236\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_be_integrator_8m_source_l00237}00237\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,514 @@
+\doxysection{approx\+::mesh\+::Grid Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_grid}{}\label{classapprox_1_1mesh_1_1_grid}\index{approx::mesh::Grid@{approx::mesh::Grid}}
+
+
+Abstract base class for multidimensional structured grids.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a99bc94a3753f90228260c4ad712eb246}{Grid}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_grid}{Grid}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a64f6d3da1c8c75b7d3dae48c3836330d}{collocate\+On\+Boundary}} (Input\+Type obj, Input\+Type i, Input\+Type x\+Ref)
+\begin{DoxyCompactList}\small\item\em Map points to grid coordinates. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aeca27435998db1ea65127ef94ac2e5d2}{collocate}} (Input\+Type obj, Input\+Type nodes, Input\+Type indices)
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a2b0db0a8dcc78a4fa0097d62e346793d}{refine}} (Input\+Type obj, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Refine the grid resolution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (positive integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4aeb1b1ad7b9ce1e33bbe4295bdfcbe0}{bbox}}
+\begin{DoxyCompactList}\small\item\em Bounding box coordinates \mbox{[}a1, b1, a2, b2, ...\mbox{]}. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}
+\begin{DoxyCompactList}\small\item\em Vector of grid dimensions per axis. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}
+\begin{DoxyCompactList}\small\item\em Cell array of element centroids per dimension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}
+\begin{DoxyCompactList}\small\item\em Cell array of element spacings per dimension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}
+\begin{DoxyCompactList}\small\item\em Cell array of element indices per dimension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}
+\begin{DoxyCompactList}\small\item\em Cell array of boundary element indices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}{indexer}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indexer for linear/multi-\/index conversion. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ad799d9b17cdf907d2773de564409c0bd}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements in the grid. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a0acc2aa6ee47b372ab3832572ae6b00a}{all\+Element\+Linear\+Indices}}
+\begin{DoxyCompactList}\small\item\em Linear indices of all elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a8be7c6f7a6db5dac4d666b4c37dfd15f}{all\+Element\+Multi\+Indices}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indices of all elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ad893cf0830982c2a19d790de1ff54229}{boundary\+Element\+Linear\+Indices}}
+\begin{DoxyCompactList}\small\item\em Linear indices of boundary elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1c33949417b7fe8726c927031d976618}{boundary\+Element\+Multi\+Indices}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indices of boundary elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a406ec184ae45f8672252583c10a2b066}{measure}}
+\begin{DoxyCompactList}\small\item\em Minimum element spacing (grid measure) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab6659079b57ebb0470cc682b78b2a831}{magnitudes}}
+\begin{DoxyCompactList}\small\item\em Vector of element magnitudes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a6e43127e4d7c0e6675fc8ae6c662a57e}{graph}}
+\begin{DoxyCompactList}\small\item\em Underlying separable graph representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab34cfe23dee751009eae96d1fe3835a6}{get\+Min\+Spacing}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Get the minimum element spacing. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_af947b23133f934f76a01987f0f85e486}{get\+All\+Element\+Magnitudes}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Get element magnitudes. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a00cbbc5e2b3885e85c0935effa044841}{get\+Separable\+Graph}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Get the underlying graph representation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_acd32034136b9e44da594514a4d9dc458}{set\+Indexer}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Initialize multi-\/indexer from resolution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab2d929409bd0f67656da14cefd0be976}{set\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Initialize element factor indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_afad04a3f31c128a76c6de046b7b50c35}{set\+Boundary}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Initialize boundary element indices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for multidimensional structured grids. 
+
+\doxylink{classapprox_1_1mesh_1_1_grid}{Grid} provides a foundation for representing multidimensional structured grids using memory-\/efficient tensor-\/based storage. This abstract class defines common properties and methods for querying grid characteristics, connectivity, and performing grid-\/based operations.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Cannot\ instantiate\ abstract\ \textcolor{keyword}{class\ }directly}
+\DoxyCodeLine{\%\ Use\ concrete\ subclasses\ instead:}
+\DoxyCodeLine{uniformGrid\ =\ approx.mesh.UniformGrid([10,\ 10],\ [0,\ 0,\ 1,\ 1]);}
+\DoxyCodeLine{nonuniformGrid\ =\ approx.mesh.NonuniformGrid(\{0:0.1:1,\ [0,\ 0.2,\ 0.5,\ 1]\});}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+This is an abstract class that cannot be instantiated directly. 
+
+Concrete subclasses must implement the collocate and refine methods, 
+
+as well as the protected abstract methods for grid-\/specific operations.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_uniform_grid}{approx.\+mesh.\+Uniform\+Grid} 
+
+\doxylink{classapprox_1_1mesh_1_1_nonuniform_grid}{approx.\+mesh.\+Nonuniform\+Grid} 
+
+\doxylink{classapprox_1_1mesh_1_1_separable_graph}{approx.\+mesh.\+Separable\+Graph} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00029}{29}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a99bc94a3753f90228260c4ad712eb246}\index{approx::mesh::Grid@{approx::mesh::Grid}!Grid@{Grid}}
+\index{Grid@{Grid}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{Grid()}{Grid()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a99bc94a3753f90228260c4ad712eb246} 
+function approx\+::mesh\+::\+Grid\+::\+Grid (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_grid}{Grid}. 
+
+obj = Grid(n\+Dims) creates a grid object for the specified number of dimensions. This constructor is called by concrete subclasses during their initialization.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of spatial dimensions (positive integer) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_aeca27435998db1ea65127ef94ac2e5d2}\index{approx::mesh::Grid@{approx::mesh::Grid}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_aeca27435998db1ea65127ef94ac2e5d2} 
+virtual function approx\+::mesh\+::\+Grid\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{nodes}{, }\item[{Input\+Type}]{indices}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aa277b2dfc5d928fb1dfaccfdc2740e05}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_ab89eec41713d944f9d7402d0da98935b}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a64f6d3da1c8c75b7d3dae48c3836330d}\index{approx::mesh::Grid@{approx::mesh::Grid}!collocateOnBoundary@{collocateOnBoundary}}
+\index{collocateOnBoundary@{collocateOnBoundary}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{collocateOnBoundary()}{collocateOnBoundary()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a64f6d3da1c8c75b7d3dae48c3836330d} 
+function approx\+::mesh\+::\+Grid\+::collocate\+On\+Boundary (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{x\+Ref}{}\end{DoxyParamCaption})}
+
+
+
+Map points to grid coordinates. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_af947b23133f934f76a01987f0f85e486}\index{approx::mesh::Grid@{approx::mesh::Grid}!getAllElementMagnitudes@{getAllElementMagnitudes}}
+\index{getAllElementMagnitudes@{getAllElementMagnitudes}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{getAllElementMagnitudes()}{getAllElementMagnitudes()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_af947b23133f934f76a01987f0f85e486} 
+virtual function approx\+::mesh\+::\+Grid\+::get\+All\+Element\+Magnitudes (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Get element magnitudes. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a63ac5ad4fa53da2b277c1ac509f96282}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a3316bdf839e1855e46edbd1ad7774847}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab34cfe23dee751009eae96d1fe3835a6}\index{approx::mesh::Grid@{approx::mesh::Grid}!getMinSpacing@{getMinSpacing}}
+\index{getMinSpacing@{getMinSpacing}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{getMinSpacing()}{getMinSpacing()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab34cfe23dee751009eae96d1fe3835a6} 
+virtual function approx\+::mesh\+::\+Grid\+::get\+Min\+Spacing (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Get the minimum element spacing. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a66b330c0b0fb72cd55599b9f4632dc5d}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a13da4962ee5e958802219c99a4bc97c6}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a00cbbc5e2b3885e85c0935effa044841}\index{approx::mesh::Grid@{approx::mesh::Grid}!getSeparableGraph@{getSeparableGraph}}
+\index{getSeparableGraph@{getSeparableGraph}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{getSeparableGraph()}{getSeparableGraph()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a00cbbc5e2b3885e85c0935effa044841} 
+virtual function approx\+::mesh\+::\+Grid\+::get\+Separable\+Graph (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Get the underlying graph representation. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a3ce09fc2655b10c2c94c4fd4c1e9d821}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_ac7dc09972bf4521be7b68df42a5bd291}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a2b0db0a8dcc78a4fa0097d62e346793d}\index{approx::mesh::Grid@{approx::mesh::Grid}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a2b0db0a8dcc78a4fa0097d62e346793d} 
+virtual function approx\+::mesh\+::\+Grid\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Refine the grid resolution. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_ae8b02e3b447b61b6b3c21ac339b681d7}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a27c800e5124b7cfc1df8bbfafe13c374}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_afad04a3f31c128a76c6de046b7b50c35}\index{approx::mesh::Grid@{approx::mesh::Grid}!setBoundary@{setBoundary}}
+\index{setBoundary@{setBoundary}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{setBoundary()}{setBoundary()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_afad04a3f31c128a76c6de046b7b50c35} 
+function approx\+::mesh\+::\+Grid\+::set\+Boundary (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Initialize boundary element indices. 
+
+obj = set\+Boundary(obj) creates factor index arrays for boundary elements on each face of the grid domain.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab2d929409bd0f67656da14cefd0be976}\index{approx::mesh::Grid@{approx::mesh::Grid}!setElements@{setElements}}
+\index{setElements@{setElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{setElements()}{setElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab2d929409bd0f67656da14cefd0be976} 
+function approx\+::mesh\+::\+Grid\+::set\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Initialize element factor indices. 
+
+obj = set\+Elements(obj) creates factor index arrays for all elements based on the current grid resolution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_acd32034136b9e44da594514a4d9dc458}\index{approx::mesh::Grid@{approx::mesh::Grid}!setIndexer@{setIndexer}}
+\index{setIndexer@{setIndexer}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{setIndexer()}{setIndexer()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_acd32034136b9e44da594514a4d9dc458} 
+function approx\+::mesh\+::\+Grid\+::set\+Indexer (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Initialize multi-\/indexer from resolution. 
+
+obj = set\+Indexer(obj) creates a Multi\+Indexer object for converting between linear and multi-\/dimensional indices based on the current grid resolution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a0acc2aa6ee47b372ab3832572ae6b00a}\index{approx::mesh::Grid@{approx::mesh::Grid}!allElementLinearIndices@{allElementLinearIndices}}
+\index{allElementLinearIndices@{allElementLinearIndices}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{allElementLinearIndices}{allElementLinearIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a0acc2aa6ee47b372ab3832572ae6b00a} 
+Property approx\+::mesh\+::\+Grid\+::all\+Element\+Linear\+Indices}
+
+
+
+Linear indices of all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00063}{63}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a8be7c6f7a6db5dac4d666b4c37dfd15f}\index{approx::mesh::Grid@{approx::mesh::Grid}!allElementMultiIndices@{allElementMultiIndices}}
+\index{allElementMultiIndices@{allElementMultiIndices}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{allElementMultiIndices}{allElementMultiIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a8be7c6f7a6db5dac4d666b4c37dfd15f} 
+Property approx\+::mesh\+::\+Grid\+::all\+Element\+Multi\+Indices}
+
+
+
+Multi-\/indices of all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00066}{66}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a4aeb1b1ad7b9ce1e33bbe4295bdfcbe0}\index{approx::mesh::Grid@{approx::mesh::Grid}!bbox@{bbox}}
+\index{bbox@{bbox}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{bbox}{bbox}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a4aeb1b1ad7b9ce1e33bbe4295bdfcbe0} 
+Property approx\+::mesh\+::\+Grid\+::bbox}
+
+
+
+Bounding box coordinates \mbox{[}a1, b1, a2, b2, ...\mbox{]}. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00036}{36}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}\index{approx::mesh::Grid@{approx::mesh::Grid}!boundary@{boundary}}
+\index{boundary@{boundary}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{boundary}{boundary}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145} 
+Property approx\+::mesh\+::\+Grid\+::boundary}
+
+
+
+Cell array of boundary element indices. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00051}{51}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ad893cf0830982c2a19d790de1ff54229}\index{approx::mesh::Grid@{approx::mesh::Grid}!boundaryElementLinearIndices@{boundaryElementLinearIndices}}
+\index{boundaryElementLinearIndices@{boundaryElementLinearIndices}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{boundaryElementLinearIndices}{boundaryElementLinearIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ad893cf0830982c2a19d790de1ff54229} 
+Property approx\+::mesh\+::\+Grid\+::boundary\+Element\+Linear\+Indices}
+
+
+
+Linear indices of boundary elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00069}{69}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a1c33949417b7fe8726c927031d976618}\index{approx::mesh::Grid@{approx::mesh::Grid}!boundaryElementMultiIndices@{boundaryElementMultiIndices}}
+\index{boundaryElementMultiIndices@{boundaryElementMultiIndices}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{boundaryElementMultiIndices}{boundaryElementMultiIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a1c33949417b7fe8726c927031d976618} 
+Property approx\+::mesh\+::\+Grid\+::boundary\+Element\+Multi\+Indices}
+
+
+
+Multi-\/indices of boundary elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00072}{72}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}\index{approx::mesh::Grid@{approx::mesh::Grid}!centroids@{centroids}}
+\index{centroids@{centroids}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{centroids}{centroids}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b} 
+Property approx\+::mesh\+::\+Grid\+::centroids}
+
+
+
+Cell array of element centroids per dimension. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00042}{42}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}\index{approx::mesh::Grid@{approx::mesh::Grid}!elements@{elements}}
+\index{elements@{elements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{elements}{elements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1} 
+Property approx\+::mesh\+::\+Grid\+::elements}
+
+
+
+Cell array of element indices per dimension. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00048}{48}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a6e43127e4d7c0e6675fc8ae6c662a57e}\index{approx::mesh::Grid@{approx::mesh::Grid}!graph@{graph}}
+\index{graph@{graph}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{graph}{graph}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a6e43127e4d7c0e6675fc8ae6c662a57e} 
+Property approx\+::mesh\+::\+Grid\+::graph}
+
+
+
+Underlying separable graph representation. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00081}{81}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}\index{approx::mesh::Grid@{approx::mesh::Grid}!indexer@{indexer}}
+\index{indexer@{indexer}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{indexer}{indexer}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4} 
+Property approx\+::mesh\+::\+Grid\+::indexer}
+
+
+
+Multi-\/indexer for linear/multi-\/index conversion. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00054}{54}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab6659079b57ebb0470cc682b78b2a831}\index{approx::mesh::Grid@{approx::mesh::Grid}!magnitudes@{magnitudes}}
+\index{magnitudes@{magnitudes}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{magnitudes}{magnitudes}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab6659079b57ebb0470cc682b78b2a831} 
+Property approx\+::mesh\+::\+Grid\+::magnitudes}
+
+
+
+Vector of element magnitudes. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00078}{78}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a406ec184ae45f8672252583c10a2b066}\index{approx::mesh::Grid@{approx::mesh::Grid}!measure@{measure}}
+\index{measure@{measure}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{measure}{measure}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a406ec184ae45f8672252583c10a2b066} 
+Property approx\+::mesh\+::\+Grid\+::measure}
+
+
+
+Minimum element spacing (grid measure) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00075}{75}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}\index{approx::mesh::Grid@{approx::mesh::Grid}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974} 
+Property approx\+::mesh\+::\+Grid\+::n\+Dims}
+
+
+
+Number of spatial dimensions (positive integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00033}{33}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ad799d9b17cdf907d2773de564409c0bd}\index{approx::mesh::Grid@{approx::mesh::Grid}!nTotalElements@{nTotalElements}}
+\index{nTotalElements@{nTotalElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{nTotalElements}{nTotalElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ad799d9b17cdf907d2773de564409c0bd} 
+Property approx\+::mesh\+::\+Grid\+::n\+Total\+Elements}
+
+
+
+Total number of elements in the grid. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00060}{60}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}\index{approx::mesh::Grid@{approx::mesh::Grid}!resolution@{resolution}}
+\index{resolution@{resolution}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{resolution}{resolution}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88} 
+Property approx\+::mesh\+::\+Grid\+::resolution}
+
+
+
+Vector of grid dimensions per axis. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00039}{39}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}\index{approx::mesh::Grid@{approx::mesh::Grid}!spacings@{spacings}}
+\index{spacings@{spacings}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{spacings}{spacings}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b} 
+Property approx\+::mesh\+::\+Grid\+::spacings}
+
+
+
+Cell array of element spacings per dimension. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00045}{45}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_grid_8m}{Grid.\+m}}\end{DoxyCompactItemize}

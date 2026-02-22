@@ -1,0 +1,142 @@
+\doxysection{L2\+Finite\+Element.\+m}
+\hypertarget{_l2_finite_element_8m_source}{}\label{_l2_finite_element_8m_source}\index{+fem/+element/L2FiniteElement.m@{+fem/+element/L2FiniteElement.m}}
+\mbox{\hyperlink{_l2_finite_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00001}00001\ classdef\ L2FiniteElement\ <\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{C0FiniteElement}}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00002}00002\ \ \ \ \ \%\ L2FINITEELEMENT\ Discontinuous\ finite\ element.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ L2FiniteElement\ implements\ a\ discontinuous\ (L2)\ finite\ element\ that}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ extends\ C0\ elements\ with\ flux\ contributions\ at\ element\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ Functions\ in\ \textcolor{keyword}{this}\ space\ may\ be\ discontinuous\ across\ element}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ boundaries,\ making\ them\ suitable\ \textcolor{keywordflow}{for}\ discontinuous\ Galerkin\ (DG)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ methods\ and\ problems\ with\ discontinuous\ solutions.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ L2\ space\ allows\ \textcolor{keywordflow}{for}\ complete\ flexibility\ in\ function\ values}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ across\ element\ interfaces,\ requiring\ numerical\ fluxes\ to\ couple}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ neighboring\ elements.\ This\ approach\ is\ particularly\ effective\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ hyperbolic\ problems,\ convection-\/dominated\ flows,\ and\ problems\ with}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ solution\ discontinuities.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ Flux\ integration\ is\ performed\ separately\ on\ each\ element\ boundary}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ face,\ with\ dedicated\ integrators\ \textcolor{keywordflow}{for}\ accurate\ computation\ of}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \textcolor{keyword}{interface\ }terms\ in\ the\ weak\ formulation.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00020}00020\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ \%\ Create\ L2\ finite\ element\ with\ volume\ and\ flux\ integration}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ geometry\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(2);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.LagrangeBasis(2);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ projector\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(basis);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ volumeIntegrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.GaussLegendre(3);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ fluxIntegrators\ =\ arrayfun(@(i)\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.FaceIntegrator(i),\ 1:4);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ element\ =\ L2FiniteElement(geometry,\ projector,\ volumeIntegrator,\ fluxIntegrators);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Set\ up\ data\ \textcolor{keywordflow}{for}\ DG\ method\ assembly}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ element.setVolumeData(1);\ \ \%\ Volume\ terms\ with\ derivatives}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ element.setFluxData(0);\ \ \ \ \%\ Flux\ terms\ with\ function\ values}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00032}00032\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ \%\ Access\ flux\ data\ \textcolor{keywordflow}{for}\ boundary\ face\ i}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ faceValues\ =\ element.fluxData(i).values;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ faceWeights\ =\ element.fluxData(i).weights;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00036}00036\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ \%\ Use\ \textcolor{keyword}{static}\ factory\ method\ \textcolor{keywordflow}{for}\ standard\ orthotope\ elements}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ element\ =\ L2FiniteElement.Orthotope(2,\ 3,\ 2,\ 1);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00039}00039\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00040}00040\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{C0FiniteElement}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{FiniteElement}},}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1data}{data}}.\mbox{\hyperlink{classfem_1_1data_1_1_function_data}{FunctionData}}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00044}00044\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ fluxData\ \%\ Array\ of\ function\ data\ \textcolor{keywordflow}{for}\ flux\ integrals\ (FunctionData\ array)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00046}\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{00046}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00048}00048\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_aa7c28e333d796a26ba6e5922de135b12}{nFluxes}}\ \%\ Number\ of\ flux\ boundaries\ (dependent\ property)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00050}\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a7f6c5103695ed00b29e064c865b2e6c5}{00050}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00052}00052\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}(K,\ P,\ I1,\ I2)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ L2FINITEELEMENT\ Constructor\ for\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00056}\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_aa7c28e333d796a26ba6e5922de135b12}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}(K,\ P,\ I1,\ I2)\ creates\ a\ discontinuous}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ with\ both\ volume\ and\ flux\ integration}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ capabilities\ using\ the\ specified\ components.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ K\ -\/\ Element\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ \textcolor{keywordtype}{object}\ (Geometry)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ P\ -\/\ Function\ \mbox{\hyperlink{namespacefem_1_1space}{space}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}\ (Projector)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ I1\ -\/\ Volume\ integrator\ \textcolor{keywordtype}{object}\ (Integrator)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ I2\ -\/\ Array\ of\ flux\ integrator\ objects\ (Integrator\ array)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}(K,\ P,\ I1);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a7f6c5103695ed00b29e064c865b2e6c5}{fluxData}}\ =\ arrayfun(@(I)\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1data}{data}}.FunctionData(I),\ I2);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_aa7c28e333d796a26ba6e5922de135b12}{nFluxes}}(obj)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NFLUXES\ Get\ the\ number\ of\ flux\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00075}\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_aa7c28e333d796a26ba6e5922de135b12}{nFluxes}}(obj)\ returns\ the\ number\ of\ boundary\ faces}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ the\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}},\ which\ equals\ the\ number\ of\ flux}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrators\ required\ for\ discontinuous\ Galerkin\ methods.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ boundary\ faces\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}.nBoundaries;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ function\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a3baab8c159d2440400e1c0798cd76312}{setFluxData}}(obj,\ r,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFLUXDATA\ Set\ function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ for\ flux\ integrals.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a3baab8c159d2440400e1c0798cd76312}{setFluxData}}(obj,\ r)\ computes\ and\ stores\ function\ values}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ derivatives\ up\ to\ order\ r\ at\ boundary\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ all\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ faces.\ This\ enables\ efficient\ computation}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ flux\ terms\ in\ discontinuous\ Galerkin\ formulations.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a3baab8c159d2440400e1c0798cd76312}{setFluxData}}(obj,\ r,\ integrationArgs)\ allows\ additional}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ arguments\ to\ be\ passed\ to\ the\ integration\ point\ setup.}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a1f8dc301a974ffa1c3719b22aa745a61}{L2FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ r\ -\/\ Maximum\ derivative\ order\ to\ compute\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00103}\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a3baab8c159d2440400e1c0798cd76312}{00103}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Optional\ arguments\ for\ integration\ point\ setup}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ NULL}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_aa7c28e333d796a26ba6e5922de135b12}{nFluxes}};}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Process\ each\ boundary\ face}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_a7f6c5103695ed00b29e064c865b2e6c5}{fluxData}}(i);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ integration\ points\ if\ additional\ arguments\ provided}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(varargin)}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D.setPoints(varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ integration\ and\ projection\ information}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ D.integrator;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ obj.projector;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ P.basis;}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ I.nodes(1:n,\ :);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ function\ values\ at\ boundary\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D.setValues(f,\ X);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ derivatives\ \textcolor{keywordflow}{if}\ requested}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ r\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D.setDerivatives(f,\ X,\ r);}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00135}00135\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_finite_element_8m_source_l00136}00136\ end}
+
+\end{DoxyCode}

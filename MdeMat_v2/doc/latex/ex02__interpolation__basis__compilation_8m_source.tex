@@ -1,0 +1,42 @@
+\doxysection{ex02\+\_\+interpolation\+\_\+basis\+\_\+compilation.\+m}
+\hypertarget{ex02__interpolation__basis__compilation_8m_source}{}\label{ex02__interpolation__basis__compilation_8m_source}\index{+approx/+basis/+scripts/ex02\_interpolation\_basis\_compilation.m@{+approx/+basis/+scripts/ex02\_interpolation\_basis\_compilation.m}}
+\mbox{\hyperlink{ex02__interpolation__basis__compilation_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00002}00002\ \%\ FileName:\ ex01\_interpolation\_basis\_compilation}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00003}00003\ \%\ Author:\ Yi\ Cai}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00004}00004\ \%\ Contact:\ yicaim@stu.xmu.edu.cn}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00005}00005\ \%\ Date:\ 2025-\/05-\/27}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00006}00006\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00007}00007\ \%\ \ \ Compile\ interpolation\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00008}00008\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00010}00010\ clear;\ clc;}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00012}00012\ \%\%\ 1.\ Lagrange\ Basis\ with\ Gauss-\/Legendre\ nodes\ on\ [-\/1/2,\ 1/2]}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00014}00014\ n\ =\ 5;}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00016}00016\ fprintf(\textcolor{stringliteral}{'Compiling\ Lagrange\ basis\ on\ Gauss-\/Legendre\ nodes...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00017}00017\ GL\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{GaussLegendreRule}}();}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00018}00018\ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00019}00019\ \ \ \ \ compiler\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler}{InterpolationPolynomialBasisCompiler}}();}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00020}00020\ \ \ \ \ [nodes,\ \string~]\ =\ GL.generate(i,\ \textcolor{keyword}{false},\ -\/0.5,\ 0.5);}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00021}00021\ \ \ \ \ compiler.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler_a3e3efde14bc481aa925837bbe4294157}{setFunctions}}(nodes,\ \textcolor{stringliteral}{'lagrange'});}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00022}00022\ \ \ \ \ compiler.compile(sprintf(\textcolor{stringliteral}{'lagrange\_unit\_gauss\_legendre\_\%d'},\ i),\ \textcolor{stringliteral}{'lagrange'},\ max(1,\ i-\/1));}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00023}00023\ end}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00025}00025\ \%\%\ 2.\ Lagrange\ Basis\ with\ Gauss-\/Lobatto\ nodes\ on\ [-\/1/2,\ 1/2]}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00027}00027\ n\ =\ 5;}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00029}00029\ fprintf(\textcolor{stringliteral}{'Compiling\ Lagrange\ basis\ on\ Gauss-\/Lobatto\ nodes...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00030}00030\ GL\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule}{GaussLobattoRule}}();}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00031}00031\ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00032}00032\ \ \ \ \ compiler\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler}{InterpolationPolynomialBasisCompiler}}();}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00033}00033\ \ \ \ \ [nodes,\ \string~]\ =\ GL.generate(i,\ \textcolor{keyword}{false},\ -\/0.5,\ 0.5);}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00034}00034\ \ \ \ \ compiler.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler_a3e3efde14bc481aa925837bbe4294157}{setFunctions}}(nodes,\ \textcolor{stringliteral}{'lagrange'});}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00035}00035\ \ \ \ \ compiler.compile(sprintf(\textcolor{stringliteral}{'lagrange\_unit\_gauss\_lobatto\_\%d'},\ i),\ \textcolor{stringliteral}{'lagrange'},\ max(1,\ i-\/1));}
+\DoxyCodeLine{\Hypertarget{ex02__interpolation__basis__compilation_8m_source_l00036}00036\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,100 @@
+\doxysection{Assembler.\+m}
+\hypertarget{_assembler_8m_source}{}\label{_assembler_8m_source}\index{+fem/+assembly/Assembler.m@{+fem/+assembly/Assembler.m}}
+\mbox{\hyperlink{_assembler_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00001}00001\ classdef\ Assembler\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00002}\mbox{\hyperlink{namespacefem_1_1assembly}{00002}}\ \ \ \ \ \%\ ASSEMBLER\ Base\ \textcolor{keyword}{class\ }for\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ assemblers.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{Assembler}}\ provides\ the\ foundation\ \textcolor{keywordflow}{for}\ assembling\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ operators\ into\ global\ matrices.\ This\ abstract\ base\ \textcolor{keyword}{class\ }manages\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ spaces\ and\ operators,\ and\ provides\ utilities\ \textcolor{keywordflow}{for}\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ sparse\ matrix\ construction.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }handles\ the\ relationship\ between\ finite\ elements,\ meshes,}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ and\ operators,\ providing\ common\ properties\ and\ methods\ needed\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ matrix\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}\ operations.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00013}00013\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_constant_assembler}{ConstantAssembler}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}.\mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler}{GridAssembler}}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00016}00016\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ fe\ \ \ \%\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ mesh\ \%\ Mesh\ \textcolor{keywordtype}{object}\ \ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ op\ \ \ \%\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keyword}{operator}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00020}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{00020}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00022}00022\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a980176995314ad6d0ca771e2b0088824}{nTotalElements}}\ \%\ Total\ number\ of\ elements\ in\ the\ discretization}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00024}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{00024}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a33f4483b73b6d52c7ec446983da2e7e3}{nLocalDofs}}\ \ \ \ \ \%\ Number\ of\ local\ degrees\ of\ freedom\ per\ \mbox{\hyperlink{namespacefem_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a80209df81f775b300313a62e8b0b6998}{nGlobalDofs}}\ \ \ \ \%\ Total\ number\ of\ global\ degrees\ of\ freedom}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a87e3e1922f5940fc1402770e58755caa}{nDims}}\ \ \ \ \ \ \ \ \ \ \%\ Number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00027}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{00027}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00029}00029\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00030}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{00030}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{Assembler}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}})}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLER\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{Assembler}}.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{Assembler}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}})\ creates\ an\ assembler\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}},\ and\ \textcolor{keyword}{operator}.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00036}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a980176995314ad6d0ca771e2b0088824}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}}\ -\/\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}}\ -\/\ Mesh\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00039}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a33f4483b73b6d52c7ec446983da2e7e3}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}}\ -\/\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keyword}{operator}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00042}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a80209df81f775b300313a62e8b0b6998}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{Assembler}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ obj.fe\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}};}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00045}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a87e3e1922f5940fc1402770e58755caa}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.mesh\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}};}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ obj.op\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}};}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nTotalElements(obj)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NTOTALELEMENTS\ Get\ the\ total\ number\ of\ elements.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.mesh.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nLocalDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NLOCALDOFS\ Get\ the\ number\ of\ local\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.fe.nDofs;}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nGlobalDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00062}\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NGLOBALDOFS\ Get\ the\ total\ number\ of\ global\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nLocalDofs\ *\ obj.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nDims(obj)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.fe.nDims;}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00072}00072\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00074}00074\ \ \ \ \ methods\ (Static)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ function\ A\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a02874ab81616081e08c036245c2e8f04}{sparseFromTriplets}}(T,\ m,\ n)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPARSEFROMTRIPLETS\ Create\ sparse\ matrix\ from\ triplet\ format.}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a02874ab81616081e08c036245c2e8f04}{sparseFromTriplets}}(T,\ m,\ n)\ converts\ a\ triplet\ list\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ (row,\ column,\ value)\ into\ a\ sparse\ matrix,\ automatically}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filtering\ out\ invalid\ indices\ (zeros\ or\ negative\ values).}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ -\/\ Triplet\ matrix\ with\ columns\ [rowIdx,\ colIdx,\ value]}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ -\/\ Number\ of\ rows\ in\ output\ sparse\ matrix\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ columns\ in\ output\ sparse\ matrix\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ -\/\ Sparse\ matrix\ of\ size\ m×n}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ find((T(:,\ 1)\ >\ 0)\ \&\ (T(:,\ 2)\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ sparse(T(k,\ 1),\ T(k,\ 2),\ T(k,\ 3),\ m,\ n);}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00093}00093\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembler_8m_source_l00094}00094\ end}
+
+\end{DoxyCode}

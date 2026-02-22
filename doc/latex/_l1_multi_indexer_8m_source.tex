@@ -1,0 +1,77 @@
+\doxysection{L1\+Multi\+Indexer.\+m}
+\hypertarget{_l1_multi_indexer_8m_source}{}\label{_l1_multi_indexer_8m_source}\index{+core/+linalg/L1MultiIndexer.m@{+core/+linalg/L1MultiIndexer.m}}
+\mbox{\hyperlink{_l1_multi_indexer_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00001}00001\ classdef\ L1MultiIndexer\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{CachedMultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00002}00002\ \ \ \ \ \%\ L1MULTIINDEXER\ Generate\ L1-\/constrained\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ L1MultiIndexer\ generates\ one-\/based\ multi-\/indices\ such\ that\ sum\ of}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ indices\ is\ within\ specified\ bounds.\ Useful\ \textcolor{keywordflow}{for}\ sparse\ tensor}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ approximation\ with\ L1-\/norm\ constraints.}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00008}00008\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{CachedMultiIndexer}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_lx_multi_indexer}{LxMultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00011}00011\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ function\ obj\ =\ setCache(obj,\ nDims,\ maxSum,\ options)}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETCACHE\ Generate\ and\ cache\ L1-\/constrained\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00015}\mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer}{00015}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer_aed4411a21d38539dd23be80ef1355b31}{setCache}}(obj,\ nDims=nDims,\ maxSum=maxSum)}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ generates\ all\ multi-\/indices\ with\ @a\ nDims\ dimensions\ and}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sum\ <=\ @a\ sMax.}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer_aed4411a21d38539dd23be80ef1355b31}{setCache}}(obj,\ nDims=nDims,\ maxSum=maxSum,}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ minSum=minSum)\ generates\ \ multi-\/indices\ with\ @a\ nDims}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimensions\ and\ sum\ between\ @a\ minSum\ and\ @a\ maxSum.}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer}{L1MultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nDims\{mustBeInteger,\ mustBePositive\}}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxSum\{mustBeInteger,\ mustBePositive\}}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.minSum\{mustBeScalarOrEmpty,\ mustBeInteger\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ nDims;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00031}\mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer_aed4411a21d38539dd23be80ef1355b31}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ maxSum;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(options.minSum)}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ nd;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ options.minSum;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(a\ >=\ nd,\ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'minSum\ must\ be\ greater\ than\ or\ equal\ to\ nDims.');}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(b\ >=\ a,\ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'maxSum\ must\ be\ greater\ than\ or\ equal\ to\ minSum.');}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nd\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a08e43aa5ef7e326ad1e876e918606d6f}{Cache}}\ =\ (a:b).';}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ nm\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ a:b}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nm\ =\ nm\ +\ nchoosek(i-\/1,\ nd-\/1);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ zeros(nm,\ nd);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ for\ s\ =\ a:b}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ nchoosek(1:(s\ -\/\ 1),\ nd-\/1);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ [D(:,\ 1),\ diff(D,\ 1,\ 2),\ s\ -\/\ D(:,\ end)];}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a77dfa8cc3002cd188b6192277539a149}{Style}},\ \textcolor{charliteral}{'C'})}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [G,\ \string~]\ =\ sortrows(G,\ 1:nd);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [G,\ \string~]\ =\ sortrows(G,\ nd:-\/1:1);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ size(G,\ 1);}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(i\ +\ (1:k),\ :)\ =\ G;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ i\ +\ k;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a08e43aa5ef7e326ad1e876e918606d6f}{Cache}}\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00070}00070\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l1_multi_indexer_8m_source_l00071}00071\ end}
+
+\end{DoxyCode}

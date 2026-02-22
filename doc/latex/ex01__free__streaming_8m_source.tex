@@ -1,0 +1,160 @@
+\doxysection{ex01\+\_\+free\+\_\+streaming.\+m}
+\hypertarget{ex01__free__streaming_8m_source}{}\label{ex01__free__streaming_8m_source}\index{+physics/+radiation/+scripts/ex01\_free\_streaming.m@{+physics/+radiation/+scripts/ex01\_free\_streaming.m}}
+\mbox{\hyperlink{ex01__free__streaming_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts}{00002}}\ \%\ FileName:\ ex01\_free\_streaming}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00006}00006\ \%\ \ \ Free\ streaming\ with\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00009}00009\ clc;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00010}00010\ clear;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00011}00011\ close\ all;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00013}00013\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00014}00014\ configPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00015}00015\ config\ =\ \mbox{\hyperlink{namespacecore}{core}}.io.OptionParser().parse(configPath);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00016}00016\ config.nDims\ =\ 2;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00017}00017\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00018}00018\ config.xBBox\ =\ repmat([-\/config.L,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00019}00019\ config.tFinal\ =\ 0.5;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00020}00020\ config.omega\ =\ repmat(pi\ /\ config.L,\ 1,\ config.nDims);\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00021}00021\ config.ic\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}(config.omega);\ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00022}00022\ config.bc\ =\ [];\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00023}00023\ config.exact\ =\ fExact(config.omega);\ \%\ Exact\ solution\ \textcolor{keywordflow}{for}\ f}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00024}00024\ \%\ config.exact\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00025}00025\ config.scattering\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00026}00026\ config.absorption\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00027}00027\ config.source\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00028}00028\ config.verbose\ =\ 1;\ \%\ Verbose\ flag}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00029}00029\ config.nx\ =\ repmat(4,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00030}00030\ \textcolor{keywordflow}{if}\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00031}00031\ \ \ \ \ config.M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00032}00032\ \ \ \ \ config.nv\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00033}00033\ elseif\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00034}00034\ \ \ \ \ config.M\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00035}00035\ \ \ \ \ config.nv\ =\ max(8,\ config.M);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00036}00036\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00037}00037\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00038}00038\ \ \ \ \ config.nv\ =\ max(8,\ ceil((3*config.M\ +\ 2)\ /\ 4)\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00039}00039\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00040}00040\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00041}00041\ \ \ \ \ config.nv\ =\ max([4,\ 4],\ repmat(ceil(sqrt(config.M))\ +\ 1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00042}00042\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00043}00043\ \ \ \ \ config.M\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00044}00044\ \ \ \ \ config.nv\ =\ max([4,\ 4],\ repmat(ceil(sqrt(config.M))\ +\ 1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00045}00045\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00046}00046\ config.N\ =\ prod(config.nv);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00047}00047\ \%\ config.N\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00048}00048\ \textcolor{keywordflow}{if}\ config.nDims\ <\ 3}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00049}00049\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'FSA\%dR\%d'},\ config.nDims,\ config.vReductionType);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00050}00050\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00051}00051\ \ \ \ \ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'FSA\%d'},\ config.nDims);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00052}00052\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00053}00053\ config.vDiscId\ =\ sprintf(\textcolor{stringliteral}{'P\%dS\%d'},\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00054}00054\ config.tDiscId\ =\ upper(config.tDiscId);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00055}00055\ config.xDiscId\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ upper(config.xDiscName),\ config.xBasisOrder);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00056}00056\ config.schemeId\ =\ strjoin(\{config.tDiscId,\ config.xDiscId,\ config.vDiscId\},\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00058}00058\ \%\%\ SIMULATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00060}00060\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme}{MacroMicroScheme}}(config)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00061}00061\ \ \ \ \ .setTimeDiscretization(config.tDiscId,\ config.tFinal)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00062}00062\ \ \ \ \ .setTimer(config.verbose)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00063}00063\ \ \ \ \ .setVisualizer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00064}00064\ \ \ \ \ \textcolor{stringliteral}{'experimentId'},\ config.experimentId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00065}00065\ \ \ \ \ \textcolor{stringliteral}{'schemeId'},\ config.schemeId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00066}00066\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00067}00067\ \ \ \ \ \textcolor{stringliteral}{'nTimeNodes'},\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00068}00068\ \ \ \ \ \textcolor{stringliteral}{'final'},\ config.tFinal,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00069}00069\ \ \ \ \ \textcolor{stringliteral}{'density'},\ ones(1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00070}00070\ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []))\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00071}00071\ \ \ \ \ .setAnalyzer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00072}00072\ \ \ \ \ \textcolor{stringliteral}{'nLevels'},\ 5,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00073}00073\ \ \ \ \ \textcolor{stringliteral}{'reductions'},\ \{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00074}00074\ \ \ \ \ \textcolor{stringliteral}{'density'},\ repmat(4,\ 1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00075}00075\ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []))\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00076}00076\ \ \ \ \ .\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a8465821a962c7240304309aa9002255c}{setPattern}}(\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00077}00077\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00078}00078\ \ \ \ \ .addDataset(\textcolor{stringliteral}{'DG'},\ 2)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00079}00079\ \ \ \ \ .addStyle(\textcolor{stringliteral}{'DG'},\ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'b'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{charliteral}{'o'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'}\})\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00080}00080\ \ \ \ \ .addDataset(\textcolor{stringliteral}{'REF'},\ \string~isempty(config.exact))\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00081}00081\ \ \ \ \ .addStyle(\textcolor{stringliteral}{'REF'},\ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'r'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'}\});}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00083}00083\ \%\%\ SIMULATION\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00085}00085\ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.FiniteElementDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00086}00086\ \ \ \ \ .setDgOrthotopeElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00087}00087\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00088}00088\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.xBasisOrder,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00089}00089\ \ \ \ \ \textcolor{stringliteral}{'basisType'},\ config.xBasisType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00090}00090\ \ \ \ \ \textcolor{stringliteral}{'basisPattern'},\ config.xBasisPattern\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00091}00091\ \ \ \ \ )\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00092}00092\ \ \ \ \ .setElementOperator()\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00093}00093\ \ \ \ \ .setDerivativeOrder(1);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00095}00095\ vDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.discretization.AffineDiscretization()\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00096}00096\ \ \ \ \ .setC0SphereElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00097}00097\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00098}00098\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.M,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00099}00099\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00100}00100\ \ \ \ \ \textcolor{stringliteral}{'nPoints'},\ config.nv)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00101}00101\ \ \ \ \ .setDerivativeOrder(0)\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00102}00102\ \ \ \ \ .setScaledAffineSpace(scheme.pattern.scales);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00104}00104\ \textcolor{keywordflow}{if}\ isempty(config.exact)}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00105}00105\ \ \ \ \ xDisc\ =\ xDisc.setUniformGrid(config.nx/2,\ config.xBBox).setMeshSpace();}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00106}00106\ \ \ \ \ coarse\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.radiation.MacroMicroState(xDisc,\ vDisc,\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00107}00107\ \ \ \ \ coarse\ =\ scheme.initialize(coarse);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00108}00108\ \ \ \ \ coarse\ =\ scheme.run(coarse);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00109}00109\ \ \ \ \ xDisc\ =\ xDisc.refineMesh(2);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00110}00110\ else}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00111}00111\ \ \ \ \ xDisc\ =\ xDisc.setUniformGrid(config.nx,\ config.xBBox).setMeshSpace();}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00112}00112\ \ \ \ \ coarse\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00113}00113\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00115}00115\ for\ i\ =\ 1:scheme.analyzer.profiler.nLevels}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00116}00116\ \ \ \ \ fine\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.radiation.MacroMicroState(xDisc,\ vDisc,\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00117}00117\ \ \ \ \ fine\ =\ scheme.initialize(fine);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00118}00118\ \ \ \ \ fine\ =\ scheme.run(fine);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00119}00119\ \ \ \ \ if\ isempty(coarse)}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00121}00121\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine,\ coarse);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00123}00123\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00124}00124\ \ \ \ \ if\ \string~isempty(coarse),\ coarse\ =\ fine;\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00125}00125\ \ \ \ \ xDisc\ =\ xDisc.refineMesh(2);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00126}00126\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00128}00128\ \%\%\ ANALYSIS}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00129}00129\ results\ =\ scheme.analyzer.analyze();}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00130}00130\ varNames\ =\ fieldnames(results);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00131}00131\ for\ iVar\ =\ 1:length(varNames)}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00132}00132\ \ \ \ \ varName\ =\ varNames\{iVar\};}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00133}00133\ \ \ \ \ disp(results.(varName));}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00134}00134\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00136}00136\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00138}00138\ function\ h\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}(omega)}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00139}00139\ h\ =\ @(x,\ v)\ fInitImpl(x,\ v,\ omega);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00140}00140\ end}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00142}00142\ function\ f\ =\ fInitImpl(x,\ v,\ omega)}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00143}00143\ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00144}00144\ \textcolor{stringliteral}{f\ =\ sin(z);}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00145}00145\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00146}00146\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00147}00147\ \textcolor{stringliteral}{function\ h\ =\ fExact(omega)}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00148}00148\ \textcolor{stringliteral}{h\ =\ @(x,\ v,\ t)\ fExactImpl(x,\ v,\ t,\ omega);}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00149}00149\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00150}00150\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00151}00151\ \textcolor{stringliteral}{function\ f\ =\ fExactImpl(x,\ v,\ t,\ omega)}}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00152}00152\ \textcolor{stringliteral}{z\ =\ omega(:).'}\ *\ (x\ -\/\ v\ .*\ t);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00153}00153\ f\ =\ sin(z);}
+\DoxyCodeLine{\Hypertarget{ex01__free__streaming_8m_source_l00154}00154\ end}
+
+\end{DoxyCode}

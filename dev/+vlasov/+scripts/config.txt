@@ -1,0 +1,79 @@
+# Environment configuration
+
+# =======================================================================
+# Algorithm
+# =======================================================================
+
+OPTION=schemeName='dghs'
+
+# -----------------------------------------------------------------------
+# Time discretization
+# -----------------------------------------------------------------------
+# tSplitName='lie_trotter': Lie-Trotter splitting (first-order)
+# tSplitName='strang': Strang splitting (second-order)
+OPTION=tSplitName='strang'
+
+# tOdeIntName='be': backward Euler scheme
+# tOdeIntName='bdf2': BDF2 scheme
+# tOdeIntName='bdf3': BDF3 scheme
+# tOdeIntName='sdirk2': SDIRK2 scheme
+# tOdeIntName='sdirk3': SDIRK3 scheme
+# tOdeIntName='imp': Implicit midpoint scheme
+OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
+
+# CFL number
+# OPTION=cfl=0.5
+
+# Time step size
+OPTION=dt=0.1
+
+# -----------------------------------------------------------------------
+# Space discretization
+# -----------------------------------------------------------------------
+
+# spatial order
+OPTION=xBasisOrder=3
+
+# xBasisType='modal': Modal basis 
+# xBasisType='nodal': Nodal basis
+OPTION=xBasisType='nodal'
+
+# xBasisPattern='Q': Qk polynomial space
+# xBasisPattern='P': Pk polynomial space
+OPTION=xBasisPattern='Q'
+
+# xPenaltyType{1,1}='boundary': add jump only to boundary elements
+# xPenaltyType{1,1}='boundaryw': add weighted jump only to boundary elements
+# xPenaltyType{1,1}='all': add jump to all elements
+# xPenaltyType{1,1}='allw': add weighted jump to all elements
+# xPenaltyType{1,2}='central': central flux
+# xPenaltyType{1,2}='right': right flux
+# xPenaltyType{1,2}='left': left flux
+# xPenaltyType{2,1}='central': central flux
+# xPenaltyType{2,1}='right': right flux
+# xPenaltyType{2,1}='left': left flux
+OPTION=xPenaltyType={'all', 'central'; 'central', ''} 
+
+# -----------------------------------------------------------------------
+# Velocity discretization
+# -----------------------------------------------------------------------
+OPTION=vBasisType='hermite'
+
+# -----------------------------------------------------------------------
+# Filter options
+# -----------------------------------------------------------------------
+# Enable filtering to reduce aliasing errors in nonlinear coupling
+OPTION=useFilter=true
+
+# Dealiasing method: 'hou-li', 'tc', or 'quasi-tc'
+OPTION=dealiasingType='hou-li'
+
+# Dealiaing parameters
+OPTION=dealiasingBeta=36
+OPTION=dealiasingGamma=36
+OPTION=dealiasingCutoff=2/3
+
+# -----------------------------------------------------------------------
+# Splitting options
+# -----------------------------------------------------------------------
+OPTION=useSplitting=true

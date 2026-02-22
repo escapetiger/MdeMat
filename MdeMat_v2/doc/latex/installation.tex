@@ -1,0 +1,73 @@
+\chapter{Installation details }
+\hypertarget{installation}{}\label{installation}\index{Installation details@{Installation details}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Matlab\ comment\ ignored\ by\ doxygen}
+\DoxyCodeLine{\%>\ comment\ analyzed\ by\ doxygen}
+
+\end{DoxyCode}
+ \begin{DoxyAttention}{Attention}
+Doxygen keyword have to begin by {\bfseries{@}}, for example @b to bold the text (the use of \textbackslash{} instead of @ is not supported) 
+\end{DoxyAttention}
+\hypertarget{installation_funcDecr}{}\doxysection{\texorpdfstring{Function description}{Function description}}\label{installation_funcDecr}
+The keyword {\bfseries{@param}} and {\bfseries{@retval}} will be used to describe the input and output parameters of a function.
+
+For function description, the description should follow the following presentation \+: \begin{DoxyVerb}///% ======================================================================
+///%> @brief Brief description of the function
+///%>
+///%> More detailed description.
+///%>
+///%> @param arg1 First argument
+///%> @param arg2 Second argument
+///%>
+///%> @retval out1 return value for the first output variable
+///%> @retval out2 return value for the second output variable
+///% ======================================================================
+///[out1, out2] = function( arg1, arg2)
+///  out1 = arg2;
+///  out2 = arg1;
+///end
+///\end{DoxyVerb}
+\hypertarget{installation_classDecr}{}\doxysection{\texorpdfstring{Class description}{Class description}}\label{installation_classDecr}
+For class description, the following description can be used \+: \begin{DoxyVerb}///% ======================================================================
+///%> @brief Brief description of the class
+///%>
+///%> More detailed description of the class
+///%>
+///% ======================================================================
+///\end{DoxyVerb}
+
+
+This package contains two files \+:
+\begin{DoxyItemize}
+\item a perl script ({\ttfamily m2cpp.\+pl}) which is a filter that converts .m files into .cpp files that Doxygen can understand
+\item the {\ttfamily Doxyfile} file (configuration file used by Doxygen) that contains parameters needed by Doxygen to extract the documentation from .m files.
+\end{DoxyItemize}
+
+Installation \+:
+\begin{DoxyItemize}
+\item You need to have the {\bfseries{Doxygen}} software installed (version 1.\+5.\+9 or newer required (tested with version 1.\+7.\+1))
+\item You need to have {\bfseries{perl}} installed (perl is shipped with Matlab, located usually in {\ttfamily \$matlabroot\textbackslash{}sys\textbackslash{}perl\textbackslash{}win32\textbackslash{}bin})
+\item extract the {\ttfamily Doxyfile} file from the {\ttfamily doxygen.\+zip} package and replace the default Doxyfile provided by Doxygen
+\item extract the {\ttfamily m2cpp.\+pl} into a directory (for example {\ttfamily C\+:\textbackslash{}Doxygen\+Matlab})
+\item edit the Doxyfile file (or use the Doxy\+Wizard tool provided by Doxygen) to modify a few settings \+:
+\begin{DoxyItemize}
+\item EXTENSION\+\_\+\+MAPPING=.m=C++
+\item FILTER\+\_\+\+PATTERN=\texorpdfstring{$\ast$}{*}m=C\+:\textbackslash{}Doxygen\+Matlab\textbackslash{}m2cpp.\+pl
+\item PERL\+\_\+\+PATH=\texorpdfstring{$<$}{<}path to your perl version\texorpdfstring{$>$}{>}
+\item INPUT=\texorpdfstring{$<$}{<}directory where your documented code is located\texorpdfstring{$>$}{>}
+\item OUTPUT\+\_\+\+DIRECTORY=\texorpdfstring{$<$}{<}directory where you want to generate your documentation\texorpdfstring{$>$}{>}
+\item STRIP\+\_\+\+FORM\+\_\+\+PATH=\texorpdfstring{$<$}{<}directory where your documented code is located\texorpdfstring{$>$}{>}
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+For Windows users, in certain circumstances, the association between .pl files and the perl executable is not well configured, leading to "{}\+Argument must contain filename -\/1 at C\+:\textbackslash{}\+Doxygen\+Matlab\textbackslash{}m2cpp.\+pl line 4"{} when running doxygen. To work around this issue, you should execute the following lines in a Windows command prompt ("{}cmd"{}) \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{assoc\ .pl=PerlScript}
+\DoxyCodeLine{ftype\ PerlScript=C:\(\backslash\)Program\ Files\(\backslash\)MATLAB\(\backslash\)R2010b\(\backslash\)sys\(\backslash\)perl\(\backslash\)win32\(\backslash\)bin\(\backslash\)perl.exe\ \%1\ \%*}
+
+\end{DoxyCode}
+ (don\textquotesingle{}t forget to replace the path to the perl.\+exe file with yours in the line above) 
+\end{DoxyNote}
+
+\end{DoxyItemize}

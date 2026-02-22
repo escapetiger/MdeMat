@@ -1,0 +1,102 @@
+\doxysection{core\+::symbolic\+::Lagrange\+Basis Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_lagrange_basis}{}\label{classcore_1_1symbolic_1_1_lagrange_basis}\index{core::symbolic::LagrangeBasis@{core::symbolic::LagrangeBasis}}
+
+
+Lagrange interpolation basis functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_a0222d309e1b4e16f08c71b1bca92c1bd}{Lagrange\+Basis}} (Input\+Type variables, Input\+Type nodes)
+\begin{DoxyCompactList}\small\item\em Construct Lagrange basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function}} (Input\+Type variables)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}} (Input\+Type obj, Input\+Type max\+Deriv\+Order)
+\begin{DoxyCompactList}\small\item\em Compile symbolic function as function handles. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e}{save}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Save symbolic function metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74}{load}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Load symbolic function metadata from file and update object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_a980a6503f757252de82828378a86c7da}{Nodes}}
+\begin{DoxyCompactList}\small\item\em Interpolation nodes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d}{Meta\+Ext}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Metadata file extension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic expressions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04}{Handles}}
+\begin{DoxyCompactList}\small\item\em Cell array of function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of input dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of output dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lagrange interpolation basis functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_lagrange_basis}{Lagrange\+Basis} generates Lagrange interpolation basis functions for given interpolation nodes. Each basis function is a polynomial that equals 1 at one node and 0 at all other nodes.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_symbolic_function}{core.\+symbolic.\+Symbolic\+Function} 
+
+\doxylink{classcore_1_1symbolic_1_1_legendre_basis}{core.\+symbolic.\+Legendre\+Basis} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_lagrange_basis_8m_source_l00015}{15}} of file \mbox{\hyperlink{_lagrange_basis_8m_source}{Lagrange\+Basis.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_lagrange_basis_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_lagrange_basis_a0222d309e1b4e16f08c71b1bca92c1bd}\index{core::symbolic::LagrangeBasis@{core::symbolic::LagrangeBasis}!LagrangeBasis@{LagrangeBasis}}
+\index{LagrangeBasis@{LagrangeBasis}!core::symbolic::LagrangeBasis@{core::symbolic::LagrangeBasis}}
+\doxysubsubsection{\texorpdfstring{LagrangeBasis()}{LagrangeBasis()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_lagrange_basis_a0222d309e1b4e16f08c71b1bca92c1bd} 
+function core\+::symbolic\+::\+Lagrange\+Basis\+::\+Lagrange\+Basis (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{, }\item[{Input\+Type}]{nodes}{}\end{DoxyParamCaption})}
+
+
+
+Construct Lagrange basis functions. 
+
+obj = Lagrange\+Basis(variables, nodes) creates Lagrange basis functions using the specified {\itshape variables} and interpolation {\itshape nodes}. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1symbolic_1_1_lagrange_basis_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_lagrange_basis_a980a6503f757252de82828378a86c7da}\index{core::symbolic::LagrangeBasis@{core::symbolic::LagrangeBasis}!Nodes@{Nodes}}
+\index{Nodes@{Nodes}!core::symbolic::LagrangeBasis@{core::symbolic::LagrangeBasis}}
+\doxysubsubsection{\texorpdfstring{Nodes}{Nodes}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_lagrange_basis_a980a6503f757252de82828378a86c7da} 
+Property core\+::symbolic\+::\+Lagrange\+Basis\+::\+Nodes}
+
+
+
+Interpolation nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_lagrange_basis_8m_source_l00019}{19}} of file \mbox{\hyperlink{_lagrange_basis_8m_source}{Lagrange\+Basis.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_lagrange_basis_8m}{Lagrange\+Basis.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,234 @@
+\doxysection{ex02\+\_\+diffusive\+\_\+scaling.\+m}
+\hypertarget{ex02__diffusive__scaling_8m_source}{}\label{ex02__diffusive__scaling_8m_source}\index{+physics/+radiation/+scripts/ex02\_diffusive\_scaling.m@{+physics/+radiation/+scripts/ex02\_diffusive\_scaling.m}}
+\mbox{\hyperlink{ex02__diffusive__scaling_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00002}00002\ \%\ FileName:\ ex02\_diffusive\_scaling}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00003}00003\ \%\ Author:\ Yi\ Cai}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00004}00004\ \%\ Date:\ 2025-\/07-\/23}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00006}00006\ \%\ \ \ Diffusive\ scaling\ with\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_a9e39a8a7ed027faa814d4295ea6b12c9}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00009}00009\ clc;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00010}00010\ clear;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00011}00011\ close\ all;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00013}00013\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00014}00014\ configPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00015}00015\ config\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1io}{io}}.\mbox{\hyperlink{classcore_1_1io_1_1_option_parser}{OptionParser}}().\mbox{\hyperlink{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6}{parse}}(configPath);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00016}00016\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00017}00017\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00018}00018\ config.xBBox\ =\ repmat([-\/config.L,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00019}00019\ config.tFinal\ =\ 0.5;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00020}00020\ config.omega\ =\ repmat(pi\ /\ config.L,\ 1,\ config.nDims);\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00021}00021\ config.lambda\ =\ 0.5;\ \%\ Time\ decay}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00022}00022\ config.epsilon\ =\ 1;\ \%\ Scaling\ parameter}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00023}00023\ config.alpha\ =\ 1;\ \%\ Time\ scale}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00024}00024\ config.beta\ =\ -\/1;\ \%\ Scattering\ scale}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00025}00025\ config.gamma\ =\ 1;\ \%\ Absorption\ scale}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00026}00026\ config.verbose\ =\ 1;\ \%\ Verbose\ flag}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00027}00027\ config.nx\ =\ repmat(4,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00028}00028\ \textcolor{keywordflow}{if}\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00029}00029\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00030}00030\ \ \ \ \ config.M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00031}00031\ \ \ \ \ config.nv\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00032}00032\ elseif\ config.nDims\ ==\ 1\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00033}00033\ \ \ \ \ config.E\ =\ 1\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00034}00034\ \ \ \ \ config.M\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00035}00035\ \ \ \ \ config.nv\ =\ max(8,\ config.M);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00036}00036\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00037}00037\ \ \ \ \ config.E\ =\ 1\ /\ (2\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00038}00038\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00039}00039\ \ \ \ \ config.nv\ =\ max(8,\ ceil((3\ *\ config.M\ +\ 2)/4)+1);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00040}00040\ elseif\ config.nDims\ ==\ 2\ \&\&\ config.vReductionType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00041}00041\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00042}00042\ \ \ \ \ config.M\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00043}00043\ \ \ \ \ config.nv\ =\ max([3,\ 3],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00044}00044\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00045}00045\ \ \ \ \ config.E\ =\ 1\ /\ (4\ *\ pi);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00046}00046\ \ \ \ \ config.M\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00047}00047\ \ \ \ \ config.nv\ =\ max([3,\ 3],\ repmat(ceil(sqrt(config.M))+1,\ 1,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00048}00048\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00049}00049\ config.N\ =\ prod(config.nv);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00050}00050\ config.ic.f\ =\ \mbox{\hyperlink{namespacephysics_1_1radiation_1_1scripts_abc9a4dc4184ca19382d808683810ba64}{fInit}}(config.E,\ config.omega,\ config.epsilon);\ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00051}00051\ config.bc.f\ =\ [];\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00052}00052\ config.exacts.f\ =\ fExact(config.E,\ config.omega,\ config.lambda,\ config.epsilon);\ \%\ Exact\ solution}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00053}00053\ \%\ config.exacts\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00054}00054\ config.scattering\ =\ scattering();}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00055}00055\ config.absorption\ =\ absorption();}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00056}00056\ config.source\ =\ source(config.E,\ config.omega,\ config.lambda,\ config.epsilon,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00057}00057\ \ \ \ \ config.alpha,\ config.beta,\ config.gamma);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00058}00058\ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'DSA\%dR\%d'},\ config.nDims,\ config.vReductionType);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00059}00059\ config.vDiscId\ =\ sprintf(\textcolor{stringliteral}{'P\%dS\%d'},\ config.M,\ config.N);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00060}00060\ config.tDiscId\ =\ upper(config.tDiscId);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00061}00061\ config.xDiscId\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ upper(config.xDiscId),\ config.xBasisOrder);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00062}00062\ config.schemeId\ =\ strjoin(\{config.tDiscId,\ config.xDiscId,\ config.vDiscId\},\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00064}00064\ \%\%\ SIMULATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00066}00066\ \textcolor{keywordflow}{switch}\ lower(config.tDiscId)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00067}00067\ \ \ \ \ case\ 'be'}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ cls\ =\ 'BeIntegrator';}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00069}00069\ \ \ \ \ case\ 'bdf2'}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ cls\ =\ 'Bdf2Integrator';}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00071}00071\ \ \ \ \ case\ 'bdf3'}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ cls\ =\ 'Bdf3Integrator';}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00073}00073\ \ \ \ \ case\ 'sdirk2'}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ cls\ =\ 'Sdirk2Integrator';}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00075}00075\ \ \ \ \ case\ 'sdirk3'}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ cls\ =\ 'Sdirk3Integrator';}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00077}00077\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00078}00078\ tDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.odeint.(cls)(config.tFinal);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00080}00080\ visualizer\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.visual.Visualizer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00081}00081\ \ \ \ \ 'experimentId',\ config.experimentId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00082}00082\ \ \ \ \ 'schemeId',\ config.schemeId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00083}00083\ \ \ \ \ 'nDims',\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00084}00084\ \ \ \ \ 'nTimeNodes',\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00085}00085\ \ \ \ \ 'final',\ config.tFinal,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00086}00086\ \ \ \ \ 'density',\ ones(1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00087}00087\ \ \ \ \ 'components',\ struct(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []),\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00088}00088\ \ \ \ \ 'exacts',\ config.exacts\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00089}00089\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00091}00091\ analyzer\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.analysis.Analyzer(\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00092}00092\ \ \ \ \ 'nLevels',\ 5,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00093}00093\ \ \ \ \ 'reductions',\ \{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00094}00094\ \ \ \ \ \textcolor{stringliteral}{'density'},\ repmat(4,\ 1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00095}00095\ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1,\ \textcolor{charliteral}{'G'},\ []),\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00096}00096\ \ \ \ \ \textcolor{stringliteral}{'exacts'},\ config.exacts\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00097}00097\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00099}00099\ pattern\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_pattern}{MacroMicroPattern}}(\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00100}00100\ \ \ \ \ \textcolor{stringliteral}{'epsilon'},\ config.epsilon,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00101}00101\ \ \ \ \ \textcolor{stringliteral}{'timeScale'},\ config.alpha,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00102}00102\ \ \ \ \ \textcolor{stringliteral}{'scatteringScale'},\ config.beta,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00103}00103\ \ \ \ \ \textcolor{stringliteral}{'absorptionScale'},\ config.gamma,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00104}00104\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00105}00105\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00106}00106\ pattern.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_pattern_a0fe135f16cbc78f6b80237d874a2ec72}{setDecompositionPattern}}(config.nDims,\ config.M);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00108}00108\ scheme\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.\mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme}{MacroMicroScheme}}(config,\ tDisc,\ visualizer,\ analyzer,\ pattern);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00110}00110\ \%\%\ SIMULATION\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00112}00112\ disc\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00113}00113\ disc.v.fe\ =\ fem.element.C0SphereFiniteElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00114}00114\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00115}00115\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.M,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00116}00116\ \ \ \ \ \textcolor{stringliteral}{'reduction'},\ config.vReductionType,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00117}00117\ \ \ \ \ \textcolor{stringliteral}{'nPoints'},\ config.nv);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00118}00118\ disc.v.space\ =\ fem.space.ScaledAffineSpace(disc.v.fe,\ pattern.scales);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00119}00119\ disc.x.fe\ =\ fem.element.L2OrthotopeFiniteElement(\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00120}00120\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00121}00121\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.xBasisOrder,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00122}00122\ \ \ \ \ \textcolor{stringliteral}{'id'},\ config.xBasisId,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00123}00123\ \ \ \ \ \textcolor{stringliteral}{'pattern'},\ config.xBasisPattern\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00124}00124\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00125}00125\ disc.x.op\ =\ fem.element.L2FiniteElementOperator(disc.x.fe);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00127}00127\ \textcolor{keywordflow}{if}\ isempty(config.exacts)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00128}00128\ \ \ \ \ disp(['[C]\ nx\ =\ ',\ mat2str(config.nx/2)]);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00129}00129\ \ \ \ \ disc.x.mesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.UniformGrid(config.nx/2,\ config.xBBox);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00130}00130\ \ \ \ \ disc.x.space\ =\ fem.space.MeshSpace(disc.x.fe,\ disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00131}00131\ \ \ \ \ coarse\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.MacroMicroState(disc);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00132}00132\ \ \ \ \ coarse\ =\ scheme.initialize(coarse);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00133}00133\ \ \ \ \ coarse\ =\ scheme.run(coarse);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00134}00134\ else}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00135}00135\ \ \ \ \ coarse\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00136}00136\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00138}00138\ for\ i\ =\ 1:analyzer.profiler.nLevels}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00139}00139\ \ \ \ \ disp(['[C]\ nx\ =\ ',\ mat2str(config.nx)]);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00140}00140\ \ \ \ \ disc.x.mesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.UniformGrid(config.nx,\ config.xBBox);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00141}00141\ \ \ \ \ disc.x.space\ =\ fem.space.MeshSpace(disc.x.fe,\ disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00142}00142\ \ \ \ \ fine\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1radiation}{radiation}}.MacroMicroState(disc);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00143}00143\ \ \ \ \ fine\ =\ scheme.initialize(fine);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00144}00144\ \ \ \ \ fine\ =\ scheme.run(fine);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00145}00145\ \ \ \ \ if\ isempty(coarse)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00147}00147\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine,\ coarse);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00149}00149\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00150}00150\ \ \ \ \ if\ \string~isempty(coarse),\ coarse\ =\ fine;\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00151}00151\ \ \ \ \ config.nx\ =\ config.nx\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00152}00152\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00154}00154\ \%\%\ ANALYSIS}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00155}00155\ results\ =\ analyzer.analyze();}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00156}00156\ varNames\ =\ fieldnames(results);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00157}00157\ for\ iVar\ =\ 1:length(varNames)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00158}00158\ \ \ \ \ varName\ =\ varNames\{iVar\};}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00159}00159\ \ \ \ \ disp(results.(varName));}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00160}00160\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00162}00162\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00164}00164\ function\ h\ =\ fInit(E,\ omega,\ epsilon)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00165}00165\ h\ =\ @(x,\ v)\ fInitImpl(x,\ v,\ E,\ omega,\ epsilon);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00166}00166\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00168}00168\ function\ f\ =\ fInitImpl(x,\ v,\ E,\ omega,\ epsilon)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00169}00169\ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00170}00170\ \textcolor{stringliteral}{y\ =\ omega(:).'}\ *\ v;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00171}00171\ sigma\_s\ =\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00172}00172\ \%<\ f\ =\ \(\backslash\)rho\ E\ +\ \(\backslash\)epsilon\ g}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00173}00173\ f\ =\ (sin(z)\ -\/\ epsilon\ *\ y\ .*\ cos(z)\ ./\ sigma\_s)\ .*\ E;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00174}00174\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00176}00176\ function\ h\ =\ fExact(E,\ omega,\ lambda,\ epsilon)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00177}00177\ h\ =\ @(x,\ v,\ t)\ fExactImpl(x,\ v,\ t,\ E,\ omega,\ lambda,\ epsilon);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00178}00178\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00180}00180\ function\ f\ =\ fExactImpl(x,\ v,\ t,\ E,\ omega,\ lambda,\ epsilon)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00181}00181\ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00182}00182\ \textcolor{stringliteral}{y\ =\ omega(:).'}\ *\ v;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00183}00183\ sigma\_s\ =\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00184}00184\ \%<\ f\ =\ \(\backslash\)rho\ E\ +\ \(\backslash\)epsilon\ g}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00185}00185\ f\ =\ exp(-\/lambda*t)\ *\ (sin(z)\ -\/\ epsilon\ *\ y\ .*\ cos(z)\ ./\ sigma\_s)\ .*\ E;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00186}00186\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00188}00188\ function\ h\ =\ scattering()}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00189}00189\ h\ =\ @(x)\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00190}00190\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00192}00192\ function\ C\ =\ scatteringImpl(x)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00193}00193\ C\ =\ ones(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00194}00194\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00196}00196\ function\ h\ =\ absorption()}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00197}00197\ h\ =\ @(x)\ absorptionImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00198}00198\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00200}00200\ function\ C\ =\ absorptionImpl(x)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00201}00201\ C\ =\ ones(1,\ size(x,\ 2));}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00202}00202\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00204}00204\ function\ h\ =\ source(E,\ omega,\ lambda,\ epsilon,\ alpha,\ beta,\ gamma)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00205}00205\ h\ =\ @(x,\ v,\ t)\ sourceImpl(x,\ v,\ t,\ E,\ omega,\ lambda,\ epsilon,\ alpha,\ beta,\ gamma);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00206}00206\ end}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00208}00208\ function\ Q\ =\ sourceImpl(x,\ v,\ t,\ E,\ omega,\ lambda,\ epsilon,\ alpha,\ beta,\ gamma)}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00209}00209\ z\ =\ omega(:).'\ *\ x;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00210}00210\ y\ =\ omega(:).'\ *\ v;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00211}00211\ sigma\_s\ =\ scatteringImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00212}00212\ sigma\_a\ =\ absorptionImpl(x);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00213}00213\ alpha\ =\ epsilon\string^alpha;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00214}00214\ beta\ =\ epsilon\string^beta;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00215}00215\ gamma\ =\ epsilon\string^gamma;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00217}00217\ \%<\ \(\backslash\)partial\_t\ f\ /\ E}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00218}00218\ T1\ =\ -\/lambda\ *\ exp(-\/lambda*t)\ *\ (sin(z)\ -\/\ epsilon\ *\ y\ .*\ cos(z)\ ./\ sigma\_s);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00219}00219\ \%<\ v\(\backslash\)cdot\(\backslash\)nabla\_x\ f\ /\ E}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00220}00220\ T2\ =\ exp(-\/lambda*t)\ *\ y\ .*\ (cos(z)\ +\ epsilon\ *\ y\ .*\ sin(z)\ ./\ sigma\_s);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00221}00221\ \%<\ sigma\_s\ *\ g\ /\ E}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00222}00222\ T3\ =\ -\/exp(-\/lambda*t)\ *\ y\ .*\ cos(z);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00223}00223\ \%<\ sigma\_a\ *\ f\ /\ E}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00224}00224\ T4\ =\ exp(-\/lambda*t)\ *\ sigma\_a\ .*\ (sin(z)\ -\/\ epsilon\ *\ y\ .*\ cos(z)\ ./\ sigma\_s);}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00226}00226\ \%<\ Q\ =\ q*E}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00227}00227\ Q\ =\ (alpha\ *\ T1\ +\ T2\ +\ beta\ *\ epsilon\ *\ T3\ +\ gamma\ *\ T4)\ ./\ (gamma\ *\ sigma\_a)\ *\ E;}
+\DoxyCodeLine{\Hypertarget{ex02__diffusive__scaling_8m_source_l00228}00228\ end}
+
+\end{DoxyCode}

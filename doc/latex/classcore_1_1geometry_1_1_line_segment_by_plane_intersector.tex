@@ -1,0 +1,100 @@
+\doxysection{core\+::geometry\+::Line\+Segment\+By\+Plane\+Intersector Class Reference}
+\hypertarget{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{}\label{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}\index{core::geometry::LineSegmentByPlaneIntersector@{core::geometry::LineSegmentByPlaneIntersector}}
+
+
+Computes intersections between line segments and planes.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{Line\+Segment\+By\+Plane\+Intersector}} (Input\+Type n\+Dims)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{Line\+Segment\+By\+Plane\+Intersector}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a2759b83721631d7a299ec7e7da841cf5}{intersect}} (Input\+Type obj, Input\+Type X1, Input\+Type X2, Input\+Type a, Input\+Type b, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Computes intersection between line segments and planes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a18e064bc2f6e005fa16f0b388c10e339}{Geometry}} (Input\+Type n\+Dims)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1geometry_1_1_geometry}{Geometry}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065}{magnitude}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Returns the measure (size) of the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c}{is\+Inside}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are inside the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11}{is\+On\+Boundary}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are on the boundary of the geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a2a54c675c734652ee442cc65a6d3cbe8}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Computes intersections between line segments and planes. 
+
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{Line\+Segment\+By\+Plane\+Intersector} computes intersection points between line segments and planes in n-\/dimensional space (n \texorpdfstring{$>$}{>}= 2). Line segments are defined by their endpoints, and planes are defined by normal vectors and offset constants.
+
+The line segment is parameterized as\+:
+
+\[L(t) = X1 + t*(X2 - X1),  t \in [0,1]
+\]
+
+The plane is defined by the equation\+:
+
+\[a^T * x + b = 0,
+\]
+
+where $a$ is the normal vector to the plane and $b$ is the offset constant. The method handles parallel and coincident cases appropriately. If a line segment lies entirely on a plane, all points are considered intersection points.
+
+\begin{DoxySeeAlso}{See also}
+core.\+geometry.\+Intersector 
+
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{core.\+geometry.\+Line\+Segment\+By\+Line\+Segment\+Intersector} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_line_segment_by_plane_intersector_8m_source_l00033}{33}} of file \mbox{\hyperlink{_line_segment_by_plane_intersector_8m_source}{Line\+Segment\+By\+Plane\+Intersector.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}\index{core::geometry::LineSegmentByPlaneIntersector@{core::geometry::LineSegmentByPlaneIntersector}!LineSegmentByPlaneIntersector@{LineSegmentByPlaneIntersector}}
+\index{LineSegmentByPlaneIntersector@{LineSegmentByPlaneIntersector}!core::geometry::LineSegmentByPlaneIntersector@{core::geometry::LineSegmentByPlaneIntersector}}
+\doxysubsubsection{\texorpdfstring{LineSegmentByPlaneIntersector()}{LineSegmentByPlaneIntersector()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Plane\+Intersector\+::\+Line\+Segment\+By\+Plane\+Intersector (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{Line\+Segment\+By\+Plane\+Intersector}. 
+
+obj = Line\+Segment\+By\+Plane\+Intersector(n\+Dims) creates an intersector for computing line segment-\/plane intersections in {\itshape n\+Dims-\/dimensional} space. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a2759b83721631d7a299ec7e7da841cf5}\index{core::geometry::LineSegmentByPlaneIntersector@{core::geometry::LineSegmentByPlaneIntersector}!intersect@{intersect}}
+\index{intersect@{intersect}!core::geometry::LineSegmentByPlaneIntersector@{core::geometry::LineSegmentByPlaneIntersector}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a2759b83721631d7a299ec7e7da841cf5} 
+function core\+::geometry\+::\+Line\+Segment\+By\+Plane\+Intersector\+::intersect (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X1}{, }\item[{Input\+Type}]{X2}{, }\item[{Input\+Type}]{a}{, }\item[{Input\+Type}]{b}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Computes intersection between line segments and planes. 
+
+\mbox{[}X, TF\mbox{]} = intersect(obj, X1, X2, a, b) computes the intersection between line segments defined by endpoints {\itshape X1} -\/ {\itshape X2} and planes defined by normal vectors {\itshape a} and offsets {\itshape b}.
+
+\mbox{[}X, TF\mbox{]} = intersect(obj, X1, X2, a, b, tol=tol) uses the specified numerical tolerance {\itshape tol}. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+geometry/\mbox{\hyperlink{_line_segment_by_plane_intersector_8m}{Line\+Segment\+By\+Plane\+Intersector.\+m}}\end{DoxyCompactItemize}

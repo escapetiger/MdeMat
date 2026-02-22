@@ -1,0 +1,38 @@
+\doxysection{periodic\+Trapezoidal.\+m}
+\hypertarget{periodic_trapezoidal_8m_source}{}\label{periodic_trapezoidal_8m_source}\index{+core/+geometry/private/periodicTrapezoidal.m@{+core/+geometry/private/periodicTrapezoidal.m}}
+\mbox{\hyperlink{periodic_trapezoidal_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00001}00001\ function\ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ac9425cdbb3e9a6430f996402d3751a6a}{periodicTrapezoidal}}(np,\ options)}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00002}00002\ \%\ PERIODICTRAPEZOIDAL\ Generate\ 1D\ periodic\ trapezoidal\ nodes\ and\ weights.}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00004}00004\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ac9425cdbb3e9a6430f996402d3751a6a}{periodicTrapezoidal}}(n)\ generates\ n\ equally\ spaced\ nodes}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00005}00005\ \%\ \ \ and\ uniform\ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [0,\ 1],\ excluding}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00006}00006\ \%\ \ \ the\ right\ endpoint.}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00007}00007\ \%}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00008}00008\ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_ac9425cdbb3e9a6430f996402d3751a6a}{periodicTrapezoidal}}(n,\ lower=lower,\ upper=upper)\ generates}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00009}00009\ \%\ \ \ nodes\ and\ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [lower,\ upper).}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00011}00011\ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ np\ (1,1)\ \{mustBePositive,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ options.lower\ (1,1)\ \{mustBeReal\}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ options.upper\ (1,1)\ \{mustBeReal\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00015}\mbox{\hyperlink{namespacecore_1_1geometry_ac9425cdbb3e9a6430f996402d3751a6a}{00015}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00017}00017\ \ \ \ \ a\ =\ options.lower;}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00018}00018\ \ \ \ \ b\ =\ options.upper;}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(a\ <=\ b,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'a\ <=\ b\ is\ required.'});}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{if}\ a\ ==\ b}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ [x,\ w]\ =\ deal(a,\ 1);}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00028}00028\ \ \ \ \ x\ =\ linspace(0,\ 1-\/1/np,\ np);}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00029}00029\ \ \ \ \ w\ =\ ones(1,\ np)\ /\ np;}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00030}00030\ \ \ \ \ x\ =\ a\ +\ (b\ -\/\ a)\ *\ x;}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00031}00031\ \ \ \ \ w\ =\ w\ *\ (b\ -\/\ a);}
+\DoxyCodeLine{\Hypertarget{periodic_trapezoidal_8m_source_l00032}00032\ end}
+
+\end{DoxyCode}

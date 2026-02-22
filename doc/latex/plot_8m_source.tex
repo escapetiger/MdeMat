@@ -1,0 +1,80 @@
+\doxysection{plot.\+m}
+\hypertarget{plot_8m_source}{}\label{plot_8m_source}\index{+physics/+radiation/+scripts/ex03/plot.m@{+physics/+radiation/+scripts/ex03/plot.m}}
+\mbox{\hyperlink{plot_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00001}00001\ clc;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00002}00002\ clear;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00004}00004\ M\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00005}00005\ N\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00006}00006\ EXPERIMENT\_ID\ =\ \textcolor{stringliteral}{'DSID1R2'};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00007}00007\ XDISC\_ID\ =\ \textcolor{stringliteral}{'UWLDG'};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00008}00008\ DATA\_DIR\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})));}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00009}00009\ DEFAULT\_MARKERS\ =\ \{\textcolor{charliteral}{'o'},\ \textcolor{charliteral}{'s'},\ \textcolor{charliteral}{'\string^'},\ \textcolor{charliteral}{'v'},\ \textcolor{charliteral}{'d'},\ \textcolor{charliteral}{'x'},\ \textcolor{charliteral}{'+'}\};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00010}00010\ DEFAULT\_COLORS\ =\ \{\textcolor{stringliteral}{'\#000000'},\ \textcolor{stringliteral}{'\#004488'},\ \textcolor{stringliteral}{'\#BB5566'},\ \textcolor{stringliteral}{'\#DDAA33'}\};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00012}00012\ dataset\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00013}00013\ style\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00015}00015\ file\ =\ sprintf(\textcolor{stringliteral}{'\%s-\/REF.mat'},\ EXPERIMENT\_ID);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00016}00016\ path\ =\ fullfile(DATA\_DIR,\ file);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00017}00017\ \textcolor{keywordflow}{if}\ exist(path,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00018}00018\ \ \ \ \ data\ =\ load(path).REF;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00019}00019\ \ \ \ \ dataset.REF\ =\ data;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00020}00020\ \ \ \ \ style.REF\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1\},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineWidth'},\ 1,\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00028}00028\ P\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00029}00029\ \ \ \ \ \textcolor{stringliteral}{'BE'},\ 1,\ M,\ N;\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00030}00030\ \ \ \ \ \textcolor{stringliteral}{'SDIRK2'},\ 2,\ M,\ N;\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00031}00031\ \ \ \ \ \textcolor{stringliteral}{'SDIRK3'},\ 3,\ M,\ N;\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00032}00032\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00033}00033\ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00034}00034\ \textcolor{keywordflow}{for}\ i\ =\ 1:size(P,\ 1)}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00035}00035\ \ \ \ \ schemeId\ =\ sprintf('\%s-\/\%s\%d-\/P\%dS\%d',\ P\{i,\ 1\},\ XDISC\_ID,\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ P\{i,\ 2\},\ P\{i,\ 3\},\ P\{i,\ 4\});}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00037}00037\ \ \ \ \ schemeName\ =\ sprintf(\textcolor{stringliteral}{'\%s\%d'},\ XDISC\_ID,\ P\{i,\ 2\});}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00038}00038\ \ \ \ \ file\ =\ sprintf(\textcolor{stringliteral}{'\%s.mat'},\ strjoin(\{EXPERIMENT\_ID,\ schemeId\},\ \textcolor{charliteral}{'-\/'}));}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00039}00039\ \ \ \ \ path\ =\ fullfile(DATA\_DIR,\ file);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{if}\ exist(path,\ \textcolor{stringliteral}{'file'})}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ n\ =\ n\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ data\ =\ load(path).DG;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ dataset.(schemeName)\ =\ data;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ style.(schemeName)\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ DEFAULT\_COLORS\{1+n\},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Marker'},\ DEFAULT\_MARKERS\{n\},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'},\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineWidth'},\ 1,\ ...}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00051}00051\ end}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00054}00054\ figure(1);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00056}00056\ subdata\ =\ prepareData(dataset,\ \textcolor{stringliteral}{'U1'},\ 1);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00059}00059\ \%\ scheme.visualizer.reset();}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00060}00060\ \%\ scheme.visualizer.render([],\ dataset,\ style,\ []);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00061}00061\ \%\ ax\ =\ gca;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00062}00062\ \%\ set(ax,\ \textcolor{stringliteral}{'box'},\ \textcolor{stringliteral}{'off'});}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00063}00063\ \%\ ax.XAxis.TickValues\ =\ 0:0.1:1;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00064}00064\ \%\ ax.XAxis.MinorTick\ =\ \textcolor{stringliteral}{'on'};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00065}00065\ \%\ ax.XAxis.MinorTickValues\ =\ 0:0.02:1;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00066}00066\ \%\ ax.YAxis.TickValues\ =\ -\/0.2:0.2:1.4;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00067}00067\ \%\ ax.YAxis.MinorTick\ =\ \textcolor{stringliteral}{'on'};}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00068}00068\ \%\ ax.YAxis.MinorTickValues\ =\ -\/0.2:0.04:1.4;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00069}00069\ \%\ xlim([0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00070}00070\ \%\ ylim([-\/0.2,\ 1.4]);}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00071}00071\ \%\ xl\ =\ xlabel(\textcolor{stringliteral}{"{}\$x\$"{}},\ \textcolor{stringliteral}{"{}Interpreter"{}},\ \textcolor{stringliteral}{"{}latex"{}});}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00072}00072\ \%\ yl\ =\ ylabel(\textcolor{stringliteral}{"{}\$\(\backslash\)rho\$"{}},\ \textcolor{stringliteral}{"{}Interpreter"{}},\ \textcolor{stringliteral}{"{}latex"{}});}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00073}00073\ \%\ xl.FontSize\ =\ 16;}
+\DoxyCodeLine{\Hypertarget{plot_8m_source_l00074}00074\ \%\ yl.FontSize\ =\ 16;}
+
+\end{DoxyCode}

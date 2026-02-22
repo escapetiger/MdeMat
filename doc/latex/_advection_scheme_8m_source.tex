@@ -1,0 +1,71 @@
+\doxysection{Advection\+Scheme.\+m}
+\hypertarget{_advection_scheme_8m_source}{}\label{_advection_scheme_8m_source}\index{+physics/+advection/AdvectionScheme.m@{+physics/+advection/AdvectionScheme.m}}
+\mbox{\hyperlink{_advection_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00001}00001\ classdef\ AdvectionScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1advection}{00002}}\ \ \ \ \ \%\ ADVECTIONSCHEME\ Base\ \textcolor{keyword}{class\ }for\ all\ schemes\ solving\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00003}00003\ \ \ \ \ \%\ equations.}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme}{AdvectionScheme}}\ implements\ a\ numerical\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ \textcolor{keywordflow}{for}\ solving\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ equations.\ This\ base\ \textcolor{keyword}{class\ }defines\ the\ basic\ validation\ and\ parse}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ logic\ of\ configuration\ \textcolor{keyword}{struct}.}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00009}00009\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00012}00012\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ function\ obj\ =\ setup(obj)}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00014}\mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme}{00014}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETUP\ Setup\ default\ configuration\ options\ for\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ schemes.}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ \mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme_a875efc0466bf791fdf47f356ff11f530}{setup}}}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme_a875efc0466bf791fdf47f356ff11f530}{setup}}@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.MolScheme(obj);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}-\/specific\ required\ configuration\ options}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isvector(x)\ \&\&\ isnumeric(x));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00023}\mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme_a875efc0466bf791fdf47f356ff11f530}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('cfl',\ default=0.5,\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isscalar(x)\ \&\&\ x\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ic',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ 'function\_handle'));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('bc',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ true);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('eId',\ default='Advection',\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ (ischar(x)\ ||\ isstring(x)));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('errorTypes',\ default=\{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'max'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ iscell(x)\ \&\&\ all(cellfun(@(y)\ ischar(y)\ ||\ isstring(y),\ x)));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig(\textcolor{stringliteral}{'exact'},\ \textcolor{keywordflow}{default}=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ \textcolor{stringliteral}{'function\_handle'})\ ||\ isempty(x));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig(\textcolor{stringliteral}{'components'},\ \textcolor{keywordflow}{default}=\textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isstruct(x)\ \&\&\ all(structfun(@(y)\ isempty(y)\ ||\ isnumeric(y)\ \&\&\ isscalar(y)\ \&\&\ (y\ >\ 0),\ x)));}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ end\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ function\ obj\ =\ configure(obj)}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONFIGURE\ Generate\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}-\/specific\ configuration}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ dependencies.}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ configure}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ configure@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}(obj);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ boundary\ condition\ type}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(obj.Config.bc)}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setConfig('bcType',\ 'periodic');}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setConfig('bcType',\ 'dirichlet');}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00051}\mbox{\hyperlink{classphysics_1_1advection_1_1_advection_scheme_a7d00fa0552290cf43d76dbae37dc60cf}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ visualization\ options}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.visualizer;}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.setComponents(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.components);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.addExact(\textcolor{charliteral}{'U'},\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.exact);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ \mbox{\hyperlink{namespacephysics_1_1analysis}{analysis}}\ options}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.analyzer;}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.setComponents(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.components);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.setReductions(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.errorTypes);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.addExact(\textcolor{charliteral}{'U'},\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.exact);}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00064}00064\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_advection_scheme_8m_source_l00065}00065\ end}
+
+\end{DoxyCode}

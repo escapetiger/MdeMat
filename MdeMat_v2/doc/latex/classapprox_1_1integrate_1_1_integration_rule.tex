@@ -1,0 +1,110 @@
+\doxysection{approx\+::integrate\+::Integration\+Rule Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_integration_rule}{}\label{classapprox_1_1integrate_1_1_integration_rule}\index{approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}}
+
+
+Base class for all integration rules.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1integrate_1_1_lebedev_rule}{approx\+::integrate\+::\+Lebedev\+Rule}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule}{approx\+::integrate\+::\+Monte\+Carlo\+Rule}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{approx\+::integrate\+::\+Separable\+Rule}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_spherical_gauss_trapezoidal_rule}{approx\+::integrate\+::\+Spherical\+Gauss\+Trapezoidal\+Rule}}, and \mbox{\hyperlink{classapprox_1_1integrate_1_1_univariate_rule}{approx\+::integrate\+::\+Univariate\+Rule}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}{Integration\+Rule}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule}. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_aad28d513863d1d63dd62769f1d848490}{generate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Generate integration nodes and weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions for the integration domain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all integration rules. 
+
+\doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule} provides a common interface for all numerical integration methods. This abstract class defines the basic structure and required methods that must be implemented by concrete integration rule subclasses.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_univariate_rule}{approx.\+integrate.\+Univariate\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{approx.\+integrate.\+Gauss\+Legendre\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_closed_newton_cotes_rule}{approx.\+integrate.\+Closed\+Newton\+Cotes\+Rule} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_integration_rule_8m_source_l00017}{17}} of file \mbox{\hyperlink{_integration_rule_8m_source}{Integration\+Rule.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}\index{approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}!IntegrationRule@{IntegrationRule}}
+\index{IntegrationRule@{IntegrationRule}!approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}}
+\doxysubsubsection{\texorpdfstring{IntegrationRule()}{IntegrationRule()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b} 
+function approx\+::integrate\+::\+Integration\+Rule\+::\+Integration\+Rule (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule}. 
+
+obj = Integration\+Rule(n\+Dims) creates a new \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule} object with the specified number of dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of dimensions (positive integer) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_aad28d513863d1d63dd62769f1d848490}\index{approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}!generate@{generate}}
+\index{generate@{generate}!approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}}
+\doxysubsubsection{\texorpdfstring{generate()}{generate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_rule_aad28d513863d1d63dd62769f1d848490} 
+virtual function approx\+::integrate\+::\+Integration\+Rule\+::generate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Generate integration nodes and weights. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_acf548b1a81e05fe9331c1b37e210f59c}{approx\+::integrate\+::\+Separable\+Rule}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}\index{approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::integrate::IntegrationRule@{approx::integrate::IntegrationRule}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f} 
+Property approx\+::integrate\+::\+Integration\+Rule\+::n\+Dims}
+
+
+
+Number of dimensions for the integration domain. 
+
+
+
+Definition at line \mbox{\hyperlink{_integration_rule_8m_source_l00021}{21}} of file \mbox{\hyperlink{_integration_rule_8m_source}{Integration\+Rule.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_integration_rule_8m}{Integration\+Rule.\+m}}\end{DoxyCompactItemize}

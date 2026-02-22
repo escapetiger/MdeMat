@@ -1,0 +1,193 @@
+\doxysection{core\+::function\+::Differentiable\+Compiled\+Function Class Reference}
+\hypertarget{classcore_1_1function_1_1_differentiable_compiled_function}{}\label{classcore_1_1function_1_1_differentiable_compiled_function}\index{core::function::DifferentiableCompiledFunction@{core::function::DifferentiableCompiledFunction}}
+
+
+Base class for compiled differentiable functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{core\+::function\+::\+Compiled\+Function}}, and \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{core\+::function\+::\+Differentiable\+Function}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{approx\+::basis\+::\+Interpolation\+Basis\+Function}}, and \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{approx\+::basis\+::\+Orthogonal\+Basis\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_compiled_function_acd13edad8d87175ea633e59e1214a770}{Differentiable\+Compiled\+Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{core\+::function\+::\+Compiled\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e}{Compiled\+Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a1a47215bf176a7a73461bab8634d7923}{load}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Load compiled metadata from specified file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{auto\+Load}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em function dimensions based on metadata \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a9e7bbafc6479b251de4f9868931534f4}{Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract \doxylink{classcore_1_1function_1_1_function}{Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab6aaaf6376df339142ae246211b0a391}{evaluate}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{core\+::function\+::\+Differentiable\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_aa2e3281fa9e863f09ea088fec05f3ed9}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_compiled_function_ac4fd00a6c86dddcc1393c589f26f1b78}{derivative\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{core\+::function\+::\+Compiled\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a283eb1095a9314b5bfc1fdc00bb6b274}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aa69c5ebaa25b5540098c1c6534f81b41}{get\+Full\+Path}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Construct full file path from filename. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a7671bc7c20cb0aebc95d958fdac60a38}{auto\+Filename}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Abstract method to generate appropriate metadata filename. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{core\+::function\+::\+Differentiable\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a44eaf9f4446f62e3849901b98dac6e4c}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implement the actual function evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{core\+::function\+::\+Compiled\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665}{metadata}}
+\begin{DoxyCompactList}\small\item\em Loaded metadata structure containing function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a3e96d75334f388a652eec3455790dbd8}{has\+Metadata}}
+\begin{DoxyCompactList}\small\item\em True if metadata is loaded and available. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a2dd1265e1ff3ccaf369b2342a2a1eede}{metasource}}
+\begin{DoxyCompactList}\small\item\em Cell array of available metadata filenames. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a0cf6eefccda4a1dab1b5562f1fa0663d}{parameters}} = struct()
+\begin{DoxyCompactList}\small\item\em Parameter registry. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_aa2558ddec64294f183c1d0c0adaa3893}{is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both input and output dimensions are positive. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a50b67a234eba67fc06ec18e9ed411e14}{has\+Parameters}}
+\begin{DoxyCompactList}\small\item\em True if the function has registered parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{core\+::function\+::\+Compiled\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_afc38ffab641909763d78a512ca1a2316}{METADATA\+\_\+\+DIR}} = \textquotesingle{}config/functions\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Directory containing metadata files. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a954241a60ae13de0ee06df84a25440a8}{FILE\+\_\+\+EXTENSION}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em File extension for metadata files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for compiled differentiable functions. 
+
+\doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} combines the capabilities of \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} and \doxylink{classcore_1_1function_1_1_differentiable_function}{Differentiable\+Function} to provide automatic metadata loading and efficient derivative evaluation using precompiled function handles.
+
+The class automatically discovers and loads compiled metadata from the configuration directory, providing both function evaluation and derivative computation capabilities with optimal performance.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ and\ use\ differentiable\ compiled\ function}
+\DoxyCodeLine{func\ =\ MyDifferentiableCompiledFunction();}
+\DoxyCodeLine{func\ =\ func.autoLoad();}
+\DoxyCodeLine{\%\ Evaluate\ function\ and\ its\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}}
+\DoxyCodeLine{x\ =\ linspace(0,\ 1,\ 100);}
+\DoxyCodeLine{y\ =\ func.evaluate(x);}
+\DoxyCodeLine{dy\ =\ func.derivative(x,\ 1);\ \ \%\ First\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1function_1_1_compiled_function}{core.\+function.\+Compiled\+Function} 
+
+\doxylink{classcore_1_1function_1_1_differentiable_function}{core.\+function.\+Differentiable\+Function} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_differentiable_compiled_function_8m_source_l00030}{30}} of file \mbox{\hyperlink{_differentiable_compiled_function_8m_source}{Differentiable\+Compiled\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1function_1_1_differentiable_compiled_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1function_1_1_differentiable_compiled_function_acd13edad8d87175ea633e59e1214a770}\index{core::function::DifferentiableCompiledFunction@{core::function::DifferentiableCompiledFunction}!DifferentiableCompiledFunction@{DifferentiableCompiledFunction}}
+\index{DifferentiableCompiledFunction@{DifferentiableCompiledFunction}!core::function::DifferentiableCompiledFunction@{core::function::DifferentiableCompiledFunction}}
+\doxysubsubsection{\texorpdfstring{DifferentiableCompiledFunction()}{DifferentiableCompiledFunction()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_differentiable_compiled_function_acd13edad8d87175ea633e59e1214a770} 
+function core\+::function\+::\+Differentiable\+Compiled\+Function\+::\+Differentiable\+Compiled\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{, }\item[{Input\+Type}]{n\+Codims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} class. 
+
+obj = \doxylink{classcore_1_1function_1_1_differentiable_compiled_function_acd13edad8d87175ea633e59e1214a770}{Differentiable\+Compiled\+Function()} creates a \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} with default dimensions (both n\+Dims and n\+Codims are 0).
+
+obj = Differentiable\+Compiled\+Function(n\+Dims) creates a \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} with specified input dimension and default output dimension (0).
+
+obj = Differentiable\+Compiled\+Function(n\+Dims, n\+Codims) creates a \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} with specified input and output dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of input dimensions (optional, default\+:0) \\
+\hline
+{\em n\+Codims} & -\/ Number of output dimensions (optional, default\+: 0) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_differentiable_compiled_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_differentiable_compiled_function_ac4fd00a6c86dddcc1393c589f26f1b78}\index{core::function::DifferentiableCompiledFunction@{core::function::DifferentiableCompiledFunction}!derivativeImpl@{derivativeImpl}}
+\index{derivativeImpl@{derivativeImpl}!core::function::DifferentiableCompiledFunction@{core::function::DifferentiableCompiledFunction}}
+\doxysubsubsection{\texorpdfstring{derivativeImpl()}{derivativeImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_differentiable_compiled_function_ac4fd00a6c86dddcc1393c589f26f1b78} 
+function core\+::function\+::\+Differentiable\+Compiled\+Function\+::derivative\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{r}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implementation of function derivative evaluation. 
+
+dY = derivative\+Impl(obj, X, r) computes derivatives of the compiled function at the specified points using precompiled derivative handles from the loaded metadata.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_differentiable_compiled_function}{Differentiable\+Compiled\+Function} object \\
+\hline
+{\em X} & -\/ Coordinates (n\+Dims x n\+Points) \\
+\hline
+{\em r} & -\/ Derivative order vector (1 x n\+Dims)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em dY} & -\/ Derivative values (n\+Codims x n\+Points) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a9ec44d60e583a774641604a5941b0afc}{core\+::function\+::\+Differentiable\+Function}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_differentiable_compiled_function_8m}{Differentiable\+Compiled\+Function.\+m}}\end{DoxyCompactItemize}

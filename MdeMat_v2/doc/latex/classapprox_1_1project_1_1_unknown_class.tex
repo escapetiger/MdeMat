@@ -1,0 +1,216 @@
+\doxysection{approx\+::project\+::Unknown\+Class Class Reference}
+\hypertarget{classapprox_1_1project_1_1_unknown_class}{}\label{classapprox_1_1project_1_1_unknown_class}\index{approx::project::UnknownClass@{approx::project::UnknownClass}}
+
+
+Base class for all Galerkin-\/type projectors.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a4e0490eceddd4a78ad9f1c7a96a06c03}{Galerkin\+Projector}} (Input\+Type \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_ad46d098b68031cca8278bf52f100abb9}{basis}})
+\begin{DoxyCompactList}\small\item\em Constructor for Galerkin projector. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a57a2849ac9bc3baace370239154b5b7e}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the space at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_ae134822b7c8da69a3dd2cd5bb11cb8d0}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data onto the function space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a177aeaeddd5790b94b5f7fe4cc64b549}{is\+Well\+Posed}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Check if the Galerkin system is well-\/posed. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a75defc91914629f512f12ba2f7b9f355}{is\+Overdetermined}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Check if the Galerkin system is. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a9b4358604463cdb10127a3b27301db51}{is\+Underdetermined}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Check if the Galerkin system is. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_ab549ecea0c363cdd95cac3d3e5dbd7c1}{set\+Mass}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set up the mass operator for the Galerkin method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a119ea1323883d2eaf1526e64d2c7b1ec}{embed}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_ad46d098b68031cca8278bf52f100abb9}{basis}}
+\begin{DoxyCompactList}\small\item\em Basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a858a9fa1666af16f4077beb87212c03a}{mass}}
+\begin{DoxyCompactList}\small\item\em Mass operator matrix. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_unknown_class_a0b47be8c9778810fb7454b95b351b0af}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all Galerkin-\/type projectors. 
+
+Provides the foundation for Galerkin approximation methods where functions are projected onto finite-\/dimensional spaces using mass operators to solve linear systems. 
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00012}{12}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a119ea1323883d2eaf1526e64d2c7b1ec}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!embed@{embed}}
+\index{embed@{embed}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{embed()}{embed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a119ea1323883d2eaf1526e64d2c7b1ec} 
+virtual function approx\+::project\+::\+Unknown\+Class\+::embed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Embed data into the latent space. 
+
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a57a2849ac9bc3baace370239154b5b7e}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a57a2849ac9bc3baace370239154b5b7e} 
+function approx\+::project\+::\+Unknown\+Class\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate functions in the space at given points. 
+
+Syntax\+: Y = evaluate(obj, Z) Y = evaluate(obj, X, C) 
+\begin{DoxyParams}{Parameters}
+{\em Z} & -\/ (n+m,p) Matrix representing \mbox{[}X, C\mbox{]} \\
+\hline
+{\em X} & -\/ (n,p) Matrix representing evaluation points \\
+\hline
+{\em C} & -\/ (m,q) Matrix representing coefficients \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Outputs. \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a4e0490eceddd4a78ad9f1c7a96a06c03}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!GalerkinProjector@{GalerkinProjector}}
+\index{GalerkinProjector@{GalerkinProjector}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{GalerkinProjector()}{GalerkinProjector()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a4e0490eceddd4a78ad9f1c7a96a06c03} 
+function approx\+::project\+::\+Unknown\+Class\+::\+Galerkin\+Projector (\begin{DoxyParamCaption}\item[{Input\+Type}]{basis}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for Galerkin projector. 
+
+Syntax\+: obj = Galerkin\+Projector(basis) 
+\begin{DoxyParams}{Parameters}
+{\em basis} & -\/ Basis functions that span the space \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a75defc91914629f512f12ba2f7b9f355}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!isOverdetermined@{isOverdetermined}}
+\index{isOverdetermined@{isOverdetermined}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{isOverdetermined()}{isOverdetermined()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a75defc91914629f512f12ba2f7b9f355} 
+function approx\+::project\+::\+Unknown\+Class\+::is\+Overdetermined (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Check if the Galerkin system is. 
+
+overdetermined.
+
+A system is overdetermined if there are more rows than columns. \Hypertarget{classapprox_1_1project_1_1_unknown_class_a9b4358604463cdb10127a3b27301db51}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!isUnderdetermined@{isUnderdetermined}}
+\index{isUnderdetermined@{isUnderdetermined}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{isUnderdetermined()}{isUnderdetermined()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a9b4358604463cdb10127a3b27301db51} 
+function approx\+::project\+::\+Unknown\+Class\+::is\+Underdetermined (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Check if the Galerkin system is. 
+
+underdetermined.
+
+A system is underdetermined if there are fewer rows than columns. \Hypertarget{classapprox_1_1project_1_1_unknown_class_a177aeaeddd5790b94b5f7fe4cc64b549}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!isWellPosed@{isWellPosed}}
+\index{isWellPosed@{isWellPosed}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{isWellPosed()}{isWellPosed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a177aeaeddd5790b94b5f7fe4cc64b549} 
+function approx\+::project\+::\+Unknown\+Class\+::is\+Well\+Posed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Check if the Galerkin system is well-\/posed. 
+
+A system is well-\/posed if the mass matrix is square. \Hypertarget{classapprox_1_1project_1_1_unknown_class_ae134822b7c8da69a3dd2cd5bb11cb8d0}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!project@{project}}
+\index{project@{project}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{project()}{project()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_ae134822b7c8da69a3dd2cd5bb11cb8d0} 
+function approx\+::project\+::\+Unknown\+Class\+::project (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{F}{}\end{DoxyParamCaption})}
+
+
+
+Project data onto the function space. 
+
+Projects data from the latent space onto the function space by solving the Galerkin system.
+
+Syntax\+: U = \doxylink{namespaceapprox_1_1project}{project(obj, F)} 
+\begin{DoxyParams}{Parameters}
+{\em F} & -\/ Data in the latent space (m x ...) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em dofs} & -\/ Coefficients of the basis functions \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_ab549ecea0c363cdd95cac3d3e5dbd7c1}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!setMass@{setMass}}
+\index{setMass@{setMass}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{setMass()}{setMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_ab549ecea0c363cdd95cac3d3e5dbd7c1} 
+virtual function approx\+::project\+::\+Unknown\+Class\+::set\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set up the mass operator for the Galerkin method. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_ad46d098b68031cca8278bf52f100abb9}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!basis@{basis}}
+\index{basis@{basis}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{basis}{basis}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_ad46d098b68031cca8278bf52f100abb9} 
+Property approx\+::project\+::\+Unknown\+Class\+::basis}
+
+
+
+Basis functions. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00016}{16}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a858a9fa1666af16f4077beb87212c03a}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!mass@{mass}}
+\index{mass@{mass}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{mass}{mass}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a858a9fa1666af16f4077beb87212c03a} 
+Property approx\+::project\+::\+Unknown\+Class\+::mass}
+
+
+
+Mass operator matrix. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00019}{19}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_unknown_class_a0b47be8c9778810fb7454b95b351b0af}\index{approx::project::UnknownClass@{approx::project::UnknownClass}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!approx::project::UnknownClass@{approx::project::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_unknown_class_a0b47be8c9778810fb7454b95b351b0af} 
+Property approx\+::project\+::\+Unknown\+Class\+::n\+Dofs}
+
+
+
+Number of degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00025}{25}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+project/\mbox{\hyperlink{_galerkin_projector_8m}{Galerkin\+Projector.\+m}}\end{DoxyCompactItemize}

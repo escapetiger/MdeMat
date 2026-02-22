@@ -1,0 +1,318 @@
+\doxysection{Finite\+Element\+Discretization.\+m}
+\hypertarget{_finite_element_discretization_8m_source}{}\label{_finite_element_discretization_8m_source}\index{+approx/+discretization/FiniteElementDiscretization.m@{+approx/+discretization/FiniteElementDiscretization.m}}
+\mbox{\hyperlink{_finite_element_discretization_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00001}00001\ classdef\ FiniteElementDiscretization\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENTDISCRETIZATION\ Finite\ element\ spatial\ discretization.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ FiniteElementDiscretization\ contains\ all\ components\ needed\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ finite\ element\ methods:\ element,\ mesh,\ space,\ and\ \textcolor{keyword}{operator}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ It\ provides\ a\ complete\ framework\ \textcolor{keywordflow}{for}\ discontinuous\ Galerkin\ (DG)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ and\ continuous\ finite\ element\ methods\ on\ orthotopal\ meshes.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }manages\ the\ complete\ finite\ element\ discretization}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ including\ geometric\ mesh,\ function\ spaces,\ and\ differential}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ operators.\ It\ supports\ various\ basis\ function\ types\ (Legendre,}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ Lagrange)\ and\ integration\ schemes\ \textcolor{keywordflow}{for}\ high-\/order\ accurate}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ computations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00015}00015\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \%\ Create\ FE\ discretization\ with\ L2\ orthotope\ element}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ disc\ =\ FiniteElementDiscretization();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ disc.setL2OrthotopeElement(\textcolor{stringliteral}{'nDims'},\ 2,\ \textcolor{stringliteral}{'order'},\ 3,\ \textcolor{stringliteral}{'basisType'},\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ disc.setElementOperator();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ disc.setDerivativeOrder(1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Set\ up\ uniform\ mesh\ and\ function\ space}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ disc.setUniformGrid([10,\ 10],\ [0,\ 1;\ 0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ disc.setMeshSpace();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00025}00025\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \%\ Access\ gradient\ \textcolor{keyword}{operator}\ \textcolor{keywordflow}{for}\ stiffness\ matrix\ assembly}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ gradOp\ =\ disc.operator.gradient;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ volGradData\ =\ gradOp.volumeData;\ \ \ \%\ Volume\ gradient\ terms}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ fluxGradData\ =\ gradOp.fluxData;\ \ \ \ \%\ Boundary\ flux\ terms}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \%\ Mesh\ refinement}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ fineMesh\ =\ disc.refineMesh(2);\ \ \%\ Refine\ by\ factor\ of\ 2}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00034}00034\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ Components\ must\ be\ set\ in\ order:\ element,\ then\ \textcolor{keyword}{operator},\ then}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ derivative\ order.\ Mesh\ and\ space\ can\ be\ set\ independently\ but}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ both\ are\ needed\ \textcolor{keywordflow}{for}\ mesh-\/based\ computations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00038}00038\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00039}00039\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element}{L2Element}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator}{L2ElementOperator}},}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{UniformGrid}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{NonuniformGrid}},}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00044}00044\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ element\ \ \%\ Element\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ local\ computations}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization}{00046}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ \ \ \ \ \%\ Mesh\ \textcolor{keywordtype}{object}\ defining\ computational\ domain}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}\ \ \ \ \%\ Function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}\ \textcolor{keywordtype}{object}\ spanning\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ \%\ Element\ \textcolor{keyword}{operator}\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ differential\ operations}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00049}00049\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{00050}}\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00051}00051\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}()}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00053}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINITEELEMENTDISCRETIZATION\ Constructor\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00056}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}()\ creates\ an\ empty\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ \textcolor{keywordtype}{object}.\ Components\ must\ be\ set\ using}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ appropriate\ setter\ methods\ in\ the\ correct\ order.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00059}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a88e5cebd12b580f6ed4d4dd149e8285a}{setL2OrthotopeElement}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETL2ORTHOTOPEELEMENT\ Set\ L2\ orthotope\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ with\ specified}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ configuration.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00073}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a88e5cebd12b580f6ed4d4dd149e8285a}{setL2OrthotopeElement}}(obj,\ varargin)\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ discontinuous\ finite\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ on\ the\ unit\ orthotope\ with}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ polynomial\ order\ and\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ configuration.\ This}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ method\ encapsulates\ the\ complex\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ construction}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ process\ including\ geometry,\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions,\ integrators,}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ projectors\ for\ DG\ methods.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Name-\/value\ parameter\ pairs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'nDims'\ -\/\ Number\ of\ spatial\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'order'\ -\/\ Polynomial\ order\ (positive\ integer,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'basisType'\ -\/\ Basis\ function\ type\ (1,\ 2,\ or\ 3,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'basisPattern'\ -\/\ Basis\ ordering\ pattern\ (1\ or\ 2,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Basis\ types:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ 1:\ Legendre\ orthogonal\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ (modal)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ 2:\ Lagrange-\/Gauss-\/Legendre\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ (nodal)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ 3:\ Lagrange-\/Gauss-\/Lobatto\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ (nodal)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Basis\ patterns:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ 1:\ L\_infinity\ norm\ ordering\ (tensor\ product)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ 2:\ L\_1\ norm\ ordering\ (total\ degree)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ inputParser;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'nDims',\ [],\ @(x)\ x\ >=\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'order',\ 1,\ @(x)\ x\ >=\ 1);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'basisType',\ 1,\ @(x)\ ismember(x,\ 1:3));}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'basisPattern',\ 1,\ @(x)\ ismember(x,\ 1:2));}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ parse(p,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ p.Results.nDims;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00109}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a88e5cebd12b580f6ed4d4dd149e8285a}{00109}}\ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ p.Results.order;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ p.Results.basisType;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ p.Results.basisPattern;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ unit\ orthotope\ geometry}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(d);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ based\ on\ type}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ t}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'unit'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{InterpolationBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_legendre'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{InterpolationBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_lobatto'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ repmat(U,\ 1,\ d);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ separable\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ with\ specified\ pattern}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ s}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}(U,\ \textcolor{stringliteral}{'lx'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}(U,\ \textcolor{stringliteral}{'l1'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ B.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ volume\ integrator}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ t}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{1,\ 2\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q\ =\ \textcolor{stringliteral}{'gauss\_legendre'};}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q\ =\ \textcolor{stringliteral}{'gauss\_lobatto'};}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ VI\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{OrthotopeIntegrator}}(G.nDims,\ Q);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ VI.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{setPoints}}(B.nFactorCodims,\ G.lower,\ G.upper);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ face\ integrators\ \textcolor{keywordflow}{for}\ all\ boundaries}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ FI\ =\ arrayfun(@(i)\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_face_integrator}{OrthotopeFaceIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G.nDims,\ Q,\ i),\ 1:(2\ *\ G.nDims));}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:(2\ *\ G.nDims)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FI(i).setPoints(B.nFactorCodims,\ G.lower,\ G.upper);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ projector\ based\ on\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ type}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ t}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector}{ModalProjector}}(B);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector_a1202dfa82b8c4d73556f444cf4334a20}{setMass}}(VI.nodes,\ VI.weights);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{2,\ 3\}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(B);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector_a861fa7c1e8683d0805362323f94f8284}{setMass}}(VI.nodes);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ L2\ orthotope\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ obj.element\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element}{L2Element}}(G,\ P,\ VI,\ FI);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ function\ obj\ =\ setElementOperator(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETELEMENTOPERATOR\ Set\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \textcolor{keyword}{operator}\ \textcolor{keywordflow}{for}\ differential}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ computations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setElementOperator(obj)\ creates\ an\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ appropriate\ \textcolor{keywordflow}{for}\ the\ current\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ type.\ The\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ provides\ gradient\ and\ other\ differential\ operators\ in\ both}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ volume\ and\ flux\ (boundary)\ forms\ required\ \textcolor{keywordflow}{for}\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ methods.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ FiniteElementDiscretization\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ FiniteElementDiscretization\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.element),\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotPrepared'},\ \textcolor{stringliteral}{'Element\ must\ be\ set\ before\ operator.'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ \textcolor{keyword}{class}(obj.element)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'approx.element.C0Element'}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.operator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{C0ElementOperator}}(obj.element);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'approx.element.L2Element'}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.operator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_operator}{L2ElementOperator}}(obj.element);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00194}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ae69e8e9667b398c7147d3fbb9b059d22}{00194}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ac77379ba1f3bf8ed7688cddc02b6685b}{setDerivativeOrder}}(obj,\ order)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETDERIVATIVEORDER\ Set\ derivative\ order\ \textcolor{keywordflow}{for}\ all\ components.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ac77379ba1f3bf8ed7688cddc02b6685b}{setDerivativeOrder}}(obj,\ order)\ sets\ up\ function\ data}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ volume\ and\ flux\ integrals\ with\ the\ specified\ maximum}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivative\ order.\ This\ method\ initializes\ all\ necessary}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ data\ structures\ \textcolor{keywordflow}{for}\ computing\ bilinear\ forms\ involving}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivatives\ up\ to\ the\ specified\ order.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ order\ -\/\ Maximum\ derivative\ order\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.element)\ \&\&\ \string~isempty(obj.operator),\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotPrepared'},\ \textcolor{stringliteral}{'Element\ and\ operator\ must\ be\ set\ before\ setting\ derivative\ order.'});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ volume\ data}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ obj.element.setVolumeData(order);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ flux\ data\ \textcolor{keywordflow}{for}\ L2\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(obj.element,\ \textcolor{stringliteral}{'approx.element.L2Element'})}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}.setFluxData(max(0,\ order-\/1));}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00222}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ac77379ba1f3bf8ed7688cddc02b6685b}{00222}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ volume\ data}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}}.setVolumeData();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ flux\ data\ for\ L2\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isa(obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}},\ '\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}.L2ElementOperator')}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}}.setFluxData();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a419555e36244c0f9fe86768fcc08e0e3}{setUniformGrid}}(obj,\ n,\ bbox)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETUNIFORMGRID\ Set\ uniform\ grid\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a419555e36244c0f9fe86768fcc08e0e3}{setUniformGrid}}(obj,\ n,\ bbox)\ creates\ a\ uniform\ grid}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ with\ the\ specified\ resolution\ and\ bounding\ box.\ The}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ provides\ the\ computational\ domain\ for\ finite\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Grid\ resolution\ vector\ (positive\ integers)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bbox\ -\/\ Bounding\ box\ matrix\ [lower;\ upper]\ (2\ x\ nDims)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}.UniformGrid(n,\ bbox);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad4dd02288dea055b449413640ac8632d}{setNonuniformGrid}}(obj,\ x)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETNONUNIFORMGRID\ Set\ nonuniform\ grid\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad4dd02288dea055b449413640ac8632d}{setNonuniformGrid}}(obj,\ x)\ creates\ a\ nonuniform\ grid}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ with\ the\ specified\ coordinate\ vectors.\ This\ allows\ for}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ adaptive\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ refinement\ and\ custom\ domain\ discretizations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00259}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a419555e36244c0f9fe86768fcc08e0e3}{00259}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x\ -\/\ Cell\ array\ of\ coordinate\ vectors,\ one\ per\ dimension}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}.NonuniformGrid(x);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1a594186d2fade64b9d6d6e8b73dc6cd}{setMeshSpace}}(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETMESHSPACE\ Set\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}-\/based\ function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1a594186d2fade64b9d6d6e8b73dc6cd}{setMeshSpace}}(obj)\ creates\ a\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}-\/based\ function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ that\ spans\ the\ entire\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ domain.\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}\ provides\ the}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ global\ degrees\ of\ freedom\ for\ finite\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ computations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00277}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad4dd02288dea055b449413640ac8632d}{00277}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\string~isempty(obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}})\ \&\&\ \string~isempty(obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}),\ ...}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'NotPrepared',\ 'Element\ and\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ must\ be\ set\ before\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}.');}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a6353033e33444cb71dc8a04b1d5a8ce0}{space}}.MeshSpace(obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}},\ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ function\ newObj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a96ecf093b9c7009bb3cf3d8c0f128bfe}{refineMesh}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ REFINEMESH\ Create\ refined\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a96ecf093b9c7009bb3cf3d8c0f128bfe}{refineMesh}}(obj,\ varargin)\ creates\ a\ new\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ with\ refined\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ while\ preserving}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ and\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_ad71676159e55e2444102a00eb8676470}{operator}}\ configurations.\ This\ enables}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00294}\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1a594186d2fade64b9d6d6e8b73dc6cd}{00294}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h-\/refinement\ studies\ and\ adaptive\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ refinement.}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Refinement\ parameters:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ For\ uniform\ grid:\ k\ -\/\ Refinement\ factor\ per\ dimension}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ For\ nonuniform\ grid:\ k\ -\/\ Number\ of\ subdivisions\ per\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ -\/\ New\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}\ with\ refined\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a7fc2cc5ef4a2fc15768da7c38798dd97}{FiniteElementDiscretization}}();}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a1d71ce3d112e9688a7ef45f11fbd8f11}{element}};}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_finite_element_discretization_a2b6f0bf9bc25089bf0b1de59c3d1382c}{mesh}}.refine(varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.space\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}(obj.element,\ newObj.mesh);}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.operator\ =\ obj.operator;}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00311}00311\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_discretization_8m_source_l00312}00312\ end}
+
+\end{DoxyCode}

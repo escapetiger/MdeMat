@@ -1,0 +1,137 @@
+\doxysection{Finite\+Element.\+m}
+\hypertarget{_finite_element_8m_source}{}\label{_finite_element_8m_source}\index{+fem/+element/FiniteElement.m@{+fem/+element/FiniteElement.m}}
+\mbox{\hyperlink{_finite_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00001}00001\ classdef\ FiniteElement\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENT\ Abstract\ base\ \textcolor{keyword}{class\ }for\ finite\ element\ representations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ FiniteElement\ provides\ the\ foundation\ \textcolor{keywordflow}{for}\ finite\ element\ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ with\ domain\ geometry,\ function\ space,\ and\ integration\ capabilities.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ This\ abstract\ base\ \textcolor{keyword}{class\ }defines\ the\ common\ interface\ for\ all}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ finite\ element\ implementations\ in\ the\ finite\ element\ method}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ framework.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }encapsulates\ the\ essential\ components\ of\ a\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ element:\ the\ geometric\ domain\ and\ the\ function\ space\ projector.\ It}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ provides\ access\ to\ geometric\ properties\ and\ function\ evaluation}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ capabilities\ that\ are\ inherited\ by\ all\ concrete\ finite\ element}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ types.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ Finite\ elements\ discretize\ continuous\ function\ spaces\ by\ defining}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ basis\ functions\ over\ geometric\ domains\ and\ providing\ numerical}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ integration\ capabilities\ \textcolor{keywordflow}{for}\ computing\ integrals\ in\ weak}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ formulations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{C0FiniteElement}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{L2FiniteElement}},}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{Geometry}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.Projector}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00025}00025\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ geometry\ \%\ Geometry\ \textcolor{keywordtype}{object}\ defining\ the\ element\ domain}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ projector\ \%\ Function\ space\ projector\ \textcolor{keywordflow}{for}\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00028}00028\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00029}00029\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00030}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{00030}}\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{nDims}}\ \%\ Number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{nDofs}}\ \%\ Number\ of\ degrees\ of\ freedom}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{outerNormals}}\ \%\ Outer\ normal\ vectors\ at\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ boundaries}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00034}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{00034}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00036}00036\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00037}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{00037}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}(K,\ P)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINITEELEMENT\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}(K,\ P)\ creates\ a\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ and\ function\ \mbox{\hyperlink{namespacefem_1_1space}{space}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}.\ This}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ constructor\ is\ called\ by\ concrete\ subclasses\ to\ initialize}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00043}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ base\ \textcolor{keyword}{class\ }functionality.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00046}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ K\ -\/\ Element\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ object\ (Geometry)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ P\ -\/\ Function\ \mbox{\hyperlink{namespacefem_1_1space}{space}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}\ (Projector)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00049}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ obj.geometry\ =\ K;}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ obj.projector\ =\ P;}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nDims(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ spatial\ dimension\ of\ the\ function\ domain.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ =\ get.nDims(obj)\ returns\ the\ number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ the\ function\ domain\ from\ the\ underlying\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ spatial\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00067}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}.basis.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{nDofs}}(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Get\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{nDofs}}(obj)\ returns\ the\ dimension\ of\ the\ finite}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ function\ \mbox{\hyperlink{namespacefem_1_1space}{space}},\ which\ equals\ the\ number\ of\ basis}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ functions\ or\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ degrees\ of\ freedom\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{nDofs}};}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ function\ N\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{outerNormals}}(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.OUTERNORMALS\ Get\ outer\ normal\ vectors\ at\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ N\ =\ get.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{outerNormals}}(obj)\ returns\ the\ outward-\/pointing\ unit}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ normal\ vectors\ at\ the\ boundaries\ of\ the\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ These\ are\ essential\ for\ flux\ computations\ and\ boundary}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ condition\ enforcement.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ N\ -\/\ Outer\ normal\ vectors\ at\ boundary\ points\ (matrix)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ N\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{outerNormals}}();}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{evaluate}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATE\ Evaluate\ functions\ in\ the\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \mbox{\hyperlink{namespacefem_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00107}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{00107}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{evaluate}}(obj,\ Z)\ evaluates\ the\ basis\ functions\ at}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ points\ specified\ in\ the\ combined\ matrix\ Z\ =\ [X;\ C],\ where\ X}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ contains\ evaluation\ points\ and\ C\ contains\ coefficients.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{evaluate}}(obj,\ X,\ C)\ evaluates\ the\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ defined\ by\ coefficients\ C\ at\ the\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X.}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ Z\ -\/\ Combined\ matrix\ [X;\ C]\ where\ X\ are\ points\ and\ C\ are\ coefficients}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ X\ -\/\ Evaluation\ points\ (\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{nDims}}\ x\ nPoints\ matrix)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ C\ -\/\ Coefficient\ vectors\ (\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{nDofs}}\ x\ nFunctions\ matrix)}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Function\ values\ at\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ \ \ \ *\ If\ nargin\ =\ 2:\ (1\ x\ nPoints)\ vector\ of\ basis\ evaluations}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ \ \ \ *\ If\ nargin\ =\ 3:\ (nFunctions\ x\ nPoints)\ matrix\ of\ function\ values}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{evaluate}}(varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00130}00130\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_8m_source_l00131}00131\ end}
+
+\end{DoxyCode}

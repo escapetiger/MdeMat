@@ -1,0 +1,146 @@
+\doxysection{ex01h\+\_\+convergence.\+m}
+\hypertarget{ex01h__convergence_8m_source}{}\label{ex01h__convergence_8m_source}\index{+physics/+vlasov/+scripts/ex01h\_convergence.m@{+physics/+vlasov/+scripts/ex01h\_convergence.m}}
+\mbox{\hyperlink{ex01h__convergence_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1vlasov_1_1scripts}{00002}}\ \%\ FileName:\ ex01h\_convergence}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00006}00006\ \%\ \ \ Homogeneous\ Landau\ damping\ convergence\ test.}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00007}00007\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00008}\mbox{\hyperlink{namespacephysics_1_1vlasov_1_1scripts_abd6a93632cb2d4cef36dd4dbdceb0447}{00008}}\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00009}00009\ clc,\ clear,\ close\ all;}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00011}00011\ \%\%\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00012}00012\ dataPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'ex01h'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00014}00014\ \textcolor{keywordflow}{for}\ k\ =\ 5}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00015}00015\ \ \ \ \ [\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}},\ \mbox{\hyperlink{namespacephysics_1_1state}{state}},\ result]\ =\ \mbox{\hyperlink{namespacephysics_1_1vlasov_1_1scripts_abd6a93632cb2d4cef36dd4dbdceb0447}{run}}(1,\ 10\string^k);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00017}00017\ \ \ \ \ fileName\ =\ sprintf(\textcolor{stringliteral}{'LDH\%d\_tau0\%d.mat'},\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisOrder'}),\ k);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.save(fullfile(dataPath,\ fileName));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00020}00020\ \ \ \ \ fieldNames\ =\ fieldnames(result);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{for}\ iName\ =\ 1:length(fieldNames)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ fieldName\ =\ fieldNames\{iName\};}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ fileName\ =\ sprintf(\textcolor{stringliteral}{'LDH\%d\_\%s\_tau0\%d.csv'},\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisOrder'}),\ fieldName,\ k);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ writetable(result.(fieldName),\ fullfile(dataPath,\ fileName));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00025}00025\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00028}00028\ \%\%\ SIMULATION}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00030}00030\ function\ [\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}},\ \mbox{\hyperlink{namespacephysics_1_1state}{state}},\ result]\ =\ run(epsilon,\ tau0)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00032}00032\ \%\ Common\ configuration\ file}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00033}00033\ common\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00035}00035\ \%\ Experiment-\/specific\ configuration\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00036}00036\ config\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00037}00037\ config.schemeName\ =\ \textcolor{stringliteral}{'dghs'};}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00038}00038\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00039}00039\ config.k\ =\ 0.5;\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00040}00040\ config.L\ =\ 2\ *\ pi\ /\ config.k;\ \%\ Length\ of\ domain}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00041}00041\ config.xBBox\ =\ [0,\ config.L];\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00042}00042\ config.vBBox\ =\ [-\/6,\ 6];\ \%\ Velocity\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00043}00043\ config.tFinal\ =\ 0.1;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00044}00044\ config.T0\ =\ 1;\ \%\ Temperature\ parameter}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00045}00045\ config.delta\ =\ 0.05;\ \%\ Perturbation}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00046}00046\ config.phiInf\ =\ phiInf(config.k);\ \%\ Potential\ steady\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00047}00047\ config.EInf\ =\ EInf(config.k);\ \%\ Electrical\ field\ steady\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00048}00048\ config.cInf\ =\ config.L\ /\ integral(@(x)\ exp(-\/config.phiInf(x)),\ 0,\ config.L);\ \%\ Normalization\ parameter}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00049}00049\ config.rhoInf\ =\ rhoInf(config.k,\ config.cInf);\ \%\ Density\ steady\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00050}00050\ config.nx\ =\ 16;\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00051}00051\ config.nh\ =\ 16;\ \%\ Number\ of\ Hermite\ modes\ -\/\ 1}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00052}00052\ config.ic.D\ =\ DInit(config.k,\ config.delta,\ config.cInf,\ config.nh);\ \%\ Initial\ hermite\ coefficients}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00053}00053\ config.ic.omega\ =\ omegaInit(config.k,\ config.delta,\ config.cInf);\ \%\ Initial\ potential}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00054}00054\ config.bc\ =\ [];\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00055}00055\ config.exact\ =\ [];\ \%\ Exact\ solution}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00056}00056\ config.tau0\ =\ tau0;\ \%\ Collision\ parameter}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00057}00057\ config.epsilon\ =\ epsilon;\ \%\ Scaling\ parameter}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00058}00058\ config.verbose\ =\ 1;\ \%\ Verbose\ flag}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00059}00059\ config.eId\ =\ sprintf(\textcolor{stringliteral}{'AP\%d'},\ config.nDims);\ \%\ Experiment\ ID}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00061}00061\ \%\ Construct\ and\ configure\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00062}00062\ \textcolor{keywordflow}{switch}\ config.schemeName}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'dghs'}}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1vlasov}{vlasov}}.\mbox{\hyperlink{classphysics_1_1vlasov_1_1_dghs_scheme}{DghsScheme}}(file\ =\ common,\ config\ =\ config);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00065}00065\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00067}00067\ \%\ Configure\ visualizer}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00068}00068\ visualizer\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'visualizer'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00069}00069\ visualizer.setDensity(1);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00070}00070\ visualizer.setTimeline(\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'tFinal'}),\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00071}00071\ visualizer.setComponents(\textcolor{keyword}{struct}(\textcolor{charliteral}{'D'},\ [],\ \textcolor{stringliteral}{'omega'},\ []));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00072}00072\ visualizer.addDataset(\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'sId'}),\ \textcolor{stringliteral}{'numeric'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00073}00073\ visualizer.addPlotter(\textcolor{stringliteral}{'profile'},\ \textcolor{stringliteral}{'1d'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00075}00075\ \%\ Configure\ analyzer}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00076}00076\ analyzer\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'analyzer'});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00077}00077\ analyzer.setNLevels(6);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00078}00078\ analyzer.setDensity(4\string^config.nDims);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00079}00079\ analyzer.setComponents(\textcolor{keyword}{struct}(\textcolor{charliteral}{'D'},\ 1:config.nh+1,\ \textcolor{stringliteral}{'omega'},\ 1));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00081}00081\ vElement\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_orthotope_element}{C0OrthotopeElement}}(config.vBBox,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00082}00082\ \ \ \ \ config.nh+1,\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'vBasisType'}),\ lambda\ =\ sqrt(config.T0));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00083}00083\ vDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_spectral_space}{SpectralSpace}}(vElement);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00085}00085\ xElement\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_orthotope_element}{L2OrthotopeElement}}(config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisOrder'}),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisType'}),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisPattern'}));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00089}00089\ xMesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{UniformGrid}}(config.xBBox,\ config.nx/2);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00090}00090\ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_finite_element_space}{FiniteElementSpace}}(xMesh,\ xElement);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00091}00091\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1vlasov}{vlasov}}.\mbox{\hyperlink{classphysics_1_1vlasov_1_1_hermite_state}{HermiteState}}(xDisc,\ vDisc,\ config.T0,\ config.rhoInf);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00092}00092\ [\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ result]\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.converge(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00093}00093\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00095}00095\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00097}00097\ function\ h\ =\ DInit(k,\ delta,\ cInf,\ nh)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00098}00098\ h\ =\ @(x)\ DInitImpl(k,\ delta,\ cInf,\ nh,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00099}00099\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00101}00101\ function\ D\ =\ DInitImpl(k,\ delta,\ cInf,\ nh,\ x)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00102}00102\ rhoInf\ =\ rhoInfImpl(k,\ cInf,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00103}00103\ D0\ =\ (rhoInf\ +\ delta\ *\ cos(k*x))\ ./\ rhoInf;}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00104}00104\ D\ =\ [D0,\ zeros(1,\ size(x,\ 2)*nh)];}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00105}00105\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00107}00107\ function\ h\ =\ omegaInit(k,\ delta,\ cInf)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00108}00108\ h\ =\ @(x)\ omegaInitImpl(k,\ delta,\ cInf,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00109}00109\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00111}00111\ function\ omega\ =\ omegaInitImpl(k,\ delta,\ cInf,\ x)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00112}00112\ rhoInf\ =\ rhoInfImpl(k,\ cInf,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00113}00113\ omega\ =\ delta\ /\ k\string^2\ *\ cos(k*x)\ .*\ sqrt(rhoInf);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00114}00114\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00116}00116\ function\ h\ =\ phiInf(k)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00117}00117\ h\ =\ @(x)\ phiInfImpl(k,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00118}00118\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00120}00120\ function\ phi\ =\ phiInfImpl(k,\ x)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00121}00121\ \%\ phi\ =\ -\/0.2*sin(k*x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00122}00122\ phi\ =\ zeros(size(x));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00123}00123\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00125}00125\ function\ h\ =\ EInf(k)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00126}00126\ h\ =\ @(x)\ EInfImpl(k,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00127}00127\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00129}00129\ function\ E\ =\ EInfImpl(k,\ x)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00130}00130\ \%\ E\ =\ 0.2*k*cos(k*x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00131}00131\ E\ =\ zeros(size(x));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00132}00132\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00134}00134\ function\ h\ =\ rhoInf(k,\ cInf)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00135}00135\ h\ =\ @(x)\ rhoInfImpl(k,\ cInf,\ x);}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00136}00136\ end}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00138}00138\ function\ rho\ =\ rhoInfImpl(k,\ cInf,\ x)}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00139}00139\ rho\ =\ cInf\ *\ exp(-\/phiInfImpl(k,\ x));}
+\DoxyCodeLine{\Hypertarget{ex01h__convergence_8m_source_l00140}00140\ end}
+
+\end{DoxyCode}

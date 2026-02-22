@@ -1,0 +1,160 @@
+\doxysection{core\+::function\+::Linear Class Reference}
+\hypertarget{classcore_1_1function_1_1_linear}{}\label{classcore_1_1function_1_1_linear}\index{core::function::Linear@{core::function::Linear}}
+
+
+\doxylink{classcore_1_1function_1_1_function}{Function} representing linear/affine transformations.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_linear_ad0774906a14f9b716e7b61b9878a85bb}{Linear}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_linear_a38b218198182d835a32ae53a27b9fe1f}{A}}, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classcore_1_1function_1_1_linear}{Linear} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract \doxylink{classcore_1_1function_1_1_function}{Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a37b7735289b78906d9ed5b2f91e406ef}{eval}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a052de8682aaf2107291fe0e0ac6d100f}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_afda3f3a9615b3bc8e942a364a8ed8ce7}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab9086461d8e0eb55ff0abb158cfd2f61}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_linear_a38b218198182d835a32ae53a27b9fe1f}{A}}
+\begin{DoxyCompactList}\small\item\em Transformation matrix (n\+Codims x n\+Dims) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_linear_a15dbf9600a2131903d7661255b889d1c}{b}}
+\begin{DoxyCompactList}\small\item\em Translation vector (n\+Codims x 1) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_ac696d773a380623081b129e9d8c30690}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a8c58c3268c34e2f3cc3bc4e22e63c0cf}{Is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both NDims and NCodims are positive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_linear_aeba1f805cda1eb0d60c51058244af3ce}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of linear function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_linear_ac02c3969cd7f063f2deafb9a3a8352d0}{diff\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Implementation of linear function derivative. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_aaa50244dc0eac9482725b5e2ae1cbd3d}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a495373f2dad1e38e4f1ccc7afa5aa0b9}{diff\+Impl}} (Input\+Type obj, Input\+Type X, ignored\+Arg)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classcore_1_1function_1_1_function}{Function} representing linear/affine transformations. 
+
+\doxylink{classcore_1_1function_1_1_linear}{Linear} represents linear/affine transformations of the form\+:
+
+\[f(x) = A*x + b
+\]
+
+where $A$ is an $m\times n$ matrix and $b$ is an $m\times 1$ vector. When $b$ is not provided or is zero, this reduces to a pure linear transformation.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} 
+
+\doxylink{classcore_1_1function_1_1_constant}{core.\+function.\+Constant} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_linear_8m_source_l00021}{21}} of file \mbox{\hyperlink{_linear_8m_source}{Linear.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1function_1_1_linear_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1function_1_1_linear_ad0774906a14f9b716e7b61b9878a85bb}\index{core::function::Linear@{core::function::Linear}!Linear@{Linear}}
+\index{Linear@{Linear}!core::function::Linear@{core::function::Linear}}
+\doxysubsubsection{\texorpdfstring{Linear()}{Linear()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_linear_ad0774906a14f9b716e7b61b9878a85bb} 
+function core\+::function\+::\+Linear\+::\+Linear (\begin{DoxyParamCaption}\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classcore_1_1function_1_1_linear}{Linear} class. 
+
+obj = Linear(\+A) creates a pure linear transformation $f(x) = Ax$.
+
+obj = \doxylink{classcore_1_1function_1_1_linear}{Linear}(A, b=b) creates an affine transformation $f(x) = Ax + b$. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_linear_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_linear_ac02c3969cd7f063f2deafb9a3a8352d0}\index{core::function::Linear@{core::function::Linear}!diffImpl@{diffImpl}}
+\index{diffImpl@{diffImpl}!core::function::Linear@{core::function::Linear}}
+\doxysubsubsection{\texorpdfstring{diffImpl()}{diffImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_linear_ac02c3969cd7f063f2deafb9a3a8352d0} 
+function core\+::function\+::\+Linear\+::diff\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{order}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of linear function derivative. 
+
+\Hypertarget{classcore_1_1function_1_1_linear_aeba1f805cda1eb0d60c51058244af3ce}\index{core::function::Linear@{core::function::Linear}!evalImpl@{evalImpl}}
+\index{evalImpl@{evalImpl}!core::function::Linear@{core::function::Linear}}
+\doxysubsubsection{\texorpdfstring{evalImpl()}{evalImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_linear_aeba1f805cda1eb0d60c51058244af3ce} 
+function core\+::function\+::\+Linear\+::eval\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of linear function evaluation. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1function_1_1_linear_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1function_1_1_linear_a38b218198182d835a32ae53a27b9fe1f}\index{core::function::Linear@{core::function::Linear}!A@{A}}
+\index{A@{A}!core::function::Linear@{core::function::Linear}}
+\doxysubsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_linear_a38b218198182d835a32ae53a27b9fe1f} 
+Property core\+::function\+::\+Linear\+::A}
+
+
+
+Transformation matrix (n\+Codims x n\+Dims) 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_8m_source_l00025}{25}} of file \mbox{\hyperlink{_linear_8m_source}{Linear.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_linear_a15dbf9600a2131903d7661255b889d1c}\index{core::function::Linear@{core::function::Linear}!b@{b}}
+\index{b@{b}!core::function::Linear@{core::function::Linear}}
+\doxysubsubsection{\texorpdfstring{b}{b}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_linear_a15dbf9600a2131903d7661255b889d1c} 
+Property core\+::function\+::\+Linear\+::b}
+
+
+
+Translation vector (n\+Codims x 1) 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_8m_source_l00028}{28}} of file \mbox{\hyperlink{_linear_8m_source}{Linear.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_linear_8m}{Linear.\+m}}\end{DoxyCompactItemize}

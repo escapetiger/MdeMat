@@ -1,0 +1,37 @@
+# Environment configuration
+
+# =======================================================================
+# Algorithm
+# =======================================================================
+
+OPTION=schemeName='ldg'
+
+# -----------------------------------------------------------------------
+# Space discretization
+# -----------------------------------------------------------------------
+
+# spatial order
+OPTION=xBasisOrder=3
+
+# xBasisType='modal': Modal basis 
+# xBasisType='nodal': Nodal basis
+OPTION=xBasisType='nodal'
+
+# xBasisPattern='Q': Qk polynomial space
+# xBasisPattern='P': Pk polynomial space
+OPTION=xBasisPattern='Q'
+
+# xPenaltyType{1,1}='boundary': add jump only to boundary elements
+# xPenaltyType{1,1}='boundaryw': add weighted jump only to boundary elements
+# xPenaltyType{1,1}='all': add jump to all elements
+# xPenaltyType{1,1}='allw': add weighted jump to all elements
+# xPenaltyType{1,2}='central': central flux
+# xPenaltyType{1,2}='right': right flux
+# xPenaltyType{1,2}='left': left flux
+# xPenaltyType{2,1}='central': central flux
+# xPenaltyType{2,1}='right': right flux
+# xPenaltyType{2,1}='left': left flux
+OPTION=xPenaltyType={'all', 'right'; 'left', ''} 
+
+# hasAuxiliaryVariable=true: enable computation of auxiliary variable 
+OPTION=hasAuxiliaryVariable=true

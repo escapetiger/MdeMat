@@ -1,0 +1,106 @@
+\doxysection{L2\+Element.\+m}
+\hypertarget{_l2_element_8m_source}{}\label{_l2_element_8m_source}\index{+approx/+element/L2Element.m@{+approx/+element/L2Element.m}}
+\mbox{\hyperlink{_l2_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00001}00001\ classdef\ L2Element\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{C0Element}}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00002}00002\ \ \ \ \ \%\ L2ELEMENT\ Element-\/level\ L2-\/conforming\ function.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ L2Element\ implements\ an\ element-\/level\ function\ that\ is\ generally}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ discontinuous\ across\ element\ boundaries\ and\ supports\ flux}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ integration.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }manages\ both\ volume\ and\ flux\ integration\ data,\ making\ it}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ suitable\ \textcolor{keywordflow}{for}\ discontinuous\ finite\ element\ methods\ where}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ inter-\/element\ communication\ occurs\ through\ numerical\ fluxes}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ computed\ at\ element\ boundaries.\ Each\ element\ boundary\ has\ its\ own}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ integration\ data\ \textcolor{keywordflow}{for}\ efficient\ flux\ computations.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00014}00014\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \%\ Create\ L2\ element\ with\ volume\ and\ flux\ integration}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ geometry\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(2);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.LagrangeBasis(2);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ projector\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(basis);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ volumeIntegrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.GaussLegendre(3);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ fluxIntegrators\ =\ arrayfun(@(i)\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.FaceIntegrator(i),\ 1:4);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ element\ =\ L2Element(geometry,\ projector,\ volumeIntegrator,\ fluxIntegrators);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Set\ up\ data\ \textcolor{keywordflow}{for}\ DG\ method\ assembly}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ element.setVolumeData(1);\ \ \%\ Volume\ terms\ with\ derivatives}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ element.setFluxData(0);\ \ \ \ \%\ Flux\ terms\ with\ function\ values}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00026}00026\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \%\ Access\ flux\ data\ \textcolor{keywordflow}{for}\ boundary\ face\ i}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ faceValues\ =\ element.fluxData(i).values;}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ faceWeights\ =\ element.fluxData(i).weights;}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00030}00030\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \%\ Use\ \textcolor{keyword}{static}\ factory\ method\ \textcolor{keywordflow}{for}\ standard\ orthotope\ elements}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ element\ =\ L2Element.Orthotope(2,\ 3,\ 2,\ 1);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00034}00034\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{C0Element}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}},}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element_function}{ElementFunction}}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00038}00038\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ fluxData\ \%\ Array\ of\ function\ data\ \textcolor{keywordflow}{for}\ flux\ integrals\ (ElementFunction\ array)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00040}\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element}{00040}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00042}00042\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}{nFluxes}}\ \%\ Number\ of\ fluxes\ (integer)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00044}\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a62d92ae39dd0245d17a05d4bb811b33e}{00044}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00046}00046\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ volumeIntegrator,\ fluxIntegrators)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ L2ELEMENT\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ volumeIntegrator,}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fluxIntegrators)\ creates\ an\ L2\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ with\ both\ volume\ and}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ flux\ integration\ capabilities\ using\ the\ specified\ components.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}\ -\/\ Geometry\ \textcolor{keywordtype}{object}\ defining\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ domain}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}\ -\/\ GalerkinProjector\ \textcolor{keywordtype}{object}\ for\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ volumeIntegrator\ -\/\ Integrator\ \textcolor{keywordtype}{object}\ for\ volume\ quadrature}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fluxIntegrators\ -\/\ Array\ of\ Integrator\ objects\ for\ boundary\ quadrature}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a4a78dc4d44373cf575b33b61d3541a5f}{C0Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ volumeIntegrator);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a62d92ae39dd0245d17a05d4bb811b33e}{fluxData}}\ =\ arrayfun(\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(integrator)\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element_function}{ElementFunction}}(integrator),\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fluxIntegrators);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00069}\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{00069}}\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}{nFluxes}}(obj)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NFLUXES\ Get\ the\ number\ of\ fluxes.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}.nBoundaries;}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_aa47bc88f137007318855cf9c87c722cb}{setFluxData}}(obj,\ k)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFLUXDATA\ Set\ function\ data\ for\ flux\ integrals.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_aa47bc88f137007318855cf9c87c722cb}{setFluxData}}(obj,\ k)\ computes\ and\ stores\ function}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ values\ and\ derivatives\ up\ to\ order\ @a\ k\ at\ boundary}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ points\ for\ all\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ faces.\ This\ method}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ prepares\ the\ data\ needed\ for\ flux\ computations\ in}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ discontinuous\ Galerkin\ methods.}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ k\ -\/\ Maximum\ derivative\ order\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a17dd6123d60a43010f1d0d0e6d943e7b}{L2Element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a62d92ae39dd0245d17a05d4bb811b33e}{fluxData}};}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}{nFluxes}}}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ D(i).integrator.nodes(1:obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}{nDims}},\ :);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D(i).setValues(obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}},\ X);}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00096}\mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_aa47bc88f137007318855cf9c87c722cb}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ k\ >\ 0,\ D(i).setDerivatives(obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}},\ X,\ k);\ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00099}00099\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_element_8m_source_l00100}00100\ end}
+
+\end{DoxyCode}

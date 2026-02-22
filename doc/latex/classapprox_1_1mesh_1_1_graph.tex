@@ -1,0 +1,173 @@
+\doxysection{approx\+::mesh\+::Graph Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_graph}{}\label{classapprox_1_1mesh_1_1_graph}\index{approx::mesh::Graph@{approx::mesh::Graph}}
+
+
+Fundamental graph structure with vertices and edges.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a03e1144b92ff3bed504ebc0a6e2e14c2}{Graph}} (Input\+Type vertices, Input\+Type edges)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_graph}{Graph}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a844eda79a954f8ea7ca7e8621ec86b6b}{set\+Vertices}} (Input\+Type obj, Input\+Type vertices)
+\begin{DoxyCompactList}\small\item\em Set the vertex coordinates. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_aac37e971718c023a8c7704f9b7b7c379}{set\+Edges}} (Input\+Type obj, Input\+Type edges)
+\begin{DoxyCompactList}\small\item\em Set the edge connectivity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a5b3977cbe59b73bef94cdd197a43b005}{Vertices}}
+\begin{DoxyCompactList}\small\item\em Matrix of vertex coordinates (n\+Vertices × n\+Dims) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a94c809e16b567997de3dbdea7142328f}{Edges}}
+\begin{DoxyCompactList}\small\item\em Matrix of edge connections (n\+Edges × 2) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a6729f92263208a3f240f9a2dbd762580}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a7f3b629f505a3cc1dfc37d194f1084bf}{NVertices}}
+\begin{DoxyCompactList}\small\item\em Number of vertices in the graph. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a1cb11ff88935dbd83052274c1afd24f1}{NEdges}}
+\begin{DoxyCompactList}\small\item\em Number of edges in the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fundamental graph structure with vertices and edges. 
+
+\doxylink{classapprox_1_1mesh_1_1_graph}{Graph} provides a basic representation of a graph data structure consisting of vertices (nodes) and edges (connections). This class serves as a foundation for more complex graph-\/based algorithms and mesh representations in computational applications.
+
+Vertices are stored as an n\+Vertices × n\+Dims matrix where each row represents a vertex. Edges are stored as an n\+Edges × 2 matrix where each row contains indices of connected vertices.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_separable_graph}{approx.\+mesh.\+Separable\+Graph} 
+
+\doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00020}{20}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a03e1144b92ff3bed504ebc0a6e2e14c2}\index{approx::mesh::Graph@{approx::mesh::Graph}!Graph@{Graph}}
+\index{Graph@{Graph}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{Graph()}{Graph()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a03e1144b92ff3bed504ebc0a6e2e14c2} 
+function approx\+::mesh\+::\+Graph\+::\+Graph (\begin{DoxyParamCaption}\item[{Input\+Type}]{vertices}{, }\item[{Input\+Type}]{edges}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_graph}{Graph}. 
+
+obj = \doxylink{classapprox_1_1mesh_1_1_graph_a03e1144b92ff3bed504ebc0a6e2e14c2}{Graph()} creates an empty graph with no vertices or edges.
+
+obj = Graph(vertices, edges) creates a graph with specified {\itshape vertices} and {\itshape edges}. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_aac37e971718c023a8c7704f9b7b7c379}\index{approx::mesh::Graph@{approx::mesh::Graph}!setEdges@{setEdges}}
+\index{setEdges@{setEdges}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{setEdges()}{setEdges()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_aac37e971718c023a8c7704f9b7b7c379} 
+function approx\+::mesh\+::\+Graph\+::set\+Edges (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{edges}{}\end{DoxyParamCaption})}
+
+
+
+Set the edge connectivity. 
+
+obj = set\+Edges(obj, edges) updates the graph edges with the specified connectivity matrix {\itshape edges}. Validates that edge indices reference existing vertices. \Hypertarget{classapprox_1_1mesh_1_1_graph_a844eda79a954f8ea7ca7e8621ec86b6b}\index{approx::mesh::Graph@{approx::mesh::Graph}!setVertices@{setVertices}}
+\index{setVertices@{setVertices}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{setVertices()}{setVertices()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a844eda79a954f8ea7ca7e8621ec86b6b} 
+function approx\+::mesh\+::\+Graph\+::set\+Vertices (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{vertices}{}\end{DoxyParamCaption})}
+
+
+
+Set the vertex coordinates. 
+
+obj = set\+Vertices(obj, vertices) updates the graph vertices with the specified coordinate matrix {\itshape vertices}. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a94c809e16b567997de3dbdea7142328f}\index{approx::mesh::Graph@{approx::mesh::Graph}!Edges@{Edges}}
+\index{Edges@{Edges}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{Edges}{Edges}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a94c809e16b567997de3dbdea7142328f} 
+Property approx\+::mesh\+::\+Graph\+::\+Edges}
+
+
+
+Matrix of edge connections (n\+Edges × 2) 
+
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00027}{27}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a6729f92263208a3f240f9a2dbd762580}\index{approx::mesh::Graph@{approx::mesh::Graph}!NDims@{NDims}}
+\index{NDims@{NDims}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a6729f92263208a3f240f9a2dbd762580} 
+Property approx\+::mesh\+::\+Graph\+::\+NDims}
+
+
+
+Number of spatial dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00033}{33}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a1cb11ff88935dbd83052274c1afd24f1}\index{approx::mesh::Graph@{approx::mesh::Graph}!NEdges@{NEdges}}
+\index{NEdges@{NEdges}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{NEdges}{NEdges}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a1cb11ff88935dbd83052274c1afd24f1} 
+Property approx\+::mesh\+::\+Graph\+::\+NEdges}
+
+
+
+Number of edges in the graph. 
+
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00039}{39}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a7f3b629f505a3cc1dfc37d194f1084bf}\index{approx::mesh::Graph@{approx::mesh::Graph}!NVertices@{NVertices}}
+\index{NVertices@{NVertices}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{NVertices}{NVertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a7f3b629f505a3cc1dfc37d194f1084bf} 
+Property approx\+::mesh\+::\+Graph\+::\+NVertices}
+
+
+
+Number of vertices in the graph. 
+
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00036}{36}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_graph_a5b3977cbe59b73bef94cdd197a43b005}\index{approx::mesh::Graph@{approx::mesh::Graph}!Vertices@{Vertices}}
+\index{Vertices@{Vertices}!approx::mesh::Graph@{approx::mesh::Graph}}
+\doxysubsubsection{\texorpdfstring{Vertices}{Vertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_graph_a5b3977cbe59b73bef94cdd197a43b005} 
+Property approx\+::mesh\+::\+Graph\+::\+Vertices}
+
+
+
+Matrix of vertex coordinates (n\+Vertices × n\+Dims) 
+
+
+
+Definition at line \mbox{\hyperlink{_graph_8m_source_l00024}{24}} of file \mbox{\hyperlink{_graph_8m_source}{Graph.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_graph_8m}{Graph.\+m}}\end{DoxyCompactItemize}

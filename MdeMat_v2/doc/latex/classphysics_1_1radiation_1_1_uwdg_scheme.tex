@@ -1,0 +1,184 @@
+\doxysection{physics\+::radiation\+::Uwdg\+Scheme Class Reference}
+\hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme}{}\label{classphysics_1_1radiation_1_1_uwdg_scheme}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+
+
+UPWINDDGSCHEME.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a8f2dfd256add137fe37f31d89f4c2447}{Uwdg\+Scheme}} (Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1radiation_1_1_uwdg_scheme}{Uwdg\+Scheme} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a8f7b547610703869b680b54c22788b6a}{run}} (Input\+Type obj, Input\+Type state, Input\+Type timer, Input\+Type visualizer)
+\begin{DoxyCompactList}\small\item\em temporal discretization \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_aebbf5b13f22524f469ac0804ac8ba458}{initialize}} (Input\+Type obj, Input\+Type state, Input\+Type timer, Input\+Type visualizer)
+\begin{DoxyCompactList}\small\item\em integration loop \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a5d36ed0d3270f707e222f20bf5440efd}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em condition \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a42f17883c3915966c8a8cd84a5f087fb}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one time step integration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a9d655b468d8f0979549acbd55a6c0d0d}{post\+Step}} (Input\+Type obj, Input\+Type state, Input\+Type timer, Input\+Type visualizer)
+\begin{DoxyCompactList}\small\item\em Postprocess step. Update visualization if enabled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_ad43ff19cf83d2eb50caa32add5882dea}{REQUIRES}} = \{\textquotesingle{}t\+Disc\+Id\textquotesingle{}, \textquotesingle{}t\+Final\textquotesingle{}\}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a558dc3346ea220533a2623a60d30bd65}{SUPPORTED\+\_\+\+TDISC}} = \{\textquotesingle{}be\textquotesingle{}, \textquotesingle{}bdf2\textquotesingle{}, \textquotesingle{}bdf3\textquotesingle{}, \textquotesingle{}sdirk2\textquotesingle{}, \textquotesingle{}sdirk3\textquotesingle{}\}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1radiation_1_1_uwdg_scheme_a7209b3eee57c2d54f6af8e008fe14eb5}{t\+Disc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+UPWINDDGSCHEME. 
+
+Definition at line \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source_l00008}{8}} of file \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a8f2dfd256add137fe37f31d89f4c2447}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!UwdgScheme@{UwdgScheme}}
+\index{UwdgScheme@{UwdgScheme}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{UwdgScheme()}{UwdgScheme()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a8f2dfd256add137fe37f31d89f4c2447} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::\+Uwdg\+Scheme (\begin{DoxyParamCaption}\item[{Input\+Type}]{config}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classphysics_1_1radiation_1_1_uwdg_scheme}{Uwdg\+Scheme} class. 
+
+Syntax\+: obj = Uwdg\+Scheme(config)
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & -\/ Configuration struct \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_aebbf5b13f22524f469ac0804ac8ba458}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!initialize@{initialize}}
+\index{initialize@{initialize}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_aebbf5b13f22524f469ac0804ac8ba458} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::initialize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{, }\item[{Input\+Type}]{timer}{, }\item[{Input\+Type}]{visualizer}{}\end{DoxyParamCaption})}
+
+
+
+integration loop 
+
+step
+
+step
+
+step
+
+Initialize the scheme. Local data \Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a9d655b468d8f0979549acbd55a6c0d0d}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!postStep@{postStep}}
+\index{postStep@{postStep}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{postStep()}{postStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a9d655b468d8f0979549acbd55a6c0d0d} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::post\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{, }\item[{Input\+Type}]{timer}{, }\item[{Input\+Type}]{visualizer}{}\end{DoxyParamCaption})}
+
+
+
+Postprocess step. Update visualization if enabled. 
+
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a5d36ed0d3270f707e222f20bf5440efd}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!preStep@{preStep}}
+\index{preStep@{preStep}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{preStep()}{preStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a5d36ed0d3270f707e222f20bf5440efd} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::pre\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+condition 
+
+operator
+
+time discretization
+
+visualization if enabled
+
+Preprocess step. Set adaptive time step based on CFL condition. \Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a8f7b547610703869b680b54c22788b6a}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!run@{run}}
+\index{run@{run}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a8f7b547610703869b680b54c22788b6a} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::run (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{, }\item[{Input\+Type}]{timer}{, }\item[{Input\+Type}]{visualizer}{}\end{DoxyParamCaption})}
+
+
+
+temporal discretization 
+
+step \Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a42f17883c3915966c8a8cd84a5f087fb}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!step@{step}}
+\index{step@{step}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a42f17883c3915966c8a8cd84a5f087fb} 
+function physics\+::radiation\+::\+Uwdg\+Scheme\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Perform one time step integration. 
+
+Syntax\+: step(obj, state)
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & -\/ Solution state to advance \\
+\hline
+{\em Update} & boundary condition \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_ad43ff19cf83d2eb50caa32add5882dea}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!REQUIRES@{REQUIRES}}
+\index{REQUIRES@{REQUIRES}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{REQUIRES}{REQUIRES}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_ad43ff19cf83d2eb50caa32add5882dea} 
+Constant Property physics\+::radiation\+::\+Uwdg\+Scheme\+::\+REQUIRES = \{\textquotesingle{}t\+Disc\+Id\textquotesingle{}, \textquotesingle{}t\+Final\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source_l00012}{12}} of file \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a558dc3346ea220533a2623a60d30bd65}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!SUPPORTED\_TDISC@{SUPPORTED\_TDISC}}
+\index{SUPPORTED\_TDISC@{SUPPORTED\_TDISC}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{SUPPORTED\_TDISC}{SUPPORTED\_TDISC}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a558dc3346ea220533a2623a60d30bd65} 
+Constant Property physics\+::radiation\+::\+Uwdg\+Scheme\+::\+SUPPORTED\+\_\+\+TDISC = \{\textquotesingle{}be\textquotesingle{}, \textquotesingle{}bdf2\textquotesingle{}, \textquotesingle{}bdf3\textquotesingle{}, \textquotesingle{}sdirk2\textquotesingle{}, \textquotesingle{}sdirk3\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source_l00015}{15}} of file \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1radiation_1_1_uwdg_scheme_a7209b3eee57c2d54f6af8e008fe14eb5}\index{physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}!tDisc@{tDisc}}
+\index{tDisc@{tDisc}!physics::radiation::UwdgScheme@{physics::radiation::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{tDisc}{tDisc}}
+{\footnotesize\ttfamily \label{classphysics_1_1radiation_1_1_uwdg_scheme_a7209b3eee57c2d54f6af8e008fe14eb5} 
+Property physics\+::radiation\+::\+Uwdg\+Scheme\+::t\+Disc}
+
+
+
+Temporal discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source_l00033}{33}} of file \mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+radiation/\mbox{\hyperlink{_09radiation_2_uwdg_scheme_8m}{Uwdg\+Scheme.\+m}}\end{DoxyCompactItemize}

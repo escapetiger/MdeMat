@@ -1,0 +1,160 @@
+\doxysection{approx\+::space\+::Affine\+Space Class Reference}
+\hypertarget{classapprox_1_1space_1_1_affine_space}{}\label{classapprox_1_1space_1_1_affine_space}\index{approx::space::AffineSpace@{approx::space::AffineSpace}}
+
+
+Affine transformation of function space.  
+
+
+
+
+Inherits approx\+::space\+::\+Function\+Space.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space}{approx\+::space\+::\+Scaled\+Affine\+Space}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}{Affine\+Space}} (Input\+Type element)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1space_1_1_affine_space}{Affine\+Space}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33}{eval}} (Input\+Type obj, Input\+Type X, Input\+Type C, Input\+Type G)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the affine space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a2add34da6c5954fc094b4d590f202d0c}{direction}} (Input\+Type obj, Input\+Type Y, Input\+Type X, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Compute directional component to reach target values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a19a604b22e34379568ec19e1660fae20}{NDofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a2afb7034e526704a8d4fd6514c79cec8}{NPoints}}
+\begin{DoxyCompactList}\small\item\em Number of integration points. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a0c56b6ecb1f38f29a906496b499efc32}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{Element}}
+\begin{DoxyCompactList}\small\item\em Element object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Affine transformation of function space. 
+
+\doxylink{classapprox_1_1space_1_1_affine_space}{Affine\+Space} represents an affine transformation of a function space, allowing for additional degrees of freedom through directional components. Functions in this space have the form\+:
+
+\[f(x) = u(x) + g(x)
+\]
+
+where $u(x)$ is a function from the underlying function space and $g$ is a directional component.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1space_1_1_scaled_affine_space}{approx.\+space.\+Scaled\+Affine\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00021}{21}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!AffineSpace@{AffineSpace}}
+\index{AffineSpace@{AffineSpace}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{AffineSpace()}{AffineSpace()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7} 
+function approx\+::space\+::\+Affine\+Space\+::\+Affine\+Space (\begin{DoxyParamCaption}\item[{Input\+Type}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1space_1_1_affine_space}{Affine\+Space}. 
+
+obj = Affine\+Space(element) creates an affine space using the specified element representation. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_a2add34da6c5954fc094b4d590f202d0c}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!direction@{direction}}
+\index{direction@{direction}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{direction()}{direction()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a2add34da6c5954fc094b4d590f202d0c} 
+function approx\+::space\+::\+Affine\+Space\+::direction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{Y}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{C}{}\end{DoxyParamCaption})}
+
+
+
+Compute directional component to reach target values. 
+
+G = direction(obj, Y, X, C) computes the direction using explicitly separated evaluation points and coefficients. \Hypertarget{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!eval@{eval}}
+\index{eval@{eval}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33} 
+function approx\+::space\+::\+Affine\+Space\+::eval (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{C}{, }\item[{Input\+Type}]{G}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate functions in the affine space. 
+
+Y = eval(obj, X, C, G) evaluates with explicitly separated points, coefficients, and directional components. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!Element@{Element}}
+\index{Element@{Element}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{Element}{Element}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972} 
+Property approx\+::space\+::\+Affine\+Space\+::\+Element}
+
+
+
+Element object. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00037}{37}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_affine_space_a0c56b6ecb1f38f29a906496b499efc32}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!NDims@{NDims}}
+\index{NDims@{NDims}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{NDims}{NDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a0c56b6ecb1f38f29a906496b499efc32} 
+Property approx\+::space\+::\+Affine\+Space\+::\+NDims}
+
+
+
+Number of dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00031}{31}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_affine_space_a19a604b22e34379568ec19e1660fae20}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!NDofs@{NDofs}}
+\index{NDofs@{NDofs}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{NDofs}{NDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a19a604b22e34379568ec19e1660fae20} 
+Property approx\+::space\+::\+Affine\+Space\+::\+NDofs}
+
+
+
+Number of degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00025}{25}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_affine_space_a2afb7034e526704a8d4fd6514c79cec8}\index{approx::space::AffineSpace@{approx::space::AffineSpace}!NPoints@{NPoints}}
+\index{NPoints@{NPoints}!approx::space::AffineSpace@{approx::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{NPoints}{NPoints}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_affine_space_a2afb7034e526704a8d4fd6514c79cec8} 
+Property approx\+::space\+::\+Affine\+Space\+::\+NPoints}
+
+
+
+Number of integration points. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00028}{28}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+space/\mbox{\hyperlink{_affine_space_8m}{Affine\+Space.\+m}}\end{DoxyCompactItemize}

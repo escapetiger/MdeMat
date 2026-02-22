@@ -1,0 +1,159 @@
+\doxysection{core\+::symbolic\+::Hermite\+Basis Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_hermite_basis}{}\label{classcore_1_1symbolic_1_1_hermite_basis}\index{core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}}
+
+
+Hermite orthogonal basis functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_hermite_basis_a2f5a8c28e45ebd407b258297ac14a3e9}{Hermite\+Basis}} (Input\+Type variables, Input\+Type max\+Degree, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct Hermite basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a6a12e0bdd45a871a72324b1899e13a13}{Orthogonal\+Polynomial\+Basis}} (Input\+Type variables, Input\+Type max\+Degree, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct orthogonal polynomial basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function}} (Input\+Type variables)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}} (Input\+Type obj, Input\+Type max\+Deriv\+Order)
+\begin{DoxyCompactList}\small\item\em Compile symbolic function as function handles. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a16f5e225528c5cd8993ae36d20ad907e}{save}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Save symbolic function metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_aa24fb423511290318656cfd253debf74}{load}} (Input\+Type obj, Input\+Type file\+Name)
+\begin{DoxyCompactList}\small\item\em Load symbolic function metadata from file and update object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_hermite_basis_a1d7b373607ed5496f9e45d5de2dc13f8}{compute\+Coefficients}} (ignored\+Arg, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Compute Hermite recurrence coefficients. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_hermite_basis_a66247d502956b8ac834a2358ac4025b7}{compute\+Normalizer}} (ignored\+Arg, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Compute Hermite normalizer. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_hermite_basis_a98121a70a17c72d97c55ba565c05de67}{transform}} (ignored\+Arg, Input\+Type x)
+\begin{DoxyCompactList}\small\item\em Transform variable to polynomial\textquotesingle{}s canonical domain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a11a8edd00d6d0b4155fc1c3c39bec06b}{initialize}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Initialize optional properties. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a46fab97cbd996ff5063a9727fc044c51}{compute\+Expressions}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate polynomial basis function expressions using recursion. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a9a83c20e43e394eb392a6ecff3205aef}{recursion}} (Input\+Type obj, Input\+Type x, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Compute orthogonal polynomial using three-\/term recurrence relation. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a27eec9cf1a357afa34ff83dd0d183ba9}{compute\+Coefficients}} (Input\+Type obj, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Compute coefficients for three-\/term recurrence relation. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_aa38b5a030ee6181060b7e35869a036a2}{compute\+Normalizer}} (Input\+Type obj, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Compute normalizer for orthonormal basis. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_ab7e7577dfaa9061ccce9505aa2848a78}{transform}} (Input\+Type obj, Input\+Type x)
+\begin{DoxyCompactList}\small\item\em Transform variable to polynomial\textquotesingle{}s canonical domain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_a5bb1901db56a5e2988112ef75c4e8fad}{Max\+Degree}}
+\begin{DoxyCompactList}\small\item\em Maximum polynomial degree. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_afe6b9fa4d2d55eee1c7b9631bfa1540e}{Is\+Normalized}}
+\begin{DoxyCompactList}\small\item\em Flag for orthonormal basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_accb7903f4196b21eb497a4bf7c5e58ce}{Is\+Monic}}
+\begin{DoxyCompactList}\small\item\em Flag for monic polynomials. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function}{core\+::symbolic\+::\+Symbolic\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a0fb95dfe04077c4d44311285d13c353d}{Meta\+Ext}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Metadata file extension. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a66ead688fa20eef1d9266c60e58ef29d}{Expressions}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic expressions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac08c4c12ea8a19ab52113bff892428e7}{Variables}}
+\begin{DoxyCompactList}\small\item\em Object array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab35e8fa2afcaee6b16608887d097df04}{Handles}}
+\begin{DoxyCompactList}\small\item\em Cell array of function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a6ca60895482f77953e43b7556f553801}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of input dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ae412bb2c331d4e24d12a9f6f244709c1}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of output dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hermite orthogonal basis functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_hermite_basis}{Hermite\+Basis} generates probabilist\textquotesingle{}s Hermite polynomial basis functions up to a specified maximum degree. The basis functions are orthogonal on the interval (-\/∞, ∞) with weight function $ e^{-x^2/2}/\sqrt{2\pi} $.
+
+The probabilist\textquotesingle{}s Hermite polynomials satisfy the recurrence\+:
+
+\[H_{n+1}(x) = x \cdot H_n(x) - n \cdot H_{n-1}(x)
+\]
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis}{core.\+symbolic.\+Orthogonal\+Polynomial\+Basis} 
+
+\doxylink{classcore_1_1symbolic_1_1_legendre_basis}{core.\+symbolic.\+Legendre\+Basis} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_09symbolic_2_hermite_basis_8m_source_l00022}{22}} of file \mbox{\hyperlink{_09symbolic_2_hermite_basis_8m_source}{Hermite\+Basis.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_a2f5a8c28e45ebd407b258297ac14a3e9}\index{core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}!HermiteBasis@{HermiteBasis}}
+\index{HermiteBasis@{HermiteBasis}!core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}}
+\doxysubsubsection{\texorpdfstring{HermiteBasis()}{HermiteBasis()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_hermite_basis_a2f5a8c28e45ebd407b258297ac14a3e9} 
+function core\+::symbolic\+::\+Hermite\+Basis\+::\+Hermite\+Basis (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{, }\item[{Input\+Type}]{max\+Degree}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct Hermite basis functions. 
+
+obj = Hermite\+Basis(variables, max\+Degree) creates Hermite basis functions using the specified {\itshape variables} up to {\itshape max\+Degree} on the unbounded domain $(-\infty, \infty)$.
+
+obj = \doxylink{classcore_1_1symbolic_1_1_hermite_basis}{Hermite\+Basis}(variables, max\+Degree, is\+Normalized=true) creates orthonormal Hermite basis functions. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_a1d7b373607ed5496f9e45d5de2dc13f8}\index{core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}!computeCoefficients@{computeCoefficients}}
+\index{computeCoefficients@{computeCoefficients}!core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}}
+\doxysubsubsection{\texorpdfstring{computeCoefficients()}{computeCoefficients()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_hermite_basis_a1d7b373607ed5496f9e45d5de2dc13f8} 
+function core\+::symbolic\+::\+Hermite\+Basis\+::compute\+Coefficients (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Compute Hermite recurrence coefficients. 
+
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_a66247d502956b8ac834a2358ac4025b7}\index{core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}!computeNormalizer@{computeNormalizer}}
+\index{computeNormalizer@{computeNormalizer}!core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}}
+\doxysubsubsection{\texorpdfstring{computeNormalizer()}{computeNormalizer()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_hermite_basis_a66247d502956b8ac834a2358ac4025b7} 
+function core\+::symbolic\+::\+Hermite\+Basis\+::compute\+Normalizer (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Compute Hermite normalizer. 
+
+\Hypertarget{classcore_1_1symbolic_1_1_hermite_basis_a98121a70a17c72d97c55ba565c05de67}\index{core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}!transform@{transform}}
+\index{transform@{transform}!core::symbolic::HermiteBasis@{core::symbolic::HermiteBasis}}
+\doxysubsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_hermite_basis_a98121a70a17c72d97c55ba565c05de67} 
+function core\+::symbolic\+::\+Hermite\+Basis\+::transform (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Transform variable to polynomial\textquotesingle{}s canonical domain. 
+
+x = transform(x) transforms {\itshape x} to the canonical domain for the specific polynomial family. For Hermite polynomials, no transformation is needed as they are defined on the entire real line 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_09symbolic_2_hermite_basis_8m}{Hermite\+Basis.\+m}}\end{DoxyCompactItemize}

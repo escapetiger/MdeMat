@@ -1,0 +1,39 @@
+\doxysection{is\+All\+Class.\+m}
+\hypertarget{is_all_class_8m_source}{}\label{is_all_class_8m_source}\index{+core/+except/isAllClass.m@{+core/+except/isAllClass.m}}
+\mbox{\hyperlink{is_all_class_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00001}00001\ function\ tf\ =\ \mbox{\hyperlink{namespacecore_1_1except_ac53ea7276d4d1425d947d6ac35eaa407}{isAllClass}}(x,\ cls)}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00002}00002\ \%\ ISALLCLASS\ Check\ \textcolor{keywordflow}{if}\ all\ elements\ of\ @a\ x\ belong\ to\ @a\ cls.}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00004}00004\ \%\ \ \ tf\ =\ \mbox{\hyperlink{namespacecore_1_1except_ac53ea7276d4d1425d947d6ac35eaa407}{isAllClass}}(x,\ cls)\ returns\ \textcolor{keyword}{true}\ \textcolor{keywordflow}{if}\ all\ elements\ in\ @a\ x\ belong\ to}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00005}00005\ \%\ \ \ one\ of\ the\ classes\ specified\ in\ @a\ cls.}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00007}00007\ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00008}00008\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.isAllSameClass}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00010}00010\ \textcolor{keywordflow}{if}\ isempty(x)}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00011}00011\ \ \ \ \ tf\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00013}\mbox{\hyperlink{namespacecore_1_1except_ac53ea7276d4d1425d947d6ac35eaa407}{00013}}\ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00015}00015\ \textcolor{keywordflow}{if}\ \string~iscell(cls),\ cls\ =\ \{cls\};\ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00017}00017\ tf\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00018}00018\ \textcolor{keywordflow}{for}\ j\ =\ 1:length(x)}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00019}00019\ \ \ \ \ tf0\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(cls)}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(x)}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ x\{j\};}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ x(j);}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ tf0\ =\ tf0\ |\ isa(y,\ cls\{i\});}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ tf0,\ \textcolor{keywordflow}{break};\ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00028}00028\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00029}00029\ \ \ \ \ tf\ =\ tf\ \&\ tf0;}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~tf,\ \textcolor{keywordflow}{return};\ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00031}00031\ end}
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{is_all_class_8m_source_l00033}00033\ end}
+
+\end{DoxyCode}

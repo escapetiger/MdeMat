@@ -1,0 +1,170 @@
+\doxysection{block.\+m}
+\hypertarget{block_8m_source}{}\label{block_8m_source}\index{+core/+linalg/block.m@{+core/+linalg/block.m}}
+\mbox{\hyperlink{block_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00001}00001\ function\ S\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}(As,\ Ms,\ Ns)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00002}\mbox{\hyperlink{namespacecore_1_1linalg}{00002}}\ \%\ BLOCK\ Constructs\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ matrix\ from\ a\ 2D\ cell\ array\ of\ matrices.}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00004}00004\ \%\ \ \ S\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}(As)\ infers\ the\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ dimensions\ and\ returns\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ matrix}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00005}00005\ \%\ \ \ from\ a\ cell\ array\ of\ matrices.}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00007}00007\ \%\ \ \ S\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}(As,\ Ms,\ Ns)\ returns\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ matrix\ from\ a\ cell\ array\ of}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00008}00008\ \%\ \ \ matrices.\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00009}00009\ \%\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00010}00010\ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00011}00011\ \%\ \ \ Each\ nonempty\ cell\ in\ @a\ A\ corresponds\ to\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ in\ @a\ S.}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00013}00013\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00014}00014\ \%\ \ \ As\ -\/\ 2D\ cell\ array\ of\ matrices}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00015}00015\ \%\ \ \ Ms\ -\/\ Row\ counts\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ row\ (optional)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00016}00016\ \%\ \ \ Ns\ -\/\ Column\ counts\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ column\ (optional)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00017}00017\ \%}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00018}00018\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00019}00019\ \%\ \ \ S\ \ -\/\ Block\ matrix\ (sparse\ \textcolor{keywordflow}{if}\ all\ blocks\ are\ sparse)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00020}00020\ \%}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00021}00021\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00022}00022\ \%\ \ \ \%\ Create\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ matrix\ from\ sparse\ blocks}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00023}00023\ \%\ \ \ A1\ =\ sparse(rand(2,3));\ \ B1\ =\ sparse(rand(2,4));}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00024}00024\ \%\ \ \ C1\ =\ sparse(rand(3,3));\ \ D1\ =\ sparse(rand(3,4));}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00025}00025\ \%\ \ \ As\ =\ \{A1,\ B1;\ C1,\ D1\};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00026}00026\ \%\ \ \ S1\ =\ block(As);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00027}00027\ \%\ \ \ \%\ S1\ will\ be\ a\ sparse\ matrix\ of\ size\ (2+3)\ x\ (3+4)\ =\ 5x7.}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00029}00029\ [nBlockRows,\ nBlockCols]\ =\ size(As);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00031}\mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{00031}}\ if\ nargin\ <\ 2\ ||\ isempty(Ms)\ ||\ isempty(Ns)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00032}00032\ \ \ \ \ Ms\ =\ zeros(nBlockRows,\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00033}00033\ \ \ \ \ Ns\ =\ zeros(nBlockCols,\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00034}00034\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00035}00035\ \ \ \ \ for\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ found\ =\ false;}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ for\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ms(iRow)\ =\ size(As\{iRow,\ jCol\},\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ found\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(found,\ \textcolor{stringliteral}{'EmptyBlockRow'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{stringliteral}{'Block\ row\ \%d\ has\ no\ nonempty\ blocks.'}\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'\ Provide\ Ms\ explicitly.'}],\ iRow);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00048}00048\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00049}00049\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ found\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ns(jCol)\ =\ size(As\{iRow,\ jCol\},\ 2);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ found\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(found,\ \textcolor{stringliteral}{'EmptyBlockColumn'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{stringliteral}{'Block\ column\ \%d\ has\ no\ nonempty\ blocks.'}\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'\ Provide\ Ns\ explicitly.'}],\ jCol);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00063}00063\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00064}00064\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00065}00065\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(numel(Ms)\ ==\ nBlockRows,\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidRowSizes'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Length\ of\ Ms\ must\ equal\ the\ number\ of\ block\ rows\ (\%d).'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ nBlockRows);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00069}00069\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(numel(Ns)\ ==\ nBlockCols,\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidColumnSizes'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Length\ of\ Ns\ must\ equal\ the\ number\ of\ block\ columns\ (\%d).'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ nBlockCols);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00074}00074\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00075}00075\ \ \ \ \ Ms\ =\ Ms(:);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00076}00076\ \ \ \ \ Ns\ =\ Ns(:);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00077}00077\ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00079}00079\ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ [rowCount,\ colCount]\ =\ size(As\{iRow,\ jCol\});}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(rowCount\ ==\ Ms(iRow),\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'RowSizeMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Block\ (\%d,\%d)\ has\ \%d\ rows;\ expected\ \%d.'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iRow,\ jCol,\ rowCount,\ Ms(iRow));}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(colCount\ ==\ Ns(jCol),\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'ColumnSizeMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Block\ (\%d,\%d)\ has\ \%d\ columns;\ expected\ \%d.'},\ ...}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iRow,\ jCol,\ colCount,\ Ns(jCol));}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00094}00094\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00095}00095\ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00097}00097\ totalRows\ =\ sum(Ms);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00098}00098\ totalCols\ =\ sum(Ns);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00099}00099\ rowOffsets\ =\ [0;\ cumsum(Ms)];}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00100}00100\ colOffsets\ =\ [0;\ cumsum(Ns)];}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00102}00102\ useSparse\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00103}00103\ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})\ \&\&\ \string~issparse(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ useSparse\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00109}00109\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00110}00110\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~useSparse}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00112}00112\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00113}00113\ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00115}00115\ \textcolor{keywordflow}{if}\ useSparse}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00116}00116\ \ \ \ \ totalNnz\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ totalNnz\ =\ totalNnz\ +\ nnz(As\{iRow,\ jCol\});}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00123}00123\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00125}00125\ \ \ \ \ rowIndices\ =\ zeros(totalNnz,\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00126}00126\ \ \ \ \ colIndices\ =\ zeros(totalNnz,\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00127}00127\ \ \ \ \ values\ =\ zeros(totalNnz,\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00128}00128\ \ \ \ \ nnzPos\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00130}00130\ \ \ \ \ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ block\ =\ As\{iRow,\ jCol\};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [blockRows,\ blockCols,\ blockVals]\ =\ find(block);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nValues\ =\ numel(blockVals);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nValues\ >\ 0}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indexRange\ =\ nnzPos:(nnzPos\ +\ nValues\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rowIndices(indexRange)\ =\ blockRows\ +\ rowOffsets(iRow);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colIndices(indexRange)\ =\ blockCols\ +\ colOffsets(jCol);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values(indexRange)\ =\ blockVals;}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nnzPos\ =\ nnzPos\ +\ nValues;}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00145}00145\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00147}00147\ \ \ \ \ S\ =\ sparse(rowIndices,\ colIndices,\ values,\ totalRows,\ totalCols);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00148}00148\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00149}00149\ \ \ \ \ S\ =\ zeros(totalRows,\ totalCols);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00150}00150\ \ \ \ \ \textcolor{keywordflow}{for}\ iRow\ =\ 1:nBlockRows}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ jCol\ =\ 1:nBlockCols}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(As\{iRow,\ jCol\})}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ block\ =\ As\{iRow,\ jCol\};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ issparse(block)}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ =\ full(block);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rowRange\ =\ (rowOffsets(iRow)\ +\ 1):rowOffsets(iRow\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colRange\ =\ (colOffsets(jCol)\ +\ 1):colOffsets(jCol\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(rowRange,\ colRange)\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}};}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00162}00162\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00163}00163\ end}
+\DoxyCodeLine{\Hypertarget{block_8m_source_l00164}00164\ end}
+
+\end{DoxyCode}

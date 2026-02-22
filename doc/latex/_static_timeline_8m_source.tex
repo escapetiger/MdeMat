@@ -1,0 +1,114 @@
+\doxysection{Static\+Timeline.\+m}
+\hypertarget{_static_timeline_8m_source}{}\label{_static_timeline_8m_source}\index{+approx/+mesh/StaticTimeline.m@{+approx/+mesh/StaticTimeline.m}}
+\mbox{\hyperlink{_static_timeline_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00001}00001\ classdef\ StaticTimeline\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_timeline}{Timeline}}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00002}00002\ \ \ \ \ \%\ STATICTIMELINE\ Predefined\ time\ node\ timeline.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ StaticTimeline\ represents\ a\ temporal\ discretization\ with\ predefined}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ time\ points.\ It\ advances\ through\ these\ points\ sequentially\ and}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ provides\ information\ about\ the\ current\ state\ and\ properties\ of}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ the\ timeline,\ including\ uniformity\ checks\ and\ time\ step\ queries.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Time\ nodes\ must\ be\ provided\ in\ strictly\ ascending\ order.\ The}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \textcolor{keyword}{class\ }supports\ both\ uniform\ and\ non-\/uniform\ time\ stepping\ and}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ can\ detect\ uniformity\ automatically.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00013}00013\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_timeline}{Timeline}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_dynamic_timeline}{DynamicTimeline}}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00015}00015\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00016}00016\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ Nodes\ \%\ Prescribed\ time\ nodes\ (row\ vector)}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00018}00018\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00019}00019\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00020}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline}{00020}}\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_ad65f2b3bab344169334d1d9dade2a6ba}{StepSize}}\ \%\ Current\ time\ step}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a219c645096434f0fdf352a30547afd37}{IsExhausted}}\ \%\ Whether\ the\ final\ time\ has\ been\ reached}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_aba5dda1059e84688eecebcba2377f2a0}{NTotalTimeSteps}}\ \%\ Total\ number\ of\ time\ steps}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00024}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a8f0a6547d930ea7a64f2fe6b7059d666}{00024}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00025}00025\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00026}00026\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{StaticTimeline}}(varargin)}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STATICTIMELINE\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{StaticTimeline}}.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00030}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_ad65f2b3bab344169334d1d9dade2a6ba}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{StaticTimeline}}(nodes)\ creates\ a\ timeline\ with\ the}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ time\ nodes.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a219c645096434f0fdf352a30547afd37}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{StaticTimeline}}(nSteps,\ final)\ creates\ a\ uniform}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ timeline\ with\ nSteps\ from\ 0\ to\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_aba5dda1059e84688eecebcba2377f2a0}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(nargin\ >=\ 1\ \&\&\ nargin\ <=\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{StaticTimeline}}\ requires\ 1\ or\ 2\ input\ arguments.');}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nodes\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isvector(nodes)\ \&\&\ isnumeric(nodes),\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'nodes\ must\ be\ a\ numeric\ vector.'});}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(diff(nodes)\ >\ 0),\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Time\ nodes\ must\ be\ in\ strictly\ ascending\ order.'});}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ finalTime\ =\ nodes(end);}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00052}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a634b2973e5c0e3409a5e64491398dc63}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nSteps\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ finalTime\ =\ varargin\{2\};}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isscalar(nSteps)\ \&\&\ nSteps\ >\ 0\ \&\&\ mod(nSteps,\ 1)\ ==\ 0,\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'nSteps\ must\ be\ a\ positive\ integer.'});}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isscalar(finalTime)\ \&\&\ finalTime\ >=\ 0,\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'final\ must\ be\ a\ nonnegative\ scalar.'});}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nodes\ =\ linspace(0,\ finalTime,\ nSteps\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_timeline}{Timeline}}(finalTime);}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Nodes\ =\ [nodes(:).\textcolor{stringliteral}{',\ inf];\ \ \%\ Add\ sentinel\ value}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Now\ =\ obj.Nodes(1);}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ advance(obj)}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ADVANCE\ Advance\ the\ timeline\ to\ the\ next\ time\ node.}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ advance(obj)\ advances\ the\ timeline\ to\ the\ next\ predefined}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ time\ node\ and\ increments\ the\ event\ counter.}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~obj.IsExhausted,\ '}TimeExceeded\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Cannot\ advance\ beyond\ the\ \textcolor{keyword}{final}\ time.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Count\ =\ obj.Count\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Now\ =\ obj.Nodes(obj.Count);}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ TF\ =\ get.IsExhausted(obj)}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISEXHAUSTED\ Check\ if\ timeline\ has\ reached\ final\ time.}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ obj.Count\ >=\ length(obj.Nodes);}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ dt\ =\ get.StepSize(obj)}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.DT\ Get\ the\ current\ time\ step\ size.}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ obj.IsExhausted}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ NaN;}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00098}\mbox{\hyperlink{classapprox_1_1mesh_1_1_static_timeline_a46e68f41660790c53b31379eb86aab2a}{00098}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.Nodes(obj.Count\ +\ 1)\ -\/\ obj.Nodes(obj.Count);}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ n\ =\ get.NTotalTimeSteps(obj)}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NTOTALTIMESTEPS\ Get\ the\ total\ number\ of\ time\ steps.}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.Nodes)\ -\/\ 1;}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_static_timeline_8m_source_l00108}00108\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

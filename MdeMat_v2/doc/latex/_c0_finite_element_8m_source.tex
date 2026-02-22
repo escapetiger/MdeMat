@@ -1,0 +1,113 @@
+\doxysection{C0\+Finite\+Element.\+m}
+\hypertarget{_c0_finite_element_8m_source}{}\label{_c0_finite_element_8m_source}\index{+fem/+element/C0FiniteElement.m@{+fem/+element/C0FiniteElement.m}}
+\mbox{\hyperlink{_c0_finite_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00001}00001\ classdef\ C0FiniteElement\ <\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{FiniteElement}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00002}\mbox{\hyperlink{namespacefem_1_1element}{00002}}\ \ \ \ \ \%\ C0FINITEELEMENT\ Continuous\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{C0FiniteElement}}\ implements\ a\ continuous\ (C0)\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ with}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ volume\ integration\ capabilities.\ Functions\ in\ \textcolor{keyword}{this}\ \mbox{\hyperlink{namespacefem_1_1space}{space}}\ are}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ continuous\ across\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ boundaries\ but\ may\ have\ discontinuous}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ derivatives.\ This\ corresponds\ to\ the\ standard\ Galerkin\ finite}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ method\ \textcolor{keywordflow}{for}\ elliptic\ and\ parabolic\ problems.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ C0\ continuity\ requirement\ ensures\ that\ the\ global\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ function\ is\ continuous\ across\ inter-\/\mbox{\hyperlink{namespacefem_1_1element}{element}}\ boundaries,\ which\ is}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ essential\ \textcolor{keywordflow}{for}\ conforming\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ approximations\ of\ problems}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ requiring\ H\string^1\ regularity.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ Volume\ integration\ is\ performed\ \textcolor{keyword}{using\ }numerical\ quadrature\ over\ the}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ domain,\ with\ function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ pre-\/computed\ at\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ efficient\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}\ of\ system\ matrices\ and\ vectors.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00018}00018\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00019}00019\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ \%\ Create\ C0\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ with\ quadrature}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ geometry\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(2);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.LagrangeBasis(2);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ projector\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(basis);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ integrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.GaussLegendre(3);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{C0FiniteElement}}(geometry,\ projector,\ integrator);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \%\ Set\ up\ function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ \textcolor{keywordflow}{for}\ mass\ matrix\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}.setVolumeData(0);\ \ \%\ Function\ values\ only}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ \%\ Set\ up\ function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ \textcolor{keywordflow}{for}\ stiffness\ matrix\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}.setVolumeData(1);\ \ \%\ Include\ first\ derivatives}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00032}00032\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ \%\ Access\ pre-\/computed\ \mbox{\hyperlink{namespacefem_1_1data}{data}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ values\ =\ \mbox{\hyperlink{namespacefem_1_1element}{element}}.volumeData.values;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ weights\ =\ \mbox{\hyperlink{namespacefem_1_1element}{element}}.volumeData.weights;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00036}00036\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00037}00037\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{FiniteElement}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{L2FiniteElement}},}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1data}{data}}.\mbox{\hyperlink{classfem_1_1data_1_1_function_data}{FunctionData}}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00041}00041\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ volumeData\ \%\ Function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ \textcolor{keywordflow}{for}\ volume\ integrals\ (FunctionData\ \textcolor{keywordtype}{object})}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00043}\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element}{00043}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00045}00045\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}(K,\ P,\ I)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00047}\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ C0FINITEELEMENT\ Constructor\ for\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}(K,\ P,\ I)\ creates\ a\ continuous\ finite}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ with\ volume\ integration\ capabilities\ using\ the}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}},\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}},\ and\ integrator.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ K\ -\/\ Element\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ \textcolor{keywordtype}{object}\ (Geometry)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ P\ -\/\ Function\ \mbox{\hyperlink{namespacefem_1_1space}{space}}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}\ (Projector)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ I\ -\/\ Volume\ integrator\ \textcolor{keywordtype}{object}\ (Integrator)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{FiniteElement}}(K,\ P);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b}{volumeData}}\ =\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1data}{data}}.FunctionData(I);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00065}\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{00065}}\ \ \ \ \ \ \ \ \ function\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}{setVolumeData}}(obj,\ r,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETVOLUMEDATA\ Set\ function\ \mbox{\hyperlink{namespacefem_1_1data}{data}}\ for\ volume\ integrals.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}{setVolumeData}}(obj,\ r)\ computes\ and\ stores\ function\ values}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ derivatives\ up\ to\ order\ r\ at\ integration\ points\ for\ use}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ in\ volume\ integral\ computations.\ This\ pre-\/computation}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ enables\ efficient\ \mbox{\hyperlink{namespacefem_1_1assembly}{assembly}}\ of\ bilinear\ forms.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}{setVolumeData}}(obj,\ r,\ args)\ allows\ additional\ arguments}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ be\ passed\ to\ the\ integration\ point\ setup.}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ r\ -\/\ Maximum\ derivative\ order\ to\ compute\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Optional\ arguments\ for\ integration\ point\ setup}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ NULL}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ obj.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b}{volumeData}};}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ integration\ points\ if\ additional\ arguments\ provided}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(varargin)}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D.setPoints(varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00089}\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}{00089}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ integration\ and\ projection\ information}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ D.integrator;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ obj.projector;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ P.basis;}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ I.nodes(1:d,\ :);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ function\ values\ at\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ D.setValues(f,\ X);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ derivatives\ \textcolor{keywordflow}{if}\ requested}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ r\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D.setDerivatives(f,\ X,\ r);}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00106}00106\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_c0_finite_element_8m_source_l00107}00107\ end}
+
+\end{DoxyCode}

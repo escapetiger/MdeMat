@@ -1,0 +1,60 @@
+\doxysection{Heun\+Integrator.\+m}
+\hypertarget{_heun_integrator_8m_source}{}\label{_heun_integrator_8m_source}\index{+approx/+odeint/HeunIntegrator.m@{+approx/+odeint/HeunIntegrator.m}}
+\mbox{\hyperlink{_heun_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00001}00001\ classdef\ HeunIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{ExrkIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ HEUNINTEGRATOR\ Heun\textcolor{stringliteral}{'s\ integrator.}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00003}00003\ \textcolor{stringliteral}{\ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00004}00004\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ HeunIntegrator\ implements\ Heun'}s\ method,\ a\ second-\/order\ \textcolor{keyword}{explicit}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ Runge-\/Kutta\ scheme\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations\ of}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ the\ form:}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ F(u)\ +\ S(t),}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f\$F(u)\(\backslash\)f\$\ is\ a\ nonlinear\ \textcolor{keyword}{operator},\ and\ \(\backslash\)f\$S(t)\(\backslash\)f\$\ is\ a\ source}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ term.\ This\ method\ provides\ second-\/order\ accuracy\ with\ good}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ stability\ properties.\ It\textcolor{stringliteral}{'s\ also\ known\ as\ the\ improved\ Euler\ method}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ or\ RK2.}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ Heun'}s\ method\ evaluates\ the\ derivative\ at\ \(\backslash\)f\$t\(\backslash\)f\$\ and\ at\ \(\backslash\)f\$t\ +}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ (2/3)\(\backslash\)Delta\ t\(\backslash\)f\$,\ then\ takes\ a\ weighted\ average.\ The\ weights\ [1/4,}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ 3/4]\ give\ optimal\ second-\/order\ accuracy\ with\ \textcolor{keyword}{this}\ intermediate}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ evaluation\ point.}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.odeint.ExrkIntegrator,\ \mbox{\hyperlink{namespaceapprox}{approx}}.odeint.Exrk4Integrator,}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.odeint.FeIntegrator}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00026}00026\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00027}00027\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ Order\ =\ 2\ \%\ Accuracy\ order\ of\ Heun\textcolor{stringliteral}{'s\ method}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00030}00030\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00031}\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator}{00031}}\ \textcolor{stringliteral}{\ \ \ \ methods}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ HeunIntegrator(final)}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ HEUNINTEGRATOR\ Constructor\ for\ HeunIntegrator.}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00035}\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator_a8a2b8216ec6be4c86de7ea9e495e586c}{00035}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ HeunIntegrator(final)\ creates\ a\ Heun'}s\ method}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ with\ the\ specified\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ final\ \{mustBeNumeric,\ mustBeNonnegative\}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}(2,\ final);}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Heun\textcolor{stringliteral}{'s\ method\ coefficients}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.c\ =\ [0,\ 2/3];}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00046}00046\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Butcher\ tableau\ coefficient\ matrix}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00048}\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator_af0a26c2920877b3305271fd0858e8f14}{00048}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.A\ =\ [0,\ 0;\ 2/3,\ 0];}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ weights\ for\ final\ update}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.b\ =\ [1/4,\ 3/4];}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_heun_integrator_8m_source_l00054}00054\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

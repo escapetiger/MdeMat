@@ -1,0 +1,114 @@
+\doxysection{ld\+\_\+by\+\_\+order.\+m}
+\hypertarget{ld__by__order_8m_source}{}\label{ld__by__order_8m_source}\index{+approx/+integrate/lebedev/ld\_by\_order.m@{+approx/+integrate/lebedev/ld\_by\_order.m}}
+\mbox{\hyperlink{ld__by__order_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00001}00001\ function\ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a78271c62c3310a141b5155cd1f2fc607}{ld\_by\_order}}\ (\ order\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00003}00003\ \%*****************************************************************************80}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00005}00005\ \%\%\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a78271c62c3310a141b5155cd1f2fc607}{ld\_by\_order}}()\ returns\ a\ Lebedev\ angular\ grid\ given\ its\ order.}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00007}00007\ \%\ \ Discussion:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00009}00009\ \%\ \ \ \ Only\ a\ certain\ set\ of\ such\ rules\ are\ available\ through\ this\ function.}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00011}00011\ \%\ \ Modified:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00013}00013\ \%\ \ \ \ 13\ September\ 2010}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00014}00014\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00015}00015\ \%\ \ Author:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00017}00017\ \%\ \ \ \ Dmitri\ Laikov}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00018}00018\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00019}00019\ \%\ \ Reference:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00020}00020\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00021}00021\ \%\ \ \ \ Vyacheslav\ Lebedev,\ Dmitri\ Laikov,}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00022}00022\ \%\ \ \ \ A\ quadrature\ formula\ for\ the\ sphere\ of\ the\ 131st}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00023}00023\ \%\ \ \ \ algebraic\ order\ of\ accuracy,}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00024}00024\ \%\ \ \ \ Russian\ Academy\ of\ Sciences\ Doklady\ Mathematics,}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00025}00025\ \%\ \ \ \ Volume\ 59,\ Number\ 3,\ 1999,\ pages\ 477-\/481.}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00026}00026\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00027}00027\ \%\ \ Input:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00028}00028\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00029}00029\ \%\ \ \ \ integer\ ORDER,\ the\ order\ of\ the\ rule.}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00030}00030\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00031}00031\ \%\ \ Output:}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00032}00032\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00033}00033\ \%\ \ \ \ real\ X(ORDER),\ Y(ORDER),\ Z(ORDER),\ W(ORDER),\ }
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00034}00034\ \%\ \ \ \ the\ coordinates\ and\ weights\ of\ the\ points.}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00035}\mbox{\hyperlink{namespaceapprox_1_1integrate_a78271c62c3310a141b5155cd1f2fc607}{00035}}\ \%}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00036}00036\ \ \ if\ (\ order\ ==\ 6\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00037}00037\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_ac57ccd6bc59bfca562539dc4ff4fab61}{ld0006}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00038}00038\ \ \ elseif\ (\ order\ ==\ 14\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00039}00039\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a94cb476da4b0872c154470225936a13e}{ld0014}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00040}00040\ \ \ elseif\ (\ order\ ==\ 26\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00041}00041\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a56427b657f50d83131e1922e474a3be2}{ld0026}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00042}00042\ \ \ elseif\ (\ order\ ==\ 38\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00043}00043\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a28caaca399346e57a1211a6fcb82ea70}{ld0038}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00044}00044\ \ \ elseif\ (\ order\ ==\ 50\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00045}00045\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a3eb86c16367831e0a06398d28fa564d5}{ld0050}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00046}00046\ \ \ elseif\ (\ order\ ==\ 74\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00047}00047\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a08321b38972a83c92bf5807322ce87d0}{ld0074}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00048}00048\ \ \ elseif\ (\ order\ ==\ 86\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00049}00049\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aee24545076c6f41a5c40596f326e7a99}{ld0086}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00050}00050\ \ \ elseif\ (\ order\ ==\ 110\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00051}00051\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aa24d15600dbd7726c8fca542205ff47a}{ld0110}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00052}00052\ \ \ elseif\ (\ order\ ==\ 146\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00053}00053\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a93da33211bf67ca11e98f891ffaf7974}{ld0146}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00054}00054\ \ \ elseif\ (\ order\ ==\ 170\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00055}00055\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aabea3a3fe81a1d66bb9d8de5e1e3248d}{ld0170}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00056}00056\ \ \ elseif\ (\ order\ ==\ 194\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00057}00057\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_ac82ff8778010494b4f9bc7be22b74530}{ld0194}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00058}00058\ \ \ elseif\ (\ order\ ==\ 230\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00059}00059\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_ac0d8c48ea492beee452edd0f00b57211}{ld0230}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00060}00060\ \ \ elseif\ (\ order\ ==\ 266\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00061}00061\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a580ed1a07ad417b34b63c242774537d2}{ld0266}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00062}00062\ \ \ elseif\ (\ order\ ==\ 302\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00063}00063\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a9c15147ae0b4cbaaecb7b56569f03a1d}{ld0302}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00064}00064\ \ \ elseif\ (\ order\ ==\ 350\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00065}00065\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aefc93a5557cb39de703e62c22acf76b5}{ld0350}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00066}00066\ \ \ elseif\ (\ order\ ==\ 434\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00067}00067\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a67f4680a2a1281f8af548c6b4060b829}{ld0434}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00068}00068\ \ \ elseif\ (\ order\ ==\ 590\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00069}00069\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_ab583243843d756cf4e71632453acaf6a}{ld0590}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00070}00070\ \ \ elseif\ (\ order\ ==\ 770\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00071}00071\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a46e9f51ff3b4ce8258141965b9bce96e}{ld0770}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00072}00072\ \ \ elseif\ (\ order\ ==\ 974\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00073}00073\ \ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a369804b0813f627f5e256d6a6cecbc42}{ld0974}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00074}00074\ \ \ elseif\ (\ order\ ==\ 1202\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00075}00075\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a2ef3b437d2f909cfc978514fdf3dc5c0}{ld1202}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00076}00076\ \ \ elseif\ (\ order\ ==\ 1454\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00077}00077\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a89a73640fec98502e89c1a8f974ec16f}{ld1454}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00078}00078\ \ \ elseif\ (\ order\ ==\ 1730\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00079}00079\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a435c25843a9a9d99d18c927177aa9596}{ld1730}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00080}00080\ \ \ elseif\ (\ order\ ==\ 2030\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00081}00081\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_ad80ce95c10c61d0bf16ff38704fa13c3}{ld2030}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00082}00082\ \ \ elseif\ (\ order\ ==\ 2354\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00083}00083\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a838af4290ca052f6dd7096cca5151656}{ld2354}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00084}00084\ \ \ elseif\ (\ order\ ==\ 2702\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00085}00085\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aae96b81913d0bb73a3db6206399ea430}{ld2702}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00086}00086\ \ \ elseif\ (\ order\ ==\ 3074\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00087}00087\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aa815bf49166d5c946509840832a330a9}{ld3074}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00088}00088\ \ \ elseif\ (\ order\ ==\ 3470\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00089}00089\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a3428edf6b6927c75abea04e82acdc043}{ld3470}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00090}00090\ \ \ elseif\ (\ order\ ==\ 3890\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00091}00091\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a1d746802500ae42a05dbfb3b0f1748e1}{ld3890}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00092}00092\ \ \ elseif\ (\ order\ ==\ 4334\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00093}00093\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a13ee5f3b76f0038a0ef0a03443c0184d}{ld4334}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00094}00094\ \ \ elseif\ (\ order\ ==\ 4802\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00095}00095\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_af2b47061c8698a6da89e1b27ac2097b7}{ld4802}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00096}00096\ \ \ elseif\ (\ order\ ==\ 5294\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00097}00097\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ ld5294\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00098}00098\ \ \ elseif\ (\ order\ ==\ 5810\ )}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00099}00099\ \ \ \ \ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_aaf004d4cc1e2fff1e5e7a58cf2ef2b3c}{ld5810}}\ (\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00100}00100\ \ \ else}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00101}00101\ \ \ \ \ fprintf\ (\ 1,\ \textcolor{charliteral}{'\(\backslash\)n'}\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00102}00102\ \ \ \ \ fprintf\ (\ 1,\ 'LD\_BY\_ORDER\ -\/\ Fatal\ error!\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00103}00103\ \ \ \ \ fprintf\ (\ 1,\ '\ \ Unexpected\ value\ of\ ORDER.\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00104}00104\ \ \ \ \ error\ (\ 'LD\_BY\_ORDER\ -\/\ Fatal\ error!'\ );}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00105}00105\ \ \ end}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00107}00107\ \ \ return}
+\DoxyCodeLine{\Hypertarget{ld__by__order_8m_source_l00108}00108\ end}
+
+\end{DoxyCode}

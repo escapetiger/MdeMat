@@ -1,0 +1,119 @@
+\doxysection{core\+::geometry\+::Intersector Class Reference}
+\hypertarget{classcore_1_1geometry_1_1_intersector}{}\label{classcore_1_1geometry_1_1_intersector}\index{core::geometry::Intersector@{core::geometry::Intersector}}
+
+
+Base class for all geometric intersectors.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{core\+::geometry\+::\+Line\+Segment\+By\+Line\+Segment\+Intersector}}, and \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{core\+::geometry\+::\+Line\+Segment\+By\+Plane\+Intersector}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_a8bb9fde6a25b1ef937168208a8287562}{Intersector}} (Input\+Type \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} object. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_aa08c79188fdc79bcf4776a959a19ecd3}{intersect}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Computes the intersection between geometric objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Dimension of the space (positive integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all geometric intersectors. 
+
+\doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} defines the interface and common functionality for computing intersections between geometric objects in n-\/dimensional space. This abstract class serves as the foundation for specific intersection algorithms.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{core.\+geometry.\+Line\+Segment\+By\+Line\+Segment\+Intersector} 
+
+\doxylink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{core.\+geometry.\+Line\+Segment\+By\+Plane\+Intersector} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_intersector_8m_source_l00016}{16}} of file \mbox{\hyperlink{_intersector_8m_source}{Intersector.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_a8bb9fde6a25b1ef937168208a8287562}\index{core::geometry::Intersector@{core::geometry::Intersector}!Intersector@{Intersector}}
+\index{Intersector@{Intersector}!core::geometry::Intersector@{core::geometry::Intersector}}
+\doxysubsubsection{\texorpdfstring{Intersector()}{Intersector()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_intersector_a8bb9fde6a25b1ef937168208a8287562} 
+function core\+::geometry\+::\+Intersector\+::\+Intersector (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} object. 
+
+obj = Intersector(n\+Dims) creates an \doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} object for operations in n\+Dims-\/dimensional space.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Dimension of the space (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ intersector\ \textcolor{keywordflow}{for}\ 3D\ space}
+\DoxyCodeLine{obj\ =\ ConcreteIntersector(3);}
+
+\end{DoxyCode}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_aa08c79188fdc79bcf4776a959a19ecd3}\index{core::geometry::Intersector@{core::geometry::Intersector}!intersect@{intersect}}
+\index{intersect@{intersect}!core::geometry::Intersector@{core::geometry::Intersector}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_intersector_aa08c79188fdc79bcf4776a959a19ecd3} 
+virtual function core\+::geometry\+::\+Intersector\+::intersect (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Computes the intersection between geometric objects. 
+
+\mbox{[}X, TF\mbox{]} = intersect(obj, varargin) computes intersection points between geometric objects. The specific implementation depends on the concrete subclass.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_intersector}{Intersector} object \\
+\hline
+{\em varargin} & -\/ Variable input arguments specific to intersection type \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}\index{core::geometry::Intersector@{core::geometry::Intersector}!nDims@{nDims}}
+\index{nDims@{nDims}!core::geometry::Intersector@{core::geometry::Intersector}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e} 
+Property core\+::geometry\+::\+Intersector\+::n\+Dims}
+
+
+
+Dimension of the space (positive integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_intersector_8m_source_l00020}{20}} of file \mbox{\hyperlink{_intersector_8m_source}{Intersector.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+geometry/\mbox{\hyperlink{_intersector_8m}{Intersector.\+m}}\end{DoxyCompactItemize}

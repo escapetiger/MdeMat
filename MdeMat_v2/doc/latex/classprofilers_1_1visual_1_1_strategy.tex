@@ -1,0 +1,191 @@
+\doxysection{profilers\+::visual\+::Strategy Class Reference}
+\hypertarget{classprofilers_1_1visual_1_1_strategy}{}\label{classprofilers_1_1visual_1_1_strategy}\index{profilers::visual::Strategy@{profilers::visual::Strategy}}
+
+
+Abstract base class for data rendering strategies.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}{Strategy}} (Input\+Type \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{bind}} (Input\+Type obj, Input\+Type var\+Name, Input\+Type axis\+Idx)
+\begin{DoxyCompactList}\small\item\em Map a variable to a specific axis index. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}{render}} (Input\+Type obj, Input\+Type axes, Input\+Type dataset, Input\+Type styleset)
+\begin{DoxyCompactList}\small\item\em Render data with variable-\/to-\/axis coordination. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions handled by this strategy. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_ad7afc8321819eb2b1d21c1e6a746a515}{var\+Map}}
+\begin{DoxyCompactList}\small\item\em Structure mapping variable names to axis indices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}{mode}}
+\begin{DoxyCompactList}\small\item\em Rendering mode (\textquotesingle{}sequential\textquotesingle{} \texorpdfstring{$\vert$}{|} \textquotesingle{}map\textquotesingle{}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for data rendering strategies. 
+
+\doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} defines the interface and common functionality for all rendering strategies used in data visualization. This class provides mode-\/based rendering control, variable-\/to-\/axis mapping capabilities, and utility methods for coordinated multi-\/panel visualizations.
+
+Concrete strategy implementations handle the specific details of rendering data in 1D, 2D, or 3D contexts, while this base class manages the overall rendering workflow and variable organization.
+
+\begin{DoxySeeAlso}{See also}
+profilers.\+visual.\+Strategy1d 
+
+profilers.\+visual.\+Strategy2d 
+
+profilers.\+visual.\+Strategy3d 
+
+\doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers.\+visual.\+Tiled\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_strategy_8m_source_l00023}{23}} of file \mbox{\hyperlink{_strategy_8m_source}{Strategy.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!Strategy@{Strategy}}
+\index{Strategy@{Strategy}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{Strategy()}{Strategy()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_a5d1f558da847beabb94e5b19cce3fe88} 
+function profilers\+::visual\+::\+Strategy\+::\+Strategy (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{, }\item[{Input\+Type}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} base class. 
+
+obj = Strategy(n\+Dims, mode) creates a rendering strategy for the specified number of dimensions with the given rendering mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of spatial dimensions (1, 2, or 3) \\
+\hline
+{\em mode} & -\/ Rendering mode\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+mode = \textquotesingle{}sequential\textquotesingle{}\+: Variables rendered in order of appearance 
+
+mode = \textquotesingle{}map\textquotesingle{}\+: Variables rendered according to \doxylink{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}{bind()} mapping 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!bind@{bind}}
+\index{bind@{bind}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_afdb0906c66cc4ae1b9ebc9a043071aec} 
+function profilers\+::visual\+::\+Strategy\+::bind (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{var\+Name}{, }\item[{Input\+Type}]{axis\+Idx}{}\end{DoxyParamCaption})}
+
+
+
+Map a variable to a specific axis index. 
+
+obj = bind(obj, var\+Name, axis\+Idx) creates a mapping from the specified variable name to an axis index for use in \textquotesingle{}map\textquotesingle{} rendering mode. This allows precise control over which variables appear on which axes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} object \\
+\hline
+{\em var\+Name} & -\/ Name of the variable to map (string) \\
+\hline
+{\em axis\+Idx} & -\/ Target axis index (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!render@{render}}
+\index{render@{render}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_ad52062adcc38a02419479194bfdcfcf9} 
+function profilers\+::visual\+::\+Strategy\+::render (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{axes}{, }\item[{Input\+Type}]{dataset}{, }\item[{Input\+Type}]{styleset}{}\end{DoxyParamCaption})}
+
+
+
+Render data with variable-\/to-\/axis coordination. 
+
+obj = render(obj, axes, dataset, styleset) renders the provided dataset onto the axes array using either sequential or mapped variable placement based on the strategy mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} object \\
+\hline
+{\em axes} & -\/ Array of axes handles for rendering \\
+\hline
+{\em dataset} & -\/ Structure containing data fields to render \\
+\hline
+{\em styleset} & -\/ Structure containing rendering style specifications\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!mode@{mode}}
+\index{mode@{mode}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_aec50873fc2465523f2532bbff89bafd6} 
+Property profilers\+::visual\+::\+Strategy\+::mode}
+
+
+
+Rendering mode (\textquotesingle{}sequential\textquotesingle{} \texorpdfstring{$\vert$}{|} \textquotesingle{}map\textquotesingle{}) 
+
+
+
+Definition at line \mbox{\hyperlink{_strategy_8m_source_l00033}{33}} of file \mbox{\hyperlink{_strategy_8m_source}{Strategy.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!nDims@{nDims}}
+\index{nDims@{nDims}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_a5862a4a697bc9cef22b3cf46908a68f7} 
+Property profilers\+::visual\+::\+Strategy\+::n\+Dims}
+
+
+
+Number of spatial dimensions handled by this strategy. 
+
+
+
+Definition at line \mbox{\hyperlink{_strategy_8m_source_l00027}{27}} of file \mbox{\hyperlink{_strategy_8m_source}{Strategy.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_strategy_ad7afc8321819eb2b1d21c1e6a746a515}\index{profilers::visual::Strategy@{profilers::visual::Strategy}!varMap@{varMap}}
+\index{varMap@{varMap}!profilers::visual::Strategy@{profilers::visual::Strategy}}
+\doxysubsubsection{\texorpdfstring{varMap}{varMap}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_strategy_ad7afc8321819eb2b1d21c1e6a746a515} 
+Property profilers\+::visual\+::\+Strategy\+::var\+Map}
+
+
+
+Structure mapping variable names to axis indices. 
+
+
+
+Definition at line \mbox{\hyperlink{_strategy_8m_source_l00030}{30}} of file \mbox{\hyperlink{_strategy_8m_source}{Strategy.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++profilers/+visual/\mbox{\hyperlink{_strategy_8m}{Strategy.\+m}}\end{DoxyCompactItemize}

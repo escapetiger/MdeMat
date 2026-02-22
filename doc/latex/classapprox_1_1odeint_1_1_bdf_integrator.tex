@@ -1,0 +1,306 @@
+\doxysection{approx\+::odeint\+::Bdf\+Integrator Class Reference}
+\hypertarget{classapprox_1_1odeint_1_1_bdf_integrator}{}\label{classapprox_1_1odeint_1_1_bdf_integrator}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+
+
+Backward Differentiation Formula integrator base class.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf2_integrator}{approx\+::odeint\+::\+Bdf2\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf3_integrator}{approx\+::odeint\+::\+Bdf3\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}{Bdf\+Integrator}} (Input\+Type n\+Steps, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_bdf_integrator}{Bdf\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}{set\+Time\+Step}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Set time step and coefficients for the BDF integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a17f6a2432e728ca5510751aa54a515fd}{set\+Lhs}} (Input\+Type obj, Input\+Type L, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the left-\/hand side matrix for the BDF system. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2}{set\+Rhs}} (Input\+Type obj, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the right-\/hand side vector for the BDF system. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a14a45ae0fa02ff97e7a0379ffcce0fc8}{stage}} (Input\+Type obj, Input\+Type L, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Compute a single stage of the BDF method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}{step}} (Input\+Type obj, Input\+Type L, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Advance one time step using the BDF method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a06fa5feff9d50248e8e1e234075beb28}{set\+LhsA}} (Input\+Type obj, Input\+Type L, Input\+Type M, Input\+Type P, Input\+Type A, Input\+Type B)
+\begin{DoxyCompactList}\small\item\em Set the left-\/hand side matrix for augmented BDF system. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1}{set\+RhsA}} (Input\+Type obj, Input\+Type S, Input\+Type M, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Set the right-\/hand side vector for augmented BDF system. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a226a1029f9c1f6fe4acbb974e910b71b}{stageA}} (Input\+Type obj, Input\+Type L, Input\+Type S, Input\+Type M, Input\+Type P, Input\+Type A, Input\+Type B, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Compute a single stage of the augmented BDF method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a1afd51596667fefd3c283a7cbc77221a}{stepA}} (Input\+Type obj, Input\+Type L, Input\+Type S, Input\+Type M, Input\+Type P, Input\+Type A, Input\+Type B, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Advance one time step using the augmented BDF method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a14beb5eee1f0e0ee329c0d1d8663acbc}{set\+Coefficients}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set BDF coefficients for variable step sizes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{Ode\+Integrator}} (Input\+Type n\+Steps, Input\+Type n\+Stages, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a29e0f42884572aa6418da51a428acbbb}{reset}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Reset the integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Update the solution history with a new solution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac0d618199b0699fcf2aa0013ef8c7890}{add}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Add a new solution at the newest position of history. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96}{advance}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance the timeline to the next time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a39eca9ca59e609cad4e242390c0ce320}{set\+Time\+Step}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Set time step for the integrator timeline. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab52c77a6e8ef389bfac7006e04c8d4ce}{set\+Rhs}} (Input\+Type obj, Input\+Type R, Input\+Type F, Input\+Type S)
+\begin{DoxyCompactList}\small\item\em Set right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a5492141163b4505a47788e7351373876}{stage}} (Input\+Type obj, Input\+Type i\+Stage)
+\begin{DoxyCompactList}\small\item\em Advance one stage of the integration method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac6ad5561eb9e84f540848ebc4dde8f6b}{step}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance one complete time step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a4e195e5c910a764ca2fb73e9794d9e5f}{alpha}}
+\begin{DoxyCompactList}\small\item\em Coefficients for previous solution values (row vector) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a01fe1fd35109ac5555e5a6f34ad50cac}{beta}}
+\begin{DoxyCompactList}\small\item\em Coefficient for current derivative evaluation (scalar) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aa137e220cfe632477cbc6b7724cd0fb2}{NSteps}}
+\begin{DoxyCompactList}\small\item\em Number of time steps required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a29d28968612078f90bd77e67ccfa223e}{NStages}}
+\begin{DoxyCompactList}\small\item\em Number of stages required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}
+\begin{DoxyCompactList}\small\item\em Timeline object for time step management. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}
+\begin{DoxyCompactList}\small\item\em Cell array of solution history. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4e583324d86e15c494bc228f09ba9b10}{Lhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_abf260e466ced7ed3896e4d30e0e8df96}{Rhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side mass term(s) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a9c07cbd5925ba0b9f2eb9099eedf38ce}{Solver}}
+\begin{DoxyCompactList}\small\item\em Stage-\/specific linear solvers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a8a39ab45e64d1ce1418925ac778a8a7d}{evaluate\+Lhs\+Mass}} (Input\+Type obj, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for left-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a7027a6cb5803fdc2a39502a6067543e9}{evaluate\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for right-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a98c737f7030604ab3da579a6934e3d29}{evaluate\+Operator}} (ignored\+Arg, Input\+Type O, Input\+Type U, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate a general operator (L, F, or S). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aafda7e9223fd5ed0a3f733bf7b2e995b}{should\+Update\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Check if Rhs mass cache should be updated. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4b2918a8135f078719c68f3e0e58351e}{set\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Update the Rhs mass operator cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad779fc8c865052aca2159e039601efd3}{get\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Retrieve mass operator from cache. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Backward Differentiation Formula integrator base class. 
+
+\doxylink{classapprox_1_1odeint_1_1_bdf_integrator}{Bdf\+Integrator} implements multi-\/step Backward Differentiation Formula (BDF) methods for solving ordinary differential equations of the form\+:
+
+\[\frac{\mathrm{d}(Mu)}{\mathrm{d}t} = Lu + S,
+\]
+
+where $M$ is a mass operator, $L$ is a linear operator, and $S$ is a source term. BDF methods use multiple previous time steps to achieve higher-\/ order accuracy and are A-\/stable, making them suitable for stiff problems.
+
+BDF methods are implicit and require solving linear systems at each time step. They are particularly effective for stiff ODEs where explicit methods would require prohibitively small time steps.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{approx.\+odeint.\+Ode\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_bdf2_integrator}{approx.\+odeint.\+Bdf2\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_be_integrator}{approx.\+odeint.\+Be\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_bdf_integrator_8m_source_l00029}{29}} of file \mbox{\hyperlink{_bdf_integrator_8m_source}{Bdf\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!BdfIntegrator@{BdfIntegrator}}
+\index{BdfIntegrator@{BdfIntegrator}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{BdfIntegrator()}{BdfIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::\+Bdf\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Steps}{, }\item[{Input\+Type}]{final}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1odeint_1_1_bdf_integrator}{Bdf\+Integrator}. 
+
+obj = Bdf\+Integrator(n\+Steps, final) creates a BDF integrator with the specified number of time steps and final time. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a14beb5eee1f0e0ee329c0d1d8663acbc}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setCoefficients@{setCoefficients}}
+\index{setCoefficients@{setCoefficients}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setCoefficients()}{setCoefficients()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a14beb5eee1f0e0ee329c0d1d8663acbc} 
+virtual function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+Coefficients (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set BDF coefficients for variable step sizes. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf2_integrator_a27ae5a027c56c78ea998bf5690c30f68}{approx\+::odeint\+::\+Bdf2\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf3_integrator_a211294411deb6212cf21362317d5484e}{approx\+::odeint\+::\+Bdf3\+Integrator}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a17f6a2432e728ca5510751aa54a515fd}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setLhs@{setLhs}}
+\index{setLhs@{setLhs}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setLhs()}{setLhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a17f6a2432e728ca5510751aa54a515fd} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+Lhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the left-\/hand side matrix for the BDF system. 
+
+obj = set\+Lhs(obj, L, M) constructs the left-\/hand side matrix as M -\/ dt\texorpdfstring{$\ast$}{*}beta\texorpdfstring{$\ast$}{*}L for the implicit BDF system. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a25c8c3d0c0b138c2d03d265e4bb03f94}{approx\+::odeint\+::\+Ode\+Integrator}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a06fa5feff9d50248e8e1e234075beb28}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setLhsA@{setLhsA}}
+\index{setLhsA@{setLhsA}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setLhsA()}{setLhsA()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a06fa5feff9d50248e8e1e234075beb28} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+LhsA (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{P}{, }\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{B}{}\end{DoxyParamCaption})}
+
+
+
+Set the left-\/hand side matrix for augmented BDF system. 
+
+obj = set\+Lhs\+A(obj, L, M, P, A, B) constructs the left-\/hand side matrix for augmented BDF systems with constraints. The system has the form\+:
+
+\[\begin{bmatrix}
+M - dt \cdot \beta \cdot L & -dt \cdot \beta \cdot P \\
+A & B
+\end{bmatrix}
+\] \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setRhs@{setRhs}}
+\index{setRhs@{setRhs}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhs()}{setRhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+Rhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Set the right-\/hand side vector for the BDF system. 
+
+obj = set\+Rhs(obj, S, M) constructs the right-\/hand side vector using the BDF approximation and source term. \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setRhsA@{setRhsA}}
+\index{setRhsA@{setRhsA}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhsA()}{setRhsA()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+RhsA (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{C}{}\end{DoxyParamCaption})}
+
+
+
+Set the right-\/hand side vector for augmented BDF system. 
+
+obj = set\+Rhs\+A(obj, S, M, C) constructs the right-\/hand side vector for augmented BDF systems with constraints using the BDF approximation and constraint source term {\itshape C}. \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!setTimeStep@{setTimeStep}}
+\index{setTimeStep@{setTimeStep}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{setTimeStep()}{setTimeStep()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::set\+Time\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Set time step and coefficients for the BDF integrator. 
+
+obj = set\+Time\+Step(obj, h=h, C=C) sets time step as dt = C\texorpdfstring{$\ast$}{*}h for dynamic timelines.
+
+obj = set\+Time\+Step(obj, h=h, C=C, p=p) sets time step as dt = C\texorpdfstring{$\ast$}{*}h\texorpdfstring{$^\wedge$}{\string^}p for dynamic timelines.
+
+obj = set\+Time\+Step(obj, dt=dt) directly sets the time step for manual control (use with caution). \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a14a45ae0fa02ff97e7a0379ffcce0fc8}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!stage@{stage}}
+\index{stage@{stage}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{stage()}{stage()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a14a45ae0fa02ff97e7a0379ffcce0fc8} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::stage (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Compute a single stage of the BDF method. 
+
+U = stage(obj, L, S, M) computes the solution at the current time step by solving the implicit BDF system. \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a226a1029f9c1f6fe4acbb974e910b71b}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!stageA@{stageA}}
+\index{stageA@{stageA}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{stageA()}{stageA()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a226a1029f9c1f6fe4acbb974e910b71b} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::stageA (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{P}{, }\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{B}{, }\item[{Input\+Type}]{C}{}\end{DoxyParamCaption})}
+
+
+
+Compute a single stage of the augmented BDF method. 
+
+U = stage\+A(obj, L, S, M, P, A, B, C) computes the solution at the current time step by solving the augmented implicit BDF system with constraints. The method handles coupled systems with constraint equations. \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!step@{step}}
+\index{step@{step}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Advance one time step using the BDF method. 
+
+U = step(obj, L, S, M) performs a complete time step by solving the implicit BDF system. For BDF methods, this is equivalent to computing a single stage. \Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a1afd51596667fefd3c283a7cbc77221a}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!stepA@{stepA}}
+\index{stepA@{stepA}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{stepA()}{stepA()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a1afd51596667fefd3c283a7cbc77221a} 
+function approx\+::odeint\+::\+Bdf\+Integrator\+::stepA (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{P}{, }\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{B}{, }\item[{Input\+Type}]{C}{}\end{DoxyParamCaption})}
+
+
+
+Advance one time step using the augmented BDF method. 
+
+U = step\+A(obj, L, S, M, P, A, B, C) performs a complete time step by solving the augmented implicit BDF system with constraints. For BDF methods, this is equivalent to computing a single stage. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a4e195e5c910a764ca2fb73e9794d9e5f}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!alpha@{alpha}}
+\index{alpha@{alpha}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a4e195e5c910a764ca2fb73e9794d9e5f} 
+Property approx\+::odeint\+::\+Bdf\+Integrator\+::alpha}
+
+
+
+Coefficients for previous solution values (row vector) 
+
+
+
+Definition at line \mbox{\hyperlink{_bdf_integrator_8m_source_l00033}{33}} of file \mbox{\hyperlink{_bdf_integrator_8m_source}{Bdf\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_bdf_integrator_a01fe1fd35109ac5555e5a6f34ad50cac}\index{approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}!beta@{beta}}
+\index{beta@{beta}!approx::odeint::BdfIntegrator@{approx::odeint::BdfIntegrator}}
+\doxysubsubsection{\texorpdfstring{beta}{beta}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_bdf_integrator_a01fe1fd35109ac5555e5a6f34ad50cac} 
+Property approx\+::odeint\+::\+Bdf\+Integrator\+::beta}
+
+
+
+Coefficient for current derivative evaluation (scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_bdf_integrator_8m_source_l00036}{36}} of file \mbox{\hyperlink{_bdf_integrator_8m_source}{Bdf\+Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+odeint/\mbox{\hyperlink{_bdf_integrator_8m}{Bdf\+Integrator.\+m}}\end{DoxyCompactItemize}

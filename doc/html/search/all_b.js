@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['h1element_0',['H1Element',['../classapprox_1_1element_1_1_h1_element.html',1,'approx::element::H1Element'],['../classapprox_1_1element_1_1_h1_element.html#a172be882134f98cd8b8e964d1e5a2295',1,'approx::element::H1Element::H1Element()']]],
+  ['h1element_2em_1',['H1Element.m',['../_h1_element_8m.html',1,'']]],
+  ['handles_2',['Handles',['../classcore_1_1symbolic_1_1_symbolic_function.html#ab35e8fa2afcaee6b16608887d097df04',1,'core::symbolic::SymbolicFunction']]],
+  ['hasconfig_3',['hasConfig',['../classphysics_1_1scheme_1_1_config_parser.html#a646bdb6d529feb5aad1d032d52d9802f',1,'physics::scheme::ConfigParser']]],
+  ['hasexact_4',['HasExact',['../classphysics_1_1analysis_1_1_analyzer.html#a2f65816574262b9536db254f606fcc38',1,'physics::analysis::Analyzer::HasExact'],['../classphysics_1_1visual_1_1_visualizer.html#a22617c3eb7d45f415e85d1ee4b8978ad',1,'physics::visual::Visualizer::HasExact']]],
+  ['hasfield_5',['hasField',['../classphysics_1_1visual_1_1_dataset.html#a37a785c820b326ca5766ffda0ec916a0',1,'physics::visual::Dataset']]],
+  ['hasfields_6',['hasFields',['../namespacecore_1_1except.html#a9b5a06b87137f0a28049312c7261279f',1,'core::except']]],
+  ['hasfields_2em_7',['hasFields.m',['../has_fields_8m.html',1,'']]],
+  ['hasstepsizechanged_8',['HasStepSizeChanged',['../classapprox_1_1mesh_1_1_dynamic_timeline.html#acbcaf13396b4c1e264c0337d95078c96',1,'approx::mesh::DynamicTimeline']]],
+  ['helper_20functions_9',['REFINEMENT HELPER FUNCTIONS',['../classapprox_1_1mesh_1_1_triangulation.html#autotoc_md0',1,'']]],
+  ['hermitebasis_10',['HermiteBasis',['../classcore_1_1function_1_1_hermite_basis.html',1,'core::function::HermiteBasis'],['../classcore_1_1symbolic_1_1_hermite_basis.html',1,'core::symbolic::HermiteBasis'],['../classcore_1_1symbolic_1_1_hermite_basis.html#a2f5a8c28e45ebd407b258297ac14a3e9',1,'core::symbolic::HermiteBasis::HermiteBasis()']]],
+  ['hermitebasis_2em_11',['HermiteBasis.m',['../_09function_2_hermite_basis_8m.html',1,'(Global Namespace)'],['../_09symbolic_2_hermite_basis_8m.html',1,'(Global Namespace)']]],
+  ['hermitestate_12',['HermiteState',['../classphysics_1_1vlasov_1_1_hermite_state.html',1,'physics::vlasov::HermiteState'],['../classphysics_1_1vlasov_1_1_hermite_state.html#aa764a92884b7e7da09ec84d58490477b',1,'physics::vlasov::HermiteState::HermiteState()']]],
+  ['hermitestate_2em_13',['HermiteState.m',['../_hermite_state_8m.html',1,'']]],
+  ['heunintegrator_14',['HeunIntegrator',['../classapprox_1_1odeint_1_1_heun_integrator.html',1,'approx::odeint::HeunIntegrator'],['../classapprox_1_1odeint_1_1_heun_integrator.html#af0a26c2920877b3305271fd0858e8f14',1,'approx::odeint::HeunIntegrator::HeunIntegrator()']]],
+  ['heunintegrator_2em_15',['HeunIntegrator.m',['../_heun_integrator_8m.html',1,'']]],
+  ['history_16',['History',['../classphysics_1_1state_1_1_state.html#a478f929bfa3ba08a9beba098e0fcdf8b',1,'physics::state::State']]],
+  ['hyperball_17',['Hyperball',['../classcore_1_1geometry_1_1_hyperball.html',1,'core::geometry::Hyperball'],['../classcore_1_1geometry_1_1_hyperball.html#aa615891aaa08c637bb24c9794111d16c',1,'core::geometry::Hyperball::Hyperball()']]],
+  ['hyperball_2em_18',['Hyperball.m',['../_hyperball_8m.html',1,'']]],
+  ['hypersphere_19',['Hypersphere',['../classcore_1_1geometry_1_1_hypersphere.html',1,'core::geometry::Hypersphere'],['../classcore_1_1geometry_1_1_hypersphere.html#a5baecdc707378aa8c5bf17771212eb74',1,'core::geometry::Hypersphere::Hypersphere()']]],
+  ['hypersphere_2em_20',['Hypersphere.m',['../_hypersphere_8m.html',1,'']]],
+  ['hypersphererule_21',['HypersphereRule',['../classapprox_1_1integrate_1_1_hypersphere_rule.html',1,'approx::integrate::HypersphereRule'],['../classapprox_1_1integrate_1_1_hypersphere_rule.html#a3e4563a15496165f69939897e5df19e9',1,'approx::integrate::HypersphereRule::HypersphereRule()']]],
+  ['hypersphererule_2em_22',['HypersphereRule.m',['../_hypersphere_rule_8m.html',1,'']]],
+  ['hypersphericalgeometry_23',['HypersphericalGeometry',['../classcore_1_1geometry_1_1_hyperspherical_geometry.html',1,'core::geometry::HypersphericalGeometry'],['../classcore_1_1geometry_1_1_hyperspherical_geometry.html#a4ab47e938fde7e04dac025900d2bb08e',1,'core::geometry::HypersphericalGeometry::HypersphericalGeometry()']]],
+  ['hypersphericalgeometry_2em_24',['HypersphericalGeometry.m',['../_hyperspherical_geometry_8m.html',1,'']]]
+];

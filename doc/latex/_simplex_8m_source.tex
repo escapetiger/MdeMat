@@ -1,0 +1,240 @@
+\doxysection{Simplex.\+m}
+\hypertarget{_simplex_8m_source}{}\label{_simplex_8m_source}\index{+core/+geometry/Simplex.m@{+core/+geometry/Simplex.m}}
+\mbox{\hyperlink{_simplex_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00001}00001\ classdef\ Simplex\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_polytope}{Polytope}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00002}00002\ \ \ \ \ \%\ SIMPLEX\ Geometry\ \textcolor{keywordflow}{for}\ n-\/dimensional\ simplex\ domains.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Simplex\ represents\ a\ generalized\ geometric\ domain\ that\ extends\ the}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \textcolor{keyword}{concept\ }of\ triangles\ and\ tetrahedra\ to\ arbitrary\ dimensions.\ It\ is}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ the\ simplest\ possible\ convex\ polytope\ in\ any\ given\ dimensional}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ space.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Dimensional\ Representations:}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ -\/\ In\ 1D:\ A\ line\ segment\ (2\ vertices)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ In\ 2D:\ A\ triangle\ (3\ vertices)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ In\ 3D:\ A\ tetrahedron\ (4\ vertices)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ In\ nD:\ An\ n-\/simplex\ (n+1\ vertices)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00015}00015\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.geometry.Polytope,\ \mbox{\hyperlink{namespacecore}{core}}.geometry.Orthotope}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00018}00018\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ NFaces\ \%\ Number\ of\ boundaries\ (nDims\ +\ 1)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ OuterNormals\ \%\ Outer\ normals\ of\ boundaries}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00022}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex}{00022}}\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00023}00023\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a58c7340fcf44bee3e4b667462f7d3d09}{Simplex}}(V)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SIMPLEX\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a58c7340fcf44bee3e4b667462f7d3d09}{Simplex}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00026}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a9f06c744bc6815ac05f153c120999135}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a58c7340fcf44bee3e4b667462f7d3d09}{Simplex}}(V)\ creates\ a\ simplex\ from\ the\ given\ vertices,}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ strict\ validation\ of\ vertex\ configuration.\ The}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00029}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_aae2ae8fa9124f01a1695a7a63a319e84}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vertices\ must\ be\ affinely\ independent\ and\ form\ a\ valid}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simplex.\ A\ nd-\/dimensional\ simplex\ \textcolor{keyword}{requires}\ exactly\ nd+1}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vertices.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ @a\ V\ parameter\ must\ be\ a\ matrix\ of\ size\ nd×(nd+1)\ where}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ each\ column\ represents\ a\ vertex.\ \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_ada0fa1fa145499229aad690f353ca767}{Vertices}}\ must\ be\ affinely}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ independent\ to\ ensure\ the\ simplex\ is\ non-\/degenerate.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(ismatrix(V),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Vertices\ must\ be\ a\ matrix.'});}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ [nd,\ nv]\ =\ size(V);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(nd+1\ ==\ nv,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Vertices\ must\ be\ of\ shape\ (\%d,\ \%d).'},\ nd,\ nd+1);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ V(:,\ 2:end)\ -\/\ V(:,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00049}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a58c7340fcf44bee3e4b667462f7d3d09}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(rank(E)\ >=\ nd,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Vertices\ must\ be\ affinely\ independent.'});}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ arrayfun(@(i)\ setdiff(1:nv,\ i),\ 1:nv,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_polytope}{Polytope}}(V,\ F);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ n\ =\ get.NFaces(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NFACES\ Returns\ the\ number\ of\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.NDims\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ N\ =\ get.OuterNormals(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.OUTNORMALS\ Returns\ the\ outward\ normals\ of\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.Vertices;}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ normal\ =\ zeros(nd,\ nd+1);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:(nd\ +\ 1)}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ setdiff(1:(nd\ +\ 1),\ i);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ V(:,\ idx);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ U(:,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ U(:,\ 2:end)\ -\/\ U0;}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ni\ =\ null(E.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ dot(U0-\/V(:,\ i),\ ni)\ <\ 0,\ ni\ =\ -\/ni;\ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normal(:,\ i)\ =\ ni\ /\ norm(ni);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ N\ =\ normal;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00080}00080\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ m\ =\ magnitude(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ MAGNITUDE\ Returns\ the\ volume\ of\ the\ simplex.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ =\ magnitude(obj)\ computes\ the\ n-\/dimensional\ volume\ of\ the}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simplex\ using\ the\ determinant\ formula.\ The\ volume\ is}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ calculated\ as\ \(\backslash\)f\$|det(E)|/nd!\(\backslash\)f\$\ where\ \(\backslash\)f\$E\(\backslash\)f\$\ is\ the}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ of\ edge\ vectors\ from\ one\ vertex\ to\ all\ others.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00088}00088\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00092}00092\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.Vertices;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ E\ =\ V(:,\ 2:end)\ -\/\ V(:,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ m\ =\ abs(det(E))\ /\ factorial(nd);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00098}00098\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ TF\ =\ isInside(obj,\ X)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00100}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a858af05cf8b74025267175a0e52307c9}{00100}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ISINSIDE\ Tests\ if\ points\ are\ inside\ the\ simplex.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ =\ isInside(obj,\ X)\ uses\ barycentric\ coordinates\ to}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ determine\ if\ points\ lie\ strictly\ within\ the\ interior\ of\ the}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simplex.\ Points\ are\ inside\ if\ all\ barycentric\ coordinates}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ are\ positive\ (greater\ than\ tolerance).}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00111}00111\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(X);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(nx(1)\ ==\ nd,\ '}DimensionMismatch\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Point\ dimension\ must\ match\ \mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}\ dimension.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00116}00116\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ sqrt(eps);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ obj.cartesianToBarycentric(X);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ all(B\ >\ tol,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00121}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a6ea3337731aafc990b686ae4fec1114e}{00121}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ TF\ =\ isOnBoundary(obj,\ X)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ISONBOUNDARY\ Tests\ if\ points\ are\ on\ the\ simplex\ boundary.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ =\ isOnBoundary(obj,\ X)\ uses\ barycentric\ coordinates\ to}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ determine\ if\ points\ lie\ exactly\ on\ the\ boundary\ faces\ of}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ simplex.\ Points\ are\ on\ the\ boundary\ if\ at\ least\ one}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ barycentric\ coordinate\ is\ zero\ (within\ tolerance).}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00134}00134\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(X);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(nx(1)\ ==\ nd,\ '}DimensionMismatch\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Point\ dimension\ must\ match\ \mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}\ dimension.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00139}00139\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ sqrt(eps);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ obj.cartesianToBarycentric(X);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ any(abs(B)\ <=\ tol,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00144}00144\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ B\ =\ cartesianToBarycentric(obj,\ C)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ CARTESIANTOBARYCENTRIC\ Converts\ Cartesian\ to\ barycentric}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00147}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_af29f3fa5be17c9d2d03682cf8d48ae4a}{00147}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ B\ =\ cartesianToBarycentric(obj,\ C)\ transforms\ points\ from}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Cartesian\ coordinates\ to\ barycentric\ coordinates\ with}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ respect\ to\ the\ simplex\ vertices.\ Barycentric\ coordinates}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sum\ to\ 1\ and\ are\ non-\/negative\ for\ interior\ points.\ Each}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00153}00153\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinate\ represents\ the\ weight\ of\ the\ corresponding}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vertex.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00155}00155\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00160}00160\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00162}00162\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(C);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(nx(1)\ ==\ nd,\ '}DimensionMismatch\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00164}00164\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Point\ dimension\ must\ match\ the\ simplex\ dimension.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00165}00165\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(C,\ nd,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00167}00167\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.Vertices;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ [V;\ ones(1,\ nd+1)];}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ [C;\ ones(1,\ size(C,\ 2))];}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00170}00170\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ A\ \(\backslash\)\ B;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx(1)\ =\ nd\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ reshape(B,\ nx);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00174}00174\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00175}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_a381d31c661abd513a49ba8a2030f21d5}{00175}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ C\ =\ barycentricToCartesian(obj,\ B)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00176}00176\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ BARYCENTRICTOCARTESIAN\ Converts\ barycentric\ to\ Cartesian}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00177}00177\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00179}00179\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ C\ =\ barycentricToCartesian(obj,\ B)\ transforms\ points\ from}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00180}00180\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ barycentric\ coordinates\ back\ to\ Cartesian\ coordinates.\ The}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00181}00181\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ barycentric\ coordinates\ must\ sum\ to\ 1\ and\ be\ non-\/negative}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ valid\ points\ within\ or\ on\ the\ simplex.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00183}00183\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00188}00188\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00189}00189\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00190}00190\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx\ =\ size(B);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00191}00191\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(nx(1)\ ==\ nd+1,\ '}DimensionMismatch\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00192}00192\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Barycentric\ coordinates\ must\ be\ \%d\textcolor{stringliteral}{',\ nd+1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00193}00193\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00194}00194\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ sqrt(eps);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ B\ =\ reshape(B,\ nd+1,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00196}00196\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(all(abs(sum(B,\ 1)-\/1)\ <=\ tol),\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}InvalidInput\textcolor{stringliteral}{',\ '}Barycentric\ coordinates\ must\ sum\ to\ 1.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00198}00198\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(all(B\ >=\ -\/tol),\ '}InvalidInput\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Barycentric\ coordinates\ should\ be\ non-\/negative.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.Vertices;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00201}00201\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ C\ =\ V\ *\ B;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nx(1)\ =\ nd;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(C,\ nx);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00205}\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex_aa55a20d80b3bc6a1fd7573c9d6e01370}{00205}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00206}00206\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ Y\ =\ transform(obj,\ X,\ V)}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ TRANSFORM\ Transform\ from\ reference\ coordinates\ to\ physical}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ transform(obj,\ X,\ V)\ transforms\ points\ from\ reference}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Cartesian\ coordinates\ to\ physical\ Cartesian\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00212}00212\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ core.geometry.Simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00215}00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ \{mustBeNumeric\}}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00218}00218\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ nd,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V0\ =\ obj.Vertices;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ b0\ =\ V0(:,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A0\ =\ V0(:,\ 2:end)\ -\/\ b0;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X\ =\ A0\ \(\backslash\)\ (X\ -\/\ b0);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00225}00225\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ reshape(V,\ nd,\ nd+1,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ b\ =\ V(:,\ 1,\ :);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ V(:,\ 2:end,\ :)\ -\/\ b;}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00228}00228\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ reshape(A,\ nd,\ nd,\ 1,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00229}00229\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ 1,\ nd,\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00230}00230\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ b\ =\ reshape(b,\ nd,\ 1,\ 1,\ []);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00231}00231\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ squeeze(sum(A\ .*\ X,\ 2)\ +\ b);}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00232}00232\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00233}00233\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_8m_source_l00234}00234\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

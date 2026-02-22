@@ -1,0 +1,69 @@
+\doxysection{Scaling\+Function.\+m}
+\hypertarget{_scaling_function_8m_source}{}\label{_scaling_function_8m_source}\index{+core/+function/ScalingFunction.m@{+core/+function/ScalingFunction.m}}
+\mbox{\hyperlink{_scaling_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00001}00001\ classdef\ ScalingFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00002}00002\ \ \ \ \ \%\ SCALING\ Function\ representing\ scaled\ coordinate\ transformations.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Scaling\ represents\ coordinate\ scaling\ transformations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00005}00005\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \ \ f(x)\ =\ g(x/\(\backslash\)lambda)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$g\(\backslash\)f\$\ is\ a\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}\ and\ \(\backslash\)f\$\(\backslash\)lambda\(\backslash\)f\$\ is\ a\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ positive\ scaling\ parameter.\ This\ transformation\ scales\ the\ input\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ coordinates\ by\ \(\backslash\)f\$1/\(\backslash\)lambda\(\backslash\)f\$\ before\ evaluating\ the\ base\ function.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ For\ derivatives,\ the\ chain\ rule\ gives:}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)partial\string^k\ f\}\{\(\backslash\)partial\ x\string^k\}(x)\ =\ \(\backslash\)frac\{1\}\{\(\backslash\)lambda\string^k\}\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)partial\string^k\ g\}\{\(\backslash\)partial\ u\string^k\}(x/\(\backslash\)lambda)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00020}00020\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.function.Function,\ \mbox{\hyperlink{namespacecore}{core}}.function.LinearFunction}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00023}00023\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ Base\ \%\ Base\ function\ (\mbox{\hyperlink{namespacecore}{core}}.function.Function)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ Lambda\ \%\ Scaling\ parameter\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00027}\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function}{00027}}\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a32dfae8a2721696b4d7ed4c299c3737e}{ScalingFunction}}(base,\ lambda)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCALING\ Constructor\ for\ the\ Scaling\ class.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00031}\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ Scaling(base,\ lambda)\ creates\ a\ scaling\ transformation}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ that\ represents\ f(x)\ =\ g(x/lambda)\ where\ @a\ base\ is\ a\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00034}\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}}\ and\ @a\ lambda\ is\ a\ positive\ scaling\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ parameter.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\{mustBeA(base,\ \textcolor{stringliteral}{"{}core.function.Function"{}})\}}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lambda\{mustBeNumeric,\ mustBePositive\}}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}}(nDims=base.\mbox{\hyperlink{classcore_1_1function_1_1_function_ac696d773a380623081b129e9d8c30690}{NDims}},\ nCodims=base.\mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}});}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Base\ =\ base;}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lambda\ =\ lambda;}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00046}00046\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00048}00048\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00049}\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a32dfae8a2721696b4d7ed4c299c3737e}{00049}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_abc500b4a154e52f9cd1650a90a508e9d}{evalImpl}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALIMPL\ Implementation\ of\ scaling\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42}{Base}}.\mbox{\hyperlink{classcore_1_1function_1_1_function_a37b7735289b78906d9ed5b2f91e406ef}{eval}}(X\ ./\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}{Lambda}});}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a8fe8f497d944986169286bc8d445d0a8}{diffImpl}}(obj,\ X,\ order)}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFFIMPL\ Implementation\ of\ scaling\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ derivative.}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ X\ /\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}{Lambda}};}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42}{Base}}.\mbox{\hyperlink{classcore_1_1function_1_1_function_a052de8682aaf2107291fe0e0ac6d100f}{diff}}(X,\ order);}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ dY./\ (obj.\mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}{Lambda}}\ \string^\ sum(order));}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00062}00062\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaling_function_8m_source_l00063}00063\ end}
+
+\end{DoxyCode}

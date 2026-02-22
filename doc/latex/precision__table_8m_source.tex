@@ -1,0 +1,63 @@
+\doxysection{precision\+\_\+table.\+m}
+\hypertarget{precision__table_8m_source}{}\label{precision__table_8m_source}\index{+core/+geometry/lebedev/precision\_table.m@{+core/+geometry/lebedev/precision\_table.m}}
+\mbox{\hyperlink{precision__table_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00001}00001\ function\ precision\ =\ \mbox{\hyperlink{namespacecore_1_1geometry_a0e473fbd39b228ce5cd3922f1feac323}{precision\_table}}\ (\ rule\ )}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00003}00003\ \%*****************************************************************************80}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00005}00005\ \%\%\ \mbox{\hyperlink{namespacecore_1_1geometry_a0e473fbd39b228ce5cd3922f1feac323}{precision\_table}}()\ returns\ the\ precision\ of\ a\ Lebedev\ rule.}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00007}00007\ \%\ \ Modified:}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00009}00009\ \%\ \ \ \ 15\ September\ 2010}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00011}00011\ \%\ \ Author:}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00013}00013\ \%\ \ \ \ John\ Burkardt}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00014}00014\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00015}00015\ \%\ \ Reference:}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00017}00017\ \%\ \ \ \ Vyacheslav\ Lebedev,\ Dmitri\ Laikov,}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00018}00018\ \%\ \ \ \ A\ quadrature\ formula\ for\ the\ sphere\ of\ the\ 131st}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00019}00019\ \%\ \ \ \ algebraic\ order\ of\ accuracy,}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00020}00020\ \%\ \ \ \ Russian\ Academy\ of\ Sciences\ Doklady\ Mathematics,}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00021}00021\ \%\ \ \ \ Volume\ 59,\ Number\ 3,\ 1999,\ pages\ 477-\/481.}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00022}00022\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00023}00023\ \%\ \ Input:}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00024}00024\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00025}00025\ \%\ \ \ \ integer\ RULE,\ the\ index\ of\ the\ rule,\ between\ 1\ and\ 65.}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00026}00026\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00027}00027\ \%\ \ Output:}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00028}00028\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00029}00029\ \%\ \ \ \ integer\ PRECISION,\ the\ precision\ of\ the\ rule.}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00030}00030\ \%}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00031}00031\ \ \ rule\_max\ =\ 65;}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00033}00033\ \ \ table\ =\ [\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00034}\mbox{\hyperlink{namespacecore_1_1geometry_a0e473fbd39b228ce5cd3922f1feac323}{00034}}\ \ \ \ \ \ \ 3,\ \ \ 5,\ \ \ 7,\ \ \ 9,\ \ 11,\ \ 13,\ \ 15,\ \ 17,\ \ 19,\ \ 21,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00035}00035\ \ \ \ \ \ 23,\ \ 25,\ \ 27,\ \ 29,\ \ 31,\ \ 33,\ \ 35,\ \ 37,\ \ 39,\ \ 41,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00036}00036\ \ \ \ \ \ 43,\ \ 45,\ \ 47,\ \ 49,\ \ 51,\ \ 53,\ \ 55,\ \ 57,\ \ 59,\ \ 61,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00037}00037\ \ \ \ \ \ 63,\ \ 65,\ \ 67,\ \ 69,\ \ 71,\ \ 73,\ \ 75,\ \ 77,\ \ 79,\ \ 81,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00038}00038\ \ \ \ \ \ 83,\ \ 85,\ \ 87,\ \ 89,\ \ 91,\ \ 93,\ \ 95,\ \ 97,\ \ 99,\ 101,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00039}00039\ \ \ \ \ 103,\ 105,\ 107,\ 109,\ 111,\ 113,\ 115,\ 117,\ 119,\ 121,\ ...}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00040}00040\ \ \ \ \ 123,\ 125,\ 127,\ 129,\ 131\ ]';}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00042}00042\ \ \ if\ (\ rule\ <\ 1\ )}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00043}00043\ \ \ \ \ fprintf\ (\ 1,\ \textcolor{charliteral}{'\(\backslash\)n'}\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00044}00044\ \ \ \ \ fprintf\ (\ 1,\ 'PRECISION\_TABLE\ -\/\ Fatal\ error!\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00045}00045\ \ \ \ \ fprintf\ (\ 1,\ '\ \ RULE\ <\ 1.\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00046}00046\ \ \ \ \ error\ (\ 'PRECISION\_TABLE\ -\/\ Fatal\ error!'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00047}00047\ \ \ elseif\ (\ rule\_max\ <\ rule\ )}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00048}00048\ \ \ \ \ fprintf\ (\ 1,\ \textcolor{charliteral}{'\(\backslash\)n'}\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00049}00049\ \ \ \ \ fprintf\ (\ 1,\ 'PRECISION\_TABLE\ -\/\ Fatal\ error!\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00050}00050\ \ \ \ \ fprintf\ (\ 1,\ '\ \ RULE\_MAX\ <\ RULE.\(\backslash\)n'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00051}00051\ \ \ \ \ error\ (\ 'PRECISION\_TABLE\ -\/\ Fatal\ error!'\ );}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00052}00052\ \ \ end}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00054}00054\ \ \ precision\ =\ table(rule);}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00056}00056\ \ \ return}
+\DoxyCodeLine{\Hypertarget{precision__table_8m_source_l00057}00057\ end}
+
+\end{DoxyCode}

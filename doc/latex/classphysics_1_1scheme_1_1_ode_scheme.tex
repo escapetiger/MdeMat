@@ -1,0 +1,357 @@
+\doxysection{physics\+::scheme\+::Ode\+Scheme Class Reference}
+\hypertarget{classphysics_1_1scheme_1_1_ode_scheme}{}\label{classphysics_1_1scheme_1_1_ode_scheme}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+
+
+Base class for ODE integration schemes.  
+
+
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}.
+
+
+
+Inherited by \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{physics\+::scheme\+::\+Mol\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_aa1f3e3fa9fbe1a222a0664407a881cbc}{Ode\+Scheme}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a55322cfe80e67369604bbb9cfd58dc15}{Scheme}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a2e63c8f1fffcc0e9b2fc6663ae9d939c}{load}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Load configuration from file and/or struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a4533fefb6e13f6f4f76fa5c69e535ac5}{load\+From\+Struct}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Load configuration from struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a3d069ec440f52ff164e9b8a812ffee8e}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_acd05c437988563b7959fc4aaf6eedbea}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a5dac6ca9fc5c65773e6bb43833fa8916}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_aa3f9ef4a35ba1b5a479789a3820f7cdc}{finalize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Finalize scheme and solution state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{physics\+::scheme\+::\+Config\+Parser}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{Config\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9}{load\+From\+File}} (Input\+Type obj, Input\+Type file)
+\begin{DoxyCompactList}\small\item\em Load configuration from file and add options to Config. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{add\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Add configuration option with default value and validator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f}{has\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Check if configuration option exists. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308}{get\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Get configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f}{set\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type value)
+\begin{DoxyCompactList}\small\item\em Set configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Remove all MATLAB paths added during parsing operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a7f3d409d89574d1270d5e15ca4634ba4}{get\+Ode\+Int\+Class}} (Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Map ode\+Int name to class name. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_acf012ea6cdb80e8dcb166131cc28a380}{get\+Split\+Class}} (Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Map splitting name to class name. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a32098c81e8e81381f2861c72a4c3fb5f}{is\+Valid\+Ode\+Int\+Name}} (Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Check if ODE integrator name is valid. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a06ebd850a316ae8baf36c4e37cdf168b}{is\+Valid\+Split\+Name}} (Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Check if splitting method name is valid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a3849d593d9235b22fa96ea76efc208e3}{L}}
+\begin{DoxyCompactList}\small\item\em Linear term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_aab31c14e9efc891f860848e4d2795326}{F}}
+\begin{DoxyCompactList}\small\item\em Nonlinear term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ab666243a520e63fd09ba594aa8149995}{S}}
+\begin{DoxyCompactList}\small\item\em Source term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102}{M}}
+\begin{DoxyCompactList}\small\item\em Mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a234fcc01ec51507941812eff134b4fcb}{Is\+Fully\+Implicit}}
+\begin{DoxyCompactList}\small\item\em Check fully implicit temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_afee4867bf0a5b2c4d1f912a118555510}{Is\+Bdf}}
+\begin{DoxyCompactList}\small\item\em Check BDF temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a7c91cecc3015cae21c20de95ebf42670}{Is\+Dirk}}
+\begin{DoxyCompactList}\small\item\em Check DIRK temporal discretization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{physics\+::scheme\+::\+Config\+Parser}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}
+\begin{DoxyCompactList}\small\item\em Struct containing all parsed configuration options. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3}{Validators}}
+\begin{DoxyCompactList}\small\item\em Struct containing validator functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a73caf0287a5f4b95e9acfbc04dd732ae}{setup}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Setup default configuration options for ODE schemes. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a4439fb2b94d6641c0af0a34c93cab5a4}{configure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate ODE-\/specific configuration dependencies. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ab4fdad37a82ac5163c494b65229a8e13}{validate\+Ode\+Int\+Name}} (Input\+Type obj, Input\+Type value)
+\begin{DoxyCompactList}\small\item\em Validate ODE integrator name(s). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ab15ba810383bc88cb6620b5e32ffb0ca}{validate\+Split\+Name}} (Input\+Type obj, Input\+Type value)
+\begin{DoxyCompactList}\small\item\em Validate splitting method name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a0318e3a4d681d6f3238361954945871e}{setup}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Setup default configuration options. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a93008252b6a8f4f434cd3fdc0e0d01ec}{configure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate configuration dependencies and validate setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for ODE integration schemes. 
+
+\doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme} provides the fundamental framework for ordinary differential equation integration schemes. It defines the common interface and workflow for all concrete ODE scheme implementations.
+
+The class manages temporal discretization through various ODE integration methods including backward Euler, BDF, SDIRK, forward Euler, Heun, and SSPRK schemes. It also supports operator splitting methods for multi-\/physics problems.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1scheme_1_1_scheme}{physics.\+scheme.\+Scheme} 
+
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{approx.\+odeint.\+Ode\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00020}{20}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_aa1f3e3fa9fbe1a222a0664407a881cbc}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!OdeScheme@{OdeScheme}}
+\index{OdeScheme@{OdeScheme}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{OdeScheme()}{OdeScheme()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_aa1f3e3fa9fbe1a222a0664407a881cbc} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::\+Ode\+Scheme (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}. 
+
+obj = \doxylink{classphysics_1_1scheme_1_1_ode_scheme_aa1f3e3fa9fbe1a222a0664407a881cbc}{Ode\+Scheme()} creates an ODE scheme with default configuration.
+
+obj = \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}(file=file) creates an ODE scheme and loads configuration from the specified {\itshape filename}.
+
+obj = \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}(config=config) creates an ODE scheme with the specified {\itshape config} configuration.
+
+obj = \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}(file=file, config=config) loads configuration from file and then overrides with struct values. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a4439fb2b94d6641c0af0a34c93cab5a4}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!configure@{configure}}
+\index{configure@{configure}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{configure()}{configure()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a4439fb2b94d6641c0af0a34c93cab5a4} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::configure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Generate ODE-\/specific configuration dependencies. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a7f3d409d89574d1270d5e15ca4634ba4}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!getOdeIntClass@{getOdeIntClass}}
+\index{getOdeIntClass@{getOdeIntClass}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{getOdeIntClass()}{getOdeIntClass()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a7f3d409d89574d1270d5e15ca4634ba4} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::get\+Ode\+Int\+Class (\begin{DoxyParamCaption}\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Map ode\+Int name to class name. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_acf012ea6cdb80e8dcb166131cc28a380}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!getSplitClass@{getSplitClass}}
+\index{getSplitClass@{getSplitClass}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{getSplitClass()}{getSplitClass()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_acf012ea6cdb80e8dcb166131cc28a380} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::get\+Split\+Class (\begin{DoxyParamCaption}\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Map splitting name to class name. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a32098c81e8e81381f2861c72a4c3fb5f}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!isValidOdeIntName@{isValidOdeIntName}}
+\index{isValidOdeIntName@{isValidOdeIntName}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{isValidOdeIntName()}{isValidOdeIntName()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a32098c81e8e81381f2861c72a4c3fb5f} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::is\+Valid\+Ode\+Int\+Name (\begin{DoxyParamCaption}\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if ODE integrator name is valid. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a06ebd850a316ae8baf36c4e37cdf168b}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!isValidSplitName@{isValidSplitName}}
+\index{isValidSplitName@{isValidSplitName}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{isValidSplitName()}{isValidSplitName()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a06ebd850a316ae8baf36c4e37cdf168b} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::is\+Valid\+Split\+Name (\begin{DoxyParamCaption}\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if splitting method name is valid. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a73caf0287a5f4b95e9acfbc04dd732ae}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!setup@{setup}}
+\index{setup@{setup}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a73caf0287a5f4b95e9acfbc04dd732ae} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::setup (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Setup default configuration options for ODE schemes. 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_ab4fdad37a82ac5163c494b65229a8e13}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!validateOdeIntName@{validateOdeIntName}}
+\index{validateOdeIntName@{validateOdeIntName}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{validateOdeIntName()}{validateOdeIntName()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_ab4fdad37a82ac5163c494b65229a8e13} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::validate\+Ode\+Int\+Name (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Validate ODE integrator name(s). 
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_ab15ba810383bc88cb6620b5e32ffb0ca}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!validateSplitName@{validateSplitName}}
+\index{validateSplitName@{validateSplitName}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{validateSplitName()}{validateSplitName()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_ab15ba810383bc88cb6620b5e32ffb0ca} 
+function physics\+::scheme\+::\+Ode\+Scheme\+::validate\+Split\+Name (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Validate splitting method name. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_aab31c14e9efc891f860848e4d2795326}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!F@{F}}
+\index{F@{F}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{F}{F}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_aab31c14e9efc891f860848e4d2795326} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::F}
+
+
+
+Nonlinear term. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00030}{30}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_afee4867bf0a5b2c4d1f912a118555510}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!IsBdf@{IsBdf}}
+\index{IsBdf@{IsBdf}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{IsBdf}{IsBdf}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_afee4867bf0a5b2c4d1f912a118555510} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::\+Is\+Bdf}
+
+
+
+Check BDF temporal discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00045}{45}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a7c91cecc3015cae21c20de95ebf42670}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!IsDirk@{IsDirk}}
+\index{IsDirk@{IsDirk}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{IsDirk}{IsDirk}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a7c91cecc3015cae21c20de95ebf42670} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::\+Is\+Dirk}
+
+
+
+Check DIRK temporal discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00048}{48}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a234fcc01ec51507941812eff134b4fcb}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!IsFullyImplicit@{IsFullyImplicit}}
+\index{IsFullyImplicit@{IsFullyImplicit}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{IsFullyImplicit}{IsFullyImplicit}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a234fcc01ec51507941812eff134b4fcb} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::\+Is\+Fully\+Implicit}
+
+
+
+Check fully implicit temporal discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00042}{42}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a3849d593d9235b22fa96ea76efc208e3}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!L@{L}}
+\index{L@{L}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{L}{L}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a3849d593d9235b22fa96ea76efc208e3} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::L}
+
+
+
+Linear term. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00027}{27}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!M@{M}}
+\index{M@{M}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{M}{M}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::M}
+
+
+
+Mass term. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00036}{36}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_ab666243a520e63fd09ba594aa8149995}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!S@{S}}
+\index{S@{S}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_ab666243a520e63fd09ba594aa8149995} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::S}
+
+
+
+Source term. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00033}{33}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}\index{physics::scheme::OdeScheme@{physics::scheme::OdeScheme}!TDisc@{TDisc}}
+\index{TDisc@{TDisc}!physics::scheme::OdeScheme@{physics::scheme::OdeScheme}}
+\doxysubsubsection{\texorpdfstring{TDisc}{TDisc}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907} 
+Property physics\+::scheme\+::\+Ode\+Scheme\+::\+TDisc}
+
+
+
+Temporal discretization. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_scheme_8m_source_l00024}{24}} of file \mbox{\hyperlink{_ode_scheme_8m_source}{Ode\+Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+scheme/\mbox{\hyperlink{_ode_scheme_8m}{Ode\+Scheme.\+m}}\end{DoxyCompactItemize}

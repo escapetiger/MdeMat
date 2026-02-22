@@ -1,0 +1,165 @@
+\doxysection{core\+::linalg\+::Linear\+Solver Class Reference}
+\hypertarget{classcore_1_1linalg_1_1_linear_solver}{}\label{classcore_1_1linalg_1_1_linear_solver}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+
+
+Adaptive linear solver with AMG preconditioning.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_ab6ae8f72b85df8b924edd311a3bbabbb}{Linear\+Solver}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_a813a4b5fb6f41c844aa0d707255e6c1f}{solve}} (Input\+Type obj, Input\+Type A, Input\+Type b)
+\begin{DoxyCompactList}\small\item\em Solve linear system using adaptive method selection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_af1f10ceefe932680c1db729a244fc737}{fast\+Condest}} (Input\+Type A)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_a045dccfb4b43602d5ac0fc49affa1e84}{Nnz\+Th}}
+\begin{DoxyCompactList}\small\item\em Sparsity threshold for direct vs iterative method selection. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_a7ce32f4f0dfe16d2b43058dccb9293d2}{Cond\+Th}}
+\begin{DoxyCompactList}\small\item\em Condition number threshold for preconditioner activation. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_ac3e8b4040422d8e58e97c5366d381a9f}{Is\+Spd}}
+\begin{DoxyCompactList}\small\item\em Symmetric positive definite matrix indicator. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_ac6182906b67120ae17c330261cc824d6}{Iter\+Opts}}
+\begin{DoxyCompactList}\small\item\em Options structure for iterative solver. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver_a5c37502870ac6767c13b6d6014629777}{Amg\+Opts}}
+\begin{DoxyCompactList}\small\item\em Options structure for AMG preconditioner. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Adaptive linear solver with AMG preconditioning. 
+
+\doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver} automatically detects matrix properties like sparsity and condition number to choose between direct methods and iterative methods with optional AMG preconditioning for optimal performance.
+
+The solver uses sparsity and condition number thresholds to determine the optimal solution strategy, with optional preconditioner caching for repeated solves with similar matrices. 
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00016}{16}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_ab6ae8f72b85df8b924edd311a3bbabbb}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!LinearSolver@{LinearSolver}}
+\index{LinearSolver@{LinearSolver}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{LinearSolver()}{LinearSolver()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_ab6ae8f72b85df8b924edd311a3bbabbb} 
+function core\+::linalg\+::\+Linear\+Solver\+::\+Linear\+Solver (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver}. 
+
+obj = \doxylink{classcore_1_1linalg_1_1_linear_solver_ab6ae8f72b85df8b924edd311a3bbabbb}{Linear\+Solver()} creates \doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver} with default settings.
+
+obj = \doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver}(Name=Value) creates \doxylink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver} with specified options using {\itshape Name} and {\itshape Value} pairs. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_af1f10ceefe932680c1db729a244fc737}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!fastCondest@{fastCondest}}
+\index{fastCondest@{fastCondest}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{fastCondest()}{fastCondest()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_af1f10ceefe932680c1db729a244fc737} 
+function core\+::linalg\+::\+Linear\+Solver\+::fast\+Condest (\begin{DoxyParamCaption}\item[{Input\+Type}]{A}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_a813a4b5fb6f41c844aa0d707255e6c1f}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!solve@{solve}}
+\index{solve@{solve}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{solve()}{solve()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_a813a4b5fb6f41c844aa0d707255e6c1f} 
+function core\+::linalg\+::\+Linear\+Solver\+::solve (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Solve linear system using adaptive method selection. 
+
+x = solve(\+A, b) solves the linear system {\itshape A} \texorpdfstring{$\ast$}{*} x = {\itshape b} using automatic method selection based on matrix properties. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_a5c37502870ac6767c13b6d6014629777}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!AmgOpts@{AmgOpts}}
+\index{AmgOpts@{AmgOpts}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{AmgOpts}{AmgOpts}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_a5c37502870ac6767c13b6d6014629777} 
+Property core\+::linalg\+::\+Linear\+Solver\+::\+Amg\+Opts}
+
+
+
+Options structure for AMG preconditioner. 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00032}{32}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_a7ce32f4f0dfe16d2b43058dccb9293d2}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!CondTh@{CondTh}}
+\index{CondTh@{CondTh}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{CondTh}{CondTh}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_a7ce32f4f0dfe16d2b43058dccb9293d2} 
+Property core\+::linalg\+::\+Linear\+Solver\+::\+Cond\+Th}
+
+
+
+Condition number threshold for preconditioner activation. 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00023}{23}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_ac3e8b4040422d8e58e97c5366d381a9f}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!IsSpd@{IsSpd}}
+\index{IsSpd@{IsSpd}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{IsSpd}{IsSpd}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_ac3e8b4040422d8e58e97c5366d381a9f} 
+Property core\+::linalg\+::\+Linear\+Solver\+::\+Is\+Spd}
+
+
+
+Symmetric positive definite matrix indicator. 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00026}{26}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_ac6182906b67120ae17c330261cc824d6}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!IterOpts@{IterOpts}}
+\index{IterOpts@{IterOpts}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{IterOpts}{IterOpts}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_ac6182906b67120ae17c330261cc824d6} 
+Property core\+::linalg\+::\+Linear\+Solver\+::\+Iter\+Opts}
+
+
+
+Options structure for iterative solver. 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00029}{29}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_linear_solver_a045dccfb4b43602d5ac0fc49affa1e84}\index{core::linalg::LinearSolver@{core::linalg::LinearSolver}!NnzTh@{NnzTh}}
+\index{NnzTh@{NnzTh}!core::linalg::LinearSolver@{core::linalg::LinearSolver}}
+\doxysubsubsection{\texorpdfstring{NnzTh}{NnzTh}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_linear_solver_a045dccfb4b43602d5ac0fc49affa1e84} 
+Property core\+::linalg\+::\+Linear\+Solver\+::\+Nnz\+Th}
+
+
+
+Sparsity threshold for direct vs iterative method selection. 
+
+
+
+Definition at line \mbox{\hyperlink{_linear_solver_8m_source_l00020}{20}} of file \mbox{\hyperlink{_linear_solver_8m_source}{Linear\+Solver.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+linalg/\mbox{\hyperlink{_linear_solver_8m}{Linear\+Solver.\+m}}\end{DoxyCompactItemize}

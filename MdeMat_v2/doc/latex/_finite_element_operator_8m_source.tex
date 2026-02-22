@@ -1,0 +1,58 @@
+\doxysection{Finite\+Element\+Operator.\+m}
+\hypertarget{_finite_element_operator_8m_source}{}\label{_finite_element_operator_8m_source}\index{+fem/+element/FiniteElementOperator.m@{+fem/+element/FiniteElementOperator.m}}
+\mbox{\hyperlink{_finite_element_operator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00001}00001\ classdef\ FiniteElementOperator\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00002}00002\ \ \ \ \ \%\ FINITEELEMENTOPERATOR\ Base\ \textcolor{keyword}{class\ }for\ finite\ element\ operators.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ FiniteElementOperator\ provides\ a\ foundation\ \textcolor{keywordflow}{for}\ operators\ that\ act}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ on\ finite\ element\ spaces,\ such\ as\ gradient,\ divergence,\ curl,\ and}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ other\ differential\ operators.\ This\ abstract\ base\ \textcolor{keyword}{class\ }maintains}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ a\ reference\ to\ the\ underlying\ finite\ element\ and\ provides\ common}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ functionality\ \textcolor{keywordflow}{for}\ all\ derived\ \textcolor{keyword}{operator}\ classes.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ Finite\ element\ operators\ encapsulate\ the\ discrete\ forms\ of}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ differential\ operators,\ enabling\ efficient\ computation\ of\ terms}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ in\ weak\ formulations\ of\ partial\ differential\ equations.\ They}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ bridge\ the\ gap\ between\ continuous\ differential\ operators\ and}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ their\ discrete\ matrix\ representations.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00016}00016\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_operator}{C0FiniteElementOperator}},\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_operator}{L2FiniteElementOperator}},}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator}{SemiLagrangianFiniteElementOperator}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00020}00020\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ fe\ \%\ Finite\ element\ \textcolor{keywordtype}{object}\ on\ which\ the\ \textcolor{keyword}{operator}\ acts}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00022}00022\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00024}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator}{00024}}\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a085d60e44af7d95abca0300f19aa1bb3}{nDofs}}\ \%\ Number\ of\ degrees\ of\ freedom\ (dependent\ property)}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00028}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{00028}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{FiniteElementOperator}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}})}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINITEELEMENTOPERATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{FiniteElementOperator}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{FiniteElementOperator}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}})\ creates\ a\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator}\ associated\ with\ the\ specified\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00034}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a085d60e44af7d95abca0300f19aa1bb3}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ constructor\ is\ called\ by\ concrete\ subclasses\ to}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ initialize\ the\ base\ \textcolor{keyword}{class\ }functionality.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}}\ -\/\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ object\ (\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{FiniteElement}})}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{FiniteElementOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ obj.fe\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}};}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Get\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.fe.nDofs;}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00051}\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{00051}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_finite_element_operator_8m_source_l00052}00052\ end}
+
+\end{DoxyCode}

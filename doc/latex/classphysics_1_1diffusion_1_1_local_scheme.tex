@@ -1,0 +1,226 @@
+\doxysection{physics\+::diffusion\+::Local\+Scheme Class Reference}
+\hypertarget{classphysics_1_1diffusion_1_1_local_scheme}{}\label{classphysics_1_1diffusion_1_1_local_scheme}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+
+
+Local scheme for diffusion equations.  
+
+
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1diffusion_1_1_diffusion_scheme}{physics\+::diffusion\+::\+Diffusion\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a64fd2f2f45cee622644cced5fa94a66c}{Local\+Scheme}} (Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1diffusion_1_1_local_scheme}{Local\+Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a3c847264c6cdee127807c79c93b921fa}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the local scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a5ba6eb4b8f6fc4d1a9d0f409909e2865}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a8456fbbf810afbb64953d7aa0e54e0ce}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a6290c3973a12a62fb2f234235e4c6908}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a2a378d0b731509b0353c491bfe98345d}{finalize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Finalize simulation with scheme and state reporting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{physics\+::scheme\+::\+Mol\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5d92746fa6d7f0d0244a4fd57945137e}{plot}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Generate visualization for current solution state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{run}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute Method of Lines simulation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a08bb3eeff096fa5c3374a814494e0bd3}{converge}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute convergence study with mesh refinement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{physics\+::scheme\+::\+Ode\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_aeae3e3fae7b572bbf41e5023c2b33df1}{Ode\+Scheme}} (Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1scheme_1_1_ode_scheme}{Ode\+Scheme}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a1046eeaf48f6d0d311d0c422f797acf5}{Scheme}} (Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a3d069ec440f52ff164e9b8a812ffee8e}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_acd05c437988563b7959fc4aaf6eedbea}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a5dac6ca9fc5c65773e6bb43833fa8916}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after each step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_aa3f9ef4a35ba1b5a479789a3820f7cdc}{finalize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Finalize scheme and solution state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1diffusion_1_1_local_scheme_a5a6440c8e3c7284788b52bec7a64192b}{Assembly}}
+\begin{DoxyCompactList}\small\item\em Diffusion assembly. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{physics\+::scheme\+::\+Ode\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a3849d593d9235b22fa96ea76efc208e3}{L}}
+\begin{DoxyCompactList}\small\item\em Linear term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_aab31c14e9efc891f860848e4d2795326}{F}}
+\begin{DoxyCompactList}\small\item\em Nonlinear term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ab666243a520e63fd09ba594aa8149995}{S}}
+\begin{DoxyCompactList}\small\item\em Source term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102}{M}}
+\begin{DoxyCompactList}\small\item\em Mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a234fcc01ec51507941812eff134b4fcb}{Is\+Fully\+Implicit}}
+\begin{DoxyCompactList}\small\item\em Check fully implicit temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_afee4867bf0a5b2c4d1f912a118555510}{Is\+Bdf}}
+\begin{DoxyCompactList}\small\item\em Check BDF temporal discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a7c91cecc3015cae21c20de95ebf42670}{Is\+Dirk}}
+\begin{DoxyCompactList}\small\item\em Check DIRK temporal discretization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a407e25a5eb5a84b5a501d3a95e9b1bf7}{Config}}
+\begin{DoxyCompactList}\small\item\em Configuration structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{physics\+::scheme\+::\+Ode\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a618776c9f11d222e6097b99830107170}{get\+Ode\+Int\+Class}} (Input\+Type ode\+Int\+Name)
+\begin{DoxyCompactList}\small\item\em Map ode\+Int name to class name. \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ae797b1a2e8ccd02c99614b9743839117}{get\+Split\+Class}} (Input\+Type split\+Name)
+\begin{DoxyCompactList}\small\item\em Map splitting name to class name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1diffusion_1_1_diffusion_scheme}{physics\+::diffusion\+::\+Diffusion\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1diffusion_1_1_diffusion_scheme_a9f058f7709495f87401aeb421698a164}{configure}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Check and parse the contained configuration struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{physics\+::scheme\+::\+Mol\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a4a6c08f1dea7a31219f75a3c40e46fdd}{configure}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Check and parse the contained configuration struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5a505ab819ed58e5a8cc282dcd58f334}{echo}} (Input\+Type obj, Input\+Type runtime)
+\begin{DoxyCompactList}\small\item\em Generate status message for current time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a21826a284fe3ec30e7ad7dd98ec36a00}{precompute}} (Input\+Type obj, Input\+Type space, Input\+Type dofs)
+\begin{DoxyCompactList}\small\item\em Compute temporal interpolation data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{physics\+::scheme\+::\+Ode\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_ad50e44d74090b51154f0bc60b30f8abe}{configure}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Check and parse the contained configuration struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_ad5e5306ed5b4c4c0b225fd69518e7ec6}{configure}} (Input\+Type obj, Input\+Type config)
+\begin{DoxyCompactList}\small\item\em Check and parse the contained configuration struct. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8fa7b68258cb05eb176c8f3f73c093f8}{parse}} (Input\+Type obj, Input\+Type config, Input\+Type name, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Parse a configuration parameter from struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Local scheme for diffusion equations. 
+
+\doxylink{classphysics_1_1diffusion_1_1_local_scheme}{Local\+Scheme} implements a local finite element method for solving diffusion equations using discontinuous Galerkin discretization. The scheme supports both periodic and Dirichlet boundary conditions with elliptic assembly operations.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1diffusion_1_1_diffusion_scheme}{physics.\+diffusion.\+Diffusion\+Scheme} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_local_scheme_8m_source_l00015}{15}} of file \mbox{\hyperlink{_local_scheme_8m_source}{Local\+Scheme.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a64fd2f2f45cee622644cced5fa94a66c}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!LocalScheme@{LocalScheme}}
+\index{LocalScheme@{LocalScheme}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{LocalScheme()}{LocalScheme()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a64fd2f2f45cee622644cced5fa94a66c} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::\+Local\+Scheme (\begin{DoxyParamCaption}\item[{Input\+Type}]{config}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classphysics_1_1diffusion_1_1_local_scheme}{Local\+Scheme}. 
+
+obj = Local\+Scheme(config) creates a local scheme with the specified configuration structure. Inherits ODE integration capabilities from Ode\+Scheme. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a2a378d0b731509b0353c491bfe98345d}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!finalize@{finalize}}
+\index{finalize@{finalize}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a2a378d0b731509b0353c491bfe98345d} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::finalize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Finalize simulation with scheme and state reporting. 
+
+state = finalize(obj, state) performs final reporting including scheme configuration details and state information summary. \Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a3c847264c6cdee127807c79c93b921fa}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!initialize@{initialize}}
+\index{initialize@{initialize}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a3c847264c6cdee127807c79c93b921fa} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::initialize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the local scheme. 
+
+state = initialize(obj, state) sets up the local scheme by assembling the local diffusion operator, fitting initial conditions, and preparing visualization components. \Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a6290c3973a12a62fb2f234235e4c6908}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!postStep@{postStep}}
+\index{postStep@{postStep}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{postStep()}{postStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a6290c3973a12a62fb2f234235e4c6908} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::post\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Postprocess operations after time step. 
+
+state = post\+Step(obj, state) performs postprocessing including visualization updates and timeline advancement for the next integration step. \Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a5ba6eb4b8f6fc4d1a9d0f409909e2865}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!preStep@{preStep}}
+\index{preStep@{preStep}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{preStep()}{preStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a5ba6eb4b8f6fc4d1a9d0f409909e2865} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::pre\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Preprocess operations before time step. 
+
+state = pre\+Step(obj, state) performs preprocessing including time step size computation based on CFL condition and coefficient updates for multi-\/step methods. \Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a8456fbbf810afbb64953d7aa0e54e0ce}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!step@{step}}
+\index{step@{step}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a8456fbbf810afbb64953d7aa0e54e0ce} 
+function physics\+::diffusion\+::\+Local\+Scheme\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Perform one time step. 
+
+state = step(obj, state) advances the solution by one time step using the upwind scheme. The method updates the solution history and applies the diffusion operator with appropriate boundary conditions. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1diffusion_1_1_local_scheme_a5a6440c8e3c7284788b52bec7a64192b}\index{physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}!Assembly@{Assembly}}
+\index{Assembly@{Assembly}!physics::diffusion::LocalScheme@{physics::diffusion::LocalScheme}}
+\doxysubsubsection{\texorpdfstring{Assembly}{Assembly}}
+{\footnotesize\ttfamily \label{classphysics_1_1diffusion_1_1_local_scheme_a5a6440c8e3c7284788b52bec7a64192b} 
+Property physics\+::diffusion\+::\+Local\+Scheme\+::\+Assembly}
+
+
+
+Diffusion assembly. 
+
+
+
+Definition at line \mbox{\hyperlink{_local_scheme_8m_source_l00019}{19}} of file \mbox{\hyperlink{_local_scheme_8m_source}{Local\+Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+diffusion/\mbox{\hyperlink{_local_scheme_8m}{Local\+Scheme.\+m}}\end{DoxyCompactItemize}

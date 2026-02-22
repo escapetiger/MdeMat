@@ -1,0 +1,80 @@
+\doxysection{Sdirk4\+Integrator.\+m}
+\hypertarget{_sdirk4_integrator_8m_source}{}\label{_sdirk4_integrator_8m_source}\index{+approx/+odeint/Sdirk4Integrator.m@{+approx/+odeint/Sdirk4Integrator.m}}
+\mbox{\hyperlink{_sdirk4_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00001}00001\ classdef\ Sdirk4Integrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ SDIRK4INTEGRATOR\ Fourth-\/order\ SDIRK\ integrator.}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Sdirk4Integrator\ implements\ a\ fourth-\/order\ SDIRK\ method\ with\ five}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ stages\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ S,}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},\ and}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f\$S\(\backslash\)f\$\ is\ a\ source\ term.\ This\ method\ provides\ high-\/order\ accuracy}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ with\ good\ stability\ properties\ \textcolor{keywordflow}{for}\ stiff\ problems.\ The\ diagonal}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ elements\ of\ the\ Butcher\ tableau\ are\ identical.}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ The\ method\ uses\ \(\backslash\)f\$\(\backslash\)gamma\ =\ 1/4\(\backslash\)f\$,\ which\ provides\ A-\/stability\ and}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ good\ damping\ properties.\ The\ method\ \textcolor{keyword}{requires}\ five\ implicit\ solves}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ per\ time\ step\ but\ achieves\ fourth-\/order\ accuracy,\ making\ it\ suitable}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ problems\ requiring\ high\ precision.}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Basic\ usage}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ integrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator}{Sdirk4Integrator}}(1.0);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_aa37ea8b9414ea06fb50da326f382cfba}{step}}(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ integrator.update(U\_new);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ integrator.advance();}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \%\ Pure\ diffusion\ (only\ linear\ term)}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00030}00030\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \%\ Pure\ forcing\ (only\ source\ term)}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step([],\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \%\ With\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00036}00036\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00037}00037\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator}{Sdirk2Integrator}},}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk3_integrator}{Sdirk3Integrator}}}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00040}00040\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00041}00041\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ ORDER\ =\ 4\ \%\ Accuracy\ order\ of\ the\ SDIRK4\ method}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00043}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator}{00043}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00045}00045\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_a21b977e943816478ffd7a2ff6fed7f3b}{Sdirk4Integrator}}(\textcolor{keyword}{final})}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00047}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_ad93dd22e3df7f9ecd09835418562fb1c}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SDIRK4INTEGRATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_a21b977e943816478ffd7a2ff6fed7f3b}{Sdirk4Integrator}}.}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_a21b977e943816478ffd7a2ff6fed7f3b}{Sdirk4Integrator}}(\textcolor{keyword}{final})\ creates\ a\ fourth-\/order\ SDIRK}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ with\ the\ specified\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ final\ -\/\ Final\ time\ for\ integration\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_a21b977e943816478ffd7a2ff6fed7f3b}{Sdirk4Integrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a51632f453404bee1a11d5b63cfd47aad}{DirkIntegrator}}(5,\ final);}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ time\ coefficients}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a9a491a9e4153248ff20f17ce8a9360ae}{c}}\ =\ [1\ /\ 4,\ 3\ /\ 4,\ 11\ /\ 20,\ 1\ /\ 2,\ 1];}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00062}\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator_a21b977e943816478ffd7a2ff6fed7f3b}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Butcher\ tableau\ coefficient\ matrix\ (5x5)}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a58caa82b11130d660fed6e0dcfd7f94a}{A}}\ =\ [1\ /\ 4,\ 0,\ 0,\ 0,\ 0;\ ...}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ /\ 2,\ 1\ /\ 4,\ 0,\ 0,\ 0;\ ...}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 17\ /\ 50,\ -\/1\ /\ 25,\ 1\ /\ 4,\ 0,\ 0;\ ...}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 371\ /\ 1360,\ -\/137\ /\ 2720,\ 15\ /\ 544,\ 1\ /\ 4,\ 0;\ ...}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 25\ /\ 24,\ -\/49\ /\ 48,\ 125\ /\ 16,\ -\/85\ /\ 12,\ 1\ /\ 4];}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stage\ weights\ for\ final\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}}}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_ad5e6af87cd5d69de3498c22e94ca3f79}{b}}\ =\ [25\ /\ 24,\ -\/49\ /\ 48,\ 125\ /\ 16,\ -\/85\ /\ 12,\ 1\ /\ 4];}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00073}00073\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_sdirk4_integrator_8m_source_l00074}00074\ end}
+
+\end{DoxyCode}

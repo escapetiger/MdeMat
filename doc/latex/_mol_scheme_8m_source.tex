@@ -1,0 +1,351 @@
+\doxysection{Mol\+Scheme.\+m}
+\hypertarget{_mol_scheme_8m_source}{}\label{_mol_scheme_8m_source}\index{+physics/+scheme/MolScheme.m@{+physics/+scheme/MolScheme.m}}
+\mbox{\hyperlink{_mol_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00001}00001\ classdef\ MolScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{OdeScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00002}00002\ \ \ \ \ \%\ MOLSCHEME\ Method\ of\ Lines\ simulation\ controller.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ MolScheme\ provides\ a\ high-\/level\ \textcolor{keyword}{interface\ }for\ executing\ Method\ of}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ Lines\ simulations.\ It\ inherits\ from\ OdeScheme\ and\ implements\ the}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ run\ method\ that\ encapsulates\ the\ common\ simulation\ pattern\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00007}00007\ \textcolor{keyword}{\ \ \ \ }\%\ \ \ the\ \textcolor{keyword}{template}\ method\ design\ pattern.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Subclasses\ must\ implement\ the\ abstract\ methods:\ initialize,}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ preStep,\ step,\ postStep,\ and\ finalize\ to\ define\ the\ specific}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}\ and\ numerical\ methods.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ All\ simulation\ parameters\ and\ profiling\ tools\ are\ configured}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ through\ the\ config\ structure.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00016}00016\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{OdeScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00019}00019\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ ShouldCheckpointing\ \%\ Check\ \textcolor{keywordflow}{if}\ current\ step\ \textcolor{keyword}{requires}\ checkpointing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00022}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{00022}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00023}00023\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ function\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{run}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RUN\ Execute\ Method\ of\ Lines\ simulation.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00026}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_aef88c86f68dff100274337867187acc1}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{run}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})\ executes\ a\ single\ simulation\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{run}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{using\ }the\ \textcolor{keyword}{template}\ method\ pattern.\ The\ method\ orchestrates}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ simulation\ workflow\ by\ calling\ the\ abstract\ methods}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ that\ must\ be\ implemented\ by\ subclasses.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ timer\ =\ obj.Config.timer;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer\ =\ obj.Config.visualizer;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ timer}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00041}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ timer.reset();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ visualizer}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.initialize();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ ODE\ integrator}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ obj.TDisc.reset();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ and\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Initialization.\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ timer.start(record=\textcolor{stringliteral}{'Initialization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.initialize(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ timer.stop(record=\textcolor{stringliteral}{'Initialization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initial\ visualization}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Visualization.\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ timer.start(record=\textcolor{stringliteral}{'Visualization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ obj.plot(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ timer.stop(record=\textcolor{stringliteral}{'Visualization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Main\ time\ stepping\ loop}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \string~obj.TDisc.Timeline.IsExhausted}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Preprocess}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.preStep(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Integration\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Integration.\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.start(record=\textcolor{stringliteral}{'Integration'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.step(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.stop(record=\textcolor{stringliteral}{'Integration'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ record\ =\ obj.Config.timer.find(\textcolor{stringliteral}{'Integration'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\%s.\(\backslash\)n'},\ obj.echo(record.Duration));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Visualization}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Visualization.\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.start(record=\textcolor{stringliteral}{'Visualization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.plot(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.stop(record=\textcolor{stringliteral}{'Visualization'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Postprocess}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.postStep(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Checkpointing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.ShouldCheckpointing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.saveCkptState(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Finalize\ simulation}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.finalize(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ function\ [\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ table]\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a08bb3eeff096fa5c3374a814494e0bd3}{converge}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONVERGE\ Execute\ convergence\ study\ with\ mesh\ refinement.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ table]\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a08bb3eeff096fa5c3374a814494e0bd3}{converge}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})\ executes\ multiple}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simulation\ runs\ with\ progressively\ refined\ meshes\ to\ study}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ convergence\ behavior.\ Uses\ the\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a81bc862d4e480359332fcb71babbf0e9}{run}}\ method\ \textcolor{keywordflow}{for\ each}\ level}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ handles\ error\ \mbox{\hyperlink{namespacephysics_1_1analysis}{analysis}}\ with\ proper\ timing.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ timer\ =\ obj.Config.timer;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer\ =\ obj.Config.analyzer;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.initialize();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~analyzer.IsEnabled}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00113}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a08bb3eeff096fa5c3374a814494e0bd3}{00113}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ nLevels\ =\ analyzer.NLevels;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ coarse\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~analyzer.HasExact}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nLevels\ =\ nLevels\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Refinement\ loop}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iLevel\ =\ 1:nLevels}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Refinement\ Level\ \%d/\%d\ \(\backslash\)n'},\ iLevel,\ nLevels);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Run\ simulation}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ obj.run(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Start\ timing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Error\ Evaluation.\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.start(record=\textcolor{stringliteral}{'Analysis'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ \textcolor{keyword}{new}\ mesh\ level}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.addLevel(\mbox{\hyperlink{namespacephysics_1_1state}{state}}.XDisc.Mesh);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Error\ evaluation}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ analyzer.HasExact}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.addAbsolute(\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ args=\{\textcolor{charliteral}{'t'},\ obj.Config.tFinal\});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iLevel\ >\ 1}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ analyzer.addRelative(\mbox{\hyperlink{namespacephysics_1_1state}{state}},\ coarse);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coarse\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}};}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Stop\ timing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.stop(record=\textcolor{stringliteral}{'Analysis'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Report\ timing\ information}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.Config.verbose\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timer.report();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Refine\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \textcolor{keywordflow}{for}\ next\ iteration}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iLevel\ <\ nLevels}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.refine(1);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'=====================================================\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Analyze\ convergence\ results}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ table\ =\ analyzer.analyze(obj.Config.verbose);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ function\ tf\ =\ get.ShouldCheckpointing(obj)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.SHOULDCHECKPOINTING\ Check\ \textcolor{keywordflow}{if}\ current\ step\ \textcolor{keyword}{requires}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ checkpointing.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ tf1\ =\ \string~isempty(obj.Config.ckptCounts);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ tf2\ =\ ismember(obj.TDisc.Timeline.Count,\ obj.Config.ckptCounts);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ tf1\ \&\&\ tf2;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00175}00175\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00177}00177\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ function\ obj\ =\ setup(obj)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETUP\ Setup\ default\ configuration\ options\ for\ MoL\ schemes.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ setup}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ setup@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme}{OdeScheme}}(obj);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ MoL-\/specific\ configuration\ options}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig('timer',\ default=\mbox{\hyperlink{namespacecore}{core}}.chrono.Timer(),\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ '\mbox{\hyperlink{namespacecore}{core}}.chrono.Timer'));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig('visualizer',\ default=\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.Visualizer(),\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ '\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1visual}{visual}}.Visualizer'));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ obj.addConfig('analyzer',\ default=\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1analysis}{analysis}}.Analyzer(),\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isa(x,\ '\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1analysis}{analysis}}.Analyzer'));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00194}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_aa736f026e5b36a59f38287a22368a68e}{00194}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('dt',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isempty(x)\ ||\ (isnumeric(x)\ \&\&\ isscalar(x)\ \&\&\ x\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('cfl',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isempty(x)\ ||\ (isnumeric(x)\ \&\&\ isscalar(x)\ \&\&\ x\ >\ 0));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptCounts',\ default=[],\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ isempty(x)\ ||\ (isvector(x)\ \&\&\ all(x\ >=\ 0)));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptDir',\ default='ckpts',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ ischar(x)\ ||\ isstring(x));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptPrefix',\ default='ckpt',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ ischar(x)\ ||\ isstring(x));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptStateName',\ default='\mbox{\hyperlink{namespacephysics_1_1state}{state}}',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ ischar(x)\ ||\ isstring(x));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptFigureName',\ default='figure',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ ischar(x)\ ||\ isstring(x));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{addConfig}}('ckptFigureFormat',\ default='pdf',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator=@(x)\ ischar(x)\ ||\ isstring(x));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a687fdb47c657f67f849668e8f467c4e0}{configure}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONFIGURE\ Configure\ MoL\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ with\ current\ configuration}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ struct.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a687fdb47c657f67f849668e8f467c4e0}{configure}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a687fdb47c657f67f849668e8f467c4e0}{configure}}@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_aa1f3e3fa9fbe1a222a0664407a881cbc}{OdeScheme}}(obj);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\string~isempty(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.cfl)\ ||\ \string~isempty(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.dt),\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Either\ dt\ or\ cfl\ must\ be\ specified\ in\ configuration.');}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5d92746fa6d7f0d0244a4fd57945137e}{plot}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PLOT\ Generate\ visualization\ for\ current\ solution\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5d92746fa6d7f0d0244a4fd57945137e}{plot}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})\ creates\ plots\ for\ the\ current}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solution\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ using\ default\ styling\ based\ on\ dataset}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ types.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00238}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a687fdb47c657f67f849668e8f467c4e0}{00238}}\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.SpatialState}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.visualizer;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~visualizer.IsEnabled}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ space\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.XDisc;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ dofs\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.Dofs;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.setRefXNodes(space.Element.Geometry);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.setPhyXNodes(space.Mesh);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00255}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5d92746fa6d7f0d0244a4fd57945137e}{00255}}\ \ \ \ \ \ \ \ \ \ \ \ \ [V0,\ n0]\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a21826a284fe3ec30e7ad7dd98ec36a00}{precompute}}(space,\ dofs);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ while\ visualizer.Timeline.isBefore(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Next)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.update(space,\ dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timeline=obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline,\ V0\ =\ V0,\ n0\ =\ n0);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.render();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visualizer.Timeline.advance();}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Checkpointing}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_aef88c86f68dff100274337867187acc1}{ShouldCheckpointing}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a48f99965c5b4926e7130e25d0a00f3eb}{saveCkptFigure}}(gcf);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a3295a6802c0fb7c1c604c0fe4044a6d0}{saveCkptState}}(obj,\ \mbox{\hyperlink{namespacephysics_1_1state}{state}})}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SAVECKPTSTATE\ Save\ current\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ as\ checkpoint.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('[\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102}{M}}]\ Saving\ checkpoint\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ ckptStateName\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptStateName;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ ckptDir\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptDir;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ ckptCounts\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptCounts;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ ckptPrefix\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptPrefix;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ timeCount\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Count;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ ckptIndex\ =\ find(ckptCounts\ ==\ timeCount,\ 1);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ ckptName\ =\ sprintf('\%s\_\%s\_\%d.mat',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ckptPrefix,\ ckptStateName,\ ckptIndex);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.save(fullfile(ckptDir,\ ckptName));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a48f99965c5b4926e7130e25d0a00f3eb}{saveCkptFigure}}(obj,\ fig)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SAVECKPTFIGURE\ Save\ current\ figure\ as\ checkpoint.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('[\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a433d77e58c6c44d7e10a2d5058192102}{M}}]\ Saving\ checkpoint\ figure.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ ckptFigureName\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptFigureName;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ ckptFigureFormat\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptFigureFormat;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ ckptDir\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptDir;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ ckptCounts\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptCounts;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00293}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a3295a6802c0fb7c1c604c0fe4044a6d0}{00293}}\ \ \ \ \ \ \ \ \ \ \ \ \ ckptPrefix\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.ckptPrefix;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ timeCount\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Count;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ ckptIndex\ =\ find(ckptCounts\ ==\ timeCount,\ 1);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ ckptName\ =\ sprintf('\%s\_\%s\_\%d.\%s',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ckptPrefix,\ ckptFigureName,\ ckptIndex,\ ckptFigureFormat);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ exportgraphics(fig,\ fullfile(ckptDir,\ ckptName),\ ...\ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'ContentType',\ 'vector');}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ function\ msg\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5a505ab819ed58e5a8cc282dcd58f334}{echo}}(obj,\ runtime)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ECHO\ Generate\ status\ message\ for\ current\ time\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}}.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ msg\ =\ sprintf('[\%d]\ now\ =\ \%.6g;\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme_a8f16fde3cfad9eba357c89b55597ba06}{step}}\ size\ =\ \%.6g;\ runtime\ =\ \%.2f\ s',\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Count,\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Now,\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.StepSize,\ ...}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runtime);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00311}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a48f99965c5b4926e7130e25d0a00f3eb}{00311}}\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00312}00312\ \ \ \ \ \ \ \ \ function\ [V0,\ n0]\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a21826a284fe3ec30e7ad7dd98ec36a00}{precompute}}(obj,\ space,\ dofs)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ TIMEINTERPOLATE\ Compute\ temporal\ interpolation\ data.}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme}{MolScheme}}}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ space\ \mbox{\hyperlink{namespaceapprox}{approx}}.space.FiniteElementSpace}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dofs\ struct}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Now;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ t1\ =\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Next;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ if\ t1\ <=\ t0}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V0\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n0\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ n0\ =\ min(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.NSteps,\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.Timeline.Count);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00331}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a5a505ab819ed58e5a8cc282dcd58f334}{00331}}\ \ \ \ \ \ \ \ \ \ \ \ \ V0\ =\ cell(1,\ n0);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:n0}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W0\ =\ reshape(obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_ode_scheme_a898a76aeccf3215b191f0efe5e067907}{TDisc}}.U0\{i\},\ space.NGlobalDofs,\ []);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dofNames\ =\ fieldnames(dofs);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:length(dofNames)}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dofName\ =\ dofNames\{j\};}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nComponentsPerDof\ =\ size(dofs.(dofName),\ 2);}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V0\{i\}.(dofName)\ =\ W0(:,\ offset+(1:nComponentsPerDof));}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ =\ offset\ +\ nComponentsPerDof;}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00343}00343\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00344}\mbox{\hyperlink{classphysics_1_1scheme_1_1_mol_scheme_a21826a284fe3ec30e7ad7dd98ec36a00}{00344}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mol_scheme_8m_source_l00345}00345\ end}
+
+\end{DoxyCode}

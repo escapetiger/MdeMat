@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['valid_5freduction_0',['VALID_REDUCTION',['../classprofilers_1_1metrics_1_1_metric.html#abe0cc805521fa988af8043cd27dc1bb2',1,'profilers::metrics::Metric']]],
+  ['validatefactors_1',['validateFactors',['../classapprox_1_1basis_1_1_separable_basis_function.html#a0e21e04ec0da7da60b83469e65169ef3',1,'approx::basis::SeparableBasisFunction']]],
+  ['values_2',['values',['../classapprox_1_1element_1_1_element_function.html#aff672c72c50b618167de958ebe7afee7',1,'approx::element::ElementFunction::values'],['../classcore_1_1data_1_1_ordered_map.html#adff8bf1cb502351dab47bff14c138362',1,'core::data::OrderedMap::values']]],
+  ['valuetype_3',['valueType',['../classcore_1_1data_1_1_ordered_map.html#a15d374df7d3535446dff0bdf3d336eb2',1,'core::data::OrderedMap']]],
+  ['variables_4',['variables',['../classcore_1_1symbolic_1_1_compiler.html#a2fe761a7b9d9ef93ac5e806b660aa253',1,'core::symbolic::Compiler::variables'],['../classcore_1_1symbolic_1_1_symbolic_function.html#a7ed16f07a2389c7fe102cc8356de0ebb',1,'core::symbolic::SymbolicFunction::variables']]],
+  ['varmap_5',['varMap',['../classprofilers_1_1visual_1_1_strategy.html#ad7afc8321819eb2b1d21c1e6a746a515',1,'profilers::visual::Strategy']]],
+  ['vector_6',['vector',['../classapprox_1_1element_1_1_element_bilinear_form.html#a077e0f9cd092b3c3755f7cd7cb7afd6e',1,'approx::element::ElementBilinearForm']]],
+  ['velocity_7',['velocity',['../classapprox_1_1element_1_1_element_clipper.html#a31639ad4260ceda446f0596a5dd826ac',1,'approx::element::ElementClipper']]],
+  ['verbose_8',['verbose',['../classcore_1_1chrono_1_1_timer.html#a65b38e62a8ff887a17a71866c09a937c',1,'core::chrono::Timer']]],
+  ['verify_9',['verify',['../namespacecore_1_1except.html#a659290750309c58a90d9b3104464cefa',1,'core::except']]],
+  ['verify_2em_10',['verify.m',['../verify_8m.html',1,'']]],
+  ['vertices_11',['vertices',['../classapprox_1_1mesh_1_1_graph.html#a8417c65c0cd08747b6d22a282ef3e2fd',1,'approx::mesh::Graph::vertices'],['../classapprox_1_1mesh_1_1_separable_graph.html#a2f0a5b4fb38478f2392dc8740e24aec6',1,'approx::mesh::SeparableGraph::vertices']]],
+  ['visualizer_12',['Visualizer',['../classprofilers_1_1visual_1_1_visualizer.html',1,'profilers::visual::Visualizer'],['../classprofilers_1_1visual_1_1_visualizer.html#aae9d0d2d5cc18a3f988a5297eed9714c',1,'profilers::visual::Visualizer::Visualizer()']]],
+  ['visualizer_13',['visualizer',['../classphysics_1_1_scheme.html#ac2781a11ddb6e42c4477b2c2b2099533',1,'physics::Scheme']]],
+  ['visualizer_2em_14',['Visualizer.m',['../_visualizer_8m.html',1,'']]],
+  ['volume_15',['volume',['../classapprox_1_1assembly_1_1_convection_operator.html#ae5ba66f52d657458bff10ab536b84750',1,'approx::assembly::ConvectionOperator::volume'],['../classapprox_1_1assembly_1_1_diffusion_operator.html#a752030c763f708594288c3e512fcede6',1,'approx::assembly::DiffusionOperator::volume']]],
+  ['volumeassembly_16',['VolumeAssembly',['../classapprox_1_1assembly_1_1_volume_assembly.html',1,'approx::assembly']]],
+  ['volumeassembly_2em_17',['VolumeAssembly.m',['../_volume_assembly_8m.html',1,'']]],
+  ['volumedata_18',['volumeData',['../classapprox_1_1element_1_1_c0_element.html#ae3d1a9fd022d8bf4b2a4e070d315644c',1,'approx::element::C0Element::volumeData'],['../classapprox_1_1element_1_1_c0_element_operator.html#a10990565b584acbad7a33ee65add492f',1,'approx::element::C0ElementOperator::volumeData']]],
+  ['volumeeuleriandata_19',['volumeEulerianData',['../classapprox_1_1element_1_1_c0_element_clipper.html#af1d218f949744e7cdeb430af71b68108',1,'approx::element::C0ElementClipper']]],
+  ['volumepiecedata_20',['volumePieceData',['../classapprox_1_1element_1_1_c0_semi_lagrangian_element_operator.html#aa447164ef84d9c555207ab5150485425',1,'approx::element::C0SemiLagrangianElementOperator']]],
+  ['volumepieces_21',['volumePieces',['../classapprox_1_1element_1_1_c0_element_clipper.html#a8ff808eba4d54867ae4a786b5149e681',1,'approx::element::C0ElementClipper']]],
+  ['volumeshifts_22',['volumeShifts',['../classapprox_1_1element_1_1_c0_element_clipper.html#a67b9b65b19f39d036f669144cd6ebfbe',1,'approx::element::C0ElementClipper']]],
+  ['volumeupstreamdata_23',['volumeUpstreamData',['../classapprox_1_1element_1_1_c0_element_clipper.html#adb618bd9fe65e74f1ce1f05d16b83449',1,'approx::element::C0ElementClipper']]]
+];

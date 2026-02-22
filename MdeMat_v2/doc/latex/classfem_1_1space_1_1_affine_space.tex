@@ -1,0 +1,191 @@
+\doxysection{fem\+::space\+::Affine\+Space Class Reference}
+\hypertarget{classfem_1_1space_1_1_affine_space}{}\label{classfem_1_1space_1_1_affine_space}\index{fem::space::AffineSpace@{fem::space::AffineSpace}}
+
+
+Affine transformation of finite element function space.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space}{fem\+::space\+::\+Finite\+Element\+Space}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1space_1_1_scaled_affine_space}{fem\+::space\+::\+Scaled\+Affine\+Space}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_a409f8cedb001bef22cb5c6aec99b38b2}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the affine space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931}{direction}} (Input\+Type obj, Input\+Type Y, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Compute directional component to reach target values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space}{fem\+::space\+::\+Finite\+Element\+Space}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a558238e7c518fe3a039b75ab1b95a7b3}{Finite\+Element\+Space}} (Input\+Type \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4}{fe}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1space_1_1_finite_element_space}{Finite\+Element\+Space}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_ac9b08b7695895c704997cf941755cc00}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_aeb4ae4fc5534787e9e724b918dc3bd04}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space}{fem\+::space\+::\+Finite\+Element\+Space}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a2479d8ed9c7a3d964b1796fb24641ce4}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a86d3ef132e90f1db7db062010d266d1e}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Affine transformation of finite element function space. 
+
+\doxylink{classfem_1_1space_1_1_affine_space}{Affine\+Space} provides a function space that represents an affine transformation of a finite element space, allowing for additional degrees of freedom through directional components. Functions in this space have the form\+:
+
+\[f(x) = u(x) + g
+\]
+
+where $u(x)$ is a function from the underlying finite element space and $g$ is a directional component that shifts the function values uniformly.
+
+This formulation is particularly useful in optimization and approximation problems where the target function may not lie exactly in the finite element space but can be reached through an affine transformation.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ affine\ space\ from\ finite\ element}
+\DoxyCodeLine{space\ =\ AffineSpace(finiteElement);}
+\DoxyCodeLine{\%\ Evaluate\ function\ with\ directional\ component}
+\DoxyCodeLine{points\ =\ [0,\ 0.5,\ 1.0;\ 0,\ 0,\ 0];\ \%\ 2D\ points}
+\DoxyCodeLine{coeffs\ =\ [1;\ 0.5;\ -\/0.2];\ \%\ FE\ coefficients}
+\DoxyCodeLine{\mbox{\hyperlink{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931}{direction}}\ =\ [0.1,\ 0.2,\ 0.3];\ \%\ directional\ shift}
+\DoxyCodeLine{values\ =\ space.evaluate(points,\ coeffs,\ \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931}{direction}});}
+\DoxyCodeLine{\%\ Compute\ \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931}{direction}}\ needed\ to\ reach\ target\ values}
+\DoxyCodeLine{targetValues\ =\ [1.5,\ 2.0,\ 1.8];}
+\DoxyCodeLine{requiredDirection\ =\ space.direction(targetValues,\ points,\ coeffs);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1space_1_1_finite_element_space}{fem.\+space.\+Finite\+Element\+Space} 
+
+\doxylink{classfem_1_1space_1_1_scaled_affine_space}{fem.\+space.\+Scaled\+Affine\+Space} 
+
+\doxylink{classfem_1_1space_1_1_mesh_space}{fem.\+space.\+Mesh\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00043}{43}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1space_1_1_affine_space_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931}\index{fem::space::AffineSpace@{fem::space::AffineSpace}!direction@{direction}}
+\index{direction@{direction}!fem::space::AffineSpace@{fem::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{direction()}{direction()}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_affine_space_abf33ca0aab0851cb6a873e7c54cc9931} 
+function fem\+::space\+::\+Affine\+Space\+::direction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{Y}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Compute directional component to reach target values. 
+
+G = direction(obj, Y, Z) computes the directional component needed to transform the finite element approximation to reach the specified target values.
+
+G = direction(obj, Y, X, C) computes the direction using explicitly separated evaluation points and coefficients.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1space_1_1_affine_space}{Affine\+Space} object \\
+\hline
+{\em Y} & -\/ (n\+Components, n\+Points) target function values \\
+\hline
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ (n\+Components, n\+Points) directional component \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1space_1_1_affine_space_a409f8cedb001bef22cb5c6aec99b38b2}\index{fem::space::AffineSpace@{fem::space::AffineSpace}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!fem::space::AffineSpace@{fem::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_affine_space_a409f8cedb001bef22cb5c6aec99b38b2} 
+function fem\+::space\+::\+Affine\+Space\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Evaluate functions in the affine space. 
+
+Y = evaluate(obj, Z) evaluates the affine function using a combined input matrix containing points, coefficients, and directional components.
+
+Y = evaluate(obj, Z, G) evaluates with separate directional component matrix.
+
+Y = evaluate(obj, X, C, G) evaluates with explicitly separated points, coefficients, and directional components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1space_1_1_affine_space}{Affine\+Space} object \\
+\hline
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values at evaluation points \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a5efeba0376a26899075790ec3b051b5c}{fem\+::space\+::\+Finite\+Element\+Space}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1space_1_1_scaled_affine_space_a1eee45f0285a9ff623d2da3f96f7d7fa}{fem\+::space\+::\+Scaled\+Affine\+Space}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1space_1_1_affine_space_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1space_1_1_affine_space_ac9b08b7695895c704997cf941755cc00}\index{fem::space::AffineSpace@{fem::space::AffineSpace}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!fem::space::AffineSpace@{fem::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_affine_space_ac9b08b7695895c704997cf941755cc00} 
+Property fem\+::space\+::\+Affine\+Space\+::n\+Dofs}
+
+
+
+Number of degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00047}{47}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+\Hypertarget{classfem_1_1space_1_1_affine_space_aeb4ae4fc5534787e9e724b918dc3bd04}\index{fem::space::AffineSpace@{fem::space::AffineSpace}!nPoints@{nPoints}}
+\index{nPoints@{nPoints}!fem::space::AffineSpace@{fem::space::AffineSpace}}
+\doxysubsubsection{\texorpdfstring{nPoints}{nPoints}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_affine_space_aeb4ae4fc5534787e9e724b918dc3bd04} 
+Property fem\+::space\+::\+Affine\+Space\+::n\+Points}
+
+
+
+Number of integration points. 
+
+
+
+Definition at line \mbox{\hyperlink{_affine_space_8m_source_l00050}{50}} of file \mbox{\hyperlink{_affine_space_8m_source}{Affine\+Space.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+space/\mbox{\hyperlink{_affine_space_8m}{Affine\+Space.\+m}}\end{DoxyCompactItemize}

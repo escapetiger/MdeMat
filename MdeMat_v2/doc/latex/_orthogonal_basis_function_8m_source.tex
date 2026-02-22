@@ -1,0 +1,115 @@
+\doxysection{Orthogonal\+Basis\+Function.\+m}
+\hypertarget{_orthogonal_basis_function_8m_source}{}\label{_orthogonal_basis_function_8m_source}\index{+approx/+basis/OrthogonalBasisFunction.m@{+approx/+basis/OrthogonalBasisFunction.m}}
+\mbox{\hyperlink{_orthogonal_basis_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00001}00001\ classdef\ OrthogonalBasisFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00002}00002\ \ \ \ \ \%\ ORTHOGONALBASISFUNCTION\ Compiled\ orthogonal\ polynomial\ basis}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00003}00003\ \ \ \ \ \%\ functions.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ OrthogonalBasisFunction\ represents\ a\ set\ of\ orthogonal\ polynomial}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ basis\ functions\ (such\ as\ Legendre\ or\ Chebyshev\ polynomials)\ with}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ automatic\ metadata\ loading\ from\ the\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}\ compilation}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ system.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }automatically\ discovers\ appropriate\ metadata\ files\ based}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ on\ the\ specified\ basis\ type,\ interval\ type,\ and\ number\ of\ basis}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ functions,\ providing\ efficient\ evaluation\ of\ both\ function\ values}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ and\ derivatives\ through\ precompiled\ function\ handles.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ Supported\ orthogonal\ polynomial\ families:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ -\/\ Legendre\ polynomials:\ orthogonal\ on\ \(\backslash\)f\$[-\/1,1]\(\backslash\)f\$\ with\ weight}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \(\backslash\)f\$w(x)\ =\ 1\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ Chebyshev\ polynomials:\ orthogonal\ on\ \(\backslash\)f\$[-\/1,1]\(\backslash\)f\$\ with\ weight}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \(\backslash\)f\$w(x)\ =\ \(\backslash\)frac\{1\}\{\(\backslash\)sqrt\{1-\/x\string^2\}\}\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ -\/\ Monic\ Legendre:\ Legendre\ polynomials\ with\ leading\ coefficient\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00022}00022\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Standard\ Legendre\ basis\ on\ unit\ interval}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ basis\ =\ OrthogonalBasisFunction(5,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'unit'});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ basis\ =\ basis.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ y\ =\ basis.evaluate([0.25]);}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ dy\ =\ basis.derivative([0.25],\ [1]);}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Monic\ Legendre\ polynomials\ on\ canonical\ interval}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ basis\ =\ OrthogonalBasisFunction(4,\ \textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'canonical'});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ basis\ =\ basis.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ \%\ Chebyshev\ polynomials\ with\ manual\ loading}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ basis\ =\ OrthogonalBasisFunction(6,\ \textcolor{stringliteral}{'chebyshev'},\ \textcolor{stringliteral}{'unit'});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ basis\ =\ basis.load(\textcolor{stringliteral}{'chebyshev\_unit\_6'});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00036}00036\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00037}00037\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}},}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.InterpolationBasisFunction}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00041}00041\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00042}\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{00042}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}}\ \ \ \ \%\ Type\ of\ orthogonal\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ (\textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'chebyshev'})}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}}\ \%\ Type\ of\ interval\ ('unit',\ 'canonical')}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00044}00044\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{00046}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{OrthogonalBasisFunction}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}},\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}},\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}})}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ORTHOGONALBASISFUNCTION\ Constructor\ for}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{OrthogonalBasisFunction}}.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{OrthogonalBasisFunction}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}},\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}},}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}})\ creates\ a\ new\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{OrthogonalBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ configuration.\ Validates\ all\ input}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_a0cf6eefccda4a1dab1b5562f1fa0663d}{parameters}}\ and\ initializes\ the\ parent}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e}{CompiledFunction}}.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ -\/\ Number\ of\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}}\ -\/\ Basis\ type\ ('monic\_legendre',\ 'legendre',\ 'chebyshev',\ 'fourier',\ 'spherical\_harmonic')}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}}\ -\/\ Interval\ type\ ('unit',\ 'canonical')}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ constructed\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{OrthogonalBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}}\ =\ lower(\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ switch\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ \{\textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'chebyshev'},\ \textcolor{stringliteral}{'fourier'}\}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nDims\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00069}\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a785b94e4ef9b1a41ac75447e56b75b5b}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'spherical\_harmonic'}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}}\ =\ lower(\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function}{CompiledFunction}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}},\ \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}});}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ obj.basisType\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}};}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ obj.intervalType\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a10410a5d809a4c45cd03d1f7e3725b20}{intervalType}};}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00078}00078\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00080}00080\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ function\ filename\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a2603fca64f319ecaaa5d552a957e835f}{autoFilename}}(obj)}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ AUTOFILENAME\ Generate\ appropriate\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665}{metadata}}\ filename\ for\ this}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a2603fca64f319ecaaa5d552a957e835f}{autoFilename}}(obj)\ generates\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665}{metadata}}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ based\ on\ the\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ configuration.\ The\ filename}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ follows\ the\ pattern:\ \{\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_ada6887d349a55e29f86b496119e2c729}{basisType}}\}\_\{intervalType\}\_\{nCodims\}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ OrthogonalBasisFunction\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filename\ -\/\ String\ of\ metadata\ filename}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ obj.basisType}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{\textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'chebyshev'},\ \textcolor{stringliteral}{'fourier'}\}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ =\ sprintf(\textcolor{stringliteral}{'\%s\_\%s\_\%d'},\ obj.basisType,\ obj.intervalType,\ obj.nCodims);}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'spherical\_harmonic'}}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00099}\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a2603fca64f319ecaaa5d552a957e835f}{00099}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ =\ sprintf(\textcolor{stringliteral}{'\%s\_\%d'},\ obj.basisType,\ obj.nCodims);}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismember(filename,\ obj.metasource),\ ...}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'FileNotFound'},\ ...}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Metadata\ file\ not\ found:\ \%s.\ Available\ files:\ \%s'},\ ...}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename,\ strjoin(obj.metasource,\ \textcolor{stringliteral}{',\ '}));}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00108}00108\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_orthogonal_basis_function_8m_source_l00109}00109\ end}
+
+\end{DoxyCode}

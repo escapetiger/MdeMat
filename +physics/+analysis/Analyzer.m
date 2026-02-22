@@ -1,0 +1,616 @@
+classdef Analyzer < handle
+    % ANALYZER Comprehensive error analysis and convergence study.
+    %
+    %   Analyzer provides sophisticated error analysis capabilities for
+    %   numerical methods, including absolute error computation against
+    %   exact solutions, relative error analysis using Richardson
+    %   extrapolation, and convergence analysis with visualization.
+    %
+    %   This unified class handles the complete workflow from error
+    %   computation through convergence table generation and plotting,
+    %   eliminating the need for separate convergence profiler management.
+    %
+    %   Reductions is a struct with one entry per field, e.g.:
+    %
+    %       Reductions.U.x = {'L1', 'L2', 'max'}  % spatial norm types
+    %       Reductions.U.v = ''                    % no velocity reduction
+    %       Reductions.F.x = {'L2'}
+    %       Reductions.F.v = 'sequence'            % L2 over velocity components
+    %
+    %   Valid values for .v (vRed) are '' (per-component) and 'sequence'
+    %   (L2 aggregate). KineticAnalyzer additionally supports 'integral'.
+    %
+    % See also:
+    %   physics.analysis.FiniteElementAbsoluteMetric,
+    %   physics.analysis.FiniteElementRichardsonMetric
+
+    properties (Constant)
+        DefaultXReductionType = {'L1', 'L2', 'max'}
+        DefaultVReductionType = ''
+    end
+
+    properties
+        NLevels % Number of refinement levels (positive integer)
+        Resolutions % (nLevels×1) mesh resolution vector
+        Descriptions % (nLevels×1) cell array of mesh level descriptions
+        Density % (1×nDims) error evaluation points per element per dimension
+        Reductions % Struct mapping field names to reduction specs (.x cell, .v string)
+        Components % Structure mapping field names to component indices
+        Exacts % Structure of exact solution function handles
+        Errors % Structure storing computed errors for each level
+        CurrentLevel % Current level count for error storage
+        TiledLayout % Handle to tiled layout for plotting
+    end
+
+    properties (Dependent)
+        HasExact % True if any exact solution is available
+        IsEnabled % True if error analysis is enabled
+        NComponents % Number of components for each field
+    end
+
+    methods
+        function obj = Analyzer(options)
+            % ANALYZER Construct an instance of Analyzer.
+            %
+            %   obj = Analyzer() creates an analyzer with default 2
+            %   refinement levels for error analysis and convergence study.
+            %
+            %   obj = Analyzer(nLevels=nLevels) creates an analyzer
+            %   configured for error analysis and convergence study with @a
+            %   nLevels refinement levels for comprehensive numerical
+            %   method analysis.
+
+            arguments
+                options.nLevels {mustBePositive, mustBeInteger} = 2
+            end
+
+            obj.Density = 0;
+            obj.Reductions = struct();
+            obj.Components = struct();
+            obj.Exacts = struct();
+            obj.Errors = struct();
+            obj.setNLevels(options.nLevels);
+        end
+
+        function obj = initialize(obj)
+            % INITIALIZE Initialize error storage structure.
+            %
+            %   obj = initialize(obj) prepares the error storage structure
+            %   based on the configured components. For fields with a
+            %   non-empty velocity reduction mode, the component count is
+            %   collapsed to 1 before initializing error storage.
+
+            arguments
+                obj physics.analysis.Analyzer
+            end
+
+            fieldNames = fieldnames(obj.Components);
+            nFields = length(fieldNames);
+            args = cell(2, nFields);
+            args(1, :) = fieldNames;
+            args(2, :) = {{cell(obj.NLevels, 1)}};
+            obj.Errors = struct(args{:});
+            obj.CurrentLevel = 1;
+        end
+
+        function obj = setDensity(obj, density)
+            % SETDENSITY Set the number of error evaluation points per
+            % element.
+            %
+            %   obj = setDensity(obj, density) sets the number of points
+            %   per element per dimension for error evaluation sampling
+            %   using @a density quadrature points for accurate error
+            %   integration.
+
+            arguments
+                obj physics.analysis.Analyzer
+                density {mustBePositive, mustBeInteger}
+            end
+
+            obj.Density = density;
+        end
+
+        function obj = setNLevels(obj, nLevels)
+            % SETNLEVELS Set the number of refinement levels.
+            %
+            %   obj = setNLevels(obj, nLevels) sets the number of
+            %   refinement levels @a nLevels for error analysis and
+            %   reinitializes the resolution and description storage
+            %   arrays.
+
+            arguments
+                obj physics.analysis.Analyzer
+                nLevels {mustBePositive, mustBeInteger}
+            end
+
+            obj.NLevels = nLevels;
+            obj.Resolutions = zeros(nLevels, 1);
+            obj.Descriptions = cell(nLevels, 1);
+            obj.CurrentLevel = 1;
+        end
+
+        function obj = setComponents(obj, components)
+            % SETCOMPONENTS Set the solution components to analyze.
+            %
+            %   obj = setComponents(obj, components) sets the indices of
+            %   solution components to analyze for each field using the
+            %   @a components structure mapping field names to indices.
+
+            arguments
+                obj physics.analysis.Analyzer
+                components {mustBeA(components, 'struct')}
+            end
+
+            obj.Components = components;
+            compFields = fieldnames(components);
+            red = struct();
+            for i = 1:length(compFields)
+                red.(compFields{i}) = struct( ...
+                    'x', {obj.DefaultXReductionType}, ...
+                    'v', obj.DefaultVReductionType);
+            end
+            obj.Reductions = red;
+        end
+
+        function obj = setReductions(obj, reductions)
+            % SETREDUCTIONS Set the per-field error reduction specifications.
+            %
+            %   obj = setReductions(obj, reductions) sets the reduction
+            %   specifications for each field using @a reductions, a struct
+            %   where each field @a f contains:
+            %
+            %       reductions.f.x  - cell array of spatial norm types
+            %                         (e.g. {'L1', 'L2', 'max'})
+            %       reductions.f.v  - velocity reduction (vRed): '' for
+            %                         per-component, 'sequence' for L2
+            %                         aggregate over velocity components
+
+            arguments
+                obj physics.analysis.Analyzer
+                reductions struct
+            end
+
+            obj.Reductions = reductions;
+        end
+
+        function obj = addReduction(obj, compName, varName, redType)
+            % ADDREDUCTION Add reduction.
+            %
+            %   obj = addReduction(obj, compName, varName, redType)
+            %   registers an error reduction type @a redType on the
+            %   variable @a varName for the specified component @a
+            %   compName.
+
+            arguments
+                obj physics.analysis.Analyzer
+                compName {mustBeTextScalar}
+                varName {mustBeTextScalar}
+                redType {mustBeA(redType, {'cell', 'char'})}
+            end
+
+            obj.Reductions.(compName).(varName) = redType;
+        end
+
+        function obj = addExact(obj, name, func)
+            % ADDEXACT Add exact solution function.
+            %
+            %   obj = addExact(obj, name, func) registers an exact solution
+            %   function @a func for the specified field @a name to enable
+            %   absolute error computation against analytical solutions.
+
+            arguments
+                obj physics.analysis.Analyzer
+                name {mustBeTextScalar}
+                func {mustBeA(func, {'numeric', 'function_handle'})}
+            end
+
+            obj.Exacts.(name) = func;
+        end
+
+        function obj = addLevel(obj, mesh)
+            % ADDLEVEL Configure analyzer for current refinement level.
+            %
+            %   obj = addLevel(obj, mesh) configures the analyzer for the
+            %   current refinement level using @a mesh properties,
+            %   extracting resolution and measure information for
+            %   convergence analysis.
+
+            arguments
+                obj physics.analysis.Analyzer
+                mesh approx.mesh.Mesh
+            end
+
+            h = mesh.computeMeasure();
+            hStr = strrep(num2str(mesh.Resolution), '  ', 'x');
+            obj.Resolutions(obj.CurrentLevel) = h;
+            obj.Descriptions{obj.CurrentLevel} = hStr;
+        end
+
+        function obj = addAbsolute(obj, state, options)
+            % ADDABSOLUTE Compute absolute error against exact solutions.
+            %
+            %   obj = addAbsolute(obj, state) computes absolute errors by
+            %   comparing numerical solutions with exact analytical
+            %   solutions. For each field, the velocity reduction @a vRed
+            %   (.v in Reductions) determines how components are aggregated:
+            %   '' uses per-component errors, 'sequence' uses L2 aggregate.
+
+            arguments
+                obj physics.analysis.Analyzer
+                state physics.state.SpatialState
+                options.args cell = {}
+            end
+
+            space = state.XDisc;
+            dofs = state.Dofs;
+
+            fieldNames = fieldnames(dofs);
+            for iField = 1:length(fieldNames)
+                fieldName = fieldNames{iField};
+                if ~isfield(obj.Components, fieldName), continue; end
+                if ~isfield(obj.Reductions, fieldName), continue; end
+                component = obj.Components.(fieldName);
+                C = dofs.(fieldName);
+                if isempty(C), continue; end
+                f = obj.Exacts.(fieldName);
+
+                xRed = obj.Reductions.(fieldName).x;
+                vRed = obj.Reductions.(fieldName).v;
+
+                metric = physics.analysis.FiniteElementAbsoluteMetric( ...
+                    space, Reductions=xRed);
+                metric.setPoints(obj.Density);
+                xRef = metric.Nodes;
+
+                U = space.eval(xRef, C);
+                U = U(:, component);
+                U0 = space.feval(f, xRef, args=options.args);
+                U0 = U0(:, component);
+                R = metric.eval(U, U0);
+
+                if isempty(vRed)
+                    obj.addNoReduction(R, fieldName);
+                elseif strcmp(vRed, 'sequence')
+                    obj.addSequence(R, fieldName);
+                else
+                    core.except.assert(false, 'UnknownVRed', ...
+                        'Unknown velocity reduction ''%s'' for field %s.', ...
+                        vRed, fieldName);
+                end
+            end
+            obj.CurrentLevel = obj.CurrentLevel + 1;
+        end
+
+        function obj = addRelative(obj, fine, coarse)
+            % ADDRELATIVE Compute relative error using Richardson
+            % extrapolation.
+            %
+            %   obj = addRelative(obj, fState, cState) computes relative
+            %   errors using Richardson extrapolation between fine grid
+            %   solution @a fine and coarse grid solution @a coarse. This
+            %   method provides error estimates when exact analytical
+            %   solutions are unavailable. Velocity reduction dispatches
+            %   on @a vRed identically to addAbsolute.
+
+            arguments
+                obj physics.analysis.Analyzer
+                fine physics.state.SpatialState
+                coarse physics.state.SpatialState
+            end
+
+            fieldNames = fieldnames(fine.Dofs);
+            for iField = 1:length(fieldNames)
+                fieldName = fieldNames{iField};
+                if ~isfield(obj.Components, fieldName), continue; end
+                if ~isfield(obj.Reductions, fieldName), continue; end
+                component = obj.Components.(fieldName);
+                C = fine.Dofs.(fieldName);
+                C0 = coarse.Dofs.(fieldName);
+                if isempty(C) || isempty(C0), continue; end
+
+                xRed = obj.Reductions.(fieldName).x;
+                vRed = obj.Reductions.(fieldName).v;
+
+                metric = physics.analysis.FiniteElementRichardsonMetric( ...
+                    fine.XDisc, coarse.XDisc, Reductions=xRed);
+                metric.setPoints(obj.Density);
+
+                fXRef = metric.Nodes{1};
+                cXRef = metric.Nodes{2};
+
+                C = C(metric.NestLI, :);
+                U = fine.XDisc.eval(fXRef, C);
+                U = U(:, component);
+                U0 = coarse.XDisc.eval(cXRef, C0);
+                U0 = U0(:, component);
+                R = metric.eval(U, U0);
+
+                if isempty(vRed)
+                    obj.addNoReduction(R, fieldName);
+                elseif strcmp(vRed, 'sequence')
+                    obj.addSequence(R, fieldName);
+                else
+                    core.except.assert(false, 'UnknownVRed', ...
+                        'Unknown velocity reduction ''%s'' for field %s.', ...
+                        vRed, fieldName);
+                end
+            end
+            obj.CurrentLevel = obj.CurrentLevel + 1;
+        end
+
+        function tables = analyze(obj, verbose)
+            % ANALYZE Generate comprehensive convergence analysis results.
+            %
+            %   tables = analyze(obj) processes all collected error data
+            %   and generates structured results including convergence
+            %   tables for each field component and error reduction type.
+            %   The results can be used for convergence verification and
+            %   method validation.
+
+            arguments
+                obj physics.analysis.Analyzer
+                verbose {mustBeNumericOrLogical} = false
+            end
+
+            tables = struct();
+            fieldNames = fieldnames(obj.Errors);
+            for iField = 1:length(fieldNames)
+                fieldName = fieldNames{iField};
+                component = obj.Components.(fieldName);
+                if isempty(component), continue; end
+                if ~isfield(obj.Reductions, fieldName), continue; end
+                xRed = obj.Reductions.(fieldName).x;
+                nRed = length(xRed);
+                E = cell2mat(obj.Errors.(fieldName));
+                for iComponent = 1:size(E, 2)
+                    Ej = reshape(E(:, iComponent), nRed, obj.NLevels).';
+                    name = sprintf('%s%d', fieldName, component(iComponent));
+                    tables.(name) = obj.analyzeImpl(Ej, xRed);
+                    if verbose > 0
+                        disp(tables.(name));
+                    end
+                end
+            end
+        end
+
+        function obj = draw(obj, options)
+            % DRAW Create convergence visualization plots.
+            %
+            %   obj = draw(obj) creates log-log convergence plots using
+            %   stored error data from previous error computations.
+            %
+            %   obj = draw(obj, rates=rates) creates plots with optional
+            %   theoretical convergence rates for comparison.
+
+            arguments
+                obj physics.analysis.Analyzer
+                options.rates {mustBeNumeric} = []
+            end
+
+            rates = options.rates;
+
+            fieldNames = fieldnames(obj.Errors);
+            if isempty(fieldNames)
+                core.except.verify(0, 'NoData', ...
+                    'No error data available for plotting.');
+                return;
+            end
+
+            %< Validate that we have resolution data
+            core.except.assert(all(obj.Resolutions > 0), 'InvalidResolutions', ...
+                'All resolutions must be positive for log-log plot.');
+
+            %< Calculate total number of components for layout
+            totalComponents = sum(obj.NComponents);
+
+            %< Create tiled layout
+            obj.setupTiledLayout(totalComponents);
+
+            %< Process each field and component
+            componentIndex = 1;
+            rateIndex = 1;
+
+            for iField = 1:length(fieldNames)
+                fieldName = fieldNames{iField};
+                component = obj.Components.(fieldName);
+                if ~isfield(obj.Reductions, fieldName), continue; end
+                xRed = obj.Reductions.(fieldName).x;
+                nRed = length(xRed);
+                E = reshape(cell2mat(obj.Errors.(fieldName)), [], obj.NLevels);
+
+                for iComponent = 1:length(component)
+                    %< Extract errors for this component across all reduction types
+                    componentErrors = zeros(obj.NLevels, nRed);
+                    for iReduction = 1:nRed
+                        errorIndex = (iReduction - 1) * length(component) + iComponent;
+                        componentErrors(:, iReduction) = E(errorIndex, :);
+                    end
+
+                    %< Extract rates for this component if provided
+                    componentRates = [];
+                    if ~isempty(rates)
+                        endIndex = min(rateIndex+nRed-1, length(rates));
+                        componentRates = rates(rateIndex:endIndex);
+                        rateIndex = endIndex + 1;
+                    end
+
+                    %< Create subplot for this component
+                    componentTitle = sprintf('%s%d', fieldName, component(iComponent));
+                    obj.drawImpl(componentErrors, xRed, componentRates, componentTitle);
+
+                    componentIndex = componentIndex + 1;
+                end
+            end
+        end
+    end
+
+    methods
+        function TF = get.IsEnabled(obj)
+            % GET.ISENABLED Check if error analysis is enabled.
+
+            TF = any(obj.Density > 0) && sum(obj.NComponents) > 0;
+        end
+
+        function TF = get.HasExact(obj)
+            % GET.HASEXACT Check if exact solutions are available.
+
+            TF = ~all(structfun(@(x) isempty(x), obj.Exacts));
+        end
+
+        function n = get.NComponents(obj)
+            % GET.NCOMPONENTS Get number of components for each field.
+
+            n = cellfun(@(f) length(obj.Components.(f)), fieldnames(obj.Components));
+        end
+    end
+
+    methods (Access = protected)
+        function obj = addNoReduction(obj, R, fieldName)
+            % ADDNOREDUCTION Per-component spatial errors without
+            % aggregation.
+            %
+            %   Stores R of shape (nRed, nComp) so that analyze can
+            %   produce one convergence table column per component.
+
+            obj.Errors.(fieldName){obj.CurrentLevel} = R;
+        end
+
+        function obj = addSequence(obj, R, fieldName)
+            % ADDSEQUENCE L2 norm over all velocity components.
+            %
+            %   Aggregates R across all columns and stores E of shape
+            %   (nRed, 1) so that analyze reports a single combined error.
+
+            E = zeros(size(R, 1), 1);
+            for j = 1:size(R, 1)
+                E(j) = norm(R(j, :), 2);
+            end
+            obj.Errors.(fieldName){obj.CurrentLevel} = E;
+        end
+
+        function obj = setupTiledLayout(obj, nComponents)
+            % SETUPTILEDLAYOUT Create optimally sized tiled layout.
+
+            %< Determine optimal layout dimensions
+            if nComponents == 1
+                nRows = 1;
+                nCols = 1;
+            elseif nComponents == 2
+                nRows = 1;
+                nCols = 2;
+            elseif nComponents <= 4
+                nRows = 2;
+                nCols = 2;
+            elseif nComponents <= 6
+                nRows = 2;
+                nCols = 3;
+            else
+                nRows = ceil(sqrt(nComponents));
+                nCols = ceil(nComponents/nRows);
+            end
+
+            %< Create figure with tiled layout
+            figure;
+            obj.TiledLayout = tiledlayout(nRows, nCols, 'TileSpacing', 'compact', ...
+                'Padding', 'compact');
+            title(obj.TiledLayout, 'Error Convergence Analysis', ...
+                'FontSize', 14, 'FontWeight', 'bold');
+        end
+
+        function T = analyzeImpl(obj, errors, names)
+            % ANALYZEIMPL Build formatted convergence table with error orders.
+
+            [~, nTypes] = size(errors);
+
+            %< Default names if not provided
+            if nargin < 3 || isempty(names)
+                names = cell(1, nTypes);
+                for i = 1:nTypes
+                    names{i} = sprintf('Error %d', i);
+                end
+            end
+
+            %< Validate inputs
+            core.except.assert(length(names) == nTypes, 'SizeMismatch', ...
+                'Number of names (%d) must match number of error types (%d).', ...
+                length(names), nTypes);
+
+            %< Replace empty descriptions with default names
+            for i = 1:obj.NLevels
+                if isempty(obj.Descriptions{i})
+                    obj.Descriptions{i} = sprintf('Level %d', i);
+                end
+            end
+
+            %< Compute convergence orders
+            orders = zeros(size(errors));
+            for j = 1:nTypes
+                for k = 2:obj.NLevels
+                    hRatio = obj.Resolutions(k-1) / obj.Resolutions(k);
+                    if errors(k, j) > 0 && errors(k-1, j) > 0
+                        eRatio = errors(k-1, j) / errors(k, j);
+                        orders(k, j) = log(eRatio) / log(hRatio);
+                    else
+                        orders(k, j) = 0;
+                    end
+                end
+            end
+
+            %< Prepare table data
+            tableData = cell(obj.NLevels, 2*nTypes+1);
+            tableData(:, 1) = obj.Descriptions;
+            for j = 1:nTypes
+                tableData(:, 2*j) = num2cell(errors(:, j));
+                tableData(:, 2*j+1) = num2cell(orders(:, j));
+            end
+
+            %< Generate column names
+            columnNames = cell(1, 2*nTypes+1);
+            columnNames{1} = 'Resolution';
+            for j = 1:nTypes
+                columnNames{2*j} = sprintf('%s_Error', names{j});
+                columnNames{2*j+1} = sprintf('%s_Order', names{j});
+            end
+
+            %< Create table
+            T = cell2table(tableData, 'VariableNames', columnNames);
+        end
+
+        function obj = drawImpl(obj, errors, names, rates, plotTitle)
+            % DRAWIMPL Create single subplot in tiled layout.
+
+            nexttile;
+
+            [~, nTypes] = size(errors);
+            plotColors = lines(nTypes);
+
+            hold on;
+
+            %< Plot actual errors for this component
+            for j = 1:nTypes
+                loglog(obj.Resolutions, errors(:, j), '-o', ...
+                    'Color', plotColors(j, :), ...
+                    'DisplayName', sprintf('%s Error', names{j}), ...
+                    'LineWidth', 2, 'MarkerSize', 6);
+
+                %< Plot theoretical convergence rates if provided
+                if ~isempty(rates) && length(rates) >= j && rates(j) > 0
+                    refErrors = errors(1, j) * (obj.Resolutions / obj.Resolutions(1)).^(rates(j));
+                    loglog(obj.Resolutions, refErrors, '--', ...
+                        'Color', plotColors(j, :), ...
+                        'DisplayName', sprintf('%s Rate %g', names{j}, rates(j)), ...
+                        'LineWidth', 1.5);
+                end
+            end
+
+            %< Format subplot
+            set(gca, 'XScale', 'log', 'YScale', 'log');
+            xlabel('Resolution');
+            ylabel('Error');
+            title(plotTitle);
+            legend('show', 'Location', 'best');
+            grid on;
+            hold off;
+        end
+    end
+end

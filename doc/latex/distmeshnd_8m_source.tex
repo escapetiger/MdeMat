@@ -1,0 +1,116 @@
+\doxysection{distmeshnd.\+m}
+\hypertarget{distmeshnd_8m_source}{}\label{distmeshnd_8m_source}\index{distmesh/distmeshnd.m@{distmesh/distmeshnd.m}}
+\mbox{\hyperlink{distmeshnd_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00001}00001\ function\ [p,t]=distmeshnd(fdist,fh,h,box,fix,varargin)}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00002}00002\ \%DISTMESHND\ N-\/D\ Mesh\ Generator\ \textcolor{keyword}{using\ }Distance\ Functions.}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00003}00003\ \%\ \ \ [P,T]=DISTMESHND(FDIST,FH,H,BOX,FIX,FDISTPARAMS)}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00005}00005\ \%\ \ \ \ \ \ P:\ \ \ \ \ \ \ \ \ \ \ Node\ positions\ (NxNDIM)}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00006}00006\ \%\ \ \ \ \ \ T:\ \ \ \ \ \ \ \ \ \ \ Triangle\ indices\ (NTx(NDIM+1))}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00007}00007\ \%\ \ \ \ \ \ FDIST:\ \ \ \ \ \ \ Distance\ function}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00008}00008\ \%\ \ \ \ \ \ FH:\ \ \ \ \ \ \ \ \ \ Edge\ length\ function}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00009}00009\ \%\ \ \ \ \ \ H:\ \ \ \ \ \ \ \ \ \ \ Smallest\ edge\ length}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00010}00010\ \%\ \ \ \ \ \ BOX:\ \ \ \ \ \ \ \ \ Bounding\ box\ [xmin,xmax;ymin,ymax;\ ...]\ (NDIMx2)}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00011}00011\ \%\ \ \ \ \ \ FIX:\ \ \ \ \ \ \ \ \ Fixed\ node\ positions\ (NFIXxNDIM)}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00012}00012\ \%\ \ \ \ \ \ FDISTPARAMS:\ Additional\ parameters\ passed\ to\ FDIST}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00013}00013\ \%}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00014}00014\ \%\ \ \ Example:\ Unit\ ball}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00015}00015\ \%\ \ \ \ \ \ dim=3;}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00016}00016\ \%\ \ \ \ \ \ d=\textcolor{keyword}{inline}(\textcolor{stringliteral}{'sqrt(sum(p.\string^2,2))-\/1'},\textcolor{charliteral}{'p'});}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00017}00017\ \%\ \ \ \ \ \ [p,t]=distmeshnd(d,@huniform,0.2,[-\/ones(1,dim);ones(1,dim)],[]);}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00018}00018\ \%}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00019}00019\ \%\ \ \ See\ also:\ DISTMESH2D,\ DELAUNAYN,\ TRIMESH,\ MESHDEMOND.}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00021}00021\ \%\ \ \ Copyright\ (C)\ 2004-\/2012\ Per-\/Olof\ Persson.\ See\ COPYRIGHT.TXT\ \textcolor{keywordflow}{for}\ details.}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00023}00023\ dim=size(box,2);}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00024}00024\ ptol=.001;\ ttol=.1;\ L0mult=1+.4/2\string^(dim-\/1);\ deltat=.1;\ geps=1e-\/1*h;\ deps=sqrt(eps)*h;}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00026}00026\ \%\ 1.\ Create\ initial\ distribution\ in\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00027}00027\ \textcolor{keywordflow}{if}\ dim==1}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00028}00028\ \ \ p=(box(1):h:box(2))\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00029}00029\ \textcolor{stringliteral}{else}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00030}00030\ \textcolor{stringliteral}{\ \ cbox=cell(1,dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00031}00031\ \textcolor{stringliteral}{\ \ for\ ii=1:dim}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ cbox\{ii\}=box(1,ii):h:box(2,ii);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00033}00033\ \textcolor{stringliteral}{\ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00034}00034\ \textcolor{stringliteral}{\ \ pp=cell(1,dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00035}00035\ \textcolor{stringliteral}{\ \ [pp\{:\}]=ndgrid(cbox\{:\});}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00036}00036\ \textcolor{stringliteral}{\ \ p=zeros(prod(size(pp\{1\})),dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00037}00037\ \textcolor{stringliteral}{\ \ for\ ii=1:dim}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ p(:,ii)=pp\{ii\}(:);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00039}00039\ \textcolor{stringliteral}{\ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00040}00040\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00041}00041\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00042}00042\ \textcolor{stringliteral}{\%\ 2.\ Remove\ points\ outside\ the\ region,\ apply\ the\ rejection\ method}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00043}00043\ \textcolor{stringliteral}{p=p(feval(fdist,p,varargin\{:\})<geps,:);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00044}00044\ \textcolor{stringliteral}{r0=feval(fh,p);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00045}00045\ \textcolor{stringliteral}{p=[fix;\ p(rand(size(p,1),1)<min(r0)\string^dim./r0.\string^dim,:)];}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00046}00046\ \textcolor{stringliteral}{N=size(p,1);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00047}00047\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00048}00048\ \textcolor{stringliteral}{count=0;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00049}00049\ \textcolor{stringliteral}{p0=inf;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00050}00050\ \textcolor{stringliteral}{while\ 1}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00051}00051\ \textcolor{stringliteral}{\ \ \%\ 3.\ Retriangulation\ by\ Delaunay}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00052}00052\ \textcolor{stringliteral}{\ \ if\ max(sqrt(sum((p-\/p0).\string^2,2)))>ttol*h}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ p0=p;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ t=delaunayn(p);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ pmid=zeros(size(t,1),dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ for\ ii=1:dim+1}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ pmid=pmid+p(t(:,ii),:)/(dim+1);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ t=t(feval(fdist,pmid,varargin\{:\})<-\/geps,:);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \%\ 4.\ Describe\ each\ edge\ by\ a\ unique\ pair\ of\ nodes}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ pair=zeros(0,2);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ localpairs=nchoosek(1:dim+1,2);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ for\ ii=1:size(localpairs,1)}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ \ \ pair=[pair;t(:,localpairs(ii,:))];}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ pair=unique(sort(pair,2),'}rows\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ \%\ 5.\ Graphical\ output\ of\ the\ current\ mesh}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ if\ dim==2}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ trimesh(t,p(:,1),p(:,2),zeros(N,1))}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ view(2),axis\ equal,axis\ off,drawnow}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ elseif\ dim==3}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ if\ mod(count,5)==0}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ simpplot(p,t,'}p(:,2)>0\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ title(['}Retriangulation\ \#\textcolor{stringliteral}{',int2str(count)])}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ drawnow}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ disp(sprintf('}Retriangulation\ \#\%d\textcolor{stringliteral}{',count))}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ count=count+1;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00082}00082\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \%\ 6.\ Move\ mesh\ points\ based\ on\ edge\ lengths\ L\ and\ forces\ F}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ bars=p(pair(:,1),:)-\/p(pair(:,2),:);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ L=sqrt(sum(bars.\string^2,2));}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ L0=feval(fh,(p(pair(:,1),:)+p(pair(:,2),:))/2);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ L0=L0*L0mult*(sum(L.\string^dim)/sum(L0.\string^dim))\string^(1/dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ F=max(L0-\/L,0);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ Fbar=[bars,-\/bars].*repmat(F./L,1,2*dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ dp=full(sparse(pair(:,[ones(1,dim),2*ones(1,dim)]),\ ...}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ones(size(pair,1),1)*[1:dim,1:dim],\ ...}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fbar,N,dim));}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ dp(1:size(fix,1),:)=0;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ p=p+deltat*dp;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00095}00095\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \%\ 7.\ Bring\ outside\ points\ back\ to\ the\ boundary}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ d=feval(fdist,p,varargin\{:\});\ ix=d>0;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ gradd=zeros(sum(ix),dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ for\ ii=1:dim}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ a=zeros(1,dim);}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ a(ii)=deps;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ d1x=feval(fdist,p(ix,:)+ones(sum(ix),1)*a,varargin\{:\});}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ gradd(:,ii)=(d1x-\/d(ix))/deps;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ p(ix,:)=p(ix,:)-\/d(ix)*ones(1,dim).*gradd;}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \%\ 8.\ Termination\ criterion}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ maxdp=max(deltat*sqrt(sum(dp(d<-\/geps,:).\string^2,2)));}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ if\ maxdp<ptol*h,\ break;\ end}}
+\DoxyCodeLine{\Hypertarget{distmeshnd_8m_source_l00110}00110\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

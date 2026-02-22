@@ -1,0 +1,70 @@
+\doxysection{Record.\+m}
+\hypertarget{_record_8m_source}{}\label{_record_8m_source}\index{+core/+chrono/Record.m@{+core/+chrono/Record.m}}
+\mbox{\hyperlink{_record_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00001}00001\ classdef\ Record\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00002}\mbox{\hyperlink{namespacecore_1_1chrono}{00002}}\ \ \ \ \ \%\ RECORD\ Individual\ timing\ measurement\ with\ state\ management.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1chrono_1_1_record}{Record}}\ represents\ a\ single\ named\ timing\ operation\ that\ tracks}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ active/inactive\ state\ and\ accumulates\ elapsed\ time\ across\ multiple}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ measurement\ sessions.\ Each\ record\ maintains\ a\ name\ identifier,}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ cumulative\ duration,\ and\ timing\ token\ \textcolor{keywordflow}{for}\ active\ measurements.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record}{Record}}\ \textcolor{keyword}{class\ }provides\ the\ fundamental\ timing\ primitive\ used\ by}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ the\ \mbox{\hyperlink{classcore_1_1chrono_1_1_timer}{Timer}}\ \textcolor{keyword}{class}.\ It\ maintains\ state\ information\ to\ distinguish}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ between\ active\ timing\ (when\ a\ measurement\ is\ in\ progress)\ and}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ inactive\ timing\ (when\ no\ measurement\ is\ running).\ Duration\ values}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ accumulate\ across\ multiple\ start/stop\ cycles.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00015}00015\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1chrono}{chrono}}.\mbox{\hyperlink{classcore_1_1chrono_1_1_timer}{Timer}}}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00018}00018\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ Name\ \%\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record}{Record}}\ name}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ Duration\ \%\ Accumulated\ elapsed\ time\ in\ seconds}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00021}\mbox{\hyperlink{classcore_1_1chrono_1_1_record}{00021}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a854890c1fb73cea0cb8c84bc968d18d3}{StartTime}}\ \%\ Timing\ token\ when\ active,\ empty\ when\ inactive}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00022}00022\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00024}00024\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00025}\mbox{\hyperlink{classcore_1_1chrono_1_1_record_ac8c6ef78494e0641639e74233ba4b328}{00025}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a9543e05001441abb04d5aea220fcca43}{IsActive}}\ \%\ Logical\ flag\ indicating\ if\ timing\ is\ active}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00028}\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a5e0af3bc6d5e530231cd280ace5f8b17}{00028}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}}(name)}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RECORD\ Construct\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}}\ instance\ with\ name\ identifier.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00031}\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a854890c1fb73cea0cb8c84bc968d18d3}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}}(name)\ creates\ a\ new\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}}\ \textcolor{keywordtype}{object}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ @a\ name\ and\ initializes\ timing\ state\ to\ zero}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ duration\ and\ inactive\ status.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00037}\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a9543e05001441abb04d5aea220fcca43}{00037}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \textcolor{keywordtype}{string}}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_ac8c6ef78494e0641639e74233ba4b328}{Name}}\ =\ name;}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc}{reset}}();}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc}{reset}}(obj)}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RESET\ Clear\ accumulated\ timing\ data\ and\ state.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc}{reset}}(obj)\ resets\ the\ accumulated\ duration\ to\ zero}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ clears\ any\ active\ timing\ operation.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00051}\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1chrono}{chrono}}.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}}}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a5e0af3bc6d5e530231cd280ace5f8b17}{Duration}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a854890c1fb73cea0cb8c84bc968d18d3}{StartTime}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ tf\ =\ get.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a9543e05001441abb04d5aea220fcca43}{IsActive}}(obj)}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISACTIVE\ Determine\ if\ timing\ measurement\ is\ in\ progress.}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ \string~isempty(obj.\mbox{\hyperlink{classcore_1_1chrono_1_1_record_a854890c1fb73cea0cb8c84bc968d18d3}{StartTime}});}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00063}00063\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_record_8m_source_l00064}00064\ end}
+
+\end{DoxyCode}

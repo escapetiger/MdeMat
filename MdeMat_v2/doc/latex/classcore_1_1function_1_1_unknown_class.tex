@@ -1,0 +1,500 @@
+\doxysection{core\+::function\+::Unknown\+Class Class Reference}
+\hypertarget{classcore_1_1function_1_1_unknown_class}{}\label{classcore_1_1function_1_1_unknown_class}\index{core::function::UnknownClass@{core::function::UnknownClass}}
+
+
+Abstract class for functions with compiled metadata.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a664efd9e0c13e13d8671cb2adc3fd4a7}{load}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Load compiled metadata from file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a253ed570a1647eac06aad7cebaafcdec}{auto\+Load}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em function dimensions based on metadata \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a28ddb2c68e02c87ac254fa5a71b5f19e}{derivative}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_ae5f727ce50601fbd76445db687fb2730}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_aae8c13f7f14954132dca45189304beb3}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a8eff255ca0437d03d913a6ab9d8367d0}{n\+Dims}} (1, 1) double=0
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a94ad7107bd3e10d251e809842f2fbe2d}{n\+Codims}} (1, 1) double=0
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_ab95e65347f393cf0d06e851fd8b4973c}{Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a8eff255ca0437d03d913a6ab9d8367d0}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a94ad7107bd3e10d251e809842f2fbe2d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract Function class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a612f830f9e2aced06ca4f2c4fe4d805c}{evaluate}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a7757980809708d659ddc91eebd220052}{metadata}} = struct()
+\begin{DoxyCompactList}\small\item\em Loaded metadata structure (always single struct) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_af5b874de703058283c8a541a31ec28b7}{has\+Metadata}}
+\begin{DoxyCompactList}\small\item\em True if metadata is loaded and available. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_ab2d7cdbaaac120891522d6ba6e154eee}{metasource}}
+\begin{DoxyCompactList}\small\item\em Cell array of available metadata filenames. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_aba5b3532886fa11874f1fd7e63965099}{parameters}} = struct()
+\begin{DoxyCompactList}\small\item\em Parameter registry. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a393343f555bf693f7ea2b76e8976d568}{is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both input and output dimensions are positive. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a73b0ec311b55584c8e45a4a5d78e973c}{has\+Parameters}}
+\begin{DoxyCompactList}\small\item\em True if the function has registered parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a8198638c5b25c1fcf48160ee4f13eb9d}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a07105a799923fd7cacd5b87a4fd0d0ee}{get\+Full\+Path}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Construct full file path from filename. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_ae03e40a813ca4d9220209adc32511fa9}{auto\+Filename}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Abstract method to generate appropriate metadata. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_adea941bd272510fabbd18b5a13f4775c}{derivative\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em the actual function evaluation \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a16879049a4f398246c17f9aab8e7ef91}{derivative\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em the actual derivative evaluation \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a6175d74ffae751fb6ded5a8d4face186}{METADATA\+\_\+\+DIR}} = \textquotesingle{}config/functions\textquotesingle{}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_unknown_class_a4efd6ab689053c2ec3a7c9e0d2354da0}{FILE\+\_\+\+EXTENSION}} = \textquotesingle{}.mat\textquotesingle{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract class for functions with compiled metadata. 
+
+Abstract base class for general functions from Euclidean.
+
+Abstract class for functions that support.
+
+Base class for compiled differentiable.
+
+from the \doxylink{namespacecore_1_1symbolic}{core.\+symbolic} module.
+
+Compiled\+Function automatically loads precompiled function handles and metadata from the +core/metadata/basis directory. This provides a bridge between symbolic function definitions and efficient numerical evaluation.
+
+The class supports automatic metadata discovery, caching, and efficient function evaluation using precompiled function handles.
+
+\begin{DoxySeeAlso}{See also}
+core.\+function.\+Function 
+
+core.\+function.\+Differentiable\+Function
+\end{DoxySeeAlso}
+functions with metadata support.
+
+This class combines the capabilities of Compiled\+Function and Differentiable\+Function to provide automatic metadata loading and efficient derivative evaluation using precompiled function handles.
+
+The class automatically discovers and loads compiled metadata from the +core/metadata/basis directory, providing both function evaluation and derivative computation capabilities.
+
+\begin{DoxySeeAlso}{See also}
+core.\+function.\+Compiled\+Function 
+
+core.\+function.\+Differentiable\+Function
+\end{DoxySeeAlso}
+differentiation.
+
+A Differentiable\+Function extends the Function class to add support for computing derivatives. This represents the mathematical concept of a differentiable function from R\texorpdfstring{$^\wedge$}{\string^}n to R\texorpdfstring{$^\wedge$}{\string^}m.
+
+The implementation uses a two-\/step approach for derivatives\+:
+\begin{DoxyEnumerate}
+\item The public derivative method handles input/output reshaping
+\item The protected derivative\+Impl method handles the actual computation
+\end{DoxyEnumerate}
+
+\begin{DoxySeeAlso}{See also}
+core.\+function.\+Function
+\end{DoxySeeAlso}
+space to Euclidean space.
+
+A Function represents a mathematical mapping from R\texorpdfstring{$^\wedge$}{\string^}n to R\texorpdfstring{$^\wedge$}{\string^}m, which can be evaluated at specified points. This class defines the interface for all function types in the system.
+
+The implementation uses a two-\/step evaluation process\+:
+\begin{DoxyEnumerate}
+\item The public evaluate method handles input/output reshaping
+\item The protected evaluate\+Impl method handles the actual computation 
+\end{DoxyEnumerate}
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00021}{21}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_ae03e40a813ca4d9220209adc32511fa9}\index{core::function::UnknownClass@{core::function::UnknownClass}!autoFilename@{autoFilename}}
+\index{autoFilename@{autoFilename}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{autoFilename()}{autoFilename()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_ae03e40a813ca4d9220209adc32511fa9} 
+virtual function core\+::function\+::\+Unknown\+Class\+::auto\+Filename (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Abstract method to generate appropriate metadata. 
+
+filename.
+
+Syntax\+: filename = auto\+Filename(obj) 
+\begin{DoxyRetVals}{Return values}
+{\em filename} & -\/ String of metadata filename \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a253ed570a1647eac06aad7cebaafcdec}\index{core::function::UnknownClass@{core::function::UnknownClass}!autoLoad@{autoLoad}}
+\index{autoLoad@{autoLoad}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{autoLoad()}{autoLoad()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a253ed570a1647eac06aad7cebaafcdec} 
+function core\+::function\+::\+Unknown\+Class\+::auto\+Load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+function dimensions based on metadata 
+
+Automatically find and load appropriate metadata.
+
+Syntax\+: obj = auto\+Load(obj) 
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ Modified object with loaded metadata \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a28ddb2c68e02c87ac254fa5a71b5f19e}\index{core::function::UnknownClass@{core::function::UnknownClass}!derivative@{derivative}}
+\index{derivative@{derivative}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{derivative()}{derivative()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a28ddb2c68e02c87ac254fa5a71b5f19e} 
+function core\+::function\+::\+Unknown\+Class\+::derivative (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{r}{}\end{DoxyParamCaption})}
+
+
+
+Compute the derivative of specified order at given. 
+
+points.
+
+Syntax\+: dY = derivative(obj, X, r) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x ...) \\
+\hline
+{\em r} & -\/ Derivative order vector (1 x n\+Dims) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em dY} & -\/ Derivative values (n\+Codims x ...) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_adea941bd272510fabbd18b5a13f4775c}\index{core::function::UnknownClass@{core::function::UnknownClass}!derivativeImpl@{derivativeImpl}}
+\index{derivativeImpl@{derivativeImpl}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{derivativeImpl()}{derivativeImpl()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_adea941bd272510fabbd18b5a13f4775c} 
+function core\+::function\+::\+Unknown\+Class\+::derivative\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{r}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of function derivative. 
+
+Syntax\+: dY = derivative\+Impl(obj, X, r) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x n\+Points) \\
+\hline
+{\em r} & -\/ Derivative order vector (1 x n\+Dims) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em dY} & -\/ Derivative values (n\+Codims x n\+Points) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a16879049a4f398246c17f9aab8e7ef91}\index{core::function::UnknownClass@{core::function::UnknownClass}!derivativeImpl@{derivativeImpl}}
+\index{derivativeImpl@{derivativeImpl}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{derivativeImpl()}{derivativeImpl()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a16879049a4f398246c17f9aab8e7ef91} 
+virtual function core\+::function\+::\+Unknown\+Class\+::derivative\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{r}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+the actual derivative evaluation 
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a612f830f9e2aced06ca4f2c4fe4d805c}\index{core::function::UnknownClass@{core::function::UnknownClass}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a612f830f9e2aced06ca4f2c4fe4d805c} 
+function core\+::function\+::\+Unknown\+Class\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate the function at specified points. 
+
+Syntax\+: Y = evaluate(obj, X) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x ...) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values (n\+Codims x ...) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a8198638c5b25c1fcf48160ee4f13eb9d}\index{core::function::UnknownClass@{core::function::UnknownClass}!evaluateImpl@{evaluateImpl}}
+\index{evaluateImpl@{evaluateImpl}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{evaluateImpl()}{evaluateImpl()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a8198638c5b25c1fcf48160ee4f13eb9d} 
+function core\+::function\+::\+Unknown\+Class\+::evaluate\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of function evaluation. 
+
+Syntax\+: Y = evaluate\+Impl(obj, X) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x n\+Points) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values (n\+Codims x n\+Points) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c}\index{core::function::UnknownClass@{core::function::UnknownClass}!evaluateImpl@{evaluateImpl}}
+\index{evaluateImpl@{evaluateImpl}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{evaluateImpl()}{evaluateImpl()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c} 
+virtual function core\+::function\+::\+Unknown\+Class\+::evaluate\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+the actual function evaluation 
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c}\index{core::function::UnknownClass@{core::function::UnknownClass}!evaluateImpl@{evaluateImpl}}
+\index{evaluateImpl@{evaluateImpl}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{evaluateImpl()}{evaluateImpl()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_aec3599f0c824160836fc10435f2c057c} 
+virtual function core\+::function\+::\+Unknown\+Class\+::evaluate\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_ab95e65347f393cf0d06e851fd8b4973c}\index{core::function::UnknownClass@{core::function::UnknownClass}!Function@{Function}}
+\index{Function@{Function}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{Function()}{Function()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_ab95e65347f393cf0d06e851fd8b4973c} 
+function core\+::function\+::\+Unknown\+Class\+::\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{, }\item[{Input\+Type}]{n\+Codims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the abstract Function class. 
+
+Syntax\+: obj = \doxylink{classcore_1_1function_1_1_unknown_class_ab95e65347f393cf0d06e851fd8b4973c}{Function()} obj = Function(n\+Dims) obj = Function(n\+Dims, n\+Codims) 
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ (Optional) Number of input dimensions, default is 0 \\
+\hline
+{\em n\+Codims} & -\/ (Optional) Number of output dimensions, default is 0 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a07105a799923fd7cacd5b87a4fd0d0ee}\index{core::function::UnknownClass@{core::function::UnknownClass}!getFullPath@{getFullPath}}
+\index{getFullPath@{getFullPath}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{getFullPath()}{getFullPath()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a07105a799923fd7cacd5b87a4fd0d0ee} 
+function core\+::function\+::\+Unknown\+Class\+::get\+Full\+Path (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Construct full file path from filename. 
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_aae8c13f7f14954132dca45189304beb3}\index{core::function::UnknownClass@{core::function::UnknownClass}!gradient@{gradient}}
+\index{gradient@{gradient}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{gradient()}{gradient()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_aae8c13f7f14954132dca45189304beb3} 
+function core\+::function\+::\+Unknown\+Class\+::gradient (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Compute the gradient at specified points. 
+
+Syntax\+: G = gradient(obj, X) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x ...) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Gradient vector (n\+Dims x ...) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_ae5f727ce50601fbd76445db687fb2730}\index{core::function::UnknownClass@{core::function::UnknownClass}!jacobian@{jacobian}}
+\index{jacobian@{jacobian}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{jacobian()}{jacobian()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_ae5f727ce50601fbd76445db687fb2730} 
+function core\+::function\+::\+Unknown\+Class\+::jacobian (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Compute the Jacobian matrix at specified points. 
+
+Syntax\+: J = jacobian(obj, X) 
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Points where to evaluate (n\+Dims x ...) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em J} & -\/ Jacobian tensor (n\+Codims x n\+Dims x ...) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a664efd9e0c13e13d8671cb2adc3fd4a7}\index{core::function::UnknownClass@{core::function::UnknownClass}!load@{load}}
+\index{load@{load}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a664efd9e0c13e13d8671cb2adc3fd4a7} 
+function core\+::function\+::\+Unknown\+Class\+::load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Load compiled metadata from file. 
+
+Syntax\+: obj = load(obj, filename) 
+\begin{DoxyParams}{Parameters}
+{\em filename} & -\/ String of metadata filename \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ Modified Compiled\+Function object with loaded metadata \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a94ad7107bd3e10d251e809842f2fbe2d}\index{core::function::UnknownClass@{core::function::UnknownClass}!nCodims@{nCodims}}
+\index{nCodims@{nCodims}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nCodims()}{nCodims()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a94ad7107bd3e10d251e809842f2fbe2d} 
+Property core\+::function\+::\+Unknown\+Class\+::n\+Codims (\begin{DoxyParamCaption}\item[{1}]{}{, }\item[{1}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Number of dimensions of output space. 
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a8eff255ca0437d03d913a6ab9d8367d0}\index{core::function::UnknownClass@{core::function::UnknownClass}!nDims@{nDims}}
+\index{nDims@{nDims}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nDims()}{nDims()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a8eff255ca0437d03d913a6ab9d8367d0} 
+Property core\+::function\+::\+Unknown\+Class\+::n\+Dims (\begin{DoxyParamCaption}\item[{1}]{}{, }\item[{1}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Number of dimensions of input space. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a4efd6ab689053c2ec3a7c9e0d2354da0}\index{core::function::UnknownClass@{core::function::UnknownClass}!FILE\_EXTENSION@{FILE\_EXTENSION}}
+\index{FILE\_EXTENSION@{FILE\_EXTENSION}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{FILE\_EXTENSION}{FILE\_EXTENSION}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a4efd6ab689053c2ec3a7c9e0d2354da0} 
+Constant Property core\+::function\+::\+Unknown\+Class\+::\+FILE\+\_\+\+EXTENSION = \textquotesingle{}.mat\textquotesingle{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00028}{28}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_af5b874de703058283c8a541a31ec28b7}\index{core::function::UnknownClass@{core::function::UnknownClass}!hasMetadata@{hasMetadata}}
+\index{hasMetadata@{hasMetadata}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{hasMetadata}{hasMetadata}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_af5b874de703058283c8a541a31ec28b7} 
+Property core\+::function\+::\+Unknown\+Class\+::has\+Metadata}
+
+
+
+True if metadata is loaded and available. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00040}{40}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a73b0ec311b55584c8e45a4a5d78e973c}\index{core::function::UnknownClass@{core::function::UnknownClass}!hasParameters@{hasParameters}}
+\index{hasParameters@{hasParameters}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{hasParameters}{hasParameters}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a73b0ec311b55584c8e45a4a5d78e973c} 
+Property core\+::function\+::\+Unknown\+Class\+::has\+Parameters}
+
+
+
+True if the function has registered parameters. 
+
+
+
+Definition at line \mbox{\hyperlink{_function_8m_source_l00037}{37}} of file \mbox{\hyperlink{_function_8m_source}{Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a393343f555bf693f7ea2b76e8976d568}\index{core::function::UnknownClass@{core::function::UnknownClass}!isWellDefined@{isWellDefined}}
+\index{isWellDefined@{isWellDefined}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{isWellDefined}{isWellDefined}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a393343f555bf693f7ea2b76e8976d568} 
+Property core\+::function\+::\+Unknown\+Class\+::is\+Well\+Defined}
+
+
+
+True if both input and output dimensions are positive. 
+
+
+
+Definition at line \mbox{\hyperlink{_function_8m_source_l00034}{34}} of file \mbox{\hyperlink{_function_8m_source}{Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a7757980809708d659ddc91eebd220052}\index{core::function::UnknownClass@{core::function::UnknownClass}!metadata@{metadata}}
+\index{metadata@{metadata}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{metadata}{metadata}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a7757980809708d659ddc91eebd220052} 
+Property core\+::function\+::\+Unknown\+Class\+::metadata = struct()}
+
+
+
+Loaded metadata structure (always single struct) 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00034}{34}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_a6175d74ffae751fb6ded5a8d4face186}\index{core::function::UnknownClass@{core::function::UnknownClass}!METADATA\_DIR@{METADATA\_DIR}}
+\index{METADATA\_DIR@{METADATA\_DIR}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{METADATA\_DIR}{METADATA\_DIR}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_a6175d74ffae751fb6ded5a8d4face186} 
+Constant Property core\+::function\+::\+Unknown\+Class\+::\+METADATA\+\_\+\+DIR = \textquotesingle{}config/functions\textquotesingle{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00025}{25}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_ab2d7cdbaaac120891522d6ba6e154eee}\index{core::function::UnknownClass@{core::function::UnknownClass}!metasource@{metasource}}
+\index{metasource@{metasource}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{metasource}{metasource}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_ab2d7cdbaaac120891522d6ba6e154eee} 
+Property core\+::function\+::\+Unknown\+Class\+::metasource}
+
+
+
+Cell array of available metadata filenames. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00043}{43}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_unknown_class_aba5b3532886fa11874f1fd7e63965099}\index{core::function::UnknownClass@{core::function::UnknownClass}!parameters@{parameters}}
+\index{parameters@{parameters}!core::function::UnknownClass@{core::function::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{parameters}{parameters}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_unknown_class_aba5b3532886fa11874f1fd7e63965099} 
+Property core\+::function\+::\+Unknown\+Class\+::parameters = struct()}
+
+
+
+Parameter registry. 
+
+
+
+Definition at line \mbox{\hyperlink{_function_8m_source_l00028}{28}} of file \mbox{\hyperlink{_function_8m_source}{Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_compiled_function_8m}{Compiled\+Function.\+m}}\item 
++core/+function/\mbox{\hyperlink{_function_8m}{Function.\+m}}\item 
++core/+function/\mbox{\hyperlink{_differentiable_compiled_function_8m}{Differentiable\+Compiled\+Function.\+m}}\item 
++core/+function/\mbox{\hyperlink{_differentiable_function_8m}{Differentiable\+Function.\+m}}\end{DoxyCompactItemize}

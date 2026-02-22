@@ -1,0 +1,171 @@
+\doxysection{fem\+::element\+::C0\+Finite\+Element Class Reference}
+\hypertarget{classfem_1_1element_1_1_c0_finite_element}{}\label{classfem_1_1element_1_1_c0_finite_element}\index{fem::element::C0FiniteElement@{fem::element::C0FiniteElement}}
+
+
+Continuous finite element.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{fem\+::element\+::\+Finite\+Element}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1element_1_1_c0_sphere_finite_element}{fem\+::element\+::\+C0\+Sphere\+Finite\+Element}}, and \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{fem\+::element\+::\+L2\+Finite\+Element}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0\+Finite\+Element}} (Input\+Type K, Input\+Type P, Input\+Type I)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1element_1_1_c0_finite_element}{C0\+Finite\+Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}{set\+Volume\+Data}} (Input\+Type obj, Input\+Type r, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set function data for volume integrals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{fem\+::element\+::\+Finite\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_aeba68046a39a95aa44f893289c80e81a}{Finite\+Element}} (Input\+Type K, Input\+Type P)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1element_1_1_finite_element}{Finite\+Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a1edde942819f7b6ee924d50bb22cb5fc}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the finite element space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b}{volume\+Data}}
+\begin{DoxyCompactList}\small\item\em Function data for volume integrals (Function\+Data object) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{fem\+::element\+::\+Finite\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}
+\begin{DoxyCompactList}\small\item\em Geometry object defining the element domain. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}
+\begin{DoxyCompactList}\small\item\em Function space projector for basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a550f4e55c2c0b91a2d06306c33cc5cd6}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae278d037a3d378806906b77ed940be61}{outer\+Normals}}
+\begin{DoxyCompactList}\small\item\em Outer normal vectors at geometry boundaries. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Continuous finite element. 
+
+\doxylink{classfem_1_1element_1_1_c0_finite_element}{C0\+Finite\+Element} implements a continuous (C0) finite element with volume integration capabilities. Functions in this space are continuous across element boundaries but may have discontinuous derivatives. This corresponds to the standard Galerkin finite element method for elliptic and parabolic problems.
+
+The C0 continuity requirement ensures that the global finite element function is continuous across inter-\/element boundaries, which is essential for conforming finite element approximations of problems requiring H\texorpdfstring{$^\wedge$}{\string^}1 regularity.
+
+Volume integration is performed using numerical quadrature over the element domain, with function data pre-\/computed at integration points for efficient assembly of system matrices and vectors.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ C0\ finite\ element\ with\ quadrature}
+\DoxyCodeLine{\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}}\ =\ core.geometry.Orthotope.unit(2);}
+\DoxyCodeLine{basis\ =\ approx.basis.LagrangeBasis(2);}
+\DoxyCodeLine{\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}}\ =\ approx.project.NodalProjector(basis);}
+\DoxyCodeLine{integrator\ =\ approx.integrate.GaussLegendre(3);}
+\DoxyCodeLine{element\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}{C0FiniteElement}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ae132c83e44c6b96c4090aaa35e0a1e9b}{geometry}},\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_ac58f667dd783c5d2347eb71a7a3342fa}{projector}},\ integrator);}
+\DoxyCodeLine{\%\ Set\ up\ function\ data\ \textcolor{keywordflow}{for}\ mass\ matrix\ assembly}
+\DoxyCodeLine{element.setVolumeData(0);\ \ \%\ Function\ values\ only}
+\DoxyCodeLine{\%\ Set\ up\ function\ data\ \textcolor{keywordflow}{for}\ stiffness\ matrix\ assembly}
+\DoxyCodeLine{element.setVolumeData(1);\ \ \%\ Include\ first\ derivatives}
+\DoxyCodeLine{\%\ Access\ pre-\/computed\ data}
+\DoxyCodeLine{values\ =\ element.volumeData.values;}
+\DoxyCodeLine{weights\ =\ element.volumeData.weights;}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1element_1_1_finite_element}{fem.\+element.\+Finite\+Element} 
+
+\doxylink{classfem_1_1element_1_1_l2_finite_element}{fem.\+element.\+L2\+Finite\+Element} 
+
+\doxylink{classfem_1_1data_1_1_function_data}{fem.\+data.\+Function\+Data} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_8m_source_l00043}{43}} of file \mbox{\hyperlink{_c0_finite_element_8m_source}{C0\+Finite\+Element.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31}\index{fem::element::C0FiniteElement@{fem::element::C0FiniteElement}!C0FiniteElement@{C0FiniteElement}}
+\index{C0FiniteElement@{C0FiniteElement}!fem::element::C0FiniteElement@{fem::element::C0FiniteElement}}
+\doxysubsubsection{\texorpdfstring{C0FiniteElement()}{C0FiniteElement()}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_aec72d3262b8d950d08314e4353a56d31} 
+function fem\+::element\+::\+C0\+Finite\+Element\+::\+C0\+Finite\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{K}{, }\item[{Input\+Type}]{P}{, }\item[{Input\+Type}]{I}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1element_1_1_c0_finite_element}{C0\+Finite\+Element}. 
+
+obj = C0\+Finite\+Element(\+K, P, I) creates a continuous finite element with volume integration capabilities using the specified geometry, projector, and integrator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em K} & -\/ Element geometry object (Geometry) \\
+\hline
+{\em P} & -\/ Function space projector (Projector) \\
+\hline
+{\em I} & -\/ Volume integrator object (Integrator) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1}\index{fem::element::C0FiniteElement@{fem::element::C0FiniteElement}!setVolumeData@{setVolumeData}}
+\index{setVolumeData@{setVolumeData}!fem::element::C0FiniteElement@{fem::element::C0FiniteElement}}
+\doxysubsubsection{\texorpdfstring{setVolumeData()}{setVolumeData()}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_a69eaac69a37f99343908a6ffd65e2bf1} 
+function fem\+::element\+::\+C0\+Finite\+Element\+::set\+Volume\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{r}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set function data for volume integrals. 
+
+set\+Volume\+Data(obj, r) computes and stores function values and derivatives up to order r at integration points for use in volume integral computations. This pre-\/computation enables efficient assembly of bilinear forms.
+
+set\+Volume\+Data(obj, r, args) allows additional arguments to be passed to the integration point setup.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1element_1_1_c0_finite_element}{C0\+Finite\+Element} object \\
+\hline
+{\em r} & -\/ Maximum derivative order to compute (non-\/negative integer) \\
+\hline
+{\em varargin} & -\/ Optional arguments for integration point setup\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b}\index{fem::element::C0FiniteElement@{fem::element::C0FiniteElement}!volumeData@{volumeData}}
+\index{volumeData@{volumeData}!fem::element::C0FiniteElement@{fem::element::C0FiniteElement}}
+\doxysubsubsection{\texorpdfstring{volumeData}{volumeData}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_a4743cfa2b78f673cad70811a6e3c868b} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+::volume\+Data}
+
+
+
+Function data for volume integrals (Function\+Data object) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_8m_source_l00047}{47}} of file \mbox{\hyperlink{_c0_finite_element_8m_source}{C0\+Finite\+Element.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+element/\mbox{\hyperlink{_c0_finite_element_8m}{C0\+Finite\+Element.\+m}}\end{DoxyCompactItemize}

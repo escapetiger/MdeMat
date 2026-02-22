@@ -1,0 +1,68 @@
+\doxysection{ex02\+\_\+legendre\+\_\+basis.\+m}
+\hypertarget{ex02__legendre__basis_8m_source}{}\label{ex02__legendre__basis_8m_source}\index{+core/+symbolic/+scripts/ex02\_legendre\_basis.m@{+core/+symbolic/+scripts/ex02\_legendre\_basis.m}}
+\mbox{\hyperlink{ex02__legendre__basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00001}00001\ \%\%\ EX02\_LEGENDRE\_BASIS\ Generate\ Legendre\ orthogonal\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00002}00002\ \%}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00003}00003\ \%\ \ \ This\ script\ generates\ Legendre\ polynomial\ basis\ functions\ up\ to\ a}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00004}00004\ \%\ \ \ specified\ maximum\ degree\ \textcolor{keyword}{using\ }the\ improved\ OrthogonalPolynomialBasis}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00005}00005\ \%\ \ \ framework.\ Configure\ parameters\ below\ and\ run\ the\ script.}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00007}00007\ \%\%\ Configuration\ Parameters}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00008}00008\ code\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00009}00009\ \textcolor{keywordflow}{switch}\ code}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00010}00010\ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ maxDegree\ =\ 10;\ \%\ Maximum\ polynomial\ degree}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ variable\ =\ sym(\textcolor{charliteral}{'x'});\ \%\ Symbolic\ variable}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ isNormalized\ =\ \textcolor{keyword}{false};\ \%\ Orthonormal\ basis\ flag}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ isMonic\ =\ \textcolor{keyword}{true};\ \%\ Monic\ polynomials\ flag}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ lowerBound\ =\ -\/1\ /\ 2;\ \%\ Lower\ domain\ bound}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ upperBound\ =\ 1\ /\ 2;\ \%\ Upper\ domain\ bound}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ fileName\ =\ \textcolor{stringliteral}{'+core/+symbolic/metadata/monic\_unit\_legendre'};\ \%\ Save\ file\ name}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ maxDerivOrder\ =\ maxDegree;\ \%\ Maximum\ derivative\ order\ \textcolor{keywordflow}{for}\ compilation}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ maxDegree\ =\ 10;\ \%\ Maximum\ polynomial\ degree}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ variable\ =\ sym(\textcolor{charliteral}{'x'});\ \%\ Symbolic\ variable}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ isNormalized\ =\ \textcolor{keyword}{true};\ \%\ Orthonormal\ basis\ flag}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ isMonic\ =\ \textcolor{keyword}{false};\ \%\ Monic\ polynomials\ flag}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ lowerBound\ =\ -\/1;\ \%\ Lower\ domain\ bound}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ upperBound\ =\ 1;\ \%\ Upper\ domain\ bound}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ fileName\ =\ \textcolor{stringliteral}{'+core/+symbolic/metadata/normal\_legendre'};\ \%\ Save\ file\ name}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ maxDerivOrder\ =\ 0;\ \%\ Maximum\ derivative\ order\ \textcolor{keywordflow}{for}\ compilation}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00028}00028\ end}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00030}00030\ \%\%\ Generate\ Legendre\ Basis\ Functions}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00032}00032\ basis\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_legendre_basis}{LegendreBasis}}(variable,\ maxDegree,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00033}00033\ \ \ \ \ isNormalized=isNormalized,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00034}00034\ \ \ \ \ isMonic=isMonic,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00035}00035\ \ \ \ \ lower=lowerBound,\ ...}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00036}00036\ \ \ \ \ upper=upperBound);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00038}00038\ basis.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}}(maxDerivOrder);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00040}00040\ \%\%\ Display\ Results}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00041}00041\ fprintf(\textcolor{stringliteral}{'Generated\ \%d\ basis\ functions:\(\backslash\)n'},\ basis.NCodims);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00043}00043\ \textcolor{keywordflow}{for}\ i\ =\ 1:basis.NCodims}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00044}00044\ \ \ \ \ fprintf(\textcolor{stringliteral}{'P\_\%d(x)\ =\ \%s\(\backslash\)n'},\ i-\/1,\ \textcolor{keywordtype}{char}(basis.Expressions(i)));}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00045}00045\ end}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00046}00046\ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00048}00048\ \%\ Display\ properties}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00049}00049\ fprintf(\textcolor{stringliteral}{'Basis\ Properties:\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00050}00050\ fprintf(\textcolor{stringliteral}{'\ \ Max\ Degree:\ \%d\(\backslash\)n'},\ basis.MaxDegree);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00051}00051\ fprintf(\textcolor{stringliteral}{'\ \ IsNormalized:\ \%s\(\backslash\)n'},\ \textcolor{keywordtype}{string}(basis.IsNormalized));}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00052}00052\ fprintf(\textcolor{stringliteral}{'\ \ Monic:\ \%s\(\backslash\)n'},\ \textcolor{keywordtype}{string}(basis.IsMonic));}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00053}00053\ fprintf(\textcolor{stringliteral}{'\ \ Domain:\ [\%.3f,\ \%.3f]\(\backslash\)n'},\ basis.Lower,\ basis.Upper);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00054}00054\ fprintf(\textcolor{stringliteral}{'\ \ Input\ Dims:\ \%d\(\backslash\)n'},\ basis.NDims);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00055}00055\ fprintf(\textcolor{stringliteral}{'\ \ Output\ Dims:\ \%d\(\backslash\)n'},\ basis.NCodims);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00056}00056\ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00058}00058\ \%\%\ Save\ Results\ (\textcolor{keywordflow}{if}\ specified)}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00059}00059\ \textcolor{keywordflow}{if}\ \string~isempty(fileName)}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00060}00060\ \ \ \ \ basis.save(fileName);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00061}00061\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Basis\ saved\ to:\ \%s\(\backslash\)n'},\ [fileName,\ basis.MetaExt]);}
+\DoxyCodeLine{\Hypertarget{ex02__legendre__basis_8m_source_l00062}00062\ end}
+
+\end{DoxyCode}

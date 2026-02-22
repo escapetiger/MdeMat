@@ -1,0 +1,394 @@
+\doxysection{Bdf\+Integrator.\+m}
+\hypertarget{_bdf_integrator_8m_source}{}\label{_bdf_integrator_8m_source}\index{+approx/+odeint/BdfIntegrator.m@{+approx/+odeint/BdfIntegrator.m}}
+\mbox{\hyperlink{_bdf_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00001}00001\ classdef\ BdfIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ BDFINTEGRATOR\ Backward\ Differentiation\ Formula\ integrator\ base\ \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ BdfIntegrator\ implements\ multi-\/step\ Backward\ Differentiation}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ Formula\ (BDF)\ methods\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ S,}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},\ and}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f\$S\(\backslash\)f\$\ is\ a\ source\ term.\ BDF\ methods\ use\ multiple\ previous\ time}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ steps\ to\ achieve\ higher-\/\ order\ accuracy\ and\ are\ A-\/stable,\ making}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ them\ suitable\ \textcolor{keywordflow}{for}\ stiff\ problems.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ BDF\ methods\ are\ implicit\ and\ require\ solving\ linear\ systems\ at\ each}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ time\ step.\ They\ are\ particularly\ effective\ \textcolor{keywordflow}{for}\ stiff\ ODEs\ where}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \textcolor{keyword}{explicit}\ methods\ would\ require\ prohibitively\ small\ time\ steps.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf2_integrator}{Bdf2Integrator}},}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00024}00024\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00025}00025\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ alpha\ \%\ Coefficients\ for\ previous\ solution\ values\ (row\ vector)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ beta\ \ \%\ Coefficient\ for\ current\ derivative\ evaluation\ (scalar)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00028}00028\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{00029}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00030}00030\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}{BdfIntegrator}}(nSteps,\ final)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ BDFINTEGRATOR\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}{BdfIntegrator}}.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a4e195e5c910a764ca2fb73e9794d9e5f}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}{BdfIntegrator}}(nSteps,\ final)\ creates\ a\ BDF\ integrator}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ the\ specified\ number\ of\ time\ steps\ and\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a01fe1fd35109ac5555e5a6f34ad50cac}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nSteps\ \{mustBeInteger,\ mustBePositive\}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{final}\ \{mustBeNumeric,\ mustBeNonnegative\}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}}(nSteps,\ 1,\ \textcolor{keyword}{final});}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ function\ obj\ =\ setTimeStep(obj,\ options)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETTIMESTEP\ Set\ time\ step\ and\ coefficients\ \textcolor{keywordflow}{for}\ the\ BDF}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ integrator.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a5032c264aa12ef70fffe06df716e9ce4}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}{setTimeStep}}(obj,\ h=h,\ C=C)\ sets\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}{step}}\ as\ dt\ =\ C*h}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ dynamic\ timelines.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}{setTimeStep}}(obj,\ h=h,\ C=C,\ p=p)\ sets\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}{step}}\ as\ dt}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ =\ C*h\string^p\ \textcolor{keywordflow}{for}\ dynamic\ timelines.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}{setTimeStep}}(obj,\ dt=dt)\ directly\ sets\ the\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}{step}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ manual\ control\ (use\ with\ caution).}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.dt\ \{mustBeNumeric,\ mustBePositive\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.h\ \{mustBeNumeric,\ mustBePositive\}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.C\ \{mustBeNumeric,\ mustBePositive\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.p\ \{mustBeNumeric,\ mustBePositive\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ varargin\ =\ namedargs2cell(options);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ setTimeStep@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}}(obj,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setCoefficients();}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ function\ obj\ =\ setLhs(obj,\ L,\ M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00072}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_aec5fb1eab4e5f60f289da40451f93cc5}{00072}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETLhs\ Set\ the\ left-\/hand\ side\ matrix\ \textcolor{keywordflow}{for}\ the\ BDF\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a17f6a2432e728ca5510751aa54a515fd}{setLhs}}(obj,\ L,\ M)\ constructs\ the\ left-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ as\ M\ -\/\ dt*\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a01fe1fd35109ac5555e5a6f34ad50cac}{beta}}*L\ \textcolor{keywordflow}{for}\ the\ implicit\ BDF\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Start\ with\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ linear\ term\ contribution}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(L)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\ =\ obj.Lhs\ -\/\ dt\ *\ obj.beta\ *\ L;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00094}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a17f6a2432e728ca5510751aa54a515fd}{00094}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2}{setRhs}}(obj,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETRhs\ Set\ the\ right-\/hand\ side\ vector\ \textcolor{keywordflow}{for}\ the\ BDF\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2}{setRhs}}(obj,\ S,\ M)\ constructs\ the\ right-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ \textcolor{keyword}{using\ }the\ BDF\ approximation\ and\ source\ term.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ min(obj.Timeline.Count,\ obj.NSteps);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ with\ mass\ term\ contribution\ from\ previous}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ solutions}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ obj.U0\{j\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ iscell(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ M\{j\}\{2\}\ *\ obj.U0\{j\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(M\{j\}\{1\})}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ R\ +\ M\{j\}\{1\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00120}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_adf3e1dfaf07432ebbf35d41e3dcfe2a2}{00120}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ M\ *\ obj.U0\{j\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ obj.Rhs\ -\/\ obj.alpha(j)\ *\ R;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ source\ term\ contribution}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(S)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ obj.Rhs\ +\ dt\ *\ obj.beta\ *\ S;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ function\ U\ =\ stage(obj,\ L,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STAGE\ Compute\ a\ single\ stage\ of\ the\ BDF\ method.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ stage(obj,\ L,\ S,\ M)\ computes\ the\ solution\ at\ the}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ current\ time\ step\ by\ solving\ the\ implicit\ BDF\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.Now;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.Timeline.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ linear\ term\ at\ current\ time}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ obj.evaluateOperator(L,\ U0,\ [t0\ +\ dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ source\ term\ at\ current\ time}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ obj.evaluateOperator(S,\ U0,\ [t0\ +\ dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ Lhs\ matrix\ \textcolor{keywordflow}{if}\ step\ size\ changed}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.Timeline.HasStepSizeChanged}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ Lhs\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateLhsMass(M,\ t0+dt);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ Lhs\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00161}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a14a45ae0fa02ff97e7a0379ffcce0fc8}{00161}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setLhs(Le,\ Me);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_abf260e466ced7ed3896e4d30e0e8df96}{Rhs}}\ mass\ term\ \textcolor{keywordflow}{for}\ all\ previous\ time\ levels}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(M,\ \textcolor{stringliteral}{'function\_handle'})}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ min(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.Count,\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aa137e220cfe632477cbc6b7724cd0fb2}{NSteps}});}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tj\ =\ t0\ +\ dt\ -\/\ sum(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSizeQueue(1:j));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\{j\}\ =\ obj.evaluateRhsMass(j,\ M,\ [t0\ +\ dt,\ tj]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ Rhs\ vector}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setRhs(Se,\ Me);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Solve\ the\ \mbox{\hyperlink{namespaceapprox_1_1linear}{linear}}\ system}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.Solver.solve(obj.Lhs,\ obj.Rhs);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ function\ U\ =\ step(obj,\ L,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Advance\ one\ time\ step\ \textcolor{keyword}{using}\ the\ BDF\ method.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ step(obj,\ L,\ S,\ M)\ performs\ a\ complete\ time\ step\ by}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solving\ the\ implicit\ BDF\ system.\ For\ BDF\ methods,\ \textcolor{keyword}{this}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ is\ equivalent\ to\ computing\ a\ single\ stage.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a14a45ae0fa02ff97e7a0379ffcce0fc8}{stage}}(L,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ function\ obj\ =\ setLhsA(obj,\ L,\ M,\ P,\ A,\ B)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETLHSA\ Set\ the\ left-\/hand\ side\ matrix\ \textcolor{keywordflow}{for}\ augmented\ BDF}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setLhsA(obj,\ L,\ M,\ P,\ A,\ B)\ constructs\ the\ left-\/hand}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ side\ matrix\ \textcolor{keywordflow}{for}\ augmented\ BDF\ systems\ with\ constraints.\ The}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ system\ has\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \(\backslash\)begin\{bmatrix\}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ M\ -\/\ dt\ \(\backslash\)cdot\ \(\backslash\)beta\ \(\backslash\)cdot\ L\ \&\ -\/dt\ \(\backslash\)cdot\ \(\backslash\)beta\ \(\backslash\)cdot\ P\ \(\backslash\)\(\backslash\)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ A\ \&\ B}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \(\backslash\)end\{bmatrix\}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00218}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a02cb7ab34898ce8a9a222e85906b7ef1}{00218}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ \{mustBeA(P,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Coupling\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ \{mustBeA(A,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ \{mustBeA(B,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ coupling\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\ =\ cell(2,\ 2);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\{1,\ 1\}\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ linear\ term\ contribution\ with\ diagonal\ coefficient}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(L)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\{1,\ 1\}\ =\ obj.Lhs\{1,1\}\ -\/\ dt\ *\ obj.beta\ *\ L;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\{1,\ 2\}\ =\ -\/dt\ *\ obj.beta\ *\ P;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\{2,\ 1\}\ =\ A;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\{2,\ 2\}\ =\ B;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Lhs\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.block(obj.Lhs);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00245}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a06fa5feff9d50248e8e1e234075beb28}{00245}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1}{setRhsA}}(obj,\ S,\ M,\ C)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETRHSA\ Set\ the\ right-\/hand\ side\ vector\ \textcolor{keywordflow}{for}\ augmented\ BDF}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ system.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1}{setRhsA}}(obj,\ S,\ M,\ C)\ constructs\ the\ right-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ \textcolor{keywordflow}{for}\ augmented\ BDF\ systems\ with\ constraints\ \textcolor{keyword}{using\ }the}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ BDF\ approximation\ and\ constraint\ source\ term\ @a\ C.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeA(C,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ min(obj.Timeline.Count,\ obj.NSteps);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ with\ mass\ term\ contribution\ from\ previous}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ solutions}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ cell(2,\ 1);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\{1\}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ obj.U0\{j\}(1:size(S,\ 2));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ iscell(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ M\{j\}\{2\}\ *\ obj.U0\{j\}(1:size(M\{j\}\{2\},\ 2));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(M\{j\}\{1\})}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ R\ +\ M\{j\}\{1\}(1:size(M\{j\}\{2\},\ 2));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ M\ *\ obj.U0\{j\}(1:size(M,\ 2));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\{1\}\ =\ obj.Rhs\{1\}\ -\/\ obj.alpha(j)\ *\ R;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ source\ term\ contribution}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(S)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00285}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a63c3fdcc7c70a488209d76ae43cae2b1}{00285}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_abf260e466ced7ed3896e4d30e0e8df96}{Rhs}}\{1\}\ =\ obj.Rhs\{1\}\ +\ dt\ *\ obj.beta\ *\ S;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\{2\}\ =\ C;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Rhs\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.block(obj.Rhs);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ function\ U\ =\ stageA(obj,\ L,\ S,\ M,\ P,\ A,\ B,\ C)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STAGEA\ Compute\ a\ single\ stage\ of\ the\ augmented\ BDF\ method.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ stageA(obj,\ L,\ S,\ M,\ P,\ A,\ B,\ C)\ computes\ the\ solution}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ the\ current\ time\ step\ by\ solving\ the\ augmented\ implicit}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ BDF\ system\ with\ constraints.\ The\ method\ handles\ coupled}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ systems\ with\ constraint\ equations.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ \{mustBeA(P,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Coupling\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ \{mustBeA(A,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ \{mustBeA(B,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ coupling\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeA(C,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.Now;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.Timeline.StepSize;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ linear\ term\ at\ stage\ time}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ obj.evaluateOperator(L,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ source\ term\ at\ stage\ time}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ obj.evaluateOperator(S,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ Pe\ =\ obj.evaluateOperator(P,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ Ae\ =\ obj.evaluateOperator(A,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ Be\ =\ obj.evaluateOperator(B,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ Ce\ =\ obj.evaluateOperator(C,\ U0,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ Lhs\ matrix\ \textcolor{keywordflow}{if}\ step\ size\ changed}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.Timeline.HasStepSizeChanged}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ Lhs\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateLhsMass(M,\ t0+dt);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00334}\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a226a1029f9c1f6fe4acbb974e910b71b}{00334}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4e583324d86e15c494bc228f09ba9b10}{Lhs}}\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setLhsA(Le,\ Me,\ Pe,\ Ae,\ Be);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_abf260e466ced7ed3896e4d30e0e8df96}{Rhs}}\ mass\ term\ \textcolor{keywordflow}{for}\ all\ previous\ time\ levels}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isa(M,\ \textcolor{stringliteral}{'function\_handle'})}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ min(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.Count,\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aa137e220cfe632477cbc6b7724cd0fb2}{NSteps}});}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tj\ =\ t0\ +\ dt\ -\/\ sum(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}.StepSizeQueue(1:j));}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\{j\}\ =\ obj.evaluateRhsMass(j,\ M,\ [t0\ +\ dt,\ tj]);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ Rhs\ vector}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setRhsA(Se,\ Me,\ Ce);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Solve\ \mbox{\hyperlink{namespaceapprox_1_1linear}{linear}}\ system\ \textcolor{keywordflow}{for}\ stage\ approximation}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.Solver.solve(obj.Lhs,\ obj.Rhs);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00358}00358\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00359}00359\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00360}00360\ \ \ \ \ \ \ \ \ function\ U\ =\ stepA(obj,\ L,\ S,\ M,\ P,\ A,\ B,\ C)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEPA\ Advance\ one\ time\ step\ \textcolor{keyword}{using}\ the\ augmented\ BDF\ method.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ stepA(obj,\ L,\ S,\ M,\ P,\ A,\ B,\ C)\ performs\ a\ complete}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ time\ step\ by\ solving\ the\ augmented\ implicit\ BDF\ system\ with}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ constraints.\ For\ BDF\ methods,\ \textcolor{keyword}{this}\ is\ equivalent\ to}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computing\ a\ single\ stage.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ \{mustBeA(L,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Linear\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ \{mustBeA(S,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ \{mustBeA(M,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'},\ \textcolor{stringliteral}{'cell'}\})\}\ \%\ Mass\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ \{mustBeA(P,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Coupling\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ \{mustBeA(A,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ \{mustBeA(B,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ coupling\ matrix}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeA(C,\ \{\textcolor{stringliteral}{'numeric'},\ \textcolor{stringliteral}{'function\_handle'}\})\}\ \%\ Constraint\ source\ term}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator_a226a1029f9c1f6fe4acbb974e910b71b}{stageA}}(L,\ S,\ M,\ P,\ A,\ B,\ C);}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00380}00380\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00381}00381\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00382}00382\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00383}00383\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00384}00384\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00385}00385\ \ \ \ \ \ \ \ \ \%\ SETCOEFFICIENTS\ Set\ BDF\ coefficients\ \textcolor{keywordflow}{for}\ variable\ step\ sizes.}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00386}00386\ \ \ \ \ \ \ \ \ obj\ =\ setCoefficients(obj)}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00387}00387\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_bdf_integrator_8m_source_l00388}00388\ end}
+
+\end{DoxyCode}

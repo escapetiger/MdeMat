@@ -1,0 +1,81 @@
+\doxysection{ex01\+\_\+lagrange\+\_\+basis.\+m}
+\hypertarget{ex01__lagrange__basis_8m_source}{}\label{ex01__lagrange__basis_8m_source}\index{+core/+symbolic/+scripts/ex01\_lagrange\_basis.m@{+core/+symbolic/+scripts/ex01\_lagrange\_basis.m}}
+\mbox{\hyperlink{ex01__lagrange__basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00001}00001\ \%\%\ EX01\_LAGRANGE\_BASIS\ Generate\ Lagrange\ interpolation\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00002}\mbox{\hyperlink{namespacecore_1_1symbolic_1_1scripts}{00002}}\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00003}00003\ \%\ \ \ This\ script\ generates\ Lagrange\ basis\ functions\ \textcolor{keywordflow}{for}\ specified}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00004}00004\ \%\ \ \ interpolation\ nodes.\ Configure\ parameters\ below\ and\ run\ the\ script.}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00006}00006\ \%\%\ Configuration\ Parameters}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00008}00008\ code\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00009}00009\ \textcolor{keywordflow}{switch}\ code}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00010}00010\ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ nodes\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ [sym(0)];\ ...\ \%\ n=1}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ (2\ *\ sym(sqrt(3))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ (2\ *\ sym(sqrt(3)))];\ ...\ \%\ n=2}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ [sym(0),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(sqrt(sym(3)/5))\ /\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ sym(sqrt(sym(3)/5))\ /\ 2];\ ...\ \%\ n=3}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 70\ *\ sym(sqrt(30+2*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 70\ *\ sym(sqrt(30+2*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(1)\ /\ 70\ *\ sym(sqrt(30-\/2*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 70\ *\ sym(sqrt(30-\/2*sqrt(sym(30))))];\ ...\ \%\ n=4}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ [sym(0),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(1)\ /\ 6\ *\ sym(sqrt(5-\/2*sqrt(sym(10)/7))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 6\ *\ sym(sqrt(5-\/2*sqrt(sym(10)/7))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(1)\ /\ 6\ *\ sym(sqrt(5+2*sqrt(sym(10)/7))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 6\ *\ sym(sqrt(5+2*sqrt(sym(10)/7)))];\ ...\ \%\ n=5}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 42\ *\ sym(sqrt(525+70*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 42\ *\ sym(sqrt(525+70*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(1)\ /\ 42\ *\ sym(sqrt(525-\/70*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 42\ *\ sym(sqrt(525-\/70*sqrt(sym(30)))),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ -\/sym(1)\ /\ 14\ *\ sym(sqrt(5)),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ sym(1)\ /\ 14\ *\ sym(sqrt(5))];\ ...\ \%\ n=6}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ fileName\ =\ \textcolor{stringliteral}{'+core/+symbolic/metadata/unit\_gauss\_legendre\_lagrange'};\ \%\ Save\ file\ name}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ nodes\ =\ \{\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ [sym(0)];\ ...\ \%\ n=1}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 2,\ sym(1)\ /\ 2];\ ...\ \%\ n=2}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 2,\ sym(0),\ sym(1)\ /\ 2];\ ...\ \%\ n=3}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 2,\ -\/sym(sqrt(sym(1)/5))\ /\ 2,\ sym(sqrt(sym(1)/5))\ /\ 2,\ sym(1)\ /\ 2];\ ...\ \%\ n=4}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 2,\ -\/sym(sqrt(sym(3)/7))\ /\ 2,\ sym(0),\ sym(sqrt(sym(3)/7))\ /\ 2,\ sym(1)\ /\ 2];\ ...\ \%\ n=5}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ [-\/sym(1)\ /\ 2,\ -\/sym(sqrt(sym(1)/3))\ /\ 2,\ -\/sym(sqrt(sym(3)/7))\ /\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ sym(sqrt(sym(3)/7))\ /\ 2,\ sym(sqrt(sym(1)/3))\ /\ 2,\ sym(1)\ /\ 2];\ ...\ \%\ n=6}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ fileName\ =\ \textcolor{stringliteral}{'+core/+symbolic/metadata/unit\_gauss\_lobatto\_lagrange'};\ \%\ Save\ file\ name}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00046}00046\ end}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00048}00048\ variable\ =\ sym(\textcolor{charliteral}{'x'});\ \%\ Symbolic\ variable}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00049}00049\ maxDerivOrder\ =\ length(nodes)\ -\/\ 1;\ \%\ Maximum\ derivative\ order\ \textcolor{keywordflow}{for}\ handles}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00051}00051\ \%\%\ Generate\ Lagrange\ Basis\ Functions}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00053}00053\ \textcolor{keywordflow}{for}\ k\ =\ 1:length(nodes)}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00054}00054\ \ \ \ \ basis\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis}{LagrangeBasis}}(variable,\ nodes\{k\});}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00056}00056\ \ \ \ \ basis.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ab1f0171d16e2a1ee4d53a1364c31403a}{compile}}(maxDerivOrder);}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00058}00058\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Generated\ \%d\ basis\ functions:\(\backslash\)n'},\ basis.NCodims);}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:basis.NCodims}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'P\_\%d(x)\ =\ \%s\(\backslash\)n'},\ i-\/1,\ \textcolor{keywordtype}{char}(basis.Expressions(i)));}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00062}00062\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00063}00063\ \ \ \ \ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00065}00065\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Basis\ Properties:\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00066}00066\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Nodes:\ \%s\(\backslash\)n'},\ \textcolor{keywordtype}{string}(basis.Nodes));}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00067}00067\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Input\ Dims:\ \%d\(\backslash\)n'},\ basis.NDims);}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00068}00068\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\ \ Output\ Dims:\ \%d\(\backslash\)n'},\ basis.NCodims);}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00069}00069\ \ \ \ \ fprintf(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(fileName)}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ basis.save(sprintf(\textcolor{stringliteral}{'\%s\_\%d'},\ fileName,\ k));}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'Basis\ saved\ to:\ \%s\(\backslash\)n'},\ [sprintf(\textcolor{stringliteral}{'\%s\_\%d'},\ fileName,\ k),\ basis.MetaExt]);}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00074}00074\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__lagrange__basis_8m_source_l00075}00075\ end}
+
+\end{DoxyCode}

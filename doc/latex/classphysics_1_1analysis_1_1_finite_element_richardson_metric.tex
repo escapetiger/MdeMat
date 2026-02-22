@@ -1,0 +1,274 @@
+\doxysection{physics\+::analysis\+::Finite\+Element\+Richardson\+Metric Class Reference}
+\hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{}\label{classphysics_1_1analysis_1_1_finite_element_richardson_metric}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+
+
+Richardson extrapolation error metric for finite element spaces.  
+
+
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric}{physics\+::analysis\+::\+Metric}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a124022363772517a6dc5a453bc6cdf0d}{Finite\+Element\+Richardson\+Metric}} (Input\+Type fine, Input\+Type coarse, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{Finite\+Element\+Richardson\+Metric}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a4bf245e1d1c1f6e72f11158fbcfc2874}{add\+Reduction}} (Input\+Type obj, Input\+Type reduction)
+\begin{DoxyCompactList}\small\item\em Add error reduction type to the metric. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a59f956407e359eebefd7b651209bc3c1}{set\+Points}} (Input\+Type obj, Input\+Type density)
+\begin{DoxyCompactList}\small\item\em Configure integration nodes and weights. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_acbb3e8e4bea070fdf4f0ea2739999e77}{eval}} (Input\+Type obj, Input\+Type U, Input\+Type V)
+\begin{DoxyCompactList}\small\item\em Compute Richardson extrapolation errors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric}{physics\+::analysis\+::\+Metric}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_a378a1b9eb568dd1eabafcdb814f48f1a}{Metric}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1analysis_1_1_metric}{Metric}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_ae80b2988db60a898d079ea838a8b2c31}{add\+Reduction}} (Input\+Type obj, Input\+Type reduction)
+\begin{DoxyCompactList}\small\item\em Add error reduction type to the metric. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a22d91dc8ea130d12426f36f584873e37}{Coarse}}
+\begin{DoxyCompactList}\small\item\em Coarse grid finite element space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a683a3eef9795bbfd0e74d9f9bdd02413}{Fine}}
+\begin{DoxyCompactList}\small\item\em Fine grid finite element space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ad22a45789bf373ef0c2326100400914d}{Integrator}}
+\begin{DoxyCompactList}\small\item\em Richardson integrator for nested grid evaluation. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a158700f152041b92b6b5ab49e14f6fd5}{Nest\+EI}}
+\begin{DoxyCompactList}\small\item\em Reordered fine element indices for nesting. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0d24a40b325912dd3f9c85def2beefe6}{Nest\+LI}}
+\begin{DoxyCompactList}\small\item\em Reordered fine DOF indices for nesting. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a718dfa434a7db10f66c2b548a0e47e8e}{Nodes}}
+\begin{DoxyCompactList}\small\item\em Cell array of integration nodes \{fine, coarse\}. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a52e45a5d8ae79bfb2770bf1d440eb024}{Weights}}
+\begin{DoxyCompactList}\small\item\em Cell array of integration weights \{fine, coarse\}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric}{physics\+::analysis\+::\+Metric}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1analysis_1_1_metric_a5fdeefb7c7d71dab886f209f29342a3b}{Reductions}}
+\begin{DoxyCompactList}\small\item\em Cell array of reduction types to compute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ac890403163d4a09ed26ad26374753a08}{reduce}} (Input\+Type obj, Input\+Type R, Input\+Type reduction)
+\begin{DoxyCompactList}\small\item\em Apply Richardson extrapolation error reduction. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0bcf5cc7d2ea0f3215c3a539baa1f255}{set\+Nest\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reorder fine elements to align with coarse elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1analysis_1_1_finite_element_richardson_metric_af875a3f0e03c78ce9b15404c9f0b1563}{set\+Nest\+Dofs}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reorder fine DOFs to align with nested structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Richardson extrapolation error metric for finite element spaces. 
+
+\doxylink{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{Finite\+Element\+Richardson\+Metric} computes relative errors between solutions on different grid resolutions using Richardson extrapolation. This approach is invaluable when exact analytical solutions are unavailable, providing a method to estimate discretization errors by comparing fine and coarse grid solutions.
+
+The metric implements the Richardson extrapolation principle\+: assuming that discretization errors behave as $E ≈ Ch^p$ where $h$ is the grid spacing and $p$ is the order of convergence, the difference between fine and coarse grid solutions provides an estimate of the error.
+
+Richardson extrapolation assumes that the coarse grid is obtained by uniform coarsening of the fine grid, typically by a factor of 2 in each spatial dimension.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1analysis_1_1_metric}{physics.\+analysis.\+Metric} 
+
+physics.\+analysis.\+Finite\+Element\+Space\+Absolute\+Metric 
+
+\doxylink{classapprox_1_1space_1_1_finite_element_space}{approx.\+space.\+Finite\+Element\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00028}{28}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a124022363772517a6dc5a453bc6cdf0d}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!FiniteElementRichardsonMetric@{FiniteElementRichardsonMetric}}
+\index{FiniteElementRichardsonMetric@{FiniteElementRichardsonMetric}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{FiniteElementRichardsonMetric()}{FiniteElementRichardsonMetric()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a124022363772517a6dc5a453bc6cdf0d} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Finite\+Element\+Richardson\+Metric (\begin{DoxyParamCaption}\item[{Input\+Type}]{fine}{, }\item[{Input\+Type}]{coarse}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{Finite\+Element\+Richardson\+Metric}. 
+
+obj = Finite\+Element\+Richardson\+Metric(fine, coarse) creates a Richardson extrapolation metric for comparing solutions between {\itshape fine} and {\itshape coarse} structured grids with empty reductions list.
+
+obj = \doxylink{classphysics_1_1analysis_1_1_finite_element_richardson_metric}{Finite\+Element\+Richardson\+Metric}(fine, coarse, reductions=reductions) creates a metric with the specified {\itshape reductions} cell array of error reduction types.
+
+The metric requires nested grid structures where the coarse grid is obtained by uniform coarsening of the fine grid, enabling Richardson extrapolation error estimates. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a4bf245e1d1c1f6e72f11158fbcfc2874}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!addReduction@{addReduction}}
+\index{addReduction@{addReduction}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{addReduction()}{addReduction()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a4bf245e1d1c1f6e72f11158fbcfc2874} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::add\+Reduction (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{reduction}{}\end{DoxyParamCaption})}
+
+
+
+Add error reduction type to the metric. 
+
+obj = add\+Reduction(obj, reduction) adds the specified error reduction type {\itshape reduction} to the metric\textquotesingle{}s list of reductions to compute during error evaluation. \Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_acbb3e8e4bea070fdf4f0ea2739999e77}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!eval@{eval}}
+\index{eval@{eval}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_acbb3e8e4bea070fdf4f0ea2739999e77} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::eval (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{, }\item[{Input\+Type}]{V}{}\end{DoxyParamCaption})}
+
+
+
+Compute Richardson extrapolation errors. 
+
+E = eval(obj, U, V) computes Richardson extrapolation errors between fine grid solution {\itshape U} and coarse grid solution {\itshape V} using nested grid structure for error estimation. \Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ac890403163d4a09ed26ad26374753a08}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!reduce@{reduce}}
+\index{reduce@{reduce}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{reduce()}{reduce()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ac890403163d4a09ed26ad26374753a08} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::reduce (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{R}{, }\item[{Input\+Type}]{reduction}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Apply Richardson extrapolation error reduction. 
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_af875a3f0e03c78ce9b15404c9f0b1563}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!setNestDofs@{setNestDofs}}
+\index{setNestDofs@{setNestDofs}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{setNestDofs()}{setNestDofs()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_af875a3f0e03c78ce9b15404c9f0b1563} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::set\+Nest\+Dofs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Reorder fine DOFs to align with nested structure. 
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0bcf5cc7d2ea0f3215c3a539baa1f255}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!setNestElements@{setNestElements}}
+\index{setNestElements@{setNestElements}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{setNestElements()}{setNestElements()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0bcf5cc7d2ea0f3215c3a539baa1f255} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::set\+Nest\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Reorder fine elements to align with coarse elements. 
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a59f956407e359eebefd7b651209bc3c1}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a59f956407e359eebefd7b651209bc3c1} 
+function physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::set\+Points (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{density}{}\end{DoxyParamCaption})}
+
+
+
+Configure integration nodes and weights. 
+
+obj = set\+Points(obj, density) sets the number of integration points per element for the quadrature rule used in error integration. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a22d91dc8ea130d12426f36f584873e37}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!Coarse@{Coarse}}
+\index{Coarse@{Coarse}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{Coarse}{Coarse}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a22d91dc8ea130d12426f36f584873e37} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Coarse}
+
+
+
+Coarse grid finite element space. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00032}{32}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a683a3eef9795bbfd0e74d9f9bdd02413}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!Fine@{Fine}}
+\index{Fine@{Fine}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{Fine}{Fine}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a683a3eef9795bbfd0e74d9f9bdd02413} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Fine}
+
+
+
+Fine grid finite element space. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00035}{35}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ad22a45789bf373ef0c2326100400914d}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!Integrator@{Integrator}}
+\index{Integrator@{Integrator}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{Integrator}{Integrator}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_ad22a45789bf373ef0c2326100400914d} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Integrator}
+
+
+
+Richardson integrator for nested grid evaluation. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00038}{38}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a158700f152041b92b6b5ab49e14f6fd5}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!NestEI@{NestEI}}
+\index{NestEI@{NestEI}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{NestEI}{NestEI}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a158700f152041b92b6b5ab49e14f6fd5} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Nest\+EI}
+
+
+
+Reordered fine element indices for nesting. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00041}{41}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0d24a40b325912dd3f9c85def2beefe6}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!NestLI@{NestLI}}
+\index{NestLI@{NestLI}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{NestLI}{NestLI}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a0d24a40b325912dd3f9c85def2beefe6} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Nest\+LI}
+
+
+
+Reordered fine DOF indices for nesting. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00044}{44}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a718dfa434a7db10f66c2b548a0e47e8e}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!Nodes@{Nodes}}
+\index{Nodes@{Nodes}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{Nodes}{Nodes}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a718dfa434a7db10f66c2b548a0e47e8e} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Nodes}
+
+
+
+Cell array of integration nodes \{fine, coarse\}. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00050}{50}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+\Hypertarget{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a52e45a5d8ae79bfb2770bf1d440eb024}\index{physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}!Weights@{Weights}}
+\index{Weights@{Weights}!physics::analysis::FiniteElementRichardsonMetric@{physics::analysis::FiniteElementRichardsonMetric}}
+\doxysubsubsection{\texorpdfstring{Weights}{Weights}}
+{\footnotesize\ttfamily \label{classphysics_1_1analysis_1_1_finite_element_richardson_metric_a52e45a5d8ae79bfb2770bf1d440eb024} 
+Property physics\+::analysis\+::\+Finite\+Element\+Richardson\+Metric\+::\+Weights}
+
+
+
+Cell array of integration weights \{fine, coarse\}. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_richardson_metric_8m_source_l00053}{53}} of file \mbox{\hyperlink{_finite_element_richardson_metric_8m_source}{Finite\+Element\+Richardson\+Metric.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+analysis/\mbox{\hyperlink{_finite_element_richardson_metric_8m}{Finite\+Element\+Richardson\+Metric.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,169 @@
+\doxysection{approx\+::assembly\+::Periodic\+Boundary\+Flux\+Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{}\label{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}\index{approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for periodic boundary flux terms.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_ab36b8f1cee901fa0c90140ae97d40d2f}{assemble\+Inner\+Left\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux on periodic boundaries. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a438fcb715e7d4dbe96efc656ee6b7868}{assemble\+Inner\+Right\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux on periodic boundaries. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_add9434d1b01edd999f5d7e62d86daa31}{assemble\+Outer\+Left\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux on periodic boundaries. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a60f0bb4dba43b12b24960adf4f46b016}{assemble\+Outer\+Right\+Flux}} (Input\+Type obj, Input\+Type dim, Input\+Type coe)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux on periodic boundaries. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aed85b9fe2eb4a6a7e50e13608da052c6}{Assembly}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh space providing geometry and connectivity (Mesh\+Space) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}
+\begin{DoxyCompactList}\small\item\em Element operator providing local computations (Element\+Operator) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for periodic boundary flux terms. 
+
+\doxylink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{Periodic\+Boundary\+Flux\+Assembly} handles the assembly of flux terms at boundaries with periodic boundary conditions in discontinuous Galerkin methods. Periodic boundary conditions enforce continuity between opposite boundaries of the computational domain, creating a seamless connection that simulates an infinite or cyclic domain.
+
+The class implements flux assembly for elements at both the minimum and maximum boundaries in each coordinate direction, ensuring proper coupling between these boundaries through numerical fluxes. This approach maintains the conservative properties of DG methods while enforcing periodicity.
+
+Periodic boundaries are particularly useful for simulating flows in periodic domains, wave propagation problems, and cases where artificial boundary effects need to be minimized.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_dirichlet_boundary_flux_assembly}{approx.\+assembly.\+Dirichlet\+Boundary\+Flux\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_periodic_boundary_flux_assembly_8m_source_l00027}{27}} of file \mbox{\hyperlink{_periodic_boundary_flux_assembly_8m_source}{Periodic\+Boundary\+Flux\+Assembly.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_ab36b8f1cee901fa0c90140ae97d40d2f}\index{approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}!assembleInnerLeftFlux@{assembleInnerLeftFlux}}
+\index{assembleInnerLeftFlux@{assembleInnerLeftFlux}!approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFlux()}{assembleInnerLeftFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_ab36b8f1cee901fa0c90140ae97d40d2f} 
+function approx\+::assembly\+::\+Periodic\+Boundary\+Flux\+Assembly\+::assemble\+Inner\+Left\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble inner left flux on periodic boundaries. 
+
+T = assemble\+Inner\+Left\+Flux(obj, dim, coe) assembles the inner contribution to left-\/biased flux terms at periodic boundaries along the specified dimension. This method handles elements at both minimum and maximum boundaries.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{Periodic\+Boundary\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a438fcb715e7d4dbe96efc656ee6b7868}\index{approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}!assembleInnerRightFlux@{assembleInnerRightFlux}}
+\index{assembleInnerRightFlux@{assembleInnerRightFlux}!approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFlux()}{assembleInnerRightFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a438fcb715e7d4dbe96efc656ee6b7868} 
+function approx\+::assembly\+::\+Periodic\+Boundary\+Flux\+Assembly\+::assemble\+Inner\+Right\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble inner right flux on periodic boundaries. 
+
+T = assemble\+Inner\+Right\+Flux(obj, dim, coe) assembles the inner contribution to right-\/biased flux terms at periodic boundaries along the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{Periodic\+Boundary\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_add9434d1b01edd999f5d7e62d86daa31}\index{approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}!assembleOuterLeftFlux@{assembleOuterLeftFlux}}
+\index{assembleOuterLeftFlux@{assembleOuterLeftFlux}!approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFlux()}{assembleOuterLeftFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_add9434d1b01edd999f5d7e62d86daa31} 
+function approx\+::assembly\+::\+Periodic\+Boundary\+Flux\+Assembly\+::assemble\+Outer\+Left\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble outer left flux on periodic boundaries. 
+
+T = assemble\+Outer\+Left\+Flux(obj, dim, coe) assembles the outer contribution to left-\/biased flux terms at periodic boundaries. This method implements the periodic coupling by connecting elements at opposite boundaries.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{Periodic\+Boundary\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a60f0bb4dba43b12b24960adf4f46b016}\index{approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}!assembleOuterRightFlux@{assembleOuterRightFlux}}
+\index{assembleOuterRightFlux@{assembleOuterRightFlux}!approx::assembly::PeriodicBoundaryFluxAssembly@{approx::assembly::PeriodicBoundaryFluxAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFlux()}{assembleOuterRightFlux()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly_a60f0bb4dba43b12b24960adf4f46b016} 
+function approx\+::assembly\+::\+Periodic\+Boundary\+Flux\+Assembly\+::assemble\+Outer\+Right\+Flux (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{, }\item[{Input\+Type}]{coe}{}\end{DoxyParamCaption})}
+
+
+
+Assemble outer right flux on periodic boundaries. 
+
+T = assemble\+Outer\+Right\+Flux(obj, dim, coe) assembles the outer contribution to right-\/biased flux terms at periodic boundaries. This completes the periodic coupling by handling the forward direction connections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_periodic_boundary_flux_assembly}{Periodic\+Boundary\+Flux\+Assembly} object \\
+\hline
+{\em dim} & -\/ Dimension index (positive integer) \\
+\hline
+{\em coe} & -\/ Coefficient vector (n\+Elements x 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, val\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_periodic_boundary_flux_assembly_8m}{Periodic\+Boundary\+Flux\+Assembly.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,309 @@
+\doxysection{Config\+Parser.\+m}
+\hypertarget{_config_parser_8m_source}{}\label{_config_parser_8m_source}\index{+physics/+scheme/ConfigParser.m@{+physics/+scheme/ConfigParser.m}}
+\mbox{\hyperlink{_config_parser_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00001}00001\ classdef\ ConfigParser\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1scheme}{00002}}\ \ \ \ \ \%\ CONFIGPARSER\ Configuration\ file\ parser\ \textcolor{keywordflow}{for}\ KEY=VALUE\ format.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{ConfigParser}}\ provides\ a\ robust\ \textcolor{keyword}{interface\ }for\ reading\ and\ processing}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ configuration\ files\ that\ use\ KEY=VALUE\ syntax.\ Supports\ extracting}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ options\ as\ MATLAB\ variables,\ dynamically\ adding\ directories\ to\ the}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ MATLAB\ path,\ and\ handling\ various\ configuration\ settings\ with}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{default}\ values\ and\ validation.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ parser\ supports\ three\ main\ configuration\ directives:}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ OPTION=name=value:\ Defines\ configuration\ options\ with\ automatic}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ type\ conversion\ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00014}00014\ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ MATLABPATH=path:\ Adds\ directories\ to\ MATLAB\textcolor{stringliteral}{'s\ search\ path}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ \%\ }}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ -\/\ SUBDIRS=path:\ Recursively\ adds\ all\ subdirectories\ to\ MATLAB'}s}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ search\ path}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ Type\ conversion\ is\ performed\ automatically\ \textcolor{keywordflow}{for}\ numeric\ values,}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ logical\ values\ (\textcolor{keyword}{true}/\textcolor{keyword}{false}),\ and\ MATLAB\ expressions.\ String\ values}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ are\ preserved\ as-\/is.\ Default\ values\ and\ validators\ can\ be}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ configured\ \textcolor{keywordflow}{for\ each}\ option\ \textcolor{keyword}{using\ }the\ addConfig\ method.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00024}00024\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ Configuration\ files\ use\ KEY=VALUE\ format\ with\ \#\ \textcolor{keywordflow}{for}\ comments.\ Empty}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ lines\ and\ comment\ lines\ are\ ignored\ during\ parsing.\ All\ parsed}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ options\ are\ stored\ in\ the\ Config\ property,\ and\ added\ paths\ are}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ tracked\ in\ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.paths\ \textcolor{keywordflow}{for}\ removal\ \textcolor{keyword}{using\ }the\ reset()\ method.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00029}00029\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00030}00030\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert,\ \mbox{\hyperlink{namespacecore}{core}}.except.verify}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00033}00033\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ Config\ \%\ Struct\ containing\ all\ parsed\ configuration\ options}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ Validators\ \%\ Struct\ containing\ validator\ functions}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00036}00036\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00037}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser}{00037}}\ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00038}00038\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{ConfigParser}}()}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONFIGPARSER\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{ConfigParser}}.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00041}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{ConfigParser}}()\ creates\ a\ new\ \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{ConfigParser}}\ instance}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ empty\ configuration\ and\ validators\ structures.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00044}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}.paths\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Validators\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ function\ obj\ =\ loadFromFile(obj,\ file)}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOADFROMFILE\ Load\ configuration\ from\ file\ and\ add\ options\ to\ Config.}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ loadFromFile(obj,\ file)\ reads\ and\ processes\ the}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ configuration\ file\ @a\ file,\ extracting}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ configuration\ options\ and\ adding\ paths\ to\ MATLAB\textcolor{stringliteral}{'s\ search}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ path\ as\ specified.\ All\ parsed\ options\ are\ added\ to\ obj.Config.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00057}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{00057}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file\ \{mustBeTextScalar,\ mustBeFile\}}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00062}00062\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ settings\ =\ obj.parseFile(file);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00064}00064\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ keys\ =\ fieldnames(settings);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(keys)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ keys\{i\};}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ settings.(key);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00069}00069\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(key,\ '}OPTION\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:length(value)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.addOption(value\{j\});}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00073}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9}{00073}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ strcmp(key,\ '}MATLABPATH\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.addMatlabPath(value);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ strcmp(key,\ '}SUBDIRS\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(value,\ '}\textcolor{stringliteral}{'),\ continue;\ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.addSubdirPath(value);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ '}UnknownSetting\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Unknown\ setting:\ \%s\(\backslash\)n\textcolor{stringliteral}{',\ key);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00084}00084\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(obj.Config.paths)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ addpath(strjoin(obj.Config.paths,\ pathsep));}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00089}00089\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ addConfig(obj,\ name,\ options)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDCONFIG\ Add\ configuration\ option\ with\ default\ value\ and}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ validator.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ addConfig(obj,\ name,\ options)\ adds\ a\ configuration}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ option\ with\ the\ specified\ @a\ name\ and\ @a\ options\ structure}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ containing\ default\ value\ and\ validator\ function.\ The}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ options\ structure\ should\ contain\ fields\ '}\textcolor{keywordflow}{default}\textcolor{stringliteral}{'\ and}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ '}validator\textcolor{stringliteral}{'.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00099}00099\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.default\ =\ []}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.validator\ =\ []}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Config.(name)\ =\ options.default;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Validators.(name)\ =\ options.validator;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00110}00110\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ tf\ =\ hasConfig(obj,\ name)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ HASCONFIG\ Check\ if\ configuration\ option\ exists.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tf\ =\ hasConfig(obj,\ name)\ returns\ true\ if\ the\ configuration}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ option\ with\ the\ specified\ @a\ name\ exists\ in\ obj.Config,}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ false\ otherwise.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00117}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{00117}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00122}00122\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ isfield(obj.Config,\ name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00125}00125\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ value\ =\ getConfig(obj,\ name)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GETCONFIG\ Get\ configuration\ option\ value.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ value\ =\ getConfig(obj,\ name)\ returns\ the\ value\ of\ the}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ configuration\ option\ with\ the\ specified\ @a\ name\ from}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj.Config.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00132}00132\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00137}00137\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00138}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f}{00138}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(isfield(obj.Config,\ name),\ '}ConfigNotFound\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Configuration\ option\ not\ found:\ \%s\textcolor{stringliteral}{',\ name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00140}00140\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ value\ =\ obj.Config.(name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00143}00143\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ setConfig(obj,\ name,\ value)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ SETCONFIG\ Set\ configuration\ option\ value.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setConfig(obj,\ name,\ value)\ sets\ the\ configuration}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ option\ with\ the\ specified\ @a\ name\ to\ the\ given\ @a\ value.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ If\ a\ validator\ exists\ for\ this\ option,\ it\ will\ be\ applied.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00150}00150\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00153}00153\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ \{mustBeTextScalar\}}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00156}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308}{00156}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isfield(obj.Validators,\ name)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator\ =\ obj.Validators.(name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isa(validator,\ '}function\_handle\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00160}00160\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(validator(value),\ '}InvalidConfig\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Configuration\ parameter\ \%s\ is\ invalid.\textcolor{stringliteral}{',\ name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00162}00162\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00164}00164\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00165}00165\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Config.(name)\ =\ value;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00167}00167\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ reset(obj)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ RESET\ Remove\ all\ MATLAB\ paths\ added\ during\ parsing}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00170}00170\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ operations.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ reset(obj)\ removes\ all\ MATLAB\ search\ paths\ that\ were}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ added\ by\ the\ parser\ during\ previous\ parse()\ operations.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00174}00174\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Displays\ a\ confirmation\ message\ indicating\ the\ number\ of}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00175}00175\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ paths\ removed\ or\ confirms\ that\ no\ paths\ needed\ removal.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00176}00176\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00177}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f}{00177}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ physics.scheme.ConfigParser}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00179}00179\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00180}00180\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00181}00181\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(obj.Config.paths)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rmpath(strjoin(obj.Config.paths,\ pathsep));}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00183}00183\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pathCount\ =\ length(obj.Config.paths);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Config.paths\ =\ \{\};}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}[M]\ Successfully\ removed\ \%d\ paths.\(\backslash\)n\textcolor{stringliteral}{',\ pathCount);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00188}00188\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00189}00189\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00190}00190\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ private)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00191}00191\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ addOption(obj,\ option)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00192}00192\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDOPTION\ Parse\ OPTION\ string\ and\ add\ to\ Config\ structure.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00193}00193\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00194}00194\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tokens\ =\ split(option,\ '}=\textcolor{stringliteral}{',\ 2);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(numel(tokens)\ ==\ 2,\ '}InvalidOption\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00196}00196\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Invalid\ OPTION\ format\ (expected\ name=value):\ \%s\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ option);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00198}00198\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ name\ =\ strtrim(tokens\{1\});}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ value0\ =\ strtrim(tokens\{2\});}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00201}00201\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ value\ =\ str2double(value0);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isnan(value)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(value0,\ '}true\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00205}\mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}{00205}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ true;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00206}00206\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ strcmpi(value0,\ '}false\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ try}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ eval(value0);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ catch}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00212}00212\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ value0;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00215}00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Validate\ if\ validator\ exists}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00218}00218\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isfield(obj.Validators,\ name)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator\ =\ obj.Validators.(name);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isa(validator,\ '}function\_handle\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ try}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validator(value);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ catch\ ME}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ '}ValidationError\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00225}00225\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Validation\ failed\ for\ option\ \%s:\ \%s\textcolor{stringliteral}{',\ name,\ ME.message);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00228}00228\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00229}00229\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00230}00230\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Config.(name)\ =\ value;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00231}00231\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00232}00232\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00233}00233\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ addMatlabPath(obj,\ path)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00234}00234\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDMATLABPATH\ Add\ directory\ path\ to\ paths\ collection.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00235}00235\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00236}00236\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj.Config.paths\ =\ [obj.Config.paths,\ \{path\}];}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00237}00237\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00238}00238\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00239}00239\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ addSubdirPath(obj,\ path)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00240}00240\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDSUBDIRPATH\ Recursively\ add\ subdirectories\ to\ paths}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00241}00241\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ collection.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00242}00242\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00243}00243\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dirs\ =\ strsplit(path,\ '},\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00244}00244\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(dirs)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00245}00245\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseDir\ =\ strtrim(dirs\{i\});}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00246}00246\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isfolder(baseDir)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00247}00247\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ genPathStr\ =\ genpath(baseDir);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00248}00248\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPaths\ =\ strsplit(genPathStr,\ pathsep);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00249}00249\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newPaths\ =\ newPaths(\string~cellfun('}isempty\textcolor{stringliteral}{',\ newPaths));}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00250}00250\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.Config.paths\ =\ [obj.Config.paths,\ newPaths];}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00251}00251\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00252}00252\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ '}DirectoryNotFound\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00253}00253\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Base\ directory\ not\ found:\ \%s\textcolor{stringliteral}{',\ baseDir);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00254}00254\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00255}00255\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00256}00256\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00257}00257\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00258}00258\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00259}00259\ \textcolor{stringliteral}{\ \ \ \ methods\ (Static,\ Access\ =\ private)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00260}00260\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ settings\ =\ parseFile(file)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00261}00261\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ PARSEFILE\ Parse\ configuration\ file\ into\ structured\ settings}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00262}00262\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ format.}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00263}00263\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00264}00264\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ settings\ =\ struct();}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00265}00265\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fid\ =\ fopen(file,\ '}r\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00266}00266\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(fid\ \string~=\ -\/1,\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00267}00267\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}FileOpenError\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00268}00268\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Cannot\ open\ configuration\ file:\ \%s\textcolor{stringliteral}{',\ file);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00269}00269\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00270}00270\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ cleanupObj\ =\ onCleanup(@()\ fclose(fid));}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00271}00271\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00272}00272\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ while\ \string~feof(fid)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00273}00273\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ strtrim(fgetl(fid));}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00274}00274\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(line)\ ||\ startsWith(line,\ '}\#\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00275}00275\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continue;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00276}00276\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00277}00277\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00278}00278\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tokens\ =\ split(line,\ '}=\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00279}00279\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ numel(tokens)\ <\ 2}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00280}00280\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.verify(0,\ '}InvalidConfig\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00281}00281\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Invalid\ configuration\ line\ format:\ \%s\textcolor{stringliteral}{',\ line);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00282}00282\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continue;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00283}00283\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00284}00284\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00285}00285\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(tokens\{1\},\ '}OPTION\textcolor{stringliteral}{')\ \&\&\ numel(tokens)\ >=\ 3}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00286}00286\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ '}OPTION\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00287}00287\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valueTokens\ =\ tokens(2:end);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00288}00288\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valueStr\ =\ strjoin(valueTokens,\ '}=\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00289}00289\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isfield(settings,\ key)}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00290}00290\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ settings.(key)\{end\ +1\}\ =\ valueStr;}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00291}00291\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00292}00292\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ settings.(key)\ =\ \{valueStr\};}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00293}00293\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00294}00294\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00295}00295\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ strtrim(tokens\{1\});}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00296}00296\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valueTokens\ =\ tokens(2:end);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00297}00297\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ strjoin(valueTokens,\ '}=\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00298}00298\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ settings.(key)\ =\ strtrim(value);}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00299}00299\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00300}00300\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00301}00301\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00302}00302\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_config_parser_8m_source_l00303}00303\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

@@ -1,0 +1,356 @@
+\doxysection{approx\+::odeint\+::Dirk\+Integrator Class Reference}
+\hypertarget{classapprox_1_1odeint_1_1_dirk_integrator}{}\label{classapprox_1_1odeint_1_1_dirk_integrator}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+
+
+Diagonally Implicit Runge-\/\+Kutta integrator.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1odeint_1_1_esdirk3_integrator}{approx\+::odeint\+::\+Esdirk3\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator}{approx\+::odeint\+::\+Sdirk2\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk3_integrator}{approx\+::odeint\+::\+Sdirk3\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator}{approx\+::odeint\+::\+Sdirk4\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a51632f453404bee1a11d5b63cfd47aad}{Dirk\+Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{n\+Stages}}, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a54c76d0cfcaf515063a783992c37a13e}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset the DIRK integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a45b9f5ff9da1f0038333d7e898fd97db}{set\+Lhs}} (Input\+Type obj, Input\+Type i, Input\+Type L, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the left-\/hand side matrix for stage i. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_acc4630f1b64517727cdf74c8dadeda33}{set\+Rhs}} (Input\+Type obj, Input\+Type i, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the right-\/hand side vector for stage i. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_af6501cc9bc52c6b3fea73c5bd300dbf3}{stage}} (Input\+Type obj, Input\+Type i, Input\+Type L, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Compute stage i of the DIRK method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_aa37ea8b9414ea06fb50da326f382cfba}{step}} (Input\+Type obj, Input\+Type L, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Advance one time step using the DIRK method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{Ode\+Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6}{n\+Steps}}, Input\+Type \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{n\+Stages}}, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a9288228bd19616a463989a89c2e98094}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset the integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Update the solution history with a new solution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96}{advance}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance the timeline to the next time step. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac484b3583fe8aebd902199950fc9fe85}{set\+Lhs}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab6db54cf0cdf055d21ce0c2be803d07d}{set\+Rhs}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4ae133737b29d767fcdbd1e37c62847a}{stage}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advance one stage of the integration method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d24a1f3edcbfaaadc571b653b6b589a}{step}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advance one complete time step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a58caa82b11130d660fed6e0dcfd7f94a}{A}}
+\begin{DoxyCompactList}\small\item\em Butcher tableau coefficient matrix (lower triangular) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_ad5e6af87cd5d69de3498c22e94ca3f79}{b}}
+\begin{DoxyCompactList}\small\item\em Stage weights vector for final update. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_a9a491a9e4153248ff20f17ce8a9360ae}{c}}
+\begin{DoxyCompactList}\small\item\em Stage time coefficients vector. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator_aa6a403127bac83196474e3c2eed47ffd}{K}}
+\begin{DoxyCompactList}\small\item\em Cell array of derivative approximations for each stage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6}{n\+Steps}}
+\begin{DoxyCompactList}\small\item\em Number of time steps required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{n\+Stages}}
+\begin{DoxyCompactList}\small\item\em Number of stages required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}
+\begin{DoxyCompactList}\small\item\em Timeline object for time step management. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}
+\begin{DoxyCompactList}\small\item\em Cell array of solution history. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_af034c906dea1004c90f0fb31eed459af}{rhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side mass term(s) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a10795e6e1de436d2f1f98e53d95510b3}{solver}}
+\begin{DoxyCompactList}\small\item\em Linear solver for all integrators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Diagonally Implicit Runge-\/\+Kutta integrator. 
+
+\doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} implements Diagonally Implicit Runge-\/\+Kutta (DIRK) methods for solving ordinary differential equations of the form\+:
+
+\[\frac{\mathrm{d}(Mu)}{\mathrm{d}t} = Lu + S,
+\]
+
+where $M$ is a mass operator, $L$ is a linear operator, and $S$ is a source term. Any of these terms can be empty. For mass operator, it means it reduces to an identity. For linear and source term, it means they vanish from the equation.
+
+DIRK methods are characterized by a lower triangular Butcher tableau with identical diagonal elements, allowing each stage to be solved independently. This makes them more efficient than fully implicit Runge-\/\+Kutta methods while maintaining good stability properties.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage}
+\DoxyCodeLine{integrator\ =\ approx.odeint.Sdirk2Integrator(1.0);}
+\DoxyCodeLine{U\_new\ =\ integrator.step(L,\ S,\ M);}
+\DoxyCodeLine{integrator.update(U\_new);}
+\DoxyCodeLine{integrator.advance();}
+\DoxyCodeLine{\%\ Pure\ diffusion\ (only\ linear\ term)}
+\DoxyCodeLine{U\_new\ =\ integrator.step(L,\ [],\ []);}
+\DoxyCodeLine{\%\ Pure\ forcing\ (only\ source\ term)}
+\DoxyCodeLine{U\_new\ =\ integrator.step([],\ S,\ []);}
+\DoxyCodeLine{\%\ Identity\ evolution\ (no\ dynamics)}
+\DoxyCodeLine{U\_new\ =\ integrator.step([],\ [],\ []);}
+\DoxyCodeLine{\%\ With\ mass\ matrix}
+\DoxyCodeLine{U\_new\ =\ integrator.step(L,\ S,\ M);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{approx.\+odeint.\+Ode\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_be_integrator}{approx.\+odeint.\+Be\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_bdf_integrator}{approx.\+odeint.\+Bdf\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_dirk_integrator_8m_source_l00046}{46}} of file \mbox{\hyperlink{_dirk_integrator_8m_source}{Dirk\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_a51632f453404bee1a11d5b63cfd47aad}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!DirkIntegrator@{DirkIntegrator}}
+\index{DirkIntegrator@{DirkIntegrator}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{DirkIntegrator()}{DirkIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_a51632f453404bee1a11d5b63cfd47aad} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::\+Dirk\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Stages}{, }\item[{Input\+Type}]{final}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator}. 
+
+obj = Dirk\+Integrator(n\+Stages, final) creates a DIRK integrator with the specified number of stages and final time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Stages} & -\/ Number of stages for the DIRK method (positive integer) \\
+\hline
+{\em final} & -\/ Final time for integration (positive scalar) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_a54c76d0cfcaf515063a783992c37a13e}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!reset@{reset}}
+\index{reset@{reset}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_a54c76d0cfcaf515063a783992c37a13e} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset the DIRK integrator to initial state. 
+
+obj = reset(obj) clears the derivative approximation storage and calls the parent reset method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_a45b9f5ff9da1f0038333d7e898fd97db}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!setLhs@{setLhs}}
+\index{setLhs@{setLhs}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{setLhs()}{setLhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_a45b9f5ff9da1f0038333d7e898fd97db} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::set\+Lhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Set the left-\/hand side matrix for stage i. 
+
+obj = set\+Lhs(obj, i, L, M) constructs the left-\/hand side matrix as M -\/ dt\texorpdfstring{$\ast$}{*}A(i,i)\texorpdfstring{$\ast$}{*}L for stage i of the DIRK system.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+{\em i} & -\/ Stage index (positive integer) \\
+\hline
+{\em L} & -\/ Linear operator (matrix or empty) \\
+\hline
+{\em M} & -\/ Mass operator (matrix or empty)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_acc4630f1b64517727cdf74c8dadeda33}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!setRhs@{setRhs}}
+\index{setRhs@{setRhs}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhs()}{setRhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_acc4630f1b64517727cdf74c8dadeda33} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::set\+Rhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Set the right-\/hand side vector for stage i. 
+
+obj = set\+Rhs(obj, i, S, M) constructs the right-\/hand side vector using mass operator, accumulated previous stages, and source term.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+{\em i} & -\/ Stage index (positive integer) \\
+\hline
+{\em S} & -\/ Source term (vector, function, or empty) \\
+\hline
+{\em M} & -\/ Mass operator (matrix, function, or empty)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_af6501cc9bc52c6b3fea73c5bd300dbf3}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!stage@{stage}}
+\index{stage@{stage}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{stage()}{stage()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_af6501cc9bc52c6b3fea73c5bd300dbf3} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::stage (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Compute stage i of the DIRK method. 
+
+U = stage(obj, i, L, S, M) computes the solution at stage i by solving the implicit system and computing the derivative approximation for use in subsequent stages.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+{\em i} & -\/ Stage index (positive integer) \\
+\hline
+{\em L} & -\/ Linear operator (matrix, function, or empty) \\
+\hline
+{\em S} & -\/ Source term (vector, function, or empty) \\
+\hline
+{\em M} & -\/ Mass operator (matrix, function, or empty)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em U} & -\/ Solution approximation at stage i \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_aa37ea8b9414ea06fb50da326f382cfba}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!step@{step}}
+\index{step@{step}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_aa37ea8b9414ea06fb50da326f382cfba} 
+function approx\+::odeint\+::\+Dirk\+Integrator\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Advance one time step using the DIRK method. 
+
+U = step(obj, L, S, M) performs a complete time step by computing all stages and combining them according to the Butcher tableau weights.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{Dirk\+Integrator} object \\
+\hline
+{\em L} & -\/ Linear operator (matrix, function, or empty) \\
+\hline
+{\em S} & -\/ Source term (vector, function, or empty) \\
+\hline
+{\em M} & -\/ Mass operator (matrix, function, or empty)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em U} & -\/ Solution at the next time step \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_a58caa82b11130d660fed6e0dcfd7f94a}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!A@{A}}
+\index{A@{A}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_a58caa82b11130d660fed6e0dcfd7f94a} 
+Property approx\+::odeint\+::\+Dirk\+Integrator\+::A}
+
+
+
+Butcher tableau coefficient matrix (lower triangular) 
+
+
+
+Definition at line \mbox{\hyperlink{_dirk_integrator_8m_source_l00050}{50}} of file \mbox{\hyperlink{_dirk_integrator_8m_source}{Dirk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_ad5e6af87cd5d69de3498c22e94ca3f79}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!b@{b}}
+\index{b@{b}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{b}{b}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_ad5e6af87cd5d69de3498c22e94ca3f79} 
+Property approx\+::odeint\+::\+Dirk\+Integrator\+::b}
+
+
+
+Stage weights vector for final update. 
+
+
+
+Definition at line \mbox{\hyperlink{_dirk_integrator_8m_source_l00053}{53}} of file \mbox{\hyperlink{_dirk_integrator_8m_source}{Dirk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_a9a491a9e4153248ff20f17ce8a9360ae}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!c@{c}}
+\index{c@{c}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{c}{c}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_a9a491a9e4153248ff20f17ce8a9360ae} 
+Property approx\+::odeint\+::\+Dirk\+Integrator\+::c}
+
+
+
+Stage time coefficients vector. 
+
+
+
+Definition at line \mbox{\hyperlink{_dirk_integrator_8m_source_l00056}{56}} of file \mbox{\hyperlink{_dirk_integrator_8m_source}{Dirk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_dirk_integrator_aa6a403127bac83196474e3c2eed47ffd}\index{approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}!K@{K}}
+\index{K@{K}!approx::odeint::DirkIntegrator@{approx::odeint::DirkIntegrator}}
+\doxysubsubsection{\texorpdfstring{K}{K}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_dirk_integrator_aa6a403127bac83196474e3c2eed47ffd} 
+Property approx\+::odeint\+::\+Dirk\+Integrator\+::K}
+
+
+
+Cell array of derivative approximations for each stage. 
+
+
+
+Definition at line \mbox{\hyperlink{_dirk_integrator_8m_source_l00059}{59}} of file \mbox{\hyperlink{_dirk_integrator_8m_source}{Dirk\+Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+odeint/\mbox{\hyperlink{_dirk_integrator_8m}{Dirk\+Integrator.\+m}}\end{DoxyCompactItemize}

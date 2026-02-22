@@ -1,0 +1,96 @@
+\doxysection{ex01\+\_\+periodic.\+m}
+\hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source}{}\label{_09poisson_2_09scripts_2ex01__periodic_8m_source}\index{+physics/+poisson/+scripts/ex01\_periodic.m@{+physics/+poisson/+scripts/ex01\_periodic.m}}
+\mbox{\hyperlink{_09poisson_2_09scripts_2ex01__periodic_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00002}\mbox{\hyperlink{namespacephysics_1_1poisson_1_1scripts}{00002}}\ \%\ FileName:\ ex01\_periodic}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00003}00003\ \%\ Author:\ Yi\ CAI}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00004}00004\ \%\ Date:\ 13/09/2025}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00006}00006\ \%\ \ \ Solving\ Poisson\ equation\ with\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1poisson_1_1scripts_a7fbe37b9301dc923e183e71a994e82ba}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00009}00009\ clc,\ clear,\ close\ all;}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00011}00011\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00013}00013\ \%\ Common\ configuration\ file}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00014}00014\ common\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00016}00016\ \%\ Experiment-\/specific\ configuration\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00017}00017\ config\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00018}00018\ config.schemeName\ =\ \textcolor{stringliteral}{'ldg'};}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00019}00019\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00020}00020\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00021}00021\ config.xBBox\ =\ repmat([-\/config.L,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00022}00022\ config.omega\ =\ repmat(pi\ /\ config.L,\ 1,\ config.nDims);\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00023}00023\ config.force\ =\ force(config.omega);\ \%\ Force\ function}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00024}00024\ config.bc\ =\ [];\ \%\ Boundary\ condition\ (periodic)}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00025}00025\ config.exact\ =\ \mbox{\hyperlink{namespacephysics_1_1poisson_1_1scripts_a7fbe37b9301dc923e183e71a994e82ba}{uExact}}(config.omega);\ \%\ Exact\ solution}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00026}00026\ config.nx\ =\ repmat(8,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00027}00027\ config.verbose\ =\ 1;\ \%\ Verbose\ flag}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00028}00028\ config.eId\ =\ sprintf(\textcolor{stringliteral}{'PA\%d'},\ config.nDims);\ \%\ Experiment\ ID}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00030}00030\ \%\ Construct\ and\ configure\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00031}00031\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1poisson}{poisson}}.\mbox{\hyperlink{classphysics_1_1poisson_1_1_ldg_scheme}{LdgScheme}}(file\ =\ common,\ config\ =\ config);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00033}00033\ \%\ Configure\ visualizer}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00034}00034\ visualizer\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'visualizer'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00035}00035\ visualizer.setDensity(1);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00036}00036\ visualizer.addDataset(\textcolor{stringliteral}{'REF'},\ \textcolor{stringliteral}{'exact'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00037}00037\ visualizer.addDataset(\mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xId'}),\ \textcolor{stringliteral}{'numeric'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00038}00038\ \textcolor{keywordflow}{switch}\ config.nDims}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ visualizer.addPlotter(\textcolor{stringliteral}{'profile'},\ \textcolor{stringliteral}{'1d'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \%\ visualizer.addPlotter(\textcolor{stringliteral}{'profile'},\ \textcolor{stringliteral}{'2d'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ visualizer.addPlotter(\textcolor{stringliteral}{'slice'},\ \textcolor{stringliteral}{'slice1d'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \%\ visualizer.addPlotter(\textcolor{stringliteral}{'profile'},\ \textcolor{stringliteral}{'3d'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ visualizer.addPlotter(\textcolor{stringliteral}{'slice'},\ \textcolor{stringliteral}{'slice1d'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00047}00047\ end}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00049}00049\ \%\ Configure\ analyzer}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00050}00050\ analyzer\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'analyzer'});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00051}00051\ analyzer.setNLevels(4);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00052}00052\ analyzer.setDensity(4\string^config.nDims);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00054}00054\ \%\%\ SIMULATION}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00056}00056\ xElement\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_orthotope_element}{L2OrthotopeElement}}(config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisOrder'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00058}00058\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisType'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.getConfig(\textcolor{stringliteral}{'xBasisPattern'}));}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00061}00061\ \textcolor{keywordflow}{if}\ \string~analyzer.HasExact}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00062}00062\ \ \ \ \ xMesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{UniformGrid}}(config.xBBox,\ config.nx/2);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00063}00063\ \ \ \ \ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_finite_element_space}{FiniteElementSpace}}(xMesh,\ xElement);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}(xDisc);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00065}00065\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.converge(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00066}00066\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00067}00067\ \ \ \ \ xMesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{UniformGrid}}(config.xBBox,\ config.nx);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00068}00068\ \ \ \ \ xDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_finite_element_space}{FiniteElementSpace}}(xMesh,\ xElement);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00069}00069\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}(xDisc);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ \mbox{\hyperlink{namespacephysics_1_1scheme}{scheme}}.converge(\mbox{\hyperlink{namespacephysics_1_1state}{state}});}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00071}00071\ end}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00073}00073\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00074}00074\ function\ h\ =\ \mbox{\hyperlink{namespacephysics_1_1poisson_1_1scripts_a7fbe37b9301dc923e183e71a994e82ba}{uExact}}(omega)}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00075}00075\ h\ =\ @(x)\ uExactImpl(omega,\ x);}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00076}00076\ end}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00078}00078\ function\ f\ =\ uExactImpl(omega,\ x)}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00079}00079\ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00080}00080\ \textcolor{stringliteral}{f\ =\ sin(z);}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00081}00081\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00082}00082\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00083}00083\ \textcolor{stringliteral}{function\ h\ =\ force(omega)}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00084}00084\ \textcolor{stringliteral}{h\ =\ @(x)\ forceImpl(omega,\ x);}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00085}00085\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00086}00086\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00087}00087\ \textcolor{stringliteral}{function\ f\ =\ forceImpl(omega,\ x)}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00088}00088\ \textcolor{stringliteral}{z\ =\ omega(:).'}\ *\ x;}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00089}00089\ f\ =\ omega(:).\textcolor{stringliteral}{'\ *\ omega(:)\ *\ sin(z);}}
+\DoxyCodeLine{\Hypertarget{_09poisson_2_09scripts_2ex01__periodic_8m_source_l00090}00090\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

@@ -1,0 +1,166 @@
+\doxysection{Rbf\+Kernel\+Basis.\+m}
+\hypertarget{_rbf_kernel_basis_8m_source}{}\label{_rbf_kernel_basis_8m_source}\index{+core/+function/RbfKernelBasis.m@{+core/+function/RbfKernelBasis.m}}
+\mbox{\hyperlink{_rbf_kernel_basis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00001}00001\ classdef\ RbfKernelBasis\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00002}00002\ \ \ \ \ \%\ RBFKERNELBASIS\ Radial\ basis\ function\ kernel\ interpolation\ basis.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ RbfKernelBasis\ represents\ a\ set\ of\ radial\ basis\ function\ (RBF)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ interpolation\ basis\ functions.\ Each\ basis\ function\ is\ a\ radial}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ kernel\ centered\ at\ a\ node\ point,\ providing\ scattered\ data}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ interpolation\ capabilities\ with\ various\ kernel\ types.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Supported\ kernel\ types:}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ \textcolor{stringliteral}{'gaussian'}:\ \(\backslash\)f\$\(\backslash\)exp(-\/\(\backslash\)varepsilon\string^2\ r\string^2)\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ \textcolor{stringliteral}{'multiquadric'}:\ \(\backslash\)f\$\(\backslash\)sqrt\{1\ +\ \(\backslash\)varepsilon\string^2\ r\string^2\}\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ \textcolor{stringliteral}{'inverse\_multiquadric'}:\ \(\backslash\)f\$\(\backslash\)frac\{1\}\{\(\backslash\)sqrt\{1\ +\ \(\backslash\)varepsilon\string^2\ r\string^2\}\}\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00017}00017\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00020}00020\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ Nodes\ \%\ Node\ points\ (nd\ x\ nc)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ Kernel\ \%\ Type\ of\ RBF\ kernel}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00023}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis}{00023}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a58cb7086a349e1173177fc0d1b6adf70}{Epsilon}}\ \%\ Shape\ parameter\ (scalar\ or\ vector)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00024}00024\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00026}00026\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00027}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a86e4ad8a8d53e2585dcf6c23342de342}{00027}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{RbfKernelBasis}}(nodes,\ options)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RBFKERNELBASIS\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{RbfKernelBasis}}.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00030}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a3c021eebc2acc9c896ba01fb37ed79e2}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{RbfKernelBasis}}(nodes,\ kernel=kernel,\ epsilon=epsilon)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ an\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{RbfKernelBasis}}\ with\ specified\ shape\ parameter.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00033}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a58cb7086a349e1173177fc0d1b6adf70}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nodes\{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.kernel\{mustBeTextScalar\}\ =\ \textcolor{stringliteral}{'gaussian'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.epsilon(:,\ 1)\ \{mustBeNumeric\}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ nDims\ =\ size(nodes,\ 1);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ nCodims\ =\ size(nodes,\ 2);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}(nDims,\ nCodims);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Nodes\ =\ nodes;}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Kernel\ =\ options.kernel;}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Epsilon\ =\ options.epsilon;}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00046}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{00046}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00048}00048\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aad659860305d8b8cf61c7e808cd128a1}{evalImpl}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATEIMPL\ Implementation\ of\ RBF\ basis\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aad659860305d8b8cf61c7e808cd128a1}{evalImpl}}(obj,\ X)\ evals\ the\ RBF\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ the\ specified\ points.\ Each\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ is\ a\ radial}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ kernel\ centered\ at\ the\ corresponding\ node\ point.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a18bb516247f34827be936a10226e4a27}{RbfKernelBasis}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (nd\ x\ np)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ values\ (nc\ x\ np)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_function_ac696d773a380623081b129e9d8c30690}{NDims}};}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ nc\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}};}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ size(X,\ 2);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ X0\ =\ reshape(obj.\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a86e4ad8a8d53e2585dcf6c23342de342}{Nodes}},\ [nd,\ nc,\ 1]);\ \%<\ [nd,\ nc,\ 1]}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ [nd,\ 1,\ np]);\ \%<\ [nd,\ 1,\ np]}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ vecnorm(X-\/X0,\ 2,\ 1);\ \%\ [1,\ nc,\ np]}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ reshape(R,\ [nc,\ np]);\ \%\ [1,\ nc,\ np]}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a58cb7086a349e1173177fc0d1b6adf70}{Epsilon}};}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isscalar(E),\ E\ =\ repmat(E,\ nc,\ 1);\ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ repmat(E,\ [1,\ np]);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a67ce469392eb41996a85d190426322f1}{evalKernel}}(R,\ E);}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00079}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aad659860305d8b8cf61c7e808cd128a1}{00079}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aa85f845188d401b6d1466fb9aec219ca}{diffImpl}}(obj,\ X,\ order)}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFFERENTIATEIMPL\ Implementation\ of\ RBF\ basis\ derivative.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aa85f845188d401b6d1466fb9aec219ca}{diffImpl}}(obj,\ X,\ order)\ computes\ derivatives\ of\ the}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ RBF\ basis\ functions\ using\ the\ chain\ rule\ and}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ kernel-\/specific\ derivative\ formulas.}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ derivative\ is\ computed\ by}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)frac\{\(\backslash\)partial\ \(\backslash\)phi\_i(\(\backslash\)|x\ -\/\ c\_i\(\backslash\)|)\}\{\(\backslash\)partial\ x\_j\}\ =}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)phi\textcolor{stringliteral}{'\_i(r\_i)\ \(\backslash\)frac\{x\_j\ -\/\ c\_\{i,j\}\}\{r\_i\},}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$r\_i\ =\ \(\backslash\)|x\ -\/\ c\_i\(\backslash\)|\(\backslash\)f\$\ is\ the\ distance\ to\ center}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$i\(\backslash\)f\$.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00095}00095\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ m\ =\ find(order\ >\ 0,\ 1);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nd\ =\ obj.NDims;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ nc\ =\ obj.NCodims;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ np\ =\ size(X,\ 2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00100}00100\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ [nd,\ 1,\ np]);\ \%\ [nd,\ 1,\ np]}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ X0\ =\ reshape(obj.Nodes,\ [nd,\ nc,\ 1]);\ \%\ [nd,\ nc,\ 1]}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ R\ =\ vecnorm(X-\/X0,\ 2,\ 1);\ \%\ [1,\ nc,\ np]}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ R\ =\ reshape(R,\ [nc,\ np]);\ \%\ [1,\ nc,\ np]}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00105}00105\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.Epsilon;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isscalar(E),\ E\ =\ repmat(E,\ nc,\ 1);\ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ E\ =\ repmat(E,\ [1,\ np]);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00109}00109\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ obj.diffKernel(R,\ E);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00111}00111\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ R0\ =\ R;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ R0(R\ ==\ 0)\ =\ eps;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ dY\ .*\ squeeze(R(m,\ :,\ :))\ ./\ R0;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00115}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_aa85f845188d401b6d1466fb9aec219ca}{00115}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ dY(R\ ==\ 0)\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00117}00117\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ phi\ =\ evalKernel(obj,\ r,\ epsilon)}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALKERNEL\ Evaluate\ RBF\ kernel\ at\ given\ distances.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ phi\ =\ evalKernel(obj,\ r,\ epsilon)\ evals\ the\ specified\ RBF}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ kernel\ at\ the\ given\ distances\ with\ shape\ parameter\ epsilon.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Supports\ vectorized\ evaluation\ for\ multiple\ distances\ and}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ shape\ parameters.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00125}00125\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.Kernel}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}gaussian\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi\ =\ exp(-\/(epsilon\ .*\ r).\string^2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}multiquadric\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi\ =\ sqrt(1+(epsilon\ .*\ r).\string^2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00132}00132\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}inverse\_multiquadric\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi\ =\ 1\ ./\ sqrt(1+(epsilon\ .*\ r).\string^2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00137}00137\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ dphi\ =\ diffKernel(obj,\ r,\ epsilon)}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ DIFFKERNEL\ Evaluate\ RBF\ kernel\ derivative.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dphi\ =\ diffKernel(obj,\ r,\ epsilon)\ evaluates\ the\ derivative}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ the\ RBF\ kernel\ with\ respect\ to\ distance\ \(\backslash\)f\$r\(\backslash\)f\$:}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$\(\backslash\)frac\{\(\backslash\)partial\ \(\backslash\)phi(r)\}\{\(\backslash\)partial\ r\}\(\backslash\)f\$.\ Supports}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vectorized\ evaluation\ for\ multiple\ distances\ and\ shape}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ parameters.}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00146}00146\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.Kernel}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00148}\mbox{\hyperlink{classcore_1_1function_1_1_rbf_kernel_basis_a67ce469392eb41996a85d190426322f1}{00148}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}gaussian\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dphi\ =\ -\/2\ *\ epsilon.\string^2\ .*\ r\ .*\ exp(-\/(epsilon\ .*\ r).\string^2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00150}00150\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}multiquadric\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dphi\ =\ epsilon.\string^2\ .*\ r\ ./\ sqrt(1+(epsilon\ .*\ r).\string^2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00153}00153\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}inverse\_multiquadric\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ denom\ =\ (1\ +\ (epsilon\ .*\ r).\string^2).\string^(3\ /\ 2);}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dphi\ =\ -\/epsilon.\string^2\ .*\ r\ ./\ denom;}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_rbf_kernel_basis_8m_source_l00160}00160\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

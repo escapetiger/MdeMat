@@ -1,0 +1,155 @@
+\doxysection{Richardson\+Integrator.\+m}
+\hypertarget{_richardson_integrator_8m_source}{}\label{_richardson_integrator_8m_source}\index{+approx/+integrate/RichardsonIntegrator.m@{+approx/+integrate/RichardsonIntegrator.m}}
+\mbox{\hyperlink{_richardson_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00001}00001\ classdef\ RichardsonIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ RICHARDSONINTEGRATOR\ Richardson\ extrapolation\ \textcolor{keywordflow}{for}\ numerical\ integration.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ RichardsonIntegrator\ implements\ Richardson\ extrapolation\ to\ improve}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ integration\ accuracy\ by\ combining\ quadrature\ rules\ at\ multiple}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ resolution\ levels.\ This\ method\ leverages\ known\ convergence\ rates}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ to\ achieve\ higher\ accuracy\ than\ the\ base\ integrator\ alone\ would}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ provide\ at\ comparable\ computational\ cost.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \%\ Create\ Richardson\ integrator\ with\ 3\ levels}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ integrator\ =\ RichardsonIntegrator(3,\ \textcolor{stringliteral}{'gauss\_legendre'},\ 3);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Using\ existing\ rule\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_aaf8ae7ad6d8889ce463a9b9d11549eed}{gaussLobatto}}(2);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ integrator\ =\ RichardsonIntegrator(rule,\ 4);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ Richardson\ extrapolation\ assumes\ that\ the\ integration\ error\ can}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ be\ expressed\ as\ a\ power\ series\ in\ the\ mesh\ size.\ The\ method}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ recursively\ refines\ the\ domain\ and\ combines\ results\ to\ eliminate}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ leading\ error\ terms.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator}{Integrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}},}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{OrthotopeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00028}00028\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ nLevels\ \%\ Number\ of\ refinement\ levels\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00030}00030\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00031}\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator}{00031}}\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00032}00032\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}(varargin)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RICHARDSONINTEGRATOR\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00035}\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}},\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}})\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Richardson\ integrator\ using\ the\ specified\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ and}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ number\ of\ refinement\ levels.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}},\ ruleId,\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}})\ creates}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ Richardson\ integrator\ with\ the\ specified\ parameters.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ -\/\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}\ \textcolor{keywordtype}{object}\ for\ the\ base\ integration}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}}\ -\/\ Number\ of\ refinement\ levels\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}}\ -\/\ Number\ of\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ ruleId\ -\/\ Rule\ identifier\ \textcolor{keywordtype}{string}:\ \{\textcolor{stringliteral}{'gauss\_legendre'},\ \textcolor{stringliteral}{'gauss\_lobatto'}\}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator}{RichardsonIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [rule,\ nLevels]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ nargin\ ==\ 3}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [nDims,\ ruleId,\ nLevels]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(ruleId,\ \textcolor{stringliteral}{'gauss\_legendre'})}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.integrate.SeparableRule.gaussLegendre(nDims);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ strcmp(ruleId,\ 'gauss\_lobatto')}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rule\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.integrate.SeparableRule.gaussLobatto(nDims);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00062}\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error('Invalid\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}\ identifier.');}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error('Invalid\ number\ of\ arguments.');}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}});}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}}\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ function\ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{copy}}(obj)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COPY\ Create\ a\ deep\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{copy}}\ of\ the\ integrator.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{copy}}(obj)\ creates\ a\ new\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{object}\ with\ the\ same\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}},\ number\ of\ levels,\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}},\ and}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}\ as\ the\ original\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}\ \textcolor{keywordtype}{object}\ to\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{copy}}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ -\/\ Deep\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{copy}}\ of\ the\ original\ integrator}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}},\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}});}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ newObj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_aba797623ca56295e70ec0d0bfdb3e4d1}{setPoints}}(obj,\ n,\ a,\ b)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETPOINTS\ Generate\ multi-\/level\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_aba797623ca56295e70ec0d0bfdb3e4d1}{setPoints}}(obj,\ n)\ generates\ integration\ points\ at}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multiple\ refinement\ levels\ with\ n\ points\ per\ dimension\ at}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ coarsest\ level\ for\ the\ unit\ orthotope.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00096}\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a829bfb0a38e062d4e84adcc056ddc98a}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_aba797623ca56295e70ec0d0bfdb3e4d1}{setPoints}}(obj,\ n,\ a,\ b)\ generates\ points\ for\ a\ custom}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ orthotope\ [a,b]\ with\ optional\ normalization.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ points\ per\ dimension\ at\ coarsest\ level}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ -\/\ Lower\ bounds\ vector\ (optional,\ default:\ zeros)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Upper\ bounds\ vector\ (optional,\ default:\ ones)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8509e940550420b6af3f0e3fa7d3f7a0}{RichardsonIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ zeros(1,\ d);\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ ones(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isscalar(n),\ n\ =\ repmat(n,\ 1,\ d);\ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_a8e9363e59e219104f1e3e6b3ef60aae8}{nLevels}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}\{i\},\ obj.weights\{i\}]\ =\ obj.refine(n,\ a,\ b,\ i);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00123}\mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator_aba797623ca56295e70ec0d0bfdb3e4d1}{00123}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00124}00124\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00125}00125\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{private})}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ function\ [X,\ w]\ =\ refine(obj,\ n,\ a,\ b,\ i)}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ REFINE\ Generate\ refined\ integration\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}\ and\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}.}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ if\ i\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ args\ =\ arrayfun(@(k)\ \{n(k),\ a(k),\ b(k)\},\ 1:d,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ w]\ =\ obj.rule.generate(args\{:\});}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ 2\string^d;}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ (a\ +\ b)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\ =\ cell(1,\ m);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ dec2bin(j\ -\/\ 1,\ d)\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ a\ .*\ (1\ -\/\ t)\ +\ c\ .*\ t;}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q\ =\ c\ .*\ (1\ -\/\ t)\ +\ b\ .*\ t;}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [Y\{j\},\ v\{j\}]\ =\ obj.refine(n,\ p,\ q,\ i\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ [Y\{:\}];}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ [v\{:\}];}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00148}00148\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_richardson_integrator_8m_source_l00149}00149\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,75 @@
+\doxysection{approx\+::integrate\+::Univariate\+Rule Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_univariate_rule}{}\label{classapprox_1_1integrate_1_1_univariate_rule}\index{approx::integrate::UnivariateRule@{approx::integrate::UnivariateRule}}
+
+
+Base class for all univariate integration rules.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{approx\+::integrate\+::\+Integration\+Rule}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1integrate_1_1_closed_newton_cotes_rule}{approx\+::integrate\+::\+Closed\+Newton\+Cotes\+Rule}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{approx\+::integrate\+::\+Gauss\+Legendre\+Rule}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule}{approx\+::integrate\+::\+Gauss\+Lobatto\+Rule}}, and \mbox{\hyperlink{classapprox_1_1integrate_1_1_periodic_trapezoidal_rule}{approx\+::integrate\+::\+Periodic\+Trapezoidal\+Rule}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_univariate_rule_ae139bdd2de7b11ad61d4880e2adfe20f}{Univariate\+Rule}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_univariate_rule}{Univariate\+Rule}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{approx\+::integrate\+::\+Integration\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}{Integration\+Rule}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule}. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_aad28d513863d1d63dd62769f1d848490}{generate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Generate integration nodes and weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{approx\+::integrate\+::\+Integration\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions for the integration domain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all univariate integration rules. 
+
+\doxylink{classapprox_1_1integrate_1_1_univariate_rule}{Univariate\+Rule} provides a specialized interface for one-\/dimensional numerical integration methods. It extends the general \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule} class with specific validation and structure appropriate for univariate quadrature formulas.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integration_rule}{approx.\+integrate.\+Integration\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{approx.\+integrate.\+Gauss\+Legendre\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_closed_newton_cotes_rule}{approx.\+integrate.\+Closed\+Newton\+Cotes\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_gauss_lobatto_rule}{approx.\+integrate.\+Gauss\+Lobatto\+Rule} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_univariate_rule_8m_source_l00018}{18}} of file \mbox{\hyperlink{_univariate_rule_8m_source}{Univariate\+Rule.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_univariate_rule_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_univariate_rule_ae139bdd2de7b11ad61d4880e2adfe20f}\index{approx::integrate::UnivariateRule@{approx::integrate::UnivariateRule}!UnivariateRule@{UnivariateRule}}
+\index{UnivariateRule@{UnivariateRule}!approx::integrate::UnivariateRule@{approx::integrate::UnivariateRule}}
+\doxysubsubsection{\texorpdfstring{UnivariateRule()}{UnivariateRule()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_univariate_rule_ae139bdd2de7b11ad61d4880e2adfe20f} 
+function approx\+::integrate\+::\+Univariate\+Rule\+::\+Univariate\+Rule (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_univariate_rule}{Univariate\+Rule}. 
+
+obj = \doxylink{classapprox_1_1integrate_1_1_univariate_rule_ae139bdd2de7b11ad61d4880e2adfe20f}{Univariate\+Rule()} creates a univariate integration rule object with dimension set to 1.
+
+Outputs\+: obj -\/ Constructed \doxylink{classapprox_1_1integrate_1_1_univariate_rule}{Univariate\+Rule} object 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_univariate_rule_8m}{Univariate\+Rule.\+m}}\end{DoxyCompactItemize}

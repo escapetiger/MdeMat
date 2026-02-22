@@ -1,0 +1,125 @@
+\doxysection{Separable.\+m}
+\hypertarget{_separable_8m_source}{}\label{_separable_8m_source}\index{+core/+linalg/Separable.m@{+core/+linalg/Separable.m}}
+\mbox{\hyperlink{_separable_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00001}00001\ classdef\ Separable\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00002}00002\ \ \ \ \ \%\ SEPARABLE\ Base\ \textcolor{keyword}{class\ }for\ all\ separable\ objects.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Separable\ represents\ mathematical\ entity\ that\ can\ be}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ decomposed\ as\ result\ of\ operation\ on\ multiple\ factors.\ Provides}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ common\ functionality\ \textcolor{keywordflow}{for}\ all\ separable\ \textcolor{keywordtype}{object}\ types.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00008}00008\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \%\ Create\ with\ uniform\ vector\ factors}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ factors\ =\ \{Vector([1,2,3]),\ Vector([4,5,6]),\ Vector([7,8,9])\};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ obj\ =\ Separable(factors);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ factor2\ =\ obj(2);\ \ \%\ Access\ \textcolor{keyword}{using\ }parentheses}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Create\ with\ mixed\ factor\ types}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ factors\ =\ \{Vector([1,2,3]),\ Matrix([4,5;6,7]),\ Scalar(8)\};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ obj\ =\ Separable(factors);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ factor2\ =\ obj\{2\};\ \%\ Access\ \textcolor{keyword}{using\ }curly\ braces}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00019}00019\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ factors\ \%\ Array\ of\ factor\ objects}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00021}00021\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00023}\mbox{\hyperlink{classcore_1_1linalg_1_1_separable}{00023}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}(F)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SEPARABLE\ Constructor\ \textcolor{keywordflow}{for}\ separable\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00027}\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}()\ creates\ empty\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}(F)\ creates\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}\ with}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}\ @a\ F.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Factor\ instances\ (cell\ array\ or\ \textcolor{keywordtype}{object}\ array)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}\ instance}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 1,\ F\ =\ \{\};\ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFactors(F);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00042}00042\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ setFactors(obj,\ F)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00044}\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFACTORS\ Set\ the\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a2ec67c6fee3c93c4250be2cc6dbf40d7}{setFactors}}(obj,\ F)\ sets\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}\ @a\ F\ \textcolor{keywordflow}{for}\ the\ \textcolor{keywordtype}{object}.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Factor\ instances\ (cell\ array\ or\ \textcolor{keywordtype}{object}\ array)\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1b915631794da4e0ceb4dff279e9e2f6}{Separable}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(F),\ \textcolor{keywordflow}{return};\ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(iscell(F)\ ||\ isobject(F),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Factors\ must\ be\ a\ cell\ array\ or\ object\ array.'});}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00062}\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a2ec67c6fee3c93c4250be2cc6dbf40d7}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1validate}{validate}}.isAllSameClass(F\{:\})}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ numel(F);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G(n)\ =\ F\{1\};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G(i)\ =\ F\{i\};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ F;}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.factors\ =\ G;}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.factors\ =\ F;}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.factors\ =\ F;}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00080}00080\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00082}00082\ \ \ \ \ methods\ (Static)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ function\ F\ =\ createFactors(factory,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CREATEFACTORS\ Create\ cell\ array\ of\ factors\ \textcolor{keyword}{using\ }factory}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ function.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ =\ Separable.createFactors(factory,\ arg1,\ arg2,\ ...)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ multiple\ factor\ objects\ \textcolor{keyword}{using\ }factory\ function\ @a}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ factory.}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ factory\ -\/\ Function\ handle\ \textcolor{keywordflow}{for}\ creating\ factor\ objects}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Arguments\ passed\ to\ factory\ function}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Cell\ array\ of\ created\ factor\ objects}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(isa(factory,\ \textcolor{stringliteral}{'function\_handle'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidFunctionHandle'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'First\ argument\ must\ be\ a\ function\ handle.'});}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(varargin)}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00105}\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ac5e323c66579ff675f6b843636acf17c}{00105}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ cellfun(@(v)\ length(v),\ varargin,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(isequal(k\{:\}),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'All\ arguments\ must\ have\ the\ same\ size.'});}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ numel(varargin\{1\});}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ cell(1,\ n);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ args\ =\ cellfun(@(x)\ x(i),\ varargin,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\{i\}\ =\ factory(args\{:\});}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00118}00118\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_8m_source_l00119}00119\ end}
+
+\end{DoxyCode}

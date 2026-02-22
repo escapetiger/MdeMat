@@ -1,0 +1,159 @@
+\doxysection{core\+::function\+::Product Class Reference}
+\hypertarget{classcore_1_1function_1_1_product}{}\label{classcore_1_1function_1_1_product}\index{core::function::Product@{core::function::Product}}
+
+
+\doxylink{classcore_1_1function_1_1_function}{Function} representing Hadamard product of two functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_product_accf10b0e075923c32a61ed4b92c29d33}{Product}} (Input\+Type lhs, Input\+Type rhs)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classcore_1_1function_1_1_product}{Product} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract \doxylink{classcore_1_1function_1_1_function}{Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a37b7735289b78906d9ed5b2f91e406ef}{eval}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a052de8682aaf2107291fe0e0ac6d100f}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_afda3f3a9615b3bc8e942a364a8ed8ce7}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab9086461d8e0eb55ff0abb158cfd2f61}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_product_ae27b6150670768f1327d352f03184b93}{Lhs}}
+\begin{DoxyCompactList}\small\item\em LHS function. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_product_ab5fa1ab08efabab557c0f98fee745396}{Rhs}}
+\begin{DoxyCompactList}\small\item\em RHSfunction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_ac696d773a380623081b129e9d8c30690}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a8c58c3268c34e2f3cc3bc4e22e63c0cf}{Is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both NDims and NCodims are positive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_product_a0d6c03d951fd03cb8887ee7b8c0a05eb}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of product function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_product_a8fb67642a0c87edd9b30eb4e06518786}{diff\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Implementation of product function derivative. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_aaa50244dc0eac9482725b5e2ae1cbd3d}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a495373f2dad1e38e4f1ccc7afa5aa0b9}{diff\+Impl}} (Input\+Type obj, Input\+Type X, ignored\+Arg)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classcore_1_1function_1_1_function}{Function} representing Hadamard product of two functions. 
+
+\doxylink{classcore_1_1function_1_1_product}{Product} represents the element-\/wise (Hadamard) product of two functions with broadcasting support\+:
+
+\mbox{[} (f \texorpdfstring{$\ast$}{*} g)(x) = f(x) .\texorpdfstring{$\ast$}{*} g(x) \mbox{]}
+
+The class supports broadcasting following MATLAB\textquotesingle{}s element-\/wise operation rules. Input dimensions must be identical, while output dimensions follow broadcasting compatibility rules. The class implements the product rule for derivatives\+:
+
+\mbox{[} (f \texorpdfstring{$\ast$}{*} g)\textquotesingle{} = f\textquotesingle{} \texorpdfstring{$\ast$}{*} g + f \texorpdfstring{$\ast$}{*} g\textquotesingle{} \mbox{]}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_product_8m_source_l00026}{26}} of file \mbox{\hyperlink{_product_8m_source}{Product.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1function_1_1_product_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1function_1_1_product_accf10b0e075923c32a61ed4b92c29d33}\index{core::function::Product@{core::function::Product}!Product@{Product}}
+\index{Product@{Product}!core::function::Product@{core::function::Product}}
+\doxysubsubsection{\texorpdfstring{Product()}{Product()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_product_accf10b0e075923c32a61ed4b92c29d33} 
+function core\+::function\+::\+Product\+::\+Product (\begin{DoxyParamCaption}\item[{Input\+Type}]{lhs}{, }\item[{Input\+Type}]{rhs}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classcore_1_1function_1_1_product}{Product} class. 
+
+obj = Product(f, g) creates a \doxylink{classcore_1_1function_1_1_product}{Product} representing the Hadamard product {\itshape f} .\texorpdfstring{$\ast$}{*} {\itshape g} of two functions. Input dimensions must be identical, while output dimensions must be broadcasting-\/compatible. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_product_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_product_a8fb67642a0c87edd9b30eb4e06518786}\index{core::function::Product@{core::function::Product}!diffImpl@{diffImpl}}
+\index{diffImpl@{diffImpl}!core::function::Product@{core::function::Product}}
+\doxysubsubsection{\texorpdfstring{diffImpl()}{diffImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_product_a8fb67642a0c87edd9b30eb4e06518786} 
+function core\+::function\+::\+Product\+::diff\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{order}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of product function derivative. 
+
+dY = diff\+Impl(obj, X, order) computes the derivative of the product function using the product rule\+: (f \texorpdfstring{$\ast$}{*} g)\textquotesingle{} = f\textquotesingle{} \texorpdfstring{$\ast$}{*} g + f \texorpdfstring{$\ast$}{*} g\textquotesingle{}
+
+For higher-\/order derivatives, this uses the generalized Leibniz rule (binomial expansion). \Hypertarget{classcore_1_1function_1_1_product_a0d6c03d951fd03cb8887ee7b8c0a05eb}\index{core::function::Product@{core::function::Product}!evalImpl@{evalImpl}}
+\index{evalImpl@{evalImpl}!core::function::Product@{core::function::Product}}
+\doxysubsubsection{\texorpdfstring{evalImpl()}{evalImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_product_a0d6c03d951fd03cb8887ee7b8c0a05eb} 
+function core\+::function\+::\+Product\+::eval\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of product function evaluation. 
+
+Y = eval\+Impl(obj, X) evaluates the Hadamard product f(\+X) .\texorpdfstring{$\ast$}{*} g(\+X) with broadcasting support for compatible output dimensions. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1function_1_1_product_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1function_1_1_product_ae27b6150670768f1327d352f03184b93}\index{core::function::Product@{core::function::Product}!Lhs@{Lhs}}
+\index{Lhs@{Lhs}!core::function::Product@{core::function::Product}}
+\doxysubsubsection{\texorpdfstring{Lhs}{Lhs}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_product_ae27b6150670768f1327d352f03184b93} 
+Property core\+::function\+::\+Product\+::\+Lhs}
+
+
+
+LHS function. 
+
+
+
+Definition at line \mbox{\hyperlink{_product_8m_source_l00030}{30}} of file \mbox{\hyperlink{_product_8m_source}{Product.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_product_ab5fa1ab08efabab557c0f98fee745396}\index{core::function::Product@{core::function::Product}!Rhs@{Rhs}}
+\index{Rhs@{Rhs}!core::function::Product@{core::function::Product}}
+\doxysubsubsection{\texorpdfstring{Rhs}{Rhs}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_product_ab5fa1ab08efabab557c0f98fee745396} 
+Property core\+::function\+::\+Product\+::\+Rhs}
+
+
+
+RHSfunction. 
+
+
+
+Definition at line \mbox{\hyperlink{_product_8m_source_l00033}{33}} of file \mbox{\hyperlink{_product_8m_source}{Product.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_product_8m}{Product.\+m}}\end{DoxyCompactItemize}

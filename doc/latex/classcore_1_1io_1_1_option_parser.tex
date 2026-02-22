@@ -1,0 +1,118 @@
+\doxysection{core\+::io\+::Option\+Parser Class Reference}
+\hypertarget{classcore_1_1io_1_1_option_parser}{}\label{classcore_1_1io_1_1_option_parser}\index{core::io::OptionParser@{core::io::OptionParser}}
+
+
+Configuration file parser for KEY=VALUE format.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1io_1_1_option_parser_aefff661057f891d294ffa93d40c8acc9}{Option\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classcore_1_1io_1_1_option_parser}{Option\+Parser}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6}{parse}} (Input\+Type obj, Input\+Type file)
+\begin{DoxyCompactList}\small\item\em Parse configuration file and return extracted options. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1io_1_1_option_parser_a61a40f6d5b8f7d32cff8bd83b82665e6}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Remove all MATLAB paths added during parsing operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1io_1_1_option_parser_a203abddfb9ffb37015a5f934a9e0113e}{Paths}}
+\begin{DoxyCompactList}\small\item\em Cell array of MATLAB paths added. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration file parser for KEY=VALUE format. 
+
+\doxylink{classcore_1_1io_1_1_option_parser}{Option\+Parser} provides a robust interface for reading and processing configuration files that use KEY=VALUE syntax. Supports extracting options as MATLAB variables, dynamically adding directories to the MATLAB path, and handling various configuration settings.
+
+The parser supports three main configuration directives\+:
+
+
+\begin{DoxyItemize}
+\item OPTION=name=value\+: Defines configuration options with automatic type conversion
+\item MATLABPATH=path\+: Adds directories to MATLAB\textquotesingle{}s search path
+\item SUBDIRS=path\+: Recursively adds all subdirectories to MATLAB\textquotesingle{}s search path
+\end{DoxyItemize}
+
+Type conversion is performed automatically for numeric values, logical values (true/false), and MATLAB expressions. String values are preserved as-\/is.
+
+Configuration files use KEY=VALUE format with \# for comments. Empty lines and comment lines are ignored during parsing. All added paths are tracked and can be removed using the \doxylink{classcore_1_1io_1_1_option_parser_a61a40f6d5b8f7d32cff8bd83b82665e6}{reset()} method.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519}{core.\+except.\+assert} 
+
+\doxylink{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa}{core.\+except.\+verify} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_option_parser_8m_source_l00034}{34}} of file \mbox{\hyperlink{_option_parser_8m_source}{Option\+Parser.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1io_1_1_option_parser_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1io_1_1_option_parser_aefff661057f891d294ffa93d40c8acc9}\index{core::io::OptionParser@{core::io::OptionParser}!OptionParser@{OptionParser}}
+\index{OptionParser@{OptionParser}!core::io::OptionParser@{core::io::OptionParser}}
+\doxysubsubsection{\texorpdfstring{OptionParser()}{OptionParser()}}
+{\footnotesize\ttfamily \label{classcore_1_1io_1_1_option_parser_aefff661057f891d294ffa93d40c8acc9} 
+function core\+::io\+::\+Option\+Parser\+::\+Option\+Parser (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classcore_1_1io_1_1_option_parser}{Option\+Parser}. 
+
+obj = \doxylink{classcore_1_1io_1_1_option_parser_aefff661057f891d294ffa93d40c8acc9}{Option\+Parser()} creates a new \doxylink{classcore_1_1io_1_1_option_parser}{Option\+Parser} instance with an empty paths collection for tracking added MATLAB paths. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1io_1_1_option_parser_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6}\index{core::io::OptionParser@{core::io::OptionParser}!parse@{parse}}
+\index{parse@{parse}!core::io::OptionParser@{core::io::OptionParser}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily \label{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6} 
+function core\+::io\+::\+Option\+Parser\+::parse (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{file}{}\end{DoxyParamCaption})}
+
+
+
+Parse configuration file and return extracted options. 
+
+options = parse(obj, file) reads and processes the specified configuration file {\itshape file}, extracting configuration options and adding paths to MATLAB\textquotesingle{}s search path as specified. \Hypertarget{classcore_1_1io_1_1_option_parser_a61a40f6d5b8f7d32cff8bd83b82665e6}\index{core::io::OptionParser@{core::io::OptionParser}!reset@{reset}}
+\index{reset@{reset}!core::io::OptionParser@{core::io::OptionParser}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classcore_1_1io_1_1_option_parser_a61a40f6d5b8f7d32cff8bd83b82665e6} 
+function core\+::io\+::\+Option\+Parser\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Remove all MATLAB paths added during parsing operations. 
+
+reset(obj) removes all MATLAB search paths that were added by the parser during previous \doxylink{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6}{parse()} operations. Displays a confirmation message indicating the number of paths removed or confirms that no paths needed removal. 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1io_1_1_option_parser_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1io_1_1_option_parser_a203abddfb9ffb37015a5f934a9e0113e}\index{core::io::OptionParser@{core::io::OptionParser}!Paths@{Paths}}
+\index{Paths@{Paths}!core::io::OptionParser@{core::io::OptionParser}}
+\doxysubsubsection{\texorpdfstring{Paths}{Paths}}
+{\footnotesize\ttfamily \label{classcore_1_1io_1_1_option_parser_a203abddfb9ffb37015a5f934a9e0113e} 
+Property core\+::io\+::\+Option\+Parser\+::\+Paths}
+
+
+
+Cell array of MATLAB paths added. 
+
+
+
+Definition at line \mbox{\hyperlink{_option_parser_8m_source_l00038}{38}} of file \mbox{\hyperlink{_option_parser_8m_source}{Option\+Parser.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+io/\mbox{\hyperlink{_option_parser_8m}{Option\+Parser.\+m}}\end{DoxyCompactItemize}

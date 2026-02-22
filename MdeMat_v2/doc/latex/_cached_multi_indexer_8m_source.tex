@@ -1,0 +1,120 @@
+\doxysection{Cached\+Multi\+Indexer.\+m}
+\hypertarget{_cached_multi_indexer_8m_source}{}\label{_cached_multi_indexer_8m_source}\index{+core/+linalg/CachedMultiIndexer.m@{+core/+linalg/CachedMultiIndexer.m}}
+\mbox{\hyperlink{_cached_multi_indexer_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00001}00001\ classdef\ CachedMultiIndexer\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{Indexer}}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00002}00002\ \ \ \ \ \%\ CACHEDMULTIINDEXER\ Base\ \textcolor{keyword}{class\ }for\ all\ indexers\ with\ cached\ indices.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ CachedMultiIndexer\ provides\ foundation\ \textcolor{keywordflow}{for}\ index\ generation}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ strategies\ that\ benefit\ from\ caching\ generated\ indices.\ Subclasses}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ implement\ specific\ index\ generation\ \textcolor{keywordflow}{while}\ inheriting\ caching}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ functionality.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00009}00009\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{Indexer}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{MultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00012}00012\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ nDims\ \%\ Number\ of\ dimensions,\ derived\ from\ cache}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ nIndices\ \%\ Number\ of\ cached\ indices,\ derived\ from\ cache}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00015}00015\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00016}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{00016}}\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00017}00017\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}}\ =\ []\ \%\ Cache\ matrix\ where\ each\ row\ represents\ a\ multi-\/index}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00019}00019\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00020}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a2de6bcafa9d0323aab0c86cb9accf886}{00020}}\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00021}00021\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}})}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00023}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_acb53980b0ca7c2521e46ba60fac513de}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CACHEDMULTIINDEXER\ Constructor\ \textcolor{keywordflow}{for}\ cached\ multi-\/indexer.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}()\ creates\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}\ with}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ default\ storage\ ordering\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}.\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}})\ creates\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00029}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ specified\ @a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ -\/\ Storage\ ordering\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ (optional,\ default:\ \textcolor{charliteral}{'F'})}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 1,\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ =\ \textcolor{charliteral}{'F'};\ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a12d8bc7603ef209ce913682b105a9c2e}{Indexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}});}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ n\ =\ get.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a2de6bcafa9d0323aab0c86cb9accf886}{nDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ number\ of\ dimensions\ based\ on\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}}.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00047}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{00047}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ n\ =\ get.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_acb53980b0ca7c2521e46ba60fac513de}{nIndices}}(obj)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NINDICES\ Get\ number\ of\ indices\ based\ on\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}}.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ L\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a3871c2fa37e7629a900528743de02b6d}{multiToLinear}}(obj,\ M)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MULTITOLINEAR\ Convert\ multi-\/indices\ to\ linear\ indices.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a3871c2fa37e7629a900528743de02b6d}{multiToLinear}}(obj,\ M)\ converts\ multi-\/indices\ @a\ M\ to}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ linear\ indices\ within\ cached\ set\ of\ indices.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Matrix\ where\ each\ row\ is\ a\ multi-\/index}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Column\ vector\ of\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismatrix(M)\ \&\&\ size(M,\ 2)\ ==\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a2de6bcafa9d0323aab0c86cb9accf886}{nDims}},\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Multi-\/indices\ must\ has\ \%d\ columns.',\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a2de6bcafa9d0323aab0c86cb9accf886}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}};}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(C),\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00073}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a3871c2fa37e7629a900528743de02b6d}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'MissingCache',\ 'Cache\ is\ empty.');}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ zeros(size(M,\ 1),\ 1);}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:size(M,\ 1)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ M(i,\ :);}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ find(all(C\ ==\ repmat(I,\ size(C,\ 1),\ 1),\ 2));}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(J),\ L(i)\ =\ J(1);\ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a7cafa0690f653962bf792b62ce0a335c}{linearToMulti}}(obj,\ L)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINEARTOMULTI\ Convert\ linear\ indices\ to\ cached\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a7cafa0690f653962bf792b62ce0a335c}{linearToMulti}}(obj,\ L)\ converts\ linear\ indices\ @a\ L\ to}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multi-\/indices\ from\ cached\ set.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a9f721e7dd0fcf12dbbec446273dc2b4b}{CachedMultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Vector\ of\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Matrix\ where\ each\ row\ is\ the\ corresponding\ multi-\/index}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}};}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(C),\ 'MissingCache',\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Cache\ is\ empty.');}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ (L\ >\ 0)\ \&\ (L\ <=\ size(C,\ 1));}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(I),\ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Linear\ index\ \%d\ is\ out\ of\ range\ (valid\ range:\ 1-\/\%d).',\ ...}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00104}\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a7cafa0690f653962bf792b62ce0a335c}{00104}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L(find(\string~I,\ 1)),\ size(C,\ 1));}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ C(L,\ :);}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00108}00108\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00110}00110\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \%\ SETCACHE\ Generate\ and\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_a0f99c46f900542550b7603a2a5b12c49}{cache}}\ indices.}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer_ade3d402416622216794d2c6b21bd04f4}{setCache}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00113}00113\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_cached_multi_indexer_8m_source_l00114}00114\ end}
+
+\end{DoxyCode}

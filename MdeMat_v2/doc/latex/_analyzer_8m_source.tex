@@ -1,0 +1,268 @@
+\doxysection{Analyzer.\+m}
+\hypertarget{_analyzer_8m_source}{}\label{_analyzer_8m_source}\index{+profilers/+analysis/Analyzer.m@{+profilers/+analysis/Analyzer.m}}
+\mbox{\hyperlink{_analyzer_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00001}00001\ classdef\ Analyzer\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00002}\mbox{\hyperlink{namespaceprofilers_1_1analysis}{00002}}\ \ \ \ \ \%\ ANALYZER\ Comprehensive\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ and\ \mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}\ computation.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer}{Analyzer}}\ provides\ sophisticated\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ capabilities\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ numerical\ methods,\ including\ absolute\ error\ computation\ against}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ exact\ solutions\ and\ relative\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ \textcolor{keyword}{using\ }Richardson}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ extrapolation.\ This\ \textcolor{keyword}{class\ }is\ essential\ for\ validating\ numerical}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ schemes\ and\ quantifying\ their\ accuracy.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ analyzer\ supports\ multiple\ error\ reduction\ types\ (L1,\ L2,}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ Lx),\ handles\ multi-\/component\ solutions,\ and\ can\ work\ with\ both}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ exact\ solutions\ and\ grid-\/based\ Richardson\ extrapolation\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ problems\ where\ analytical\ solutions\ are\ unavailable.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00015}00015\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \%\ Create\ analyzer\ \textcolor{keywordflow}{for}\ convergence\ study}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ analyzer\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer}{Analyzer}}(\textcolor{stringliteral}{'nLevels'},\ 4,\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'density'},\ [10,\ 10],\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'reductions'},\ \{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ 1,\ \textcolor{charliteral}{'v'},\ 2),\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'exacts'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ @(x)\ sin(x(1,:))));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Compute\ absolute\ error\ against\ exact\ solution}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ analyzer.\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_afc8ccc368748a46798aabafeba6166a8}{setLevel}}(mesh);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ analyzer.absolute(space,\ dofs);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \%\ Compute\ relative\ error\ \textcolor{keyword}{using\ }Richardson\ extrapolation}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ analyzer.relative(fineSpace,\ fineDofs,\ coarseSpace,\ coarseDofs);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ \%\ Generate\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ results}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ results\ =\ analyzer.analyze();}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00032}00032\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00033}00033\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}.\mbox{\hyperlink{classprofilers_1_1analysis_1_1_convergence_profiler}{ConvergenceProfiler}},\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_mesh_space_absolute_metric}{MeshSpaceAbsoluteMetric}}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00036}00036\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ profiler\ \ \ \ \%\ ConvergenceProfiler\ \textcolor{keywordflow}{for}\ managing\ convergence\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00038}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer}{00038}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a416478179ac43f77b2987d8245a7edfb}{density}}\ \ \ \ \ \%\ (1×nDims)\ number\ of\ error\ evaluation\ points\ per\ element\ per\ dimension}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a641878a2d9523b317746f0e7dcd0c9df}{reductions}}\ \ \%\ Cell\ array\ of\ error\ reduction\ types\ (\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'})}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{components}}\ \ \%\ Structure\ mapping\ field\ names\ to\ component\ indices}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ace762946b7db749069d981bcbf0cf258}{exacts}}\ \ \ \ \ \ \%\ Structure\ of\ exact\ solution\ function\ handles}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00042}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a745ae93182d0db0a559987429c6875c9}{00042}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a7ef01ba75aec8c02361f87e551933bff}{errors}}\ \ \ \ \ \ \%\ Structure\ storing\ computed\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a7ef01ba75aec8c02361f87e551933bff}{errors}}\ \textcolor{keywordflow}{for\ each}\ level}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a72c5a561b6e50f734792919f00898234}{count}}\ \ \ \ \ \ \ \%\ Current\ level\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a72c5a561b6e50f734792919f00898234}{count}}\ \textcolor{keywordflow}{for}\ error\ storage}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00044}00044\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00045}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a416478179ac43f77b2987d8245a7edfb}{00045}}\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00046}00046\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ab33359463ceddc2937ca48b73f953b00}{hasExact}}\ \ \ \ \ \%\ True\ \textcolor{keywordflow}{if}\ any\ exact\ solution\ is\ available}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00048}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a641878a2d9523b317746f0e7dcd0c9df}{00048}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa3582566bf18f256960d14366aaa2983}{isEnabled}}\ \ \ \ \%\ True\ \textcolor{keywordflow}{if}\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ is\ enabled}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a4f6d04e6bfafb48abdcf299b21d631ec}{nComponents}}\ \ \%\ Number\ of\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{components}}\ \textcolor{keywordflow}{for\ each}\ field}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00051}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{00051}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00052}00052\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}(varargin)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00054}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ace762946b7db749069d981bcbf0cf258}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ANALYZER\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}(\textcolor{stringliteral}{'Parameter'},\ Value,\ ...)\ creates\ an\ analyzer}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00057}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a7ef01ba75aec8c02361f87e551933bff}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ with\ specified\ configuration\ for\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}.\ The}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ analyzer\ supports\ various\ error\ \mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}\ and\ can\ handle}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multi-\/component\ solutions\ with\ optional\ exact\ solutions.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00060}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a72c5a561b6e50f734792919f00898234}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ nLevels\ -\/\ Number\ of\ refinement\ levels\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a416478179ac43f77b2987d8245a7edfb}{density}}\ -\/\ (1×nDims)\ error\ sampling\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a416478179ac43f77b2987d8245a7edfb}{density}}\ per\ element\ (optional)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a641878a2d9523b317746f0e7dcd0c9df}{reductions}}\ -\/\ Cell\ array\ of\ error\ reduction\ types\ (optional)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00066}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ab33359463ceddc2937ca48b73f953b00}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{components}}\ -\/\ Structure\ mapping\ field\ names\ to\ indices\ (optional)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ace762946b7db749069d981bcbf0cf258}{exacts}}\ -\/\ Structure\ of\ exact\ solution\ functions\ (optional)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00069}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa3582566bf18f256960d14366aaa2983}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00072}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a4f6d04e6bfafb48abdcf299b21d631ec}{00072}}\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ inputParser;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'nLevels',\ [],\ @(x)\ isnumeric(x)\ \&\&\ isscalar(x));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a641878a2d9523b317746f0e7dcd0c9df}{reductions}}',\ [],\ @(x)\ iscell(x));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a416478179ac43f77b2987d8245a7edfb}{density}}',\ [],\ @(x)\ isnumeric(x));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{components}}',\ [],\ @(x)\ isstruct(x));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_ace762946b7db749069d981bcbf0cf258}{exacts}}',\ [],\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ @(x)\ isempty(x)\ ||\ isa(x,\ 'function\_handle')\ ||\ isstruct(x));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ parse(p,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ obj.profiler\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}.\mbox{\hyperlink{classprofilers_1_1analysis_1_1_convergence_profiler}{ConvergenceProfiler}}(p.Results.nLevels);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ obj.density\ =\ p.Results.density;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ obj.reductions\ =\ p.Results.reductions;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ obj.components\ =\ p.Results.components;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ obj.exacts\ =\ p.Results.exacts;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ error\ storage\ structure}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ fieldNames\ =\ fieldnames(p.Results.components);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ nFields\ =\ length(fieldNames);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ args\ =\ cell(2,\ nFields);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ args(1,\ :)\ =\ fieldNames;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ args(2,\ :)\ =\ \{\{cell(p.Results.nLevels,\ 1)\}\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ obj.errors\ =\ \textcolor{keyword}{struct}(args\{:\});}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00094}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.count\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.isEnabled(obj)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISENABLED\ Check\ \textcolor{keywordflow}{if}\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ is\ enabled.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ any(obj.density\ >\ 0)\ \&\&\ sum(obj.nComponents)\ >\ 0;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.hasExact(obj)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.HASEXACT\ Check\ \textcolor{keywordflow}{if}\ exact\ solutions\ are\ available.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ \string~isempty(obj.exacts)\ \&\&\ \string~isempty(fieldnames(obj.exacts));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nComponents(obj)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NCOMPONENTS\ Get\ number\ of\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aaa3deb9cb1682fdafa74163c098a0149}{components}}\ \textcolor{keywordflow}{for\ each}\ field.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ cellfun(@(f)\ length(obj.components.(f)),\ fieldnames(obj.components));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_af8dd7b235b8e987d2f275190bc93c381}{addExact}}(obj,\ name,\ func)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ADDEXACT\ Add\ exact\ solution.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_af8dd7b235b8e987d2f275190bc93c381}{addExact}}(obj,\ name,\ style)\ registers\ a\ \textcolor{keyword}{new}\ exact}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solution\ with\ the\ specified\ function\ handle.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Visualizer\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ name\ -\/\ Solution\ name\ (\textcolor{keywordtype}{string}\ or\ \textcolor{keywordtype}{char}\ array)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ func\ -\/\ Exact\ funtion\ (function\ handle)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Visualizer\ \textcolor{keywordtype}{object}\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ obj.exacts.(name)\ =\ func;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_afc8ccc368748a46798aabafeba6166a8}{setLevel}}(obj,\ mesh)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETLEVEL\ Set\ current\ refinement\ level\ information.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_afc8ccc368748a46798aabafeba6166a8}{setLevel}}(obj,\ mesh)\ configures\ the\ analyzer\ \textcolor{keywordflow}{for}\ the}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ current\ refinement\ level\ \textcolor{keyword}{using\ }mesh\ properties.\ This\ method}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ extracts\ the\ mesh\ resolution\ and\ creates\ descriptive}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ strings\ \textcolor{keywordflow}{for}\ the\ convergence\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a745ae93182d0db0a559987429c6875c9}{profiler}}.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ mesh\ -\/\ Mesh\ \textcolor{keywordtype}{object}\ with\ resolution\ and\ measure\ properties}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00146}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_af8dd7b235b8e987d2f275190bc93c381}{00146}}\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ mesh.measure;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ hStr\ =\ strrep(num2str(mesh.resolution),\ \textcolor{stringliteral}{'\ \ '},\ \textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ obj.profiler.resolutions(obj.count)\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ obj.profiler.descriptions\{obj.count\}\ =\ hStr;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ function\ obj\ =\ absolute(obj,\ space,\ dofs,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ABSOLUTE\ Compute\ absolute\ error\ against\ exact\ solutions.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ absolute(obj,\ space,\ dofs)\ computes\ absolute\ errors}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ by\ comparing\ numerical\ solutions\ with\ exact\ analytical}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solutions.\ The\ method\ evaluates\ both\ numerical\ and\ exact}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solutions\ at\ the\ same\ sample\ points\ and\ computes\ specified}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ error\ \mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ space\ -\/\ Function\ space\ \textcolor{keywordflow}{for}\ solution\ evaluation}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00165}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_afc8ccc368748a46798aabafeba6166a8}{00165}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dofs\ -\/\ Structure\ containing\ solution\ coefficient\ dofs}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Additional\ arguments\ \textcolor{keywordflow}{for}\ exact\ solution\ evaluation}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ metric\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_mesh_space_absolute_metric}{MeshSpaceAbsoluteMetric}}(obj.reductions,\ space);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ metric.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_mesh_space_absolute_metric_aeac8f20575015c610f7261d7a8e93060}{setPoints}}(obj.density);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ metric.nodes;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ fieldNames\ =\ fieldnames(dofs);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iField\ =\ 1:length(fieldNames)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName\ =\ fieldNames\{iField\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ component\ =\ obj.components.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ dofs.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ obj.exacts.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ space.evaluate(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ U(:,\ component);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ space.evaluate(f,\ X,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ U0(:,\ component);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.errors.(fieldName)\{obj.count\}\ =\ metric.evaluate(U,\ U0);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ obj.count\ =\ obj.count\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00190}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa351f6adbd23fbeee121552e0ce46314}{00190}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a29f602972727524cc65853c07fb7b589}{relative}}(obj,\ fSpace,\ fDofs,\ cSpace,\ cDofs)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RELATIVE\ Compute\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a29f602972727524cc65853c07fb7b589}{relative}}\ error\ \textcolor{keyword}{using\ }Richardson}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ extrapolation.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a29f602972727524cc65853c07fb7b589}{relative}}(obj,\ fSpace,\ fDofs,\ cSpace,\ cDofs)\ computes}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a29f602972727524cc65853c07fb7b589}{relative}}\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a7ef01ba75aec8c02361f87e551933bff}{errors}}\ \textcolor{keyword}{using\ }Richardson\ extrapolation\ between\ fine}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ coarse\ grid\ solutions.\ This\ method\ is\ useful\ when\ exact}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solutions\ are\ not\ available.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fSpace\ -\/\ Fine\ grid\ function\ space}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ fDofs\ -\/\ Structure\ containing\ fine\ grid\ solution\ dofs}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ cSpace\ -\/\ Coarse\ grid\ function\ space\ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ cDofs\ -\/\ Structure\ containing\ coarse\ grid\ solution\ dofs}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ metric\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_grid_space_richardson_metric}{GridSpaceRichardsonMetric}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.reductions,\ fSpace,\ cSpace);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ metric.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_grid_space_richardson_metric_a4fcf904da34283c58b13782433c4876e}{setPoints}}(obj.density);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ metric.nodes\{1\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ X0\ =\ metric.nodes\{2\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ fieldNames\ =\ fieldnames(fDofs);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iField\ =\ 1:length(fieldNames)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName\ =\ fieldNames\{iField\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ component\ =\ obj.components.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ fDofs.(fieldName)(metric.iNestDofs,\ :);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C0\ =\ cDofs.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ fSpace.evaluate(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ U(:,\ component);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ cSpace.evaluate(X0,\ C0);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ U0(:,\ component);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.errors.(fieldName)\{obj.count\}\ =\ metric.evaluate(U,\ U0);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00228}\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a29f602972727524cc65853c07fb7b589}{00228}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.count\ =\ obj.count\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00230}00230\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ function\ results\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a6dbc466c9bcd2a6da9f5f9f6941b55b9}{analyze}}(obj)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ANALYZE\ Generate\ comprehensive\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ results.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ results\ =\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_a6dbc466c9bcd2a6da9f5f9f6941b55b9}{analyze}}(obj)\ processes\ all\ collected\ error\ data}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ generates\ structured\ results\ including\ convergence}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tables\ \textcolor{keywordflow}{for\ each}\ field\ component\ and\ error\ reduction\ type.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ results\ can\ be\ used\ \textcolor{keywordflow}{for}\ convergence\ verification\ and}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ method\ validation.}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer_aa685519d7ad1046c3798a2ccef2bba4e}{Analyzer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ results\ -\/\ Convergence\ tables}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ results\ =\ \textcolor{keyword}{struct}();}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ nLevels\ =\ obj.profiler.nLevels;}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ nReductions\ =\ length(obj.reductions);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ fieldNames\ =\ fieldnames(obj.errors);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iField\ =\ 1:length(fieldNames)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName\ =\ fieldNames\{iField\};}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ component\ =\ obj.components.(fieldName);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ cell2mat(obj.errors.(fieldName));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ iComponent\ =\ 1:size(E,\ 2)}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ej\ =\ reshape(E(:,\ iComponent),\ nReductions,\ nLevels).';}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ =\ sprintf('\%s\%d',\ fieldName,\ component(iComponent));}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ results.(name)\ =\ obj.profiler.buildTable(Ej,\ obj.reductions);}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00261}00261\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_analyzer_8m_source_l00262}00262\ end}
+
+\end{DoxyCode}

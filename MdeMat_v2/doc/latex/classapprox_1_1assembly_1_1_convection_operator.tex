@@ -1,0 +1,210 @@
+\doxysection{approx\+::assembly\+::Convection\+Operator Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_convection_operator}{}\label{classapprox_1_1assembly_1_1_convection_operator}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for convection operators in DG methods.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{Convection\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}, Input\+Type bc\+Type)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_convection_operator}{Convection\+Operator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}{linear}} (Input\+Type obj, Input\+Type coe, Input\+Type vel)
+\begin{DoxyCompactList}\small\item\em Assemble linear convection operator matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a}{linear\+Bc}} (Input\+Type obj, Input\+Type coe, Input\+Type vel, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble boundary condition terms for linear convection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aed85b9fe2eb4a6a7e50e13608da052c6}{Assembly}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}, Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}{volume}}
+\begin{DoxyCompactList}\small\item\em Volume assembly for interior terms (\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{Volume\+Assembly}) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}{flux}}
+\begin{DoxyCompactList}\small\item\em Flux assembly for interface terms (\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh space providing geometry and connectivity (Mesh\+Space) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}
+\begin{DoxyCompactList}\small\item\em Element operator providing local computations (Element\+Operator) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for convection operators in DG methods. 
+
+\doxylink{classapprox_1_1assembly_1_1_convection_operator}{Convection\+Operator} provides high-\/level assembly of convection (advection) operators using discontinuous Galerkin discretizations. It combines volume and flux assembly components to create complete convection operators with appropriate upwind stabilization.
+
+The operator automatically selects upwind flux directions based on the velocity field, ensuring stability for convection-\/dominated problems. It supports both periodic and Dirichlet boundary conditions with appropriate flux treatments.
+
+The convection operator discretizes terms of the form\+:
+
+\[\nabla \cdot (c \mathbf{v} u)
+\]
+
+where $c$ is a coefficient, $v$ is the velocity field, and $u$ is the transported quantity.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ convection\ \textcolor{keyword}{operator}\ with\ periodic\ boundaries}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ =\ approx.space.MeshSpace(mesh,\ element);}
+\DoxyCodeLine{\textcolor{keyword}{operator}\ =\ approx.element.L2ElementOperator(element);}
+\DoxyCodeLine{convOp\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}{ConvectionOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator},\ \textcolor{stringliteral}{'periodic'});}
+\DoxyCodeLine{\%\ Assemble\ convection\ matrix\ \textcolor{keywordflow}{for}\ constant\ velocity}
+\DoxyCodeLine{coefficients\ =\ [1.0;\ 0.5];\ \ \%\ [c\_x;\ c\_y]}
+\DoxyCodeLine{velocity\ =\ [2.0;\ 1.0];\ \ \ \ \ \ \%\ [v\_x;\ v\_y]}
+\DoxyCodeLine{A\ =\ convOp.linear(coefficients,\ velocity);}
+\DoxyCodeLine{\%\ Assemble\ boundary\ condition\ terms}
+\DoxyCodeLine{boundaryFunction\ =\ @(x,\ t)\ sin(pi*x(1,:))\ .*\ cos(pi*x(2,:));}
+\DoxyCodeLine{B\ =\ convOp.linearBc(coefficients,\ velocity,\ boundaryFunction);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{approx.\+assembly.\+Volume\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{approx.\+assembly.\+Flux\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_convection_operator_8m_source_l00045}{45}} of file \mbox{\hyperlink{_convection_operator_8m_source}{Convection\+Operator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}!ConvectionOperator@{ConvectionOperator}}
+\index{ConvectionOperator@{ConvectionOperator}!approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+\doxysubsubsection{\texorpdfstring{ConvectionOperator()}{ConvectionOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_convection_operator_a5cdbd20d8e89079dac84e479ceb4c014} 
+function approx\+::assembly\+::\+Convection\+Operator\+::\+Convection\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{space}{, }\item[{Input\+Type}]{operator}{, }\item[{Input\+Type}]{bc\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1assembly_1_1_convection_operator}{Convection\+Operator}. 
+
+obj = Convection\+Operator(space, operator, bc\+Type) creates a convection operator with the specified mesh space, element operator, and boundary condition type. For Dirichlet boundaries, upwind flux is automatically selected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em space} & -\/ Mesh\+Space object \\
+\hline
+{\em operator} & -\/ Element\+Operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type\+: \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\} \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}!linear@{linear}}
+\index{linear@{linear}!approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+\doxysubsubsection{\texorpdfstring{linear()}{linear()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_convection_operator_ae6a44288f4fe5359d011c4178829d911} 
+function approx\+::assembly\+::\+Convection\+Operator\+::linear (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{coe}{, }\item[{Input\+Type}]{vel}{}\end{DoxyParamCaption})}
+
+
+
+Assemble linear convection operator matrix. 
+
+A = linear(obj, coe) assembles the convection operator matrix with coefficients coe, using coe as both coefficients and velocity field.
+
+A = linear(obj, coe, vel) assembles the convection operator matrix with coefficients coe and velocity field vel. The flux direction (left/right bias) is automatically selected based on the velocity sign in each dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_convection_operator}{Convection\+Operator} object \\
+\hline
+{\em coe} & -\/ Coefficient vector for each dimension (n\+Dims x 1) \\
+\hline
+{\em vel} & -\/ Velocity vector for each dimension (n\+Dims x 1, optional)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Assembled convection operator matrix (sparse) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}!linearBc@{linearBc}}
+\index{linearBc@{linearBc}!approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+\doxysubsubsection{\texorpdfstring{linearBc()}{linearBc()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_convection_operator_a136ad5fdafc91f51244311c34d6c1c4a} 
+function approx\+::assembly\+::\+Convection\+Operator\+::linear\+Bc (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{coe}{, }\item[{Input\+Type}]{vel}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Assemble boundary condition terms for linear convection. 
+
+A = linear\+Bc(obj, coe, vel, f) assembles the boundary condition contribution matrix for linear convection with Dirichlet boundary conditions. The boundary flux direction depends on the velocity sign (inflow boundaries only).
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1assembly_1_1_convection_operator}{Convection\+Operator} object \\
+\hline
+{\em coe} & -\/ Coefficient vector for each dimension (n\+Dims x 1) \\
+\hline
+{\em vel} & -\/ Velocity vector for each dimension (n\+Dims x 1) \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em varargin} & -\/ Input arguments passed to boundary condition\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Boundary condition contribution matrix (sparse) \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}!flux@{flux}}
+\index{flux@{flux}!approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+\doxysubsubsection{\texorpdfstring{flux}{flux}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_convection_operator_a617eefb82e6516cb778a59930c9e7c1f} 
+Property approx\+::assembly\+::\+Convection\+Operator\+::flux}
+
+
+
+Flux assembly for interface terms (\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly}) 
+
+
+
+Definition at line \mbox{\hyperlink{_convection_operator_8m_source_l00052}{52}} of file \mbox{\hyperlink{_convection_operator_8m_source}{Convection\+Operator.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750}\index{approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}!volume@{volume}}
+\index{volume@{volume}!approx::assembly::ConvectionOperator@{approx::assembly::ConvectionOperator}}
+\doxysubsubsection{\texorpdfstring{volume}{volume}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_convection_operator_ae5ba66f52d657458bff10ab536b84750} 
+Property approx\+::assembly\+::\+Convection\+Operator\+::volume}
+
+
+
+Volume assembly for interior terms (\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{Volume\+Assembly}) 
+
+
+
+Definition at line \mbox{\hyperlink{_convection_operator_8m_source_l00049}{49}} of file \mbox{\hyperlink{_convection_operator_8m_source}{Convection\+Operator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_convection_operator_8m}{Convection\+Operator.\+m}}\end{DoxyCompactItemize}

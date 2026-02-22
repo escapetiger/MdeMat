@@ -1,0 +1,124 @@
+\doxysection{ld0770.\+m}
+\hypertarget{ld0770_8m_source}{}\label{ld0770_8m_source}\index{+approx/+integrate/lebedev/ld0770.m@{+approx/+integrate/lebedev/ld0770.m}}
+\mbox{\hyperlink{ld0770_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00001}00001\ function\ [\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a46e9f51ff3b4ce8258141965b9bce96e}{ld0770}}\ (\ )}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00003}00003\ \%*****************************************************************************80}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00004}00004\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00005}00005\ \%\%\ \mbox{\hyperlink{namespaceapprox_1_1integrate_a46e9f51ff3b4ce8258141965b9bce96e}{ld0770}}()\ computes\ the\ 770\ point\ Lebedev\ angular\ grid.}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00007}00007\ \%\ \ Modified:}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00009}00009\ \%\ \ \ \ 14\ September\ 2010}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00011}00011\ \%\ \ Author:}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00013}00013\ \%\ \ \ \ Dmitri\ Laikov}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00014}00014\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00015}00015\ \%\ \ Reference:}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00017}00017\ \%\ \ \ \ Vyacheslav\ Lebedev,\ Dmitri\ Laikov,}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00018}00018\ \%\ \ \ \ A\ quadrature\ formula\ for\ the\ sphere\ of\ the\ 131st}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00019}00019\ \%\ \ \ \ algebraic\ order\ of\ accuracy,}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00020}00020\ \%\ \ \ \ Russian\ Academy\ of\ Sciences\ Doklady\ Mathematics,}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00021}00021\ \%\ \ \ \ Volume\ 59,\ Number\ 3,\ 1999,\ pages\ 477-\/481.}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00022}00022\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00023}00023\ \%\ \ Output:}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00024}00024\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00025}00025\ \%\ \ \ \ real\ X(N),\ Y(N),\ Z(N),\ W(N),\ the\ coordinates}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00026}00026\ \%\ \ \ \ and\ weights\ of\ the\ points.}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00027}00027\ \%}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00028}00028\ \ \ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00029}\mbox{\hyperlink{namespaceapprox_1_1integrate_a46e9f51ff3b4ce8258141965b9bce96e}{00029}}\ \ \ x\ =\ zeros(770,1);}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00030}00030\ \ \ y\ =\ zeros(770,1);}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00031}00031\ \ \ z\ =\ zeros(770,1);}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00032}00032\ \ \ w\ =\ zeros(770,1);}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00033}00033\ \ \ a\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00034}00034\ \ \ b\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00035}00035\ \ \ v\ =\ 0.2192942088181184E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00036}00036\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 1,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00037}00037\ \ \ v\ =\ 0.1436433617319080E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00038}00038\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 2,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00039}00039\ \ \ v\ =\ 0.1421940344335877E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00040}00040\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 3,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00041}00041\ \ \ a\ =\ 0.5087204410502360E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00042}00042\ \ \ v\ =\ 0.6798123511050502E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00043}00043\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00044}00044\ \ \ a\ =\ 0.1228198790178831;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00045}00045\ \ \ v\ =\ 0.9913184235294912E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00046}00046\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00047}00047\ \ \ a\ =\ 0.2026890814408786;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00048}00048\ \ \ v\ =\ 0.1180207833238949E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00049}00049\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00050}00050\ \ \ a\ =\ 0.2847745156464294;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00051}00051\ \ \ v\ =\ 0.1296599602080921E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00052}00052\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00053}00053\ \ \ a\ =\ 0.3656719078978026;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00054}00054\ \ \ v\ =\ 0.1365871427428316E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00055}00055\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00056}00056\ \ \ a\ =\ 0.4428264886713469;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00057}00057\ \ \ v\ =\ 0.1402988604775325E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00058}00058\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00059}00059\ \ \ a\ =\ 0.5140619627249735;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00060}00060\ \ \ v\ =\ 0.1418645563595609E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00061}00061\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00062}00062\ \ \ a\ =\ 0.6306401219166803;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00063}00063\ \ \ v\ =\ 0.1421376741851662E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00064}00064\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00065}00065\ \ \ a\ =\ 0.6716883332022612;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00066}00066\ \ \ v\ =\ 0.1423996475490962E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00067}00067\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00068}00068\ \ \ a\ =\ 0.6979792685336881;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00069}00069\ \ \ v\ =\ 0.1431554042178567E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00070}00070\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 4,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00071}00071\ \ \ a\ =\ 0.1446865674195309;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00072}00072\ \ \ v\ =\ 0.9254401499865368E-\/03;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00073}00073\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00074}00074\ \ \ a\ =\ 0.3390263475411216;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00075}00075\ \ \ v\ =\ 0.1250239995053509E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00076}00076\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00077}00077\ \ \ a\ =\ 0.5335804651263506;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00078}00078\ \ \ v\ =\ 0.1394365843329230E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00079}00079\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 5,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00080}00080\ \ \ a\ =\ 0.6944024393349413E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00081}00081\ \ \ b\ =\ 0.2355187894242326;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00082}00082\ \ \ v\ =\ 0.1127089094671749E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00083}00083\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00084}00084\ \ \ a\ =\ 0.2269004109529460;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00085}00085\ \ \ b\ =\ 0.4102182474045730;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00086}00086\ \ \ v\ =\ 0.1345753760910670E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00087}00087\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00088}00088\ \ \ a\ =\ 0.8025574607775339E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00089}00089\ \ \ b\ =\ 0.6214302417481605;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00090}00090\ \ \ v\ =\ 0.1424957283316783E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00091}00091\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00092}00092\ \ \ a\ =\ 0.1467999527896572;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00093}00093\ \ \ b\ =\ 0.3245284345717394;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00094}00094\ \ \ v\ =\ 0.1261523341237750E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00095}00095\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00096}00096\ \ \ a\ =\ 0.1571507769824727;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00097}00097\ \ \ b\ =\ 0.5224482189696630;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00098}00098\ \ \ v\ =\ 0.1392547106052696E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00099}00099\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00100}00100\ \ \ a\ =\ 0.2365702993157246;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00101}00101\ \ \ b\ =\ 0.6017546634089558;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00102}00102\ \ \ v\ =\ 0.1418761677877656E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00103}00103\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00104}00104\ \ \ a\ =\ 0.7714815866765732E-\/01;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00105}00105\ \ \ b\ =\ 0.4346575516141163;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00106}00106\ \ \ v\ =\ 0.1338366684479554E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00107}00107\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00108}00108\ \ \ a\ =\ 0.3062936666210730;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00109}00109\ \ \ b\ =\ 0.4908826589037616;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00110}00110\ \ \ v\ =\ 0.1393700862676131E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00111}00111\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00112}00112\ \ \ a\ =\ 0.3822477379524787;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00113}00113\ \ \ b\ =\ 0.5648768149099500;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00114}00114\ \ \ v\ =\ 0.1415914757466932E-\/02;}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00115}00115\ \ \ [\ n,\ x,\ y,\ z,\ w\ ]\ =\ \mbox{\hyperlink{namespaceapprox_1_1integrate_abdbb424673e76d5ca25aaed8cfa52d2f}{gen\_oh}}\ (\ 6,\ n,\ a,\ b,\ v,\ x,\ y,\ z,\ w\ );}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00116}00116\ \ \ }
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00117}00117\ \ \ return}
+\DoxyCodeLine{\Hypertarget{ld0770_8m_source_l00118}00118\ end}
+
+\end{DoxyCode}

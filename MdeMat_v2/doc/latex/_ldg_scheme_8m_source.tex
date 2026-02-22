@@ -1,0 +1,128 @@
+\doxysection{Ldg\+Scheme.\+m}
+\hypertarget{_ldg_scheme_8m_source}{}\label{_ldg_scheme_8m_source}\index{+physics/+diffusion/LdgScheme.m@{+physics/+diffusion/LdgScheme.m}}
+\mbox{\hyperlink{_ldg_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00001}00001\ classdef\ LdgScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00002}00002\ \ \ \ \ \%\ LDGSCHEME}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00004}00004\ \ \ \ \ properties\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00005}00005\ \ \ \ \ \ \ \ \ assembly\ \%\ Diffusion\ assembly}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00006}00006\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ \%\ Diffusion\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00007}00007\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00008}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme}{00008}}\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00009}00009\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00010}00010\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a707bfc92edebcca2294be0e4be1843d7}{initialize}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ the\ scheme.}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00012}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a7b6a66b550fbf5a00583cf39bfeb9ed3}{00012}}\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.reset();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00015}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_ab336c3bfda7785927b31142d77a97bd3}{00015}}\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Local\ data}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe.setVolumeData(1);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe.setFluxData(0);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.op.setVolumeData();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.op.setFluxData();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ state.disc.x.space.project(obj.config.ic);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00025}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a707bfc92edebcca2294be0e4be1843d7}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Diffusion\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ obj.assembly\ =\ fem.assembly.DiffusionGridAssembly(\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.disc.x.fe,\ state.disc.x.mesh,\ state.disc.x.op,\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string~isempty(obj.config.bc),\ obj.config.xDiffusionFlux(1),\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.config.xDiffusionFlux(2),\ obj.config.xDiffusionBoundaryJump);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ obj.operator\ =\ obj.assembly.hessian(obj.config.diffusion);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Reset\ time\ discretization}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.reset();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.reset();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addDataset(\textcolor{stringliteral}{'DG'},\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'b'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{charliteral}{'o'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'}\});}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.hasExact}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addDataset(\textcolor{stringliteral}{'REF'},\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'r'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'}\});}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Update\ visualization\ \textcolor{keywordflow}{if}\ enabled}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.isEnabled}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(2,\ \textcolor{stringliteral}{'[M]\ Visualization.'});}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.plot(state.disc.x.space,\ state.dofs,\ obj.tDisc);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(2);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ function\ state\ =\ preStep(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PRESTEP\ Preprocess\ step.}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Set\ adaptive\ time\ step\ based\ on\ CFL\ condition.}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ state.disc.x.mesh.measure;}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.setTimeStep(h,\ obj.config.cfl);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(obj.tDisc,\ \textcolor{stringliteral}{'approx.odeint.BdfIntegrator'})}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.setCoefficients();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ function\ state\ =\ step(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Perform\ one\ time\ step\ integration.}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ step(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Solution\ state\ to\ advance}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Update\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(obj.config.bc)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ obj.config.\mbox{\hyperlink{namespacephysics_1_1diffusion}{diffusion}};}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00075}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a97b9d4a994797a7f91c986e15f4d42bf}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.xDiffusionBoundaryJump\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\ =\ @(X)\ state.disc.x.space.evaluate(X,\ state.dofs.U);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ @(t)\ obj.\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a7b6a66b550fbf5a00583cf39bfeb9ed3}{assembly}}.hessianBc(c,\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.bc,\ g,\ t);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}.update(state.dofs.U);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ obj.\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_ab336c3bfda7785927b31142d77a97bd3}{operator}};}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}.\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a6e3f1f40c701d6b5b24b7224c54f0115}{step}}(L,\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_ab9c2cbec7633e6f3dfbd012e2af9e040}{postStep}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ POSTSTEP\ Postprocess\ \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a6e3f1f40c701d6b5b24b7224c54f0115}{step}}.}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Update\ visualization\ if\ enabled}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00094}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a6e3f1f40c701d6b5b24b7224c54f0115}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.isEnabled}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}.start(2,\ '[M]\ Visualization.');}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.plot(state.disc.x.space,\ state.dofs,\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}});}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}.stop(2);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}.timeline.advance();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00102}00102\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}{finalize}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}.isEnabled}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}.start(3,\ '[M]\ Error\ Evaluation.');}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ length(varargin)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.absolute(state.disc.x.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.now);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [state,\ coarse]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.disc.x.mesh);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.relative(state.disc.x.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coarse.disc.x.space,\ coarse.dofs);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00117}\mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_ab9c2cbec7633e6f3dfbd012e2af9e040}{00117}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(3);}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.report();}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00121}00121\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_ldg_scheme_8m_source_l00122}00122\ end}
+
+\end{DoxyCode}

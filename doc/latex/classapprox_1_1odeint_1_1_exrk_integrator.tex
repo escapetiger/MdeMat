@@ -1,0 +1,264 @@
+\doxysection{approx\+::odeint\+::Exrk\+Integrator Class Reference}
+\hypertarget{classapprox_1_1odeint_1_1_exrk_integrator}{}\label{classapprox_1_1odeint_1_1_exrk_integrator}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+
+
+Explicit Runge-\/\+Kutta integrator.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk4_integrator}{approx\+::odeint\+::\+Exrk4\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator}{approx\+::odeint\+::\+Heun\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk2_integrator}{approx\+::odeint\+::\+Ssprk2\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator}{approx\+::odeint\+::\+Ssprk3\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{Exrk\+Integrator}} (Input\+Type n\+Stages, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_exrk_integrator}{Exrk\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_ace4cd49b5ffc27f5b768a4c5bf848608}{reset}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Reset the explicit RK integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862}{set\+Lhs}} (Input\+Type obj, Input\+Type i, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the mass matrix for explicit solve at stage i. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1be341c1fe9e6e7c69706d9a5820eef0}{set\+Rhs}} (Input\+Type obj, Input\+Type i, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Set the right-\/hand side vector for stage i. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}} (Input\+Type obj, Input\+Type i, Input\+Type L, Input\+Type F, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Compute stage i of the explicit RK method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_ad74e961f9ccf0ca9a97eb4ccf43e2209}{step}} (Input\+Type obj, Input\+Type L, Input\+Type F, Input\+Type S, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Advance one time step using the explicit RK method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{Ode\+Integrator}} (Input\+Type n\+Steps, Input\+Type n\+Stages, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a29e0f42884572aa6418da51a428acbbb}{reset}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Reset the integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Update the solution history with a new solution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac0d618199b0699fcf2aa0013ef8c7890}{add}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Add a new solution at the newest position of history. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96}{advance}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance the timeline to the next time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a39eca9ca59e609cad4e242390c0ce320}{set\+Time\+Step}} (Input\+Type obj, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Set time step for the integrator timeline. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab52c77a6e8ef389bfac7006e04c8d4ce}{set\+Rhs}} (Input\+Type obj, Input\+Type R, Input\+Type F, Input\+Type S)
+\begin{DoxyCompactList}\small\item\em Set right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a5492141163b4505a47788e7351373876}{stage}} (Input\+Type obj, Input\+Type i\+Stage)
+\begin{DoxyCompactList}\small\item\em Advance one stage of the integration method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac6ad5561eb9e84f540848ebc4dde8f6b}{step}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance one complete time step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1a175c53d53751632643384d9049aa6e}{A}}
+\begin{DoxyCompactList}\small\item\em Butcher tableau coefficient matrix (strictly lower triangular) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a194c44cf69ceba1034071c9c1a0a6155}{b}}
+\begin{DoxyCompactList}\small\item\em Stage weights vector for final update. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1}{c}}
+\begin{DoxyCompactList}\small\item\em Stage time coefficients vector. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}{K}}
+\begin{DoxyCompactList}\small\item\em Cell array of derivative approximations for each stage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aa137e220cfe632477cbc6b7724cd0fb2}{NSteps}}
+\begin{DoxyCompactList}\small\item\em Number of time steps required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a29d28968612078f90bd77e67ccfa223e}{NStages}}
+\begin{DoxyCompactList}\small\item\em Number of stages required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad0db421b82272d0b03dbaf8089550c51}{Timeline}}
+\begin{DoxyCompactList}\small\item\em Timeline object for time step management. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}
+\begin{DoxyCompactList}\small\item\em Cell array of solution history. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4e583324d86e15c494bc228f09ba9b10}{Lhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_abf260e466ced7ed3896e4d30e0e8df96}{Rhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side mass term(s) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a9c07cbd5925ba0b9f2eb9099eedf38ce}{Solver}}
+\begin{DoxyCompactList}\small\item\em Stage-\/specific linear solvers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{approx\+::odeint\+::\+Ode\+Integrator}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a8a39ab45e64d1ce1418925ac778a8a7d}{evaluate\+Lhs\+Mass}} (Input\+Type obj, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for left-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a7027a6cb5803fdc2a39502a6067543e9}{evaluate\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for right-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a98c737f7030604ab3da579a6934e3d29}{evaluate\+Operator}} (ignored\+Arg, Input\+Type O, Input\+Type U, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate a general operator (L, F, or S). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aafda7e9223fd5ed0a3f733bf7b2e995b}{should\+Update\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Check if Rhs mass cache should be updated. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4b2918a8135f078719c68f3e0e58351e}{set\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Update the Rhs mass operator cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad779fc8c865052aca2159e039601efd3}{get\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Retrieve mass operator from cache. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Explicit Runge-\/\+Kutta integrator. 
+
+\doxylink{classapprox_1_1odeint_1_1_exrk_integrator}{Exrk\+Integrator} implements explicit Runge-\/\+Kutta methods for solving ordinary differential equations of the form\+:
+
+\[\frac{\mathrm{d}(Mu)}{\mathrm{d}t} = Lu + F(u) + S,
+\]
+
+where $M$ is a mass operator, $L$ is a linear operator, $F(u)$ is a nonlinear operator, and $S$ is a source term. Any of these terms can be empty (indicating they vanish from the equation). When M is empty, it defaults to identity. All non-\/empty terms are treated explicitly, making this suitable for non-\/stiff problems where stability constraints are manageable.
+
+Explicit RK methods have excellent stability properties for non-\/stiff problems but may require small time steps for stability when applied to stiff systems.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{approx.\+odeint.\+Ode\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{approx.\+odeint.\+Dirk\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_fe_integrator}{approx.\+odeint.\+Fe\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_exrk_integrator_8m_source_l00030}{30}} of file \mbox{\hyperlink{_exrk_integrator_8m_source}{Exrk\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!ExrkIntegrator@{ExrkIntegrator}}
+\index{ExrkIntegrator@{ExrkIntegrator}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{ExrkIntegrator()}{ExrkIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::\+Exrk\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Stages}{, }\item[{Input\+Type}]{final}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1odeint_1_1_exrk_integrator}{Exrk\+Integrator}. 
+
+obj = Exrk\+Integrator(n\+Stages, final) creates an explicit Runge-\/\+Kutta integrator with the specified number of stages and final time. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_ace4cd49b5ffc27f5b768a4c5bf848608}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!reset@{reset}}
+\index{reset@{reset}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_ace4cd49b5ffc27f5b768a4c5bf848608} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Reset the explicit RK integrator to initial state. 
+
+obj = reset(obj) clears the derivative approximation storage and calls the parent reset method. \Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!setLhs@{setLhs}}
+\index{setLhs@{setLhs}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{setLhs()}{setLhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::set\+Lhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set the mass matrix for explicit solve at stage i. 
+
+obj = set\+Lhs(obj, i, M) sets the left-\/hand side matrix to the mass operator for stage i. For explicit methods, this is used to solve M\texorpdfstring{$\ast$}{*}K = Rhs for the derivative approximation. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a25c8c3d0c0b138c2d03d265e4bb03f94}{approx\+::odeint\+::\+Ode\+Integrator}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a1be341c1fe9e6e7c69706d9a5820eef0}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!setRhs@{setRhs}}
+\index{setRhs@{setRhs}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhs()}{setRhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a1be341c1fe9e6e7c69706d9a5820eef0} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::set\+Rhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Set the right-\/hand side vector for stage i. 
+
+obj = set\+Rhs(obj, i, M) constructs the right-\/hand side vector using mass operator and accumulated previous stages. \Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!stage@{stage}}
+\index{stage@{stage}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{stage()}{stage()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::stage (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{F}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Compute stage i of the explicit RK method. 
+
+U = stage(obj, i, L, F, S, M) computes the solution at stage i by evaluating all terms explicitly and computing the derivative approximation for use in subsequent stages. \Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_ad74e961f9ccf0ca9a97eb4ccf43e2209}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!step@{step}}
+\index{step@{step}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_ad74e961f9ccf0ca9a97eb4ccf43e2209} 
+function approx\+::odeint\+::\+Exrk\+Integrator\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{F}{, }\item[{Input\+Type}]{S}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Advance one time step using the explicit RK method. 
+
+U = step(obj, L, F, S, M) performs a complete time step by evaluating all stages explicitly and combining them according to the Butcher tableau weights. Empty terms contribute zero to all stages. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a1a175c53d53751632643384d9049aa6e}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!A@{A}}
+\index{A@{A}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a1a175c53d53751632643384d9049aa6e} 
+Property approx\+::odeint\+::\+Exrk\+Integrator\+::A}
+
+
+
+Butcher tableau coefficient matrix (strictly lower triangular) 
+
+
+
+Definition at line \mbox{\hyperlink{_exrk_integrator_8m_source_l00034}{34}} of file \mbox{\hyperlink{_exrk_integrator_8m_source}{Exrk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a194c44cf69ceba1034071c9c1a0a6155}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!b@{b}}
+\index{b@{b}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{b}{b}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a194c44cf69ceba1034071c9c1a0a6155} 
+Property approx\+::odeint\+::\+Exrk\+Integrator\+::b}
+
+
+
+Stage weights vector for final update. 
+
+
+
+Definition at line \mbox{\hyperlink{_exrk_integrator_8m_source_l00037}{37}} of file \mbox{\hyperlink{_exrk_integrator_8m_source}{Exrk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!c@{c}}
+\index{c@{c}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{c}{c}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1} 
+Property approx\+::odeint\+::\+Exrk\+Integrator\+::c}
+
+
+
+Stage time coefficients vector. 
+
+
+
+Definition at line \mbox{\hyperlink{_exrk_integrator_8m_source_l00040}{40}} of file \mbox{\hyperlink{_exrk_integrator_8m_source}{Exrk\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}\index{approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}!K@{K}}
+\index{K@{K}!approx::odeint::ExrkIntegrator@{approx::odeint::ExrkIntegrator}}
+\doxysubsubsection{\texorpdfstring{K}{K}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4} 
+Property approx\+::odeint\+::\+Exrk\+Integrator\+::K}
+
+
+
+Cell array of derivative approximations for each stage. 
+
+
+
+Definition at line \mbox{\hyperlink{_exrk_integrator_8m_source_l00043}{43}} of file \mbox{\hyperlink{_exrk_integrator_8m_source}{Exrk\+Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+odeint/\mbox{\hyperlink{_exrk_integrator_8m}{Exrk\+Integrator.\+m}}\end{DoxyCompactItemize}

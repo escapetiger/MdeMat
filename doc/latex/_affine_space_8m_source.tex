@@ -1,0 +1,95 @@
+\doxysection{Affine\+Space.\+m}
+\hypertarget{_affine_space_8m_source}{}\label{_affine_space_8m_source}\index{+approx/+space/AffineSpace.m@{+approx/+space/AffineSpace.m}}
+\mbox{\hyperlink{_affine_space_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00001}00001\ classdef\ AffineSpace\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.FunctionSpace}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1space}{00002}}\ \ \ \ \ \%\ AFFINESPACE\ Affine\ transformation\ of\ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}\ represents\ an\ affine\ transformation\ of\ a\ function}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ allowing\ \textcolor{keywordflow}{for}\ additional\ degrees\ of\ freedom\ through}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ directional\ components.\ Functions\ in\ \textcolor{keyword}{this}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ have\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ f(x)\ =\ u(x)\ +\ g(x)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$u(x)\(\backslash\)f\$\ is\ a\ function\ from\ the\ underlying\ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ and\ \(\backslash\)f\$g\(\backslash\)f\$\ is\ a\ directional\ component.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00015}00015\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space}{ScaledAffineSpace}}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00017}00017\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00018}00018\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ NDofs\ \ \ \%\ Number\ of\ degrees\ of\ freedom}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ NPoints\ \%\ Number\ of\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00021}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{00021}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a0c56b6ecb1f38f29a906496b499efc32}{NDims}}\ \%\ Number\ of\ dimensions}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00022}00022\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00023}00023\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00024}00024\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00025}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a19a604b22e34379568ec19e1660fae20}{00025}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{Element}}\ \%\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{Element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00027}00027\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00028}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a2afb7034e526704a8d4fd6514c79cec8}{00028}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}{AffineSpace}}(\mbox{\hyperlink{namespaceapprox_1_1element}{element}})}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ AFFINESPACE\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}{AffineSpace}}.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00031}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a0c56b6ecb1f38f29a906496b499efc32}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}{AffineSpace}}(\mbox{\hyperlink{namespaceapprox_1_1element}{element}})\ creates\ an\ affine\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00033}00033\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\%\ \ \ the\ specified\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ representation.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00037}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{00037}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{Element}}\ =\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}};}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ function\ n\ =\ get.NDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Returns\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element_a74d6e9186f468c4254664fc1dd88dad7}{NDofs}};}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ function\ n\ =\ get.NPoints(obj)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NPOINTS\ Returns\ the\ number\ of\ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aff78f4721e1203597101b48917993ca7}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.Element.Volume.NPoints;}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33}{eval}}(obj,\ X,\ C,\ G)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVAL\ Evaluate\ functions\ in\ the\ affine\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33}{eval}}(obj,\ X,\ C,\ G)\ evaluates\ with\ explicitly}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ separated\ points,\ coefficients,\ and\ directional\ components.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{Element}}.eval(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ U\ +\ G;}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ function\ G\ =\ direction(obj,\ Y,\ X,\ C)}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DIRECTION\ Compute\ directional\ component\ to\ reach\ target}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ values.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00074}\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a7d4389266d8425c43d56cf6e87b80a33}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a2add34da6c5954fc094b4d590f202d0c}{direction}}(obj,\ Y,\ X,\ C)\ computes\ the\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a2add34da6c5954fc094b4d590f202d0c}{direction}}\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00076}00076\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\%\ \ \ explicitly\ separated\ evaluation\ points\ and\ coefficients.}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ \{mustBeNumeric\}}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a449f86ae2a9ae9adc55d9bac396fe972}{Element}}.eval(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ Y\ -\/\ U;}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00088}00088\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_space_8m_source_l00089}00089\ end}
+
+\end{DoxyCode}

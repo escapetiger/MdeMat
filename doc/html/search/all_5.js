@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['b_0',['B',['../classphysics_1_1vlasov_1_1_dghs_scheme.html#a48cfde8ea103f55a4827502a21a739b6',1,'physics::vlasov::DghsScheme']]],
+  ['b_1',['b',['../classapprox_1_1odeint_1_1_dirk_integrator.html#ad5e6af87cd5d69de3498c22e94ca3f79',1,'approx::odeint::DirkIntegrator::b'],['../classapprox_1_1odeint_1_1_exrk_integrator.html#a194c44cf69ceba1034071c9c1a0a6155',1,'approx::odeint::ExrkIntegrator::b'],['../classcore_1_1function_1_1_linear.html#a15dbf9600a2131903d7661255b889d1c',1,'core::function::Linear::b'],['../classphysics_1_1poisson_1_1_ldg_scheme.html#a07520e692f8d845c6dda9f0875e41cc3',1,'physics::poisson::LdgScheme::b']]],
+  ['barycentrictocartesian_2',['barycentricToCartesian',['../classcore_1_1geometry_1_1_simplex.html#aa55a20d80b3bc6a1fd7573c9d6e01370',1,'core::geometry::Simplex']]],
+  ['basis_3',['Basis',['../classapprox_1_1linear_1_1_linear_approximator.html#a4c5452d59939ce653587a33977088ec8',1,'approx::linear::LinearApproximator']]],
+  ['basisname_4',['basisName',['../classcore_1_1function_1_1_compiled_interpolation_basis.html#a6f9dff5df595a4aab6e1698a524e8b0b',1,'core::function::CompiledInterpolationBasis::basisName'],['../classcore_1_1function_1_1_compiled_orthogonal_basis.html#a662a6c0721a5f1ec3510d1d9f55a4ee0',1,'core::function::CompiledOrthogonalBasis::basisName']]],
+  ['bbox_5',['BBox',['../classapprox_1_1mesh_1_1_grid.html#aa1efcca9b8e294da3bff78cee19f10d5',1,'approx::mesh::Grid::BBox'],['../classcore_1_1geometry_1_1_hyperspherical_geometry.html#ade5903e26abd4ea9b71fe3be7652c30d',1,'core::geometry::HypersphericalGeometry::BBox'],['../classcore_1_1geometry_1_1_orthotope.html#a914ecec984c9fcfccf925d75e6dee5dc',1,'core::geometry::Orthotope::BBox']]],
+  ['bctype_6',['BcType',['../classapprox_1_1assembly_1_1_finite_element_adjoint_assembly.html#a4f024dd61cc5fb0279ca667b897f270b',1,'approx::assembly::FiniteElementAdjointAssembly::BcType'],['../classapprox_1_1assembly_1_1_finite_element_semi_lagrangian_assembly.html#a3be1559428389a7c0622da4ccb493a33',1,'approx::assembly::FiniteElementSemiLagrangianAssembly::BcType'],['../classapprox_1_1assembly_1_1_finite_element_trace_assembly.html#a3febd225f1a22ec381af7ee08856de28',1,'approx::assembly::FiniteElementTraceAssembly::BcType'],['../classapprox_1_1assembly_1_1_finite_element_upwind_assembly.html#aa1270a0bb57ac4b07e1ada2b17d0563e',1,'approx::assembly::FiniteElementUpwindAssembly::BcType']]],
+  ['bdf2integrator_7',['Bdf2Integrator',['../classapprox_1_1odeint_1_1_bdf2_integrator.html',1,'approx::odeint::Bdf2Integrator'],['../classapprox_1_1odeint_1_1_bdf2_integrator.html#a0821e1276874d02dad8415d4c4073ad4',1,'approx::odeint::Bdf2Integrator::Bdf2Integrator()']]],
+  ['bdf2integrator_2em_8',['Bdf2Integrator.m',['../_bdf2_integrator_8m.html',1,'']]],
+  ['bdf3integrator_9',['Bdf3Integrator',['../classapprox_1_1odeint_1_1_bdf3_integrator.html',1,'approx::odeint::Bdf3Integrator'],['../classapprox_1_1odeint_1_1_bdf3_integrator.html#a909c94873593d85df75a6455b9a579b3',1,'approx::odeint::Bdf3Integrator::Bdf3Integrator()']]],
+  ['bdf3integrator_2em_10',['Bdf3Integrator.m',['../_bdf3_integrator_8m.html',1,'']]],
+  ['bdfintegrator_11',['BdfIntegrator',['../classapprox_1_1odeint_1_1_bdf_integrator.html',1,'approx::odeint::BdfIntegrator'],['../classapprox_1_1odeint_1_1_bdf_integrator.html#a5032c264aa12ef70fffe06df716e9ce4',1,'approx::odeint::BdfIntegrator::BdfIntegrator()']]],
+  ['bdfintegrator_2em_12',['BdfIntegrator.m',['../_bdf_integrator_8m.html',1,'']]],
+  ['be_13',['bE',['../classapprox_1_1odeint_1_1_imexrk_integrator.html#a3ebfdda6cfb820da59cc112f57523aa9',1,'approx::odeint::ImexrkIntegrator']]],
+  ['beintegrator_14',['BeIntegrator',['../classapprox_1_1odeint_1_1_be_integrator.html',1,'approx::odeint::BeIntegrator'],['../classapprox_1_1odeint_1_1_be_integrator.html#a66c33728409475792e6011be305da068',1,'approx::odeint::BeIntegrator::BeIntegrator()']]],
+  ['beintegrator_2em_15',['BeIntegrator.m',['../_be_integrator_8m.html',1,'']]],
+  ['beta_16',['beta',['../classapprox_1_1odeint_1_1_bdf_integrator.html#a01fe1fd35109ac5555e5a6f34ad50cac',1,'approx::odeint::BdfIntegrator']]],
+  ['bi_17',['bI',['../classapprox_1_1odeint_1_1_imexrk_integrator.html#acc3d1ccc985aa8a6f4f04210b48d23a1',1,'approx::odeint::ImexrkIntegrator']]],
+  ['bind_18',['bind',['../classphysics_1_1visual_1_1_tiled_plotter.html#ae2e1a49aa961526de73d6e95c9b8e0d2',1,'physics::visual::TiledPlotter']]],
+  ['block_19',['block',['../namespacecore_1_1linalg.html#aff9ecf04ad0bc6dc04858ffb64ba8c6e',1,'core::linalg']]],
+  ['block_2em_20',['block.m',['../block_8m.html',1,'']]],
+  ['boundary_21',['Boundary',['../classapprox_1_1mesh_1_1_grid.html#a3a285c929a654f847144232b66a50329',1,'approx::mesh::Grid::Boundary'],['../classapprox_1_1mesh_1_1_polytopal_mesh.html#a1e28f717ce7460b466bab29ab839982c',1,'approx::mesh::PolytopalMesh::Boundary'],['../classcore_1_1geometry_1_1_hyperball.html#a92db2c0cb938443de0255cf304069ab1',1,'core::geometry::Hyperball::Boundary']]],
+  ['bringalltofront_22',['bringAllToFront',['../classphysics_1_1visual_1_1_figure_manager.html#a739b41ec223b114c3318b7fe2b863dcc',1,'physics::visual::FigureManager']]],
+  ['bringtofront_23',['bringToFront',['../classphysics_1_1visual_1_1_figure_manager.html#aafe11f33c6c2d5323e0f9fb5231da76f',1,'physics::visual::FigureManager']]]
+];

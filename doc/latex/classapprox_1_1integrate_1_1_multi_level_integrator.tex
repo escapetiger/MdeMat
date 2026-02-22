@@ -1,0 +1,197 @@
+\doxysection{approx\+::integrate\+::Multi\+Level\+Integrator Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator}{}\label{classapprox_1_1integrate_1_1_multi_level_integrator}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+
+
+Multi-\/level integrator with Richardson extrapolation.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_a9480952f2c14bb50af389d00b30c216b}{Multi\+Level\+Integrator}} (Input\+Type rule, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{classapprox_1_1integrate_1_1_multi_level_integrator}{Multi\+Level\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_ac323d2462c6c7282b35684674103284a}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the multi-\/level integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_af75521d089663c100dd88b436333d19a}{set\+Points}} (Input\+Type obj, Input\+Type geometry, Input\+Type np)
+\begin{DoxyCompactList}\small\item\em Set up multi-\/level integration points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_ae45a14d5cc63d0376956b97e29a81bc0}{set\+Values}} (Input\+Type obj, Input\+Type func)
+\begin{DoxyCompactList}\small\item\em Evaluate function at all integration levels. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_a50b458f9c9e2944e6dd9645082a4277b}{add\+Weight\+Function}} (Input\+Type obj, Input\+Type weight\+Func)
+\begin{DoxyCompactList}\small\item\em Apply weight function to all levels. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_a51a359b09140e501316b63c08e216f0f}{integrate}} (Input\+Type obj, Input\+Type func, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Compute integral using multi-\/level extrapolation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_af51f22358863c075bf380d27c65cb149}{Integrators}}
+\begin{DoxyCompactList}\small\item\em Array of \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} objects, one per level. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_a7547ab4ca01c3e5114f8a64fa51940ef}{NLevels}}
+\begin{DoxyCompactList}\small\item\em Number of refinement levels. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_a154a7c671eabe57a79e80e337699a555}{Nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_multi_level_integrator_ab20f8aeb35fbb1ab48560aa75749b5ca}{Weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Multi-\/level integrator with Richardson extrapolation. 
+
+\doxylink{classapprox_1_1integrate_1_1_multi_level_integrator}{Multi\+Level\+Integrator} implements multi-\/level numerical integration using an array of \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} objects at different refinement levels. It supports Richardson extrapolation to achieve higher accuracy by combining results from multiple levels with known convergence rates.
+
+The class manages a collection of \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} objects, each operating at different resolutions, and provides methods for setting up multi-\/level integration points, evaluating functions at all levels, and computing extrapolated results.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integrator}{approx.\+integrate.\+Integrator} 
+
+\doxylink{classcore_1_1geometry_1_1_orthotope}{core.\+geometry.\+Orthotope} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_multi_level_integrator_8m_source_l00022}{22}} of file \mbox{\hyperlink{_multi_level_integrator_8m_source}{Multi\+Level\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_a9480952f2c14bb50af389d00b30c216b}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!MultiLevelIntegrator@{MultiLevelIntegrator}}
+\index{MultiLevelIntegrator@{MultiLevelIntegrator}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{MultiLevelIntegrator()}{MultiLevelIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_a9480952f2c14bb50af389d00b30c216b} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::\+Multi\+Level\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{rule}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Construct a \doxylink{classapprox_1_1integrate_1_1_multi_level_integrator}{Multi\+Level\+Integrator}. 
+
+obj = Multi\+Level\+Integrator(rule) creates an multi-\/level integrator.
+
+obj = \doxylink{classapprox_1_1integrate_1_1_multi_level_integrator}{Multi\+Level\+Integrator}(rule, n\+Levels=n\+Levels) creates a multi-\/level integrator with the specified number of levels. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_a50b458f9c9e2944e6dd9645082a4277b}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!addWeightFunction@{addWeightFunction}}
+\index{addWeightFunction@{addWeightFunction}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{addWeightFunction()}{addWeightFunction()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_a50b458f9c9e2944e6dd9645082a4277b} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::add\+Weight\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{weight\+Func}{}\end{DoxyParamCaption})}
+
+
+
+Apply weight function to all levels. 
+
+obj = add\+Weight\+Function(obj, weight\+Func) multiplies the integration weights by the specified weight function evaluated at the integration nodes for all levels. \Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_ac323d2462c6c7282b35684674103284a}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!copy@{copy}}
+\index{copy@{copy}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_ac323d2462c6c7282b35684674103284a} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::copy (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Create a deep copy of the multi-\/level integrator. 
+
+new\+Obj = copy(obj) creates a new \doxylink{classapprox_1_1integrate_1_1_multi_level_integrator}{Multi\+Level\+Integrator} object with the same geometry, number of levels, and integrator configurations as the original object. All integrator data including nodes, weights, and values are copied. \Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_a51a359b09140e501316b63c08e216f0f}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!integrate@{integrate}}
+\index{integrate@{integrate}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_a51a359b09140e501316b63c08e216f0f} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::integrate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{func}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Compute integral using multi-\/level extrapolation. 
+
+I = \doxylink{namespaceapprox_1_1integrate}{integrate(obj)} integrates using stored function values from all levels and applies Richardson extrapolation.
+
+I = \doxylink{namespaceapprox_1_1integrate}{integrate(obj, func)} evaluates the specified function at all integration levels and computes the extrapolated integral.
+
+I = integrate(obj, func, level\+Index=level\+Index) computes the integral using only the specified level. \Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_af75521d089663c100dd88b436333d19a}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_af75521d089663c100dd88b436333d19a} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::set\+Points (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{geometry}{, }\item[{Input\+Type}]{np}{}\end{DoxyParamCaption})}
+
+
+
+Set up multi-\/level integration points. 
+
+obj = set\+Points(obj, geometry, np) generates multi-\/level integration points using the specified number of points {\itshape np} and quadrature type {\itshape tp}. Currently supports Orthotope geometries. \Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_ae45a14d5cc63d0376956b97e29a81bc0}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!setValues@{setValues}}
+\index{setValues@{setValues}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{setValues()}{setValues()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_ae45a14d5cc63d0376956b97e29a81bc0} 
+function approx\+::integrate\+::\+Multi\+Level\+Integrator\+::set\+Values (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{func}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate function at all integration levels. 
+
+obj = set\+Values(obj, func) evaluates the specified function at the integration nodes for all levels and stores the results in each integrator\textquotesingle{}s Values property. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_af51f22358863c075bf380d27c65cb149}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!Integrators@{Integrators}}
+\index{Integrators@{Integrators}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{Integrators}{Integrators}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_af51f22358863c075bf380d27c65cb149} 
+Property approx\+::integrate\+::\+Multi\+Level\+Integrator\+::\+Integrators}
+
+
+
+Array of \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} objects, one per level. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_level_integrator_8m_source_l00026}{26}} of file \mbox{\hyperlink{_multi_level_integrator_8m_source}{Multi\+Level\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_a7547ab4ca01c3e5114f8a64fa51940ef}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!NLevels@{NLevels}}
+\index{NLevels@{NLevels}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{NLevels}{NLevels}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_a7547ab4ca01c3e5114f8a64fa51940ef} 
+Property approx\+::integrate\+::\+Multi\+Level\+Integrator\+::\+NLevels}
+
+
+
+Number of refinement levels. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_level_integrator_8m_source_l00032}{32}} of file \mbox{\hyperlink{_multi_level_integrator_8m_source}{Multi\+Level\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_a154a7c671eabe57a79e80e337699a555}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!Nodes@{Nodes}}
+\index{Nodes@{Nodes}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{Nodes}{Nodes}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_a154a7c671eabe57a79e80e337699a555} 
+Property approx\+::integrate\+::\+Multi\+Level\+Integrator\+::\+Nodes}
+
+
+
+Integration nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_level_integrator_8m_source_l00035}{35}} of file \mbox{\hyperlink{_multi_level_integrator_8m_source}{Multi\+Level\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_multi_level_integrator_ab20f8aeb35fbb1ab48560aa75749b5ca}\index{approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}!Weights@{Weights}}
+\index{Weights@{Weights}!approx::integrate::MultiLevelIntegrator@{approx::integrate::MultiLevelIntegrator}}
+\doxysubsubsection{\texorpdfstring{Weights}{Weights}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_multi_level_integrator_ab20f8aeb35fbb1ab48560aa75749b5ca} 
+Property approx\+::integrate\+::\+Multi\+Level\+Integrator\+::\+Weights}
+
+
+
+Integration weights. 
+
+
+
+Definition at line \mbox{\hyperlink{_multi_level_integrator_8m_source_l00038}{38}} of file \mbox{\hyperlink{_multi_level_integrator_8m_source}{Multi\+Level\+Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_multi_level_integrator_8m}{Multi\+Level\+Integrator.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,418 @@
+\doxysection{ex01\+\_\+prothero\+\_\+robinson.\+m}
+\hypertarget{ex01__prothero__robinson_8m_source}{}\label{ex01__prothero__robinson_8m_source}\index{+approx/+odeint/+scripts/ex01\_prothero\_robinson.m@{+approx/+odeint/+scripts/ex01\_prothero\_robinson.m}}
+\mbox{\hyperlink{ex01__prothero__robinson_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00001}00001\ \%\%\ ex01\_prothero\_robinson.m}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1odeint_1_1scripts}{00002}}\ \%\ Solve\ the\ Prothero-\/Robinson\ equation\ \textcolor{keyword}{using\ }multiple\ integrator\ types}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00004}00004\ \%\ Problem:\ du/dt\ =\ λ(u\ -\/\ φ(t))\ +\ φ\textcolor{stringliteral}{'(t)}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00005}00005\ \textcolor{stringliteral}{\%\ where\ φ(t)\ =\ exp(-\/t),\ λ\ =\ -\/100\ (stiff\ parameter)}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00006}00006\ \textcolor{stringliteral}{\%\ Exact\ solution:\ u(t)\ =\ exp(-\/t)\ when\ u(0)\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00007}00007\ \textcolor{stringliteral}{\%}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00008}00008\ \textcolor{stringliteral}{\%\ This\ is\ a\ standard\ test\ problem\ for\ stiff\ ODE\ solvers.}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00009}00009\ \textcolor{stringliteral}{\%\ Tests\ explicit,\ implicit,\ IMEX,\ and\ splitting\ integrators.}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00010}00010\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00011}00011\ \textcolor{stringliteral}{clear;\ close\ all;\ clc;}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00012}00012\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00013}00013\ \textcolor{stringliteral}{\%\%\ Problem\ Setup}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00014}00014\ \textcolor{stringliteral}{lambda\ =\ -\/100;\ \ \ \ \ \ \ \ \ \ \ \%\ Stiffness\ parameter}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00015}00015\ \textcolor{stringliteral}{phi\ =\ @(t)\ exp(-\/t);\ \ \ \ \ \ \%\ Exact\ solution}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00016}00016\ \textcolor{stringliteral}{phi\_prime\ =\ @(t)\ -\/exp(-\/t);}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00017}00017\ \textcolor{stringliteral}{u0\ =\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Initial\ condition}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00018}00018\ \textcolor{stringliteral}{final\_time\ =\ 2.0;}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00019}00019\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00020}00020\ \textcolor{stringliteral}{\%\ For\ IMEX\ methods:\ split\ into\ stiff\ linear\ and\ non-\/stiff\ parts}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00021}00021\ \textcolor{stringliteral}{L\ =\ lambda;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Stiff\ linear\ operator\ (implicit)}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00022}00022\ \textcolor{stringliteral}{F\ =\ [];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ No\ nonlinear\ term}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00023}00023\ \textcolor{stringliteral}{S\ =\ @(u,\ t)\ -\/lambda\ *\ phi(t)\ +\ phi\_prime(t);\ \ \%\ Source\ term}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00024}00024\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00025}00025\ \textcolor{stringliteral}{\%\ For\ explicit\ methods:\ combine\ everything\ into\ one\ term}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00026}00026\ \textcolor{stringliteral}{F\_explicit\ =\ @(u,\ t)\ lambda\ *\ (u\ -\/\ phi(t))\ +\ phi\_prime(t);}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00027}00027\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00028}00028\ \textcolor{stringliteral}{\%\ For\ splitting\ methods:\ decompose\ the\ equation}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00029}00029\ \textcolor{stringliteral}{\%\ du/dt\ =\ λu\ +\ (-\/λφ(t)\ +\ φ'}(t))}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00030}00030\ \%\ Split\ 1:\ du/dt\ =\ λu\ (stiff\ part\ -\/\ treat\ implicitly)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00031}00031\ \%\ Split\ 2:\ du/dt\ =\ -\/λφ(t)\ +\ φ\textcolor{stringliteral}{'(t)\ (non-\/stiff\ source\ -\/\ treat\ explicitly)}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00032}00032\ \textcolor{stringliteral}{L\_split\ =\ \{lambda,\ []\};}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00033}00033\ \textcolor{stringliteral}{F\_split\ =\ \{[],\ []\};}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00034}00034\ \textcolor{stringliteral}{S\_split\ =\ \{@(u,\ t)\ -\/lambda\ *\ phi(t),\ @(u,\ t)\ phi\_prime(t)\};}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00035}00035\ \textcolor{stringliteral}{M\_split\ =\ \{[],\ []\};}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00036}00036\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00037}00037\ \textcolor{stringliteral}{\%\ Alternative\ splitting\ for\ demonstration:}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00038}00038\ \textcolor{stringliteral}{\%\ Split\ 1:\ du/dt\ =\ λ(u\ -\/\ φ(t))}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00039}00039\ \textcolor{stringliteral}{\%\ Split\ 2:\ du/dt\ =\ φ'}(t)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00040}00040\ L\_split\_alt\ =\ \{[],\ []\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00041}00041\ F\_split\_alt\ =\ \{@(u,\ t)\ lambda\ *\ (u\ -\/\ phi(t)),\ []\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00042}00042\ S\_split\_alt\ =\ \{[],\ @(u,\ t)\ phi\_prime(t)\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00043}00043\ M\_split\_alt\ =\ \{[],\ []\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00045}00045\ \%\ Exact\ solution\ \textcolor{keywordflow}{for}\ comparison}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00046}00046\ exact\_solution\ =\ @(t)\ exp(-\/t);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00048}00048\ \%\%\ Setup\ integrators}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00049}00049\ dt\_implicit\ =\ 0.1;\ \ \ \ \ \ \%\ Larger\ step\ \textcolor{keywordflow}{for}\ implicit\ methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00050}00050\ dt\_imex\ =\ 0.05;\ \ \ \ \ \ \ \ \ \%\ Moderate\ step\ \textcolor{keywordflow}{for}\ implicit-\/\textcolor{keyword}{explicit}\ methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00051}00051\ dt\_explicit\ =\ 0.01;\ \ \ \ \ \%\ Smaller\ step\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{explicit}\ methods\ (stability)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00052}00052\ dt\_splitting\ =\ 0.01;\ \ \ \ \%\ Moderate\ step\ \textcolor{keywordflow}{for}\ splitting\ methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00054}00054\ \%\ Create\ integrators\ with\ different\ time\ steps}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00055}00055\ implicit\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00056}00056\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf2_integrator}{Bdf2Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00058}00058\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf3_integrator}{Bdf3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator}{Sdirk2Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk3_integrator}{Sdirk3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00061}00061\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk4_integrator}{Sdirk4Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_esdirk3_integrator}{Esdirk3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00063}00063\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00065}00065\ explicit\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00067}00067\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator}{HeunIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk2_integrator}{Ssprk2Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00069}00069\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator}{Ssprk3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk4_integrator}{Exrk4Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00071}00071\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00073}00073\ imex\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars111_integrator}{Ars111Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars222_integrator}{Ars222Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00076}00076\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars443_integrator}{Ars443Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00077}00077\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00079}00079\ \%\ Create\ splitting\ integrators}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00080}00080\ \%\ Lie-\/Trotter\ splitting:\ implicit\ stiff\ part\ +\ \textcolor{keyword}{explicit}\ source}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00081}00081\ factor\_integrators\_lt1\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00082}00082\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00084}00084\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00085}00085\ lie\_trotter\_1\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{LieTrotterIntegrator}}(factors=factor\_integrators\_lt1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00087}00087\ \%\ Strang\ splitting:\ implicit\ stiff\ part\ +\ \textcolor{keyword}{explicit}\ source}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00088}00088\ factor\_integrators\_st1\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00090}00090\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00091}00091\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00092}00092\ strang\_1\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{StrangIntegrator}}(factors=factor\_integrators\_st1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00094}00094\ \%\ Alternative\ Lie-\/Trotter:\ \textcolor{keyword}{explicit}\ nonlinear\ +\ \textcolor{keyword}{explicit}\ source}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00095}00095\ factor\_integrators\_lt2\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00098}00098\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00099}00099\ lie\_trotter\_2\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{LieTrotterIntegrator}}(factors=factor\_integrators\_lt2);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00101}00101\ \%\ Alternative\ Strang:\ \textcolor{keyword}{explicit}\ nonlinear\ +\ \textcolor{keyword}{explicit}\ source}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00102}00102\ factor\_integrators\_st2\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00104}00104\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00105}00105\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00106}00106\ strang\_2\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{StrangIntegrator}}(factors=factor\_integrators\_st2);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00108}00108\ splitting\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00109}00109\ \ \ \ \ lie\_trotter\_1}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00110}00110\ \ \ \ \ strang\_1}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00111}00111\ \ \ \ \ lie\_trotter\_2}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00112}00112\ \ \ \ \ strang\_2}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00113}00113\ \};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00115}00115\ \%\ Combine\ all\ integrators}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00116}00116\ all\_integrators\ =\ [implicit\_integrators;\ explicit\_integrators;\ imex\_integrators;\ splitting\_integrators];}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00117}00117\ n\_methods\ =\ length(all\_integrators);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00119}00119\ \%\ Extract\ integrator\ names\ and\ types}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00120}00120\ integrator\_names\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00121}00121\ integrator\_types\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00123}00123\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00124}00124\ \ \ \ \ \textcolor{keywordflow}{if}\ i\ <=\ length(implicit\_integrators)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ class\_name\ =\ \textcolor{keyword}{class}(all\_integrators\{i\});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ name\_parts\ =\ strsplit(class\_name,\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ base\_name\ =\ name\_parts\{end\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ strrep(base\_name,\ \textcolor{stringliteral}{'Integrator'},\ \textcolor{stringliteral}{''});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Implicit'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00130}00130\ \ \ \ \ elseif\ i\ <=\ length(implicit\_integrators)\ +\ length(explicit\_integrators)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ class\_name\ =\ \textcolor{keyword}{class}(all\_integrators\{i\});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ name\_parts\ =\ strsplit(class\_name,\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ base\_name\ =\ name\_parts\{end\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ strrep(base\_name,\ \textcolor{stringliteral}{'Integrator'},\ \textcolor{stringliteral}{''});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Explicit'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00136}00136\ \ \ \ \ elseif\ i\ <=\ length(implicit\_integrators)\ +\ length(explicit\_integrators)\ +\ length(imex\_integrators)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ class\_name\ =\ \textcolor{keyword}{class}(all\_integrators\{i\});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ name\_parts\ =\ strsplit(class\_name,\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ base\_name\ =\ name\_parts\{end\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ strrep(base\_name,\ \textcolor{stringliteral}{'Integrator'},\ \textcolor{stringliteral}{''});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'IMEX'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \%\ Splitting\ methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ splitting\_idx\ =\ i\ -\/\ length(implicit\_integrators)\ -\/\ length(explicit\_integrators)\ -\/\ length(imex\_integrators);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ splitting\_idx}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ \textcolor{stringliteral}{'LT-\/ImplEx'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Splitting'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ \textcolor{stringliteral}{'Strang-\/ImplEx'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Splitting'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ \textcolor{stringliteral}{'LT-\/ExplExpl'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Splitting'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\}\ =\ \textcolor{stringliteral}{'Strang-\/ExplExpl'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Splitting'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00159}00159\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00160}00160\ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00162}00162\ \%\%\ Solve\ with\ all\ integrators}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00163}00163\ fprintf(\textcolor{stringliteral}{'Solving\ Prothero-\/Robinson\ equation\ with\ multiple\ integrator\ types...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00164}00164\ fprintf(\textcolor{stringliteral}{'Implicit\ methods\ dt:\ \%.3f\(\backslash\)n'},\ dt\_implicit);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00165}00165\ fprintf(\textcolor{stringliteral}{'Explicit\ methods\ dt:\ \%.3f\(\backslash\)n'},\ dt\_explicit);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00166}00166\ fprintf(\textcolor{stringliteral}{'IMEX\ methods\ dt:\ \%.3f\(\backslash\)n'},\ dt\_imex);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00167}00167\ fprintf(\textcolor{stringliteral}{'Splitting\ methods\ dt:\ \%.3f\(\backslash\)n\(\backslash\)n'},\ dt\_splitting);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00169}00169\ \%\ Storage\ \textcolor{keywordflow}{for}\ solutions\ and\ time\ values}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00170}00170\ U\_solutions\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00171}00171\ t\_solutions\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00173}00173\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00174}00174\ \ \ \ \ fprintf(\textcolor{stringliteral}{'Solving\ with\ \%s\ (\%s)...\(\backslash\)n'},\ integrator\_names\{i\},\ integrator\_types\{i\});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00175}00175\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00176}00176\ \ \ \ \ integrator\ =\ all\_integrators\{i\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00177}00177\ \ \ \ \ integrator.reset();}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00178}00178\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00179}00179\ \ \ \ \ \%\ Choose\ appropriate\ time\ step\ based\ on\ method\ type}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00180}00180\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ dt\ =\ dt\_implicit;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00182}00182\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ dt\ =\ dt\_explicit;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00184}00184\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ dt\ =\ dt\_imex;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ dt\ =\ dt\_splitting;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00188}00188\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00189}00189\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00190}00190\ \ \ \ \ n\_steps\ =\ ceil(final\_time\ /\ dt);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00191}00191\ \ \ \ \ t\_values\ =\ (0:n\_steps)\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00192}00192\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00193}00193\ \ \ \ \ \%\ Initialize\ solution\ history}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00194}00194\ \ \ \ \ integrator.update(u0);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00195}00195\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00196}00196\ \ \ \ \ \%\ Storage\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{this}\ method}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00197}00197\ \ \ \ \ U\_current\_method\ =\ zeros(1,\ n\_steps\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00198}00198\ \ \ \ \ U\_current\_method(1)\ =\ u0;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00199}00199\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00200}00200\ \ \ \ \ \%\ Time\ stepping}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00201}00201\ \ \ \ \ \textcolor{keywordflow}{for}\ k\ =\ 1:n\_steps}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \%\ Set\ timeline\ \textcolor{keywordflow}{for}\ integrator}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ integrator.setTimeStep(dt=dt);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \%\ Call\ appropriate\ step\ method\ based\ on\ integrator\ type}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(L,\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ For\ \textcolor{keyword}{explicit}\ methods,\ treat\ everything\ as\ nonlinear\ term}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ t\_current\ =\ (k-\/1)\ *\ dt;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ F\_eval\ =\ F\_explicit(integrator.U0\{1\},\ t\_current);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step([],\ F\_eval,\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(L,\ [],\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ splitting\_idx\ =\ i\ -\/\ length(implicit\_integrators)\ -\/\ length(explicit\_integrators)\ -\/\ length(imex\_integrators);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ splitting\_idx}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{1,\ 2\}\ \%\ ImplicitExplicit\ splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(L\_split,\ F\_split,\ S\_split,\ M\_split);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{3,\ 4\}\ \%\ ExplicitExplicit\ splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(L\_split\_alt,\ F\_split\_alt,\ S\_split\_alt,\ M\_split\_alt);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ integrator.update(U\_new);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ integrator.advance();}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ U\_current\_method(k\ +\ 1)\ =\ U\_new;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00228}00228\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00229}00229\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00230}00230\ \ \ \ \ \%\ Store\ results}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00231}00231\ \ \ \ \ U\_solutions\{i\}\ =\ U\_current\_method;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00232}00232\ \ \ \ \ t\_solutions\{i\}\ =\ t\_values;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00233}00233\ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00235}00235\ \%\%\ Plot\ results}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00236}00236\ figure(\textcolor{stringliteral}{'Position'},\ [100,\ 100,\ 1500,\ 600]);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00238}00238\ \%\ Define\ colors\ \textcolor{keywordflow}{for}\ different\ types}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00239}00239\ colors\_implicit\ =\ lines(length(implicit\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00240}00240\ colors\_explicit\ =\ autumn(length(explicit\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00241}00241\ colors\_imex\ =\ spring(length(imex\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00242}00242\ colors\_splitting\ =\ cool(length(splitting\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00244}00244\ \%\ Solution\ comparison}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00245}00245\ subplot(1,\ 3,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00246}00246\ \%\ Plot\ exact\ solution}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00247}00247\ t\_exact\ =\ linspace(0,\ final\_time,\ 1000);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00248}00248\ U\_exact\_fine\ =\ exact\_solution(t\_exact);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00249}00249\ plot(t\_exact,\ U\_exact\_fine,\ \textcolor{stringliteral}{'k-\/'},\ \textcolor{stringliteral}{'LineWidth'},\ 3,\ \textcolor{stringliteral}{'DisplayName'},\ \textcolor{stringliteral}{'Exact'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00250}00250\ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00252}00252\ \%\ Plot\ numerical\ solutions}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00253}00253\ color\_idx\ =\ [1,\ 1,\ 1,\ 1];\ \%\ Index\ \textcolor{keywordflow}{for\ each}\ type}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00254}00254\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00255}00255\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ color\ =\ colors\_implicit(color\_idx(1),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ color\_idx(1)\ =\ color\_idx(1)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00259}00259\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ color\ =\ colors\_explicit(color\_idx(2),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{stringliteral}{'-\/-\/'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ color\_idx(2)\ =\ color\_idx(2)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00263}00263\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ color\ =\ colors\_imex(color\_idx(3),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{stringliteral}{'-\/.'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ color\_idx(3)\ =\ color\_idx(3)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00267}00267\ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ color\ =\ colors\_splitting(color\_idx(4),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{charliteral}{':'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ color\_idx(4)\ =\ color\_idx(4)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00271}00271\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00272}00272\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00273}00273\ \ \ \ \ plot(t\_solutions\{i\},\ U\_solutions\{i\},\ style,\ \textcolor{stringliteral}{'Color'},\ color,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineWidth'},\ 1.5,\ \textcolor{stringliteral}{'DisplayName'},\ [integrator\_names\{i\}\ \textcolor{stringliteral}{'\ ('}\ integrator\_types\{i\}\ \textcolor{charliteral}{')'}]);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00275}00275\ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00277}00277\ xlabel(\textcolor{stringliteral}{'Time'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00278}00278\ ylabel(\textcolor{stringliteral}{'u(t)'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00279}00279\ title(\textcolor{stringliteral}{'Prothero-\/Robinson\ Equation\ Solution'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00280}00280\ legend(\textcolor{stringliteral}{'Location'},\ \textcolor{stringliteral}{'best'},\ \textcolor{stringliteral}{'FontSize'},\ 8);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00281}00281\ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00283}00283\ \%\ Error\ comparison}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00284}00284\ subplot(1,\ 3,\ 2);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00285}00285\ color\_idx\ =\ [1,\ 1,\ 1,\ 1];\ \%\ Reset\ index}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00286}00286\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00287}00287\ \ \ \ \ \%\ Interpolate\ exact\ solution\ to\ match\ numerical\ time\ points}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00288}00288\ \ \ \ \ U\_exact\_interp\ =\ exact\_solution(t\_solutions\{i\});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00289}00289\ \ \ \ \ error\ =\ abs(U\_solutions\{i\}\ -\/\ U\_exact\_interp);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00290}00290\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00291}00291\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ color\ =\ colors\_implicit(color\_idx(1),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ color\_idx(1)\ =\ color\_idx(1)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00295}00295\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ color\ =\ colors\_explicit(color\_idx(2),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{stringliteral}{'-\/-\/'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ color\_idx(2)\ =\ color\_idx(2)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00299}00299\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ color\ =\ colors\_imex(color\_idx(3),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{stringliteral}{'-\/.'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ color\_idx(3)\ =\ color\_idx(3)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00303}00303\ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ color\ =\ colors\_splitting(color\_idx(4),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ style\ =\ \textcolor{charliteral}{':'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ color\_idx(4)\ =\ color\_idx(4)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00307}00307\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00308}00308\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00309}00309\ \ \ \ \ semilogy(t\_solutions\{i\},\ error,\ style,\ \textcolor{stringliteral}{'Color'},\ color,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'LineWidth'},\ 1.5,\ \textcolor{stringliteral}{'DisplayName'},\ [integrator\_names\{i\}\ \textcolor{stringliteral}{'\ ('}\ integrator\_types\{i\}\ \textcolor{charliteral}{')'}]);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00311}00311\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00312}00312\ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00313}00313\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00314}00314\ xlabel(\textcolor{stringliteral}{'Time'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00315}00315\ ylabel(\textcolor{stringliteral}{'Absolute\ Error'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00316}00316\ title(\textcolor{stringliteral}{'Error\ Comparison'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00317}00317\ legend(\textcolor{stringliteral}{'Location'},\ \textcolor{stringliteral}{'best'},\ \textcolor{stringliteral}{'FontSize'},\ 8);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00318}00318\ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00320}00320\ \%\ Work-\/precision\ diagram\ (error\ vs\ computational\ cost)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00321}00321\ subplot(1,\ 3,\ 3);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00322}00322\ final\_errors\ =\ zeros(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00323}00323\ computational\_costs\ =\ zeros(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00325}00325\ color\_idx\ =\ [1,\ 1,\ 1,\ 1];\ \%\ Reset\ index}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00326}00326\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00327}00327\ \ \ \ \ \%\ Compute\ \textcolor{keyword}{final}\ error}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00328}00328\ \ \ \ \ U\_exact\_final\ =\ exact\_solution(final\_time);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00329}00329\ \ \ \ \ final\_errors(i)\ =\ abs(U\_solutions\{i\}(end)\ -\/\ U\_exact\_final);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00330}00330\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00331}00331\ \ \ \ \ \%\ Estimate\ computational\ cost\ (number\ of\ function\ evaluations)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00332}00332\ \ \ \ \ n\_steps\_used\ =\ length(t\_solutions\{i\})\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00333}00333\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00334}00334\ \ \ \ \ \ \ \ \ \%\ Implicit\ methods:\ assume\ one\ linear\ solve\ per\ step/stage}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00335}00335\ \ \ \ \ \ \ \ \ computational\_costs(i)\ =\ n\_steps\_used\ *\ all\_integrators\{i\}.NStages;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00336}00336\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00337}00337\ \ \ \ \ \ \ \ \ \%\ Explicit\ methods:\ one\ function\ evaluation\ per\ stage}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00338}00338\ \ \ \ \ \ \ \ \ computational\_costs(i)\ =\ n\_steps\_used\ *\ all\_integrators\{i\}.NStages;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00339}00339\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00340}00340\ \ \ \ \ \ \ \ \ \%\ IMEX\ methods:\ mix\ of\ explicit\ and\ implicit\ evaluations}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ computational\_costs(i)\ =\ n\_steps\_used\ *\ all\_integrators\{i\}.NStages\ *\ 1.5;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00342}00342\ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00343}00343\ \ \ \ \ \ \ \ \ \%\ Splitting\ methods:\ cost\ depends\ on\ factor\ integrators}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00344}00344\ \ \ \ \ \ \ \ \ splitting\_idx\ =\ i\ -\/\ length(implicit\_integrators)\ -\/\ length(explicit\_integrators)\ -\/\ length(imex\_integrators);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00345}00345\ \ \ \ \ \ \ \ \ integrator\ =\ all\_integrators\{i\};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00346}00346\ \ \ \ \ \ \ \ \ total\_cost\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00347}00347\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:integrator.NFactors}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ factor\ =\ integrator.getFactor(j);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(factor,\ \textcolor{stringliteral}{'approx.odeint.BeIntegrator'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Implicit\ factor}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ factor\_cost\ =\ factor.NStages\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Explicit\ factor}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ factor\_cost\ =\ factor.NStages;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ total\_cost\ =\ total\_cost\ +\ factor\_cost;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00357}00357\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00358}00358\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ mod(splitting\_idx,\ 2)\ ==\ 0\ \%\ Strang\ methods\ (even\ indices)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ computational\_costs(i)\ =\ n\_steps\_used\ *\ total\_cost\ *\ 1.5;\ \%\ More\ sub-\/steps}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00360}00360\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Lie-\/Trotter\ methods\ (odd\ indices)}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ computational\_costs(i)\ =\ n\_steps\_used\ *\ total\_cost;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00362}00362\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00363}00363\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00364}00364\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00365}00365\ \ \ \ \ \%\ Plot\ point}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00366}00366\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Implicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00367}00367\ \ \ \ \ \ \ \ \ color\ =\ colors\_implicit(color\_idx(1),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00368}00368\ \ \ \ \ \ \ \ \ marker\ =\ \textcolor{charliteral}{'o'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00369}00369\ \ \ \ \ \ \ \ \ color\_idx(1)\ =\ color\_idx(1)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00370}00370\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00371}00371\ \ \ \ \ \ \ \ \ color\ =\ colors\_explicit(color\_idx(2),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00372}00372\ \ \ \ \ \ \ \ \ marker\ =\ \textcolor{charliteral}{'s'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00373}00373\ \ \ \ \ \ \ \ \ color\_idx(2)\ =\ color\_idx(2)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00374}00374\ \ \ \ \ elseif\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'IMEX'})}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ color\ =\ colors\_imex(color\_idx(3),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00376}00376\ \ \ \ \ \ \ \ \ marker\ =\ \textcolor{charliteral}{'\string^'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00377}00377\ \ \ \ \ \ \ \ \ color\_idx(3)\ =\ color\_idx(3)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00378}00378\ \ \ \ \ \textcolor{keywordflow}{else}\ \%\ Splitting}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00379}00379\ \ \ \ \ \ \ \ \ color\ =\ colors\_splitting(color\_idx(4),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00380}00380\ \ \ \ \ \ \ \ \ marker\ =\ \textcolor{charliteral}{'d'};}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00381}00381\ \ \ \ \ \ \ \ \ color\_idx(4)\ =\ color\_idx(4)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00382}00382\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00383}00383\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00384}00384\ \ \ \ \ loglog(computational\_costs(i),\ final\_errors(i),\ marker,\ \textcolor{stringliteral}{'Color'},\ color,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00385}00385\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'MarkerSize'},\ 8,\ \textcolor{stringliteral}{'MarkerFaceColor'},\ color,\ \textcolor{stringliteral}{'LineWidth'},\ 1.5,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00386}00386\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'DisplayName'},\ [integrator\_names\{i\}\ \textcolor{stringliteral}{'\ ('}\ integrator\_types\{i\}\ \textcolor{charliteral}{')'}]);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00387}00387\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00388}00388\ end}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00390}00390\ xlabel(\textcolor{stringliteral}{'Computational\ Cost\ (Function\ Evaluations)'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00391}00391\ ylabel(\textcolor{stringliteral}{'Final\ Error'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00392}00392\ title(\textcolor{stringliteral}{'Work-\/Precision\ Diagram'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00393}00393\ legend(\textcolor{stringliteral}{'Location'},\ \textcolor{stringliteral}{'best'},\ \textcolor{stringliteral}{'FontSize'},\ 8);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00394}00394\ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00396}00396\ \%\%\ Error\ analysis}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00397}00397\ fprintf(\textcolor{stringliteral}{'\(\backslash\)n===\ ERROR\ ANALYSIS\ ===\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00398}00398\ fprintf(\textcolor{stringliteral}{'Results\ at\ t\ =\ \%.1f:\(\backslash\)n'},\ final\_time);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00399}00399\ fprintf(\textcolor{stringliteral}{'Exact\ solution:\ \%.6f\(\backslash\)n\(\backslash\)n'},\ exact\_solution(final\_time));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00400}00400\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00401}00401\ fprintf(\textcolor{stringliteral}{'\%-\/15s\ |\ \%-\/8s\ |\ \%-\/12s\ |\ \%-\/12s\ |\ \%-\/8s\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00402}00402\ \ \ \ \ \textcolor{stringliteral}{'Method'},\ \textcolor{stringliteral}{'Type'},\ \textcolor{stringliteral}{'Final\ Value'},\ \textcolor{stringliteral}{'Error'},\ \textcolor{stringliteral}{'Steps'});}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00403}00403\ fprintf(\textcolor{stringliteral}{'\%s\(\backslash\)n'},\ repmat(\textcolor{charliteral}{'-\/'},\ 1,\ 70));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00405}00405\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00406}00406\ \ \ \ \ final\_value\ =\ U\_solutions\{i\}(end);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00407}00407\ \ \ \ \ final\_error\ =\ abs(final\_value\ -\/\ exact\_solution(final\_time));}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00408}00408\ \ \ \ \ n\_steps\_used\ =\ length(t\_solutions\{i\})\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00409}00409\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00410}00410\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\%-\/15s\ |\ \%-\/8s\ |\ \%12.6f\ |\ \%12.2e\ |\ \%8d\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00411}00411\ \ \ \ \ \ \ \ \ integrator\_names\{i\},\ integrator\_types\{i\},\ final\_value,\ final\_error,\ n\_steps\_used);}
+\DoxyCodeLine{\Hypertarget{ex01__prothero__robinson_8m_source_l00412}00412\ end}
+
+\end{DoxyCode}

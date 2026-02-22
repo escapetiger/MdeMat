@@ -1,0 +1,82 @@
+\doxysection{approx\+::element\+::C0\+Orthotope\+Element Class Reference}
+\hypertarget{classapprox_1_1element_1_1_c0_orthotope_element}{}\label{classapprox_1_1element_1_1_c0_orthotope_element}\index{approx::element::C0OrthotopeElement@{approx::element::C0OrthotopeElement}}
+
+
+C0 element defined on orthotope domains.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{approx\+::element\+::\+C0\+Element}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_orthotope_element_a2d2076eca7f791715620151aa1622cb6}{C0\+Orthotope\+Element}} (Input\+Type bbox, Input\+Type basis\+Order, Input\+Type basis\+Type, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Create a $C^0$ element on the orthotope. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{approx\+::element\+::\+C0\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a105e1fa25203c19209f14fbce09be011}{C0\+Element}} (Input\+Type geometry, Input\+Type approximator, Input\+Type integrator)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a73c934a93daec7d37b9ec338308d1f6a}{Element}} (Input\+Type geometry, Input\+Type approximator)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element}{Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a4765a526a30fc06bae8b262a414a3e60}{eval}} (Input\+Type obj, Input\+Type X, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Evaluate a function over the element. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a550c4b29ead9644b43af193e7e1c56b8}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type C, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Differentiate a function over the element. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a64f0a6d30faab544f48cf070ceddeefa}{fit}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Fit data over the element. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a42cc85b1df36e4adaf7fb34824fccb3c}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data over the element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{approx\+::element\+::\+C0\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a904197f82efb4666eb85087181ec4f53}{Type}} = \textquotesingle{}c0\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1element_1_1_element}{Element} type identifier. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_aefccb33d3ec68c96ccf06bd10ddb8278}{Volume}}
+\begin{DoxyCompactList}\small\item\em Volume integrator (Integrator) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a079c42e244e7592a188181fdd5eea250}{Geometry}}
+\begin{DoxyCompactList}\small\item\em Geometry object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_ab7dc8b540201a2445b8e5b5fa0605ea7}{Approximator}}
+\begin{DoxyCompactList}\small\item\em Linear\+Approximator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a6e23907a17cf10f2ba8410f99d97a17a}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a74d6e9186f468c4254664fc1dd88dad7}{NDofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+C0 element defined on orthotope domains. 
+
+\doxylink{classapprox_1_1element_1_1_c0_orthotope_element}{C0\+Orthotope\+Element} extends \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element} for orthotope geometries with various basis function types and reduction schemes. The element supports 1D (interval), 2D (rectangle), and 3D (cuboid) domains with orthogonal basis functions. 
+
+Definition at line \mbox{\hyperlink{_c0_orthotope_element_8m_source_l00013}{13}} of file \mbox{\hyperlink{_c0_orthotope_element_8m_source}{C0\+Orthotope\+Element.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_c0_orthotope_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_orthotope_element_a2d2076eca7f791715620151aa1622cb6}\index{approx::element::C0OrthotopeElement@{approx::element::C0OrthotopeElement}!C0OrthotopeElement@{C0OrthotopeElement}}
+\index{C0OrthotopeElement@{C0OrthotopeElement}!approx::element::C0OrthotopeElement@{approx::element::C0OrthotopeElement}}
+\doxysubsubsection{\texorpdfstring{C0OrthotopeElement()}{C0OrthotopeElement()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_orthotope_element_a2d2076eca7f791715620151aa1622cb6} 
+function approx\+::element\+::\+C0\+Orthotope\+Element\+::\+C0\+Orthotope\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{basis\+Order}{, }\item[{Input\+Type}]{basis\+Type}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Create a $C^0$ element on the orthotope. 
+
+obj = C0\+Orthotope\+Element(n\+Dims, bbox, basis\+Order, basis\+Type) creates a $C^0$ element on the orthotope with specified basis configuration. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_c0_orthotope_element_8m}{C0\+Orthotope\+Element.\+m}}\end{DoxyCompactItemize}

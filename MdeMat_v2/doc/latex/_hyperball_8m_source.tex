@@ -1,0 +1,169 @@
+\doxysection{Hyperball.\+m}
+\hypertarget{_hyperball_8m_source}{}\label{_hyperball_8m_source}\index{+core/+geometry/Hyperball.m@{+core/+geometry/Hyperball.m}}
+\mbox{\hyperlink{_hyperball_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00001}00001\ classdef\ Hyperball\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{HypersphericalGeometry}}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00002}00002\ \ \ \ \ \%\ HYPERBALL\ Geometry\ \textcolor{keywordflow}{for}\ n-\/ball\ domains.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Hyperball\ represents\ a\ generalized\ geometric\ domain\ that\ extends}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ the\ \textcolor{keyword}{concept\ }of\ filled\ circles\ and\ solid\ spheres\ to\ arbitrary}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ dimensions.\ It\ represents\ the\ region\ enclosed\ by\ an}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f\$(n-\/1)\(\backslash\)f\$-\/dimensional\ sphere\ in\ n-\/dimensional\ Euclidean\ space.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ Dimensional\ representations:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ -\/\ 1-\/ball:\ A\ line\ segment}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ -\/\ 2-\/ball:\ A\ disk\ (filled\ circle)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ 3-\/ball:\ A\ solid\ sphere}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ n-\/ball:\ A\ solid\ region\ in\ n-\/dimensional\ space}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00014}00014\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \%\ Create\ a\ 2-\/ball\ (disk)\ with\ radius\ 3\ centered\ at\ [1,2]}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ ball\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball}{Hyperball}}([1,2],\ 3);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ area\ =\ ball.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ac9108c998c2f0d025be0cb8d851c7349}{magnitude}}();\ \ \%\ Returns\ pi*3\string^2\ (disk\ area)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00018}00018\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \%\ Create\ a\ unit\ 3-\/ball\ centered\ at\ origin}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ ball3D\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball}{Hyperball}}(3);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00022}00022\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{HypersphericalGeometry}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00025}00025\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ boundary\ \%\ Boundary\ of\ the\ hyperball}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00027}00027\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00029}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball}{00029}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}(varargin)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ HYPERBALL\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00033}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}(\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{nDims}})\ creates\ a\ unit\ hyperball}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ (n-\/dimensional\ solid\ ball)\ centered\ at\ the\ origin\ with}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}\ 1.\ The\ dimension\ of\ the\ ball\ is\ specified\ by\ \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{nDims}}.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}(\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_aa5fc8d66578ec45f48e9ca14c72ab7fd}{centroid}},\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}})\ creates\ a\ hyperball\ with}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ center\ point\ and\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}.\ The\ dimension\ is}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ determined\ by\ the\ length\ of\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_aa5fc8d66578ec45f48e9ca14c72ab7fd}{centroid}}\ vector.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{nDims}}\ -\/\ Dimension\ of\ the\ n-\/ball}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_aa5fc8d66578ec45f48e9ca14c72ab7fd}{centroid}}\ -\/\ Centeroid\ of\ the\ n-\/ball\ (vector)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}\ -\/\ Radius\ of\ the\ n-\/ball\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ nargin}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{nDims}}\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(nDims\ >=\ 1,\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Ball\ dimension\ must\ be\ a\ positive\ integer.'});}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00056}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{nDims}}\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centroid\ =\ zeros(1,\ nDims);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ radius\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [centroid,\ radius]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry}{HypersphericalGeometry}}(centroid,\ radius);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ m\ =\ magnitude(obj)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MAGNITUDE\ Returns\ the\ volume\ of\ the\ hyperball.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ =\ magnitude(obj)\ computes\ the\ n-\/dimensional\ volume\ of\ the}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ hyperball\ \textcolor{keyword}{using\ }the\ general\ formula\ \textcolor{keywordflow}{for}\ hyperballs.\ Special}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ cases\ are\ optimized\ \textcolor{keywordflow}{for}\ common\ dimensions\ (1D,\ 2D,\ 3D)\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computational\ efficiency\ and\ accuracy.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Hyperball\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ -\/\ Volume\ of\ the\ hyperball}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ obj.radius;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ d}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ 2\ *\ r;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ pi\ *\ r\string^2;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00087}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ac9108c998c2f0d025be0cb8d851c7349}{00087}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ 4\ /\ 3\ *\ pi\ *\ r\string^3;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ pi\string^(d\ /\ 2)\ /\ gamma(d/2+1)\ *\ r\string^d;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ TF\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a47e6afc742dc051f898cd4ac0d2c1142}{isInside}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ISINSIDE\ Tests\ \textcolor{keywordflow}{if}\ points\ are\ inside\ the\ hyperball.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a47e6afc742dc051f898cd4ac0d2c1142}{isInside}}(obj,\ X)\ determines\ whether\ points\ lie}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ strictly\ within\ the\ interior\ of\ the\ hyperball,\ excluding}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}\ surface.\ Points\ are\ inside\ \textcolor{keywordflow}{if}\ their\ distance}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ the\ center\ is\ strictly\ less\ than\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (matrix)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ -\/\ True\ \textcolor{keywordflow}{if}\ the\ point\ is\ inside\ the\ hyperball}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(X);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(n(1)\ ==\ d,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Point\ dimension\ must\ match\ geometry\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ obj.radius;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ obj.centroid(:);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ sum((X\ -\/\ c).\string^2,\ 1)\ <\ r\string^2;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00117}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a47e6afc742dc051f898cd4ac0d2c1142}{00117}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ TF\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a94178eae9f7cca420c05a0de189d45b1}{isOnBoundary}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ISONBOUNDARY\ Tests\ \textcolor{keywordflow}{if}\ points\ are\ on\ the\ hyperball\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a94178eae9f7cca420c05a0de189d45b1}{isOnBoundary}}(obj,\ X)\ determines\ whether\ points\ lie}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ exactly\ on\ the\ surface\ of\ the\ hyperball\ (the\ corresponding}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ hypersphere).\ Points\ are\ on\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}\ \textcolor{keywordflow}{if}\ their\ distance}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ the\ center\ equals\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}\ within\ numerical}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tolerance.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_aa615891aaa08c637bb24c9794111d16c}{Hyperball}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (matrix)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ -\/\ True\ \textcolor{keywordflow}{if}\ the\ point\ is\ on\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(X);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(n(1)\ ==\ d,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Point\ dimension\ must\ match\ geometry\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ obj.radius;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ obj.centroid(:);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ sqrt(eps);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ abs(sum((X\ -\/\ c).\string^2,\ 1)-\/r\string^2)\ <=\ tol;}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00144}\mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_a94178eae9f7cca420c05a0de189d45b1}{00144}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ sphere\ =\ get.boundary(obj)}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.BOUNDARY\ Returns\ the\ surface\ of\ the\ hyperball.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sphere\ =\ get.boundary(obj)\ returns\ the\ corresponding}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}\ \textcolor{keywordtype}{object}\ that\ represents\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}\ surface\ of}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{this}\ hyperball.\ The\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}\ sphere\ has\ the\ same\ center\ and}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperspherical_geometry_a35c949ee783fda7702c3733940f5916c}{radius}}\ as\ the\ hyperball.}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ NULL}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sphere\ -\/\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}\ \textcolor{keywordtype}{object}\ representing\ the\ \mbox{\hyperlink{classcore_1_1geometry_1_1_hyperball_ae27f4a3fc2758febd96d02e5c2f6e8ae}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ sphere\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}(obj.centroid,\ obj.radius);}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00162}00162\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_hyperball_8m_source_l00163}00163\ end}
+
+\end{DoxyCode}

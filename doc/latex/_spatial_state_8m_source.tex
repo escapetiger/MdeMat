@@ -1,0 +1,131 @@
+\doxysection{Spatial\+State.\+m}
+\hypertarget{_spatial_state_8m_source}{}\label{_spatial_state_8m_source}\index{+physics/+state/SpatialState.m@{+physics/+state/SpatialState.m}}
+\mbox{\hyperlink{_spatial_state_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00001}00001\ classdef\ SpatialState\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00002}00002\ \ \ \ \ \%\ SPATIALSTATE\ State\ \textcolor{keyword}{class\ }with\ spatial\ discretization.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SpatialState\ extends\ State\ by\ adding\ spatial\ discretization}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ information\ \textcolor{keywordflow}{for}\ spatial\ partial\ differential\ equations.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00007}00007\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}},\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_kinetic_state}{KineticState}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00010}00010\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00011}00011\ \ \ \ \ \ \ \ \ XDisc\ \ \ \%\ Spatial\ discretization}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00012}00012\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00013}00013\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00014}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{00014}}\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_aaf4248ee5f3dae3d783ae470ce7543de}{nXDims}}\ \%\ Number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00016}00016\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00018}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a811eb77cf3f91646a947327655b4f7e1}{00018}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{SpatialState}}(xDisc)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPATIALSTATE\ Construct\ an\ instance\ of\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{SpatialState}}.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{SpatialState}}(xDisc)\ creates\ a\ spatial\ solution\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{object}\ with\ the\ specified\ spatial\ discretization\ @a\ xDisc.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00024}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_aaf4248ee5f3dae3d783ae470ce7543de}{00024}}\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ xDisc\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ obj.XDisc\ =\ xDisc;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nXDims(obj)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.nXDims\ Get\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.XDisc.NDims;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00037}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{00037}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ function\ newObj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a15ed1540ba9881bd96deec569cb420c4}{refine}}(obj,\ nLevels)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ REFINE\ Create\ refined\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a15ed1540ba9881bd96deec569cb420c4}{refine}}(obj,\ nLevels)\ creates\ a\ refined\ spatial}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ with\ @a\ nLevels\ refinement\ levels.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nLevels\ \{mustBeNonnegative,\ mustBeInteger\}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ newXDisc\ =\ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a811eb77cf3f91646a947327655b4f7e1}{XDisc}}.refine(nLevels);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}(newXDisc);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ obj\ =\ report(obj)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ REPORT\ Generate\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ information\ report.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ report(obj)\ displays\ the\ names\ of\ degrees\ of\ freedom}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00058}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a15ed1540ba9881bd96deec569cb420c4}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ coefficients,\ plus\ mesh\ resolution\ information.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a7a22190764aec7832602b6fa899570ce}{report}}@\mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_state}{State}}(obj);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[R]\ Mesh\ Resolution:\ \%d\ elements\(\backslash\)n'},\ obj.XDisc.Mesh.NElements);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a981d270453fdb83399d1fe125dce3149}{save}}(obj,\ filename)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SAVE\ Save\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ to\ file.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a981d270453fdb83399d1fe125dce3149}{save}}(obj,\ filename)\ saves\ the\ complete\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ including\ discretization\ data\ to\ a\ MAT\ file\ with\ the}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ @a\ filename.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00076}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a7a22190764aec7832602b6fa899570ce}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ [dirPath,\ \string~,\ \string~]\ =\ fileparts(filename);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(dirPath)\ \&\&\ \string~exist(dirPath,\ \textcolor{stringliteral}{'dir'})}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mkdir(dirPath);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('[M]\ Created\ directory:\ \%s\(\backslash\)n',\ dirPath);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.dofs\ =\ obj.Dofs;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.coefs\ =\ obj.Coefs;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.history\ =\ obj.History;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.xDisc\ =\ obj.XDisc;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.className\ =\ class(obj);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ save(filename,\ '\mbox{\hyperlink{namespacephysics_1_1state}{state}}',\ '-\/v7.3');}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00095}\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a981d270453fdb83399d1fe125dce3149}{00095}}\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('[M]\ Spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ saved\ to:\ \%s\(\backslash\)n',\ filename);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00097}00097\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00099}00099\ \ \ \ \ methods\ (Static)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a9fca5a4423d28bee0c30233c2804ee91}{load}}(filename)}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOAD\ Load\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ from\ file.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{SpatialState}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a9fca5a4423d28bee0c30233c2804ee91}{load}}(filename)\ loads\ a\ spatial\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{object}\ from\ the\ specified\ MAT\ file\ and\ returns\ a\ new}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state_a653624f7218fe7c6d88059c88ada171a}{SpatialState}}\ instance.}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ arguments}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filename\ \{mustBeTextScalar\}}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(exist(filename,\ \textcolor{stringliteral}{'file'})\ ==\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'File\ \%s\ does\ not\ exist'},\ filename);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacephysics_1_1state}{state}}\ =\ load(filename).state;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1state}{state}}.\mbox{\hyperlink{classphysics_1_1state_1_1_spatial_state}{SpatialState}}(\mbox{\hyperlink{namespacephysics_1_1state}{state}}.xDisc);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1state_1_1_state_ad362dfc19120942ce87d909cbe35b52c}{Dofs}}\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.dofs;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ obj.Coefs\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.coefs;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ obj.History\ =\ \mbox{\hyperlink{namespacephysics_1_1state}{state}}.history;}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'[M]\ Spatial\ state\ loaded\ from:\ \%s\(\backslash\)n'},\ filename);}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00124}00124\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spatial_state_8m_source_l00125}00125\ end}
+
+\end{DoxyCode}

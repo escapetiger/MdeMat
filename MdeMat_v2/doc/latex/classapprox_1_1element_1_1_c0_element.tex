@@ -1,0 +1,165 @@
+\doxysection{approx\+::element\+::C0\+Element Class Reference}
+\hypertarget{classapprox_1_1element_1_1_c0_element}{}\label{classapprox_1_1element_1_1_c0_element}\index{approx::element::C0Element@{approx::element::C0Element}}
+
+
+Element-\/level interior-\/continuous function.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element}{approx\+::element\+::\+L2\+Element}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a4a78dc4d44373cf575b33b61d3541a5f}{C0\+Element}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}, Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}, Input\+Type integrator)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a51bdbc5dece2cc14fcefbfaf5096e07a}{set\+Volume\+Data}} (Input\+Type obj, Input\+Type k)
+\begin{DoxyCompactList}\small\item\em Set function data for volume integrals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_afae4d7173f5e658eee37e7ca51d564f2}{Element}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}, Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element}{Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a1da7e04ed31549bf3777e3e900d73d53}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate a function over the element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_ae3d1a9fd022d8bf4b2a4e070d315644c}{volume\+Data}}
+\begin{DoxyCompactList}\small\item\em Function data for volume integrals (\doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}
+\begin{DoxyCompactList}\small\item\em Geometry object defining the element domain. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}
+\begin{DoxyCompactList}\small\item\em Function space projector for basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_ab295899409d2ba72ce1b33a941291256}{outer\+Normals}}
+\begin{DoxyCompactList}\small\item\em Outer normal vectors at geometry boundaries. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Element-\/level interior-\/continuous function. 
+
+\doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element} implements an element-\/level function that is continuous across element interior and supports volume integration. This class extends the base \doxylink{classapprox_1_1element_1_1_element}{Element} class by adding volume integration capabilities through pre-\/computed function data at quadrature points.
+
+The class manages function evaluations and derivatives at volume integration points, enabling efficient assembly of finite element matrices and vectors. It is designed for conforming finite element methods where continuity across element boundaries is enforced.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ C0\ element\ with\ quadrature}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}\ =\ core.geometry.Orthotope.unit(2);}
+\DoxyCodeLine{basis\ =\ approx.basis.LagrangeBasis(2);}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}\ =\ approx.project.NodalProjector(basis);}
+\DoxyCodeLine{integrator\ =\ approx.integrate.GaussLegendre(3);}
+\DoxyCodeLine{element\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_a4a78dc4d44373cf575b33b61d3541a5f}{C0Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ integrator);}
+\DoxyCodeLine{\%\ Set\ up\ function\ data\ \textcolor{keywordflow}{for}\ mass\ matrix\ assembly}
+\DoxyCodeLine{element.setVolumeData(0);\ \ \%\ Function\ values\ only}
+\DoxyCodeLine{\%\ Set\ up\ function\ data\ \textcolor{keywordflow}{for}\ stiffness\ matrix\ assembly}
+\DoxyCodeLine{element.setVolumeData(1);\ \ \%\ Include\ first\ derivatives}
+\DoxyCodeLine{\%\ Access\ pre-\/computed\ data}
+\DoxyCodeLine{values\ =\ element.volumeData.values;}
+\DoxyCodeLine{weights\ =\ element.volumeData.weights;}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1element_1_1_element}{approx.\+element.\+Element} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element}{approx.\+element.\+L2\+Element} 
+
+\doxylink{classapprox_1_1element_1_1_element_function}{approx.\+element.\+Element\+Function} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_c0_element_8m_source_l00039}{39}} of file \mbox{\hyperlink{_c0_element_8m_source}{C0\+Element.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_a4a78dc4d44373cf575b33b61d3541a5f}\index{approx::element::C0Element@{approx::element::C0Element}!C0Element@{C0Element}}
+\index{C0Element@{C0Element}!approx::element::C0Element@{approx::element::C0Element}}
+\doxysubsubsection{\texorpdfstring{C0Element()}{C0Element()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_a4a78dc4d44373cf575b33b61d3541a5f} 
+function approx\+::element\+::\+C0\+Element\+::\+C0\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{geometry}{, }\item[{Input\+Type}]{projector}{, }\item[{Input\+Type}]{integrator}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element}. 
+
+obj = C0\+Element(geometry, projector, integrator) creates a continuous element with the specified geometry, projector, and integrator for volume computations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em geometry} & -\/ Geometry object defining the element domain \\
+\hline
+{\em projector} & -\/ Galerkin\+Projector object for basis functions \\
+\hline
+{\em integrator} & -\/ Integrator object for volume quadrature \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_a51bdbc5dece2cc14fcefbfaf5096e07a}\index{approx::element::C0Element@{approx::element::C0Element}!setVolumeData@{setVolumeData}}
+\index{setVolumeData@{setVolumeData}!approx::element::C0Element@{approx::element::C0Element}}
+\doxysubsubsection{\texorpdfstring{setVolumeData()}{setVolumeData()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_a51bdbc5dece2cc14fcefbfaf5096e07a} 
+function approx\+::element\+::\+C0\+Element\+::set\+Volume\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{k}{}\end{DoxyParamCaption})}
+
+
+
+Set function data for volume integrals. 
+
+obj = set\+Volume\+Data(obj, k) computes and stores function values and derivatives up to order {\itshape k} at integration points for volume integral computations. This method evaluates the basis functions and their derivatives at quadrature points, enabling efficient matrix assembly.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element} object \\
+\hline
+{\em k} & -\/ Maximum derivative order (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_c0_element}{C0\+Element} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_c0_element_ae3d1a9fd022d8bf4b2a4e070d315644c}\index{approx::element::C0Element@{approx::element::C0Element}!volumeData@{volumeData}}
+\index{volumeData@{volumeData}!approx::element::C0Element@{approx::element::C0Element}}
+\doxysubsubsection{\texorpdfstring{volumeData}{volumeData}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_c0_element_ae3d1a9fd022d8bf4b2a4e070d315644c} 
+Property approx\+::element\+::\+C0\+Element\+::volume\+Data}
+
+
+
+Function data for volume integrals (\doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function}) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_element_8m_source_l00043}{43}} of file \mbox{\hyperlink{_c0_element_8m_source}{C0\+Element.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_c0_element_8m}{C0\+Element.\+m}}\end{DoxyCompactItemize}

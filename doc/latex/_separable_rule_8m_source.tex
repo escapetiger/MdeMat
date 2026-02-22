@@ -1,0 +1,168 @@
+\doxysection{Separable\+Rule.\+m}
+\hypertarget{_separable_rule_8m_source}{}\label{_separable_rule_8m_source}\index{+approx/+integrate/SeparableRule.m@{+approx/+integrate/SeparableRule.m}}
+\mbox{\hyperlink{_separable_rule_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00001}00001\ classdef\ SeparableRule\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_separable}{Separable}}\ \&\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00002}00002\ \ \ \ \ \%\ SEPARABLERULE\ Separable\ multidimensional\ integration\ rule.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SeparableRule\ creates\ multidimensional\ integration\ rules\ by\ taking}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ tensor\ products\ of\ one-\/dimensional\ rules.\ This\ approach\ is}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ efficient\ \textcolor{keywordflow}{for}\ integrating\ functions\ that\ can\ be\ separated\ into}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ products\ of\ univariate\ functions\ or\ \textcolor{keywordflow}{for}\ rectangular\ integration}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ domains.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00010}00010\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \%\ Create\ a\ 2D\ separable\ rule\ from\ two\ Gauss-\/Legendre\ rules}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ rule1D\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{GaussLegendreRule}}();}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ rule2D\ =\ SeparableRule(\{rule1D,\ rule1D\});}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \%\ Generate\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ [X,\ w]\ =\ rule2D.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule_a42bd157788f881ff8d0cea3dfbfd4e17}{generate}}(\{5\},\ \{5\});}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \%\ Use\ \textcolor{keyword}{static}\ methods\ \textcolor{keywordflow}{for}\ common\ rules}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ gaussRule3D\ =\ SeparableRule.gaussLegendre(3);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00021}00021\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ The\ separable\ rule\ constructs\ multidimensional\ quadrature\ by}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ taking\ tensor\ products\ of\ univariate\ rules.\ This\ is\ most\ efficient}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ functions\ that\ exhibit\ separability\ or\ low-\/rank\ structure.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00025}00025\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00026}00026\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.SeparableObject,\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}},}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{GaussLegendreRule}}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00030}00030\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ SeparableRule(rules)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SEPARABLERULE\ Constructor\ \textcolor{keywordflow}{for}\ SeparableRule.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_a4ef876b27fdd3429c7dc72a7e43cd19f}{SeparableRule}}()\ creates\ an\ empty\ separable\ rule.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_a4ef876b27fdd3429c7dc72a7e43cd19f}{SeparableRule}}(rules)\ creates\ a\ separable\ rule\ from}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ cell\ array\ of\ univariate\ integration\ rules.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ rules\ -\/\ Cell\ array\ of\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}{IntegrationRule}}\ objects\ (optional)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_a4ef876b27fdd3429c7dc72a7e43cd19f}{SeparableRule}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cls\ =\ \{\textcolor{stringliteral}{'approx.integrate.IntegrationRule'}\};}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\mbox{\hyperlink{namespacecore}{core}}.validate.isAllClass(rules,\ cls),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidFactor'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Factors\ must\ be\ one\ of\ \{\%s\}.'},\ strjoin(cls,\ \textcolor{stringliteral}{',\ '}));}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00052}\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_a4ef876b27fdd3429c7dc72a7e43cd19f}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ >\ 0\ \&\&\ \string~isempty(rules)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(rules)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}}\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}}\ +\ rules\{i\}.nDims;}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_separable}{Separable}}(rules);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}}(nDims);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ function\ [X,\ w]\ =\ generate(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Generate\ separable\ integration\ rule\ nodes\ and}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ weights.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [X,\ w]\ =\ generate(obj,\ varargin)\ generates\ multidimensional}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ nodes\ and\ weights\ and\ takes\ tensor\ products\ of}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ constituent\ univariate\ rules.}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{SeparableRule}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Cell\ array\ of\ arguments\ \textcolor{keywordflow}{for\ each}\ factor\ rule}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Integration\ nodes\ (nDims\ x\ nPoints\ or\ 1\ x\ nDims\ cell\ array)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ w\ -\/\ Integration\ weights\ (1\ x\ nPoints\ or\ 1\ x\ nDims\ cell\ array)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ obj.factors;}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ cell(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ cell(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:d}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fi\ =\ F\{i\};}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Fi\ =\ F(i);}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00088}\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_acf548b1a81e05fe9331c1b37e210f59c}{00088}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X\{i\},\ w\{i\}]\ =\ Fi.generate(varargin\{i\}\{:\});}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ [X\{1:d\}]\ =\ ndgrid(X\{:\});}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(cat(d+1,\ X\{:\}),\ [],\ d).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00094}00094\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ [w\{1:d\}]\ =\ ndgrid(w\{:\});}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ w\ =\ reshape(prod(cat(d+1,\ w\{:\}),\ d+1),\ 1,\ []);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00099}00099\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ methods\ (Static)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ closedNewtonCotes(nDims)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ CLOSEDNEWTONCOTES\ Create\ multidimensional\ closed\ Newton-\/Cotes}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ rule.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ closedNewtonCotes(nDims)\ creates\ a\ separable\ rule}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ using\ closed\ Newton-\/Cotes\ quadrature\ in\ each\ dimension.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nDims\ -\/\ Number\ of\ dimensions\ (positive\ integer)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ SeparableRule\ instance\ with\ closed\ Newton-\/Cotes\ factors}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00113}00113\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ rules\ =\ cell(1,\ nDims);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:nDims}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rules\{i\}\ =\ approx.integrate.ClosedNewtonCotesRule();}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00118}00118\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ approx.integrate.SeparableRule(rules);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00121}00121\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ gaussLegendre(nDims)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GAUSSLEGENDRE\ Create\ multidimensional\ Gauss-\/Legendre\ rule.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00125}\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_a99755ded40340d183fdc96afc0ab0717}{00125}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ gaussLegendre(nDims)\ creates\ a\ separable\ rule\ using}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Gauss-\/Legendre\ quadrature\ in\ each\ dimension.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nDims\ -\/\ Number\ of\ dimensions\ (positive\ integer)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ SeparableRule\ instance\ with\ Gauss-\/Legendre\ factors}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00133}00133\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ rules\ =\ cell(1,\ nDims);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:nDims}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rules\{i\}\ =\ approx.integrate.GaussLegendreRule();}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00138}00138\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ approx.integrate.SeparableRule(rules);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00141}00141\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ obj\ =\ gaussLobatto(nDims)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GAUSSLOBATTO\ Create\ multidimensional\ Gauss-\/Lobatto\ rule.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ gaussLobatto(nDims)\ creates\ a\ separable\ rule\ using}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Gauss-\/Lobatto\ quadrature\ in\ each\ dimension.}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00148}\mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule_adedd5245fda8c1ad7bf8370b2aa8b761}{00148}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nDims\ -\/\ Number\ of\ dimensions\ (positive\ integer)}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ SeparableRule\ instance\ with\ Gauss-\/Lobatto\ factors}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00153}00153\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ rules\ =\ cell(1,\ nDims);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:nDims}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rules\{i\}\ =\ approx.integrate.GaussLobattoRule();}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00158}00158\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ obj\ =\ approx.integrate.SeparableRule(rules);}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00160}00160\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_separable_rule_8m_source_l00162}00162\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

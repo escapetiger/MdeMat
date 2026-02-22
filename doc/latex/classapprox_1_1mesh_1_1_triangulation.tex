@@ -1,0 +1,391 @@
+\doxysection{approx\+::mesh\+::Triangulation Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_triangulation}{}\label{classapprox_1_1mesh_1_1_triangulation}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+
+
+Computational mesh using simplicial elements.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ab2d22b35e444d7339b83667f8842b54e}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate graph representation from simplex connectivity. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a4638931573e6a2ec6a7fc295d6c2a686}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ac6cdbb1d995da4509b07aa453aa4fd7c}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Perform uniform subdivision of simplicial mesh. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a12c792a0f1fefa7893b09fef01d30a65}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic mesh size. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a6c6a9a0e72e0665e3c542476918fbb0f}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian matrices for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a6826f60e2611e2d8d80aa8222683c535}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian determinants for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a54b891a8df3afda76fe4f98419cae358}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute inverse Jacobian matrices for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a5aa8ac939b0fccaa605e64ce0d10c43b}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants for all faces. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ad8fd8101f741640fae7550d6b925c5e4}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors for all faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_aa726195cef780c570f2dcd9f883bc673}{Polytopal\+Mesh}} (Input\+Type vertices, Input\+Type elements)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae5a9621fd345cd913ac6a022c976d8fe}{find\+Element\+Vertices}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Extract vertex coordinates for specified elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3e44121eba246e45bc3dc237eee25372}{set\+Periodic}} (Input\+Type obj, Input\+Type bbox, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Establish periodic boundary mappings. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a13a9690f78787d9afad36bb2e3aaba9f}{get\+Internal\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Get linear indices of internal elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a05675efcb101e35a9f77dd5811740749}{get\+Boundary\+Elements}} (Input\+Type obj, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Get linear indices of boundary elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a14d8c941d8a69a5b3d379734818e5c2d}{find\+Internal\+Elements}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Find internal elements across faces. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a80f5d7fd1d127ee0acdc430091aa9f6d}{find\+Boundary\+Elements}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Find boundary elements across faces. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9ee9389514571ad9e51b2facd50cfe24}{find\+Neighbor\+Elements}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI, Input\+Type BC)
+\begin{DoxyCompactList}\small\item\em Find neighboring elements across faces. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a234082a348c3a263510fdc7e7ec9ee3a}{compute\+Unique\+Direction}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute a unique direction vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac58aa483b5a792481864267a1dea11ea}{Mesh}} (Input\+Type vertices, Input\+Type elements)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a63e99a0ef31b6863de91f0a2f22223c7}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a7e2c6b2f4ac308f8916f7671dcb84b2d}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad13b129654d4d9dd445fa1b658b2a525}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type EI)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4e4bfb0a28c78e152d21ad7c1fd1bde4}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a8ca49f1f81402dd26d3e0ed05c3aa865}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aaeeddb637b6130f77a89c51d5331e594}{compute\+Direction}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute a direction vector. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae5b36bc9338f2ee352725c23cc21790d}{compute\+Face\+Scaling\+Factors}} (Input\+Type obj, Input\+Type EI, Input\+Type LFI)
+\begin{DoxyCompactList}\small\item\em Compute face scaling factors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_addb5a7f106e9f8a2b2a26e1016622af3}{set\+Faces}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate face connectivity from simplex elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_aaf49aa46611c0e0b5300c1660b6503ac}{force\+Positive\+Orientation}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Ensure positive element orientations. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_add71db22a9aab5d6d8a3f5f301012019}{refine\+Lines}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em ======================================================================== \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_ad3f186564db176409d8026fdf0792991}{refine\+Triangles}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em Refine triangular elements by edge subdivision. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_triangulation_a726c123b3d7faa58641234b99723f9fc}{refine\+Tetrahedra}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em Refine tetrahedral elements by edge subdivision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a17238da1ff7030adbf3095f3e67b3013}{Faces}}
+\begin{DoxyCompactList}\small\item\em Face connectivity (NFaces × NVertices\+Per\+Face) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a1e28f717ce7460b466bab29ab839982c}{Boundary}}
+\begin{DoxyCompactList}\small\item\em Boundary face indices (NBoundary\+Faces × 1) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6148d710af254663fe0739126cf407ae}{Face\+To\+Element\+Table}}
+\begin{DoxyCompactList}\small\item\em Face-\/element connectivity (sparse NFaces × NElements) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7ba2fd017bcf6489ec76fd3aa461fb1}{Vertex\+To\+Vertex\+Tables}}
+\begin{DoxyCompactList}\small\item\em Periodic vertex mappings (cell of sparse NVertices × NVertices) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a4ed1bf0099f63fa15003ad31779214ab}{Face\+To\+Face\+Table}}
+\begin{DoxyCompactList}\small\item\em Periodic face mapping (sparse NFaces × NFaces) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a411038fd9ed66d1e3d26bfaa7ae3e283}{NFaces}}
+\begin{DoxyCompactList}\small\item\em Number of faces in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac4206d294d61c4217e7ddbbbed30815b}{NVertices\+Per\+Face}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per face (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a8518d2b3cd481fe29f11e2ac428294d1}{NBoundary\+Faces}}
+\begin{DoxyCompactList}\small\item\em Number of boundary faces (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a128c5519a73f3845a998eb69b74d0a2d}{EJac\+Mask}} = 0b100000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a24f3cf609ce8e24227c1c3c4c6269706}{Det\+EJac\+Mask}} = 0b010000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aafd6f803208218788666cca50ed132d3}{Inv\+EJac\+Mask}} = 0b001000
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a7779be6d4e10806652171afdc6363375}{Det\+FJac\+Mask}} = 0b000100
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9708b39ece1379a50bf51b6a22913247}{Out\+Normal\+Mask}} = 0b000010
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af49a9affb9f88064f4440ccac7d35d02}{Direction\+Mask}} = 0b000001
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9f727e20e0f99cdc6ad9840aa0d25646}{Vertices}}
+\begin{DoxyCompactList}\small\item\em Vertex coordinates (NVertices × NDims or cell array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4321491dece6c852d5eb153f7ff2e0da}{Elements}}
+\begin{DoxyCompactList}\small\item\em Element connectivity (NElements × NVertices\+Per\+Element or cell array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af8470de3e97737309f792dd3e8633a4b}{Transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4e017b45e88350f63daaba874437d7b4}{Direction}}
+\begin{DoxyCompactList}\small\item\em Direction vector (NDims x 1) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a319c185bd054cfc21e9df934672eb443}{Status}}
+\begin{DoxyCompactList}\small\item\em Status mask. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a86920922c82ee55efd4b7ed1a804ff0d}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a096aa9ffd7827c06fb730324ab737680}{NVertices}}
+\begin{DoxyCompactList}\small\item\em Number of vertices in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_abda0d79287038fba358e06acf52dc7f2}{NElements}}
+\begin{DoxyCompactList}\small\item\em Number of elements in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a8b8be8cf29e95ab3409281183a3258f1}{NVertices\+Per\+Element}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per element (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Computational mesh using simplicial elements. 
+
+\doxylink{classapprox_1_1mesh_1_1_triangulation}{Triangulation} provides a concrete implementation of \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} for simplicial elements (line segments in 1D, triangles in 2D, tetrahedra in 3D).
+
+Element types by dimension\+:
+\begin{DoxyItemize}
+\item 1D\+: Line segments (2 vertices, 2 faces as endpoints)
+\item 2D\+: Triangles (3 vertices, 3 edges as faces)
+\item 3D\+: Tetrahedra (4 vertices, 4 triangular faces)
+\item nD\+: n-\/simplices (n+1 vertices, n+1 (n-\/1)-\/simplex faces)
+\end{DoxyItemize}
+
+The class uses affine coordinate transformations between reference and physical coordinates, where the reference simplex has vertices at the origin and unit coordinate vectors\+: \{0, e\+\_\+1, e\+\_\+2, ..., e\+\_\+n\}.
+
+Reference coordinates use the standard simplex with vertices at \{0, e\+\_\+1, e\+\_\+2, ..., e\+\_\+n\} where e\+\_\+i are unit coordinate vectors. This differs from some references that use centered or symmetric simplices.
+
+\doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} refinement follows standard subdivision rules\+:
+\begin{DoxyItemize}
+\item 1D\+: Each edge splits into 2 segments
+\item 2D\+: Each triangle splits into 4 triangles
+\item 3D\+: Each tetrahedron splits into 8 tetrahedra
+\item General\+: Each k-\/level refinement produces 2\texorpdfstring{$^\wedge$}{\string^}(k×d) sub-\/elements
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx.\+mesh.\+Polytopal\+Mesh} 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{approx.\+mesh.\+Polytopal\+Mesh\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_triangulation_8m_source_l00036}{36}} of file \mbox{\hyperlink{_triangulation_8m_source}{Triangulation.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a4638931573e6a2ec6a7fc295d6c2a686}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a4638931573e6a2ec6a7fc295d6c2a686} 
+function approx\+::mesh\+::\+Triangulation\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{EI}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Map reference coordinates to physical coordinates. 
+
+Y = collocate(obj, X, EI) transforms reference Cartesian coordinates to physical Cartesian coordinates using affine transformations defined by simplex element vertices. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9f2e5da9c17f8108cd088654adc4d869}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a54b891a8df3afda76fe4f98419cae358}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeAllElementInverseJacobians@{computeAllElementInverseJacobians}}
+\index{computeAllElementInverseJacobians@{computeAllElementInverseJacobians}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeAllElementInverseJacobians()}{computeAllElementInverseJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a54b891a8df3afda76fe4f98419cae358} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+All\+Element\+Inverse\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute inverse Jacobian matrices for all elements. 
+
+inv\+EJac = compute\+All\+Element\+Inverse\+Jacobians(obj) computes the inverse of the Jacobian matrix for each element, used in gradient computations and coordinate transformations. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a6826f60e2611e2d8d80aa8222683c535}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}}
+\index{computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobianDeterminants()}{computeAllElementJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a6826f60e2611e2d8d80aa8222683c535} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+All\+Element\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian determinants for all elements. 
+
+det\+EJac = compute\+All\+Element\+Jacobian\+Determinants(obj) computes the determinant of the Jacobian matrix for each simplex element, used in integration and volume calculations. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a6c6a9a0e72e0665e3c542476918fbb0f}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeAllElementJacobians@{computeAllElementJacobians}}
+\index{computeAllElementJacobians@{computeAllElementJacobians}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobians()}{computeAllElementJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a6c6a9a0e72e0665e3c542476918fbb0f} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+All\+Element\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian matrices for all elements. 
+
+EJac = compute\+All\+Element\+Jacobians(obj) computes the Jacobian matrix for coordinate transformation from reference to physical coordinates for every element in the mesh. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a5aa8ac939b0fccaa605e64ce0d10c43b}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}}
+\index{computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeAllFaceJacobianDeterminants()}{computeAllFaceJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a5aa8ac939b0fccaa605e64ce0d10c43b} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+All\+Face\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute face Jacobian determinants for all faces. 
+
+det\+FJac = compute\+All\+Face\+Jacobian\+Determinants(obj) computes Jacobian determinants for coordinate transformation on all element faces, used in boundary and interface integration. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_ad8fd8101f741640fae7550d6b925c5e4}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeAllOutwardNormals@{computeAllOutwardNormals}}
+\index{computeAllOutwardNormals@{computeAllOutwardNormals}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeAllOutwardNormals()}{computeAllOutwardNormals()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_ad8fd8101f741640fae7550d6b925c5e4} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+All\+Outward\+Normals (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute outward normal vectors for all faces. 
+
+normal = compute\+All\+Outward\+Normals(obj) computes unit outward normal vectors for all element faces, essential for boundary conditions and flux computations. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_a12c792a0f1fefa7893b09fef01d30a65}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!computeMeasure@{computeMeasure}}
+\index{computeMeasure@{computeMeasure}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{computeMeasure()}{computeMeasure()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a12c792a0f1fefa7893b09fef01d30a65} 
+function approx\+::mesh\+::\+Triangulation\+::compute\+Measure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute characteristic mesh size. 
+
+h = compute\+Measure(obj) returns the minimum edge length among all edges in the simplicial mesh, which serves as a characteristic measure of mesh resolution. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_aaf49aa46611c0e0b5300c1660b6503ac}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!forcePositiveOrientation@{forcePositiveOrientation}}
+\index{forcePositiveOrientation@{forcePositiveOrientation}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{forcePositiveOrientation()}{forcePositiveOrientation()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_aaf49aa46611c0e0b5300c1660b6503ac} 
+function approx\+::mesh\+::\+Triangulation\+::force\+Positive\+Orientation (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Ensure positive element orientations. 
+
+obj = force\+Positive\+Orientation(obj) reorders element vertices to ensure positive Jacobian determinants, which is essential for proper integration and geometric computations. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_ab2d22b35e444d7339b83667f8842b54e}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!graphify@{graphify}}
+\index{graphify@{graphify}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{graphify()}{graphify()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_ab2d22b35e444d7339b83667f8842b54e} 
+function approx\+::mesh\+::\+Triangulation\+::graphify (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Generate graph representation from simplex connectivity. 
+
+graph\+Obj = graphify(obj) creates a graph representation by extracting all edges (vertex pairs) from the simplex elements and eliminating duplicates. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_ac6cdbb1d995da4509b07aa453aa4fd7c}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_ac6cdbb1d995da4509b07aa453aa4fd7c} 
+function approx\+::mesh\+::\+Triangulation\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Levels}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Perform uniform subdivision of simplicial mesh. 
+
+new\+Obj = refine(obj, n\+Levels) creates a refined mesh by uniformly subdividing each simplex element. The number of refinement levels determines the subdivision density. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_add71db22a9aab5d6d8a3f5f301012019}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!refineLines@{refineLines}}
+\index{refineLines@{refineLines}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{refineLines()}{refineLines()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_add71db22a9aab5d6d8a3f5f301012019} 
+function approx\+::mesh\+::\+Triangulation\+::refine\+Lines (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+======================================================================== 
+
+\hypertarget{classapprox_1_1mesh_1_1_triangulation_autotoc_md0}{}\doxysubsection{\texorpdfstring{REFINEMENT HELPER FUNCTIONS}{REFINEMENT HELPER FUNCTIONS}}\label{classapprox_1_1mesh_1_1_triangulation_autotoc_md0}
+Refine 1D line segments by midpoint subdivision.
+
+\mbox{[}V, E\mbox{]} = refine\+Lines(\+V0, E0) subdivides each line segment into two segments by adding midpoint vertices. \Hypertarget{classapprox_1_1mesh_1_1_triangulation_a726c123b3d7faa58641234b99723f9fc}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!refineTetrahedra@{refineTetrahedra}}
+\index{refineTetrahedra@{refineTetrahedra}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{refineTetrahedra()}{refineTetrahedra()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_a726c123b3d7faa58641234b99723f9fc} 
+function approx\+::mesh\+::\+Triangulation\+::refine\+Tetrahedra (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Refine tetrahedral elements by edge subdivision. 
+
+\mbox{[}V, E\mbox{]} = refine\+Tetrahedra(\+V0, E0) subdivides each tetrahedron into eight tetrahedra by adding midpoint vertices on all edges.
+
+\begin{DoxyNote}{Note}
+Each tetrahedron has 6 edges, creating 6 new midpoint vertices. The 8 sub-\/tetrahedra consist of\+:
+\begin{DoxyItemize}
+\item 4 corner tetrahedra (one at each original vertex)
+\item 4 interior tetrahedra (connecting midpoints) 
+\end{DoxyItemize}
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_ad3f186564db176409d8026fdf0792991}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!refineTriangles@{refineTriangles}}
+\index{refineTriangles@{refineTriangles}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{refineTriangles()}{refineTriangles()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_ad3f186564db176409d8026fdf0792991} 
+function approx\+::mesh\+::\+Triangulation\+::refine\+Triangles (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Refine triangular elements by edge subdivision. 
+
+\mbox{[}V, E\mbox{]} = refine\+Triangles(\+V0, E0) subdivides each triangle into four triangles by adding midpoint vertices on all edges.
+
+\begin{DoxyNote}{Note}
+Each triangle is subdivided into 4 sub-\/triangles\+:
+\begin{DoxyItemize}
+\item 3 corner triangles (one at each original vertex)
+\item 1 central triangle (connecting the 3 edge midpoints) 
+\end{DoxyItemize}
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_triangulation_addb5a7f106e9f8a2b2a26e1016622af3}\index{approx::mesh::Triangulation@{approx::mesh::Triangulation}!setFaces@{setFaces}}
+\index{setFaces@{setFaces}!approx::mesh::Triangulation@{approx::mesh::Triangulation}}
+\doxysubsubsection{\texorpdfstring{setFaces()}{setFaces()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_triangulation_addb5a7f106e9f8a2b2a26e1016622af3} 
+function approx\+::mesh\+::\+Triangulation\+::set\+Faces (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Generate face connectivity from simplex elements. 
+
+obj = set\+Faces(obj) extracts face definitions from element connectivity and builds the face-\/to-\/element mapping table for simplicial meshes. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_triangulation_8m}{Triangulation.\+m}}\end{DoxyCompactItemize}

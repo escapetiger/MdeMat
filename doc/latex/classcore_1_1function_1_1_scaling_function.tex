@@ -1,0 +1,162 @@
+\doxysection{core\+::function\+::Scaling\+Function Class Reference}
+\hypertarget{classcore_1_1function_1_1_scaling_function}{}\label{classcore_1_1function_1_1_scaling_function}\index{core::function::ScalingFunction@{core::function::ScalingFunction}}
+
+
+\doxylink{classcore_1_1function_1_1_function}{Function} representing scaled coordinate transformations.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a32dfae8a2721696b4d7ed4c299c3737e}{Scaling\+Function}} (Input\+Type base, Input\+Type lambda)
+\begin{DoxyCompactList}\small\item\em Constructor for the Scaling class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a722b73d6cd655b7e23b6eaa550f230f5}{Function}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract \doxylink{classcore_1_1function_1_1_function}{Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a37b7735289b78906d9ed5b2f91e406ef}{eval}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a052de8682aaf2107291fe0e0ac6d100f}{diff}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_afda3f3a9615b3bc8e942a364a8ed8ce7}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab9086461d8e0eb55ff0abb158cfd2f61}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42}{Base}}
+\begin{DoxyCompactList}\small\item\em Base function (\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function}) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}{Lambda}}
+\begin{DoxyCompactList}\small\item\em Scaling parameter (positive scalar) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_ac696d773a380623081b129e9d8c30690}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a97af4a7e2920169d80889e8c6e481690}{NCodims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a8c58c3268c34e2f3cc3bc4e22e63c0cf}{Is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both NDims and NCodims are positive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_abc500b4a154e52f9cd1650a90a508e9d}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of scaling function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_scaling_function_a8fe8f497d944986169286bc8d445d0a8}{diff\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type order)
+\begin{DoxyCompactList}\small\item\em Implementation of scaling function derivative. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_aaa50244dc0eac9482725b5e2ae1cbd3d}{eval\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a495373f2dad1e38e4f1ccc7afa5aa0b9}{diff\+Impl}} (Input\+Type obj, Input\+Type X, ignored\+Arg)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classcore_1_1function_1_1_function}{Function} representing scaled coordinate transformations. 
+
+Scaling represents coordinate scaling transformations of the form\+:
+
+\[f(x) = g(x/\lambda)
+\]
+
+where $g$ is a \doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} and $\lambda$ is a positive scaling parameter. This transformation scales the input coordinates by $1/\lambda$ before evaluating the base function.
+
+For derivatives, the chain rule gives\+:    \[\frac{\partial^k f}{\partial x^k}(x) = \frac{1}{\lambda^k}
+\frac{\partial^k g}{\partial u^k}(x/\lambda)
+\]
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} 
+
+\doxylink{classcore_1_1function_1_1_linear_function}{core.\+function.\+Linear\+Function} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_scaling_function_8m_source_l00027}{27}} of file \mbox{\hyperlink{_scaling_function_8m_source}{Scaling\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_a32dfae8a2721696b4d7ed4c299c3737e}\index{core::function::ScalingFunction@{core::function::ScalingFunction}!ScalingFunction@{ScalingFunction}}
+\index{ScalingFunction@{ScalingFunction}!core::function::ScalingFunction@{core::function::ScalingFunction}}
+\doxysubsubsection{\texorpdfstring{ScalingFunction()}{ScalingFunction()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_scaling_function_a32dfae8a2721696b4d7ed4c299c3737e} 
+function core\+::function\+::\+Scaling\+Function\+::\+Scaling\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{base}{, }\item[{Input\+Type}]{lambda}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the Scaling class. 
+
+obj = Scaling(base, lambda) creates a scaling transformation that represents f(x) = g(x/lambda) where {\itshape base} is a \doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} and {\itshape lambda} is a positive scaling parameter. 
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_a8fe8f497d944986169286bc8d445d0a8}\index{core::function::ScalingFunction@{core::function::ScalingFunction}!diffImpl@{diffImpl}}
+\index{diffImpl@{diffImpl}!core::function::ScalingFunction@{core::function::ScalingFunction}}
+\doxysubsubsection{\texorpdfstring{diffImpl()}{diffImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_scaling_function_a8fe8f497d944986169286bc8d445d0a8} 
+function core\+::function\+::\+Scaling\+Function\+::diff\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{order}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of scaling function derivative. 
+
+\Hypertarget{classcore_1_1function_1_1_scaling_function_abc500b4a154e52f9cd1650a90a508e9d}\index{core::function::ScalingFunction@{core::function::ScalingFunction}!evalImpl@{evalImpl}}
+\index{evalImpl@{evalImpl}!core::function::ScalingFunction@{core::function::ScalingFunction}}
+\doxysubsubsection{\texorpdfstring{evalImpl()}{evalImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_scaling_function_abc500b4a154e52f9cd1650a90a508e9d} 
+function core\+::function\+::\+Scaling\+Function\+::eval\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Implementation of scaling function evaluation. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42}\index{core::function::ScalingFunction@{core::function::ScalingFunction}!Base@{Base}}
+\index{Base@{Base}!core::function::ScalingFunction@{core::function::ScalingFunction}}
+\doxysubsubsection{\texorpdfstring{Base}{Base}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_scaling_function_a52f4c060be0f4175b6fda31a4eb96b42} 
+Property core\+::function\+::\+Scaling\+Function\+::\+Base}
+
+
+
+Base function (\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function}) 
+
+
+
+Definition at line \mbox{\hyperlink{_scaling_function_8m_source_l00031}{31}} of file \mbox{\hyperlink{_scaling_function_8m_source}{Scaling\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc}\index{core::function::ScalingFunction@{core::function::ScalingFunction}!Lambda@{Lambda}}
+\index{Lambda@{Lambda}!core::function::ScalingFunction@{core::function::ScalingFunction}}
+\doxysubsubsection{\texorpdfstring{Lambda}{Lambda}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_scaling_function_a7ea4797ad2fb6ec45a9aa87628ead5bc} 
+Property core\+::function\+::\+Scaling\+Function\+::\+Lambda}
+
+
+
+Scaling parameter (positive scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_scaling_function_8m_source_l00034}{34}} of file \mbox{\hyperlink{_scaling_function_8m_source}{Scaling\+Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_scaling_function_8m}{Scaling\+Function.\+m}}\end{DoxyCompactItemize}

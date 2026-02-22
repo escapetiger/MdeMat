@@ -1,0 +1,420 @@
+\doxysection{core\+::linalg Namespace Reference}
+\hypertarget{namespacecore_1_1linalg}{}\label{namespacecore_1_1linalg}\index{core::linalg@{core::linalg}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{Cached\+Multi\+Indexer}}
+\begin{DoxyCompactList}\small\item\em Base class for all indexers with cached indices. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{Indexer}}
+\begin{DoxyCompactList}\small\item\em Base class for all indexers. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_l1_multi_indexer}{L1\+Multi\+Indexer}}
+\begin{DoxyCompactList}\small\item\em Generate L1-\/constrained multi-\/indices. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_linear_solver}{Linear\+Solver}}
+\begin{DoxyCompactList}\small\item\em Adpative linear solver. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_lx_multi_indexer}{Lx\+Multi\+Indexer}}
+\begin{DoxyCompactList}\small\item\em Generate L-\/infinity constrained multi-\/indices. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{Multi\+Indexer}}
+\begin{DoxyCompactList}\small\item\em Indexers handling multi-\/dimensional indexing. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcore_1_1linalg_1_1_separable}{Separable}}
+\begin{DoxyCompactList}\small\item\em Base class for all separable objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}} (Input\+Type As, Input\+Type Ms, Input\+Type Ns)
+\begin{DoxyCompactList}\small\item\em Constructs a block matrix from a 2D cell array of matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a996b11d4855cdb568838e1668d0fc093}{cut}} (Input\+Type T, Input\+Type d)
+\begin{DoxyCompactList}\small\item\em Cuts a tensor along a specified dimension. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a227b12bbd52c2d1f67d0c5718e074d72}{fold}} (Input\+Type A, Input\+Type n, Input\+Type d)
+\begin{DoxyCompactList}\small\item\em Inverse of unfold. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}} (Input\+Type U, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Compute Khatri-\/\+Rao product of input matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{kronecker}} (Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Kronecker product of multiple matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0}{ones\+Like}} (Input\+Type X, Input\+Type d)
+\begin{DoxyCompactList}\small\item\em Create array of ones with size similar to input.. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a6ed49f046f565f894f1ece4ae3bd55e9}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a9e38d8c9bdad151a75ecdfd31cd52c6e}{unfold}} (Input\+Type T, Input\+Type n, Input\+Type d)
+\begin{DoxyCompactList}\small\item\em Tensor matricization. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}} (Input\+Type X, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Set array entries below threshold to zero. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d}{zeros\+Like}} (Input\+Type X, Input\+Type d)
+\begin{DoxyCompactList}\small\item\em Create array of zeros with size similar to input.. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacecore_1_1linalg_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}\index{core::linalg@{core::linalg}!block@{block}}
+\index{block@{block}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{block()}{block()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e} 
+function core\+::linalg\+::block (\begin{DoxyParamCaption}\item[{Input\+Type}]{As}{, }\item[{Input\+Type}]{Ms}{, }\item[{Input\+Type}]{Ns}{}\end{DoxyParamCaption})}
+
+
+
+Constructs a block matrix from a 2D cell array of matrices. 
+
+S = block(\+As) infers the block dimensions and returns a block matrix from a cell array of matrices.
+
+S = block(\+As, Ms, Ns) returns a block matrix from a cell array of matrices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em As} & -\/ 2D cell array of matrices \\
+\hline
+{\em Ms} & -\/ Row counts for each block row (optional) \\
+\hline
+{\em Ns} & -\/ Column counts for each block column (optional)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em S} & -\/ Block matrix (sparse if all blocks are sparse)\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ a\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}\ matrix\ from\ sparse\ blocks}
+\DoxyCodeLine{A1\ =\ sparse(rand(2,3));\ \ B1\ =\ sparse(rand(2,4));}
+\DoxyCodeLine{C1\ =\ sparse(rand(3,3));\ \ D1\ =\ sparse(rand(3,4));}
+\DoxyCodeLine{As\ =\ \{A1,\ B1;\ C1,\ D1\};}
+\DoxyCodeLine{S1\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_aff9ecf04ad0bc6dc04858ffb64ba8c6e}{block}}(As);}
+\DoxyCodeLine{\%\ S1\ will\ be\ a\ sparse\ matrix\ of\ size\ (2+3)\ x\ (3+4)\ =\ 5x7.}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Each nonempty cell in {\itshape A} corresponds to a block in {\itshape S}. 
+\end{DoxyNote}
+\Hypertarget{namespacecore_1_1linalg_a996b11d4855cdb568838e1668d0fc093}\index{core::linalg@{core::linalg}!cut@{cut}}
+\index{cut@{cut}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{cut()}{cut()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a996b11d4855cdb568838e1668d0fc093} 
+function core\+::linalg\+::cut (\begin{DoxyParamCaption}\item[{Input\+Type}]{T}{, }\item[{Input\+Type}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Cuts a tensor along a specified dimension. 
+
+S = cut(\+T, d) returns slices of {\itshape T} along the dimension {\itshape d}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T} & -\/ Input tensor \\
+\hline
+{\em d} & -\/ Dimension index\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em S} & -\/ Cell array of slices of {\itshape T} along the dimension {\itshape d} \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ a\ 3D\ T\ and\ \mbox{\hyperlink{namespacecore_1_1linalg_a996b11d4855cdb568838e1668d0fc093}{cut}}\ along\ the\ second\ dimension}
+\DoxyCodeLine{T\ =\ rand(3,\ 4,\ 5);}
+\DoxyCodeLine{S\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a996b11d4855cdb568838e1668d0fc093}{cut}}(T,\ 2);}
+\DoxyCodeLine{\%\ returns\ a\ cell\ array\ of\ length\ 4\ of\ which\ entry\ is\ a\ 3×5\ matrix}
+
+\end{DoxyCode}
+ \Hypertarget{namespacecore_1_1linalg_a227b12bbd52c2d1f67d0c5718e074d72}\index{core::linalg@{core::linalg}!fold@{fold}}
+\index{fold@{fold}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{fold()}{fold()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a227b12bbd52c2d1f67d0c5718e074d72} 
+function core\+::linalg\+::fold (\begin{DoxyParamCaption}\item[{Input\+Type}]{A}{, }\item[{Input\+Type}]{n}{, }\item[{Input\+Type}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Inverse of unfold. 
+
+T = fold(\+A, n, d) returns a tensor {\itshape T} of shape {\itshape n} obtained by folding a matrix {\itshape A} along the dimension {\itshape d}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & -\/ Matrix of shape \mbox{[}n(d), prod(n)/n(d)\mbox{]} \\
+\hline
+{\em n} & -\/ Tensor shape \\
+\hline
+{\em d} & -\/ Mode along which to fold\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Folded tensor of shape {\itshape n} \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Unfold\ T\ along\ dimension\ 2,\ then\ \mbox{\hyperlink{namespacecore_1_1linalg_a227b12bbd52c2d1f67d0c5718e074d72}{fold}}\ it\ back}
+\DoxyCodeLine{T\ =\ rand(3,\ 4,\ 5);}
+\DoxyCodeLine{n\ =\ size(T);}
+\DoxyCodeLine{A\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.unfold(T,\ n,\ 2);}
+\DoxyCodeLine{TT\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.fold(A,\ n,\ 2);\ \%\ TT\ equals\ to\ T}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a9e38d8c9bdad151a75ecdfd31cd52c6e}{core.\+linalg.\+unfold} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}\index{core::linalg@{core::linalg}!khatrirao@{khatrirao}}
+\index{khatrirao@{khatrirao}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{khatrirao()}{khatrirao()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8} 
+function core\+::linalg\+::khatrirao (\begin{DoxyParamCaption}\item[{Input\+Type}]{U}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Compute Khatri-\/\+Rao product of input matrices. 
+
+X = khatrirao(\+A, B) computes column-\/wise Kronecker product of matrices {\itshape A} and {\itshape B}. For matrices A (I-\/by-\/K) and B (J-\/by-\/K), result is (I\texorpdfstring{$\ast$}{*}J)-\/by-\/K matrix where each column k is Kronecker product of k-\/th columns of A and B.
+
+
+\begin{DoxyParams}{Parameters}
+{\em U} & -\/ Cell array of matrices or head input matrix \\
+\hline
+{\em varargin} & -\/ Tailed input matrices\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em X} & -\/ Khatri-\/\+Rao product matrix\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Two-\/matrix\ Khatri-\/Rao\ product}
+\DoxyCodeLine{A\ =\ [1\ 2;\ 3\ 4];\ \ \ \ \%\ 2-\/by-\/2\ matrix}
+\DoxyCodeLine{B\ =\ [5\ 6;\ 7\ 8];\ \ \ \ \%\ 2-\/by-\/2\ matrix}
+\DoxyCodeLine{X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}}(A,\ B);}
+\DoxyCodeLine{\%\ Sparse\ matrix\ Khatri-\/Rao\ product}
+\DoxyCodeLine{As\ =\ sparse([1\ 0;\ 3\ 4]);}
+\DoxyCodeLine{Bs\ =\ sparse([5\ 0;\ 0\ 8]);}
+\DoxyCodeLine{X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{khatrirao}}(As,\ Bs);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{core.\+linalg.\+kronecker} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}\index{core::linalg@{core::linalg}!kronecker@{kronecker}}
+\index{kronecker@{kronecker}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{kronecker()}{kronecker()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b} 
+function core\+::linalg\+::kronecker (\begin{DoxyParamCaption}\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Kronecker product of multiple matrices. 
+
+K = kronecker(\+A1, A2, ...) computes Kronecker product of all input matrices, with operation carried out from right to left. Extends MATLAB\textquotesingle{}s built-\/in kron to handle multiple As.
+
+
+\begin{DoxyParams}{Parameters}
+{\em varargin} & -\/ Input matrices\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em K} & -\/ Kronecker product\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage}
+\DoxyCodeLine{A\ =\ [1\ 2;\ 3\ 4];}
+\DoxyCodeLine{B\ =\ [5\ 6;\ 7\ 8];}
+\DoxyCodeLine{K\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{kronecker}}(A,\ B);\ \%\ K\ will\ be\ a\ 4x4\ matrix}
+\DoxyCodeLine{\%\ Using\ cell\ array}
+\DoxyCodeLine{K\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{kronecker}}(\{A,\ B,\ eye(2)\});\ \%\ K\ will\ be\ an\ 8x8\ matrix}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a9f977d50db66d498551414be890bffa8}{core.\+linalg.\+khatrirao} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0}\index{core::linalg@{core::linalg}!onesLike@{onesLike}}
+\index{onesLike@{onesLike}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{onesLike()}{onesLike()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0} 
+function core\+::linalg\+::ones\+Like (\begin{DoxyParamCaption}\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Create array of ones with size similar to input.. 
+
+Y = ones\+Like(\+X) returns an array of the same size as {\itshape X} filled with ones.
+
+Y = ones\+Like(\+X, d) returns an array matching size along the dimension {\itshape d}, which is filled with ones.
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Input array \\
+\hline
+{\em d} & -\/ Dimension index (optional)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Output array filled with ones\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ ones\ array\ matching\ 3D\ array}
+\DoxyCodeLine{A\ =\ rand(3,\ 4,\ 5);}
+\DoxyCodeLine{Y1\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0}{onesLike}}(A);\ \%\ Returns\ 3x4x5\ array\ of\ ones}
+\DoxyCodeLine{\%\ Create\ ones\ array\ matching\ one\ dimension}
+\DoxyCodeLine{Y2\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0}{onesLike}}(A,\ 2);\ \%\ Returns\ 1x4\ array\ of\ ones}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d}{core.\+linalg.\+zeros\+Like} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1linalg_a6ed49f046f565f894f1ece4ae3bd55e9}\index{core::linalg@{core::linalg}!sparseFromTriplets@{sparseFromTriplets}}
+\index{sparseFromTriplets@{sparseFromTriplets}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{sparseFromTriplets()}{sparseFromTriplets()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a6ed49f046f565f894f1ece4ae3bd55e9} 
+function core\+::linalg\+::sparse\+From\+Triplets (\begin{DoxyParamCaption}\item[{Input\+Type}]{T}{, }\item[{Input\+Type}]{m}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})}
+
+
+
+Create sparse matrix from triplet format. 
+
+A = sparse\+From\+Triplets(\+T, m, n) converts a triplet list (row, column, value) into a sparse matrix, automatically filtering out invalid indices (zeros or negative values).
+
+
+\begin{DoxyParams}{Parameters}
+{\em T} & -\/ Triplet matrix with columns \mbox{[}row, col, val\mbox{]} \\
+\hline
+{\em m} & -\/ Number of rows (positive integer) \\
+\hline
+{\em n} & -\/ Number of columns (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Sparse matrix of size m×n \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{namespacecore_1_1linalg_a9e38d8c9bdad151a75ecdfd31cd52c6e}\index{core::linalg@{core::linalg}!unfold@{unfold}}
+\index{unfold@{unfold}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{unfold()}{unfold()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a9e38d8c9bdad151a75ecdfd31cd52c6e} 
+function core\+::linalg\+::unfold (\begin{DoxyParamCaption}\item[{Input\+Type}]{T}{, }\item[{Input\+Type}]{n}{, }\item[{Input\+Type}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Tensor matricization. 
+
+A = unfold(\+T, n, d) returns a matrix {\itshape A} obtained by unfolding a tensor {\itshape T} of shape {\itshape n} along the dimension {\itshape d}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T} & -\/ Tensor of shape {\itshape n} \\
+\hline
+{\em n} & -\/ Tensor shape \\
+\hline
+{\em d} & -\/ Mode along which to unfold\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Unfolded matrix of shape \mbox{[}n(d), prod(n)/n(d)\mbox{]}\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Unfold\ 3D\ tensor\ along\ dimension\ 2}
+\DoxyCodeLine{T\ =\ rand(3,\ 4,\ 5);}
+\DoxyCodeLine{A\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9e38d8c9bdad151a75ecdfd31cd52c6e}{unfold}}(T,\ size(T),\ 2);\ \%\ A\ will\ be\ a\ 4x15\ matrix}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a227b12bbd52c2d1f67d0c5718e074d72}{core.\+linalg.\+fold} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}\index{core::linalg@{core::linalg}!zeroing@{zeroing}}
+\index{zeroing@{zeroing}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{zeroing()}{zeroing()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1} 
+function core\+::linalg\+::zeroing (\begin{DoxyParamCaption}\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})}
+
+
+
+Set array entries below threshold to zero. 
+
+X = zeroing(\+X) replaces values in array {\itshape X} smaller than the default tolerance with zeros.
+
+X = zeroing(\+X, tol) replaces values in array {\itshape X} smaller than the specified tolerance {\itshape tol} with zeros.
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Input array \\
+\hline
+{\em tol} & -\/ Tolerance threshold (optional, default\+: eps\texorpdfstring{$\ast$}{*}1e3)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em X} & -\/ Output array with small values replaced by zeros\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage\ with\ \textcolor{keywordflow}{default}\ tolerance}
+\DoxyCodeLine{A\ =\ [1,\ 1e-\/16,\ -\/1e-\/15,\ 2];}
+\DoxyCodeLine{cleanA\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(A);\ \%\ Returns\ [1,\ 0,\ 0,\ 2]}
+\DoxyCodeLine{\%\ With\ custom\ tolerance}
+\DoxyCodeLine{B\ =\ [10,\ 0.01,\ 0.001,\ 0.0001,\ 5];}
+\DoxyCodeLine{cleanB\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(B,\ 0.001);\ \%\ Returns\ [10,\ 0.01,\ 0.001,\ 0,\ 5]}
+
+\end{DoxyCode}
+ \Hypertarget{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d}\index{core::linalg@{core::linalg}!zerosLike@{zerosLike}}
+\index{zerosLike@{zerosLike}!core::linalg@{core::linalg}}
+\doxysubsubsection{\texorpdfstring{zerosLike()}{zerosLike()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d} 
+function core\+::linalg\+::zeros\+Like (\begin{DoxyParamCaption}\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Create array of zeros with size similar to input.. 
+
+Y = zeros\+Like(\+X) returns an array of the same size as {\itshape X} filled with zeros.
+
+Y = zeros\+Like(\+X, d) returns an array matching size along the dimension {\itshape d}, which is filled with zeros.
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ Input array \\
+\hline
+{\em d} & -\/ Dimension index (optional)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Output array filled with zeros\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ zeros\ array\ matching\ 3D\ array}
+\DoxyCodeLine{A\ =\ rand(3,\ 4,\ 5);}
+\DoxyCodeLine{Y1\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d}{zerosLike}}(A);\ \%\ Returns\ 3x4x5\ array\ of\ zeros}
+\DoxyCodeLine{\%\ Create\ zeros\ array\ matching\ one\ dimension}
+\DoxyCodeLine{Y2\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a221180ed73c46fd3bc72e845bb00788d}{zerosLike}}(A,\ 2);\ \%\ Returns\ 1x4\ array\ of\ zeros}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1linalg_a3eca1d0f74039f6cbec577599ff3dec0}{core.\+linalg.\+ones\+Like} 
+\end{DoxySeeAlso}

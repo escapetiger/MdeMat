@@ -1,0 +1,158 @@
+\doxysection{fem\+::space\+::Finite\+Element\+Space Class Reference}
+\hypertarget{classfem_1_1space_1_1_finite_element_space}{}\label{classfem_1_1space_1_1_finite_element_space}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+
+
+Base class for finite element function spaces.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1space_1_1_affine_space}{fem\+::space\+::\+Affine\+Space}}, and \mbox{\hyperlink{classfem_1_1space_1_1_mesh_space}{fem\+::space\+::\+Mesh\+Space}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a5efeba0376a26899075790ec3b051b5c}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the finite element space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a558238e7c518fe3a039b75ab1b95a7b3}{Finite\+Element\+Space}} (Input\+Type \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4}{fe}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1space_1_1_finite_element_space}{Finite\+Element\+Space}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a2479d8ed9c7a3d964b1796fb24641ce4}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1space_1_1_finite_element_space_a86d3ef132e90f1db7db062010d266d1e}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for finite element function spaces. 
+
+\doxylink{classfem_1_1space_1_1_finite_element_space}{Finite\+Element\+Space} provides an abstract representation of a function space that is constructed from a finite element. This class serves as the foundation for specialized function spaces such as affine spaces, mesh spaces, and scaled variants.
+
+The class encapsulates the finite element that generates the space and provides common properties and interfaces that all concrete finite element spaces must implement. Each space defines how functions are represented, evaluated, and manipulated within that space.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1space_1_1_affine_space}{fem.\+space.\+Affine\+Space} 
+
+\doxylink{classfem_1_1space_1_1_mesh_space}{fem.\+space.\+Mesh\+Space} 
+
+\doxylink{classfem_1_1space_1_1_scaled_affine_space}{fem.\+space.\+Scaled\+Affine\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_finite_element_space_8m_source_l00023}{23}} of file \mbox{\hyperlink{_finite_element_space_8m_source}{Finite\+Element\+Space.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_a558238e7c518fe3a039b75ab1b95a7b3}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}!FiniteElementSpace@{FiniteElementSpace}}
+\index{FiniteElementSpace@{FiniteElementSpace}!fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+\doxysubsubsection{\texorpdfstring{FiniteElementSpace()}{FiniteElementSpace()}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_finite_element_space_a558238e7c518fe3a039b75ab1b95a7b3} 
+function fem\+::space\+::\+Finite\+Element\+Space\+::\+Finite\+Element\+Space (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1space_1_1_finite_element_space}{Finite\+Element\+Space}. 
+
+obj = Finite\+Element\+Space(fe) creates an abstract finite element space using the specified finite element as the basis for function representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object that defines the space basis \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_a5efeba0376a26899075790ec3b051b5c}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_finite_element_space_a5efeba0376a26899075790ec3b051b5c} 
+virtual function fem\+::space\+::\+Finite\+Element\+Space\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Evaluate functions in the finite element space. 
+
+Abstract method that must be implemented by concrete subclasses to define how functions in the space are evaluated at given points. The specific signature and behavior depends on the concrete space implementation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1space_1_1_finite_element_space}{Finite\+Element\+Space} object \\
+\hline
+{\em varargin} & -\/ Variable arguments depending on space type\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Evaluation results (format depends on space type) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1space_1_1_affine_space_a409f8cedb001bef22cb5c6aec99b38b2}{fem\+::space\+::\+Affine\+Space}}, \mbox{\hyperlink{classfem_1_1space_1_1_mesh_space_a56207536b61ccf74cbd1108bcf606552}{fem\+::space\+::\+Mesh\+Space}}, and \mbox{\hyperlink{classfem_1_1space_1_1_scaled_affine_space_a1eee45f0285a9ff623d2da3f96f7d7fa}{fem\+::space\+::\+Scaled\+Affine\+Space}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}!fe@{fe}}
+\index{fe@{fe}!fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+\doxysubsubsection{\texorpdfstring{fe}{fe}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_finite_element_space_aee2d6c272b204de31af4250f3be706f4} 
+Property fem\+::space\+::\+Finite\+Element\+Space\+::fe}
+
+
+
+Finite element. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_space_8m_source_l00027}{27}} of file \mbox{\hyperlink{_finite_element_space_8m_source}{Finite\+Element\+Space.\+m}}.
+
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_a86d3ef132e90f1db7db062010d266d1e}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}!nDims@{nDims}}
+\index{nDims@{nDims}!fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_finite_element_space_a86d3ef132e90f1db7db062010d266d1e} 
+Property fem\+::space\+::\+Finite\+Element\+Space\+::n\+Dims}
+
+
+
+Number of spatial dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_space_8m_source_l00036}{36}} of file \mbox{\hyperlink{_finite_element_space_8m_source}{Finite\+Element\+Space.\+m}}.
+
+\Hypertarget{classfem_1_1space_1_1_finite_element_space_a2479d8ed9c7a3d964b1796fb24641ce4}\index{fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}!op@{op}}
+\index{op@{op}!fem::space::FiniteElementSpace@{fem::space::FiniteElementSpace}}
+\doxysubsubsection{\texorpdfstring{op}{op}}
+{\footnotesize\ttfamily \label{classfem_1_1space_1_1_finite_element_space_a2479d8ed9c7a3d964b1796fb24641ce4} 
+Property fem\+::space\+::\+Finite\+Element\+Space\+::op}
+
+
+
+Finite element operator. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_space_8m_source_l00030}{30}} of file \mbox{\hyperlink{_finite_element_space_8m_source}{Finite\+Element\+Space.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+space/\mbox{\hyperlink{_finite_element_space_8m}{Finite\+Element\+Space.\+m}}\end{DoxyCompactItemize}

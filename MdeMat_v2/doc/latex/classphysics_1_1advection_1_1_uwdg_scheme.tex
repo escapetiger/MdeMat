@@ -1,0 +1,287 @@
+\doxysection{physics\+::advection\+::Uwdg\+Scheme Class Reference}
+\hypertarget{classphysics_1_1advection_1_1_uwdg_scheme}{}\label{classphysics_1_1advection_1_1_uwdg_scheme}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+
+
+Upwind Discontinuous Galerkin scheme.  
+
+
+
+
+Inherits \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the UWDG scheme. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a3a25e5ccda4a37c93483a553e089ee5b}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one upwind DG time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{finalize}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Finalize simulation with error analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a7a24ac6dad1ce81e05435e8face449d6}{Scheme}} (Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a8848877ce06f8a8b9ea45186687b6e2a}{set\+Timer}} (Input\+Type obj, Input\+Type verbose)
+\begin{DoxyCompactList}\small\item\em Set performance timer with specified verbosity. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_acdb6478e56a463b3ac88c1530602fef9}{set\+Time\+Discretization}} (Input\+Type obj, Input\+Type t\+Disc\+Id, Input\+Type t\+Final)
+\begin{DoxyCompactList}\small\item\em Set temporal discretization method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab046345780aa4bbc86e9b79d70c26714}{set\+Analyzer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set analysis component for error assessment. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a77f6eeace68f8d6da5803ba08cfee56a}{set\+Visualizer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set visualization component for solution output. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{run}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute the complete time integration loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}{assembly}}
+\begin{DoxyCompactList}\small\item\em Transport assembly for upwind operations. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e}{operator}}
+\begin{DoxyCompactList}\small\item\em Transport operator matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classphysics_1_1_scheme}{physics\+::\+Scheme}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb}{RECORDS}} = \{\textquotesingle{}Integration\textquotesingle{}, \textquotesingle{}Visualization\textquotesingle{}, \textquotesingle{}Analysis\textquotesingle{}\}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}
+\begin{DoxyCompactList}\small\item\em Timer record categories. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{t\+Disc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization object for time integration. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}
+\begin{DoxyCompactList}\small\item\em Performance timer for monitoring execution phases. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}
+\begin{DoxyCompactList}\small\item\em Visualization object for solution plotting and output. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}
+\begin{DoxyCompactList}\small\item\em Analysis object for error computation and assessment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Upwind Discontinuous Galerkin scheme. 
+
+\doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} implements an Upwind Discontinuous Galerkin (UWDG) method for solving advection equations. The method uses upwind numerical fluxes to handle the hyperbolic nature of advection problems, providing stability and sharp resolution of solution features.
+
+The UWDG method discretizes the spatial domain using discontinuous Galerkin finite elements and handles inter-\/element communication through upwind fluxes, making it particularly suitable for transport-\/dominated problems with sharp gradients or discontinuities.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ UWDG\ scheme\ with\ configuration}
+\DoxyCodeLine{\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}\ =\ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'ic'},\ @(x)\ sin(x),\ \textcolor{stringliteral}{'advection'},\ [1],\ \textcolor{stringliteral}{'cfl'},\ 0.5,\ ...}
+\DoxyCodeLine{\textcolor{stringliteral}{'bc'},\ [],\ \textcolor{stringliteral}{'verbose'},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{scheme\ =\ UwdgScheme(\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}},\ timeIntegrator,\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}});}
+\DoxyCodeLine{\%\ Full\ simulation\ workflow}
+\DoxyCodeLine{state\ =\ scheme.initialize(initialState);}
+\DoxyCodeLine{finalState\ =\ scheme.run(state);}
+\DoxyCodeLine{scheme.finalize(finalState);}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+The upwind flux selection provides natural stabilization for 
+
+hyperbolic problems but may require smaller time steps compared 
+
+to semi-\/\+Lagrangian methods for stability.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1_scheme}{physics.\+Scheme} 
+
+\doxylink{classphysics_1_1advection_1_1_sldg_scheme}{physics.\+advection.\+Sldg\+Scheme} 
+
+approx.\+assembly.\+Upwind\+Grid\+Assembly 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_uwdg_scheme_8m_source_l00039}{39}} of file \mbox{\hyperlink{_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!finalize@{finalize}}
+\index{finalize@{finalize}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206} 
+function physics\+::advection\+::\+Uwdg\+Scheme\+::finalize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Finalize simulation with error analysis. 
+
+state = finalize(obj, state) performs final error analysis for absolute error computation against exact solutions.
+
+\mbox{[}fine, coarse\mbox{]} = finalize(obj, fine, coarse) performs relative error analysis comparing fine and coarse grid solutions for convergence studies.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} object \\
+\hline
+{\em varargin} & -\/ Variable arguments containing state(s) for analysis\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Final processed solution state \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!initialize@{initialize}}
+\index{initialize@{initialize}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d} 
+function physics\+::advection\+::\+Uwdg\+Scheme\+::initialize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialize the UWDG scheme. 
+
+state = initialize(obj, state) sets up the upwind discontinuous Galerkin scheme by configuring finite element data, assembling the advection operator, projecting initial conditions, and preparing visualization components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} object \\
+\hline
+{\em state} & -\/ Initial solution state structure\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Initialized state ready for time integration \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!postStep@{postStep}}
+\index{postStep@{postStep}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{postStep()}{postStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53} 
+function physics\+::advection\+::\+Uwdg\+Scheme\+::post\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Postprocess operations after time step. 
+
+state = post\+Step(obj, state) performs postprocessing including visualization updates and timeline advancement for the next integration step.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} object \\
+\hline
+{\em state} & -\/ Current solution state\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Postprocessed solution state \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_a3a25e5ccda4a37c93483a553e089ee5b}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!preStep@{preStep}}
+\index{preStep@{preStep}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{preStep()}{preStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_a3a25e5ccda4a37c93483a553e089ee5b} 
+function physics\+::advection\+::\+Uwdg\+Scheme\+::pre\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Preprocess operations before time step. 
+
+state = pre\+Step(obj, state) performs preprocessing including time step size computation based on CFL condition and coefficient updates for multi-\/step methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} object \\
+\hline
+{\em state} & -\/ Current solution state\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Preprocessed solution state \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39}{physics\+::\+Scheme}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!step@{step}}
+\index{step@{step}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79} 
+function physics\+::advection\+::\+Uwdg\+Scheme\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Perform one upwind DG time step. 
+
+state = step(obj, state) advances the solution by one time step using the upwind discontinuous Galerkin method. The method updates the solution history and applies the linear advection operator with appropriate boundary conditions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{Uwdg\+Scheme} object \\
+\hline
+{\em state} & -\/ Current solution state\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Updated solution state after one time step \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{physics\+::\+Scheme}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!assembly@{assembly}}
+\index{assembly@{assembly}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{assembly}{assembly}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a} 
+Property physics\+::advection\+::\+Uwdg\+Scheme\+::assembly}
+
+
+
+Transport assembly for upwind operations. 
+
+
+
+Definition at line \mbox{\hyperlink{_uwdg_scheme_8m_source_l00043}{43}} of file \mbox{\hyperlink{_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e}\index{physics::advection::UwdgScheme@{physics::advection::UwdgScheme}!operator@{operator}}
+\index{operator@{operator}!physics::advection::UwdgScheme@{physics::advection::UwdgScheme}}
+\doxysubsubsection{\texorpdfstring{operator}{operator}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e} 
+Property physics\+::advection\+::\+Uwdg\+Scheme\+::operator}
+
+
+
+Transport operator matrix. 
+
+
+
+Definition at line \mbox{\hyperlink{_uwdg_scheme_8m_source_l00046}{46}} of file \mbox{\hyperlink{_uwdg_scheme_8m_source}{Uwdg\+Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+advection/\mbox{\hyperlink{_uwdg_scheme_8m}{Uwdg\+Scheme.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,97 @@
+\doxysection{Constant\+Function.\+m}
+\hypertarget{_constant_function_8m_source}{}\label{_constant_function_8m_source}\index{+core/+function/ConstantFunction.m@{+core/+function/ConstantFunction.m}}
+\mbox{\hyperlink{_constant_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00001}00001\ classdef\ ConstantFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00002}00002\ \ \ \ \ \%\ CONSTANTFUNCTION\ Function\ that\ returns\ constant\ values.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ ConstantFunction\ represents\ a\ mathematical\ mapping\ that\ returns}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ the\ same\ constant\ value\ \textcolor{keywordflow}{for}\ all\ input\ points:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \ \ f(x)\ =\ c}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$c\(\backslash\)f\$\ is\ a\ constant\ vector\ in\ \(\backslash\)f\$R\string^m\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00013}00013\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Scalar\ constant\ function}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ f\ =\ ConstantFunction(3,\ 5);\ \ \%\ R\string^3\ -\/>\ R\string^1,\ returns\ 5}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \%\ Vector\ constant\ function}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ f\ =\ ConstantFunction(2,\ [1;\ 2;\ 3]);\ \ \%\ R\string^2\ -\/>\ R\string^3,\ returns\ [1;2;3]}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ \%\ Evaluate}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ X\ =\ rand(3,\ 100);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ Y\ =\ f.evaluate(X);\ \ \%\ Y\ will\ be\ 5\ \textcolor{keywordflow}{for}\ all\ points}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00024}00024\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_linear_function}{LinearFunction}}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00027}00027\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ constant\ \%\ The\ constant\ value\ returned\ by\ the\ function}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00029}00029\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00030}\mbox{\hyperlink{classcore_1_1function_1_1_constant_function}{00030}}\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00031}00031\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}},\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}})}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ CONSTANTFUNCTION\ Constructor\ \textcolor{keywordflow}{for}\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}\ \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00034}\mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}},\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}})\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}\ that\ maps\ from\ R\string^\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ to\ R\string^m,\ where\ m}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ is\ determined\ by\ the\ size\ of\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ -\/\ Number\ of\ input\ dimensions}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ -\/\ Constant\ value\ (scalar\ or\ column\ vector)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ created\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}(:);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ =\ length(\mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}});}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}(\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}},\ \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}});}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.constant\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}};}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00051}\mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{00051}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00052}00052\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00054}00054\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a7ce4d019645bfc6b0ceeee7adc797a29}{evaluateImpl}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATEIMPL\ Implementation\ of\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a7ce4d019645bfc6b0ceeee7adc797a29}{evaluateImpl}}(obj,\ X)\ returns\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ value}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ replicated\ for\ each\ input\ point.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ nPoints)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Constant\ values\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ x\ nPoints)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ nPoints\ =\ size(X,\ 2);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ repmat(obj.\mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}},\ 1,\ nPoints);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ae91b8e5d86a12e15c36d6f960e9ea0d8}{derivativeImpl}}(obj,\ X,\ r)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DERIVATIVEIMPL\ Implementation\ of\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ \mbox{\hyperlink{namespacecore_1_1function}{function}}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00074}\mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a7ce4d019645bfc6b0ceeee7adc797a29}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classcore_1_1function_1_1_function_a32423701ae2a8d238b9617bdb16acd87}{derivative}}.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ae91b8e5d86a12e15c36d6f960e9ea0d8}{derivativeImpl}}(obj,\ X,\ r)\ returns\ zeros\ since\ the}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1function_1_1_function_a32423701ae2a8d238b9617bdb16acd87}{derivative}}\ of\ a\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_ab2477e479f0d61e1be452759c1596c33}{constant}}\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ is\ always\ zero.}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_constant_function_a36f35441908c0791e1f6de701f219567}{ConstantFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ nPoints)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ r\ -\/\ Derivative\ order\ vector\ (1\ x\ \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ -\/\ Zero\ derivatives\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ x\ nPoints)}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ nPoints\ =\ size(X,\ 2);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ zeros(obj.\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}},\ nPoints);}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00090}00090\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_function_8m_source_l00091}00091\ end}
+
+\end{DoxyCode}

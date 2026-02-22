@@ -1,0 +1,340 @@
+\doxysection{approx\+::mesh\+::Polytopal\+Mesh\+Plotter Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{}\label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} plotter.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a1c4e3f7895ee45b455268ae079d1c7f1}{Polytopal\+Mesh\+Plotter}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{Polytopal\+Mesh\+Plotter}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aee32283671cd17871082aafffeff9a66}{plot}} (Input\+Type obj, Input\+Type mesh, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Visualize a \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a9b988ca1cba1f050ac5ec8017160b999}{plot\+Polytopal\+Mesh\+Fast}} (ignored\+Arg, Input\+Type mesh, Input\+Type graph, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Visualize mesh using optimized MATLAB functions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ad8fd73b35c66f1faa8ec4bb1842b4d67}{plot\+Polytopal\+Mesh\+Original}} (Input\+Type obj, Input\+Type mesh, Input\+Type graph, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Use original plotting method for compatibility. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aaa9898798527b75e8e5e86ea9e3ebabf}{plot\+High\+Dimensional}} (Input\+Type obj, Input\+Type mesh, Input\+Type graph, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Visualize a mesh with n\+Dims \texorpdfstring{$>$}{>} 3. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a25a08de5ba8330e6acd463237f3fce82}{is\+Triangular\+Polytopal\+Mesh}} (Input\+Type mesh)
+\begin{DoxyCompactList}\small\item\em Check if mesh consists of triangular/tetrahedral elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acbeb447b5c2e4ef8b871dd371cb461f4}{get\+Tetrahedral\+Surface}} (Input\+Type mesh)
+\begin{DoxyCompactList}\small\item\em if elements are simplices (triangles or tetrahedra) \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a637d494d4ce39d4f0a481e7120a4329d}{plot\+Elements\+Fast}} (Input\+Type mesh, Input\+Type options, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a25a08de5ba8330e6acd463237f3fce82}{is\+Triangular\+Polytopal\+Mesh}})
+\begin{DoxyCompactList}\small\item\em boundary faces which should be triangles \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a4cd3482a80ad47756a59a5d7caa99ae2}{plot\+Faces\+Fast}} (Input\+Type mesh, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em line segments efficiently \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a7cd32744572e3cc8024b10bec16ca204}{plot\+Edges\+Fast}} (Input\+Type mesh, Input\+Type edges, Input\+Type options, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a25a08de5ba8330e6acd463237f3fce82}{is\+Triangular\+Polytopal\+Mesh}})
+\begin{DoxyCompactList}\small\item\em trisurf for triangular faces in 3D \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acfb6810b2313bd44cc68c9062275f74a}{plot\+Edges\+Vectorized}} (Input\+Type vertices, Input\+Type edges, Input\+Type options, Input\+Type n\+Dims)
+\begin{DoxyCompactList}\small\item\em triplot for triangular mesh edges \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a53b2d1ac852168448a84fa474c75ddfe}{plot\+Vertices\+Fast}} (Input\+Type mesh, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em vectorized edge coordinates \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab972fbac5d4d22091bf70ebf1b839363}{plot\+Boundary\+Fast}} (Input\+Type mesh, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em first 3 dimensions for visualization \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab83245f13d5ebf8c90fd3f14748c7bd9}{plot\+Faces\+Slow}} (Input\+Type mesh, Input\+Type face\+Color, Input\+Type alpha)
+\begin{DoxyCompactList}\small\item\em boundary face vertices \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a5540a3b36433f2a12249ae3db65ea022}{plot\+Elements\+Slow}} (Input\+Type mesh, Input\+Type element\+Color, Input\+Type alpha)
+\begin{DoxyCompactList}\small\item\em 1D and 2D, faces are lower-\/dimensional and handled differently \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a8e4b3d00b99c7a5b3a8d8927e9d2af1a}{plot\+Boundary\+Slow}} (Input\+Type mesh, Input\+Type boundary\+Color, Input\+Type line\+Width)
+\begin{DoxyCompactList}\small\item\em segments \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a573c77b59e7b149c847a8ed4ce756b0a}{add\+Legend}} (Input\+Type options)
+\begin{DoxyCompactList}\small\item\em points in 1D \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ae49a874fc22d7eebb372fd6f0d349cce}{Graph\+Plotter}}
+\begin{DoxyCompactList}\small\item\em Visualizing the mesh\textquotesingle{}s graph (\doxylink{classapprox_1_1mesh_1_1_graph_plotter}{Graph\+Plotter}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} plotter. 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{Polytopal\+Mesh\+Plotter} provides fast visualization functionality for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx.\+mesh.\+Polytopal\+Mesh} objects using MATLAB\textquotesingle{}s built-\/in plotting functions such as triplot, trimesh, trisurf, and vectorized plotting for maximum performance.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx.\+mesh.\+Polytopal\+Mesh} 
+
+approx.\+mesh.\+Simplex\+Polytopal\+Mesh 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_plotter_8m_source_l00016}{16}} of file \mbox{\hyperlink{_polytopal_mesh_plotter_8m_source}{Polytopal\+Mesh\+Plotter.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a1c4e3f7895ee45b455268ae079d1c7f1}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!PolytopalMeshPlotter@{PolytopalMeshPlotter}}
+\index{PolytopalMeshPlotter@{PolytopalMeshPlotter}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{PolytopalMeshPlotter()}{PolytopalMeshPlotter()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a1c4e3f7895ee45b455268ae079d1c7f1} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::\+Polytopal\+Mesh\+Plotter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{Polytopal\+Mesh\+Plotter}. 
+
+obj = \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a1c4e3f7895ee45b455268ae079d1c7f1}{Polytopal\+Mesh\+Plotter()} creates a mesh plotter instance with an associated graph plotter for rendering vertices and edges. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a573c77b59e7b149c847a8ed4ce756b0a}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!addLegend@{addLegend}}
+\index{addLegend@{addLegend}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{addLegend()}{addLegend()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a573c77b59e7b149c847a8ed4ce756b0a} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::add\+Legend (\begin{DoxyParamCaption}\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+points in 1D 
+
+edges in 2D
+
+faces in 3D
+
+face outline
+
+problematic boundary faces
+
+Add legend to the plot based on visible elements.
+
+add\+Legend(options) creates a legend showing only the mesh components that are currently visible based on the plotting options. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acbeb447b5c2e4ef8b871dd371cb461f4}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!getTetrahedralSurface@{getTetrahedralSurface}}
+\index{getTetrahedralSurface@{getTetrahedralSurface}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{getTetrahedralSurface()}{getTetrahedralSurface()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acbeb447b5c2e4ef8b871dd371cb461f4} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::get\+Tetrahedral\+Surface (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+if elements are simplices (triangles or tetrahedra) 
+
+Extract surface triangles from tetrahedral mesh. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a25a08de5ba8330e6acd463237f3fce82}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!isTriangularPolytopalMesh@{isTriangularPolytopalMesh}}
+\index{isTriangularPolytopalMesh@{isTriangularPolytopalMesh}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{isTriangularPolytopalMesh()}{isTriangularPolytopalMesh()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a25a08de5ba8330e6acd463237f3fce82} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::is\+Triangular\+Polytopal\+Mesh (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Check if mesh consists of triangular/tetrahedral elements. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aee32283671cd17871082aafffeff9a66}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plot@{plot}}
+\index{plot@{plot}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plot()}{plot()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aee32283671cd17871082aafffeff9a66} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Visualize a \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object. 
+
+plot(obj, mesh) creates a visualization of the mesh with default styling options using fast built-\/in functions.
+
+plot(obj, mesh, options) allows customization of the visualization through options structure. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab972fbac5d4d22091bf70ebf1b839363}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotBoundaryFast@{plotBoundaryFast}}
+\index{plotBoundaryFast@{plotBoundaryFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotBoundaryFast()}{plotBoundaryFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab972fbac5d4d22091bf70ebf1b839363} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Boundary\+Fast (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+first 3 dimensions for visualization 
+
+Plot boundary using optimized functions. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a8e4b3d00b99c7a5b3a8d8927e9d2af1a}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotBoundarySlow@{plotBoundarySlow}}
+\index{plotBoundarySlow@{plotBoundarySlow}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotBoundarySlow()}{plotBoundarySlow()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a8e4b3d00b99c7a5b3a8d8927e9d2af1a} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Boundary\+Slow (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{boundary\+Color}{, }\item[{Input\+Type}]{line\+Width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+segments 
+
+in 2D
+
+elements (tetrahedra, etc.)
+
+convex hull for 3D visualization
+
+problematic elements
+
+Plot the boundary faces of a mesh.
+
+plot\+Boundary\+Slow(mesh, boundary\+Color, line\+Width) renders boundary faces as lines or highlighted regions. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a7cd32744572e3cc8024b10bec16ca204}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotEdgesFast@{plotEdgesFast}}
+\index{plotEdgesFast@{plotEdgesFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotEdgesFast()}{plotEdgesFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a7cd32744572e3cc8024b10bec16ca204} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Edges\+Fast (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{edges}{, }\item[{Input\+Type}]{options}{, }\item[{Input\+Type}]{is\+Triangular\+Polytopal\+Mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+trisurf for triangular faces in 3D 
+
+patch for general faces
+
+Plot edges using optimized functions. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acfb6810b2313bd44cc68c9062275f74a}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotEdgesVectorized@{plotEdgesVectorized}}
+\index{plotEdgesVectorized@{plotEdgesVectorized}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotEdgesVectorized()}{plotEdgesVectorized()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_acfb6810b2313bd44cc68c9062275f74a} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Edges\+Vectorized (\begin{DoxyParamCaption}\item[{Input\+Type}]{vertices}{, }\item[{Input\+Type}]{edges}{, }\item[{Input\+Type}]{options}{, }\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+triplot for triangular mesh edges 
+
+edges directly using vectorized plotting
+
+trimesh for 3D triangular mesh edges
+
+tetrahedra, plot edges directly
+
+edges directly
+
+edges directly for other dimensions
+
+Plot edges using vectorized plotting. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a637d494d4ce39d4f0a481e7120a4329d}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotElementsFast@{plotElementsFast}}
+\index{plotElementsFast@{plotElementsFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotElementsFast()}{plotElementsFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a637d494d4ce39d4f0a481e7120a4329d} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Elements\+Fast (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{options}{, }\item[{Input\+Type}]{is\+Triangular\+Polytopal\+Mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+boundary faces which should be triangles 
+
+Plot elements using optimized functions. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a5540a3b36433f2a12249ae3db65ea022}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotElementsSlow@{plotElementsSlow}}
+\index{plotElementsSlow@{plotElementsSlow}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotElementsSlow()}{plotElementsSlow()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a5540a3b36433f2a12249ae3db65ea022} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Elements\+Slow (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{element\+Color}{, }\item[{Input\+Type}]{alpha}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+1D and 2D, faces are lower-\/dimensional and handled differently 
+
+3D, faces are 2D polygons
+
+different face types
+
+convhull for proper ordering if needed
+
+problematic faces
+
+Plot the elements of a mesh.
+
+plot\+Elements\+Slow(mesh, element\+Color, alpha) renders mesh elements as filled shapes with the specified color and transparency. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a4cd3482a80ad47756a59a5d7caa99ae2}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotFacesFast@{plotFacesFast}}
+\index{plotFacesFast@{plotFacesFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotFacesFast()}{plotFacesFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a4cd3482a80ad47756a59a5d7caa99ae2} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Faces\+Fast (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+line segments efficiently 
+
+trisurf for filled triangles
+
+patch for general polygons
+
+mesh -\/ show surface using boundary
+
+patch for general 3D elements
+
+Plot faces using optimized functions. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab83245f13d5ebf8c90fd3f14748c7bd9}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotFacesSlow@{plotFacesSlow}}
+\index{plotFacesSlow@{plotFacesSlow}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotFacesSlow()}{plotFacesSlow()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ab83245f13d5ebf8c90fd3f14748c7bd9} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Faces\+Slow (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{face\+Color}{, }\item[{Input\+Type}]{alpha}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+boundary face vertices 
+
+points in 1D
+
+edges in 2D -\/ plot as line segments
+
+faces in 3D
+
+trisurf to plot boundary triangles as wireframe
+
+boundary faces
+
+Plot the faces of a mesh.
+
+plot\+Faces\+Slow(mesh, face\+Color, alpha) renders mesh faces as filled polygons with the specified color and transparency. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aaa9898798527b75e8e5e86ea9e3ebabf}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotHighDimensional@{plotHighDimensional}}
+\index{plotHighDimensional@{plotHighDimensional}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotHighDimensional()}{plotHighDimensional()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_aaa9898798527b75e8e5e86ea9e3ebabf} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+High\+Dimensional (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{graph}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Visualize a mesh with n\+Dims \texorpdfstring{$>$}{>} 3. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a9b988ca1cba1f050ac5ec8017160b999}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotPolytopalMeshFast@{plotPolytopalMeshFast}}
+\index{plotPolytopalMeshFast@{plotPolytopalMeshFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotPolytopalMeshFast()}{plotPolytopalMeshFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a9b988ca1cba1f050ac5ec8017160b999} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Polytopal\+Mesh\+Fast (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{graph}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Visualize mesh using optimized MATLAB functions. 
+
+plot\+Polytopal\+Mesh\+Fast(obj, mesh, graph, options) renders mesh components using vectorized MATLAB built-\/in functions for maximum speed. \Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ad8fd73b35c66f1faa8ec4bb1842b4d67}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotPolytopalMeshOriginal@{plotPolytopalMeshOriginal}}
+\index{plotPolytopalMeshOriginal@{plotPolytopalMeshOriginal}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotPolytopalMeshOriginal()}{plotPolytopalMeshOriginal()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ad8fd73b35c66f1faa8ec4bb1842b4d67} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Polytopal\+Mesh\+Original (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{graph}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Use original plotting method for compatibility. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a53b2d1ac852168448a84fa474c75ddfe}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!plotVerticesFast@{plotVerticesFast}}
+\index{plotVerticesFast@{plotVerticesFast}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{plotVerticesFast()}{plotVerticesFast()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_a53b2d1ac852168448a84fa474c75ddfe} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::plot\+Vertices\+Fast (\begin{DoxyParamCaption}\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+vectorized edge coordinates 
+
+Plot vertices using optimized functions. 
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ae49a874fc22d7eebb372fd6f0d349cce}\index{approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}!GraphPlotter@{GraphPlotter}}
+\index{GraphPlotter@{GraphPlotter}!approx::mesh::PolytopalMeshPlotter@{approx::mesh::PolytopalMeshPlotter}}
+\doxysubsubsection{\texorpdfstring{GraphPlotter}{GraphPlotter}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_plotter_ae49a874fc22d7eebb372fd6f0d349cce} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+Plotter\+::\+Graph\+Plotter\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Visualizing the mesh\textquotesingle{}s graph (\doxylink{classapprox_1_1mesh_1_1_graph_plotter}{Graph\+Plotter}) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_plotter_8m_source_l00020}{20}} of file \mbox{\hyperlink{_polytopal_mesh_plotter_8m_source}{Polytopal\+Mesh\+Plotter.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_polytopal_mesh_plotter_8m}{Polytopal\+Mesh\+Plotter.\+m}}\end{DoxyCompactItemize}

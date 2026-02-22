@@ -1,0 +1,128 @@
+\doxysection{approx\+::integrate\+::Spherical\+Monte\+Carlo\+Rule Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{}\label{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}\index{approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}}
+
+
+Monte Carlo integration rule on hypersphere.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule}{approx\+::integrate\+::\+Hypersphere\+Rule}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_aa003cfbcf14e397c4a82eb4e96030c55}{Spherical\+Monte\+Carlo\+Rule}} (Input\+Type n\+Dims, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{Spherical\+Monte\+Carlo\+Rule}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule}{approx\+::integrate\+::\+Hypersphere\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule_a3e4563a15496165f69939897e5df19e9}{Hypersphere\+Rule}} (Input\+Type n\+Dims, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classapprox_1_1integrate_1_1_hypersphere_rule}{Hypersphere\+Rule}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{approx\+::integrate\+::\+Integration\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}{Integration\+Rule}} (Input\+Type n\+Dims)
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a9e0919b9249cf617db2096b0e918c56d}{generate}} (Input\+Type obj, Input\+Type geometry, Input\+Type np)
+\begin{DoxyCompactList}\small\item\em Generate integration points and weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_a79e87d122cc75483c618d53f78afa5ed}{Seed}}
+\begin{DoxyCompactList}\small\item\em Random number generator seed for reproducibility. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule}{approx\+::integrate\+::\+Hypersphere\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule_a31de91b3e8dc3cdbcc18727ac172287d}{Coord}}
+\begin{DoxyCompactList}\small\item\em Coordinate system for output points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{approx\+::integrate\+::\+Integration\+Rule}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_ad28892d624409e132bc943b497798e93}{NDims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions supported by this rule. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_ac5269511fda2bad29296ba09e879e43a}{generate\+Impl}} (Input\+Type obj, Input\+Type geometry, Input\+Type np)
+\begin{DoxyCompactList}\small\item\em Generate uniformly distributed nodes and weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Monte Carlo integration rule on hypersphere. 
+
+\doxylink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{Spherical\+Monte\+Carlo\+Rule} implements Monte Carlo integration over hyperspheres of arbitrary dimension using the normalized Gaussian method for uniform point generation. This method is particularly useful for high-\/dimensional integration problems and integrands with discontinuities or singularities.
+
+The implementation uses the normalized Gaussian method\+: multivariate normal random vectors are generated and normalized to unit length, ensuring uniform distribution on the hypersphere surface.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_monte_carlo_rule}{approx.\+integrate.\+Monte\+Carlo\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_lebedev_rule}{approx.\+integrate.\+Lebedev\+Rule} 
+
+\doxylink{classapprox_1_1integrate_1_1_spherical_gauss_trapezoidal_rule}{approx.\+integrate.\+Spherical\+Gauss\+Trapezoidal\+Rule} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_spherical_monte_carlo_rule_8m_source_l00023}{23}} of file \mbox{\hyperlink{_spherical_monte_carlo_rule_8m_source}{Spherical\+Monte\+Carlo\+Rule.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_aa003cfbcf14e397c4a82eb4e96030c55}\index{approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}!SphericalMonteCarloRule@{SphericalMonteCarloRule}}
+\index{SphericalMonteCarloRule@{SphericalMonteCarloRule}!approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}}
+\doxysubsubsection{\texorpdfstring{SphericalMonteCarloRule()}{SphericalMonteCarloRule()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_aa003cfbcf14e397c4a82eb4e96030c55} 
+function approx\+::integrate\+::\+Spherical\+Monte\+Carlo\+Rule\+::\+Spherical\+Monte\+Carlo\+Rule (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{Spherical\+Monte\+Carlo\+Rule}. 
+
+obj = Spherical\+Monte\+Carlo\+Rule(n\+Dims) creates a Monte Carlo rule that supports up to {\itshape n\+Dims} dimensions with default random seed.
+
+obj = \doxylink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{Spherical\+Monte\+Carlo\+Rule}(n\+Dims, seed=seed) creates a Monte Carlo rule with the specified random number generator seed {\itshape seed}. 
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_ac5269511fda2bad29296ba09e879e43a}\index{approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}!generateImpl@{generateImpl}}
+\index{generateImpl@{generateImpl}!approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}}
+\doxysubsubsection{\texorpdfstring{generateImpl()}{generateImpl()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_ac5269511fda2bad29296ba09e879e43a} 
+function approx\+::integrate\+::\+Spherical\+Monte\+Carlo\+Rule\+::generate\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{geometry}{, }\item[{Input\+Type}]{np}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Generate uniformly distributed nodes and weights. 
+
+\mbox{[}X, w\mbox{]} = generate\+Impl(obj, geometry, np) generates {\itshape np} uniformly distributed points {\itshape X} and corresponding weights {\itshape w} on the hypersphere {\itshape geometry}. 
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_rule_ab3f7e1c24a0432d7596d457528ec89e2}{approx\+::integrate\+::\+Hypersphere\+Rule}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_a79e87d122cc75483c618d53f78afa5ed}\index{approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}!Seed@{Seed}}
+\index{Seed@{Seed}!approx::integrate::SphericalMonteCarloRule@{approx::integrate::SphericalMonteCarloRule}}
+\doxysubsubsection{\texorpdfstring{Seed}{Seed}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule_a79e87d122cc75483c618d53f78afa5ed} 
+Property approx\+::integrate\+::\+Spherical\+Monte\+Carlo\+Rule\+::\+Seed}
+
+
+
+Random number generator seed for reproducibility. 
+
+
+
+Definition at line \mbox{\hyperlink{_spherical_monte_carlo_rule_8m_source_l00027}{27}} of file \mbox{\hyperlink{_spherical_monte_carlo_rule_8m_source}{Spherical\+Monte\+Carlo\+Rule.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_spherical_monte_carlo_rule_8m}{Spherical\+Monte\+Carlo\+Rule.\+m}}\end{DoxyCompactItemize}

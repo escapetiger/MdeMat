@@ -1,0 +1,186 @@
+\doxysection{physics\+::scheme\+::Config\+Parser Class Reference}
+\hypertarget{classphysics_1_1scheme_1_1_config_parser}{}\label{classphysics_1_1scheme_1_1_config_parser}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+
+
+Configuration file parser for KEY=VALUE format.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classphysics_1_1scheme_1_1_scheme}{physics\+::scheme\+::\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{Config\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9}{load\+From\+File}} (Input\+Type obj, Input\+Type file)
+\begin{DoxyCompactList}\small\item\em Load configuration from file and add options to Config. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}{add\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type options)
+\begin{DoxyCompactList}\small\item\em Add configuration option with default value and validator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f}{has\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Check if configuration option exists. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308}{get\+Config}} (Input\+Type obj, Input\+Type name)
+\begin{DoxyCompactList}\small\item\em Get configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f}{set\+Config}} (Input\+Type obj, Input\+Type name, Input\+Type value)
+\begin{DoxyCompactList}\small\item\em Set configuration option value. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Remove all MATLAB paths added during parsing operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}{Config}}
+\begin{DoxyCompactList}\small\item\em Struct containing all parsed configuration options. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3}{Validators}}
+\begin{DoxyCompactList}\small\item\em Struct containing validator functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration file parser for KEY=VALUE format. 
+
+\doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser} provides a robust interface for reading and processing configuration files that use KEY=VALUE syntax. Supports extracting options as MATLAB variables, dynamically adding directories to the MATLAB path, and handling various configuration settings with default values and validation.
+
+The parser supports three main configuration directives\+:
+
+
+\begin{DoxyItemize}
+\item OPTION=name=value\+: Defines configuration options with automatic type conversion
+\item MATLABPATH=path\+: Adds directories to MATLAB\textquotesingle{}s search path
+\item SUBDIRS=path\+: Recursively adds all subdirectories to MATLAB\textquotesingle{}s search path
+\end{DoxyItemize}
+
+Type conversion is performed automatically for numeric values, logical values (true/false), and MATLAB expressions. String values are preserved as-\/is. Default values and validators can be configured for each option using the add\+Config method.
+
+Configuration files use KEY=VALUE format with \# for comments. Empty lines and comment lines are ignored during parsing. All parsed options are stored in the Config property, and added paths are tracked in obj.\+Config.\+paths for removal using the \doxylink{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}{reset()} method.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519}{core.\+except.\+assert} 
+
+\doxylink{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa}{core.\+except.\+verify} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_config_parser_8m_source_l00037}{37}} of file \mbox{\hyperlink{_config_parser_8m_source}{Config\+Parser.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!ConfigParser@{ConfigParser}}
+\index{ConfigParser@{ConfigParser}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{ConfigParser()}{ConfigParser()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760} 
+function physics\+::scheme\+::\+Config\+Parser\+::\+Config\+Parser (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser}. 
+
+obj = \doxylink{classphysics_1_1scheme_1_1_config_parser_af6f7f76146291486cf4f9d62818cb760}{Config\+Parser()} creates a new \doxylink{classphysics_1_1scheme_1_1_config_parser}{Config\+Parser} instance with empty configuration and validators structures. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!addConfig@{addConfig}}
+\index{addConfig@{addConfig}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{addConfig()}{addConfig()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a53e631f580caffa509aae444b2ae1465} 
+function physics\+::scheme\+::\+Config\+Parser\+::add\+Config (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{name}{, }\item[{Input\+Type}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Add configuration option with default value and validator. 
+
+obj = add\+Config(obj, name, options) adds a configuration option with the specified {\itshape name} and {\itshape options} structure containing default value and validator function. The options structure should contain fields \textquotesingle{}default\textquotesingle{} and \textquotesingle{}validator\textquotesingle{}. \Hypertarget{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!getConfig@{getConfig}}
+\index{getConfig@{getConfig}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{getConfig()}{getConfig()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_aebca99d864b808dc9131d5e3f1c85308} 
+function physics\+::scheme\+::\+Config\+Parser\+::get\+Config (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Get configuration option value. 
+
+value = get\+Config(obj, name) returns the value of the configuration option with the specified {\itshape name} from obj.\+Config. \Hypertarget{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!hasConfig@{hasConfig}}
+\index{hasConfig@{hasConfig}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{hasConfig()}{hasConfig()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a646bdb6d529feb5aad1d032d52d9802f} 
+function physics\+::scheme\+::\+Config\+Parser\+::has\+Config (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Check if configuration option exists. 
+
+tf = has\+Config(obj, name) returns true if the configuration option with the specified {\itshape name} exists in obj.\+Config, false otherwise. \Hypertarget{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!loadFromFile@{loadFromFile}}
+\index{loadFromFile@{loadFromFile}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{loadFromFile()}{loadFromFile()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a2bf9cb6d02f27f6e4c838fe8c243a6a9} 
+function physics\+::scheme\+::\+Config\+Parser\+::load\+From\+File (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{file}{}\end{DoxyParamCaption})}
+
+
+
+Load configuration from file and add options to Config. 
+
+obj = load\+From\+File(obj, file) reads and processes the specified configuration file {\itshape file}, extracting configuration options and adding paths to MATLAB\textquotesingle{}s search path as specified. All parsed options are added to obj.\+Config. \Hypertarget{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!reset@{reset}}
+\index{reset@{reset}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a444c2b7e2a258ae3a19ba1ac395cfe0e} 
+function physics\+::scheme\+::\+Config\+Parser\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Remove all MATLAB paths added during parsing operations. 
+
+obj = reset(obj) removes all MATLAB search paths that were added by the parser during previous parse() operations. Displays a confirmation message indicating the number of paths removed or confirms that no paths needed removal. \Hypertarget{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!setConfig@{setConfig}}
+\index{setConfig@{setConfig}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{setConfig()}{setConfig()}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a2bbceedd5e5032f0bcdbd8c9d62fe86f} 
+function physics\+::scheme\+::\+Config\+Parser\+::set\+Config (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{name}{, }\item[{Input\+Type}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Set configuration option value. 
+
+obj = set\+Config(obj, name, value) sets the configuration option with the specified {\itshape name} to the given {\itshape value}. If a validator exists for this option, it will be applied. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!Config@{Config}}
+\index{Config@{Config}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{Config}{Config}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_af240b274e7e4d6fa162f0c48a1bac9ef} 
+Property physics\+::scheme\+::\+Config\+Parser\+::\+Config}
+
+
+
+Struct containing all parsed configuration options. 
+
+
+
+Definition at line \mbox{\hyperlink{_config_parser_8m_source_l00041}{41}} of file \mbox{\hyperlink{_config_parser_8m_source}{Config\+Parser.\+m}}.
+
+\Hypertarget{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3}\index{physics::scheme::ConfigParser@{physics::scheme::ConfigParser}!Validators@{Validators}}
+\index{Validators@{Validators}!physics::scheme::ConfigParser@{physics::scheme::ConfigParser}}
+\doxysubsubsection{\texorpdfstring{Validators}{Validators}}
+{\footnotesize\ttfamily \label{classphysics_1_1scheme_1_1_config_parser_a32666bbd043f5deeaeeb44e4e604c1a3} 
+Property physics\+::scheme\+::\+Config\+Parser\+::\+Validators}
+
+
+
+Struct containing validator functions. 
+
+
+
+Definition at line \mbox{\hyperlink{_config_parser_8m_source_l00044}{44}} of file \mbox{\hyperlink{_config_parser_8m_source}{Config\+Parser.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+scheme/\mbox{\hyperlink{_config_parser_8m}{Config\+Parser.\+m}}\end{DoxyCompactItemize}

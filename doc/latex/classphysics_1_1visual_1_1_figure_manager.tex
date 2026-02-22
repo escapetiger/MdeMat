@@ -1,0 +1,310 @@
+\doxysection{physics\+::visual\+::Figure\+Manager Class Reference}
+\hypertarget{classphysics_1_1visual_1_1_figure_manager}{}\label{classphysics_1_1visual_1_1_figure_manager}\index{physics::visual::FigureManager@{physics::visual::FigureManager}}
+
+
+Automatic figure positioning and lifecycle management.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a373c28dbdf6a3162a7678f334fb13166}{Figure\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Construct an instance of \doxylink{classphysics_1_1visual_1_1_figure_manager}{Figure\+Manager}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a6b04d40669a08de96e4b2f2e74f1f68c}{create\+Figures}} (Input\+Type obj, Input\+Type n\+Figures)
+\begin{DoxyCompactList}\small\item\em Create non-\/overlapping figures with default styling. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_ae543380b877482f86a1abdd93b73013f}{close\+All}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Close all managed figures. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a90295c7d37ff930911eec8797cc1ad7a}{is\+Valid}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Check if all managed figures are still valid. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_aafe11f33c6c2d5323e0f9fb5231da76f}{bring\+To\+Front}} (Input\+Type obj, Input\+Type figure\+Index)
+\begin{DoxyCompactList}\small\item\em Bring specified figure to front. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a739b41ec223b114c3318b7fe2b863dcc}{bring\+All\+To\+Front}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Bring all managed figures to front. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a13ecbea8cfd9db3cb97464d02203ae78}{get\+Screen\+Size}} ()
+\begin{DoxyCompactList}\small\item\em linear index to grid coordinates \end{DoxyCompactList}\item 
+static function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a4d62111ea6b1a294058f325778041273}{calculate\+Layout}} (Input\+Type n\+Figures)
+\begin{DoxyCompactList}\small\item\em Determine optimal layout dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a8e751d96a3cfd9c72dfc3ef1b43d1e6f}{Figure\+Handles}}
+\begin{DoxyCompactList}\small\item\em Cell array of created figure handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a36b08f5c7fa395d49643a1b4a16f088c}{Screen\+Size}}
+\begin{DoxyCompactList}\small\item\em Screen dimensions \mbox{[}width, height\mbox{]} in pixels. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a577684000deb668e60a657fc2ec9a120}{Figure\+Size}}
+\begin{DoxyCompactList}\small\item\em Standard figure size \mbox{[}width, height\mbox{]} in pixels. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a227a4cc49d8d627e26ad1c5884ce462b}{Default\+Figure\+Width}} = 560
+\begin{DoxyCompactList}\small\item\em Default MATLAB figure width in pixels. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_acbadcdbceaa5290f7c72778e90cc1f3c}{Default\+Figure\+Height}} = 420
+\begin{DoxyCompactList}\small\item\em Default MATLAB figure height in pixels. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a46a825afff492c17017a2cdff834fe66}{Figure\+Spacing}} = 20
+\begin{DoxyCompactList}\small\item\em Spacing between figures in pixels. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_ae57212b8265a4eb43f7e647125a40279}{Screen\+Margin}} = 50
+\begin{DoxyCompactList}\small\item\em Margin from screen edges in pixels. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a7bcc9c9936c9085445a8becd24128f0d}{NFigures}}
+\begin{DoxyCompactList}\small\item\em Number of managed figures. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1visual_1_1_figure_manager_a730e51d60ee09559e47b0a32bfc37ce4}{calculate\+Non\+Overlapping\+Position}} (Input\+Type obj, Input\+Type figure\+Index, Input\+Type layout\+Dims)
+\begin{DoxyCompactList}\small\item\em Calculate position without overlap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Automatic figure positioning and lifecycle management. 
+
+\doxylink{classphysics_1_1visual_1_1_figure_manager}{Figure\+Manager} handles creation, positioning, and cleanup of figure windows with automatic screen centering. Figures are positioned in the center of the screen with default MATLAB styling.
+
+The manager creates figures with consistent positioning and handles their lifecycle, ensuring proper cleanup when visualization is complete.
+
+Examples\+: \% Create manager and figures manager = \doxylink{classphysics_1_1visual_1_1_figure_manager_a373c28dbdf6a3162a7678f334fb13166}{Figure\+Manager()}; figures = manager.\+create\+Figures(2);
+
+\% Later cleanup manager.\+close\+All(); 
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00024}{24}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a373c28dbdf6a3162a7678f334fb13166}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!FigureManager@{FigureManager}}
+\index{FigureManager@{FigureManager}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{FigureManager()}{FigureManager()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a373c28dbdf6a3162a7678f334fb13166} 
+function physics\+::visual\+::\+Figure\+Manager\+::\+Figure\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Construct an instance of \doxylink{classphysics_1_1visual_1_1_figure_manager}{Figure\+Manager}. 
+
+obj = \doxylink{classphysics_1_1visual_1_1_figure_manager_a373c28dbdf6a3162a7678f334fb13166}{Figure\+Manager()} creates a figure manager and initializes screen size information for automatic positioning calculations. 
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a739b41ec223b114c3318b7fe2b863dcc}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!bringAllToFront@{bringAllToFront}}
+\index{bringAllToFront@{bringAllToFront}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{bringAllToFront()}{bringAllToFront()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a739b41ec223b114c3318b7fe2b863dcc} 
+function physics\+::visual\+::\+Figure\+Manager\+::bring\+All\+To\+Front (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Bring all managed figures to front. 
+
+obj = bring\+All\+To\+Front(obj) brings all managed figures to the front in creation order. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_aafe11f33c6c2d5323e0f9fb5231da76f}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!bringToFront@{bringToFront}}
+\index{bringToFront@{bringToFront}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{bringToFront()}{bringToFront()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_aafe11f33c6c2d5323e0f9fb5231da76f} 
+function physics\+::visual\+::\+Figure\+Manager\+::bring\+To\+Front (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{figure\+Index}{}\end{DoxyParamCaption})}
+
+
+
+Bring specified figure to front. 
+
+obj = bring\+To\+Front(obj, figure\+Index) brings the specified figure to the front of all windows and gives it focus. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_a4d62111ea6b1a294058f325778041273}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!calculateLayout@{calculateLayout}}
+\index{calculateLayout@{calculateLayout}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{calculateLayout()}{calculateLayout()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a4d62111ea6b1a294058f325778041273} 
+function physics\+::visual\+::\+Figure\+Manager\+::calculate\+Layout (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Figures}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determine optimal layout dimensions. 
+
+layout\+Dims = calculate\+Layout(n\+Figures) calculates the optimal number of rows and columns for arranging figures without overlap. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_a730e51d60ee09559e47b0a32bfc37ce4}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!calculateNonOverlappingPosition@{calculateNonOverlappingPosition}}
+\index{calculateNonOverlappingPosition@{calculateNonOverlappingPosition}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{calculateNonOverlappingPosition()}{calculateNonOverlappingPosition()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a730e51d60ee09559e47b0a32bfc37ce4} 
+function physics\+::visual\+::\+Figure\+Manager\+::calculate\+Non\+Overlapping\+Position (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{figure\+Index}{, }\item[{Input\+Type}]{layout\+Dims}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Calculate position without overlap. 
+
+position = calculate\+Non\+Overlapping\+Position(obj, figure\+Index, layout\+Dims) calculates the screen position for the figure to ensure no overlap with other figures in the layout. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_ae543380b877482f86a1abdd93b73013f}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!closeAll@{closeAll}}
+\index{closeAll@{closeAll}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{closeAll()}{closeAll()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_ae543380b877482f86a1abdd93b73013f} 
+function physics\+::visual\+::\+Figure\+Manager\+::close\+All (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Close all managed figures. 
+
+obj = close\+All(obj) closes all figures created by this manager and clears the figure handle cache. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_a6b04d40669a08de96e4b2f2e74f1f68c}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!createFigures@{createFigures}}
+\index{createFigures@{createFigures}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{createFigures()}{createFigures()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a6b04d40669a08de96e4b2f2e74f1f68c} 
+function physics\+::visual\+::\+Figure\+Manager\+::create\+Figures (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Figures}{}\end{DoxyParamCaption})}
+
+
+
+Create non-\/overlapping figures with default styling. 
+
+figure\+Handles = create\+Figures(obj, n\+Figures) creates the specified number of figures positioned to avoid overlap. For 1-\/2 figures, they are placed side by side. For more figures, they are arranged in a simple grid pattern. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_a13ecbea8cfd9db3cb97464d02203ae78}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!getScreenSize@{getScreenSize}}
+\index{getScreenSize@{getScreenSize}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{getScreenSize()}{getScreenSize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a13ecbea8cfd9db3cb97464d02203ae78} 
+function physics\+::visual\+::\+Figure\+Manager\+::get\+Screen\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+linear index to grid coordinates 
+
+default figure size
+
+total grid dimensions
+
+if grid fits on screen, if not, scale down
+
+down figure size to fit
+
+grid dimensions with scaled figures
+
+the entire grid on screen
+
+figure position within grid
+
+Get usable screen dimensions.
+
+screen\+Size = \doxylink{classphysics_1_1visual_1_1_figure_manager_a13ecbea8cfd9db3cb97464d02203ae78}{get\+Screen\+Size()} returns the screen dimensions \mbox{[}width, height\mbox{]} in pixels for positioning. \Hypertarget{classphysics_1_1visual_1_1_figure_manager_a90295c7d37ff930911eec8797cc1ad7a}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!isValid@{isValid}}
+\index{isValid@{isValid}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a90295c7d37ff930911eec8797cc1ad7a} 
+function physics\+::visual\+::\+Figure\+Manager\+::is\+Valid (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Check if all managed figures are still valid. 
+
+TF = is\+Valid(obj) returns true if all managed figures are still open and valid. 
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_acbadcdbceaa5290f7c72778e90cc1f3c}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!DefaultFigureHeight@{DefaultFigureHeight}}
+\index{DefaultFigureHeight@{DefaultFigureHeight}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{DefaultFigureHeight}{DefaultFigureHeight}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_acbadcdbceaa5290f7c72778e90cc1f3c} 
+Constant Property physics\+::visual\+::\+Figure\+Manager\+::\+Default\+Figure\+Height = 420}
+
+
+
+Default MATLAB figure height in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00043}{43}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a227a4cc49d8d627e26ad1c5884ce462b}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!DefaultFigureWidth@{DefaultFigureWidth}}
+\index{DefaultFigureWidth@{DefaultFigureWidth}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{DefaultFigureWidth}{DefaultFigureWidth}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a227a4cc49d8d627e26ad1c5884ce462b} 
+Constant Property physics\+::visual\+::\+Figure\+Manager\+::\+Default\+Figure\+Width = 560}
+
+
+
+Default MATLAB figure width in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00040}{40}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a8e751d96a3cfd9c72dfc3ef1b43d1e6f}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!FigureHandles@{FigureHandles}}
+\index{FigureHandles@{FigureHandles}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{FigureHandles}{FigureHandles}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a8e751d96a3cfd9c72dfc3ef1b43d1e6f} 
+Property physics\+::visual\+::\+Figure\+Manager\+::\+Figure\+Handles}
+
+
+
+Cell array of created figure handles. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00028}{28}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a577684000deb668e60a657fc2ec9a120}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!FigureSize@{FigureSize}}
+\index{FigureSize@{FigureSize}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{FigureSize}{FigureSize}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a577684000deb668e60a657fc2ec9a120} 
+Property physics\+::visual\+::\+Figure\+Manager\+::\+Figure\+Size}
+
+
+
+Standard figure size \mbox{[}width, height\mbox{]} in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00034}{34}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a46a825afff492c17017a2cdff834fe66}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!FigureSpacing@{FigureSpacing}}
+\index{FigureSpacing@{FigureSpacing}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{FigureSpacing}{FigureSpacing}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a46a825afff492c17017a2cdff834fe66} 
+Constant Property physics\+::visual\+::\+Figure\+Manager\+::\+Figure\+Spacing = 20}
+
+
+
+Spacing between figures in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00046}{46}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a7bcc9c9936c9085445a8becd24128f0d}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!NFigures@{NFigures}}
+\index{NFigures@{NFigures}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{NFigures}{NFigures}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a7bcc9c9936c9085445a8becd24128f0d} 
+Property physics\+::visual\+::\+Figure\+Manager\+::\+NFigures}
+
+
+
+Number of managed figures. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00055}{55}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_ae57212b8265a4eb43f7e647125a40279}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!ScreenMargin@{ScreenMargin}}
+\index{ScreenMargin@{ScreenMargin}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{ScreenMargin}{ScreenMargin}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_ae57212b8265a4eb43f7e647125a40279} 
+Constant Property physics\+::visual\+::\+Figure\+Manager\+::\+Screen\+Margin = 50}
+
+
+
+Margin from screen edges in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00049}{49}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+\Hypertarget{classphysics_1_1visual_1_1_figure_manager_a36b08f5c7fa395d49643a1b4a16f088c}\index{physics::visual::FigureManager@{physics::visual::FigureManager}!ScreenSize@{ScreenSize}}
+\index{ScreenSize@{ScreenSize}!physics::visual::FigureManager@{physics::visual::FigureManager}}
+\doxysubsubsection{\texorpdfstring{ScreenSize}{ScreenSize}}
+{\footnotesize\ttfamily \label{classphysics_1_1visual_1_1_figure_manager_a36b08f5c7fa395d49643a1b4a16f088c} 
+Property physics\+::visual\+::\+Figure\+Manager\+::\+Screen\+Size}
+
+
+
+Screen dimensions \mbox{[}width, height\mbox{]} in pixels. 
+
+
+
+Definition at line \mbox{\hyperlink{_figure_manager_8m_source_l00031}{31}} of file \mbox{\hyperlink{_figure_manager_8m_source}{Figure\+Manager.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+visual/\mbox{\hyperlink{_figure_manager_8m}{Figure\+Manager.\+m}}\end{DoxyCompactItemize}

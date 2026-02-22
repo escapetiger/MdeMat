@@ -1,0 +1,216 @@
+%==========================================================================
+% FileName: ex02_diffusive_scaling
+% Author: Yi Cai
+% Date: 2025-07-23
+% Description:
+%   Diffusive scaling with periodic boundary conditions.
+%==========================================================================
+
+clc;
+clear;
+close all;
+
+%% CONFIGURATION
+configPath = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
+config = core.io.OptionParser().parse(configPath);
+config.nDims = 1; % Dimension
+config.L = 1; % Length
+config.xBBox = repmat([-config.L, config.L], 1, config.nDims); % Spatial bounding box
+config.tFinal = 0.1; % Final time
+config.omega = repmat(pi / config.L, 1, config.nDims); % Wave length
+config.lambda = 0.5; % Time decay
+config.epsilon = 1; % Scaling parameter
+config.alpha = 1; % Time scale
+config.beta = -1; % Scattering scale
+config.gamma = 1; % Absorption scale
+config.verbose = 1; % Verbose flag
+config.nx = repmat(4, 1, config.nDims); % Grid resolution
+if config.nDims == 1 && config.vReductionType == 1
+    config.E = 1 / 2;
+    config.M = 1;
+    config.nv = 2;
+elseif config.nDims == 1 && config.vReductionType == 2
+    config.E = 1 / 2;
+    config.M = 3;
+    config.nv = max(8, config.M);
+elseif config.nDims == 2 && config.vReductionType == 1
+    config.E = 1 / (2 * pi);
+    config.M = 3;
+    config.nv = max(8, ceil((3 * config.M + 2)/4)+1);
+elseif config.nDims == 2 && config.vReductionType == 2
+    config.E = 1 / (4 * pi);
+    config.M = 3;
+    config.nv = max([3, 3], repmat(ceil(sqrt(config.M))+1, 1, 2));
+else
+    config.E = 1 / (4 * pi);
+    config.M = 4;
+    config.nv = max([3, 3], repmat(ceil(sqrt(config.M))+1, 1, 2));
+end
+config.N = prod(config.nv);
+% config.N = 0;
+config.ic = fInit(config.E, config.omega, config.epsilon); % Initial condition
+config.bc = []; % Boundary condition
+config.exact = fExact(config.E, config.omega, config.lambda, config.epsilon); % Exact solution
+% config.exact = [];
+config.scattering = scattering();
+config.absorption = absorption();
+config.source = source(config.E, config.omega, config.lambda, config.epsilon, ...
+    config.alpha, config.beta, config.gamma);
+if config.nDims < 3
+    config.experimentId = sprintf('DSA%dR%d', config.nDims, config.vReductionType);
+else
+    config.experimentId = sprintf('DSA%d', config.nDims);
+end
+config.vDiscId = sprintf('P%dS%d', config.M, config.N);
+config.tDiscId = upper(config.tDiscId);
+config.xDiscId = sprintf('%s%d', upper(config.xDiscName), config.xBasisOrder);
+config.schemeId = strjoin({config.tDiscId, config.xDiscId, config.vDiscId}, '-');
+
+%% SIMULATION SETUP
+
+scheme = physics.radiation.MacroMicroScheme(config) ...
+    .setTimeDiscretization(config.tDiscId, config.tFinal) ...
+    .setTimer(config.verbose) ...
+    .setVisualizer( ...
+    'experimentId', config.experimentId, ...
+    'schemeId', config.schemeId, ...
+    'nDims', config.nDims, ...
+    'nTimeNodes', 2, ...
+    'final', config.tFinal, ...
+    'density', ones(1, config.nDims), ...
+    'components', struct('U', 1:config.M, 'G', [])) ...
+    .setAnalyzer( ...
+    'nLevels', 5, ...
+    'reductions', {'L1', 'L2', 'Lx'}, ...
+    'density', repmat(4, 1, config.nDims), ...
+    'components', struct('U', 1:config.M, 'G', [])) ...
+    .setPattern( ...
+    'epsilon', config.epsilon, ...
+    'timeScale', config.alpha, ...
+    'scatteringScale', config.beta, ...
+    'absorptionScale', config.gamma, ...
+    'reduction', config.vReductionType) ...
+    .addDataset('DG', 2) ...
+    .addStyle('DG', {'Color', 'b', 'Marker', 'o', 'LineStyle', 'none'}) ...
+    .addDataset('REF', ~isempty(config.exact)) ...
+    .addStyle('REF', {'Color', 'r', 'Marker', 'none', 'LineStyle', '-'});
+
+%% SIMULATION EXECUTION
+
+xDisc = approx.discretization.FiniteElementDiscretization() ...
+    .setDgOrthotopeElement( ...
+    'nDims', config.nDims, ...
+    'order', config.xBasisOrder, ...
+    'basisType', config.xBasisType, ...
+    'basisPattern', config.xBasisPattern ...
+    ) ...
+    .setElementOperator() ...
+    .setDerivativeOrder(1);
+
+vDisc = approx.discretization.AffineDiscretization() ...
+    .setC0SphereElement( ...
+    'nDims', config.nDims, ...
+    'order', config.M, ...
+    'reduction', config.vReductionType, ...
+    'nPoints', config.nv) ...
+    .setDerivativeOrder(0) ...
+    .setScaledAffineSpace([]);
+
+if isempty(config.exact)
+    xDisc = xDisc.setUniformGrid(config.nx/2, config.xBBox).setMeshSpace();
+    coarse = physics.radiation.MacroMicroState(xDisc, vDisc, config.M, config.N);
+    coarse = scheme.initialize(coarse);
+    coarse = scheme.run(coarse);
+else
+    xDisc = xDisc.setUniformGrid(config.nx, config.xBBox).setMeshSpace();
+    coarse = [];
+end
+
+for i = 1:scheme.analyzer.profiler.nLevels
+    fine = physics.radiation.MacroMicroState(xDisc, vDisc, config.M, config.N);
+    fine = scheme.initialize(fine);
+    fine = scheme.run(fine);
+    if isempty(coarse)
+        fine = scheme.finalize(fine);
+    else
+        fine = scheme.finalize(fine, coarse);
+    end
+    if ~isempty(coarse), coarse = fine; end
+    xDisc = xDisc.refineMesh(2);
+end
+
+%% ANALYSIS
+results = scheme.analyzer.analyze();
+varNames = fieldnames(results);
+for iVar = 1:length(varNames)
+    varName = varNames{iVar};
+    disp(results.(varName));
+end
+
+%% HELPER FUNCTIONS
+
+function h = fInit(E, omega, epsilon)
+h = @(x, v) fInitImpl(x, v, E, omega, epsilon);
+end
+
+function f = fInitImpl(x, v, E, omega, epsilon)
+z = omega(:).' * x;
+y = omega(:).' * v;
+sigma_s = scatteringImpl(x);
+%< f = \rho E + \epsilon g
+f = (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
+end
+
+function h = fExact(E, omega, lambda, epsilon)
+h = @(x, v, t) fExactImpl(x, v, t, E, omega, lambda, epsilon);
+end
+
+function f = fExactImpl(x, v, t, E, omega, lambda, epsilon)
+z = omega(:).' * x;
+y = omega(:).' * v;
+sigma_s = scatteringImpl(x);
+%< f = \rho E + \epsilon g
+f = exp(-lambda*t) * (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
+end
+
+function h = scattering()
+h = @(x) scatteringImpl(x);
+end
+
+function C = scatteringImpl(x)
+C = ones(1, size(x, 2));
+end
+
+function h = absorption()
+h = @(x) absorptionImpl(x);
+end
+
+function C = absorptionImpl(x)
+C = ones(1, size(x, 2));
+end
+
+function h = source(E, omega, lambda, epsilon, alpha, beta, gamma)
+h = @(x, v, t) sourceImpl(x, v, t, E, omega, lambda, epsilon, alpha, beta, gamma);
+end
+
+function Q = sourceImpl(x, v, t, E, omega, lambda, epsilon, alpha, beta, gamma)
+z = omega(:).' * x;
+y = omega(:).' * v;
+sigma_s = scatteringImpl(x);
+sigma_a = absorptionImpl(x);
+alpha = epsilon^alpha;
+beta = epsilon^beta;
+gamma = epsilon^gamma;
+
+%< \partial_t f / E
+T1 = -lambda * exp(-lambda*t) * (sin(z) - epsilon * y .* cos(z) ./ sigma_s);
+%< v\cdot\nabla_x f / E
+T2 = exp(-lambda*t) * y .* (cos(z) + epsilon * y .* sin(z) ./ sigma_s);
+%< sigma_s * g / E
+T3 = -exp(-lambda*t) * y .* cos(z);
+%< sigma_a * f / E
+T4 = exp(-lambda*t) * sigma_a .* (sin(z) - epsilon * y .* cos(z) ./ sigma_s);
+
+%< Q = q*E
+Q = (alpha * T1 + T2 + beta * epsilon * T3 + gamma * T4) ./ (gamma * sigma_a) * E;
+end

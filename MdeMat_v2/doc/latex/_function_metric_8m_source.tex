@@ -1,0 +1,109 @@
+\doxysection{Function\+Metric.\+m}
+\hypertarget{_function_metric_8m_source}{}\label{_function_metric_8m_source}\index{+profilers/+metrics/FunctionMetric.m@{+profilers/+metrics/FunctionMetric.m}}
+\mbox{\hyperlink{_function_metric_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00001}00001\ classdef\ FunctionMetric\ <\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{Metric}}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00002}\mbox{\hyperlink{namespaceprofilers_1_1metrics}{00002}}\ \ \ \ \ \%\ FUNCTIONMETRIC\ Error\ computation\ \textcolor{keywordflow}{for}\ function-\/based\ solutions.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric}{FunctionMetric}}\ implements\ error\ computation\ between\ discrete}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ function\ values\ evaluated\ at\ specified\ integration\ nodes\ with}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ associated\ quadrature\ weights.\ This\ \textcolor{keyword}{class\ }is\ designed\ for\ computing}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ various\ error\ norms\ (L1,\ L2,\ Lx)\ between\ numerical\ and\ reference}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ solutions\ represented\ as\ function\ values.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ metric\ uses\ numerical\ integration\ to\ compute\ weighted\ error}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ norms,\ making\ it\ suitable\ \textcolor{keywordflow}{for}\ finite\ element\ error\ \mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}\ where}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ solutions\ are\ evaluated\ at\ quadrature\ points\ with\ appropriate}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ integration\ weights.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00015}00015\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \%\ Create\ function\ metric\ with\ L2\ norm}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ metric\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric}{FunctionMetric}}(\{\textcolor{stringliteral}{'L2'}\},\ gaussIntegrator);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \%\ Compute\ error\ between\ numerical\ and\ exact\ solutions}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ numericalValues\ =\ [1.1,\ 2.05,\ 2.98];\ \%\ at\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ exactValues\ =\ [1.0,\ 2.0,\ 3.0];}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ error\ =\ metric.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}{evaluate}}(numericalValues,\ exactValues);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \%\ Multiple\ error\ norms\ simultaneously}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ metric\ =\ FunctionMetric(\{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'}\},\ integrator);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ errors\ =\ metric.evaluate(numerical,\ exact);\ \%\ returns\ cell\ array}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00028}00028\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{Metric}},\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_mesh_space_absolute_metric}{MeshSpaceAbsoluteMetric}}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00030}00030\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00031}00031\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ integrator\ \%\ Numerical\ integrator\ providing\ nodes\ and\ weights}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00033}00033\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00034}\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric}{00034}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00035}00035\ \ \ \ \ methods\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}(\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}},\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}})}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FUNCTIONMETRIC\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00038}\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}(\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}},\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}})\ creates\ a\ function}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ metric\ that\ computes\ errors\ between\ function\ values\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00041}00041\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\%\ \ \ the\ specified\ integration\ rule\ \textcolor{keywordflow}{for}\ weighted\ error\ norms.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}\ -\/\ Cell\ array\ of\ error\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}\ types}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}}\ -\/\ Integrator\ \textcolor{keywordtype}{object}\ providing\ nodes\ and\ weights}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1metrics}{metrics}}.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{Metric}}(\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}});}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ obj.integrator\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}};}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ E\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}{evaluate}}(obj,\ U,\ V)}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00055}\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATE\ Compute\ error\ between\ function-\/based\ solutions.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ E\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}{evaluate}}(obj,\ U,\ V)\ computes\ errors\ between\ numerical}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solution\ U\ and\ reference\ solution\ V\ \textcolor{keyword}{using\ }the\ specified}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ error\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}\ types.\ For\ L1\ and\ L2\ norms,\ integration}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ weights\ are\ applied\ \textcolor{keywordflow}{for}\ proper\ numerical\ integration.}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Numerical\ solution\ values\ at\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ -\/\ Reference\ solution\ values\ (same\ points)\ or\ scalar}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ E\ -\/\ Cell\ array\ of\ computed\ errors\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}\ type}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Prepare\ data\ \textcolor{keywordflow}{for}\ weighted\ integration}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ismember(\textcolor{stringliteral}{'L1'},\ obj.reduction)\ ||\ ismember(\textcolor{stringliteral}{'L2'},\ obj.reduction)}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ obj.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}};}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ I.weights;}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ I.nPoints;}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ reshape(U,\ n,\ []);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isscalar(V)}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00077}\mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}{00077}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ reshape(V,\ n,\ []);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ absolute\ difference}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ abs(U\ -\/\ V);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ each\ requested\ error\ norm}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ nReds\ =\ length(obj.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}});}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ cell(1,\ nReds);}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:nReds}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ red\ =\ obj.\mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}\{i\};}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ red}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'L1'}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ sum(w\ *\ R,\ \textcolor{stringliteral}{'all'});}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'L2'}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ sqrt(sum(w\ *\ R.\string^2,\ \textcolor{stringliteral}{'all'}));}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'Lx'}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ max(R,\ [],\ \textcolor{stringliteral}{'all'});}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'none'}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ R;}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\{i\}\ =\ e(:).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_function_metric_8m_source_l00103}00103\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

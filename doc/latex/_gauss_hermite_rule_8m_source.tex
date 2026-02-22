@@ -1,0 +1,76 @@
+\doxysection{Gauss\+Hermite\+Rule.\+m}
+\hypertarget{_gauss_hermite_rule_8m_source}{}\label{_gauss_hermite_rule_8m_source}\index{+approx/+integrate/GaussHermiteRule.m@{+approx/+integrate/GaussHermiteRule.m}}
+\mbox{\hyperlink{_gauss_hermite_rule_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00001}00001\ classdef\ GaussHermiteRule\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_rule}{OrthotopeRule}}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00002}00002\ \ \ \ \ \%\ GAUSSHERMITERULE\ Gauss-\/Hermite\ numerical\ integration\ rule.}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ GaussHermiteRule\ implements\ numerical\ integration\ \textcolor{keyword}{using\ }the}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ Gauss-\/Hermite\ method\ \textcolor{keywordflow}{for}\ integrands\ weighted\ by\ the\ Gaussian}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ function.\ This\ method\ is\ optimal\ \textcolor{keywordflow}{for}\ integrating\ functions\ over}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ the\ entire\ real\ line\ with\ the\ weight\ function:}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \ \ w(x)\ =\ \(\backslash\)frac\{e\string^\{-\/x\string^2/2\}\}\{\(\backslash\)sqrt\{2\(\backslash\)pi\}\}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ For\ \(\backslash\)f\$n\(\backslash\)f\$\ nodes,\ \textcolor{keyword}{this}\ method\ exactly\ integrates\ polynomials}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ weighted\ by\ the\ Gaussian\ function\ up\ to\ degree\ \(\backslash\)f\$2n-\/1\(\backslash\)f\$.\ The}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ nodes\ are\ the\ roots\ of\ the\ physicist\textcolor{stringliteral}{'s\ Hermite\ polynomial}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ \(\backslash\)f\$He\_n(x)\(\backslash\)f\$\ scaled\ for\ the\ weight\ \(\backslash\)f\$e\string^\{-\/x\string^2/2\}\(\backslash\)f\$.}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ This\ quadrature\ is\ particularly\ useful\ for\ probability\ integrals}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ and\ Fourier\ transforms\ involving\ Gaussian\ functions.}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ \%\ See\ also:}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ approx.integrate.GaussLegendreRule,}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ approx.integrate.GaussLobattoRule,}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ \%\ \ \ approx.integrate.IntegrationRule}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ protected)}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ [x,\ w]\ =\ generate1d(\string~,\ np,\ options)}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE1D\ Generate\ 1D\ Gauss-\/Hermite\ nodes\ and\ weights.}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_hermite_rule}{00029}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [x,\ w]\ =\ generate1d(obj,\ np)\ generates\ @a\ np\ Gauss-\/Hermite}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nodes\ @a\ x\ and\ corresponding\ weights\ @a\ w\ for\ the\ weight}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ e\string^\{-\/x\string^2/2\}/sqrt(2*pi)\ over\ the\ infinite\ domain.}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [x,\ w]\ =\ generate1d(obj,\ np,\ lower=a,\ upper=b)\ generates}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nodes\ and\ weights,\ but\ ignores\ lower\ and\ upper\ bounds\ since}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00036}00036\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Gauss-\/Hermite\ quadrature\ is\ defined\ over\ the\ infinite}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ domain.}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00038}00038\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ arguments}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string~}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ np(1,\ 1)\ \{mustBePositive,\ mustBeInteger\}}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.lower(1,\ 1)\ \{mustBeReal\}\ =\ -\/inf}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ options.upper(1,\ 1)\ \{mustBeReal\}\ =\ inf}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00044}00044\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00045}00045\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_hermite_rule_a4d85f0cb6c5944bb8ef4edff64cf5870}{00046}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ np\ ==\ 1}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00051}00051\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 1:np\ -\/\ 1;}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ beta\ =\ sqrt(i);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ J\ =\ diag(beta,\ 1)\ +\ diag(beta,\ -\/1);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ [V,\ D]\ =\ eig(J);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ x\ =\ diag(D);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ idx]\ =\ sort(x);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ x\ =\ x(idx);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ V(:,\ idx);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ w\ =\ V(1,\ :).\string^2;}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00061}00061\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ beta\ =\ sqrt((1:np-\/1)\ /\ 2);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ diag(beta,\ 1)\ +\ diag(beta,\ -\/1);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ [V,\ D]\ =\ eig(T);}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ [x,\ idx]\ =\ sort(diag(D));}}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ x'};}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ V(1,\ idx).\string^2;}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00069}00069\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_hermite_rule_8m_source_l00070}00070\ end}
+
+\end{DoxyCode}
