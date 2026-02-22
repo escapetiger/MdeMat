@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['weights_0',['Weights',['../classapprox_1_1integrate_1_1_integrator.html#ae1c9ab538975492758a728e0d2254b27',1,'approx::integrate::Integrator::Weights'],['../classapprox_1_1integrate_1_1_multi_level_integrator.html#ab20f8aeb35fbb1ab48560aa75749b5ca',1,'approx::integrate::MultiLevelIntegrator::Weights'],['../classapprox_1_1space_1_1_sum_space.html#adae824652495bba3611d875479b680f8',1,'approx::space::SumSpace::Weights'],['../classcore_1_1function_1_1_cardinal_kernel_basis.html#a0137d3d990438027258b5fefd1bac444',1,'core::function::CardinalKernelBasis::Weights'],['../classphysics_1_1analysis_1_1_finite_element_absolute_metric.html#a4f2e996744c140143cf5805bda115f23',1,'physics::analysis::FiniteElementAbsoluteMetric::Weights'],['../classphysics_1_1analysis_1_1_finite_element_richardson_metric.html#a52e45a5d8ae79bfb2770bf1d440eb024',1,'physics::analysis::FiniteElementRichardsonMetric::Weights']]],
-  ['with_20poisson_1',['VERSION 2: linearized stage with Poisson',['../classphysics_1_1vlasov_1_1_dghs_scheme.html#autotoc_md5',1,'']]],
-  ['without_20poisson_2',['VERSION 1: linearized stage without Poisson',['../classphysics_1_1vlasov_1_1_dghs_scheme.html#autotoc_md3',1,'']]]
-];

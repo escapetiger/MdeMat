@@ -185,7 +185,7 @@ end
 
 % Configure analyzer
 analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(6);
+analyzer.setNLevels(5);
 analyzer.setDensity(4^config.nDims);
 M = scheme.getConfig('M');
 N = scheme.getConfig('N');
