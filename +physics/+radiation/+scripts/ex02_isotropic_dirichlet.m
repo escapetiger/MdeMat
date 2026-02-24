@@ -351,7 +351,7 @@ function plotDensity2d(config, state, plt)
 
 figure(plt.figIdx);
 ax = gca;
-density = state.XDisc.eval(zeros(state.NXDims, 1), state.Dofs.U(:, 1));
+density = state.density(zeros(state.NXDims, 1));
 x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
 density = reshape(density, length(x{1}), length(x{2}));
 

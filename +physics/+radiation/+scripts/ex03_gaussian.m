@@ -58,26 +58,6 @@ config.ic = fInit(config);
 config.bc = [];
 config.exact = [];
 
-% Velocity discretization parameters based on dimensions
-switch config.nDims
-    case 1
-        if strcmp(config.vDimReduction, 'topology')
-            config.nu = 1;
-            config.nv = 2;
-        else
-            config.nu = 2;
-            config.nv = 16;
-        end
-    case 2
-        if strcmp(config.vDimReduction, 'topology')
-            config.nu = 5;
-            config.nv = 0;
-        else
-            config.nu = 2;
-            config.nv = 16;
-        end
-end
-
 % Checkpoint information
 config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
@@ -85,15 +65,17 @@ config.ckptTimeStamps = [0.1, 0.2, 0.3, 0.4, 0.5];
 config.verbose = 2;
 config.tFinal = 0.5;
 config.cfl = [];
-config.dt = 5e-3;
-config.useFilter = true;
-% config.usePositivityLimiter = true;
+config.dt = 1e-1;
+config.epsilon = 1;
+config.usePositivityLimiter = true;
+config.positivityLimiterType = 'zhang_shu';
 
 % Parameter sweep
-override = 1;
+override = 0;
+reference = 0;
 order = [2];
-epsilon = 10.^[0];
-for k = 1:length(epsilon)
+nuv = [0, 8; 2, 8; 4, 8; 6, 8];
+for k = 1:size(nuv, 1)
     plt = struct();
     plt.legend = {};
     if override 
@@ -101,8 +83,14 @@ for k = 1:length(epsilon)
     else
         plt.time = 0.5;
     end
-    config.epsilon = epsilon(k);
-    config.ckptPostfix = sprintf('epsilon%.0e', epsilon(k));
+    switch config.nDims
+        case 2
+            plt.figIdx = k + 1;
+            plt.strategy = physics.visual.Strategy2d();
+    end
+    config.nu = nuv(k, 1);
+    config.nv = nuv(k, 2);
+    config.ckptPostfix = sprintf('nu%d_nv%d', config.nu, config.nv);
 
     %< Reference
     config.ckptPrefix = [upper(config.schemeName), num2str(1)];
@@ -126,8 +114,6 @@ for k = 1:length(epsilon)
         plt.colorIdx = 1;
         plt.markerIdx = 1;
         switch state.NXDims
-            case 1
-                plotDensity1d(config, state, plt);
             case 2
                 plotDensity2d(config, state, plt);
         end
@@ -140,10 +126,10 @@ for k = 1:length(epsilon)
                 config.tOdeIntName = 'fe';
                 config.xBasisOrder = 1;
             case 2
-                config.tOdeIntName = 'ssprk2';
+                config.tOdeIntName = 'sdirk2';
                 config.xBasisOrder = 2;
             case 3
-                config.tOdeIntName = 'ssprk3';
+                config.tOdeIntName = 'sdirk3';
                 config.xBasisOrder = 3;
         end
         config.ckptPrefix = [upper(config.schemeName), num2str(config.xBasisOrder)];
@@ -174,8 +160,6 @@ for k = 1:length(epsilon)
             plt.colorIdx = j+1;
             plt.markerIdx = j;
             switch state.NXDims
-                case 1
-                    plotDensity1d(config, state, plt);
                 case 2
                     plotDensity2d(config, state, plt);
             end
@@ -279,35 +263,25 @@ C = ones(1, size(x, 2));
 end
 
 
-function plotDensity1d(config, state, plt)
-strategy1d = physics.visual.Strategy1d();
+function plotDensity2d(config, state, plt)
 
-figure(2);
+figure(plt.figIdx);
 ax = gca;
+density = state.density(zeros(state.NXDims, 1));
+x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
+density = reshape(density, length(x{1}), length(x{2}));
 
-x = state.XDisc.Mesh.collocate(0);
-density = state.density(0);
-
-hold(ax, 'on');
-switch plt.style
-    case 'line'
-        style = strategy1d.getDefaultLineStyle(plt.colorIdx, plt.markerIdx);
-    case 'scatter'
-        style = strategy1d.getDefaultScatterStyle(plt.colorIdx, plt.markerIdx);
-end
-line = plot(x, density, style{:});
-set(line, 'LineWidth', 3, 'MarkerSize', 8);
-leg = legend(ax, plt.legend);
-set(leg, 'Location', strategy1d.DefaultLegendPosition);
-set(leg, 'FontSize', strategy1d.DefaultLegendFontSize);
-set(leg, 'Interpreter', 'latex');
-hold(ax, 'off');
-xlim([0, config.L]);
-xl = xlabel('x');
-set(ax, 'FontSize', strategy1d.DefaultFontSize);
-set(xl, 'FontSize', strategy1d.DefaultAxisLabelFontSize);
-ti = title('Density');
-set(ti, 'FontSize', strategy1d.DefaultTitleFontSize);
+imagesc(ax, x{1}, x{2}, density.', 'Interpolation', 'bilinear');
+axis(ax, 'xy', 'equal', 'tight');
+xl = xlabel(ax, 'x');
+yl = ylabel(ax, 'y');
+set(ax, 'FontSize', plt.strategy.DefaultFontSize);
+set(xl, 'FontSize', plt.strategy.DefaultAxisLabelFontSize);
+set(yl, 'FontSize', plt.strategy.DefaultAxisLabelFontSize);
+colormap(ax, plt.strategy.ColorMap);
+colorbar(ax);
+ti = title(sprintf('t = %.2f', plt.time));
+set(ti, 'FontSize', plt.strategy.DefaultTitleFontSize);
 if ~isempty(plt.time)
     timeStr = sprintf('t%.1f', plt.time);
     timeStr = strrep(timeStr, '.', 'p');
@@ -315,28 +289,7 @@ if ~isempty(plt.time)
 else
     fileName = sprintf('%s_density_%s.pdf', config.ckptPrefix, config.ckptPostfix);
 end
-fileName = fullfile(config.ckptDir, fileName);
-exportgraphics(ax, fileName, 'ContentType', 'vector');
-end
-
-function plotDensity2d(config, state, plt)
-strategy2d = physics.visual.Strategy2d();
-
-figure(2);
-ax = gca;
-x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
-density = state.density([0; 0]);
-density = reshape(density, length(x{1}), length(x{2}));
-imagesc(ax, x{1}, x{2}, density.', 'Interpolation', 'bilinear');
-axis(ax, 'xy', 'equal', 'tight');
-xl = xlabel(ax, 'x');
-yl = ylabel(ax, 'y');
-set(ax, 'FontSize', strategy2d.DefaultFontSize);
-set(xl, 'FontSize', strategy2d.DefaultAxisLabelFontSize);
-set(yl, 'FontSize', strategy2d.DefaultAxisLabelFontSize);
-colormap(ax, strategy2d.ColorMap);
-colorbar(ax);
-fileName = sprintf('%s_density_%s.pdf', config.ckptPrefix, config.ckptPostfix);
+% caxis([0, 1.25]);
 fileName = fullfile(config.ckptDir, fileName);
 exportgraphics(ax, fileName, 'ContentType', 'vector');
 end

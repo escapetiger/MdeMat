@@ -187,9 +187,9 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             end
 
             %< Apply positivity limiter if enabled
-            % if obj.Config.usePositivityLimiter && m > 0
-            %     state = obj.applyPositivityLimiter(state);
-            % end
+            if obj.Config.usePositivityLimiter && m > 0
+                state = obj.applyPositivityLimiter(state);
+            end
 
             %< Reconstruct distribution
             state.kineticReconstruct();
@@ -277,19 +277,24 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             %< Add positivity limiter configuration options
             obj.addConfig('usePositivityLimiter', default=false, ...
                 validator=@(x) islogical(x) || isnumeric(x));
+            obj.addConfig('positivityLimiterType', default='zhang_shu', ...
+                validator=@(x) (ischar(x) || isstring(x)) && ...
+                    ismember(lower(x), {'cutoff', 'zhang_shu'}));
 
             %< Add filter configuration options
             obj.addConfig('useFilter', default=false, ...
                 validator=@(x) islogical(x) || isnumeric(x));
             obj.addConfig('filterType', default='rot', ...
                 validator=@(x) (ischar(x) || isstring(x)) && ...
-                    ismember(lower(x), {'rot', ''}));
-            obj.addConfig('filterStrength', default=1, ...
-                validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
-            obj.addConfig('filterOrder', default=36, ...
-                validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
-            obj.addConfig('filterCutoff', default=2/3, ...
+                    ismember(lower(x), {'rot', 'exp', ''}));
+            obj.addConfig('filterStrength', default=0.1, ...
                 validator=@(x) isnumeric(x) && isscalar(x) && (x > 0) && (x <= 1));
+            obj.addConfig('filterOrder', default=4, ...
+                validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
+            obj.addConfig('filterCutoff', default=0, ...
+                validator=@(x) isnumeric(x) && isscalar(x) && (x >= 0) && (x <= 1));
+            obj.addConfig('filterCollisionRate', default=0, ...
+                validator=@(x) isnumeric(x) && isscalar(x) && (x >= 0));
         end
 
         function obj = configure(obj)
@@ -785,10 +790,30 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
         end
 
         function state = applyFilter(obj, state)
-            % APPLYFILTER Apply spectral filter to macro coefficients.
+            % APPLYFILTER Apply spectral filter to macro angular coefficients.
             %
-            %   U = applyFilter(obj, state) applies the filter
-            %   coefficients to the state @a state.
+            %   state = applyFilter(obj, state) damps the higher angular
+            %   modes of the macro DOFs @a state.Dofs.U to suppress Gibbs
+            %   oscillations from the truncated angular basis.
+            %
+            %   Two filter types are available:
+            %
+            %   'rot' — Rotational hyperviscosity (Padé form). Adds
+            %   biharmonic angular diffusion \f$ -\nu_r (-\partial_\theta^2)^2 u \f$.
+            %   Intermediate modes are time-consistent (\f$ \sigma_k \to 1 \f$
+            %   as \f$ \Delta t \to 0 \f$); the top mode has fixed attenuation
+            %   @a filterStrength per step.
+            %
+            %   'exp' — Vandeven exponential filter. Applies
+            %   \f$ \sigma_k = \exp(-\alpha \eta_k^p) \f$ where
+            %   \f$ \eta_k = (k - k_c)/(N - k_c) \f$. Preserves accuracy of
+            %   order @a filterOrder below the cutoff.
+            %
+            %   Both types interpret @a filterStrength as the target
+            %   attenuation \f$ \sigma_N^* \in (0,1] \f$ at the top mode
+            %   \f$ k = N \f$. Set @a filterCollisionRate to \f$ \sigma_s +
+            %   \sigma_a \f$ to compensate for physical collision damping
+            %   that already acts on higher modes.
 
             m = state.NVMacroDofs;
             if m == 0
@@ -802,39 +827,137 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                 return;
             end
 
-            eta = k / kmax;
             tp = obj.Config.filterType;
-            s = obj.Config.filterStrength;
+            sN = obj.Config.filterStrength;
             p = obj.Config.filterOrder;
             dt = obj.TDisc.Timeline.StepSize;
+            kc = round(obj.Config.filterCutoff * kmax);
+
+            if kmax <= kc
+                return;
+            end
+
+            %< Adjust target for physical collision damping already present
+            cr = obj.Config.filterCollisionRate;
+            sN_eff = sN * exp(cr * dt);
+            if sN_eff >= 1
+                return;
+            end
+
+            %< Normalized level relative to cutoff
+            eta = max(k - kc, 0) / (kmax - kc);
 
             switch lower(tp)
                 case 'rot'
-                    k0 = 1; 
-                    alpha = s * (max(k0, kmax) - k0) .* dt.^(1-eta.^p);
-                    sigma = 1 ./ (1 + alpha .* k.^4);
+                    %< Biharmonic rotational diffusion (Pade form)
+                    %< sigma_k = 1/(1 + c * dt^(1-eta^p) * (k-kc)^4)
+                    %< where c is chosen so that sigma(kmax) = sN_eff
+                    alpha = (1/sN_eff - 1) / m^4;
+                    % alpha = alpha .* dt.^(1 - eta.^p);
+                    sigma = 1 ./ (1 + alpha .* max(k - kc, 0).^4);
+                case 'exp'
+                    %< Vandeven exponential filter (time-consistent)
+                    %< sigma_k = exp(-alpha * dt * eta^p)
+                    %< filterStrength = target cumulative attenuation per unit time
+                    %< at k=kmax: cumulative sigma = sN_eff^T (dt-independent)
+                    alpha = -log(sN_eff);
+                    sigma = exp(-alpha .* dt .* eta.^p);
                 otherwise
                     sigma = ones(1, m);
             end
 
+            sigma(k <= kc) = 1;
             state.Dofs.U = state.Dofs.U .* sigma;
         end
 
         function state = applyPositivityLimiter(obj, state)
-            % APPLYPOSITIVITYLIMITER Apply cutoff positivity limiter to density.
+            % APPLYPOSITIVITYLIMITER Apply positivity limiter to density.
             %
             %   state = applyPositivityLimiter(obj, state) enforces
             %   non-negativity of the zeroth velocity moment (density) in
-            %   the macro DOFs @a state.Dofs.U(:,1). For modal spatial
-            %   discretization, only the cell-average DOF (first local DOF
-            %   per element) is clamped; for nodal, all spatial values are
-            %   clamped.
+            %   the macro DOFs @a state.Dofs.U(:,1).
+            %
+            %   Two limiter types are available via config.positivityLimiterType:
+            %
+            %   - 'cutoff': Clamps cell-average DOFs to zero. Simple but
+            %     NOT mass-conservative; adds spurious mass when cell averages
+            %     are negative.
+            %
+            %   - 'zhang_shu' (default): Zhang-Shu (2010) limiter. Scales
+            %     within-element spatial fluctuations to enforce
+            %     \f$ u_0(x) \geq 0 \f$ at all quadrature nodes while
+            %     preserving the cell average exactly. Mass-conservative
+            %     whenever the cell average is non-negative. If the cell
+            %     average itself is negative, it is clamped to zero (mass
+            %     loss is unavoidable in that case).
 
             if strcmpi(obj.Config.xBasisType, 'modal')
                 nl = state.XDisc.NLocalDofs;
-                state.Dofs.U(1:nl:end, 1) = max(0, state.Dofs.U(1:nl:end, 1));
+                ne = state.XDisc.NMeshElements;
+                C = reshape(state.Dofs.U(:, 1), nl, ne);  %< (nl x ne)
+
+                switch lower(obj.Config.positivityLimiterType)
+                    case 'zhang_shu'
+                        %< Cell averages: first DOF per element (monic Legendre)
+                        u_avg = C(1, :);  %< (1 x ne)
+
+                        %< Evaluate density at element quadrature nodes
+                        xRef = state.XDisc.Element.Volume.Nodes;
+                        u_vals = state.XDisc.Element.eval(xRef, C);  %< (ne x np)
+
+                        %< Minimum density per element over quadrature nodes
+                        u_min = min(u_vals, [], 2).';  %< (1 x ne)
+
+                        %< Zhang-Shu theta: largest scaling that ensures u >= 0
+                        theta = ones(1, ne);
+                        mask = (u_min < 0) & (u_avg > 0);
+                        theta(mask) = u_avg(mask) ./ (u_avg(mask) - u_min(mask));
+                        theta = min(1, theta);
+
+                        %< Scale within-element fluctuations; preserve averages
+                        C(2:end, :) = C(2:end, :) .* theta;
+
+                        %< Clamp negative cell averages (accept unavoidable mass loss)
+                        C(1, :) = max(0, u_avg);
+
+                    otherwise  %< 'cutoff'
+                        C(1, :) = max(0, C(1, :));
+                end
+
+                state.Dofs.U(:, 1) = C(:);
             else
-                state.Dofs.U(:, 1) = max(0, state.Dofs.U(:, 1));
+                %< Nodal basis: DOFs are already values at quadrature nodes
+                nl = state.XDisc.NLocalDofs;
+                ne = state.XDisc.NMeshElements;
+                U = reshape(state.Dofs.U(:, 1), nl, ne);  %< (nl x ne)
+
+                switch lower(obj.Config.positivityLimiterType)
+                    case 'zhang_shu'
+                        %< Cell averages via quadrature weights (unit ref element)
+                        w = state.XDisc.Element.Volume.Weights;  %< (1 x nl)
+                        u_avg = w * U;  %< (1 x ne)
+
+                        %< Minimum nodal value per element (DOFs = node values)
+                        u_min = min(U, [], 1);  %< (1 x ne)
+
+                        %< Zhang-Shu theta
+                        theta = ones(1, ne);
+                        mask = (u_min < 0) & (u_avg > 0);
+                        theta(mask) = u_avg(mask) ./ (u_avg(mask) - u_min(mask));
+                        theta = min(1, theta);
+
+                        %< Scale fluctuations; preserve cell average
+                        U = u_avg + theta .* (U - u_avg);
+
+                        %< Clamp negative cell averages
+                        mask_neg = u_avg < 0;
+                        U(:, mask_neg) = 0;
+
+                    otherwise  %< 'cutoff'
+                        U = max(0, U);
+                end
+
+                state.Dofs.U(:, 1) = U(:);
             end
         end
     end
