@@ -55,9 +55,8 @@ config.source = [];
 
 % Initial and boundary conditions
 config.ic = fInit(config);
-config.bc = fBc(config);
+config.bc = [];
 config.exact = [];
-config.filtering = true;
 
 % Velocity discretization parameters based on dimensions
 switch config.nDims
@@ -72,7 +71,7 @@ switch config.nDims
     case 2
         if strcmp(config.vDimReduction, 'topology')
             config.nu = 5;
-            config.nv = 8;
+            config.nv = 0;
         else
             config.nu = 2;
             config.nv = 16;
@@ -82,9 +81,13 @@ end
 % Checkpoint information
 config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
-config.ckptTimeStamps = [0.1, 0.2, 0.3, 0.4];
+config.ckptTimeStamps = [0.1, 0.2, 0.3, 0.4, 0.5];
 config.verbose = 2;
-config.tFinal = 0.4;
+config.tFinal = 0.5;
+config.cfl = [];
+config.dt = 5e-3;
+config.useFilter = true;
+% config.usePositivityLimiter = true;
 
 % Parameter sweep
 override = 1;
@@ -93,7 +96,11 @@ epsilon = 10.^[0];
 for k = 1:length(epsilon)
     plt = struct();
     plt.legend = {};
-    plt.time = 0.2;
+    if override 
+        plt.time = config.tFinal;
+    else
+        plt.time = 0.5;
+    end
     config.epsilon = epsilon(k);
     config.ckptPostfix = sprintf('epsilon%.0e', epsilon(k));
 
@@ -130,7 +137,7 @@ for k = 1:length(epsilon)
         %< Numeric
         switch order(j)
             case 1
-                config.tOdeIntName = 'be';
+                config.tOdeIntName = 'fe';
                 config.xBasisOrder = 1;
             case 2
                 config.tOdeIntName = 'ssprk2';
@@ -190,7 +197,7 @@ end
 visualizer = scheme.getConfig('visualizer');
 visualizer.setDensity(1);
 visualizer.setTimeline(scheme.getConfig('tFinal'), 10);
-visualizer.setComponents(struct('U', 1, 'G', []));
+visualizer.setComponents(struct('U', [], 'G', []));
 visualizer.addDataset(scheme.getConfig('sId'), 'numeric');
 switch config.nDims
     case 1
@@ -250,8 +257,9 @@ end
 
 function f = fInitImpl(x, v, config)
 E = config.E;
-sigma = sqrt(1e-2);
-f = exp(-sum(x.^2, 1) / (2 * sigma^2)) * E;
+sigma = 1e-1;
+nd = size(x, 1);
+f = exp(-sum(x.^2, 1) / (2 * sigma^2)) / (sqrt(2*pi)*sigma)^nd * E;
 end
 
 function h = fBc(config)
@@ -278,7 +286,7 @@ figure(2);
 ax = gca;
 
 x = state.XDisc.Mesh.collocate(0);
-density = state.XDisc.eval(0, state.Dofs.U(:, 1));
+density = state.density(0);
 
 hold(ax, 'on');
 switch plt.style
@@ -316,8 +324,8 @@ strategy2d = physics.visual.Strategy2d();
 
 figure(2);
 ax = gca;
-density = state.XDisc.eval(zeros(state.NXDims, 1), state.Dofs.U(:, 1));
 x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
+density = state.density([0; 0]);
 density = reshape(density, length(x{1}), length(x{2}));
 imagesc(ax, x{1}, x{2}, density.', 'Interpolation', 'bilinear');
 axis(ax, 'xy', 'equal', 'tight');

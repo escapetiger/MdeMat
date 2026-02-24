@@ -15,7 +15,7 @@ common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
 config = physics.scheme.ConfigParser.parseFile(common);
 
 % Experiment-specific configuration struct
-config.nDims = 1; % Dimension
+config.nDims = 2; % Dimension
 config.L = 1; % Length
 config.xBBox = repmat([-config.L, config.L], 1, config.nDims); % Spatial bounding box
 config.tFinal = 0.5; % Final time

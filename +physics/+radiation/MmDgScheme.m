@@ -18,8 +18,6 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
         UwAmb % Upwind assembly
 
         Dual % Dual operators
-
-        Filter % Filter configuration
     end
 
     properties (Constant)
@@ -102,11 +100,6 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             %< Set source term
             obj.setSourceTerm(state);
 
-            %< Set up filter if enabled
-            if obj.Config.useFilter
-                obj.setFilter(state);
-            end
-
             %< Initialize visualizer with exact solution if available
             visualizer = obj.getConfig('visualizer');
             if ~isempty(visualizer) && visualizer.IsEnabled
@@ -118,7 +111,7 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
 
             %< Initialize analyzer with exact solution if available
             analyzer = obj.getConfig('analyzer');
-            if ~isempty(analyzer) && analyzer.IsEnabled
+            if ~isempty(obj.Config.exact) && analyzer.IsEnabled
                 fnU = @(x, varargin) state.macroFEval(obj.Config.exact, 'x', x, varargin{:});
                 fnG = @(x, varargin) state.microFEval(obj.Config.exact, 'x', x, varargin{:});
                 fnF = @(x, varargin) state.kineticFEval(obj.Config.exact, 'x', x, varargin{:});
@@ -190,10 +183,15 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
 
             %< Apply filter if enabled
             if obj.Config.useFilter && m > 0
-                state.Dofs.U = obj.applyFilter(state.Dofs.U);
+                state = obj.applyFilter(state);
             end
 
-            %< Reconstruct distribution 
+            %< Apply positivity limiter if enabled
+            % if obj.Config.usePositivityLimiter && m > 0
+            %     state = obj.applyPositivityLimiter(state);
+            % end
+
+            %< Reconstruct distribution
             state.kineticReconstruct();
         end
 
@@ -276,12 +274,16 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             obj.addConfig('N', default=0, ...
                 validator=@(x) isnumeric(x) && isscalar(x) && (x >= 0));
 
+            %< Add positivity limiter configuration options
+            obj.addConfig('usePositivityLimiter', default=false, ...
+                validator=@(x) islogical(x) || isnumeric(x));
+
             %< Add filter configuration options
             obj.addConfig('useFilter', default=false, ...
                 validator=@(x) islogical(x) || isnumeric(x));
-            obj.addConfig('filterType', default='exp', ...
+            obj.addConfig('filterType', default='rot', ...
                 validator=@(x) (ischar(x) || isstring(x)) && ...
-                    ismember(lower(x), {'exp', 'rot'}));
+                    ismember(lower(x), {'rot', ''}));
             obj.addConfig('filterStrength', default=1, ...
                 validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
             obj.addConfig('filterOrder', default=36, ...
@@ -299,14 +301,18 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             %< Determine velocity discretization parameters
             nDims = obj.Config.nDims;
             vDimReduction = obj.Config.vDimReduction;
-            if nDims == 1 && strcmpi(vDimReduction, 'topology')
-                obj.setConfig('M', obj.Config.nu);
-            elseif nDims == 1 && strcmpi(vDimReduction, 'symmetry')
-                obj.setConfig('M', obj.Config.nu);
-            elseif nDims == 2 && strcmpi(vDimReduction, 'topology')
-                obj.setConfig('M', 2 * obj.Config.nu - 1);
+            if obj.Config.nu > 0
+                if nDims == 1 && strcmpi(vDimReduction, 'topology')
+                    obj.setConfig('M', obj.Config.nu);
+                elseif nDims == 1 && strcmpi(vDimReduction, 'symmetry')
+                    obj.setConfig('M', obj.Config.nu);
+                elseif nDims == 2 && strcmpi(vDimReduction, 'topology')
+                    obj.setConfig('M', 2 * obj.Config.nu - 1);
+                else
+                    obj.setConfig('M', obj.Config.nu^2);
+                end
             else
-                obj.setConfig('M', obj.Config.nu^2);
+                obj.setConfig('M', 0);
             end
             obj.setConfig('N', prod(obj.Config.nv));
 
@@ -354,12 +360,15 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                     T(:, :, d) = VGd;
                 end
             else
+                vG = state.VDisc.Rhs.Element.Volume.Nodes;
+                BL = state.VDisc.Lhs.Element.Approximator.Basis;
                 EU = state.VLhsBasisValues.';
-                EG = state.VDisc.Lhs.Element.Approximator.Basis.eval(state.VDisc.Rhs.Element.Volume.Nodes).';
+                EG = BL.eval(vG).';
                 VU = state.VLhsNodes;
                 VG = state.VRhsNodes;
                 WU = diag(state.VLhsWeights);
-                WG = diag(state.VRhsWeights);
+                M = BL.Rhs.eval(vG).^2;
+                WG = diag(state.VRhsWeights(:) ./ M(:));
                 L = state.Levels(1:m);
                 S = ones(1, m);
                 S(L+1 < max(L)+1) = 0;
@@ -414,7 +423,13 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             S2 = repmat(sc, length(sc), 1);
             S2(all(obj.Pattern.freeTransport == 0, 3)) = inf;
             S3 = inf(length(sc), 1);
-            if ~isempty(scs), S3(2:end) = scs + sc(2:end); end
+            if ~isempty(scs)
+                if m > 0
+                    S3(2:end) = scs + sc(2:end);
+                else
+                    S3 = scs + sc(:);
+                end
+            end
             S4 = inf(length(sc), 1);
             if ~isempty(sca), S4 = sca + sc(:); end
             S = [S1, S2, S3, S4];
@@ -517,10 +532,17 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                     if ~isempty(obj.Config.bc) && ~isempty(obj.Config.xPenaltyType{1, 1})
                         %< Jump term
                         Dj = sparse(ng, ng);
-                        aa = squeeze(PFT(m+j, i, :));
-                        for d = 1:nxd
-                            if a(d) == 0 || aa(d) == 0, continue; end
-                            Dj = Dj - aa(d) * a(d) * obj.Dual{1, 1}{d};
+                        if mod(state.Levels(i), 2) == 0
+                            aa = squeeze(PFT(m+j, i, :));
+                            for d = 1:nxd
+                                if a(d) == 0 || aa(d) == 0, continue; end
+                                Dj = Dj - aa(d) * a(d) * obj.Dual{1, 1}{d};
+                            end
+                        else
+                            for d = 1:nxd
+                                if a(d) == 0, continue; end
+                                Dj = Dj - a(d) * obj.Dual{1, 1}{d};
+                            end
                         end
                         obj.L{i, i} = obj.L{i, i} - Dj * PS(i, 1+m+j);
                     end
@@ -554,7 +576,7 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                         continue;
                     end
                     D = obj.UwAmb.assembleMatrix(a, VG(:, j));
-                    obj.L{m + i, m + j} = -D * PS(m+i, 1+m+j);
+                    obj.L{m + i, m + j} = - D * PS(m+i, 1+m+j);
                 end
             end
         end
@@ -622,11 +644,8 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             state.Coefs.SU = state.macroFit(obj.Config.source, t=t);
             state.Coefs.SG = state.microFit(obj.Config.source, t=t);
 
-            CA = state.Coefs.CA;
-            f = @(x) reshape(state.XDisc.eval([], CA), 1, []);
-            CA = obj.MultAmb.assembleMatrix(f);
-            SU = CA * state.Coefs.SU .* PS(1:m, m+n+3).';
-            SG = CA * state.Coefs.SG .* PS(m+1:m+n, m+n+3).';
+            SU = state.Coefs.SU .* PS(1:m, m+n+3).';
+            SG = state.Coefs.SG .* PS(m+1:m+n, m+n+3).';
 
             for i = 1:m
                 S{i} = SU(:, i);
@@ -685,11 +704,18 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                     a = squeeze(PFT(i, m + j, :));
                     if all(a == 0), continue; end
                     if ~isempty(obj.Config.xPenaltyType{1, 1})
-                        aa = squeeze(PFT(m+j, i, :));
                         D = sparse(ng, 1);
-                        for d = 1:nd
-                            if a(d) == 0 || aa(d) == 0, continue; end
-                            D = D - aa(d) * a(d) * bU{1, 1}{d}(:, i);
+                        if mod(state.Levels(i), 2) == 0
+                            aa = squeeze(PFT(m+j, i, :));
+                            for d = 1:nd
+                                if a(d) == 0 || aa(d) == 0, continue; end
+                                D = D - aa(d) * a(d) * bU{1, 1}{d}(:, i);
+                            end
+                        else
+                            for d = 1:nd
+                                if a(d) == 0, continue; end
+                                D = D - a(d) * bU{1, 1}{d}(:, i);
+                            end
                         end
                         S{i} = S{i} - D * PS(i, 1+m+j);
                     end
@@ -758,57 +784,58 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             end
         end
 
-        function obj = setFilter(obj, state)
-            % SETFILTER Set up spectral filter coefficients.
+        function state = applyFilter(obj, state)
+            % APPLYFILTER Apply spectral filter to macro coefficients.
             %
-            %   obj = setFilter(obj, state) computes filter coefficients
-            %   based on the macro basis levels.
+            %   U = applyFilter(obj, state) applies the filter
+            %   coefficients to the state @a state.
 
             m = state.NVMacroDofs;
             if m == 0
-                obj.Filter = [];
                 return;
             end
 
-            levels = state.Levels(1:m);
-            kmax = max(levels);
+            k = state.Levels(1:m);
+            kmax = max(k);
 
             if kmax == 0
-                obj.Filter = ones(1, m);
                 return;
             end
 
-            eta = levels / kmax;
+            eta = k / kmax;
             tp = obj.Config.filterType;
             s = obj.Config.filterStrength;
             p = obj.Config.filterOrder;
-            c = obj.Config.filterCutoff;
+            dt = obj.TDisc.Timeline.StepSize;
 
             switch lower(tp)
-                case 'exp'
-                    sigma = exp(-s * eta.^p);
-                    sigma(eta <= c) = 1;
                 case 'rot'
-                    alpha = s * kmax * (1 - eta.^p);
-                    sigma = 1 ./ (1 + alpha .* levels.^4);
+                    k0 = 1; 
+                    alpha = s * (max(k0, kmax) - k0) .* dt.^(1-eta.^p);
+                    sigma = 1 ./ (1 + alpha .* k.^4);
                 otherwise
                     sigma = ones(1, m);
             end
 
-            obj.Filter = sigma;
+            state.Dofs.U = state.Dofs.U .* sigma;
         end
 
-        function U = applyFilter(obj, U)
-            % APPLYFILTER Apply spectral filter to macro coefficients.
+        function state = applyPositivityLimiter(obj, state)
+            % APPLYPOSITIVITYLIMITER Apply cutoff positivity limiter to density.
             %
-            %   U = applyFilter(obj, U) applies the precomputed filter
-            %   coefficients to the macro coefficients @a U.
+            %   state = applyPositivityLimiter(obj, state) enforces
+            %   non-negativity of the zeroth velocity moment (density) in
+            %   the macro DOFs @a state.Dofs.U(:,1). For modal spatial
+            %   discretization, only the cell-average DOF (first local DOF
+            %   per element) is clamped; for nodal, all spatial values are
+            %   clamped.
 
-            if isempty(obj.Filter)
-                return;
+            if strcmpi(obj.Config.xBasisType, 'modal')
+                nl = state.XDisc.NLocalDofs;
+                state.Dofs.U(1:nl:end, 1) = max(0, state.Dofs.U(1:nl:end, 1));
+            else
+                state.Dofs.U(:, 1) = max(0, state.Dofs.U(:, 1));
             end
-
-            U = U .* obj.Filter;
         end
     end
 

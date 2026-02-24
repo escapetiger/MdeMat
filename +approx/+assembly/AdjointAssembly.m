@@ -160,9 +160,9 @@ classdef AdjointAssembly < approx.assembly.FiniteElementAssembly
             PT = obj.PenaltyType;
 
             switch PT{1, 1}
-                case {'all', 'boundary'}
+                case 'all'
                     beta = 1;
-                case {'allw', 'boundaryw'}
+                case 'allw'
                     beta = ratio;
                 otherwise
                     beta = 0;

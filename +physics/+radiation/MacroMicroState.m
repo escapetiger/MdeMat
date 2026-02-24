@@ -160,13 +160,11 @@ classdef MacroMicroState < physics.state.KineticState
             detJac = obj.XDisc.Mesh.computeElementJacobianDeterminants();
 
             %< Mass: rho
-            if m > 0
-                CU = obj.XDisc.eval(xRef, obj.Dofs.U(:, 1));
-                CU = wxq * reshape(CU, nxq, []);
-                CU = detJac(:).' * reshape(CU, ne, []);
-                mass = sum(CU);
-                obj.History.mass(end+1) = mass;
-            end
+            rho = obj.density(xRef);
+            rho = wxq * reshape(rho, nxq, []);
+            rho = detJac(:).' * reshape(rho, ne, []);
+            mass = sum(rho);
+            obj.History.mass(end+1) = mass;
 
             %< Free energy: (1/2) * int |f|^2 dx dv
             %  Assuming orthonormal velocity basis, this simplifies to
@@ -312,6 +310,25 @@ classdef MacroMicroState < physics.state.KineticState
             end
         end
 
+        function rho = density(obj, xRef)
+            % DENSITY Compute macroscopic density.
+            %
+            %   rho = density(obj, xRef) computes the macroscopic density
+            %   at reference points @a xRef.
+
+            m = obj.NVMacroDofs;
+            
+            if m > 0
+                rho = obj.XDisc.eval(xRef, obj.Dofs.U(:, 1));
+            else
+                w = obj.VDisc.Rhs.Element.Volume.Weights;
+                v = obj.VDisc.Rhs.Element.Volume.Nodes;
+                F = obj.XDisc.eval(xRef, obj.Dofs.F);
+                F = obj.VDisc.Rhs.eval(v, F.');
+                rho = F * w(:);
+            end
+        end
+
         function obj = kineticReconstruct(obj, options)
             arguments
                 obj physics.radiation.MacroMicroState
@@ -409,14 +426,14 @@ classdef MacroMicroState < physics.state.KineticState
 
             %< For macro coefficients, use macro velocity nodes
             if m > 0
-                VU = obj.VLhsNodes;
-                BU = obj.VLhsBasisValues;
-                wU = obj.VLhsWeights;
-                nv = size(VU, 2);
+                VVMacro = obj.VLhsNodes;
+                B = obj.VLhsBasisValues;
+                w = obj.VLhsWeights;
+                nvMacro = size(VVMacro, 2);
 
-                obj.Cache.F = zeros(ng, nv);
-                for k = 1:nv
-                    vk = VU(:, k);
+                obj.Cache.F = zeros(ng, nvMacro);
+                for k = 1:nvMacro
+                    vk = VVMacro(:, k);
                     if nArgs == 2
                         fk = @(x) f(x, repmat(vk, 1, size(x, 2)));
                     else
@@ -425,18 +442,18 @@ classdef MacroMicroState < physics.state.KineticState
                     obj.Cache.F(:, k) = obj.XDisc.fit(fk);
                 end
 
-                S = obj.VDisc.Lhs.Element.Approximator.embed(obj.Cache.F.', BU, wU);
+                S = obj.VDisc.Lhs.Element.Approximator.embed(obj.Cache.F.', B, w);
                 obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
             end
 
             %< For micro coefficients, evaluate f at micro velocity nodes
             if n > 0
-                VG = obj.VRhsNodes;
-                nv = size(VG, 2);
+                VVMicro = obj.VRhsNodes;
+                nvMicro = size(VVMicro, 2);
 
-                obj.Cache.F = zeros(ng, nv);
-                for k = 1:nv
-                    vk = VG(:, k);
+                obj.Cache.F = zeros(ng, nvMicro);
+                for k = 1:nvMicro
+                    vk = VVMicro(:, k);
                     if nArgs == 2
                         fk = @(x) f(x, repmat(vk, 1, size(x, 2)));
                     else
@@ -489,52 +506,53 @@ classdef MacroMicroState < physics.state.KineticState
                 V = kron(VV, ones(1, size(XX, 2)));
 
                 if nargin(f) == 2
-                    F = f(X, V);
+                    obj.Cache.F = f(X, V);
                 else
-                    F = f(X, V, t);
+                    obj.Cache.F = f(X, V, t);
                 end
-                F = reshape(F, size(XX, 2), []);
-                obj.Cache.F = F;
+                obj.Cache.F = reshape(obj.Cache.F, size(XX, 2), []);
                 obj.Cache.C = [];
+                obj.Cache.UsedFit = false;
                 return;
             end
 
             %< For macro coefficients, use macro velocity nodes
             if m > 0
-                VU = obj.VLhsNodes;
-                BU = obj.VLhsBasisValues;
-                wU = obj.VLhsWeights;
+                VV = obj.VLhsNodes;
+                B = obj.VLhsBasisValues;
+                w = obj.VLhsWeights;
 
-                X = kron(ones(1, size(VU, 2)), XX);
-                V = kron(VU, ones(1, size(XX, 2)));
+                X = kron(ones(1, size(VV, 2)), XX);
+                V = kron(VV, ones(1, size(XX, 2)));
 
                 if nargin(f) == 2
-                    FU = f(X, V);
+                    obj.Cache.F = f(X, V);
                 else
-                    FU = f(X, V, t);
+                    obj.Cache.F = f(X, V, t);
                 end
-                FU = reshape(FU, size(XX, 2), []);
-                obj.Cache.F = FU;
+                obj.Cache.F = reshape(obj.Cache.F, size(XX, 2), []);
 
-                S = obj.VDisc.Lhs.Element.Approximator.embed(FU.', BU, wU);
+                S = obj.VDisc.Lhs.Element.Approximator.embed(obj.Cache.F.', B, w);
                 obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
             end
 
             %< For micro coefficients, evaluate f at micro velocity nodes
             if n > 0
-                VG = obj.VRhsNodes;
+                VV = obj.VRhsNodes;
 
-                X = kron(ones(1, size(VG, 2)), XX);
-                V = kron(VG, ones(1, size(XX, 2)));
+                X = kron(ones(1, size(VV, 2)), XX);
+                V = kron(VV, ones(1, size(XX, 2)));
 
                 if nargin(f) == 2
-                    FG = f(X, V);
+                    obj.Cache.F = f(X, V);
                 else
-                    FG = f(X, V, t);
+                    obj.Cache.F = f(X, V, t);
                 end
-                FG = reshape(FG, size(XX, 2), []);
-                obj.Cache.F = FG;
+                obj.Cache.F = reshape(obj.Cache.F, size(XX, 2), []);
             end
+
+            %< Mark that lazyFEval was used
+            obj.Cache.UsedFit = false;
         end
 
         function obj = lazyTraceEvaluate(obj, LFI, f, options)
@@ -558,7 +576,6 @@ classdef MacroMicroState < physics.state.KineticState
             n = obj.NVMicroDofs;
             nl = obj.XDisc.NLocalDofs;
             t = options.t;
-            nArgs = nargin(f);
 
             %< Get boundary nodes
             EI = obj.XDisc.Mesh.getBoundaryElements(LFI);
@@ -570,101 +587,58 @@ classdef MacroMicroState < physics.state.KineticState
             end
             nxx = size(XX, 2);
 
-            core.except.assert(isa(obj.XDisc.Mesh, 'approx.mesh.Grid'), ...
-                'InvalidMesh', 'Only support grid!');
-
             if m > 0 && n > 0 && isempty(options.v)
-                VU = obj.VLhsNodes;
-                VG = obj.VRhsNodes;
+                obj.lazyTraceEvaluateMixed( ...
+                    LFI, f, EI, xRef, XX, nxx, t);
+                return;
+            end
 
-                %< Evaluate f at macro velocity nodes
-                X = kron(ones(1, size(VU, 2)), XX);
-                V = kron(VU, ones(1, nxx));
-                if nArgs == 2
-                    FU = f(X, V);
-                else
-                    FU = f(X, V, t);
-                end
-                FU = reshape(FU, nxx, []);
-
-                %< Evaluate f at micro velocity nodes
-                X = kron(ones(1, size(VG, 2)), XX);
-                V = kron(VG, ones(1, nxx));
-                if nArgs == 2
-                    FG = f(X, V);
-                else
-                    FG = f(X, V, t);
-                end
-                FG = reshape(FG, nxx, []);
-
-                %< Handle outflow
-                normal = obj.XDisc.Mesh.computeOutwardNormals(EI, LFI);
-                K = bsxfun(@plus, (EI(:).' - 1)*nl, (1:nl).');
-
-                Co = obj.XDisc.eval(xRef, obj.Dofs.U(K(:), :), EI=EI);
-                Uo = obj.VDisc.Lhs.Element.Approximator.project(Co.');
-
-                JUo = find(sum(normal .* VU, 1) > 0);
-                if ~isempty(JUo)
-                    VUo = obj.VDisc.Lhs.Element.Volume.Nodes(:, JUo);
-                    Go = obj.XDisc.eval(xRef, obj.Dofs.G(K(:), :), EI=EI);
-                    Go = obj.VDisc.Rhs.eval(VUo, Go.');
-                    FU(:, JUo) = obj.VDisc.Lhs.eval(VUo, Uo) + Go;
-                end
-
-                JGo = find(sum(normal .* VG, 1) > 0);
-                if ~isempty(JGo)
-                    VGo = obj.VDisc.Rhs.Element.Volume.Nodes(:, JGo);
-                    Go = obj.XDisc.eval(xRef, obj.Dofs.G(K(:), JGo), EI=EI);
-                    FG(:, JGo) = obj.VDisc.Lhs.eval(VGo, Uo) + Go;
-                end
-
-                %< Store micro values in Cache.F
-                obj.Cache.F = FG;
-
-                %< Project macro from FU
-                BU = obj.VLhsBasisValues;
-                wU = obj.VLhsWeights;
-                S = obj.VDisc.Lhs.Element.Approximator.embed(FU.', BU, wU);
-                obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
+            %< Get velocity nodes
+            if ~isempty(options.v)
+                VV = options.v;
+            elseif m > 0
+                VV = obj.VLhsNodes;
             else
-                %< Get velocity nodes
-                if ~isempty(options.v)
-                    VV = options.v;
-                elseif m > 0
-                    VV = obj.VLhsNodes;
-                else
-                    VV = obj.VRhsNodes;
-                end
+                VV = obj.VRhsNodes;
+            end
 
-                X = kron(ones(1, size(VV, 2)), XX);
-                V = kron(VV, ones(1, nxx));
+            X = kron(ones(1, size(VV, 2)), XX);
+            V = kron(VV, ones(1, nxx));
 
-                if nArgs == 2
-                    obj.Cache.F = f(X, V);
-                else
-                    obj.Cache.F = f(X, V, t);
-                end
-                obj.Cache.F = reshape(obj.Cache.F, nxx, []);
+            if nargin(f) == 2
+                obj.Cache.F = f(X, V);
+            elseif nargin(f) == 3
+                obj.Cache.F = f(X, V, t);
+            end
+            obj.Cache.F = reshape(obj.Cache.F, nxx, []);
 
-                %< Handle outflow
+            %< NOTE: ONLY WORK FOR GRID CASE!!!
+            if isa(obj.XDisc.Mesh, 'approx.mesh.Grid')
                 normal = obj.XDisc.Mesh.computeOutwardNormals(EI, LFI);
                 K = bsxfun(@plus, (EI(:).' - 1)*nl, (1:nl).');
                 Jo = find(sum(normal .* VV, 1) > 0);
-                if ~isempty(Jo) && m > 0 && n == 0 
-                    Vo = obj.VDisc.Lhs.Element.Volume.Nodes(:, Jo);
-                    Co = obj.XDisc.eval(xRef, obj.Dofs.U(K(:), :), EI=EI);
-                    Uo = obj.VDisc.Lhs.Element.Approximator.project(Co.');
-                    obj.Cache.F(:, Jo) = obj.VDisc.Lhs.eval(Vo, Uo);
+                if ~isempty(Jo)
+                    if m > 0 && n == 0
+                        %< Macro-only case
+                        Vo = obj.VDisc.Lhs.Element.Volume.Nodes(:, Jo);
+                        Co = obj.XDisc.eval(xRef, obj.Dofs.U(K(:), :), EI=EI);
+                        P = obj.VDisc.Lhs.Element.Approximator;
+                        Uo = P.project(Co.');
+                        obj.Cache.F(:, Jo) = obj.VDisc.Lhs.eval(Vo, Uo);
+                    elseif m == 0 && n > 0
+                        %< Micro-only case: nothing to do (outflow from BC)
+                    end
                 end
+            else
+                core.except.assert(0, 'InvalidMesh', 'Only support grid!');
+            end
 
-                %< Project to macro coefficients
-                if m > 0
-                    B = obj.VLhsBasisValues;
-                    w = obj.VLhsWeights;
-                    S = obj.VDisc.Lhs.Element.Approximator.embed(obj.Cache.F.', B, w);
-                    obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
-                end
+            %< Project to macro coefficients
+            if m > 0
+                B = obj.VLhsBasisValues;
+                w = obj.VLhsWeights;
+                S = obj.VDisc.Lhs.Element.Approximator.embed(obj.Cache.F.', B, w);
+                obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
             end
         end
 
@@ -823,34 +797,6 @@ classdef MacroMicroState < physics.state.KineticState
             end
         end
 
-        function F = kineticFEval(obj, f, options)
-            % KINETICFEVAL Evaluate the distribution function from the
-            % function handle.
-            %
-            %   F = kineticFEval(obj, f) evaluates the distribution function
-            %   from the function handle @a f at the scheme's Rhs velocity
-            %   nodes.
-            %
-            %   F = kineticFEval(obj, f, x=X, v=V, t=t) uses specified
-            %   evaluation points, velocity nodes, and time.
-
-            arguments
-                obj physics.radiation.MacroMicroState
-                f function_handle
-                options.x double = []
-                options.v double = []
-                options.t double = 0
-            end
-
-            if isempty(options.v)
-                options.v = obj.VRhsNodes;
-            end
-
-            obj.lazyFEval(f, x=options.x, v=options.v, t=options.t);
-            F = obj.Cache.F;
-            obj.reset();
-        end
-
         function U = macroTraceEvaluate(obj, i, f, options)
             % MACROTRACEEVALUATE Evaluates the macroscopic component from
             % the function handle on boundary trace points.
@@ -879,12 +825,41 @@ classdef MacroMicroState < physics.state.KineticState
                 obj.lazyTraceEvaluate(i, f, x=options.x, v=options.v, t=options.t);
             end
 
-            U = obj.macroImpl();
+            M = obj.VDisc.Lhs.Element.Approximator.Mass;
+            U = (M * obj.Cache.C).';
 
             obj.Status = bitor(obj.Status, obj.IsMacroComputed);
             if bitand(obj.Status, obj.IsAllComputed)
                 obj.reset();
             end
+        end
+
+        function F = kineticFEval(obj, f, options)
+            % KINETICFEVAL Evaluate the distribution function from the
+            % function handle.
+            %
+            %   F = kineticFEval(obj, f) evaluates the distribution function
+            %   from the function handle @a f at the scheme's Rhs velocity
+            %   nodes.
+            %
+            %   F = kineticFEval(obj, f, x=X, v=V, t=t) uses specified
+            %   evaluation points, velocity nodes, and time.
+
+            arguments
+                obj physics.radiation.MacroMicroState
+                f function_handle
+                options.x double = []
+                options.v double = []
+                options.t double = 0
+            end
+
+            if isempty(options.v)
+                options.v = obj.VRhsNodes;
+            end
+
+            obj.lazyFEval(f, x=options.x, v=options.v, t=options.t);
+            F = obj.Cache.F;
+            obj.reset();
         end
 
         function G = microTraceEvaluate(obj, i, f, options)
@@ -915,13 +890,13 @@ classdef MacroMicroState < physics.state.KineticState
                 obj.lazyTraceEvaluate(i, f, x=options.x, v=options.v, t=options.t);
             end
 
-            if ~isempty(options.v)
+            m = obj.NVMacroDofs;
+            if m > 0
+                V = obj.VDisc.Rhs.Element.Volume.Nodes;
+                G = obj.VDisc.invRhs(obj.Cache.F, V, obj.Cache.C);
+            else
                 G = obj.Cache.F;
-                obj.reset();
-                return;
             end
-
-            G = obj.microImpl();
             
             obj.Status = bitor(obj.Status, obj.IsMicroComputed);
             if bitand(obj.Status, obj.IsAllComputed)
@@ -929,6 +904,76 @@ classdef MacroMicroState < physics.state.KineticState
             end
         end
     
+        function obj = lazyTraceEvaluateMixed(obj, LFI, f, EI, xRef, XX, nxx, t)
+            % LAZYTRACEEVALUATEMIXED Trace evaluation for macro-micro case
+            % with separate velocity quadrature nodes.
+
+            m = obj.NVMacroDofs;
+            n = obj.NVMicroDofs;
+            nl = obj.XDisc.NLocalDofs;
+            nArgs = nargin(f);
+
+            VV_M = obj.VLhsNodes;
+            VV_u = obj.VRhsNodes;
+
+            %< Evaluate f at macro velocity nodes
+            X_M = kron(ones(1, size(VV_M, 2)), XX);
+            V_M = kron(VV_M, ones(1, nxx));
+            if nArgs == 2
+                F_M = f(X_M, V_M);
+            else
+                F_M = f(X_M, V_M, t);
+            end
+            F_M = reshape(F_M, nxx, []);
+
+            %< Evaluate f at micro velocity nodes
+            X_u = kron(ones(1, size(VV_u, 2)), XX);
+            V_u = kron(VV_u, ones(1, nxx));
+            if nArgs == 2
+                F_u = f(X_u, V_u);
+            else
+                F_u = f(X_u, V_u, t);
+            end
+            F_u = reshape(F_u, nxx, []);
+
+            %< Handle outflow
+            core.except.assert(isa(obj.XDisc.Mesh, 'approx.mesh.Grid'), ...
+                'InvalidMesh', 'Only support grid!');
+
+            normal = obj.XDisc.Mesh.computeOutwardNormals(EI, LFI);
+            K = bsxfun(@plus, (EI(:).' - 1)*nl, (1:nl).');
+
+            Co = obj.XDisc.eval(xRef, obj.Dofs.U(K(:), :), EI=EI);
+            P = obj.VDisc.Lhs.Element.Approximator;
+            Uo = P.project(Co.');
+
+            %< Outflow at macro velocity nodes
+            Jo_M = find(sum(normal .* VV_M, 1) > 0);
+            if ~isempty(Jo_M)
+                Vo_M = obj.VDisc.Lhs.Element.Volume.Nodes(:, Jo_M);
+                Go_all = obj.XDisc.eval(xRef, obj.Dofs.G(K(:), :), EI=EI);
+                Go_at_M = obj.VDisc.Rhs.eval(Vo_M, Go_all.');
+                F_M(:, Jo_M) = obj.VDisc.Lhs.eval(Vo_M, Uo) + Go_at_M;
+            end
+
+            %< Outflow at micro velocity nodes
+            Jo_u = find(sum(normal .* VV_u, 1) > 0);
+            if ~isempty(Jo_u)
+                Vo_u = obj.VDisc.Rhs.Element.Volume.Nodes(:, Jo_u);
+                Go = obj.XDisc.eval(xRef, obj.Dofs.G(K(:), Jo_u), EI=EI);
+                F_u(:, Jo_u) = obj.VDisc.Lhs.eval(Vo_u, Uo) + Go;
+            end
+
+            %< Store micro values in Cache.F
+            obj.Cache.F = F_u;
+
+            %< Project macro from F_M
+            B = obj.VLhsBasisValues;
+            w = obj.VLhsWeights;
+            S = obj.VDisc.Lhs.Element.Approximator.embed(F_M.', B, w);
+            obj.Cache.C = obj.VDisc.Lhs.Element.Approximator.project(S);
+        end
+
         function U = macroImpl(obj)
             % MACROIMPL Implements the macroscopic component from the
             % cached coefficients.

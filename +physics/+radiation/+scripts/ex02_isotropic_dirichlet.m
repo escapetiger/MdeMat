@@ -39,7 +39,7 @@ end
 % Spatial domain [0, L]^d (not symmetric)
 config.L = 1;
 config.xBBox = repmat([0, config.L], 1, config.nDims);
-config.nx = repmat(400, 1, config.nDims);
+config.nx = repmat(64, 1, config.nDims);
 
 % Physical parameters
 config.decomposition = '';
@@ -54,16 +54,16 @@ switch config.nDims
             config.nu = 1; % order: 0 or 1
             config.nv = 2; % micro coupling
         else
-            config.nu = 1; % order: 0 for none; nu - 1 for degree
+            config.nu = 2; % order: 0 for none; nu - 1 for degree
             config.nv = 16; % micro coupling
         end
     case 2
         if strcmp(config.vDimReduction, 'topology')
-            config.nu = 1; % order: 0 for none; nu - 1 for degree
+            config.nu = 2; % order: 0 for none; nu - 1 for degree
             config.nv = 16; % micro coupling
         else
             config.nu = 2; % order: 0 for none; nu - 1 for degree
-            config.nv = 16; % micro coupling
+            config.nv = [4, 4]; % micro coupling
         end
 end
 
@@ -73,16 +73,21 @@ if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
 config.ckptTimeStamps = [0.1, 0.4, 1.0, 1.6, 4.0];
 config.verbose = 2;
 config.tFinal = 4.0;
+config.cfl = [];
+config.dt = 0.1;
 
 % Parameter sweep
 override = 0;
-order = [2,3];
+order = [1];
 epsilon = 10.^[0];
 for k = 1:length(epsilon)
     plt = struct();
     plt.legend = {};
-    plt.time = 4.0;
-    
+    if override 
+        plt.time = config.tFinal;
+    else
+        plt.time = 4.0;
+    end
     switch config.nDims
         case 1
             plt.figIdx = 2;

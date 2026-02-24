@@ -163,40 +163,40 @@ classdef L2SphereElement < approx.element.L2Element
 
             %< Create geometry, integrator, and basis based on dimensions and reduction
             if nDims == 1 && strcmp(reduction, 'topology')
-                A = 1 / 2;
+                % A = 1 / 2;
                 geometry = core.geometry.Sphere([0], radius);
                 R = approx.integrate.GaussTrapezoidalRule(1, coord = 'car');
-                E = core.function.Constant(1, A);
+                % E = core.function.Constant(1, A);
                 integrator = approx.integrate.Integrator(R);
                 integrator.setPoints(geometry, min(2, np));
-                integrator.addWeightFunction(@(v) 1./E.eval(v));
+                % integrator.addWeightFunction(@(v) 1./E.eval(v));
 
             elseif nDims == 1 && strcmp(reduction, 'symmetry')
-                A = 1 / (2 * radius);
+                % A = 1 / (2 * radius);
                 geometry = core.geometry.Orthotope([-radius, radius]);
                 R = approx.integrate.GaussLegendreRule(1);
-                E = core.function.Constant(1, A);
+                % E = core.function.Constant(1, A);
                 integrator = approx.integrate.Integrator(R);
                 integrator.setPoints(geometry, np);
-                integrator.addWeightFunction(@(v) 1./E.eval(v));
+                % integrator.addWeightFunction(@(v) 1./E.eval(v));
 
             elseif nDims == 2 && strcmp(reduction, 'topology')
-                A = 1 / (2 * pi * radius);
+                % A = 1 / (2 * pi * radius);
                 geometry = core.geometry.Sphere([0, 0], radius);
                 R = approx.integrate.GaussTrapezoidalRule(2, coord = 'cossph');
-                E = core.function.Constant(1, A);
+                % E = core.function.Constant(1, A);
                 integrator = approx.integrate.Integrator(R);
                 integrator.setPoints(geometry, np);
-                integrator.addWeightFunction(@(v) 1./E.eval(v));
+                % integrator.addWeightFunction(@(v) 1./E.eval(v));
 
             else %< nDims >= 3
-                A = 1 / (4 * pi * radius^2);
+                % A = 1 / (4 * pi * radius^2);
                 geometry = core.geometry.Sphere([0, 0, 0], radius);
                 R = approx.integrate.GaussTrapezoidalRule(3, coord = 'cossph');
-                E = core.function.Constant(1, A);
+                % E = core.function.Constant(1, A);
                 integrator = approx.integrate.Integrator(R);
                 integrator.setPoints(geometry, np);
-                integrator.addWeightFunction(@(v) 1./E.eval(v));
+                % integrator.addWeightFunction(@(v) 1./E.eval(v));
             end
 
             %< Create RBF basis function

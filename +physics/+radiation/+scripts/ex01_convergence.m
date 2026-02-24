@@ -53,12 +53,12 @@ switch config.nDims
             config.nu = 1; % order: 0 or 1
             config.nv = 2; % number of velocities
         else
-            config.nu = 1; % order: 0 for none; nu - 1 for degree
+            config.nu = 2; % order: 0 for none; nu - 1 for degree
             config.nv = 16; % number of velocities
         end
     case 2
         if strcmp(config.vDimReduction, 'topology')
-            config.nu = 8; % order: 0 for none; nu - 1 for degree
+            config.nu = 2; % order: 0 for none; nu - 1 for degree
             config.nv = 16; % number of velocities
         else
             config.nu = 2; % order: 0 for none; nu - 1 for degree
@@ -74,11 +74,14 @@ config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
 
 config.verbose = 1;
-config.tFinal = 0.1;
+config.tFinal = 0.5;
+% config.cfl = 0.1;
+config.useFilter = false;
+config.usePositivityLimiter = false;
 
 % Parameter sweep
 epsilon = 10.^[0];
-order = [2,3];
+order = [2];
 for k = 1:length(epsilon)
     config.epsilon = epsilon(k);
     config.ckptPostfix = sprintf('epsilon%.0e', epsilon(k));
@@ -146,13 +149,17 @@ if contains(config.id, 'ft')
     config.absorption = [];
     config.source = [];
 else
-    config.lambda = 0.5;
+    config.lambda = 0.1;
     config.decomposition = '';
     config.timeScale = 1;
     config.scatteringScale = -1;
     config.absorptionScale = 1;
     config.ic = fInitDs(config);
     config.bc = [];
+    % config.exact = [];
+    % config.scattering = scatteringDs(config);
+    % config.absorption = [];
+    % config.source = [];
     config.exact = fExactDs(config);
     config.scattering = scatteringDs(config);
     config.absorption = absorptionDs(config);
@@ -185,19 +192,19 @@ end
 
 % Configure analyzer
 analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(5);
+analyzer.setNLevels(4);
 analyzer.setDensity(4^config.nDims);
 M = scheme.getConfig('M');
 N = scheme.getConfig('N');
-analyzer.setComponents(struct('U', 1:M, 'G', 1:N, 'F', 1:N));
+analyzer.setComponents(struct('U', 1:M, 'G', 1:N, 'F', []));
 analyzer.addReduction('U', 'v', 'sequence');
-analyzer.addReduction('G', 'v', 'sequence');
+analyzer.addReduction('G', 'v', '');
 analyzer.addReduction('F', 'v', 'sequence');
 
 % Build velocity discretization (SumSpace)
 if config.nu > 0
     vMacroElement = approx.element.L2SphereElement.modal(config.nDims, ...
-        config.nu, reduction=config.vDimReduction);
+        config.nu, reduction=config.vDimReduction, np=config.nv);
     vMacroDisc = approx.space.SpectralSpace(vMacroElement);
 else
     vMacroDisc = [];
@@ -270,9 +277,10 @@ function f = fInitDsImpl(x, v, config)
 E = config.E;
 omega = config.omega;
 epsilon = config.epsilon;
+sigma_s = scatteringDsImpl(x, config);
 z = omega(:).' * x;
 y = omega(:).' * v;
-f = (sin(z) - epsilon * y .* cos(z)) .* E;
+f = (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
 end
 
 function h = fExactDs(config)
@@ -284,9 +292,10 @@ E = config.E;
 omega = config.omega;
 lambda = config.lambda;
 epsilon = config.epsilon;
+sigma_s = scatteringDsImpl(x, config);
 z = omega(:).' * x;
 y = omega(:).' * v;
-f = exp(-lambda*t) * (sin(z) - epsilon * y .* cos(z)) .* E;
+f = exp(-lambda*t) * (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
 end
 
 function h = scatteringDs(config)
@@ -302,7 +311,7 @@ h = @(x) absorptionDsImpl(x, config);
 end
 
 function C = absorptionDsImpl(x, config)
-C = ones(1, size(x, 2));
+C = zeros(1, size(x, 2));
 end
 
 function h = sourceDs(config)
@@ -329,8 +338,8 @@ sigma_a = absorptionDsImpl(x, config);
 T1 = -lambda * exp(-lambda*t) * (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
 % v \cdot \nabla_x f
 T2 = exp(-lambda*t) * y .* (cos(z) + epsilon * y .* sin(z) ./ sigma_s) .* E;
-% \sigma_s * g
-T3 = -epsilon * exp(-lambda*t) * y .* cos(z) .* sigma_s .* E;
+% -\sigma_s * g
+T3 = -epsilon * exp(-lambda*t) * y .* cos(z) .* E;
 % \sigma_a * f
 T4 = exp(-lambda*t) * sigma_a .* (sin(z) - epsilon * y .* cos(z) ./ sigma_s) .* E;
 

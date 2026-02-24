@@ -22,8 +22,8 @@ OPTION=tSplitName=''
 OPTION=tOdeIntName='sdirk2'
 
 # CFL number
-OPTION=cfl=0.5
-# OPTION=dt=0.1
+# OPTION=cfl=0.1
+OPTION=dt=0.1
 
 # -----------------------------------------------------------------------
 # Space discretization
@@ -55,13 +55,18 @@ OPTION=xPenaltyType={'boundary', 'right'; 'left', ''}
 # -----------------------------------------------------------------------
 # Filter options
 # -----------------------------------------------------------------------
-# Enable filtering to reduce aliasing errors in nonlinear coupling
-OPTION=useFilter=true
+# Enable filtering to reduce oscillations
+OPTION=useFilter=false
 
-# Dealiasing method: 'hou-li', 'tc', or 'quasi-tc'
-OPTION=dealiasingType='hou-li'
+# filter method: 'rot', 'exp'
+OPTION=dealiasingType='rot'
 
-# Dealiaing parameters
-OPTION=dealiasingBeta=36
-OPTION=dealiasingGamma=36
-OPTION=dealiasingCutoff=2/3
+# filter parameters
+OPTION=filterStrength=1
+OPTION=filterOrder=1
+
+# -----------------------------------------------------------------------
+# Limiter options
+# -----------------------------------------------------------------------
+# Enable filtering to reduce oscillations
+OPTION=usePositivityLimiter=true
