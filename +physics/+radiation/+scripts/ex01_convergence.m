@@ -53,12 +53,12 @@ switch config.nDims
             config.nu = 1; % order: 0 or 1
             config.nv = 2; % number of velocities
         else
-            config.nu = 2; % order: 0 for none; nu - 1 for degree
-            config.nv = 16; % number of velocities
+            config.nu = 4; % order: 0 for none; nu - 1 for degree
+            config.nv = 8; % number of velocities
         end
     case 2
         if strcmp(config.vDimReduction, 'topology')
-            config.nu = 2; % order: 0 for none; nu - 1 for degree
+            config.nu = 1; % order: 0 for none; nu - 1 for degree
             config.nv = 16; % number of velocities
         else
             config.nu = 2; % order: 0 for none; nu - 1 for degree
@@ -75,13 +75,14 @@ if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
 
 config.verbose = 1;
 config.tFinal = 0.5;
-% config.cfl = 0.1;
+config.cfl = 0.5;
+config.dt = [];
 config.useFilter = false;
 config.usePositivityLimiter = false;
 
 % Parameter sweep
 epsilon = 10.^[0];
-order = [2];
+order = [2,3];
 for k = 1:length(epsilon)
     config.epsilon = epsilon(k);
     config.ckptPostfix = sprintf('epsilon%.0e', epsilon(k));
@@ -192,13 +193,13 @@ end
 
 % Configure analyzer
 analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(4);
+analyzer.setNLevels(5);
 analyzer.setDensity(4^config.nDims);
 M = scheme.getConfig('M');
 N = scheme.getConfig('N');
 analyzer.setComponents(struct('U', 1:M, 'G', 1:N, 'F', []));
 analyzer.addReduction('U', 'v', 'sequence');
-analyzer.addReduction('G', 'v', '');
+analyzer.addReduction('G', 'v', 'sequence');
 analyzer.addReduction('F', 'v', 'sequence');
 
 % Build velocity discretization (SumSpace)

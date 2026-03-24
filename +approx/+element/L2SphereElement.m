@@ -158,7 +158,9 @@ classdef L2SphereElement < approx.element.L2Element
 
             radius = options.radius;
             reduction = options.reduction;
-            np = order; %< Number of points for RBF
+
+            %< Determine number of integration points
+            np = order;
             epsilon = options.epsilon;
 
             %< Create geometry, integrator, and basis based on dimensions and reduction

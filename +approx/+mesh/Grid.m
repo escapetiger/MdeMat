@@ -240,14 +240,16 @@ classdef Grid < approx.mesh.Mesh
                     for i = 1:nd
                         C = obj.Centroids{i};
                         h = obj.Spacings{i};
-                        Y{i} = C(:).' + h(:).' .* X{i}(:).';
+                        Y{i} = C(:).' + h(:).' .* X{i}(:);
+                        Y{i} = Y{i}(:);
                     end
                 else
                     M = obj.Indexer.linearToMulti(EI);
                     for i = 1:nd
                         C = obj.Centroids{i}(M(:, i));
                         h = obj.Spacings{i}(M(:, i));
-                        Y{i} = C(:).' + h(:).' .* X{i}(:).';
+                        Y{i} = C(:).' + h(:).' .* X{i}(:);
+                        Y{i} = Y{i}(:);
                     end
                 end
             end

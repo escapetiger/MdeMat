@@ -144,6 +144,8 @@ classdef ApDghsScheme < physics.vlasov.VlasovScheme
                 % Strang splitting scheme
                 % state = obj.stepLinear(state, dt);
                 % state = obj.stepLinearized(state, dt);
+                % state = obj.stepLinearized(state, dt);
+                % state = obj.stepNonlinear(state, dt);
                 state = obj.stepLinearized(state, dt / 2);
                 state = obj.stepNonlinear(state, dt);
                 state = obj.stepLinearized(state, dt / 2);

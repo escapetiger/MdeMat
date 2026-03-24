@@ -69,6 +69,7 @@ classdef GaussTrapezoidalRule < approx.integrate.SphereRule
             G2 = core.geometry.Orthotope([0, 2*pi]);
             PT = approx.integrate.PeriodicTrapezoidalRule(1);
             [X{k}, w{k}] = PT.generate(G2, np(k));
+            X{k} = mod(X{k} + pi/6, 2*pi);
 
             [X{1:k}] = ndgrid(X{:});
             [w{1:k}] = ndgrid(w{:});

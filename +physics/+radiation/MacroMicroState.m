@@ -79,7 +79,10 @@ classdef MacroMicroState < physics.state.KineticState
             %< Set history for free energy
             obj.setHistory('time', []);
             obj.setHistory('mass', []);
-            obj.setHistory('freeEnergy', []); % Free energy
+            obj.setHistory('freeEnergy', []); % |f|^2/2
+            obj.setHistory('L2Entropy', []); % |f-\rho M|
+            obj.setHistory('L2FDistance', []); % |f-f_\infty|
+            obj.setHistory('L2RhoDistance', []); % |\rho-\rho_\infty|
 
             %< Reset cache and status
             obj.setLevels();
@@ -166,9 +169,7 @@ classdef MacroMicroState < physics.state.KineticState
             mass = sum(rho);
             obj.History.mass(end+1) = mass;
 
-            %< Free energy: (1/2) * int |f|^2 dx dv
-            %  Assuming orthonormal velocity basis, this simplifies to
-            %  (1/2) * sum_i ∫ |c_i(x)|^2 dx where c_i are modal coefficients
+            %< Relative entropy: (1/2) * int |f|^2 dx dv
             freeEnergy = 0;
 
             if m > 0

@@ -383,11 +383,11 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                     VUd = diag(VU(d, :));
                     VGd = diag(VG(d, :));
                     TUUd = EU.' * WU * VUd * EU;
-                    TUGd = S * EG.' * WG * VGd;
+                    TUGd = EG.' * WG * VGd;
                     T(1:m, 1:m, d) = TUUd;
-                    T(1:m, m+1:m+n, d) = TUGd;
+                    T(1:m, m+1:m+n, d) = S * TUGd;
                     T(m+1:m+n, 1:m, d) = (VGd * EG - EG * TUUd);
-                    T(m+1:m+n, m+1:m+n, d) = (VGd - EG * TUGd);
+                    T(m+1:m+n, m+1:m+n, d) = (VGd - EG * S * TUGd);
                 end
             end
             T(abs(T) < tol) = 0;
@@ -598,6 +598,16 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
                 C = obj.MultAmb.assembleMatrix(obj.Config.scattering);
                 for i = 1:(m + n)
                     obj.L{i, i} = obj.L{i, i} - C * PS(i, m+n+2);
+                end
+                
+                if m == 0 && n > 0
+                    M = obj.Config.E;
+                    w = state.VRhsWeights * M;
+                    for i = 1:(m+n)
+                        for j = 1:(m+n)
+                            obj.L{i, j} = obj.L{i, j} + C * w(j) * PS(i, m+n+2);
+                        end
+                    end
                 end
             end
 
@@ -850,9 +860,9 @@ classdef MmDgScheme < physics.radiation.RadiationScheme
             switch lower(tp)
                 case 'rot'
                     %< Biharmonic rotational diffusion (Pade form)
-                    %< sigma_k = 1/(1 + c * dt^(1-eta^p) * (k-kc)^4)
+                    %< sigma_k = 1/(1 + c * (k-kc)^4)
                     %< where c is chosen so that sigma(kmax) = sN_eff
-                    alpha = (1/sN_eff - 1) / m^4;
+                    alpha = (1/sN_eff - 1) / (kmax - kc)^4;
                     % alpha = alpha .* dt.^(1 - eta.^p);
                     sigma = 1 ./ (1 + alpha .* max(k - kc, 0).^4);
                 case 'exp'

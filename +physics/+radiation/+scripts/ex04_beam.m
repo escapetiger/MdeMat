@@ -1,9 +1,10 @@
 %==========================================================================
-% FileName: ex03_gaussian
+% FileName: ex04_beam
 % Author: Yi CAI
 % Description:
-%   Gaussian pulse test for radiation transport. An isotropic Gaussian
-%   density pulse propagates outward through a pure scattering medium.
+%   Beam problem for radiation transport. A directional Gaussian source
+%   at the origin emits particles in the +x1 direction through a pure
+%   scattering medium with periodic boundary conditions.
 %==========================================================================
 
 clc, clear, close all;
@@ -15,7 +16,7 @@ common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
 config = physics.scheme.ConfigParser.parseFile(common);
 
 % Problem setup
-config.id = 'ex03_2dt';
+config.id = 'ex04_2dt';
 
 % Parse problem ID
 tok = regexp(config.id, '_(\d+)d([ts])$', 'tokens');
@@ -51,25 +52,25 @@ config.absorptionScale = 1;
 % Scattering and absorption
 config.scattering = fScattering(config);
 config.absorption = [];
-config.source = [];
+config.source = fSource(config);
 
 % Initial and boundary conditions
 config.ic = fInit(config);
 config.bc = [];
 config.exact = [];
 
-% Temporal domain 
-config.tFinal = 0.6;
+% Temporal domain
+config.tFinal = 1.0;
 
 % Checkpoint information
 config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
-config.ckptTimeStamps = 0:0.05:config.tFinal;
+config.ckptTimeStamps = 0.1:0.1:config.tFinal;
 config.verbose = 2;
 
 % Scheme control
 config.useFilter = false;
-config.filterType = 'rot';
+config.filterType = 'exp';
 config.filterStrength = 0.01;
 config.filterOrder = 4;
 config.filterCutOff = 2/3;
@@ -77,7 +78,7 @@ config.filterCollisionRate = 1;
 config.usePositivityLimiter = true;
 config.positivityLimiterType = 'zhang_shu';
 
-% Simulation control 
+% Simulation control
 enableRef = 1;
 overrideRef = 0;
 enableNum = 1;
@@ -85,17 +86,15 @@ overrideNum = 0;
 
 % Plotting control
 plt = struct();
-plt.angleFigIdx = 1;
-plt.sliceFigIdx = 2;
 plt.legend = {};
 switch config.nDims
     case 2
         plt.strategy = physics.visual.Strategy2d();
-        plt.figIdx = plt.sliceFigIdx + 1;
+        plt.figIdx = 2;
         plt.colorIdx = 1;
         plt.markerIdx = 1;
 end
-plt.time = 0.6;
+plt.time = 1.0;
 plt.slicePostfix = sprintf('epsilon%.0e', config.epsilon);
 
 % Reference
@@ -105,15 +104,13 @@ if enableRef
     config.cfl = [];
     config.dt = 0.0005;
     config.nx = repmat(50, 1, config.nDims);
-    config.nu = 1;
+    config.nu = 0;
     config.nv = 100;
     config.ckptPostfix = sprintf('epsilon%.0e', config.epsilon);
     config.ckptPrefix = 'REF';
     switch config.id
-        case 'ex03_2dt'
-            config.ckptPrefix = strjoin({'GS2DT', config.ckptPrefix}, '_');
-        case 'ex03_2ds'
-            config.ckptPrefix = strjoin({'GS2DS', config.ckptPrefix}, '_');
+        case 'ex04_2dt'
+            config.ckptPrefix = strjoin({'BM2DT', config.ckptPrefix}, '_');
     end
     if ~isempty(plt.time) && ~overrideRef
         timeStr = sprintf('t%.1f', plt.time);
@@ -125,7 +122,7 @@ if enableRef
             config.ckptPrefix, config.ckptPostfix);
     end
     fileName = fullfile(config.ckptDir, fileName);
-    
+
     if exist(fileName, 'file') && ~overrideRef
         state = physics.radiation.MacroMicroState.load(fileName);
     else
@@ -136,7 +133,6 @@ if enableRef
     plt.legend{end+1} = 'REF';
     switch state.NXDims
         case 2
-            plotAngleDist2d(config, state, plt);
             plotDensitySlice1d(config, state, plt);
             plotDensity2d(config, state, plt);
             plt.figIdx = plt.figIdx + 1;
@@ -150,13 +146,11 @@ if enableNum
     config.dt = 0.05;
     config.nx = repmat(50, 1, config.nDims);
     order = [2];
-    % nuv = [4,0;6,0;8,0;10,0;12,0;14,0;16,0;18,0;20,0]; % varying
-    % nuv = [0,7;0,11;0,15;0,19;0,23;0,27;0,31;0,35;0,39]; % varying
-    % nuv = [2,36;8,24;16,8;20,0];
-    % nuv = [0, 19;1, 18;2, 16;6, 8;8, 4;10, 0]; % same DoFs
-    % nuv = [0, 33;1, 32; 2, 30; 9, 16; 12, 8; 17, 0];
-    % nuv = [6, 0; 6, 4;6, 8; 6, 16];
-    nuv = [1, 4; 4, 4; 8, 4; 16, 4];
+    % nuv = [0, 19;6,8;10, 0]; % same DoFs
+    % nuv = [0, 33;2,30;8,18;17, 0;8, 0;0, 18]; % same DoFs
+    % nuv = [6, 0; 6, 4;6, 16];
+    % nuv = [1, 8;8, 8;16, 8];
+    nuv = [12, 0;12, 4;12, 16];
     for k = 1:size(nuv, 1)
         config.nu = nuv(k, 1);
         config.nv = nuv(k, 2:end);
@@ -176,12 +170,10 @@ if enableNum
             end
             config.ckptPrefix = [upper(config.schemeName), num2str(config.xBasisOrder)];
             switch config.id
-                case 'ex03_2dt'
-                    config.ckptPrefix = strjoin({'GS2DT', config.ckptPrefix}, '_');
-                case 'ex03_2ds'
-                    config.ckptPrefix = strjoin({'GS2DS', config.ckptPrefix}, '_');
+                case 'ex04_2dt'
+                    config.ckptPrefix = strjoin({'BM2DT', config.ckptPrefix}, '_');
             end
-    
+
             if ~isempty(plt.time) && ~overrideNum
                 timeStr = sprintf('t%.1f', plt.time);
                 timeStr = strrep(timeStr, '.', 'p');
@@ -192,20 +184,18 @@ if enableNum
                     config.ckptPrefix, config.ckptPostfix);
             end
             fileName = fullfile(config.ckptDir, fileName);
-    
+
             if exist(fileName, 'file') && ~overrideNum
                 state = physics.radiation.MacroMicroState.load(fileName);
             else
                 [config, scheme, state] = run(config);
                 state.save(fileName);
             end
-    
+
+            plt.style = 'scatter';
             plt.legend{end+1} = sprintf('MMDG%d', order(j));
             switch state.NXDims
                 case 2
-                    plt.style = 'line';
-                    plotAngleDist2d(config, state, plt);
-                    plt.style = 'scatter';
                     plotDensitySlice1d(config, state, plt);
                     plotDensity2d(config, state, plt);
             end
@@ -288,18 +278,22 @@ h = @(x, v) fInitImpl(x, v, config);
 end
 
 function f = fInitImpl(x, v, config)
-E = config.E;
+f = zeros(1, size(x, 2));
+end
+
+function h = fSource(config)
+h = @(x, v, t) fSourceImpl(x, v, t, config);
+end
+
+function f = fSourceImpl(x, v, t, config)
+v0 = [sqrt(3)/2; 1/2];
+kappa = 100;
 sigma = sqrt(1e-2);
 nd = size(x, 1);
-f = exp(-sum(x.^2, 1) / (2 * sigma^2)) / (sqrt(2*pi)*sigma)^nd * E;
-end
-
-function h = fBc(config)
-h = @(x, v, t) fBcImpl(x, v, t, config);
-end
-
-function f = fBcImpl(x, v, t, config)
-f = zeros(1, size(x, 2));
+x0 = zeros(nd, 1);
+Gx = exp(-sum((x - x0).^2, 1) / (2 * sigma^2)) / (sqrt(2*pi)*sigma)^nd;
+Gv = exp(kappa * v0.' * v) / (2*pi*besseli(0, kappa));
+f = Gx .* Gv;
 end
 
 function h = fScattering(config)
@@ -307,7 +301,7 @@ h = @(x) fScatteringImpl(x, config);
 end
 
 function C = fScatteringImpl(x, config)
-C = ones(1, size(x, 2));
+C = double(x(1, :) > 0.5) * 10;
 end
 
 
@@ -315,12 +309,8 @@ function plotDensity2d(config, state, plt)
 
 figure(plt.figIdx);
 ax = gca;
-xRefCell = repmat({0}, state.NXDims, 1);
-xRef = cell(size(xRefCell));
-[xRef{:}] = ndgrid(xRefCell{:});
-xRef = reshape(cat(ndims(xRef{1})+1, xRef{:}), [], numel(xRefCell)).';
-density = state.density(xRef);
-x = state.XDisc.Mesh.collocate(xRefCell);
+density = state.density(zeros(state.NXDims, 1));
+x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
 density = reshape(density, length(x{1}), length(x{2}));
 
 imagesc(ax, x{1}, x{2}, density.', 'Interpolation', 'bilinear');
@@ -332,15 +322,8 @@ set(xl, 'FontSize', plt.strategy.DefaultAxisLabelFontSize);
 set(yl, 'FontSize', plt.strategy.DefaultAxisLabelFontSize);
 colormap(ax, plt.strategy.ColorMap);
 colorbar(ax);
-
-if plt.time == 0.3
-    clim([-0.05, 8.05]);
-elseif plt.time == 0.4
-    clim([-0.05, 5.55]);
-elseif plt.time == 0.6
-    clim([-0.05, 0.85]);
-end
-
+clim([-0.05, 5.05]);
+xline(ax, 0.5, '--w', 'LineWidth', 3, 'HandleVisibility', 'off');
 % if ~isempty(plt.time)
 %     t = plt.time;
 % else
@@ -361,16 +344,15 @@ end
 
 function plotDensitySlice1d(config, state, plt)
 
-figure(plt.sliceFigIdx);
+figure(1);
 ax = gca;
 hold(ax, 'on');
 density = state.density(zeros(state.NXDims, 1));
 x = state.XDisc.Mesh.collocate(repmat({0}, state.NXDims, 1));
 density = reshape(density, length(x{1}), length(x{2}));
 
-R = sqrt(state.NXDims);
 r = linspace(min(x{1}), max(x{1}), 256);
-s = interp2(x{1}, x{2}, density.', r/R, r/R);
+s = interp2(x{1}, x{2}, density.', r*sqrt(3)/2, r/2);
 
 strategy = physics.visual.Strategy1d();
 if strcmpi(plt.style, 'line')
@@ -390,19 +372,12 @@ else
     end
 end
 plot(ax, r, s, style{:}, 'DisplayName', label);
+xline(ax, 0.5, '--r', 'LineWidth', 3, 'HandleVisibility', 'off');
 legend(ax, 'show', 'FontSize', strategy.DefaultLegendFontSize, ...
     'Location', strategy.DefaultLegendPosition);
-xlim([0, config.L]);
-xticks(0:0.2:config.L);
-
-if plt.time == 0.3
-    ylim([-0.05, 8.05]);
-elseif plt.time == 0.4
-    ylim([-0.05, 5.55]);
-elseif plt.time == 0.6
-    ylim([-0.05, 1.05]);
-end
-
+xlim([-config.L, config.L]);
+xticks(-config.L:0.25:config.L);
+ylim([-0.05, 5.05]);
 xl = xlabel(ax, 'x');
 yl = ylabel(ax, '\rho');
 set(ax, 'FontSize', strategy.DefaultFontSize);
@@ -413,73 +388,14 @@ if ~isempty(plt.time)
 else
     t = config.tFinal;
 end
-ti = title(ax, sprintf('t = %.2f', t));
-set(ti, 'FontSize', strategy.DefaultTitleFontSize);
-
+ti = title(sprintf('t = %.2f', t));
+set(ti, 'FontSize', plt.strategy.DefaultTitleFontSize);
 if ~isempty(plt.time)
     timeStr = sprintf('t%.1f', plt.time);
     timeStr = strrep(timeStr, '.', 'p');
     fileName = sprintf('%s_slice_%s_%s.pdf', config.ckptPrefix, plt.slicePostfix, timeStr);
 else
     fileName = sprintf('%s_slice_%s.pdf', config.ckptPrefix, plt.slicePostfix);
-end
-fileName = fullfile(config.ckptDir, fileName);
-exportgraphics(ax, fileName, 'ContentType', 'vector');
-end
-
-function plotAngleDist2d(config, state, plt)
-
-ne = state.XDisc.NMeshElements;
-nvq = 512;
-theta = linspace(0, 2*pi, nvq+1);
-nxq = state.XDisc.Element.Volume.NPoints;
-wxq = state.XDisc.Element.Volume.Weights;
-xRef = state.XDisc.Element.Volume.Nodes;
-detJac = state.XDisc.Mesh.computeElementJacobianDeterminants();
-
-M = 1/(2*pi);
-F = state.distribution(xRef, theta);
-E = wxq * reshape((F-M).^2/M/2, nxq, []);
-E = detJac(:).' * reshape(E, ne, []);
-
-figure(plt.angleFigIdx);
-ax = gca;
-hold(ax, 'on');
-strategy = physics.visual.Strategy1d();
-if strcmpi(plt.style, 'line')
-    style = strategy.getDefaultLineStyle(plt.colorIdx, plt.markerIdx);
-else
-    style = strategy.getDefaultScatterStyle(plt.colorIdx, plt.markerIdx);
-end
-if contains(plt.legend{end}, 'REF')
-    label = plt.legend{end};
-else
-    if config.nu == 0
-        label = sprintf('S_{%d}', config.nv);
-    elseif config.nv == 0
-        label = sprintf('P_{%d}', config.nu-1);
-    else
-        label = sprintf('P_{%d}S_{%d}', config.nu-1, config.nv);
-    end
-end
-plot(ax, theta, E, style{:}, 'DisplayName', label);
-legend(ax, 'show', 'FontSize', strategy.DefaultLegendFontSize, ...
-    'Location', strategy.DefaultLegendPosition);
-xlim([0, 2*pi]);
-xticks(0:pi/4:2*pi);
-xticklabels({'0','\pi/4','\pi/2','3\pi/4','\pi','5\pi/4','3\pi/2','7\pi/4','2\pi'});
-xl = xlabel(ax, '\theta');
-% yl = ylabel(ax, '\rho(\theta)');
-set(ax, 'FontSize', strategy.DefaultFontSize);
-set(xl, 'FontSize', strategy.DefaultAxisLabelFontSize);
-% set(yl, 'FontSize', strategy.DefaultAxisLabelFontSize);
-
-if ~isempty(plt.time)
-    timeStr = sprintf('t%.1f', plt.time);
-    timeStr = strrep(timeStr, '.', 'p');
-    fileName = sprintf('%s_angle_%s_%s.pdf', config.ckptPrefix, plt.slicePostfix, timeStr);
-else
-    fileName = sprintf('%s_angle_%s.pdf', config.ckptPrefix, plt.slicePostfix);
 end
 fileName = fullfile(config.ckptDir, fileName);
 exportgraphics(ax, fileName, 'ContentType', 'vector');

@@ -90,10 +90,8 @@ for k = 1:length(epsilon)
     end
     switch config.nDims
         case 1
-            plt.figIdx = 2;
             plt.strategy = physics.visual.Strategy1d();
         case 2
-            plt.figIdx = k + 1;
             plt.strategy = physics.visual.Strategy2d();
     end
 
@@ -123,16 +121,12 @@ for k = 1:length(epsilon)
         plt.legend{end+1} = 'REF';
         plt.colorIdx = 1;
         plt.markerIdx = 1;
-        switch config.nDims
-            case 1
-                plt.figIdx = 2;
-            case 2
-                plt.figIdx = 1;
-        end
         switch state.NXDims
             case 1
+                plt.figIdx = 2;
                 plotDensity1d(config, state, plt);
             case 2
+                plt.figIdx = 1;
                 plotDensity2d(config, state, plt);
         end
     end

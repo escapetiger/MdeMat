@@ -1,9 +1,10 @@
 %==========================================================================
-% FileName: ex05_beam
+% FileName: ex05_lattice
 % Author: Yi CAI
 % Description:
-%   Beam problem for radiation transport. A collimated beam enters from
-%   the left boundary and propagates through a scattering medium.
+%   Lattice (checkerboard) problem for radiation transport. A 7x7 grid of
+%   alternating scattering and absorbing material cells with a fixed
+%   isotropic source in the center cell.
 %==========================================================================
 
 clc, clear, close all;
@@ -37,10 +38,10 @@ else
     config.E = 1 / (4*pi);
 end
 
-% Spatial domain [0, L]^d
-config.L = 3;
+% Spatial domain [0, 7]^d
+config.L = 7;
 config.xBBox = repmat([0, config.L], 1, config.nDims);
-config.nx = repmat(40, 1, config.nDims);
+config.nx = repmat(35, 1, config.nDims);
 
 % Physical parameters
 config.decomposition = '';
@@ -48,10 +49,10 @@ config.timeScale = 1;
 config.scatteringScale = -1;
 config.absorptionScale = 1;
 
-% Scattering and absorption
+% Scattering, absorption, and source
 config.scattering = fScattering(config);
-config.absorption = [];
-config.source = [];
+config.absorption = fAbsorption(config);
+config.source = fSource(config);
 
 % Initial and boundary conditions
 config.ic = fInit(config);
@@ -85,9 +86,9 @@ end
 % Checkpoint information
 config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 if ~isfolder(config.ckptDir), mkdir(config.ckptDir); end
-config.ckptTimeStamps = [0.5, 1.0, 1.5, 2.0, 3.0];
+config.ckptTimeStamps = [0.5, 1.0, 2.0, 3.0, 3.5];
 config.verbose = 2;
-config.tFinal = 3.0;
+config.tFinal = 3.5;
 
 % Parameter sweep
 override = 0;
@@ -96,7 +97,7 @@ epsilon = 10.^[0];
 for k = 1:length(epsilon)
     plt = struct();
     plt.legend = {};
-    plt.time = 1.0;
+    plt.time = 3.5;
     config.epsilon = epsilon(k);
     config.ckptPostfix = sprintf('epsilon%.0e', epsilon(k));
 
@@ -104,7 +105,7 @@ for k = 1:length(epsilon)
     config.ckptPrefix = [upper(config.schemeName), num2str(1)];
     switch config.id
         case 'ex05_2dt'
-            config.ckptPrefix = strjoin({'BM2DT', config.ckptPrefix}, '_');
+            config.ckptPrefix = strjoin({'LT2DT', config.ckptPrefix}, '_');
     end
     if ~isempty(plt.time) && ~override
         timeStr = sprintf('t%.1f', plt.time);
@@ -140,7 +141,7 @@ for k = 1:length(epsilon)
         config.ckptPrefix = [upper(config.schemeName), num2str(config.xBasisOrder)];
         switch config.id
             case 'ex05_2dt'
-                config.ckptPrefix = strjoin({'BM2DT', config.ckptPrefix}, '_');
+                config.ckptPrefix = strjoin({'LT2DT', config.ckptPrefix}, '_');
         end
 
         if ~isempty(plt.time) && ~override
@@ -250,14 +251,7 @@ h = @(x, v, t) fBcImpl(x, v, t, config);
 end
 
 function f = fBcImpl(x, v, t, config)
-L = config.L;
-onLeft = (x(1, :) == 0);
-beamCenter = L / 2;
-beamWidth = L / 10;
-kappa = 10;
-spatial = exp(-((x(2, :) - beamCenter) / beamWidth).^2);
-angular = exp(kappa * (v(1, :) - 1));
-f = onLeft .* spatial .* angular;
+f = zeros(1, size(x, 2));
 end
 
 function h = fScattering(config)
@@ -265,7 +259,30 @@ h = @(x) fScatteringImpl(x, config);
 end
 
 function C = fScatteringImpl(x, config)
-C = ones(1, size(x, 2));
+ci = min(6, max(0, floor(x(1, :))));
+cj = min(6, max(0, floor(x(2, :))));
+isScattering = (mod(ci + cj, 2) == 0);
+C = isScattering * 1.0;
+end
+
+function h = fAbsorption(config)
+h = @(x) fAbsorptionImpl(x, config);
+end
+
+function C = fAbsorptionImpl(x, config)
+ci = min(6, max(0, floor(x(1, :))));
+cj = min(6, max(0, floor(x(2, :))));
+isAbsorbing = (mod(ci + cj, 2) == 1);
+C = isAbsorbing * 10.0;
+end
+
+function h = fSource(config)
+h = @(x, v, t) fSourceImpl(x, v, t, config);
+end
+
+function S = fSourceImpl(x, v, t, config)
+inCenter = (x(1,:) >= 3 & x(1,:) <= 4 & x(2,:) >= 3 & x(2,:) <= 4);
+S = double(inCenter);
 end
 
 

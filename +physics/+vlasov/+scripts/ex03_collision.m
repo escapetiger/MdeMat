@@ -45,10 +45,10 @@ config.vBBox = [-3.2, 3.2];
 config.ckptFigureName = 'f';
 config.verbose = 2;
 
-override = 0;
+override = 1;
 strategy1d = physics.visual.Strategy1d();
 strategy2d = physics.visual.Strategy2d();
-tau0Level = [0,1,2,3,4,5,6];
+tau0Level = [inf];
 tau0 = 10.^tau0Level;
 peLegs = cell(1, length(tau0));
 k0 = inf;
@@ -92,8 +92,8 @@ for k = 1:kmax
     ti = title(sprintf('t = %d', tckpt));
     set(ti, 'FontSize', strategy2d.DefaultTitleFontSize);
     caxis([-0.05, 0.65]);
-    fileName = sprintf('%s_f_%s_t%dp0.pdf', config.ckptPrefix, config.ckptPostfix, tckpt);
-    % fileName = sprintf('%s_f_%s.pdf', config.ckptPrefix, config.ckptPostfix);
+    % fileName = sprintf('%s_f_%s_t%dp0.pdf', config.ckptPrefix, config.ckptPostfix, tckpt);
+    fileName = sprintf('%s_f_%s.pdf', config.ckptPrefix, config.ckptPostfix);
     fileName = fullfile(config.ckptDir, fileName);
     exportgraphics(ax, fileName, 'ContentType', 'vector');
 
@@ -241,6 +241,45 @@ for k = 1:kmax
     % exportgraphics(ax, fileName, 'ContentType', 'vector');
 end
 
+
+% Save conservation plot
+figure(8);
+ax = gca;
+hold(ax, 'on');
+style1 = strategy1d.getDefaultLineStyle(1, 1);
+style2 = strategy1d.getDefaultLineStyle(2, 2);
+style3 = strategy1d.getDefaultLineStyle(3, 3);
+t = state.History.time;
+mass = state.History.mass;
+momentum = state.History.momentum;
+totalEnergy = state.History.totalEnergy;
+mass = mass - mass(1);
+momentum = momentum - momentum(1);
+totalEnergy = totalEnergy - totalEnergy(1);
+line = plot(t, mass, style1{:});
+set(line, 'LineWidth', 2);
+line = plot(t, momentum, style2{:});
+set(line, 'LineWidth', 2);
+line = plot(t, totalEnergy, style3{:});
+set(line, 'LineWidth', 2);
+distLegs = cell(1, 3);
+distLegs{1} = 'mass';
+distLegs{2} = 'momentum';
+distLegs{3} = 'total energy';
+leg = legend(ax, distLegs);
+set(leg, 'Location', strategy1d.DefaultLegendPosition);
+set(leg, 'FontSize', strategy1d.DefaultLegendFontSize);
+set(leg, 'Interpreter', 'latex');
+xlim([0, config.tFinal]);
+xl = xlabel('$t$');
+set(xl, 'Interpreter', 'latex');
+ylim([-1e-5, 1e-5]);
+yticks(-1e-5:5e-6:1e-5);
+yticklabels(arrayfun(@(x) sprintf('%.0e', x), -1e-5:5e-6:1e-5, 'Un', 0));
+title('Conservation');
+fileName = sprintf('%s_conservation.pdf', config.ckptPrefix);
+fileName = fullfile(config.ckptDir, fileName);
+exportgraphics(ax, fileName, 'ContentType', 'vector');
 
 %% SIMULATION
 
