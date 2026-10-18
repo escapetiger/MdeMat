@@ -19,7 +19,8 @@ OPTION=tSplitName='strang'
 # tOdeIntName='sdirk2': SDIRK2 scheme
 # tOdeIntName='sdirk3': SDIRK3 scheme
 # tOdeIntName='imp': Implicit midpoint scheme
-OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
+OPTION=tOdeIntName={'be', 'be'}
+# OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
 # OPTION=tOdeIntName='sdirk2'
 # OPTION=tOdeIntName='ars222'
 
@@ -37,7 +38,7 @@ OPTION=useSemiImplicit=true
 # -----------------------------------------------------------------------
 
 # spatial order
-OPTION=xBasisOrder=2
+OPTION=xBasisOrder=1
 
 # xBasisType='modal': Modal basis 
 # xBasisType='nodal': Nodal basis
@@ -57,7 +58,7 @@ OPTION=xBasisPattern='Q'
 # xOpType{2,1}='central': central flux
 # xOpType{2,1}='right': right flux
 # xOpType{2,1}='left': left flux
-OPTION=xOpAType={'', 'right'; 'left', ''}
+OPTION=xOpAType={'', 'central'; 'central', ''}
 OPTION=xOpBType={'', 'right'; 'left', ''} 
 
 # -----------------------------------------------------------------------
