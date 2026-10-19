@@ -1,0 +1,478 @@
+\doxysection{Nonuniform\+Grid.\+m}
+\hypertarget{_nonuniform_grid_8m_source}{}\label{_nonuniform_grid_8m_source}\index{+approx/+mesh/NonuniformGrid.m@{+approx/+mesh/NonuniformGrid.m}}
+\mbox{\hyperlink{_nonuniform_grid_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00001}00001\ classdef\ NonuniformGrid\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{Grid}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00002}00002\ \ \ \ \ \%\ NONUNIFORMGRID\ Structured\ grid\ with\ variable\ element\ spacing.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ NonuniformGrid\ represents\ a\ structured\ computational\ grid\ where}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ elements\ can\ have\ different\ sizes\ within\ each\ dimension\ \textcolor{keywordflow}{while}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ maintaining\ the\ regular\ tensor-\/product\ topology.\ This\ flexibility}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ enables\ adaptive\ mesh\ refinement\ in\ specific\ regions\ \textcolor{keywordflow}{while}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ preserving\ the\ computational\ advantages\ of\ structured\ grids.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ grid\ is\ defined\ by\ coordinate\ vectors\ along\ each\ dimension,}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ allowing\ arbitrary\ spacing\ distributions\ such\ as\ geometric}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ progressions,\ hyperbolic\ tangent\ clustering,\ or\ user-\/defined}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ refinement\ patterns.\ Despite\ varying\ element\ sizes,\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ tensor-\/product\ structure\ enables\ efficient\ storage\ O(∑nᵢ)\ and}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ algorithmic\ operations\ compared\ to\ unstructured\ meshes.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ Key\ advantages\ over\ uniform\ grids:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ Adaptive\ resolution:\ Fine\ elements\ where\ needed,\ coarse\ elsewhere}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ -\/\ Boundary\ layer\ capture:\ Geometric\ clustering\ near\ walls/interfaces}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ -\/\ Smooth\ transitions:\ Gradual\ spacing\ changes\ avoid\ numerical\ artifacts}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ -\/\ Domain\ conformity:\ Better\ approximation\ of\ curved\ boundaries}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ Key\ advantages\ over\ unstructured\ meshes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ -\/\ Tensor-\/product\ structure:\ Efficient\ matrix\ operations\ and\ solvers}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ -\/\ Separable\ algorithms:\ Fast\ Fourier\ transforms\ and\ direct\ methods}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ -\/\ Memory\ efficiency:\ O(d×n)\ storage\ vs\ O(n\string^d)\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{explicit}\ connectivity}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ -\/\ Neighbor\ queries:\ O(1)\ algorithmic\ connectivity\ vs\ stored\ tables}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00029}00029\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ \%\ 1D\ grid\ with\ boundary\ layer\ refinement}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ x\_fine\ =\ linspace(0,\ 0.1,\ 21);\ \ \ \ \ \%\ Fine\ near\ x=0}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ x\_coarse\ =\ linspace(0.1,\ 1,\ 11);\ \ \ \%\ Coarse\ in\ interior}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ x\ =\ [x\_fine,\ x\_coarse(2:end)];\ \ \ \ \ \%\ Remove\ duplicate}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ grid1D\ =\ NonuniformGrid(\{x\});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00035}00035\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ \%\ 2D\ grid\ with\ geometric\ stretching}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ x\_uniform\ =\ linspace(0,\ 1,\ 51);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Uniform\ in\ x}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ y\_stretched\ =\ [0,\ cumsum(1.05.\string^(0:29))];\ \ \ \ \%\ Geometric\ in\ y}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ y\_stretched\ =\ y\_stretched\ /\ y\_stretched(end);\ \%\ Normalize\ to\ [0,1]}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ grid2D\ =\ NonuniformGrid(\{x\_uniform,\ y\_stretched\});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00041}00041\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \%\ 3D\ grid\ with\ mixed\ spacing\ patterns}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ x\ =\ linspace(-\/1,\ 1,\ 21);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Uniform\ x-\/direction}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ y\ =\ tanh(linspace(-\/2,\ 2,\ 31))\ /\ tanh(2);\ \ \ \ \ \%\ Hyperbolic\ clustering\ in\ y}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00045}00045\ \ \ \ \ \%\ \ \ z\ =\ [0,\ 0.01,\ 0.05,\ 0.1:0.1:0.9,\ 0.95,\ 0.99,\ 1];\ \%\ Manual\ refinement\ in\ z}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00046}00046\ \ \ \ \ \%\ \ \ grid3D\ =\ NonuniformGrid(\{x,\ y,\ z\});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00047}00047\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00048}00048\ \ \ \ \ \%\ \ \ \%\ Query\ nonuniform\ grid\ properties}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00049}00049\ \ \ \ \ \%\ \ \ h\ =\ grid2D.computeMeasure();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Minimum\ element\ spacing}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00050}00050\ \ \ \ \ \%\ \ \ detJ\ =\ grid2D.computeAllElementJacobianDeterminants();\ \ \%\ Variable\ per\ element}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00051}00051\ \ \ \ \ \%\ \ \ spacing\_x\ =\ grid2D.spacings\{1\};\ \ \ \ \ \ \ \ \ \ \ \%\ Variable\ spacing\ in\ x}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00052}00052\ \ \ \ \ \%\ \ \ spacing\_y\ =\ grid2D.spacings\{2\};\ \ \ \ \ \ \ \ \ \ \ \%\ Variable\ spacing\ in\ y}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00053}00053\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00054}00054\ \ \ \ \ \%\ \ \ \%\ Coordinate\ transformations\ (element-\/dependent)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00055}00055\ \ \ \ \ \%\ \ \ xRef\ =\ [0.3;\ -\/0.2];\ \ \%\ Reference\ coordinates}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00056}00056\ \ \ \ \ \%\ \ \ xPhys\ =\ grid2D.collocate(xRef,\ [100,\ 200]);\ \ \%\ Map\ to\ elements\ 100,\ 200}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00057}00057\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00058}00058\ \ \ \ \ \%\ \ \ \%\ Mesh\ refinement\ (preserves\ spacing\ patterns)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00059}00059\ \ \ \ \ \%\ \ \ fineGrid\ =\ grid2D.refine(1);\ \ \%\ Each\ element\ subdivides\ uniformly}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00060}00060\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00061}00061\ \ \ \ \ \%\ \ \ \%\ Access\ variable\ grid\ structure}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00062}00062\ \ \ \ \ \%\ \ \ centers\_x\ =\ grid2D.centroids\{1\};\ \ \%\ Variable\ element\ centers\ in\ x}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00063}00063\ \ \ \ \ \%\ \ \ centers\_y\ =\ grid2D.centroids\{2\};\ \ \%\ Variable\ element\ centers\ in\ y}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00064}00064\ \ \ \ \ \%\ \ \ nElements\ =\ grid2D.nElements;\ \ \ \ \ \%\ Total\ elements\ =\ nx\ ×\ ny}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00065}00065\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00066}00066\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00067}00067\ \ \ \ \ \%\ \ \ Node\ coordinates\ must\ be\ strictly\ increasing\ within\ each\ dimension}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00068}00068\ \ \ \ \ \%\ \ \ to\ ensure\ proper\ element\ ordering\ and\ positive\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00069}00069\ \ \ \ \ \%\ \ \ determinants.\ The\ constructor\ automatically\ computes\ element}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00070}00070\ \ \ \ \ \%\ \ \ centers\ and\ spacings\ from\ the\ provided\ node\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00071}00071\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00072}00072\ \ \ \ \ \%\ \ \ Refinement\ preserves\ the\ relative\ spacing\ ratios\ within\ each}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00073}00073\ \ \ \ \ \%\ \ \ original\ element\ \textcolor{keywordflow}{while}\ subdividing\ uniformly.\ This\ maintains\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00074}00074\ \ \ \ \ \%\ \ \ adaptive\ character\ of\ the\ original\ grid\ at\ finer\ scales.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00075}00075\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00076}00076\ \ \ \ \ \%\ \ \ Despite\ variable\ spacing,\ face\ normals\ remain\ axis-\/aligned\ and\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00077}00077\ \ \ \ \ \%\ \ \ coordinate\ transformation\ retains\ its\ separable\ structure,\ enabling}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00078}00078\ \ \ \ \ \%\ \ \ efficient\ tensor-\/product\ algorithms.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00079}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{00079}}\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00080}00080\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00081}00081\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{Grid}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_separable_graph}{SeparableGraph}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00083}00083\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}(nodes)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ NONUNIFORMGRID\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}(nodes)\ creates\ a\ nonuniform\ grid\ from}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinate\ vectors\ that\ define\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ boundaries\ in\ each}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimension,\ automatically\ computing\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ properties.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nodes\ -\/\ Cell\ array\ of\ coordinate\ vectors\ \{x,\ y,\ z,\ ...\}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00094}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Validate\ input\ format}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(iscell(nodes),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Nodes\ must\ be\ a\ cell\ array\ of\ coordinate\ vectors.'});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Validate\ coordinate\ ordering\ within\ each\ dimension}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(nodes)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ nodes\{i\};}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(diff(x)\ >\ 0),\ \textcolor{stringliteral}{'InvalidCoordinates'},\ ...}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Coordinates\ must\ be\ strictly\ increasing\ in\ dimension\ \%d.'},\ i);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ grid\ properties\ from\ node\ coordinates}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ resolution\ =\ cellfun(@(x)\ length(x)-\/1,\ nodes);\ \%\ Elements\ =\ nodes\ -\/\ 1}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ spacings\ =\ cellfun(@(x)\ diff(x),\ nodes,\ \textcolor{stringliteral}{'Un'},\ 0);\ \%\ Element\ widths}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ centroids\ =\ cellfun(@(x)\ (x(1:end-\/1)\ +\ x(2:end))/2,\ nodes,\ \textcolor{stringliteral}{'Un'},\ 0);\ \%\ Element\ centers}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ domain\ bounding\ box\ from\ coordinate\ extrema}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ bbox\ =\ cellfun(@(x)\ [min(x),\ max(x)],\ nodes,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ bbox\ =\ horzcat(bbox\{:\});\ \%\ Flatten\ to\ [x\_min,\ x\_max,\ y\_min,\ y\_max,\ ...]}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ domain\ and\ reference\ geometries}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ domain\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}(bbox);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ reference\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}(repmat([-\/1\ /\ 2,\ 1\ /\ 2],\ 1,\ length(nodes)));}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ constructor\ with\ computed\ properties}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{Grid}}(domain,\ reference,\ resolution,\ centroids,\ spacings);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ function\ graphObj\ =\ graphify(obj)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GRAPHIFY\ Convert\ nonuniform\ grid\ to\ separable\ graph\ representation.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ graphObj\ =\ graphify(obj)\ creates\ a\ SeparableGraph\ that}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ represents\ the\ nonuniform\ grid\textcolor{stringliteral}{'s\ connectivity\ structure\ using}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 1D\ factors\ with\ variable\ vertex\ spacing.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00135}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aa4b81ef3446396f963718b7227f36fb3}{00135}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ graphObj\ -\/\ SeparableGraph\ with\ tensor-\/product\ structure}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00137}00137\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.resolution;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ h\ =\ obj.spacings;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ c\ =\ obj.centroids;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00142}00142\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ vertex\ coordinates:\ element\ boundaries\ in\ each\ dimension}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ arrayfun(@(i)\ [c\{i\}\ -\/\ h\{i\}\ /\ 2,\ c\{i\}(end)\ +\ h\{i\}(end)\ /\ 2].'},\ 1:d,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ edge\ connectivity:\ standard\ 1D\ chains}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ arrayfun(@(k)\ [(1:k).\textcolor{stringliteral}{',\ (2:(k\ +\ 1)).'}],\ n,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ separable\ graph\ from\ 1D\ factors}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ graphObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_separable_graph}{SeparableGraph}}(V,\ E);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a3c80295ee78472c1c9a5be43e513531a}{collocate}}(obj,\ X,\ L)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COLLOCATE\ Map\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ coordinates\ to\ physical\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a3c80295ee78472c1c9a5be43e513531a}{collocate}}(obj,\ X)\ maps\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ coordinates\ from\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ standard\ hypercube\ [-\/1/2,1/2]\string^d\ to\ physical\ coordinates}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ across\ all\ grid\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/specific\ transformations.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a3c80295ee78472c1c9a5be43e513531a}{collocate}}(obj,\ X,\ L)\ maps\ coordinates\ to\ specific}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ identified\ by\ linear\ indices\ L.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Reference\ coordinates\ (d\ ×\ nPoints\ or\ cell\ array)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Element\ linear\ indices\ (optional,\ vector)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Physical\ coordinates\ (d\ ×\ nPoints\ or\ cell\ array)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00170}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a3c80295ee78472c1c9a5be43e513531a}{00170}}\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Use\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ \textcolor{keywordflow}{if}\ none\ specified}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 3,\ L\ =\ [];\ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ matrix\ input\ to\ cell\ array\ format\ \textcolor{keywordflow}{for}\ processing}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ismatrix(X)\ \&\&\ \string~iscell(X)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ num2cell(reshape(X,\ d,\ []),\ 2);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ cell(d,\ 1);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(L)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Transform\ to\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}:\ broadcast\ over\ all\ centers}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:d}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ obj.centroids\{i\};\ \%\ All\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ centers\ in\ dimension\ i}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ obj.spacings\{i\};\ \%\ All\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ spacings\ in\ dimension\ i}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ bsxfun(@times,\ h,\ X\{i\}(:));\ \%\ Scale\ by\ element\ spacing}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\{i\}\ =\ reshape(bsxfun(@plus,\ a,\ b),\ 1,\ []);\ \%\ Translate\ to\ centers}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Transform\ to\ specific\ elements:\ use\ element-\/specific\ properties}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.indexer.linearToMulti(L);\ \%\ Convert\ to\ multi-\/indices}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:d}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ obj.centroids\{i\}(M(:,\ i));\ \%\ Centers\ \textcolor{keywordflow}{for}\ specified\ elements}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ obj.spacings\{i\}(M(:,\ i));\ \%\ Spacings\ \textcolor{keywordflow}{for}\ specified\ elements}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ bsxfun(@times,\ h,\ X\{i\}(:));\ \%\ Scale\ by\ element-\/specific\ spacing}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\{i\}\ =\ reshape(bsxfun(@plus,\ a,\ b),\ 1,\ []);\ \%\ Translate\ to\ centers}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ back\ to\ matrix\ format\ \textcolor{keywordflow}{if}\ specific\ elements\ requested}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(L),\ Y\ =\ cell2mat(Y);\ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ function\ newObj\ =\ refine(obj,\ nLevels)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ REFINE\ Create\ refined\ nonuniform\ grid\ preserving\ spacing\ patterns.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ refine(obj,\ nLevels)\ creates\ a\ refined\ nonuniform\ grid}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ by\ uniformly\ subdividing\ each\ element\ \textcolor{keywordflow}{while}\ preserving\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ relative\ spacing\ characteristics\ of\ the\ original\ grid.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nLevels\ -\/\ Number\ of\ refinement\ levels\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ -\/\ Refined\ NonuniformGrid\ with\ preserved\ spacing\ patterns}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Refinement\ subdivides\ each\ original\ element\ into\ 2\string^nLevels}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sub-\/elements\ with\ uniform\ spacing\ within\ the\ original\ element.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ preserves\ the\ adaptive\ character:\ regions\ that\ were\ fine}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ remain\ proportionally\ fine,\ and\ coarse\ regions\ remain\ coarse.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ total\ number\ of\ elements\ increases\ by\ 2\string^(nLevels×d),\ but}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00228}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a0eac8ee4457c8758f385db7bd6c187a4}{00228}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ relative\ spacing\ ratios\ between\ different\ grid\ regions}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ are\ maintained\ at\ the\ refined\ scale.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nLevels\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ obj;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ 2\string^nLevels;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ cell(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:d}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ obj.centroids\{i\};}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.resolution(i);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ obj.spacings\{i\};}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ y\ -\/\ s\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ y\ +\ s\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ (b\ -\/\ a)\ ./\ p;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\{i\}\ =\ zeros(1,\ 1+n*p);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\{i\}(1)\ =\ a(1);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\{i\}(1\ +\ (j\ -\/\ 1)\ *\ p\ +\ (1:p))\ =\ (a(j)\ +\ h(j)):h(j):b(j);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{NonuniformGrid}}(x);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ function\ h\ =\ computeMeasure(obj)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEMEASURE\ Compute\ minimum\ element\ spacing\ across\ the\ grid.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ =\ computeMeasure(obj)\ returns\ the\ minimum\ element\ spacing}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ among\ all\ elements\ in\ all\ dimensions,\ providing\ a\ characteristic}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ length\ scale\ \textcolor{keywordflow}{for}\ the\ nonuniform\ grid.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ -\/\ Minimum\ element\ spacing\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ nonuniform\ grids,\ the\ measure\ is\ min(min(h₁),\ min(h₂),\ ...,\ min(hₐ))}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ hᵢ\ is\ the\ spacing\ array\ in\ dimension\ i.\ This\ provides\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ finest\ resolution\ anywhere\ in\ the\ grid,\ important\ \textcolor{keywordflow}{for}:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ CFL\ stability\ conditions\ (determined\ by\ smallest\ element)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Error\ estimates\ (dominated\ by\ finest\ resolution)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00274}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a50b027afe065c49a0229ccd02be7d7ba}{00274}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Solver\ convergence\ (limited\ by\ most\ refined\ regions)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ minimum\ spacing\ in\ each\ dimension,\ then\ global\ minimum}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ min(cellfun(@min,\ obj.spacings));}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ function\ detJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_ab6f45dc846aca60c5cf5f8770d4db43a}{computeAllElementJacobianDeterminants}}(obj)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANDETERMINANTS\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/specific}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Jacobian\ determinants.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_ab6f45dc846aca60c5cf5f8770d4db43a}{computeAllElementJacobianDeterminants}}(obj)\ computes}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ Jacobian\ determinant\ \textcolor{keywordflow}{for}\ coordinate\ transformation\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\ For\ nonuniform\ grids,\ determinants\ vary\ by\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_aeeed1399274a9f29fc678640c2e4987f}{NonuniformGrid}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detJ\ -\/\ Jacobian\ determinants\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}{nElements}}\ ×\ 1)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ with\ multi-\/index\ (i₁,\ i₂,\ ...,\ iₐ)\ and\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ =\ [h₁(i₁),\ h₂(i₂),\ ...,\ hₐ(iₐ)]:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ det(J)\ =\ h₁(i₁)\ ×\ h₂(i₂)\ ×\ ...\ ×\ hₐ(iₐ)\ =\ ∏ⱼ\ hⱼ(iⱼ)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00298}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_ab6f45dc846aca60c5cf5f8770d4db43a}{00298}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/specific\ determinant\ appears\ in\ integration:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ∫\_Ωₑ\ f(x)\ dx\ =\ det(Jₑ)\ ∫\_Ω̂\ f(Fₑ(ξ))\ dξ\ where\ Ωₑ\ is\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ e.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ tensor\ grid\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}:\ h\{i\}(j)\ at\ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cell(1,\ obj.nDims);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ [h\{:\}]\ =\ ndgrid(obj.spacings\{:\});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Flatten\ spacing\ arrays\ and\ compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/wise\ products}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cellfun(@(x)\ x(:).\textcolor{stringliteral}{',\ h,\ '}Un\textcolor{stringliteral}{',\ 0);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ detJ\ =\ prod(cat(1,\ h\{:\}),\ 1);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00309}00309\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ detJ\ =\ detJ(:);\ \%\ Convert\ to\ column\ vector}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00310}00310\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00311}00311\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ J\ =\ computeAllElementJacobians(obj)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANS\ Compute\ element-\/specific\ Jacobian\ matrices.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00314}00314\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00315}00315\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ =\ computeAllElementJacobians(obj)\ computes\ the\ Jacobian}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00316}00316\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ for\ coordinate\ transformation\ for\ each\ element.\ For}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00317}00317\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nonuniform\ grids,\ Jacobians\ vary\ by\ element\ but\ remain\ diagonal.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00318}00318\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00319}00319\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00320}00320\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00321}00321\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00322}00322\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00323}00323\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ -\/\ Jacobian\ matrices\ (d\ ×\ d\ ×\ nElements)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00324}00324\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00325}00325\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00326}00326\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ element\ with\ multi-\/index\ (i₁,\ i₂,\ ...,\ iₐ)\ and\ spacings}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00327}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a00be8dfb29c21452fc874a1460a838d4}{00327}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ =\ [h₁(i₁),\ h₂(i₂),\ ...,\ hₐ(iₐ)]:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00328}00328\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J(:,:,element)\ =\ diag([h₁(i₁),\ h₂(i₂),\ ...,\ hₐ(iₐ)])}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00329}00329\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00330}00330\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Despite\ variable\ spacing,\ Jacobians\ remain\ diagonal\ due\ to}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00331}00331\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ axis-\/aligned\ coordinate\ transformation\ structure.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00332}00332\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00333}00333\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00334}00334\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00335}00335\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ tensor\ grid\ of\ spacings\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00336}00336\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cell(1,\ d);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00337}00337\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ [h\{:\}]\ =\ ndgrid(obj.spacings\{:\});}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00338}00338\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00339}00339\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Flatten\ and\ arrange\ spacings\ for\ matrix\ construction}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00340}00340\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cellfun(@(x)\ x(:).'},\ h,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cat(1,\ h\{:\});\ \%\ d\ ×\ nElements\ array}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ diagonal\ Jacobian\ matrices\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ reshape(h,\ d,\ 1,\ [])\ .*\ eye(d,\ d);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00345}00345\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00347}00347\ \ \ \ \ \ \ \ \ function\ invJ\ =\ computeAllElementInverseJacobians(obj)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTINVERSEJACOBIANS\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/specific\ inverse}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Jacobian\ matrices.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invJ\ =\ computeAllElementInverseJacobians(obj)\ computes\ the}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ inverse\ Jacobian\ matrix\ \textcolor{keywordflow}{for}\ coordinate\ transformation\ \textcolor{keywordflow}{for\ each}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\ For\ nonuniform\ grids,\ inverse\ Jacobians\ vary\ by\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{NonuniformGrid}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invJ\ -\/\ Inverse\ Jacobian\ matrices\ (d\ ×\ d\ ×\ nElements)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00361}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_ade2caa7bc69f96b5b8d6782b42ee96f2}{00361}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ with\ multi-\/index\ (i₁,\ i₂,\ ...,\ iₐ)\ and\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ =\ [h₁(i₁),\ h₂(i₂),\ ...,\ hₐ(iₐ)]:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J⁻¹(:,:,\mbox{\hyperlink{namespaceapprox_1_1element}{element}})\ =\ diag([1/h₁(i₁),\ 1/h₂(i₂),\ ...,\ 1/hₐ(iₐ)])}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Element-\/specific\ inverse\ Jacobians\ appear\ in\ gradient\ transformations:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ∇\_x\ f\ =\ (Jₑ)⁻ᵀ\ ∇\_ξ\ f\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ e.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ tensor\ grid\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cell(1,\ d);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ [h\{:\}]\ =\ ndgrid(obj.spacings\{:\});}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Flatten\ and\ compute\ reciprocal\ spacings}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cellfun(@(x)\ x(:).\textcolor{stringliteral}{',\ h,\ '}Un\textcolor{stringliteral}{',\ 0);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00377}00377\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ h\ =\ 1\ ./\ cat(1,\ h\{:\});\ \%\ Reciprocal\ spacings:\ d\ ×\ nElements}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00378}00378\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00379}00379\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ diagonal\ inverse\ Jacobian\ matrices\ for\ each\ element}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00380}00380\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ invJ\ =\ reshape(h,\ d,\ 1,\ [])\ .*\ eye(d,\ d);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00381}00381\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00382}00382\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00383}00383\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ detFJ\ =\ computeAllFaceJacobianDeterminants(obj)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00384}00384\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLFACEJACOBIANDETERMINANTS\ Compute\ element-\/specific\ face}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00385}00385\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Jacobian\ determinants.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00386}00386\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00387}00387\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ =\ computeAllFaceJacobianDeterminants(obj)\ computes}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00388}00388\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Jacobian\ determinants\ for\ coordinate\ transformation\ on\ element}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00389}00389\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ faces.\ For\ nonuniform\ grids,\ face\ determinants\ vary\ by\ element.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00390}00390\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00391}00391\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00392}00392\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00393}00393\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00394}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_a06312bffe3e3e9486fadb64b5c941902}{00394}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00395}00395\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ -\/\ Face\ Jacobian\ determinants\ (cell\ array\ by\ face\ type)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00396}00396\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00397}00397\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00398}00398\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ face\ perpendicular\ to\ dimension\ k\ in\ element\ (i₁,\ ...,\ iₐ):}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00399}00399\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ det(J\_face)\ =\ ∏\_\{j≠k\}\ hⱼ(iⱼ)\ (product\ of\ spacings\ in\ other\ dimensions)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00400}00400\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00401}00401\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Face\ determinants\ vary\ by\ element\ location\ due\ to\ nonuniform}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00402}00402\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spacing,\ unlike\ uniform\ grids\ where\ they\ are\ constant\ per\ face\ type.}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00403}00403\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00404}00404\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ detFJ\ =\ cell(1,\ 2*obj.nDims);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00405}00405\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00406}00406\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ faceIndex\ =\ 1:2\ *\ obj.nDims}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00407}00407\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ perpendicular\ dimension\ for\ this\ face\ type}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00408}00408\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dim\ =\ ceil(faceIndex/2);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00409}00409\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00410}00410\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Identify\ dimensions\ parallel\ to\ the\ face\ (all\ except\ perpendicular)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00411}00411\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherDims\ =\ 1:obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00412}00412\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherDims(dim)\ =\ [];}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00413}00413\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00414}00414\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(otherDims)}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00415}00415\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 1D\ case:\ faces\ are\ points,\ determinant\ is\ 1\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00416}00416\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detFJ\{faceIndex\}\ =\ ones(1,\ obj.nElements);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00417}00417\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00418}00418\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Higher\ dimensions:\ product\ of\ spacings\ in\ parallel\ dimensions}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00419}00419\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ cell(1,\ obj.nDims);}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00420}00420\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [h\{:\}]\ =\ ndgrid(obj.spacings\{:\});}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00421}00421\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00422}00422\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ spacings\ for\ dimensions\ parallel\ to\ the\ face}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00423}00423\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\_parallel\ =\ cellfun(@(x)\ x(:).'},\ h(otherDims),\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/wise\ products\ \textcolor{keywordflow}{for}\ face\ determinants}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detFJ\{faceIndex\}\ =\ prod(cat(1,\ h\_parallel\{:\}),\ 1);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00429}00429\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00430}00430\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00431}00431\ \ \ \ \ \ \ \ \ function\ outN\ =\ computeAllOutwardNormals(obj)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLOUTWARDNORMALS\ Compute\ outward\ normal\ vectors\ \textcolor{keywordflow}{for}\ all\ faces.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ =\ computeAllOutwardNormals(obj)\ computes\ unit\ outward}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ normal\ vectors\ \textcolor{keywordflow}{for\ each}\ face\ type.\ For\ nonuniform\ grids,\ normals}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ remain\ axis-\/aligned\ and\ constant\ \textcolor{keywordflow}{for}\ faces\ of\ the\ same\ type.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ NonuniformGrid\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ -\/\ Outward\ normal\ vectors\ (cell\ array\ by\ face\ type)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00443}\mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid_adf6fc775d1d6a22e4f567367418ae707}{00443}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Despite\ variable\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ spacing,\ outward\ normals\ remain}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ axis-\/aligned\ and\ independent\ of\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ size:}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 2k-\/1:\ normal\ =\ -\/eₖ\ (negative\ k-\/direction,\ \textcolor{stringliteral}{"{}lower"{}}\ face)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 2k:\ \ \ normal\ =\ +eₖ\ (positive\ k-\/direction,\ \textcolor{stringliteral}{"{}upper"{}}\ face)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ eₖ\ is\ the\ unit\ vector\ in\ dimension\ k.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ All\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ sharing\ the\ same\ face\ type\ have\ identical}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outward\ normals,\ regardless\ of\ their\ individual\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ sizes.}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00453}00453\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ outN\ =\ cell(1,\ 2*obj.nDims);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00455}00455\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ normal\ vector\ \textcolor{keywordflow}{for\ each}\ face\ type}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ faceIndex\ =\ 1:2\ *\ obj.nDims}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ perpendicular\ dimension\ and\ orientation}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dim\ =\ ceil(faceIndex/2);\ \%\ Which\ dimension\ (1,\ 2,\ 3,\ ...)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isPositive\ =\ (mod(faceIndex,\ 2)\ ==\ 0);\ \%\ Upper\ face\ (even)\ or\ lower\ face\ (odd)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00461}00461\ }
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ unit\ normal\ vector\ (axis-\/aligned,\ independent\ of\ spacing)}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\{faceIndex\}\ =\ zeros(obj.nDims,\ 1);}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isPositive}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\{faceIndex\}(dim)\ =\ +1;\ \%\ Outward\ =\ positive\ direction}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\{faceIndex\}(dim)\ =\ -\/1;\ \%\ Outward\ =\ negative\ direction}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00470}00470\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00471}00471\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_nonuniform_grid_8m_source_l00472}00472\ end}
+
+\end{DoxyCode}

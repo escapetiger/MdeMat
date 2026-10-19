@@ -1,0 +1,225 @@
+\doxysection{fem\+::assembly\+::Assembly Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_assembly}{}\label{classfem_1_1assembly_1_1_assembly}\index{fem::assembly::Assembly@{fem::assembly::Assembly}}
+
+
+Base class for assembly procedure.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1assembly_1_1_constant_assembly}{fem\+::assembly\+::\+Constant\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}{Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for assembly procedure. 
+
+\doxylink{classfem_1_1assembly_1_1_assembly}{Assembly} provides the foundation for assembling finite element operators into global operators. This abstract base class manages finite element spaces and operators, and provides utilities for sparse matrix construction.
+
+The class handles the relationship between finite elements, meshes, and operators, providing common properties and methods needed for matrix assembly operations.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_constant_assembly}{fem.\+assembly.\+Constant\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_grid_assembly}{fem.\+assembly.\+Grid\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00020}{20}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!Assembly@{Assembly}}
+\index{Assembly@{Assembly}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{Assembly()}{Assembly()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e} 
+function fem\+::assembly\+::\+Assembly\+::\+Assembly (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{op}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. 
+
+obj = Assembly(fe, mesh, op) creates an assembler object with the specified finite element, mesh, and operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object \\
+\hline
+{\em mesh} & -\/ Mesh object \\
+\hline
+{\em op} & -\/ Finite element operator object \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!sparseFromTriplets@{sparseFromTriplets}}
+\index{sparseFromTriplets@{sparseFromTriplets}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{sparseFromTriplets()}{sparseFromTriplets()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5} 
+function fem\+::assembly\+::\+Assembly\+::sparse\+From\+Triplets (\begin{DoxyParamCaption}\item[{Input\+Type}]{T}{, }\item[{Input\+Type}]{m}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Create sparse matrix from triplet format. 
+
+A = sparse\+From\+Triplets(\+T, m, n) converts a triplet list (row, column, value) into a sparse matrix, automatically filtering out invalid indices (zeros or negative values).
+
+
+\begin{DoxyParams}{Parameters}
+{\em T} & -\/ Triplet matrix with columns \mbox{[}row\+Idx, col\+Idx, value\mbox{]} \\
+\hline
+{\em m} & -\/ Number of rows in output sparse matrix (positive integer) \\
+\hline
+{\em n} & -\/ Number of columns in output sparse matrix (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Sparse matrix of size m×n \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!fe@{fe}}
+\index{fe@{fe}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{fe}{fe}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3} 
+Property fem\+::assembly\+::\+Assembly\+::fe}
+
+
+
+Finite element object. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00024}{24}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!mesh@{mesh}}
+\index{mesh@{mesh}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183} 
+Property fem\+::assembly\+::\+Assembly\+::mesh}
+
+
+
+Mesh object. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00027}{27}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!nDims@{nDims}}
+\index{nDims@{nDims}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58} 
+Property fem\+::assembly\+::\+Assembly\+::n\+Dims}
+
+
+
+Number of dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00045}{45}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!nGlobalDofs@{nGlobalDofs}}
+\index{nGlobalDofs@{nGlobalDofs}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{nGlobalDofs}{nGlobalDofs}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2} 
+Property fem\+::assembly\+::\+Assembly\+::n\+Global\+Dofs}
+
+
+
+Total number of degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00042}{42}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!nLocalDofs@{nLocalDofs}}
+\index{nLocalDofs@{nLocalDofs}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{nLocalDofs}{nLocalDofs}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb} 
+Property fem\+::assembly\+::\+Assembly\+::n\+Local\+Dofs}
+
+
+
+Number of degrees of freedom per element. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00039}{39}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!nTotalElements@{nTotalElements}}
+\index{nTotalElements@{nTotalElements}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{nTotalElements}{nTotalElements}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f} 
+Property fem\+::assembly\+::\+Assembly\+::n\+Total\+Elements}
+
+
+
+Total number of elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00036}{36}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}\index{fem::assembly::Assembly@{fem::assembly::Assembly}!op@{op}}
+\index{op@{op}!fem::assembly::Assembly@{fem::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{op}{op}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac} 
+Property fem\+::assembly\+::\+Assembly\+::op}
+
+
+
+Finite element operator object. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00030}{30}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_assembly_8m}{Assembly.\+m}}\end{DoxyCompactItemize}

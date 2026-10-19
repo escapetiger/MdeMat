@@ -1,0 +1,143 @@
+\doxysection{Graph.\+m}
+\hypertarget{_graph_8m_source}{}\label{_graph_8m_source}\index{+approx/+mesh/Graph.m@{+approx/+mesh/Graph.m}}
+\mbox{\hyperlink{_graph_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00001}00001\ classdef\ Graph\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00002}00002\ \ \ \ \ \%\ GRAPH\ Fundamental\ graph\ structure\ with\ vertices\ and\ edges.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Graph\ provides\ a\ basic\ representation\ of\ a\ graph\ data\ structure}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ consisting\ of\ vertices\ (nodes)\ and\ edges\ (connections).\ This\ \textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ serves\ as\ a\ foundation\ \textcolor{keywordflow}{for}\ more\ complex\ graph-\/based\ algorithms\ and}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ mesh\ representations\ in\ computational\ applications.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Create\ empty\ graph}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ graph\ =\ Graph();}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \%\ Create\ graph\ with\ vertices\ and\ edges}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ vertices\ =\ [0,\ 0;\ 1,\ 0;\ 1,\ 1;\ 0,\ 1];\ \ \%\ 2D\ square}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ edges\ =\ [1,\ 2;\ 2,\ 3;\ 3,\ 4;\ 4,\ 1];\ \ \ \ \ \%\ Square\ connectivity}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ graph\ =\ Graph(vertices,\ edges);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \%\ Query\ graph\ properties}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ nVerts\ =\ graph.nVertices;}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ nEdges\ =\ graph.nEdges;}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ dims\ =\ graph.nDims;}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00023}00023\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ Vertices\ are\ stored\ as\ an\ nVertices\ ×\ nDims\ matrix\ where\ each\ row}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ represents\ a\ vertex.\ Edges\ are\ stored\ as\ an\ nEdges\ ×\ 2\ matrix\ where}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ each\ row\ contains\ indices\ of\ connected\ vertices.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00028}00028\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_separable_graph}{SeparableGraph}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{Grid}}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00030}00030\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00031}00031\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ vertices\ \ \%\ Matrix\ of\ vertex\ coordinates\ (nVertices\ ×\ nDims)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph}{00033}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}\ \ \ \ \ \%\ Matrix\ of\ edge\ connections\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8eff95f4c584dea5fdb79afeb071135d}{nEdges}}\ ×\ 2)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00034}00034\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00036}00036\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00037}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{00037}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_acfc40094e3bfd671c2b863049eb30684}{nDims}}\ \ \ \ \ \%\ Number\ of\ spatial\ dimensions}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a9e128f4124d1e55d3b407aafd95f1bd0}{nVertices}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}\ in\ the\ graph}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8eff95f4c584dea5fdb79afeb071135d}{nEdges}}\ \ \ \ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}\ in\ the\ graph}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00040}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{00040}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00041}00041\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00042}00042\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}(V,\ E)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GRAPH\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_acfc40094e3bfd671c2b863049eb30684}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}()\ creates\ an\ empty\ graph\ with\ no\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ or\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a9e128f4124d1e55d3b407aafd95f1bd0}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}(V,\ E)\ creates\ a\ graph\ with\ specified\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00052}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8eff95f4c584dea5fdb79afeb071135d}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ -\/\ Matrix\ where\ each\ row\ represents\ a\ vertex\ (optional)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ E\ -\/\ Matrix\ where\ each\ row\ represents\ an\ edge\ (optional)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 1,\ V\ =\ [];\ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2,\ E\ =\ [];\ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a39104e5b7365e472dc8868e1cba16561}{setVertices}}(V);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_ae0d72d797ffd7adb33fa5ce186f869e6}{setEdges}}(E);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a39104e5b7365e472dc8868e1cba16561}{setVertices}}(obj,\ V)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETVERTICES\ Set\ the\ vertex\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a39104e5b7365e472dc8868e1cba16561}{setVertices}}(obj,\ V)\ updates\ the\ graph\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}\ with}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ coordinate\ matrix.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00071}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ -\/\ Matrix\ where\ each\ row\ represents\ a\ vertex\ coordinate}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(V)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismatrix(V)\ \&\&\ isnumeric(V),\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidVertices',\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Vertices\ must\ be\ a\ numeric\ matrix.');}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}\ =\ V;}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_ae0d72d797ffd7adb33fa5ce186f869e6}{setEdges}}(obj,\ E)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETEDGES\ Set\ the\ edge\ connectivity.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00092}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a39104e5b7365e472dc8868e1cba16561}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_ae0d72d797ffd7adb33fa5ce186f869e6}{setEdges}}(obj,\ E)\ updates\ the\ graph\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ connectivity\ matrix.\ Validates\ that\ edge\ indices}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ reference\ existing\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ E\ -\/\ Matrix\ where\ each\ row\ contains\ two\ vertex\ indices}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a99b06758b955c3bfb8d8a5bb0f4575d9}{Graph}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(E)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismatrix(E)\ \&\&\ isnumeric(E)\ \&\&\ size(E,\ 2)\ ==\ 2,\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidEdges',\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Edges\ must\ be\ a\ numeric\ matrix\ with\ 2\ columns');}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ all(E(:)\ <=\ n\ \&\ E(:)\ >=\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidEdgeIndices',\ ...}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Edge\ indices\ must\ reference\ valid\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}');}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}\ =\ E;}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00117}\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_ae0d72d797ffd7adb33fa5ce186f869e6}{00117}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_acfc40094e3bfd671c2b863049eb30684}{nDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a9e128f4124d1e55d3b407aafd95f1bd0}{nVertices}}(obj)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NVERTICES\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8417c65c0cd08747b6d22a282ef3e2fd}{vertices}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a8eff95f4c584dea5fdb79afeb071135d}{nEdges}}(obj)}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NEDGES\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}}.}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph_a630b78cfa37a7e51e061d8dd13266524}{edges}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00136}00136\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_graph_8m_source_l00137}00137\ end}
+
+\end{DoxyCode}

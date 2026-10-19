@@ -1,0 +1,50 @@
+\doxysection{render\+Variable1d.\+m}
+\hypertarget{render_variable1d_8m_source}{}\label{render_variable1d_8m_source}\index{+profilers/+visual/private/renderVariable1d.m@{+profilers/+visual/private/renderVariable1d.m}}
+\mbox{\hyperlink{render_variable1d_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00001}00001\ function\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a1931fed272459281b05384783538aad6}{renderVariable1d}}(axes,\ dataset,\ styleset,\ varName,\ offset)}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00002}00002\ dataNames\ =\ fieldnames(dataset);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00003}00003\ [fieldName,\ varIdx]\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a733889fbbf19bead64b9a779c93a3e58}{splitVarName}}(varName);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00005}00005\ ax\ =\ axes(offset);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00006}00006\ cla(ax);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00007}\mbox{\hyperlink{namespaceprofilers_1_1visual_a1931fed272459281b05384783538aad6}{00007}}\ hold(ax,\ \textcolor{stringliteral}{'on'});}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00009}00009\ [xmin,\ xmax,\ umin,\ umax]\ =\ deal(inf,\ -\/inf,\ inf,\ -\/inf);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00010}00010\ legends\ =\ cell(1,\ length(dataNames));}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00012}00012\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00013}00013\ \textcolor{keywordflow}{for}\ i\ =\ 1:length(dataNames)}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00014}00014\ \ \ \ \ dataName\ =\ dataNames\{i\};}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00015}00015\ \ \ \ \ g\ =\ dataset.(dataName);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isfield(g.data,\ fieldName)}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00019}00019\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00021}00021\ \ \ \ \ x\ =\ g.coords;}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00022}00022\ \ \ \ \ u\ =\ g.data.(fieldName)(:,\ varIdx);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00024}00024\ \ \ \ \ xmin\ =\ min(xmin,\ min(x(:)));}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00025}00025\ \ \ \ \ xmax\ =\ max(xmax,\ max(x(:)));}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00026}00026\ \ \ \ \ umin\ =\ min(umin,\ min(u(:)));}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00027}00027\ \ \ \ \ umax\ =\ max(umax,\ max(u(:)));}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{if}\ isfield(styleset,\ dataName)}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ style\ =\ styleset.(dataName);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ style\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00033}00033\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00035}00035\ \ \ \ \ plot(ax,\ x(:),\ u(:),\ style\{:\});}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00036}00036\ \ \ \ \ legends\{count+1\}\ =\ dataName;}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00037}00037\ \ \ \ \ count\ =\ count\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00038}00038\ end}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00039}00039\ legends\ =\ legends(1:count);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00041}00041\ \textcolor{keywordflow}{if}\ \string~isempty(legends)}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{namespaceprofilers_1_1visual_a66dba490b8c87f76deb1eb8834548c1c}{finalizeAxis}}(ax,\ xmin,\ xmax,\ umin,\ umax,\ \textcolor{charliteral}{'x'},\ varName,\ legends);}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00043}00043\ end}
+\DoxyCodeLine{\Hypertarget{render_variable1d_8m_source_l00044}00044\ end}
+
+\end{DoxyCode}

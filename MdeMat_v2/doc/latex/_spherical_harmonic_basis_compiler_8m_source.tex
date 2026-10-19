@@ -1,0 +1,65 @@
+\doxysection{Spherical\+Harmonic\+Basis\+Compiler.\+m}
+\hypertarget{_spherical_harmonic_basis_compiler_8m_source}{}\label{_spherical_harmonic_basis_compiler_8m_source}\index{+core/+symbolic/SphericalHarmonicBasisCompiler.m@{+core/+symbolic/SphericalHarmonicBasisCompiler.m}}
+\mbox{\hyperlink{_spherical_harmonic_basis_compiler_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00001}00001\ classdef\ SphericalHarmonicBasisCompiler\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{Compiler}}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00002}00002\ \ \ \ \ \%\ SPHERICALHARMONICBASISCOMPILER\ Compiler\ \textcolor{keywordflow}{for}\ spherical\ harmonic\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SphericalHarmonicBasisCompiler\ specializes\ in\ compiling\ basis}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ matrices\ \textcolor{keywordflow}{for}\ real-\/valued\ spherical\ harmonic\ basis\ functions.\ It}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ creates\ and\ manages\ arrays\ of\ spherical\ harmonic\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ including\ zonal\ and\ tesseral\ harmonics.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Create\ compiler\ and\ set\ functions}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ compiler\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler}{SphericalHarmonicBasisCompiler}}();}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ compiler.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler_a88c9c74d1f4eeec7080bf60cad064d34}{setFunctions}}(8,\ \textcolor{stringliteral}{'spherical\_harmonic'});}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Compile\ and\ load\ basis\ matrix}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ compiler.compile(\textcolor{stringliteral}{'spherical\_harmonic\_basis'},\ \textcolor{stringliteral}{'SphericalHarmonic'},\ 1);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ metadata\ =\ compiler.load(\textcolor{stringliteral}{'spherical\_harmonic\_basis'});}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00018}00018\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{Compiler}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{SphericalHarmonicBasisFunction}}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00020}00020\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00021}00021\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ function\ obj\ =\ setFunctions(obj,\ maxIndex,\ basisType)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFUNCTIONS\ Sets\ spherical\ harmonic\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00025}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler_a88c9c74d1f4eeec7080bf60cad064d34}{setFunctions}}(obj,\ maxIndex)\ creates\ an\ array\ of}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spherical\ harmonic\ basis\ functions\ from\ index\ 1\ to\ maxIndex}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{using\ }the\ \textcolor{keywordflow}{default}\ basis\ type.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler_a88c9c74d1f4eeec7080bf60cad064d34}{setFunctions}}(obj,\ maxIndex,\ basisType)\ creates}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spherical\ harmonic\ basis\ functions\ with\ \textcolor{keyword}{explicit}\ type}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specification.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler}{SphericalHarmonicBasisCompiler}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ maxIndex\ -\/\ Maximum\ index\ \textcolor{keywordflow}{for}\ basis\ functions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ basisType\ -\/\ Type\ of\ basis\ (optional,\ \textcolor{keywordflow}{default}:\ \textcolor{stringliteral}{'spherical\_harmonic'})}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler}{SphericalHarmonicBasisCompiler}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(maxIndex\ >=\ 1,\ ...}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Maximum\ index\ must\ be\ positive.'});}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 3}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basisType\ =\ \textcolor{stringliteral}{'spherical\_harmonic'};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00047}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler_a88c9c74d1f4eeec7080bf60cad064d34}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ supportedTypes\ =\ \{\textcolor{stringliteral}{'spherical\_harmonic'}\};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(ismember(lower(basisType),\ supportedTypes),\ ...}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Supported\ basis\ types:\ \%s'},\ strjoin(supportedTypes,\ \textcolor{stringliteral}{',\ '}));}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ obj.funcs\ =\ arrayfun(@(i)\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{SphericalHarmonicBasisFunction}}(i),\ ...}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1:maxIndex);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'Set\ \%d\ \%s\ basis\ functions,\ index\ 1\ to\ \%d\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxIndex,\ basisType,\ maxIndex);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00058}00058\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_compiler_8m_source_l00059}00059\ end}
+
+\end{DoxyCode}

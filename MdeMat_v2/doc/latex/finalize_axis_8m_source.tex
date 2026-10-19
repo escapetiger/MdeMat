@@ -1,0 +1,39 @@
+\doxysection{finalize\+Axis.\+m}
+\hypertarget{finalize_axis_8m_source}{}\label{finalize_axis_8m_source}\index{+profilers/+visual/private/finalizeAxis.m@{+profilers/+visual/private/finalizeAxis.m}}
+\mbox{\hyperlink{finalize_axis_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00001}00001\ function\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a66dba490b8c87f76deb1eb8834548c1c}{finalizeAxis}}(ax,\ xmin,\ xmax,\ ymin,\ ymax,\ xLabel,\ yLabel,\ legends)}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00002}00002\ \%\ FINALIZEAXIS\ Applies\ common\ formatting\ to\ an\ axis.}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00004}00004\ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00005}00005\ \%\ \ \ finalize(ax,\ xmin,\ xmax,\ ymin,\ ymax,\ xLabel,\ yLabel,\ legends)}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00007}00007\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00008}00008\ \%\ \ \ ax\ -\/\ Axes\ handle\ to\ format}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00009}00009\ \%\ \ \ xmin\ -\/\ Minimum\ x-\/axis\ value}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00010}00010\ \%\ \ \ xmax\ -\/\ Maximum\ x-\/axis\ value}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00011}00011\ \%\ \ \ ymin\ -\/\ Minimum\ y-\/axis\ value}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00012}00012\ \%\ \ \ ymax\ -\/\ Maximum\ y-\/axis\ value}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00013}00013\ \%\ \ \ xLabel\ -\/\ Label\ \textcolor{keywordflow}{for}\ x-\/axis}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00014}00014\ \%\ \ \ yLabel\ -\/\ Label\ \textcolor{keywordflow}{for}\ y-\/axis}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00015}00015\ \%\ \ \ legends\ -\/\ Cell\ array\ of\ legend\ entries}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00017}00017\ epsilon\ =\ 1e-\/8;}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00018}00018\ xmin\ =\ min(-\/epsilon,\ xmin);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00019}00019\ xmax\ =\ max(epsilon,\ xmax);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00020}\mbox{\hyperlink{namespaceprofilers_1_1visual_a66dba490b8c87f76deb1eb8834548c1c}{00020}}\ ymin\ =\ min(-\/epsilon,\ ymin);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00021}00021\ ymax\ =\ max(epsilon,\ ymax);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00023}00023\ xlim(ax,\ [xmin,\ xmax]);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00024}00024\ ylim(ax,\ [ymin,\ ymax]);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00025}00025\ xlabel(ax,\ xLabel);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00026}00026\ ylabel(ax,\ yLabel);}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00028}00028\ \textcolor{keywordflow}{if}\ \string~isempty(legends)}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00029}00029\ \ \ \ \ legend(ax,\ legends,\ \textcolor{stringliteral}{'Location'},\ \textcolor{stringliteral}{'best'});}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00030}00030\ end}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00032}00032\ hold(ax,\ \textcolor{stringliteral}{'off'});}
+\DoxyCodeLine{\Hypertarget{finalize_axis_8m_source_l00033}00033\ end}
+
+\end{DoxyCode}

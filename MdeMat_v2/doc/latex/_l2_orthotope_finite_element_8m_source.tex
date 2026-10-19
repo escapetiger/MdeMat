@@ -1,0 +1,108 @@
+\doxysection{L2\+Orthotope\+Finite\+Element.\+m}
+\hypertarget{_l2_orthotope_finite_element_8m_source}{}\label{_l2_orthotope_finite_element_8m_source}\index{+fem/+element/L2OrthotopeFiniteElement.m@{+fem/+element/L2OrthotopeFiniteElement.m}}
+\mbox{\hyperlink{_l2_orthotope_finite_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00001}00001\ classdef\ L2OrthotopeFiniteElement\ <\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{L2FiniteElement}}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00002}00002\ \ \ \ \ \%\ L2ORTHOTOPEFINITEELEMENT\ Discontinuous\ finite\ element\ defined\ on\ an}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00003}00003\ \ \ \ \ \%\ orthotope.}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00005}00005\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ \%\ Create\ L2\ finite\ element\ on\ an\ orthotope}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ element\ =\ L2OrthotopeFiniteElement(nDims,\ order,\ \textcolor{keywordtype}{id},\ pattern);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00009}00009\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{L2FiniteElement}}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00012}00012\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ function\ obj\ =\ L2OrthotopeFiniteElement(varargin)}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ L2ORTHOTOPEFINITEELEMENT\ Create\ standard\ L2\ finite\ element\ on}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00015}\mbox{\hyperlink{classfem_1_1element_1_1_l2_orthotope_finite_element}{00015}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ unit\ orthotope.}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_orthotope_finite_element_ab22378e0720c0584d26a6d476c4d5493}{L2OrthotopeFiniteElement}}(...)\ creates\ a\ discontinuous}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ on\ the\ unit\ orthotope\ with\ specified}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ polynomial\ order\ and\ basis\ configuration.}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{nDims}}\ -\/\ Number\ of\ spatial\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ order\ -\/\ Polynomial\ order\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \textcolor{keywordtype}{id}\ -\/\ Basis\ type\ identifier}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ pattern\ -\/\ Tensor\ product\ pattern}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{id}\ =\ 1:\ Orthogonal\ (Legendre)\ basis}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{id}\ =\ 2:\ Lagrange-\/Gauss-\/Legendre\ basis}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordtype}{id}\ =\ 3:\ Lagrange-\/Gauss-\/Lobatto\ basis}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ pattern\ =\ 1:\ \(\backslash\)f\$L\_\(\backslash\)infty\(\backslash\)f\$\ norm\ ordering}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ pattern\ =\ 2:\ \(\backslash\)f\$L\_1\(\backslash\)f\$\ norm\ ordering}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_l2_orthotope_finite_element_ab22378e0720c0584d26a6d476c4d5493}{L2OrthotopeFiniteElement}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ inputParser;}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00039}\mbox{\hyperlink{classfem_1_1element_1_1_l2_orthotope_finite_element_ab22378e0720c0584d26a6d476c4d5493}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_a7126f7b1cf86d1fe7f5bafbbae46829c}{nDims}}',\ [],\ @(x)\ isnumeric(x)\ \&\&\ isscalar(x));}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'order',\ 1,\ @(x)\ isnumeric(x)\ \&\&\ isscalar(x));}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ '\textcolor{keywordtype}{id}',\ 1,\ @(x)\ isnumeric(x)\ \&\&\ isscalar(x));}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'pattern',\ 1,\ @(x)\ isnumeric(x));}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ parse(p,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ unit\ orthotope\ geometry}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ K\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(p.Results.nDims);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ basis\ functions\ based\ on\ type}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ p.Results.id}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.Results.order,\ \textcolor{stringliteral}{'monic\_legendre'},\ \textcolor{stringliteral}{'unit'});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{InterpolationBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.Results.order,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_legendre'});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{InterpolationBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.Results.order,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_lobatto'});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ repmat(U,\ 1,\ p.Results.nDims);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ separable\ basis\ with\ specified\ pattern}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ p.Results.pattern}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}(U,\ \textcolor{stringliteral}{'lx'});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}(U,\ \textcolor{stringliteral}{'l1'});}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ B.\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ volume\ integrator}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ p.Results.id}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{1,\ 2\}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q\ =\ \textcolor{stringliteral}{'gauss\_legendre'};}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q\ =\ \textcolor{stringliteral}{'gauss\_lobatto'};}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ I1\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{OrthotopeIntegrator}}(K.nDims,\ Q);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ I1.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a44da2ca662ecd9153b92699a0d97f980}{setPoints}}(B.nFactorCodims,\ \textcolor{keyword}{false},\ K.lower,\ K.upper);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ face\ integrators\ \textcolor{keywordflow}{for}\ all\ boundaries}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ I2\ =\ arrayfun(@(i)\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_face_integrator}{OrthotopeFaceIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ K.nDims,\ Q,\ i),\ 1:(2\ *\ K.nDims));}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:(2\ *\ K.nDims)}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I2(i).setPoints(B.nFactorCodims,\ \textcolor{keyword}{false},\ K.lower,\ K.upper);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ projector\ based\ on\ basis\ type}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ p.Results.id}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector}{ModalProjector}}(B);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector_a1202dfa82b8c4d73556f444cf4334a20}{setMass}}(I1.nodes,\ I1.weights);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \{2,\ 3\}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(B);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector_a861fa7c1e8683d0805362323f94f8284}{setMass}}(I1.nodes);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ L2\ orthotope\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element}{L2FiniteElement}}(K,\ P,\ I1,\ I2);}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00101}00101\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_l2_orthotope_finite_element_8m_source_l00102}00102\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,513 @@
+\doxysection{ex05\+\_\+stability\+\_\+region.\+m}
+\hypertarget{ex05__stability__region_8m_source}{}\label{ex05__stability__region_8m_source}\index{+approx/+odeint/+scripts/ex05\_stability\_region.m@{+approx/+odeint/+scripts/ex05\_stability\_region.m}}
+\mbox{\hyperlink{ex05__stability__region_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00001}00001\ \%\%\ ex05\_stability\_regions.m}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00002}00002\ \%\ Analyze\ and\ visualize\ stability\ regions\ \textcolor{keywordflow}{for}\ all\ integrator\ types}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00004}00004\ \%\ Tests\ A-\/stability\ \textcolor{keyword}{using\ }the\ Dahlquist\ test\ equation:\ du/dt\ =\ λu}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00005}00005\ \%\ A\ method\ is\ A-\/stable\ \textcolor{keywordflow}{if}\ |R(z)|\ ≤\ 1\ \textcolor{keywordflow}{for}\ all\ z\ with\ Re(z)\ ≤\ 0}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00006}00006\ \%\ where\ R(z)\ is\ the\ stability\ function\ and\ z\ =\ λ*dt}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00007}00007\ \%\ Includes\ \textcolor{keyword}{explicit},\ implicit,\ and\ IMEX\ integrators.}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00009}00009\ clear;\ close\ all;\ clc;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00011}00011\ \%\%\ Setup\ \textcolor{keywordflow}{for}\ stability\ analysis}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00012}00012\ fprintf(\textcolor{stringliteral}{'===\ STABILITY\ REGION\ ANALYSIS\ ===\(\backslash\)n\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00014}00014\ \%\ Complex\ plane\ grid}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00015}00015\ lambda\_real\ =\ linspace(-\/8,\ 2,\ 200);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00016}00016\ lambda\_imag\ =\ linspace(-\/5,\ 5,\ 200);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00017}00017\ [LR,\ LI]\ =\ meshgrid(lambda\_real,\ lambda\_imag);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00018}00018\ Z\ =\ LR\ +\ 1i\ *\ LI;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00020}00020\ \%\%\ Define\ integrators\ to\ analyze}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00021}00021\ final\_time\ =\ 5.0;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00022}00022\ \%\ Implicit\ integrators}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00023}00023\ implicit\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf2_integrator}{Bdf2Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk2_integrator}{Sdirk2Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_sdirk3_integrator}{Sdirk3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00028}00028\ \};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00030}00030\ \%\ Explicit\ integrators}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00031}00031\ explicit\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_heun_integrator}{HeunIntegrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk4_integrator}{Exrk4Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ssprk3_integrator}{Ssprk3Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00036}00036\ \};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00038}00038\ \%\ IMEX\ integrators\ (\textcolor{keywordflow}{for}\ A-\/stability,\ we\ consider\ their\ implicit\ part)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00039}00039\ imex\_integrators\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars111_integrator}{Ars111Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars222_integrator}{Ars222Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ars443_integrator}{Ars443Integrator}}(final\_time)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00043}00043\ \};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00045}00045\ \%\ Combine\ all\ integrators}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00046}00046\ all\_integrators\ =\ [implicit\_integrators;\ explicit\_integrators;\ imex\_integrators];}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00047}00047\ n\_methods\ =\ length(all\_integrators);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00049}00049\ \%\ Extract\ integrator\ names\ and\ types}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00050}00050\ integrator\_names\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00051}00051\ integrator\_types\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00053}00053\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00054}00054\ \ \ \ \ class\_name\ =\ \textcolor{keyword}{class}(all\_integrators\{i\});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00055}00055\ \ \ \ \ name\_parts\ =\ strsplit(class\_name,\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00056}00056\ \ \ \ \ base\_name\ =\ name\_parts\{end\};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00057}00057\ \ \ \ \ integrator\_names\{i\}\ =\ strrep(base\_name,\ \textcolor{stringliteral}{'Integrator'},\ \textcolor{stringliteral}{''});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00058}00058\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00059}00059\ \ \ \ \ \%\ Determine\ type}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{if}\ i\ <=\ length(implicit\_integrators)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Implicit'};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00062}00062\ \ \ \ \ elseif\ i\ <=\ length(implicit\_integrators)\ +\ length(explicit\_integrators)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'Explicit'};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ integrator\_types\{i\}\ =\ \textcolor{stringliteral}{'IMEX'};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00066}00066\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00067}00067\ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00069}00069\ \%\%\ Compute\ stability\ functions}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00070}00070\ R\ =\ cell(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00072}00072\ \%\ Implicit\ methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00073}00073\ \%\ Backward\ Euler:\ R(z)\ =\ 1/(1-\/z)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00074}00074\ R\{1\}\ =\ 1\ ./\ (1\ -\/\ Z);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00076}00076\ \%\ BDF2:\ R(z)\ =\ (3-\/2z)/(1\ -\/\ 2z/3)\string^2\ (corrected\ BDF2\ stability\ function)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00077}00077\ R\{2\}\ =\ (3\ -\/\ 2*Z)\ ./\ (1\ -\/\ (2/3)*Z).\string^2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00079}00079\ \%\ SDIRK2:\ R(z)\ =\ (1\ +\ (1-\/2γ)z)\ /\ (1\ -\/\ γz)\string^2}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00080}00080\ gamma2\ =\ 1\ -\/\ sqrt(2)/2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00081}00081\ R\{3\}\ =\ (1\ +\ (1-\/2*gamma2)*Z)\ ./\ (1\ -\/\ gamma2*Z).\string^2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00083}00083\ \%\ SDIRK3:\ Approximate\ stability\ function}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00084}00084\ gamma3\ =\ 0.435866521508459;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00085}00085\ R\{4\}\ =\ 1\ ./\ (1\ -\/\ gamma3*Z).\string^3;\ \ \%\ Simplified\ approximation}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00087}00087\ \%\ Explicit\ methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00088}00088\ \%\ Forward\ Euler:\ R(z)\ =\ 1\ +\ z}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00089}00089\ R\{5\}\ =\ 1\ +\ Z;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00091}00091\ \%\ Heun\ (RK2):\ R(z)\ =\ 1\ +\ z\ +\ z\string^2/2}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00092}00092\ R\{6\}\ =\ 1\ +\ Z\ +\ Z.\string^2/2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00094}00094\ \%\ RK4:\ R(z)\ =\ 1\ +\ z\ +\ z\string^2/2\ +\ z\string^3/6\ +\ z\string^4/24}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00095}00095\ R\{7\}\ =\ 1\ +\ Z\ +\ Z.\string^2/2\ +\ Z.\string^3/6\ +\ Z.\string^4/24;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00097}00097\ \%\ SSPRK3:\ Approximate\ stability\ function\ (3rd\ order)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00098}00098\ R\{8\}\ =\ 1\ +\ Z\ +\ Z.\string^2/2\ +\ Z.\string^3/6;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00100}00100\ \%\ IMEX\ methods\ (analyze\ implicit\ part\ \textcolor{keywordflow}{for}\ A-\/stability)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00101}00101\ \%\ ARS111:\ Similar\ to\ Backward\ Euler\ \textcolor{keywordflow}{for}\ implicit\ part}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00102}00102\ R\{9\}\ =\ 1\ ./\ (1\ -\/\ Z);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00104}00104\ \%\ ARS222:\ Similar\ to\ SDIRK2\ \textcolor{keywordflow}{for}\ implicit\ part}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00105}00105\ gamma\_ars2\ =\ 1\ -\/\ sqrt(2)/2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00106}00106\ R\{10\}\ =\ (1\ +\ (1-\/2*gamma\_ars2)*Z)\ ./\ (1\ -\/\ gamma\_ars2*Z).\string^2;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00108}00108\ \%\ ARS443:\ More\ complex,\ approximate\ as\ 3rd\ order\ DIRK}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00109}00109\ R\{11\}\ =\ 1\ ./\ (1\ -\/\ 0.5*Z).\string^3;\ \ \%\ Simplified}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00111}00111\ \%\%\ Plot\ stability\ regions}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00112}00112\ figure(\textcolor{stringliteral}{'Position'},\ [100,\ 100,\ 1600,\ 1200]);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00114}00114\ \%\ Define\ colors\ \textcolor{keywordflow}{for}\ different\ types}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00115}00115\ colors\_implicit\ =\ lines(length(implicit\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00116}00116\ colors\_explicit\ =\ autumn(length(explicit\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00117}00117\ colors\_imex\ =\ spring(length(imex\_integrators));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00119}00119\ \%\ Plot\ all\ stability\ regions}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00120}00120\ subplot\_positions\ =\ [1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 8,\ 9,\ 10,\ 11,\ 12];}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00122}00122\ \%\ Check\ A-\/stability\ \textcolor{keywordflow}{for}\ all\ methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00123}00123\ is\_A\_stable\ =\ \textcolor{keyword}{false}(n\_methods,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00124}00124\ left\_half\_plane\ =\ (LR\ <=\ 0);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00126}00126\ \textcolor{keywordflow}{for}\ i\ =\ 1:n\_methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00127}00127\ \ \ \ \ subplot(3,\ 4,\ subplot\_positions(i));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00128}00128\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00129}00129\ \ \ \ \ \%\ Compute\ magnitude\ of\ stability\ function}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00130}00130\ \ \ \ \ R\_mag\ =\ abs(R\{i\});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00131}00131\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00132}00132\ \ \ \ \ \%\ Plot\ stability\ region\ (where\ |R(z)|\ ≤\ 1)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00133}00133\ \ \ \ \ contourf(LR,\ LI,\ R\_mag,\ [0:0.1:1,\ 1.5:0.5:5],\ \textcolor{stringliteral}{'ShowText'},\ \textcolor{stringliteral}{'off'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00134}00134\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00135}00135\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00136}00136\ \ \ \ \ \%\ Highlight\ the\ stability\ boundary\ |R(z)|\ =\ 1}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00137}00137\ \ \ \ \ contour(LR,\ LI,\ R\_mag,\ [1,\ 1],\ \textcolor{stringliteral}{'k-\/'},\ \textcolor{stringliteral}{'LineWidth'},\ 3);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00138}00138\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00139}00139\ \ \ \ \ \%\ Highlight\ left\ half-\/plane\ (where\ A-\/stability\ is\ required)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00140}00140\ \ \ \ \ fill([-\/8,\ 0,\ 0,\ -\/8],\ [-\/5,\ -\/5,\ 5,\ 5],\ \textcolor{stringliteral}{'white'},\ \textcolor{stringliteral}{'FaceAlpha'},\ 0.1,\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'EdgeColor'},\ \textcolor{stringliteral}{'red'},\ \textcolor{stringliteral}{'LineWidth'},\ 2,\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'-\/-\/'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00142}00142\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00143}00143\ \ \ \ \ \%\ Color\ scheme:\ stable\ region\ in\ blue,\ unstable\ in\ red}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00144}00144\ \ \ \ \ colormap(flipud(hot));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00145}00145\ \ \ \ \ colorbar;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00146}00146\ \ \ \ \ caxis([0,\ 3]);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00147}00147\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00148}00148\ \ \ \ \ xlabel(\textcolor{stringliteral}{'Re(λ·dt)'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00149}00149\ \ \ \ \ ylabel(\textcolor{stringliteral}{'Im(λ·dt)'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00150}00150\ \ \ \ \ title(sprintf(\textcolor{stringliteral}{'\%s\ (\%s)'},\ integrator\_names\{i\},\ integrator\_types\{i\}));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00151}00151\ \ \ \ \ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00152}00152\ \ \ \ \ axis\ equal;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00153}00153\ \ \ \ \ xlim([-\/8,\ 2]);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00154}00154\ \ \ \ \ ylim([-\/5,\ 5]);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00155}00155\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00156}00156\ \ \ \ \ \%\ Check\ A-\/stability\ (only\ meaningful\ \textcolor{keywordflow}{for}\ implicit\ and\ IMEX\ methods)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00157}00157\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \%\ Explicit\ methods\ are\ never\ A-\/stable}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ is\_A\_stable(i)\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ text(-\/6,\ 4,\ \textcolor{stringliteral}{'NOT\ A-\/STABLE'},\ \textcolor{stringliteral}{'FontSize'},\ 10,\ \textcolor{stringliteral}{'FontWeight'},\ \textcolor{stringliteral}{'bold'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ \textcolor{stringliteral}{'red'},\ \textcolor{stringliteral}{'BackgroundColor'},\ \textcolor{stringliteral}{'white'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ text(-\/6,\ 3,\ \textcolor{stringliteral}{'(Explicit)'},\ \textcolor{stringliteral}{'FontSize'},\ 8,\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ \textcolor{stringliteral}{'red'},\ \textcolor{stringliteral}{'BackgroundColor'},\ \textcolor{stringliteral}{'white'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \%\ Check\ A-\/stability\ \textcolor{keywordflow}{for}\ implicit\ and\ IMEX\ methods}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ is\_A\_stable(i)\ =\ all(R\_mag(left\_half\_plane)\ <=\ 1.05);\ \ \%\ Small\ tolerance}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ is\_A\_stable(i)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ text(-\/6,\ 4,\ \textcolor{stringliteral}{'A-\/STABLE'},\ \textcolor{stringliteral}{'FontSize'},\ 10,\ \textcolor{stringliteral}{'FontWeight'},\ \textcolor{stringliteral}{'bold'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ \textcolor{stringliteral}{'green'},\ \textcolor{stringliteral}{'BackgroundColor'},\ \textcolor{stringliteral}{'white'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ text(-\/6,\ 4,\ \textcolor{stringliteral}{'NOT\ A-\/STABLE'},\ \textcolor{stringliteral}{'FontSize'},\ 10,\ \textcolor{stringliteral}{'FontWeight'},\ \textcolor{stringliteral}{'bold'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Color'},\ \textcolor{stringliteral}{'red'},\ \textcolor{stringliteral}{'BackgroundColor'},\ \textcolor{stringliteral}{'white'});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00175}00175\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00177}00177\ \ \ \ \ \%\ Print\ result}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(integrator\_types\{i\},\ \textcolor{stringliteral}{'Explicit'})}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\%s\ (\%s):\ Not\ A-\/stable\ (explicit\ method)\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\},\ integrator\_types\{i\});}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00181}00181\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ stability\_str\ =\ is\_A\_stable(i);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ stability\_str}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ result\_str\ =\ \textcolor{stringliteral}{"{}A-\/stable"{}};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ result\_str\ =\ \textcolor{stringliteral}{"{}Not\ A-\/stable"{}};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ fprintf(\textcolor{stringliteral}{'\%s\ (\%s):\ \%s\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ integrator\_names\{i\},\ integrator\_types\{i\},\ result\_str);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00190}00190\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00191}00191\ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00193}00193\ \%\%\ Stability\ region\ comparison\ by\ method\ type}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00194}00194\ figure(\textcolor{stringliteral}{'Position'},\ [200,\ 200,\ 1500,\ 500]);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00196}00196\ method\_types\ =\ \{\textcolor{stringliteral}{'Implicit'},\ \textcolor{stringliteral}{'Explicit'},\ \textcolor{stringliteral}{'IMEX'}\};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00197}00197\ colors\_by\_type\ =\ \{colors\_implicit,\ colors\_explicit,\ colors\_imex\};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00199}00199\ \textcolor{keywordflow}{for}\ type\_idx\ =\ 1:3}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00200}00200\ \ \ \ \ subplot(1,\ 3,\ type\_idx);}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00201}00201\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00202}00202\ \ \ \ \ type\_name\ =\ method\_types\{type\_idx\};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00203}00203\ \ \ \ \ type\_indices\ =\ find(strcmp(integrator\_types,\ type\_name));}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00204}00204\ \ \ \ \ colors\ =\ colors\_by\_type\{type\_idx\};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00205}00205\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(type\_indices)}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00208}00208\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00209}00209\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00210}00210\ \ \ \ \ \%\ Plot\ multiple\ stability\ boundaries\ on\ same\ plot}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00211}00211\ \ \ \ \ color\_idx\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ type\_indices\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ R\_mag\ =\ abs(R\{i\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ contour(LR,\ LI,\ R\_mag,\ [1,\ 1],\ '}-\/\textcolor{stringliteral}{',\ '}Color\textcolor{stringliteral}{',\ colors(color\_idx,\ :),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00215}00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}LineWidth\textcolor{stringliteral}{',\ 2,\ '}DisplayName\textcolor{stringliteral}{',\ integrator\_names\{i\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ hold\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ color\_idx\ =\ color\_idx\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00218}00218\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \%\ Highlight\ left\ half-\/plane}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ fill([-\/8,\ 0,\ 0,\ -\/8],\ [-\/5,\ -\/5,\ 5,\ 5],\ '}white\textcolor{stringliteral}{',\ '}FaceAlpha\textcolor{stringliteral}{',\ 0.1,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ '}EdgeColor\textcolor{stringliteral}{',\ '}red\textcolor{stringliteral}{',\ '}LineWidth\textcolor{stringliteral}{',\ 2,\ '}LineStyle\textcolor{stringliteral}{',\ '}-\/-\/\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ '}DisplayName\textcolor{stringliteral}{',\ '}Left\ half-\/plane\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00225}00225\ \textcolor{stringliteral}{\ \ \ \ xlabel('}Re(λ·dt)\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ ylabel('}Im(λ·dt)\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ title([type\_name\ '}\ Methods\ -\/\ Stability\ Boundaries\textcolor{stringliteral}{']);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00228}00228\ \textcolor{stringliteral}{\ \ \ \ legend('}Location\textcolor{stringliteral}{',\ '}eastoutside\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 8);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00229}00229\ \textcolor{stringliteral}{\ \ \ \ grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00230}00230\ \textcolor{stringliteral}{\ \ \ \ axis\ equal;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00231}00231\ \textcolor{stringliteral}{\ \ \ \ xlim([-\/8,\ 2]);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00232}00232\ \textcolor{stringliteral}{\ \ \ \ ylim([-\/5,\ 5]);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00233}00233\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00234}00234\ \textcolor{stringliteral}{\ \ \ \ \%\ Add\ text\ about\ A-\/stability\ for\ this\ type}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00235}00235\ \textcolor{stringliteral}{\ \ \ \ if\ strcmp(type\_name,\ '}Explicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00236}00236\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(-\/6,\ 4,\ '}Explicit\ methods:\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 10,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00237}00237\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}BackgroundColor\textcolor{stringliteral}{',\ '}white\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00238}00238\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(-\/6,\ 3.5,\ '}Never\ A-\/stable\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 9,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00239}00239\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}BackgroundColor\textcolor{stringliteral}{',\ '}white\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00240}00240\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(-\/6,\ 3,\ '}Stability\ limited\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 9,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00241}00241\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}BackgroundColor\textcolor{stringliteral}{',\ '}white\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00242}00242\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00243}00243\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Count\ A-\/stable\ methods\ in\ this\ type}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00244}00244\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ type\_a\_stable\ =\ sum(is\_A\_stable(type\_indices));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00245}00245\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(-\/6,\ 4,\ sprintf('}\%d/\%d\ A-\/stable\textcolor{stringliteral}{',\ type\_a\_stable,\ length(type\_indices)),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00246}00246\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}FontSize\textcolor{stringliteral}{',\ 10,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{',\ '}BackgroundColor\textcolor{stringliteral}{',\ '}white\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00247}00247\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00248}00248\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00249}00249\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00250}00250\ \textcolor{stringliteral}{\%\%\ Practical\ stability\ test\ with\ Dahlquist\ equation}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00251}00251\ \textcolor{stringliteral}{fprintf('}\(\backslash\)n===\ PRACTICAL\ STABILITY\ TEST\ ===\(\backslash\)n\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00252}00252\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00253}00253\ \textcolor{stringliteral}{\%\ Test\ parameters}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00254}00254\ \textcolor{stringliteral}{lambda\_test\ =\ -\/10;\ \ \%\ Stiff\ parameter}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00255}00255\ \textcolor{stringliteral}{dt\_test\ =\ 0.5;\ \ \ \ \ \ \%\ Large\ time\ step\ to\ test\ stability}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00256}00256\ \textcolor{stringliteral}{u0\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00257}00257\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00258}00258\ \textcolor{stringliteral}{\%\ Exact\ solution:\ u(t)\ =\ exp(λt)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00259}00259\ \textcolor{stringliteral}{exact\_solution\ =\ @(t)\ exp(lambda\_test\ *\ t);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00260}00260\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00261}00261\ \textcolor{stringliteral}{fprintf('}Testing\ with\ λ\ =\ \%g,\ dt\ =\ \%g\(\backslash\)n\textcolor{stringliteral}{',\ lambda\_test,\ dt\_test);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00262}00262\ \textcolor{stringliteral}{fprintf('}Theoretical\ z\ =\ λ·dt\ =\ \%g\(\backslash\)n\(\backslash\)n\textcolor{stringliteral}{',\ lambda\_test\ *\ dt\_test);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00263}00263\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00264}00264\ \textcolor{stringliteral}{\%\ Test\ with\ subset\ of\ methods\ (representative\ from\ each\ type)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00265}00265\ \textcolor{stringliteral}{test\_indices\ =\ [1,\ 3,\ 5,\ 7,\ 9,\ 10];\ \ \%\ Be,\ Sdirk2,\ Fe,\ Rk4,\ Ars111,\ Ars222}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00266}00266\ \textcolor{stringliteral}{test\_integrators\ =\ all\_integrators(test\_indices);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00267}00267\ \textcolor{stringliteral}{test\_names\ =\ integrator\_names(test\_indices);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00268}00268\ \textcolor{stringliteral}{test\_types\ =\ integrator\_types(test\_indices);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00269}00269\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00270}00270\ \textcolor{stringliteral}{\%\ Plot\ practical\ test\ results}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00271}00271\ \textcolor{stringliteral}{figure('}Position\textcolor{stringliteral}{',\ [300,\ 300,\ 1200,\ 800]);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00272}00272\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00273}00273\ \textcolor{stringliteral}{colors\_test\ =\ lines(length(test\_integrators));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00274}00274\ \textcolor{stringliteral}{n\_steps\ =\ ceil(final\_time\ /\ dt\_test);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00275}00275\ \textcolor{stringliteral}{t\_values\ =\ (0:n\_steps)\ *\ dt\_test;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00276}00276\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00277}00277\ \textcolor{stringliteral}{\%\ Storage\ for\ numerical\ solutions}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00278}00278\ \textcolor{stringliteral}{U\_solutions\ =\ zeros(length(test\_integrators),\ n\_steps\ +\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00279}00279\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00280}00280\ \textcolor{stringliteral}{\%\ Solution\ evolution\ plot}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00281}00281\ \textcolor{stringliteral}{subplot(2,\ 2,\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00282}00282\ \textcolor{stringliteral}{for\ i\ =\ 1:length(test\_integrators)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00283}00283\ \textcolor{stringliteral}{\ \ \ \ integrator\ =\ test\_integrators\{i\};}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00284}00284\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00285}00285\ \textcolor{stringliteral}{\ \ \ \ \%\ Initialize}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00286}00286\ \textcolor{stringliteral}{\ \ \ \ integrator.update(u0);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00287}00287\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00288}00288\ \textcolor{stringliteral}{\ \ \ \ \%\ Store\ initial\ condition}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00289}00289\ \textcolor{stringliteral}{\ \ \ \ U\_solutions(i,\ 1)\ =\ u0;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00290}00290\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00291}00291\ \textcolor{stringliteral}{\ \ \ \ \%\ Time\ stepping}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00292}00292\ \textcolor{stringliteral}{\ \ \ \ stable\ =\ true;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00293}00293\ \textcolor{stringliteral}{\ \ \ \ for\ k\ =\ 1:n\_steps}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00294}00294\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ integrator.timeline.setTimeStep(dt\_test,\ 1,\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00295}00295\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00296}00296\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Set\ coefficients\ for\ BDF\ methods}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00297}00297\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ if\ isa(integrator,\ '}\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{BdfIntegrator}}\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00298}00298\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ integrator.setCoefficients();}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00299}00299\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00300}00300\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00301}00301\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Call\ appropriate\ step\ method\ based\ on\ integrator\ type}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00302}00302\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ if\ strcmp(test\_types\{i\},\ '}Implicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00303}00303\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(lambda\_test,\ [],\ []);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00304}00304\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ elseif\ strcmp(test\_types\{i\},\ '}Explicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00305}00305\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ For\ explicit\ methods,\ treat\ λu\ as\ nonlinear\ term}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00306}00306\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ F\_eval\ =\ lambda\_test\ *\ integrator.U0\{1\};}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00307}00307\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step([],\ F\_eval,\ [],\ []);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ else\ \%\ IMEX}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00309}00309\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ U\_new\ =\ integrator.step(lambda\_test,\ [],\ [],\ []);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00310}00310\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00311}00311\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ integrator.update(U\_new);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ integrator.advance();}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00314}00314\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ U\_solutions(i,\ k\ +\ 1)\ =\ U\_new;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00315}00315\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00316}00316\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Check\ for\ instability}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00317}00317\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ if\ abs(U\_new)\ >\ 1e10}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00318}00318\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ stable\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00319}00319\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ U\_solutions(i,\ k+1:end)\ =\ NaN;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00320}00320\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ break;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00321}00321\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00322}00322\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00323}00323\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00324}00324\ \textcolor{stringliteral}{\ \ \ \ \%\ Plot\ solution}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00325}00325\ \textcolor{stringliteral}{\ \ \ \ valid\_indices\ =\ \string~isnan(U\_solutions(i,\ :));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00326}00326\ \textcolor{stringliteral}{\ \ \ \ if\ any(valid\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00327}00327\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ semilogy(t\_values(valid\_indices),\ abs(U\_solutions(i,\ valid\_indices)),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00328}00328\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}-\/\textcolor{stringliteral}{',\ '}Color\textcolor{stringliteral}{',\ colors\_test(i,\ :),\ '}LineWidth\textcolor{stringliteral}{',\ 2,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00329}00329\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}DisplayName\textcolor{stringliteral}{',\ [test\_names\{i\}\ '}\ (\textcolor{stringliteral}{'\ test\_types\{i\}\ '})\textcolor{stringliteral}{']);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00330}00330\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ hold\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00331}00331\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00332}00332\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00333}00333\ \textcolor{stringliteral}{\ \ \ \ \%\ Report\ stability}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00334}00334\ \textcolor{stringliteral}{\ \ \ \ final\_value\ =\ U\_solutions(i,\ end);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00335}00335\ \textcolor{stringliteral}{\ \ \ \ exact\_final\ =\ exact\_solution(final\_time);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00336}00336\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00337}00337\ \textcolor{stringliteral}{\ \ \ \ fprintf('}\%s\ (\%s):\(\backslash\)n\textcolor{stringliteral}{',\ test\_names\{i\},\ test\_types\{i\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00338}00338\ \textcolor{stringliteral}{\ \ \ \ if\ stable\ \&\&\ \string~isnan(final\_value)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00339}00339\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\ \ Final\ value:\ \%.2e\ (exact:\ \%.2e)\(\backslash\)n\textcolor{stringliteral}{',\ final\_value,\ exact\_final);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00340}00340\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\ \ Stable:\ Yes\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00341}00341\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\ \ Error:\ \%.2e\(\backslash\)n\(\backslash\)n\textcolor{stringliteral}{',\ abs(final\_value\ -\/\ exact\_final));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00342}00342\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00343}00343\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\ \ Unstable\ (solution\ blew\ up)\(\backslash\)n\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00344}00344\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00345}00345\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00346}00346\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00347}00347\ \textcolor{stringliteral}{\%\ Add\ exact\ solution}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00348}00348\ \textcolor{stringliteral}{U\_exact\ =\ exact\_solution(t\_values);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00349}00349\ \textcolor{stringliteral}{semilogy(t\_values,\ abs(U\_exact),\ '}k-\/-\/\textcolor{stringliteral}{',\ '}LineWidth\textcolor{stringliteral}{',\ 2,\ '}DisplayName\textcolor{stringliteral}{',\ '}Exact\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00350}00350\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00351}00351\ \textcolor{stringliteral}{xlabel('}Time\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00352}00352\ \textcolor{stringliteral}{ylabel('}|u(t)|\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00353}00353\ \textcolor{stringliteral}{title('}Dahlquist\ Test:\ Solution\ Evolution\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00354}00354\ \textcolor{stringliteral}{legend('}Location\textcolor{stringliteral}{',\ '}best\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 8);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00355}00355\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00356}00356\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00357}00357\ \textcolor{stringliteral}{\%\ Error\ evolution\ plot}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00358}00358\ \textcolor{stringliteral}{subplot(2,\ 2,\ 2);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00359}00359\ \textcolor{stringliteral}{for\ i\ =\ 1:length(test\_integrators)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00360}00360\ \textcolor{stringliteral}{\ \ \ \ U\_exact\_vals\ =\ exact\_solution(t\_values);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00361}00361\ \textcolor{stringliteral}{\ \ \ \ error\ =\ abs(U\_solutions(i,\ :)\ -\/\ U\_exact\_vals);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00362}00362\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00363}00363\ \textcolor{stringliteral}{\ \ \ \ valid\_indices\ =\ \string~isnan(error)\ \&\ error\ >\ 0;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00364}00364\ \textcolor{stringliteral}{\ \ \ \ if\ any(valid\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00365}00365\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ semilogy(t\_values(valid\_indices),\ error(valid\_indices),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00366}00366\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}-\/\textcolor{stringliteral}{',\ '}Color\textcolor{stringliteral}{',\ colors\_test(i,\ :),\ '}LineWidth\textcolor{stringliteral}{',\ 2,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00367}00367\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}DisplayName\textcolor{stringliteral}{',\ [test\_names\{i\}\ '}\ (\textcolor{stringliteral}{'\ test\_types\{i\}\ '})\textcolor{stringliteral}{']);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00368}00368\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ hold\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00369}00369\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00370}00370\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00371}00371\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00372}00372\ \textcolor{stringliteral}{xlabel('}Time\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00373}00373\ \textcolor{stringliteral}{ylabel('}Absolute\ Error\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00374}00374\ \textcolor{stringliteral}{title('}Error\ Evolution\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00375}00375\ \textcolor{stringliteral}{legend('}Location\textcolor{stringliteral}{',\ '}best\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 8);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00376}00376\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00377}00377\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00378}00378\ \textcolor{stringliteral}{\%\ Stability\ summary\ by\ method\ type}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00379}00379\ \textcolor{stringliteral}{subplot(2,\ 2,\ 3);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00380}00380\ \textcolor{stringliteral}{type\_stability\ =\ zeros(3,\ 1);\ \ \%\ [Implicit,\ Explicit,\ IMEX]}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00381}00381\ \textcolor{stringliteral}{type\_counts\ =\ zeros(3,\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00382}00382\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00383}00383\ \textcolor{stringliteral}{for\ i\ =\ 1:length(test\_integrators)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00384}00384\ \textcolor{stringliteral}{\ \ \ \ if\ strcmp(test\_types\{i\},\ '}Implicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00385}00385\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ type\_idx\ =\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00386}00386\ \textcolor{stringliteral}{\ \ \ \ elseif\ strcmp(test\_types\{i\},\ '}Explicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00387}00387\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ type\_idx\ =\ 2;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00388}00388\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00389}00389\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ type\_idx\ =\ 3;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00390}00390\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00391}00391\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00392}00392\ \textcolor{stringliteral}{\ \ \ \ type\_counts(type\_idx)\ =\ type\_counts(type\_idx)\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00393}00393\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00394}00394\ \textcolor{stringliteral}{\ \ \ \ final\_value\ =\ U\_solutions(i,\ end);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00395}00395\ \textcolor{stringliteral}{\ \ \ \ if\ \string~isnan(final\_value)\ \&\&\ abs(final\_value)\ <\ 1e10}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00396}00396\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ type\_stability(type\_idx)\ =\ type\_stability(type\_idx)\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00397}00397\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00398}00398\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00399}00399\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00400}00400\ \textcolor{stringliteral}{type\_names\ =\ \{'}Implicit\textcolor{stringliteral}{',\ '}Explicit\textcolor{stringliteral}{',\ '}IMEX\textcolor{stringliteral}{'\};}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00401}00401\ \textcolor{stringliteral}{bar\_colors\ =\ [0.3,\ 0.6,\ 0.9;\ 0.9,\ 0.6,\ 0.3;\ 0.6,\ 0.9,\ 0.3];}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00402}00402\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00403}00403\ \textcolor{stringliteral}{bar\_handle\ =\ bar(1:3,\ type\_stability,\ '}FaceColor\textcolor{stringliteral}{',\ '}flat\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00404}00404\ \textcolor{stringliteral}{bar\_handle.CData\ =\ bar\_colors;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00405}00405\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00406}00406\ \textcolor{stringliteral}{set(gca,\ '}XTick\textcolor{stringliteral}{',\ 1:3);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00407}00407\ \textcolor{stringliteral}{set(gca,\ '}XTickLabel\textcolor{stringliteral}{',\ type\_names);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00408}00408\ \textcolor{stringliteral}{ylabel('}Number\ of\ Stable\ Methods\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00409}00409\ \textcolor{stringliteral}{title('}Stability\ by\ Method\ Type\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00410}00410\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00411}00411\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00412}00412\ \textcolor{stringliteral}{\%\ Add\ text\ annotations}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00413}00413\ \textcolor{stringliteral}{for\ i\ =\ 1:3}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00414}00414\ \textcolor{stringliteral}{\ \ \ \ if\ type\_counts(i)\ >\ 0}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00415}00415\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(i,\ type\_stability(i)\ +\ 0.1,\ sprintf('}\%d/\%d\textcolor{stringliteral}{',\ type\_stability(i),\ type\_counts(i)),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00416}00416\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}HorizontalAlignment\textcolor{stringliteral}{',\ '}center\textcolor{stringliteral}{',\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00417}00417\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00418}00418\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00419}00419\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00420}00420\ \textcolor{stringliteral}{\%\ Theoretical\ vs\ practical\ stability\ comparison}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00421}00421\ \textcolor{stringliteral}{subplot(2,\ 2,\ 4);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00422}00422\ \textcolor{stringliteral}{theoretical\_stable\ =\ is\_A\_stable(test\_indices);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00423}00423\ \textcolor{stringliteral}{practical\_stable\ =\ \string~isnan(U\_solutions(:,\ end))\ \&\ abs(U\_solutions(:,\ end))\ <\ 1e10;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00424}00424\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00425}00425\ \textcolor{stringliteral}{\%\ Create\ scatter\ plot}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00426}00426\ \textcolor{stringliteral}{for\ i\ =\ 1:length(test\_integrators)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00427}00427\ \textcolor{stringliteral}{\ \ \ \ if\ strcmp(test\_types\{i\},\ '}Implicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00428}00428\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ color\ =\ [0.3,\ 0.6,\ 0.9];}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00429}00429\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ marker\ =\ '}o\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00430}00430\ \textcolor{stringliteral}{\ \ \ \ elseif\ strcmp(test\_types\{i\},\ '}Explicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00431}00431\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ color\ =\ [0.9,\ 0.6,\ 0.3];}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00432}00432\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ marker\ =\ '}s\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00433}00433\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00434}00434\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ color\ =\ [0.6,\ 0.9,\ 0.3];}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00435}00435\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ marker\ =\ '}\string^\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00436}00436\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00437}00437\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00438}00438\ \textcolor{stringliteral}{\ \ \ \ scatter(theoretical\_stable(i),\ practical\_stable(i),\ 100,\ color,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00439}00439\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ marker,\ '}filled\textcolor{stringliteral}{',\ '}DisplayName\textcolor{stringliteral}{',\ [test\_names\{i\}\ '}\ (\textcolor{stringliteral}{'\ test\_types\{i\}\ '})\textcolor{stringliteral}{']);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00440}00440\ \textcolor{stringliteral}{\ \ \ \ hold\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00441}00441\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00442}00442\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00443}00443\ \textcolor{stringliteral}{set(gca,\ '}XTick\textcolor{stringliteral}{',\ [0,\ 1]);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00444}00444\ \textcolor{stringliteral}{set(gca,\ '}XTickLabel\textcolor{stringliteral}{',\ \{'}Not\ A-\/stable\textcolor{stringliteral}{',\ '}A-\/stable\textcolor{stringliteral}{'\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00445}00445\ \textcolor{stringliteral}{set(gca,\ '}YTick\textcolor{stringliteral}{',\ [0,\ 1]);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00446}00446\ \textcolor{stringliteral}{set(gca,\ '}YTickLabel\textcolor{stringliteral}{',\ \{'}Unstable\textcolor{stringliteral}{',\ '}Stable\textcolor{stringliteral}{'\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00447}00447\ \textcolor{stringliteral}{xlabel('}Theoretical\ A-\/stability\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00448}00448\ \textcolor{stringliteral}{ylabel('}Practical\ Stability\ (λdt\ =\ -\/5)\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00449}00449\ \textcolor{stringliteral}{title('}Theory\ vs\ Practice\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00450}00450\ \textcolor{stringliteral}{legend('}Location\textcolor{stringliteral}{',\ '}best\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 8);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00451}00451\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00452}00452\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00453}00453\ \textcolor{stringliteral}{\%\%\ Summary\ analysis}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00454}00454\ \textcolor{stringliteral}{fprintf('}===\ STABILITY\ ANALYSIS\ SUMMARY\ ===\(\backslash\)n\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00455}00455\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00456}00456\ \textcolor{stringliteral}{fprintf('}A-\/stability\ analysis:\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00457}00457\ \textcolor{stringliteral}{for\ type\_idx\ =\ 1:3}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00458}00458\ \textcolor{stringliteral}{\ \ \ \ type\_name\ =\ method\_types\{type\_idx\};}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00459}00459\ \textcolor{stringliteral}{\ \ \ \ type\_indices\ =\ find(strcmp(integrator\_types,\ type\_name));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00460}00460\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00461}00461\ \textcolor{stringliteral}{\ \ \ \ if\ isempty(type\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00462}00462\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ continue;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00463}00463\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00464}00464\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00465}00465\ \textcolor{stringliteral}{\ \ \ \ if\ strcmp(type\_name,\ '}Explicit\textcolor{stringliteral}{')}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00466}00466\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\%s\ methods:\ Never\ A-\/stable\ (inherent\ limitation)\(\backslash\)n\textcolor{stringliteral}{',\ type\_name);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00467}00467\ \textcolor{stringliteral}{\ \ \ \ else}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00468}00468\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ n\_a\_stable\ =\ sum(is\_A\_stable(type\_indices));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00469}00469\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ n\_total\ =\ length(type\_indices);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00470}00470\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fprintf('}\%s\ methods:\ \%d/\%d\ are\ A-\/stable\(\backslash\)n\textcolor{stringliteral}{',\ type\_name,\ n\_a\_stable,\ n\_total);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00471}00471\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00472}00472\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ List\ which\ ones\ are\ A-\/stable}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00473}00473\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ a\_stable\_indices\ =\ type\_indices(is\_A\_stable(type\_indices));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00474}00474\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ if\ \string~isempty(a\_stable\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00475}00475\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf('}\ \ A-\/stable:\ \textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00476}00476\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(a\_stable\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00477}00477\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('}\%s\textcolor{stringliteral}{',\ integrator\_names\{a\_stable\_indices(i)\});}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00478}00478\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ i\ <\ length(a\_stable\_indices)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00479}00479\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('},\ \textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00480}00480\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00481}00481\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00482}00482\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf('}\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00483}00483\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00484}00484\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00485}00485\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00486}00486\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00487}00487\ \textcolor{stringliteral}{fprintf('}\(\backslash\)nPractical\ stability\ test\ (λdt\ =\ \%g):\(\backslash\)n\textcolor{stringliteral}{',\ lambda\_test\ *\ dt\_test);}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00488}00488\ \textcolor{stringliteral}{fprintf('}Results\ show\ whether\ methods\ can\ handle\ large\ time\ steps\ for\ stiff\ problems.\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00489}00489\ \textcolor{stringliteral}{fprintf('}A-\/stable\ methods\ should\ remain\ stable,\ while\ explicit\ methods\ typically\ fail.\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00490}00490\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00491}00491\ \textcolor{stringliteral}{\%\ Compare\ theoretical\ and\ practical\ results}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00492}00492\ \textcolor{stringliteral}{fprintf('}\(\backslash\)nTheory\ vs\ Practice\ correlation:\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00493}00493\ \textcolor{stringliteral}{correlation\_correct\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00494}00494\ \textcolor{stringliteral}{for\ i\ =\ 1:length(test\_integrators)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00495}00495\ \textcolor{stringliteral}{\ \ \ \ theoretical\ =\ is\_A\_stable(test\_indices(i));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00496}00496\ \textcolor{stringliteral}{\ \ \ \ practical\ =\ \string~isnan(U\_solutions(i,\ end))\ \&\&\ abs(U\_solutions(i,\ end))\ <\ 1e10;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00497}00497\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00498}00498\ \textcolor{stringliteral}{\ \ \ \ if\ (theoretical\ \&\&\ practical)\ ||\ (\string~theoretical\ \&\&\ \string~practical)}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00499}00499\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ correlation\_correct\ =\ correlation\_correct\ +\ 1;}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00500}00500\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00501}00501\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00502}00502\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00503}00503\ \textcolor{stringliteral}{fprintf('}Methods\ where\ theory\ matches\ practice:\ \%d/\%d\(\backslash\)n\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00504}00504\ \textcolor{stringliteral}{\ \ \ \ correlation\_correct,\ length(test\_integrators));}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00505}00505\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00506}00506\ \textcolor{stringliteral}{fprintf('}\(\backslash\)nNote:\ Explicit\ methods\ are\ inherently\ limited\ by\ stability\ constraints.\(\backslash\)n\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex05__stability__region_8m_source_l00507}00507\ \textcolor{stringliteral}{fprintf('}\ \ \ \ \ \ For\ stiff\ problems,\ implicit\ or\ IMEX\ methods\ are\ preferred.\(\backslash\)n\textcolor{stringliteral}{');}}
+
+\end{DoxyCode}

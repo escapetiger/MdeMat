@@ -1,0 +1,99 @@
+\doxysection{Semi\+Lagrangian\+Periodic\+Assembly.\+m}
+\hypertarget{_semi_lagrangian_periodic_assembly_8m_source}{}\label{_semi_lagrangian_periodic_assembly_8m_source}\index{+approx/+assembly/SemiLagrangianPeriodicAssembly.m@{+approx/+assembly/SemiLagrangianPeriodicAssembly.m}}
+\mbox{\hyperlink{_semi_lagrangian_periodic_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00001}00001\ classdef\ SemiLagrangianPeriodicAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ SEMILAGRANGIANPERIODICASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ dynamic}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00003}00003\ \ \ \ \ \%\ with\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ SemiLagrangianPeriodicAssembly\ implements\ the\ assembly\ of\ transport}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ operators\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ methods\ with\ periodic\ boundary}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ conditions.\ It\ handles\ characteristic\ tracing\ with\ automatic}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ wrapping\ at\ domain\ boundaries,\ enabling\ stable\ advection}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ computations\ without\ \textcolor{keyword}{explicit}\ boundary\ condition\ enforcement.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ periodic\ treatment\ allows\ characteristics\ that\ exit\ one\ side\ of}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ the\ domain\ to\ re-\/enter\ from\ the\ opposite\ side,\ maintaining}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ conservation\ and\ stability\ properties.\ This\ is\ particularly\ useful}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ problems\ on\ periodic\ domains\ or\ with\ circular\ advection}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ patterns.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00017}00017\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ Unlike\ Dirichlet\ assembly,\ periodic\ assembly\ only\ \textcolor{keyword}{requires}\ volume}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ assembly\ as\ boundary\ conditions\ are\ handled\ implicitly\ through}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ the\ periodic\ indexing\ scheme.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00022}00022\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_dirichlet_assembly}{SemiLagrangianDirichletAssembly}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{UniformGrid}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00027}00027\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00028}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly}{00028}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_aedededeb07195891dd1b9efd4d946a1b}{BC\_TYPE}}\ =\ 'periodic'\ \%\ Boundary\ condition\ type\ identifier}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00029}00029\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00031}00031\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00032}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_aedededeb07195891dd1b9efd4d946a1b}{00032}}\ \ \ \ \ \ \ \ \ function\ T\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_ac818f3a45e826d428d97b033630f3cc4}{assembleVolume}}(obj)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVOLUME\ Assemble\ volume\ terms\ for\ periodic}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ semi-\/Lagrangian\ transport.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_ac818f3a45e826d428d97b033630f3cc4}{assembleVolume}}(obj)\ assembles\ the\ triplet}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ representation\ of\ the\ transport\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ matrix\ for\ all}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements\ with\ periodic\ boundary\ conditions.\ The\ method}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ handles\ characteristic\ tracing\ with\ automatic\ wrapping\ at}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ domain\ boundaries\ using\ periodic\ indexing.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly}{SemiLagrangianPeriodicAssembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ T\ -\/\ Triplet\ matrix\ representation\ [row,\ col,\ val]}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Standard\ volume\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ for\ periodic\ transport}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ triplets\ =\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_ac818f3a45e826d428d97b033630f3cc4}{assembleVolume}}();}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ =\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ =\ \mbox{\hyperlink{namespacecore}{core}}.linalg.sparseFromTriplets(triplets,\ n,\ n);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Matrix\ A\ now\ includes\ periodic\ wrapping\ automatically}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\_new\ =\ A\ *\ U\_old;\ \ \%\ Time\ step\ with\ periodic\ BCs}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Periodic\ indexing\ (flag=0\ in\ multiToLinear)\ automatically}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ handles\ wrap-\/around\ at\ domain\ boundaries.\ All\ elements}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ participate\ in\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ unlike\ Dirichlet\ case.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ np\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}.clipper.nVolumePieces;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nTotalElements;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00065}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly_ac818f3a45e826d428d97b033630f3cc4}{00065}}\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Project\ mass\ matrices\ for\ each\ volume\ piece}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ fM\ =\ @(i)\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.projector.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}.mass(i).matrix);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ arrayfun(fM,\ 1:np,\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}.clipper.volumeShifts;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ cell(np,\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ for\ p\ =\ 1:np}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}\ =\ zeros(nl\string^2*ne,\ 3);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [i,\ j,\ v]\ =\ find(M\{p\});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nv\ =\ numel(v);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ volume\ shifts\ with\ periodic\ wrapping}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.space.mesh.allElementMultiIndices;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ m\ +\ s(:,\ p).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ to\ linear\ indices\ with\ periodic\ boundary\ conditions}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ obj.space.mesh.indexer.multiToLinear(m,\ 0);\ \ \%\ flag=0\ for\ periodic}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ 1:(nv\ *\ ne);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Assemble\ triplet\ entries}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 1)\ =\ reshape(bsxfun(@plus,\ (0:ne\ -\/\ 1)*nl,\ i(:)),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 2)\ =\ reshape(bsxfun(@plus,\ (l(:).'}\ -\/\ 1)*nl,\ j(:)),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\{p\}(k,\ 3)\ =\ kron(ones(ne,\ 1),\ v(:));}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ vertcat(T\{:\});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00092}00092\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_periodic_assembly_8m_source_l00093}00093\ end}
+
+\end{DoxyCode}

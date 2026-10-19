@@ -1,0 +1,18 @@
+\doxysection{render\+Variable3d.\+m}
+\hypertarget{render_variable3d_8m_source}{}\label{render_variable3d_8m_source}\index{+profilers/+visual/private/renderVariable3d.m@{+profilers/+visual/private/renderVariable3d.m}}
+\mbox{\hyperlink{render_variable3d_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00001}00001\ function\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a678dd9f7c944f7193882ba5be85a25c4}{renderVariable3d}}(axes,\ dataset,\ styleset,\ varName,\ offset)}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00002}00002\ subdata\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a15e29c4767b0357ba1ba03092f41f649}{prepareData}}(dataset,\ varName,\ 3);}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00004}00004\ \textcolor{keywordflow}{if}\ isempty(fieldnames(subdata))}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00005}00005\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00006}00006\ end}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00007}\mbox{\hyperlink{namespaceprofilers_1_1visual_a678dd9f7c944f7193882ba5be85a25c4}{00007}}\ varAxes\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a2c446a7a50b8709d0dfdfb5420b30216}{render3d}}(axes,\ subdata,\ varName,\ offset);}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00008}00008\ \mbox{\hyperlink{namespaceprofilers_1_1visual_ad5f92758ec01000c45a91e5974a2d0a5}{renderSlices}}(axes,\ subdata,\ styleset,\ varName,\ offset,\ 3);}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00009}00009\ \textcolor{keywordflow}{if}\ length(varAxes)\ >\ 1}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{namespaceprofilers_1_1visual_a794177a260e3b3fd6be4afabeefebe81}{syncColorLimits}}(varAxes,\ subdata);}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00011}00011\ end}
+\DoxyCodeLine{\Hypertarget{render_variable3d_8m_source_l00012}00012\ end}
+
+\end{DoxyCode}

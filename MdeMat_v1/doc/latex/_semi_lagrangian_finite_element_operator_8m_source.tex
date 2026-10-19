@@ -1,0 +1,58 @@
+\doxysection{Semi\+Lagrangian\+Finite\+Element\+Operator.\+m}
+\hypertarget{_semi_lagrangian_finite_element_operator_8m_source}{}\label{_semi_lagrangian_finite_element_operator_8m_source}\index{+fem/+element/SemiLagrangianFiniteElementOperator.m@{+fem/+element/SemiLagrangianFiniteElementOperator.m}}
+\mbox{\hyperlink{_semi_lagrangian_finite_element_operator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00001}00001\ classdef\ SemiLagrangianFiniteElementOperator\ <\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator}{FiniteElementOperator}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00002}00002\ \ \ \ \ \%\ SEMILAGRANGIANFINITEELEMENTOPERATOR\ Base\ \textcolor{keyword}{class\ }for\ semi-\/Lagrangian}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00003}00003\ \ \ \ \ \%\ finite\ element\ operators.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ SemiLagrangianFiniteElementOperator\ provides\ the\ foundation\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ operators\ used\ in\ semi-\/Lagrangian\ finite\ element\ methods.\ These}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ methods\ track\ fluid\ parcels\ backward\ in\ time\ along\ characteristic}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ curves,\ requiring\ specialized\ operators\ that\ handle\ the\ coupling}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ between\ Eulerian\ and\ upstream\ (Lagrangian)\ data.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }maintains\ a\ reference\ to\ a\ clipper\ object\ that\ manages}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ the\ geometric\ intersection\ and\ integration\ over\ the\ overlap}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ regions\ between\ Eulerian\ elements\ and\ upstream\ footprints.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ This\ is\ essential\ \textcolor{keywordflow}{for}\ accurate\ transport\ calculations\ in}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ convection-\/dominated\ problems.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ Semi-\/Lagrangian\ methods\ are\ particularly\ effective\ \textcolor{keywordflow}{for}\ problems}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ with\ high\ Péclet\ numbers\ where\ traditional\ Eulerian\ methods}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ suffer\ from\ numerical\ diffusion\ or\ instability.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator}{FiniteElementOperator}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_c0_semi_lagrangian_finite_element_operator}{C0SemiLagrangianFiniteElementOperator}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_semi_lagrangian_finite_element_operator}{L2SemiLagrangianFiniteElementOperator}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00026}00026\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ clipper\ \%\ Finite\ element\ clipper\ \textcolor{keywordflow}{for}\ geometric\ intersections}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00028}\mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator}{00028}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00030}00030\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_a965280acd92d77792e666d86a0ab13cb}{SemiLagrangianFiniteElementOperator}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}},\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00032}\mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SEMILAGRANGIANFINITEELEMENTOPERATOR\ Constructor\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_a965280acd92d77792e666d86a0ab13cb}{SemiLagrangianFiniteElementOperator}}.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_a965280acd92d77792e666d86a0ab13cb}{SemiLagrangianFiniteElementOperator}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}},\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ a\ semi-\/Lagrangian\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ \textcolor{keyword}{operator}\ with}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ and\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}}.\ This\ constructor}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ is\ called\ by\ concrete\ subclasses\ to\ initialize\ the\ base}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{class\ }functionality.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}}\ -\/\ Finite\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ object\ (\mbox{\hyperlink{classfem_1_1element_1_1_finite_element}{FiniteElement}})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}}\ -\/\ Geometric\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}}\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{namespacefem_1_1element}{element}}\ intersections}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_a965280acd92d77792e666d86a0ab13cb}{SemiLagrangianFiniteElementOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator}{FiniteElementOperator}}(\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj.clipper\ =\ \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_aac2dc2aa214c84e6dba038f349bf5bbb}{clipper}};}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00051}\mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator_a965280acd92d77792e666d86a0ab13cb}{00051}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_finite_element_operator_8m_source_l00052}00052\ end}
+
+\end{DoxyCode}

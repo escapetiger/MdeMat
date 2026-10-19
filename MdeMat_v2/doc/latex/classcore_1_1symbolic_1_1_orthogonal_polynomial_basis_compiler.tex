@@ -1,0 +1,193 @@
+\doxysection{core\+::symbolic\+::Orthogonal\+Polynomial\+Basis\+Compiler Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{}\label{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}\index{core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}}
+
+
+\doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} for orthogonal polynomial basis functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{core\+::symbolic\+::\+Compiler}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a9f4a6b3a2ec4a2a4ac4e6df76fea29dc}{set\+Functions}} (Input\+Type obj, Input\+Type degree, Input\+Type bbox, Input\+Type basis\+Type)
+\begin{DoxyCompactList}\small\item\em Sets orthogonal polynomial basis functions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_aeb10c0e4eac06ed659f9c6bf8ae31d69}{set\+Legendre}} (Input\+Type obj, Input\+Type degree, Input\+Type bbox, Input\+Type basis\+Type)
+\begin{DoxyCompactList}\small\item\em Sets Legendre polynomial basis functions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a39a572b9a9d8c8d845847a9d14adbd39}{set\+Chebyshev}} (Input\+Type obj, Input\+Type degree, Input\+Type bbox, Input\+Type basis\+Type)
+\begin{DoxyCompactList}\small\item\em Sets Chebyshev polynomial basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{core\+::symbolic\+::\+Compiler}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_ab692113350deaff43f9b65e816d94d60}{Compiler}} (Input\+Type \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253}{variables}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a629d6aaf1f23d6738780090ca7fabd02}{compile}} (Input\+Type obj, Input\+Type file\+Name, Input\+Type basis\+Name, Input\+Type max\+Order)
+\begin{DoxyCompactList}\small\item\em Compiles polynomial basis matrix with derivatives. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a311dca03b6dd599d026f3f4f657689c5}{load}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Loads a previously compiled basis matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_aaf951d0cb3e5d54f5a70b60bba6a777b}{list}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Lists all compiled basis matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a636ce2c1a906ca8a33ed569f6ceb1ef0}{delete}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Deletes a compiled basis matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a56ba1d51ab88f8c977344c147688939a}{clear}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Deletes all compiled basis matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a257de1e4bfcb161506333b8ae4e574e1}{set\+Functions}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Abstract method for setting basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{core\+::symbolic\+::\+Compiler}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a5edf3bb34846f75e640f97df438047a4}{METADATA\+\_\+\+DIR}} = \textquotesingle{}config/functions\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Directory for storing compiled matrices. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a8a019a078711e687994db00e754185cc}{FILE\+\_\+\+EXTENSION}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em File extension for compiled matrices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253}{variables}}
+\begin{DoxyCompactList}\small\item\em Cell array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a1e4eca1151599fc4ccd9d3a345c87d70}{funcs}}
+\begin{DoxyCompactList}\small\item\em Object array of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} instances. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler}{core\+::symbolic\+::\+Compiler}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_ae1a76d371f4b4a64fd055cc9caae3727}{save}} (Input\+Type obj, Input\+Type filename, Input\+Type metadata)
+\begin{DoxyCompactList}\small\item\em Saves metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a12effaa62b16342f630c2ab3f94cd3a4}{get\+Full\+Path}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Constructs full file path from filename. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_afeac604bae87550875c973c35dc87e5f}{create\+Handles}} (Input\+Type obj, Input\+Type max\+Order)
+\begin{DoxyCompactList}\small\item\em Creates basis matrix from stored functions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a0b83b1ae32d21bd32c7c9fdbe6bb7919}{create\+Metadata}} (Input\+Type obj, Input\+Type basis\+Type)
+\begin{DoxyCompactList}\small\item\em Creates base metadata structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} for orthogonal polynomial basis functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{Orthogonal\+Polynomial\+Basis\+Compiler} specializes in compiling basis matrices for orthogonal polynomial families such as Legendre and Chebyshev polynomials. It creates and manages arrays of orthogonal polynomial basis functions with optional monic normalization.
+
+Supported orthogonal polynomial families\+:
+\begin{DoxyItemize}
+\item Legendre\+: orthogonal on \mbox{[}-\/1,1\mbox{]} with weight w(x) = 1
+\item Chebyshev\+: orthogonal on \mbox{[}-\/1,1\mbox{]} with weight w(x) = 1/√(1-\/x²) Both families support standard and monic forms.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ compiler\ and\ set\ Legendre\ functions}
+\DoxyCodeLine{compiler\ =\ core.symbolic.OrthogonalPolynomialBasisCompiler();}
+\DoxyCodeLine{compiler.setFunctions(3,\ [0,\ 1],\ \textcolor{stringliteral}{'legendre'});}
+\DoxyCodeLine{\%\ Compile\ and\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a311dca03b6dd599d026f3f4f657689c5}{load}}\ basis\ matrix}
+\DoxyCodeLine{compiler.compile(\textcolor{stringliteral}{'legendre\_basis'},\ \textcolor{stringliteral}{'Legendre'},\ 2);}
+\DoxyCodeLine{metadata\ =\ compiler.load(\textcolor{stringliteral}{'legendre\_basis'});}
+\DoxyCodeLine{\%\ Chebyshev\ polynomials\ in\ monic\ form}
+\DoxyCodeLine{compiler.setFunctions(4,\ [-\/1,\ 1],\ \textcolor{stringliteral}{'monic\_chebyshev'});}
+\DoxyCodeLine{compiler.compile(\textcolor{stringliteral}{'chebyshev\_monic'},\ \textcolor{stringliteral}{'Chebyshev\_Monic'},\ 1);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_compiler}{core.\+symbolic.\+Compiler} 
+
+\doxylink{classcore_1_1symbolic_1_1_legendre_basis_function}{core.\+symbolic.\+Legendre\+Basis\+Function} 
+
+\doxylink{classcore_1_1symbolic_1_1_chebyshev_basis_function}{core.\+symbolic.\+Chebyshev\+Basis\+Function} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_orthogonal_polynomial_basis_compiler_8m_source_l00034}{34}} of file \mbox{\hyperlink{_orthogonal_polynomial_basis_compiler_8m_source}{Orthogonal\+Polynomial\+Basis\+Compiler.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a39a572b9a9d8c8d845847a9d14adbd39}\index{core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}!setChebyshev@{setChebyshev}}
+\index{setChebyshev@{setChebyshev}!core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}}
+\doxysubsubsection{\texorpdfstring{setChebyshev()}{setChebyshev()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a39a572b9a9d8c8d845847a9d14adbd39} 
+function core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis\+Compiler\+::set\+Chebyshev (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{degree}{, }\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{basis\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Sets Chebyshev polynomial basis functions. 
+
+set\+Chebyshev(obj, degree, bbox, basis\+Type) creates an array of Chebyshev polynomial basis functions from degree 0 to the specified maximum degree. Supports both standard and monic forms with interval scaling to the specified bounding box.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{Orthogonal\+Polynomial\+Basis\+Compiler} object \\
+\hline
+{\em degree} & -\/ Maximum degree of Chebyshev polynomials \\
+\hline
+{\em bbox} & -\/ Bounding box \mbox{[}lower, upper\mbox{]} \\
+\hline
+{\em basis\+Type} & -\/ Type (\textquotesingle{}chebyshev\textquotesingle{} or \textquotesingle{}monic\+\_\+chebyshev\textquotesingle{})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a9f4a6b3a2ec4a2a4ac4e6df76fea29dc}\index{core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}!setFunctions@{setFunctions}}
+\index{setFunctions@{setFunctions}!core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}}
+\doxysubsubsection{\texorpdfstring{setFunctions()}{setFunctions()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_a9f4a6b3a2ec4a2a4ac4e6df76fea29dc} 
+function core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis\+Compiler\+::set\+Functions (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{degree}{, }\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{basis\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Sets orthogonal polynomial basis functions. 
+
+obj = set\+Functions(obj, degree, bbox, basis\+Type) creates an array of orthogonal polynomial basis functions from degree 0 to the specified maximum degree. Dispatches to the appropriate specialized method based on basis type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{Orthogonal\+Polynomial\+Basis\+Compiler} object \\
+\hline
+{\em degree} & -\/ Maximum degree of polynomials (non-\/negative integer) \\
+\hline
+{\em bbox} & -\/ Bounding box \mbox{[}lower, upper\mbox{]} defining the interval \\
+\hline
+{\em basis\+Type} & -\/ Type of basis (\textquotesingle{}legendre\textquotesingle{}, \textquotesingle{}monic\+\_\+legendre\textquotesingle{}, \textquotesingle{}chebyshev\textquotesingle{}, \textquotesingle{}monic\+\_\+chebyshev\textquotesingle{})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{Orthogonal\+Polynomial\+Basis\+Compiler} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_aeb10c0e4eac06ed659f9c6bf8ae31d69}\index{core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}!setLegendre@{setLegendre}}
+\index{setLegendre@{setLegendre}!core::symbolic::OrthogonalPolynomialBasisCompiler@{core::symbolic::OrthogonalPolynomialBasisCompiler}}
+\doxysubsubsection{\texorpdfstring{setLegendre()}{setLegendre()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler_aeb10c0e4eac06ed659f9c6bf8ae31d69} 
+function core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis\+Compiler\+::set\+Legendre (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{degree}{, }\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{basis\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Sets Legendre polynomial basis functions. 
+
+set\+Legendre(obj, degree, bbox, basis\+Type) creates an array of Legendre polynomial basis functions from degree 0 to the specified maximum degree. Supports both standard and monic forms with interval scaling to the specified bounding box.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{Orthogonal\+Polynomial\+Basis\+Compiler} object \\
+\hline
+{\em degree} & -\/ Maximum degree of Legendre polynomials \\
+\hline
+{\em bbox} & -\/ Bounding box \mbox{[}lower, upper\mbox{]} \\
+\hline
+{\em basis\+Type} & -\/ Type (\textquotesingle{}legendre\textquotesingle{} or \textquotesingle{}monic\+\_\+legendre\textquotesingle{})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_orthogonal_polynomial_basis_compiler_8m}{Orthogonal\+Polynomial\+Basis\+Compiler.\+m}}\end{DoxyCompactItemize}

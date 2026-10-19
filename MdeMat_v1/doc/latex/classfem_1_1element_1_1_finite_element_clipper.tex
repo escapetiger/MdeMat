@@ -1,0 +1,111 @@
+\doxysection{fem\+::element\+::Finite\+Element\+Clipper Class Reference}
+\hypertarget{classfem_1_1element_1_1_finite_element_clipper}{}\label{classfem_1_1element_1_1_finite_element_clipper}\index{fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}}
+
+
+Abstract base class for finite element clippers.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper}{fem\+::element\+::\+C0\+Finite\+Element\+Clipper}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_ad5ab450efecbfc3c16ee00df27c359f7}{Finite\+Element\+Clipper}} (Input\+Type \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1element_1_1_finite_element_clipper}{Finite\+Element\+Clipper}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object for which clipping is performed. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}}
+\begin{DoxyCompactList}\small\item\em Velocity vector for characteristic tracking. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for finite element clippers. 
+
+\doxylink{classfem_1_1element_1_1_finite_element_clipper}{Finite\+Element\+Clipper} provides the foundation for geometric clipping operations in semi-\/\+Lagrangian finite element methods. Clippers handle the complex geometric intersections that arise when tracking fluid parcels backward along characteristic curves, computing the overlap between Eulerian elements and upstream footprints.
+
+The clipping process is essential for accurate semi-\/\+Lagrangian transport calculations, as it determines the integration domains for coupling Eulerian and Lagrangian data. This involves computing intersections between the current element and the region occupied by fluid parcels at the previous time step.
+
+Clippers organize the resulting geometric pieces and set up appropriate quadrature rules for accurate integration over these potentially complex domains.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1element_1_1_c0_finite_element_clipper}{fem.\+element.\+C0\+Finite\+Element\+Clipper} 
+
+\doxylink{classfem_1_1element_1_1_l2_finite_element_clipper}{fem.\+element.\+L2\+Finite\+Element\+Clipper} 
+
+\doxylink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator}{fem.\+element.\+Semi\+Lagrangian\+Finite\+Element\+Operator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_finite_element_clipper_8m_source_l00028}{28}} of file \mbox{\hyperlink{_finite_element_clipper_8m_source}{Finite\+Element\+Clipper.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1element_1_1_finite_element_clipper_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1element_1_1_finite_element_clipper_ad5ab450efecbfc3c16ee00df27c359f7}\index{fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}!FiniteElementClipper@{FiniteElementClipper}}
+\index{FiniteElementClipper@{FiniteElementClipper}!fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{FiniteElementClipper()}{FiniteElementClipper()}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_clipper_ad5ab450efecbfc3c16ee00df27c359f7} 
+function fem\+::element\+::\+Finite\+Element\+Clipper\+::\+Finite\+Element\+Clipper (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{velocity}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1element_1_1_finite_element_clipper}{Finite\+Element\+Clipper}. 
+
+obj = Finite\+Element\+Clipper(fe, velocity) creates a finite element clipper with the specified finite element and velocity field. This constructor is called by concrete subclasses to initialize the base class functionality.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object (\doxylink{classfem_1_1element_1_1_finite_element}{Finite\+Element}) \\
+\hline
+{\em velocity} & -\/ Velocity vector for characteristic tracking (column vector) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1element_1_1_finite_element_clipper_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9}\index{fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}!fe@{fe}}
+\index{fe@{fe}!fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{fe}{fe}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9} 
+Property fem\+::element\+::\+Finite\+Element\+Clipper\+::fe}
+
+
+
+Finite element object for which clipping is performed. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_clipper_8m_source_l00032}{32}} of file \mbox{\hyperlink{_finite_element_clipper_8m_source}{Finite\+Element\+Clipper.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}\index{fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}!velocity@{velocity}}
+\index{velocity@{velocity}!fem::element::FiniteElementClipper@{fem::element::FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{velocity}{velocity}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3} 
+Property fem\+::element\+::\+Finite\+Element\+Clipper\+::velocity}
+
+
+
+Velocity vector for characteristic tracking. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_clipper_8m_source_l00035}{35}} of file \mbox{\hyperlink{_finite_element_clipper_8m_source}{Finite\+Element\+Clipper.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+element/\mbox{\hyperlink{_finite_element_clipper_8m}{Finite\+Element\+Clipper.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,118 @@
+\doxysection{Scheme.\+m}
+\hypertarget{_scheme_8m_source}{}\label{_scheme_8m_source}\index{+physics/Scheme.m@{+physics/Scheme.m}}
+\mbox{\hyperlink{_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00001}00001\ classdef\ Scheme\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00002}00002\ \ \ \ \ \%\ SCHEME\ Base\ \textcolor{keyword}{class\ }for\ \mbox{\hyperlink{namespacephysics}{physics}}\ simulation\ schemes.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ The\ Scheme\ \textcolor{keyword}{class\ }provides\ a\ common\ framework\ for\ \mbox{\hyperlink{namespacephysics}{physics}}\ simulation}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ schemes,\ managing\ time\ integration\ loops,\ performance\ monitoring,}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ visualization,\ and\ analysis\ workflows.\ It\ defines\ the\ essential}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ structure\ \textcolor{keywordflow}{for}\ numerical\ solution\ procedures\ \textcolor{keywordflow}{while}\ allowing\ specific}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ implementations\ through\ abstract\ method\ definitions.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ Key\ features\ include:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ Standardized\ time\ integration\ workflow}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ Integrated\ performance\ timing\ and\ monitoring}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ Visualization\ and\ analysis\ pipeline\ management}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ -\/\ Configurable\ verbose\ output\ and\ reporting}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ Extensible\ architecture\ \textcolor{keywordflow}{for}\ different\ \mbox{\hyperlink{namespacephysics}{physics}}\ models}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00017}00017\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ This\ is\ an\ abstract\ base\ \textcolor{keyword}{class\ }that\ cannot\ be\ instantiated}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ directly.\ Concrete\ subclasses\ must\ implement\ all\ abstract\ methods}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ to\ define\ specific\ \mbox{\hyperlink{namespacephysics}{physics}}\ and\ numerical\ schemes.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00022}00022\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ RECORDS\ =\ \{\textcolor{stringliteral}{'Integration'},\ \textcolor{stringliteral}{'Visualization'},\ \textcolor{stringliteral}{'Analysis'}\};\ \%\ Timer\ record\ categories}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00024}00024\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00025}\mbox{\hyperlink{classphysics_1_1_scheme}{00025}}\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00026}00026\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}\ \%\ Configuration\ structure\ containing\ simulation\ parameters}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}\ \%\ Temporal\ discretization\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ time\ integration}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00029}\mbox{\hyperlink{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb}{00029}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}\ \%\ Performance\ \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}\ \textcolor{keywordflow}{for}\ monitoring\ execution\ phases}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}\ \%\ Visualization\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ solution\ plotting}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}\ \%\ Analysis\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ error\ computation\ and\ assessment}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00032}00032\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00034}00034\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00035}\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{00035}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{Scheme}}(\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}},\ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}})}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCHEME\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{Scheme}}.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00038}\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{Scheme}}(\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}},\ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}},\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}})\ creates}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ base\ scheme\ \textcolor{keywordtype}{object}\ with\ the\ specified\ configuration,}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ temporal\ discretization,\ visualization,\ and\ analysis}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00041}\mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ components.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00044}\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}\ -\/\ Configuration\ structure\ with\ simulation\ parameters}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}\ -\/\ Temporal\ discretization\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}\ -\/\ Visualization\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ solution\ plotting}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00047}\mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}\ -\/\ Analysis\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ error\ computation}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{Scheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ obj.config\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}};}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}};}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1chrono}{chrono}}.\mbox{\hyperlink{classcore_1_1chrono_1_1_timer}{Timer}}(obj.RECORDS,\ \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.verbose);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}};}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}};}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{run}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RUN\ Execute\ the\ complete\ time\ integration\ loop.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{run}}(obj,\ state)\ performs\ the\ full\ time\ integration}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ initial\ to\ \textcolor{keyword}{final}\ time,\ managing\ preprocessing,}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ steps,\ and\ postprocessing\ with\ performance}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ monitoring\ throughout\ the\ simulation.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00067}\mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classphysics_1_1_scheme_acd69726e6336ef79e23acc98d98ef42c}{Scheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Initial\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Final\ solution\ state\ after\ time\ integration}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Time\ integration\ loop}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \string~obj.tDisc.timeline.isFinished}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Preprocess\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ obj.preStep(state);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Integration\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ msg\ =\ sprintf(\ ...}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}[\%d]\ now\ =\ \%f;\ step\ size\ =\ \%f;\ runtime\ =\ \%.2f\ s;"{}},\ ...}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.count,\ ...}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.now,\ ...}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.h(1),\ ...}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.records(1).duration);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(1,\ msg);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ obj.step(state);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(1);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Postprocess\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00091}\mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{00091}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ obj.postStep(state);}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00094}00094\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00096}00096\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ the\ scheme\ and\ solution\ state.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05}{initialize}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \%\ PRESTEP\ Preprocess\ operations\ before\ each\ time\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39}{preStep}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \%\ STEP\ Perform\ one\ time\ integration\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \%\ POSTSTEP\ Postprocess\ operations\ after\ each\ time\ \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}}.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681}{postStep}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \%\ FINALIZE\ Finalize\ simulation\ and\ perform\ \textcolor{keyword}{final}\ analysis.}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}{finalize}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00111}00111\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scheme_8m_source_l00112}00112\ end}
+
+\end{DoxyCode}

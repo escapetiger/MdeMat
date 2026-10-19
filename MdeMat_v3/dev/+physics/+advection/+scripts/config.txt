@@ -1,0 +1,45 @@
+# Environment configuration
+
+# =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
+# Algorithm
+# =======================================================================
+
+# -----------------------------------------------------------------------
+# Time discretization
+# -----------------------------------------------------------------------
+# tDiscName='be': backward Euler scheme
+# tDiscName='bdf2': BDF2 scheme
+# tDiscName='bdf3': BDF3 scheme
+# tDiscName='sdirk2': SDIRK2 scheme
+# tDiscName='sdirk3': SDIRK3 scheme
+OPTION=tDiscName='bdf3'
+
+# CFL number
+OPTION=cfl=0.5
+
+# -----------------------------------------------------------------------
+# Space discretization
+# -----------------------------------------------------------------------
+
+# xDiscName='uwdg': upwind DG
+# xDiscName='sldg': semi-Lagrangian DG
+OPTION=xDiscName='uwdg'
+
+# spatial order
+OPTION=xBasisOrder=3
+
+# xBasisType='modal_legendre': Monic Legendre basis, 
+# xBasisType='nodal_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='nodal_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='modal_legendre'
+
+# xBasisPattern='Q': Qk polynomial space
+# xBasisPattern='P': Pk polynomial space
+OPTION=xBasisPattern='P'

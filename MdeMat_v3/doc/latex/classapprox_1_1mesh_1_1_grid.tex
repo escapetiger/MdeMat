@@ -1,0 +1,410 @@
+\doxysection{approx\+::mesh\+::Grid Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_grid}{}\label{classapprox_1_1mesh_1_1_grid}\index{approx::mesh::Grid@{approx::mesh::Grid}}
+
+
+Base class for multidimensional structured grids.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1mesh_1_1_nonuniform_grid}{approx\+::mesh\+::\+Nonuniform\+Grid}}, and \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid}{approx\+::mesh\+::\+Uniform\+Grid}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a5b2b5cd3fe674234c240b42fed9d1be6}{find\+Interior\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Find linear indices of interior elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a8f47f77588cc3357af1633499b5f593c}{find\+Boundary\+Elements}} (Input\+Type obj, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Find linear indices of boundary elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a721539c3d02a74338391dbb0bbdc9635}{find\+Neighbor\+Elements}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE, Input\+Type BC)
+\begin{DoxyCompactList}\small\item\em Find neighboring elements across faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a142fb2e0bd3bee828cf136414c8ccf8c}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Convert mesh to graph representation. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a144648013076ba21a3dab384fde72d56}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Create refined mesh with smaller elements. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic mesh size. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all face Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all outward normal vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}
+\begin{DoxyCompactList}\small\item\em Element count per dimension (1 × n\+Dims vector) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}
+\begin{DoxyCompactList}\small\item\em Element center coordinates per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}
+\begin{DoxyCompactList}\small\item\em Element spacing per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}
+\begin{DoxyCompactList}\small\item\em Element index ranges per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}
+\begin{DoxyCompactList}\small\item\em Boundary element specifications (1 × 2n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}{indexer}}
+\begin{DoxyCompactList}\small\item\em Multi-\/index converter (\doxylink{classcore_1_1linalg_1_1_multi_indexer}{core.\+linalg.\+Multi\+Indexer}) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (positive integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}{n\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements in the grid (positive integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}
+\begin{DoxyCompactList}\small\item\em Domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}
+\begin{DoxyCompactList}\small\item\em Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for multidimensional structured grids. 
+
+\doxylink{classapprox_1_1mesh_1_1_grid}{Grid} provides a foundational framework for representing structured computational grids using memory-\/efficient tensor-\/based storage. Unlike unstructured meshes that store explicit connectivity, structured grids leverage their regular topology to achieve O(d×n) memory usage instead of O(n\texorpdfstring{$^\wedge$}{\string^}d) for d-\/dimensional grids with n elements per dimension.
+
+The class implements a tensor-\/product structure where\+:
+\begin{DoxyItemize}
+\item \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} vertices form a Cartesian product of 1D coordinate arrays
+\item Element connectivity follows regular patterns in each dimension
+\item Neighbor relationships are computed algorithmically rather than stored
+\item Boundary faces are identified by coordinate extrema
+\end{DoxyItemize}
+
+Reference coordinate system uses the hypercube \mbox{[}-\/1/2, 1/2\mbox{]}\texorpdfstring{$^\wedge$}{\string^}d, providing a canonical domain for finite element basis functions and quadrature rules. Coordinate transformations between reference and physical spaces are handled by concrete subclasses (\doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid}, \doxylink{classapprox_1_1mesh_1_1_nonuniform_grid}{Nonuniform\+Grid}).
+
+The Multi\+Indexer facilitates efficient conversion between\+:
+\begin{DoxyItemize}
+\item Linear indices\+: Single integers identifying grid elements \mbox{[}1, N\mbox{]}
+\item Multi-\/indices\+: d-\/tuples specifying position in each dimension
+\item Factor indices\+: Separate indexing within each dimensional factor
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_mesh}{approx.\+mesh.\+Mesh} 
+
+\doxylink{classapprox_1_1mesh_1_1_separable_graph}{approx.\+mesh.\+Separable\+Graph} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00035}{35}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}\index{approx::mesh::Grid@{approx::mesh::Grid}!Grid@{Grid}}
+\index{Grid@{Grid}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{Grid()}{Grid()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704} 
+function approx\+::mesh\+::\+Grid\+::\+Grid (\begin{DoxyParamCaption}\item[{Input\+Type}]{domain}{, }\item[{Input\+Type}]{reference}{, }\item[{Input\+Type}]{resolution}{, }\item[{Input\+Type}]{centroids}{, }\item[{Input\+Type}]{spacings}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} base class. 
+
+obj = Grid(domain, reference, resolution, centroids, spacings) creates a structured grid with the specified geometric domain, reference element, resolution, and spacing information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & -\/ Physical domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry}) \\
+\hline
+{\em reference} & -\/ Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry}) \\
+\hline
+{\em resolution} & -\/ Elements per dimension (1 × n\+Dims vector) \\
+\hline
+{\em centroids} & -\/ Element centers per dimension (1 × n\+Dims cell) \\
+\hline
+{\em spacings} & -\/ Element spacings per dimension (1 × n\+Dims cell) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a8f47f77588cc3357af1633499b5f593c}\index{approx::mesh::Grid@{approx::mesh::Grid}!findBoundaryElements@{findBoundaryElements}}
+\index{findBoundaryElements@{findBoundaryElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{findBoundaryElements()}{findBoundaryElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a8f47f77588cc3357af1633499b5f593c} 
+function approx\+::mesh\+::\+Grid\+::find\+Boundary\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IFE}{}\end{DoxyParamCaption})}
+
+
+
+Find linear indices of boundary elements. 
+
+IE = find\+Boundary\+Elements(obj, IFE) computes linear indices of elements that share the specified boundary face, essential for applying boundary conditions in numerical methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object \\
+\hline
+{\em IFE} & -\/ Boundary face index (1 to 2×n\+Dims)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em IE} & -\/ Linear indices of boundary elements (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Face numbering follows the convention\+: 
+
+-\/ Face 1\+: Lower boundary in dimension 1 (x\+\_\+min) 
+
+-\/ Face 2\+: Upper boundary in dimension 1 (x\+\_\+max) 
+
+-\/ Face 3\+: Lower boundary in dimension 2 (y\+\_\+min) 
+
+-\/ Face 4\+: Upper boundary in dimension 2 (y\+\_\+max) 
+
+-\/ And so forth for higher dimensions 
+
+Boundary elements have one coordinate at the domain extremum 
+
+while others vary over the full range. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a5b2b5cd3fe674234c240b42fed9d1be6}\index{approx::mesh::Grid@{approx::mesh::Grid}!findInteriorElements@{findInteriorElements}}
+\index{findInteriorElements@{findInteriorElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{findInteriorElements()}{findInteriorElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a5b2b5cd3fe674234c240b42fed9d1be6} 
+function approx\+::mesh\+::\+Grid\+::find\+Interior\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Find linear indices of interior elements. 
+
+IE = find\+Interior\+Elements(obj) computes linear indices of elements that do not touch the domain boundary, useful for applying different numerical schemes to interior and boundary regions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em IE} & -\/ Linear indices of interior elements (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Interior elements are those with indices \mbox{[}2, n\+\_\+i-\/1\mbox{]} in 
+
+every dimension i, where n\+\_\+i is the number of elements in 
+
+dimension i. This excludes the first and last layer of 
+
+elements which touch the boundary. 
+
+For a 2D grid with resolution \mbox{[}nx, ny\mbox{]}, interior elements 
+
+have multi-\/indices (i,j) where 2 ≤ i ≤ nx-\/1 and 2 ≤ j ≤ 
+
+ny-\/1. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a721539c3d02a74338391dbb0bbdc9635}\index{approx::mesh::Grid@{approx::mesh::Grid}!findNeighborElements@{findNeighborElements}}
+\index{findNeighborElements@{findNeighborElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{findNeighborElements()}{findNeighborElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a721539c3d02a74338391dbb0bbdc9635} 
+function approx\+::mesh\+::\+Grid\+::find\+Neighbor\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IE}{, }\item[{Input\+Type}]{IFE}{, }\item[{Input\+Type}]{BC}{}\end{DoxyParamCaption})}
+
+
+
+Find neighboring elements across faces. 
+
+\mbox{[}JE, JFE\mbox{]} = find\+Neighbor\+Elements(obj, IE, IFE, BC) computes neighbor elements sharing the specified local face of given elements, with appropriate boundary condition treatment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} object \\
+\hline
+{\em IE} & -\/ Linear indices of primary elements (vector) \\
+\hline
+{\em IFE} & -\/ Local face index (1 to 2×n\+Dims) \\
+\hline
+{\em BC} & -\/ Boundary condition (\textquotesingle{}periodic\textquotesingle{} or \textquotesingle{}dirichlet\textquotesingle{})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em JE} & -\/ Linear indices of neighbor elements (vector) \\
+\hline
+{\em JFE} & -\/ Local face indices of neighbors (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Local face numbering matches global boundary face 
+
+numbering. For structured grids, neighbors are found by 
+
+shifting element coordinates by ±1 in the appropriate 
+
+dimension. 
+
+Boundary condition handling\+: 
+
+-\/ \textquotesingle{}periodic\textquotesingle{}\+: Wrap around at domain boundaries (torus topology) 
+
+-\/ \textquotesingle{}dirichlet\textquotesingle{}\+: No neighbors across domain boundaries (JE = 0) 
+
+The neighbor\textquotesingle{}s local face index JFE is always opposite to 
+
+IFE\+: if element E has neighbor N across face IFE, then N 
+
+has E across face JFE where JFE = 2×ceil(IFE/2) -\/ 
+
+mod(IFE-\/1,2). 
+\end{DoxyNote}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}\index{approx::mesh::Grid@{approx::mesh::Grid}!boundary@{boundary}}
+\index{boundary@{boundary}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{boundary}{boundary}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145} 
+Property approx\+::mesh\+::\+Grid\+::boundary}
+
+
+
+Boundary element specifications (1 × 2n\+Dims cell) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00051}{51}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}\index{approx::mesh::Grid@{approx::mesh::Grid}!centroids@{centroids}}
+\index{centroids@{centroids}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{centroids}{centroids}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b} 
+Property approx\+::mesh\+::\+Grid\+::centroids}
+
+
+
+Element center coordinates per dimension (1 × n\+Dims cell) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00042}{42}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}\index{approx::mesh::Grid@{approx::mesh::Grid}!elements@{elements}}
+\index{elements@{elements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{elements}{elements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1} 
+Property approx\+::mesh\+::\+Grid\+::elements}
+
+
+
+Element index ranges per dimension (1 × n\+Dims cell) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00048}{48}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}\index{approx::mesh::Grid@{approx::mesh::Grid}!indexer@{indexer}}
+\index{indexer@{indexer}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{indexer}{indexer}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4} 
+Property approx\+::mesh\+::\+Grid\+::indexer}
+
+
+
+Multi-\/index converter (\doxylink{classcore_1_1linalg_1_1_multi_indexer}{core.\+linalg.\+Multi\+Indexer}) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00054}{54}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}\index{approx::mesh::Grid@{approx::mesh::Grid}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974} 
+Property approx\+::mesh\+::\+Grid\+::n\+Dims}
+
+
+
+Number of spatial dimensions (positive integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00060}{60}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}\index{approx::mesh::Grid@{approx::mesh::Grid}!nElements@{nElements}}
+\index{nElements@{nElements}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{nElements}{nElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8} 
+Property approx\+::mesh\+::\+Grid\+::n\+Elements}
+
+
+
+Total number of elements in the grid (positive integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00063}{63}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}\index{approx::mesh::Grid@{approx::mesh::Grid}!resolution@{resolution}}
+\index{resolution@{resolution}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{resolution}{resolution}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88} 
+Property approx\+::mesh\+::\+Grid\+::resolution}
+
+
+
+Element count per dimension (1 × n\+Dims vector) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00039}{39}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}\index{approx::mesh::Grid@{approx::mesh::Grid}!spacings@{spacings}}
+\index{spacings@{spacings}!approx::mesh::Grid@{approx::mesh::Grid}}
+\doxysubsubsection{\texorpdfstring{spacings}{spacings}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b} 
+Property approx\+::mesh\+::\+Grid\+::spacings}
+
+
+
+Element spacing per dimension (1 × n\+Dims cell) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00045}{45}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_grid_8m}{Grid.\+m}}\end{DoxyCompactItemize}

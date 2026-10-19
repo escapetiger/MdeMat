@@ -1,0 +1,157 @@
+\doxysection{Constant\+Scalar\+Divergence.\+m}
+\hypertarget{_constant_scalar_divergence_8m_source}{}\label{_constant_scalar_divergence_8m_source}\index{+approx/+assembly/ConstantScalarDivergence.m@{+approx/+assembly/ConstantScalarDivergence.m}}
+\mbox{\hyperlink{_constant_scalar_divergence_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00001}00001\ classdef\ ConstantScalarDivergence\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1operator}{operator}}.MeshOperator}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00003}00003\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00004}00004\ \ \ \ \ \ \ \ \ VALID\_BC\_TYPES\ =\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00005}00005\ \ \ \ \ \ \ \ \ VALID\_FLUX\_TYPES\ =\ \{\textcolor{stringliteral}{'upwind'},\ \textcolor{stringliteral}{'central'},\ \textcolor{stringliteral}{'outward'},\ \textcolor{stringliteral}{'inward'}\}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00006}00006\ \ \ \ \ \ \ \ \ VALID\_PERIODIC\_FLUX\_MODES\ =\ \{\textcolor{stringliteral}{'periodic'}\}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00007}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence}{00007}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a0254ff486d569ba5b44ede2c6a3a1b5d}{VALID\_DIRICHLET\_FLUX\_MODES}}\ =\ \{\textcolor{stringliteral}{'extrapolate'},\ \textcolor{stringliteral}{'truncate'},\ \textcolor{stringliteral}{'inflow'}\}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00008}00008\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00010}00010\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00011}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_ae33ef3bb1a014259754f2f823e530caf}{00011}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}}\ \%\ Boundary\ condition\ type}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00012}00012\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}}\ \%\ Flux\ type}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00013}00013\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}}\ \%\ Flux\ mode}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00014}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a0d810a794f30934a75a7cb56470c98c3}{00014}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00016}00016\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00017}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a4d35e3ccb58f397ccab069419f8bd488}{00017}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence}{ConstantScalarDivergence}}(\mbox{\hyperlink{namespaceapprox_1_1space}{space}},\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}},\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}},\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}})}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1operator}{operator}}.MeshOperator(\mbox{\hyperlink{namespaceapprox_1_1space}{space}});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setBcType(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00020}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a0254ff486d569ba5b44ede2c6a3a1b5d}{00020}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFluxType(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFluxMode(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ function\ obj\ =\ setBcType(obj,\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}})}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isValidBcType(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}}),\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00026}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'BC\ type\ is\ not\ supported.'});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isCompitable(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}},\ obj.fluxMode),\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Flux\ mode\ is\ incompatiable\ with\ BC.'});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ obj.bcType\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a1595d1a16285f8b214b32ea68851c699}{bcType}};}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00032}\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{00032}}\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ function\ obj\ =\ setFluxType(obj,\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}})}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isempty(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}})\ ||\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismember(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}},\ obj.VALID\_FLUX\_TYPES),\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Flux\ type\ is\ not\ supported.'});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ obj.fluxType\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a089d651d8f8bd80f392248914e079d72}{fluxType}};}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ function\ obj\ =\ setFluxMode(obj,\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}})}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isValidFluxMode(\mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}}),\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Flux\ mode\ is\ not\ supported.'});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isCompitable(obj.bcType,\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}}),\ ...}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Flux\ mode\ is\ incompatiable\ with\ BC.'});}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj.fluxMode\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_constant_scalar_divergence_a79b0bb12c21a4a2163b4467e27ad5cbd}{fluxMode}};}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ function\ D\ =\ addBilinearVolume(obj,\ coe)}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.space.nDims;}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isscalar(coe)}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(coe,\ 1,\ 1,\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ coe;}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ invJ\ =\ obj.space.mesh.computeElementInverseJacobians();}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.space.element.volume.weights);}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.space.element.volume.derivatives(:,\ :,\ 1:d);}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.space.element.volume.values;}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ pagemtimes(pagemtimes(U,\ W),\ V.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ reshape(A,\ [],\ d)\ *\ reshape(invJ,\ d,\ []);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ reshape(A,\ size(U,\ 1),\ size(V,\ 1),\ d,\ size(invJ,\ 3));}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ A\ =\ A\ .*\ C;}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ D\ =\ obj.addBilinear([],\ [],\ [],\ [],\ A);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00070}00070\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBilinearInteriorFlux(obj,\ coe,\ vel)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~strcmpi(obj.fluxType,\ '}upwind\textcolor{stringliteral}{'),\ ...}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}InvalidInput\textcolor{stringliteral}{',\ '}Upwind\ flux\ \textcolor{keyword}{requires}\ velocity.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vel\ =\ [];}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00078}00078\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBilinearBoundaryFlux(obj,\ coe,\ vel)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~strcmpi(obj.fluxType,\ '}upwind\textcolor{stringliteral}{'),\ ...}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}InvalidInput\textcolor{stringliteral}{',\ '}Upwind\ flux\ \textcolor{keyword}{requires}\ velocity.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vel\ =\ [];}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00086}00086\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addLinearBoundaryFlux(obj,\ coe,\ vel)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~strcmpi(obj.fluxType,\ '}upwind\textcolor{stringliteral}{'),\ ...}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}InvalidInput\textcolor{stringliteral}{',\ '}Upwind\ flux\ \textcolor{keyword}{requires}\ velocity.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vel\ =\ [];}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ alpha\ =\ computeStablizer(obj,\ coe,\ vel)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.fluxType}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}upwind\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}central\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}outward\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}inflow\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00104}00104\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ protected)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBilinearInteriorAverage(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00108}00108\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBiliearInteriorJump(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00111}00111\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBilinearBoundaryAverage(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00114}00114\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addBilinearBoundaryJump(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00117}00117\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addLinearBoundaryAverage(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00120}00120\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ F\ =\ addLinearBoundaryJump(obj,\ coe)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00124}00124\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ methods\ (Access\ =\ private)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ tf\ =\ isValidBcType(obj,\ bcType)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ ismember(bcType,\ obj.VALID\_BC\_TYPES);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ tf\ =\ isValidFluxType(obj,\ fluxType)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ isempty(fluxType)\ ||\ ismember(fluxType,\ obj.VALID\_FLUX\_TYPES);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00133}00133\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ tf\ =\ isValidFluxMode(obj,\ fluxMode)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ VALID\_FLUX\_MODES\ =\ [obj.VALID\_PERIODIC\_FLUX\_MODES,\ ...}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.VALID\_DIRICHLET\_FLUX\_MODES];}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ isempty(fluxMode)\ ||\ ismember(fluxMode,\ VALID\_FLUX\_MODES);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00139}00139\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ tf\ =\ isCompatible(obj,\ bcType,\ fluxMode)}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ bcType}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}periodic\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ ismember(fluxMode,\ obj.VALID\_PERIODIC\_FLUX\_MODES);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ '}dirichlet\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ ismember(fluxMode,\ obj.VALID\_DIRICHLET\_FLUX\_MODES);}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tf\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_constant_scalar_divergence_8m_source_l00151}00151\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

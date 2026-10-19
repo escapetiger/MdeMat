@@ -1,0 +1,294 @@
+\doxysection{approx\+::element\+::Element\+Function Class Reference}
+\hypertarget{classapprox_1_1element_1_1_element_function}{}\label{classapprox_1_1element_1_1_element_function}\index{approx::element::ElementFunction@{approx::element::ElementFunction}}
+
+
+Element-\/level discrete function data.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a9741d2785dcc9e4f6d8318aa0d88638d}{Element\+Function}} (Input\+Type I)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a3a950bc3abfabfe5b2c69b7df0018e7f}{set\+Points}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set the integration points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_ae495866076fc9dd17d539150e19d938c}{set\+Values}} (Input\+Type obj, Input\+Type f, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Set the function values at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a11d4a1d2006e166f10ac3e638e8db752}{set\+Derivatives}} (Input\+Type obj, Input\+Type f, Input\+Type X, Input\+Type k)
+\begin{DoxyCompactList}\small\item\em Set function derivatives at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aebe88b68a4d16b846e41baba2ac684b3}{integrator}}
+\begin{DoxyCompactList}\small\item\em Integrator object for quadrature. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aff672c72c50b618167de958ebe7afee7}{values}}
+\begin{DoxyCompactList}\small\item\em Function values at integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a4db376af26717e411cebceae191a103f}{derivatives}}
+\begin{DoxyCompactList}\small\item\em Function derivatives at integration nodes (cell array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a9b8e2988371cab151466143fd6d3423e}{nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_ab8bcc03b3e6745429815033441147e50}{weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aa14ffd68924cfa569f6dd92a7bdf3815}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_ab26e851b26f63fa2a4c84a19d20b221e}{n\+Derivatives}}
+\begin{DoxyCompactList}\small\item\em Number of available derivatives (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Element-\/level discrete function data. 
+
+\doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} stores function values and derivatives evaluated at integration nodes, along with the associated quadrature weights. This class provides the fundamental data structure for numerical integration and finite element computations.
+
+The class manages function evaluations at quadrature points and supports efficient computation of integrals involving functions and their derivatives. It serves as a bridge between continuous function representations and discrete numerical computations.
+
+Function derivatives are computed using multi-\/index notation to handle arbitrary spatial dimensions and derivative orders efficiently.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ function\ data\ with\ Gauss\ quadrature}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aebe88b68a4d16b846e41baba2ac684b3}{integrator}}\ =\ approx.integrate.GaussLegendre(5);}
+\DoxyCodeLine{funcData\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a9741d2785dcc9e4f6d8318aa0d88638d}{ElementFunction}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aebe88b68a4d16b846e41baba2ac684b3}{integrator}});}
+\DoxyCodeLine{\%\ Set\ integration\ points\ and\ evaluate\ function}
+\DoxyCodeLine{funcData.setPoints(-\/1,\ 1);}
+\DoxyCodeLine{f\ =\ @(x)\ sin(pi*x);}
+\DoxyCodeLine{funcData.setValues(f,\ funcData.nodes);}
+\DoxyCodeLine{\%\ Compute\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_function_a4db376af26717e411cebceae191a103f}{derivatives}}}
+\DoxyCodeLine{df\ =\ DifferentiableFunction(f);}
+\DoxyCodeLine{funcData.setDerivatives(df,\ funcData.nodes,\ 2);}
+\DoxyCodeLine{\%\ Access\ computed\ data}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_function_aff672c72c50b618167de958ebe7afee7}{values}}\ =\ funcData.values;}
+\DoxyCodeLine{firstDeriv\ =\ funcData.derivatives\{1\};}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_function_ab8bcc03b3e6745429815033441147e50}{weights}}\ =\ funcData.weights;}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integrator}{approx.\+integrate.\+Integrator} 
+
+\doxylink{classapprox_1_1element_1_1_element_bilinear_form}{approx.\+element.\+Element\+Bilinear\+Form} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00042}{42}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_element_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_function_a9741d2785dcc9e4f6d8318aa0d88638d}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!ElementFunction@{ElementFunction}}
+\index{ElementFunction@{ElementFunction}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{ElementFunction()}{ElementFunction()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_a9741d2785dcc9e4f6d8318aa0d88638d} 
+function approx\+::element\+::\+Element\+Function\+::\+Element\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{I}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function}. 
+
+obj = Element\+Function(\+I) creates a function data object with the specified integrator. The function values and derivatives are initially empty and must be set using the appropriate methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em I} & -\/ Integrator object for quadrature computations \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1element_1_1_element_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_function_a11d4a1d2006e166f10ac3e638e8db752}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!setDerivatives@{setDerivatives}}
+\index{setDerivatives@{setDerivatives}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{setDerivatives()}{setDerivatives()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_a11d4a1d2006e166f10ac3e638e8db752} 
+function approx\+::element\+::\+Element\+Function\+::set\+Derivatives (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{k}{}\end{DoxyParamCaption})}
+
+
+
+Set function derivatives at specified points. 
+
+obj = set\+Derivatives(obj, f, X, k) computes derivatives of the function {\itshape f} up to order {\itshape k} at the specified points {\itshape X} using multi-\/index notation. The derivatives are stored in the derivatives cell array.
+
+The multi-\/index approach enables efficient computation of derivatives in arbitrary spatial dimensions, where each derivative is characterized by a multi-\/index specifying the order of differentiation in each coordinate direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+{\em f} & -\/ Differentiable\+Function object with derivative method \\
+\hline
+{\em X} & -\/ Evaluation nodes (column vector) \\
+\hline
+{\em k} & -\/ Maximum derivative order (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1element_1_1_element_function_a3a950bc3abfabfe5b2c69b7df0018e7f}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_a3a950bc3abfabfe5b2c69b7df0018e7f} 
+function approx\+::element\+::\+Element\+Function\+::set\+Points (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set the integration points. 
+
+obj = set\+Points(obj, varargin) configures the integration points using the integrator\textquotesingle{}s set\+Points method. The specific arguments depend on the integrator type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+{\em varargin} & -\/ Variable arguments passed to integrator.\+set\+Points\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1element_1_1_element_function_ae495866076fc9dd17d539150e19d938c}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!setValues@{setValues}}
+\index{setValues@{setValues}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{setValues()}{setValues()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_ae495866076fc9dd17d539150e19d938c} 
+function approx\+::element\+::\+Element\+Function\+::set\+Values (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Set the function values at specified points. 
+
+obj = set\+Values(obj, f, X) evaluates the function f at the specified points X and stores the results in the values property.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+{\em f} & -\/ Function object with evaluate method \\
+\hline
+{\em X} & -\/ Evaluation nodes (column vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element_function}{Element\+Function} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_element_function_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_function_a4db376af26717e411cebceae191a103f}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!derivatives@{derivatives}}
+\index{derivatives@{derivatives}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{derivatives}{derivatives}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_a4db376af26717e411cebceae191a103f} 
+Property approx\+::element\+::\+Element\+Function\+::derivatives}
+
+
+
+Function derivatives at integration nodes (cell array) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00052}{52}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_aebe88b68a4d16b846e41baba2ac684b3}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!integrator@{integrator}}
+\index{integrator@{integrator}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{integrator}{integrator}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_aebe88b68a4d16b846e41baba2ac684b3} 
+Property approx\+::element\+::\+Element\+Function\+::integrator}
+
+
+
+Integrator object for quadrature. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00046}{46}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_ab26e851b26f63fa2a4c84a19d20b221e}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!nDerivatives@{nDerivatives}}
+\index{nDerivatives@{nDerivatives}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{nDerivatives}{nDerivatives}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_ab26e851b26f63fa2a4c84a19d20b221e} 
+Property approx\+::element\+::\+Element\+Function\+::n\+Derivatives}
+
+
+
+Number of available derivatives (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00067}{67}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_a9b8e2988371cab151466143fd6d3423e}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!nodes@{nodes}}
+\index{nodes@{nodes}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_a9b8e2988371cab151466143fd6d3423e} 
+Property approx\+::element\+::\+Element\+Function\+::nodes}
+
+
+
+Integration nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00058}{58}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_aa14ffd68924cfa569f6dd92a7bdf3815}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!nPoints@{nPoints}}
+\index{nPoints@{nPoints}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{nPoints}{nPoints}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_aa14ffd68924cfa569f6dd92a7bdf3815} 
+Property approx\+::element\+::\+Element\+Function\+::n\+Points}
+
+
+
+Number of integration points (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00064}{64}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_aff672c72c50b618167de958ebe7afee7}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!values@{values}}
+\index{values@{values}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{values}{values}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_aff672c72c50b618167de958ebe7afee7} 
+Property approx\+::element\+::\+Element\+Function\+::values}
+
+
+
+Function values at integration nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00049}{49}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_function_ab8bcc03b3e6745429815033441147e50}\index{approx::element::ElementFunction@{approx::element::ElementFunction}!weights@{weights}}
+\index{weights@{weights}!approx::element::ElementFunction@{approx::element::ElementFunction}}
+\doxysubsubsection{\texorpdfstring{weights}{weights}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_function_ab8bcc03b3e6745429815033441147e50} 
+Property approx\+::element\+::\+Element\+Function\+::weights}
+
+
+
+Integration weights. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_function_8m_source_l00061}{61}} of file \mbox{\hyperlink{_element_function_8m_source}{Element\+Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_element_function_8m}{Element\+Function.\+m}}\end{DoxyCompactItemize}

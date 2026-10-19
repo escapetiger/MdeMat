@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['data_0',['data',['../classcore_1_1data_1_1_grid_struct.html#a576dafe2baea42cfc8a32490bcd4f3c5',1,'core::data::GridStruct']]],
+  ['degree_1',['degree',['../classcore_1_1symbolic_1_1_polynomial_basis_function.html#ad31d56e3175bafc7b20c4080ca22fde3',1,'core::symbolic::PolynomialBasisFunction']]],
+  ['delete_2',['delete',['../classcore_1_1symbolic_1_1_compiler.html#a636ce2c1a906ca8a33ed569f6ceb1ef0',1,'core::symbolic::Compiler']]],
+  ['derivative_3',['derivative',['../classcore_1_1function_1_1_function.html#a32423701ae2a8d238b9617bdb16acd87',1,'core::function::Function::derivative()'],['../classcore_1_1function_1_1_separable_function.html#a1aacb8f0a0cbc8c0e1728e0001840124',1,'core::function::SeparableFunction::derivative(InputType obj, InputType X, InputType r)']]],
+  ['derivativedense_4',['derivativeDense',['../classcore_1_1function_1_1_separable_function.html#ab69bedc09bf96dbb3436131e7b117652',1,'core::function::SeparableFunction']]],
+  ['derivativeimpl_5',['derivativeImpl',['../classcore_1_1function_1_1_compiled_function.html#a25afcb8c833a3dcfdbb6eea252376177',1,'core::function::CompiledFunction::derivativeImpl()'],['../classcore_1_1function_1_1_function.html#ab60ffdff5fafbe558f28b63ba68cff36',1,'core::function::Function::derivativeImpl()'],['../classcore_1_1function_1_1_separable_function.html#a180231acf969c078fe4a16e917f10fe6',1,'core::function::SeparableFunction::derivativeImpl()']]],
+  ['derivatives_6',['derivatives',['../classfem_1_1data_1_1_function_data.html#a9e1cabb20e175862b2403e7d16c256b3',1,'fem::data::FunctionData']]],
+  ['derivativesparse_7',['derivativeSparse',['../classcore_1_1function_1_1_separable_function.html#a2a9a2d1eb66a662b42c1e844b02eac47',1,'core::function::SeparableFunction']]],
+  ['descriptions_8',['descriptions',['../classprofilers_1_1analysis_1_1_convergence_profiler.html#a1a9d73df00f2e906bd911dffe4925b07',1,'profilers::analysis::ConvergenceProfiler']]],
+  ['diffusiongridassembler_9',['DiffusionGridAssembler',['../classfem_1_1assembly_1_1_diffusion_grid_assembler.html',1,'fem::assembly::DiffusionGridAssembler'],['../classfem_1_1assembly_1_1_diffusion_grid_assembler.html#a6407536aef027a4ad40dfdcd93d73a55',1,'fem::assembly::DiffusionGridAssembler::DiffusionGridAssembler()']]],
+  ['diffusiongridassembler_2em_10',['DiffusionGridAssembler.m',['../_diffusion_grid_assembler_8m.html',1,'']]],
+  ['direction_11',['direction',['../classfem_1_1space_1_1_affine_space.html#abf33ca0aab0851cb6a873e7c54cc9931',1,'fem::space::AffineSpace::direction()'],['../classfem_1_1space_1_1_scaled_affine_space.html#a9162378f48d1fbe5c609bacdb2d42671',1,'fem::space::ScaledAffineSpace::direction()']]],
+  ['dirkintegrator_12',['DirkIntegrator',['../classapprox_1_1odeint_1_1_dirk_integrator.html',1,'approx::odeint::DirkIntegrator'],['../classapprox_1_1odeint_1_1_dirk_integrator.html#a51632f453404bee1a11d5b63cfd47aad',1,'approx::odeint::DirkIntegrator::DirkIntegrator()']]],
+  ['dirkintegrator_2em_13',['DirkIntegrator.m',['../_dirk_integrator_8m.html',1,'']]],
+  ['disp_14',['disp',['../classcore_1_1data_1_1_ordered_map.html#a4f40fcfcd6f95820ff03e71da4a93185',1,'core::data::OrderedMap']]],
+  ['divergence_15',['divergence',['../classfem_1_1assembly_1_1_mixed_grid_assembler.html#adce856cb223919912b4bf2196fe2b34a',1,'fem::assembly::MixedGridAssembler::divergence()'],['../classfem_1_1assembly_1_1_upwind_grid_assembler.html#a56e8d526b374c7742a48408b53c70434',1,'fem::assembly::UpwindGridAssembler::divergence(InputType obj, InputType c, InputType a)']]],
+  ['divergencebc_16',['divergenceBc',['../classfem_1_1assembly_1_1_upwind_grid_assembler.html#a319499c4de256d329442b1745a01d552',1,'fem::assembly::UpwindGridAssembler']]],
+  ['dofs_17',['dofs',['../classphysics_1_1advection_1_1_state.html#a36411561963e8bc17690440096dc35c2',1,'physics::advection::State::dofs'],['../classphysics_1_1diffusion_1_1_state.html#ab1fe7286b0406cd44066182d793f9e2e',1,'physics::diffusion::State::dofs'],['../classphysics_1_1radiation_1_1_state.html#adbbea9b2122b538217bde4f531545e75',1,'physics::radiation::State::dofs']]],
+  ['double_18',['double',['../classcore_1_1geometry_1_1_polytope.html#ab8e8ea4ad58055c32c9617b71db61707',1,'core::geometry::Polytope']]],
+  ['draft_19',['draft',['../classprofilers_1_1visual_1_1_tiled_plotter.html#a38926ea95985ed7e437ee1201f18f18c',1,'profilers::visual::TiledPlotter']]],
+  ['draw_20',['draw',['../classprofilers_1_1analysis_1_1_convergence_profiler.html#aa42b05987828caad269fcd3805c0b846',1,'profilers::analysis::ConvergenceProfiler']]],
+  ['duration_21',['duration',['../classcore_1_1chrono_1_1_record.html#a1bec72c009ff266a156a19390ad1223e',1,'core::chrono::Record']]],
+  ['dynamictimeline_22',['DynamicTimeline',['../classapprox_1_1mesh_1_1_dynamic_timeline.html',1,'approx::mesh::DynamicTimeline'],['../classapprox_1_1mesh_1_1_dynamic_timeline.html#ae2cd33e97bb9faa51c0a2861a5e8935a',1,'approx::mesh::DynamicTimeline::DynamicTimeline()']]],
+  ['dynamictimeline_2em_23',['DynamicTimeline.m',['../_dynamic_timeline_8m.html',1,'']]]
+];

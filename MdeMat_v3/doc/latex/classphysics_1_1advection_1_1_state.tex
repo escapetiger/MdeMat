@@ -1,0 +1,121 @@
+\doxysection{physics\+::advection\+::State Class Reference}
+\hypertarget{classphysics_1_1advection_1_1_state}{}\label{classphysics_1_1advection_1_1_state}\index{physics::advection::State@{physics::advection::State}}
+
+
+Solution state for advection problems.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1advection_1_1_state_abb1f6e314ca27b4b900e0bd05da93e39}{State}} (Input\+Type \mbox{\hyperlink{classphysics_1_1advection_1_1_state_a9f80618c8407e3e907a7d06690c09955}{x\+Disc}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1advection_1_1_state}{State}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1advection_1_1_state_a9f80618c8407e3e907a7d06690c09955}{x\+Disc}}
+\begin{DoxyCompactList}\small\item\em Spatial discretization structure containing mesh, space, operators. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1advection_1_1_state_a36411561963e8bc17690440096dc35c2}{dofs}}
+\begin{DoxyCompactList}\small\item\em Degrees of freedom structure containing solution data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Solution state for advection problems. 
+
+The \doxylink{classphysics_1_1advection_1_1_state}{State} class encapsulates the complete solution state for advection problems, managing both spatial discretization information and degrees of freedom data. It provides a unified container for all components needed to represent and evolve the numerical solution.
+
+The class uses handle semantics to enable efficient state management during time integration without unnecessary copying of large data structures.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ state\ with\ spatial\ discretization}
+\DoxyCodeLine{state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_state_abb1f6e314ca27b4b900e0bd05da93e39}{State}}(spatialDiscretization);}
+\DoxyCodeLine{\%\ Access\ discretization\ and\ solution\ data}
+\DoxyCodeLine{mesh\ =\ state.xDisc.mesh;}
+\DoxyCodeLine{solution\ =\ state.dofs.U;}
+\DoxyCodeLine{\%\ Update\ solution\ data}
+\DoxyCodeLine{state.dofs.U\ =\ newSolutionVector;}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+The handle-\/based design allows for efficient passing of state 
+
+objects between methods without copying large arrays.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1_scheme}{physics.\+Scheme} 
+
+\doxylink{classphysics_1_1advection_1_1_sldg_scheme}{physics.\+advection.\+Sldg\+Scheme} 
+
+\doxylink{classphysics_1_1advection_1_1_uwdg_scheme}{physics.\+advection.\+Uwdg\+Scheme} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_09advection_2_state_8m_source_l00035}{35}} of file \mbox{\hyperlink{_09advection_2_state_8m_source}{State.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1advection_1_1_state_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1advection_1_1_state_abb1f6e314ca27b4b900e0bd05da93e39}\index{physics::advection::State@{physics::advection::State}!State@{State}}
+\index{State@{State}!physics::advection::State@{physics::advection::State}}
+\doxysubsubsection{\texorpdfstring{State()}{State()}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_state_abb1f6e314ca27b4b900e0bd05da93e39} 
+function physics\+::advection\+::\+State\+::\+State (\begin{DoxyParamCaption}\item[{Input\+Type}]{x\+Disc}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classphysics_1_1advection_1_1_state}{State}. 
+
+obj = State(x\+Disc) creates a solution state object with the specified spatial discretization and initializes empty degrees of freedom structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+Disc} & -\/ Spatial discretization structure \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1advection_1_1_state_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1advection_1_1_state_a36411561963e8bc17690440096dc35c2}\index{physics::advection::State@{physics::advection::State}!dofs@{dofs}}
+\index{dofs@{dofs}!physics::advection::State@{physics::advection::State}}
+\doxysubsubsection{\texorpdfstring{dofs}{dofs}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_state_a36411561963e8bc17690440096dc35c2} 
+Property physics\+::advection\+::\+State\+::dofs}
+
+
+
+Degrees of freedom structure containing solution data. 
+
+
+
+Definition at line \mbox{\hyperlink{_09advection_2_state_8m_source_l00042}{42}} of file \mbox{\hyperlink{_09advection_2_state_8m_source}{State.\+m}}.
+
+\Hypertarget{classphysics_1_1advection_1_1_state_a9f80618c8407e3e907a7d06690c09955}\index{physics::advection::State@{physics::advection::State}!xDisc@{xDisc}}
+\index{xDisc@{xDisc}!physics::advection::State@{physics::advection::State}}
+\doxysubsubsection{\texorpdfstring{xDisc}{xDisc}}
+{\footnotesize\ttfamily \label{classphysics_1_1advection_1_1_state_a9f80618c8407e3e907a7d06690c09955} 
+Property physics\+::advection\+::\+State\+::x\+Disc}
+
+
+
+Spatial discretization structure containing mesh, space, operators. 
+
+
+
+Definition at line \mbox{\hyperlink{_09advection_2_state_8m_source_l00039}{39}} of file \mbox{\hyperlink{_09advection_2_state_8m_source}{State.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/+advection/\mbox{\hyperlink{_09advection_2_state_8m}{State.\+m}}\end{DoxyCompactItemize}

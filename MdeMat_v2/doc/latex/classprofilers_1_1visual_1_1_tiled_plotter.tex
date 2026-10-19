@@ -1,0 +1,338 @@
+\doxysection{profilers\+::visual\+::Tiled\+Plotter Class Reference}
+\hypertarget{classprofilers_1_1visual_1_1_tiled_plotter}{}\label{classprofilers_1_1visual_1_1_tiled_plotter}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+
+
+Multi-\/panel figure manager for data visualization.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter}{profilers\+::visual\+::\+Geometry\+Plotter}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_aa056410437a57f26935660674a572997}{Tiled\+Plotter}} (Input\+Type n\+Rows, Input\+Type n\+Cols)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_ab917e7da5e748132dc50f2803d567d8c}{set\+Strategy}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}})
+\begin{DoxyCompactList}\small\item\em Configure the rendering strategy. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a08810db4600d739d6caaaad718e226f1}{add\+Axis\+Spec}} (Input\+Type obj, Input\+Type n\+Rows, Input\+Type n\+Cols)
+\begin{DoxyCompactList}\small\item\em Add axis specification for a panel. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a38926ea95985ed7e437ee1201f18f18c}{draft}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Create the tiledlayout and axes. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a8300bb890fe188e5c4b298ad39dc4162}{render}} (Input\+Type obj, Input\+Type title\+Text, Input\+Type dataset, Input\+Type styleset, Input\+Type render\+Fn)
+\begin{DoxyCompactList}\small\item\em Render data using the configured strategy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_afa2a12cecc6293f24d26e38ca2f9b7e3}{size}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}n\+Rows, n\+Cols\mbox{]} overall grid dimensions \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_aa6763930f0167e6251458d9bde1189ca}{axes}}
+\begin{DoxyCompactList}\small\item\em Array of axes handles for rendering. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a3a0c6a98222205ba1127d6afd578c19c}{specs}}
+\begin{DoxyCompactList}\small\item\em Array of axis specifications with rows/cols fields. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a658eff76632f4fb582f29a6638ee8b7a}{tiled\+Obj}}
+\begin{DoxyCompactList}\small\item\em Handle to the tiledlayout container. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a66eb0662a19e67e9534808aabec54807}{tile\+Indices}}
+\begin{DoxyCompactList}\small\item\em Computed tile indices for axis placement. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}}
+\begin{DoxyCompactList}\small\item\em Rendering strategy object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a82a1d5f5b25dbdd9806b8f601e62e1cf}{compute\+Tile\+Indices}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute tile placement for axis specifications. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Multi-\/panel figure manager for data visualization. 
+
+\doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} provides infrastructure for creating and managing multi-\/panel figures using MATLAB\textquotesingle{}s tiledlayout functionality. This class simplifies the creation of complex visualization layouts with automatic tile placement and flexible axis specifications.
+
+The plotter supports both manual axis specification and automatic layout computation, making it suitable for both simple multi-\/plot figures and complex dashboard-\/style visualizations with varying panel sizes.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ 2×3\ tiled\ layout}
+\DoxyCodeLine{plotter\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_aa056410437a57f26935660674a572997}{TiledPlotter}}(2,\ 3);}
+\DoxyCodeLine{\%\ Add\ axis\ specifications\ \textcolor{keywordflow}{for}\ different\ panel\ sizes}
+\DoxyCodeLine{plotter.addAxisSpec(1,\ 1);\ \%\ Standard\ 1×1\ panel}
+\DoxyCodeLine{plotter.addAxisSpec(1,\ 2);\ \%\ Wide\ 1×2\ panel}
+\DoxyCodeLine{plotter.addAxisSpec(2,\ 1);\ \%\ Tall\ 2×1\ panel}
+\DoxyCodeLine{\%\ Set\ up\ layout\ and\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}}}
+\DoxyCodeLine{plotter.draft(\textcolor{stringliteral}{'TileSpacing'},\ \textcolor{stringliteral}{'compact'});}
+\DoxyCodeLine{plotter.setStrategy(\mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}});}
+\DoxyCodeLine{\%\ Render\ data}
+\DoxyCodeLine{plotter.render(\textcolor{stringliteral}{'My\ Results'},\ dataStructure,\ styleStructure);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classprofilers_1_1visual_1_1_strategy}{profilers.\+visual.\+Strategy} 
+
+\doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{profilers.\+visual.\+Geometry\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00035}{35}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_aa056410437a57f26935660674a572997}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!TiledPlotter@{TiledPlotter}}
+\index{TiledPlotter@{TiledPlotter}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{TiledPlotter()}{TiledPlotter()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_aa056410437a57f26935660674a572997} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::\+Tiled\+Plotter (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Rows}{, }\item[{Input\+Type}]{n\+Cols}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter}. 
+
+obj = Tiled\+Plotter(n\+Rows, n\+Cols) creates a tiled plotter with the specified grid dimensions. The actual tiledlayout is created when \doxylink{classprofilers_1_1visual_1_1_tiled_plotter_a38926ea95985ed7e437ee1201f18f18c}{draft()} is called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Rows} & -\/ Number of rows in the overall grid (positive integer) \\
+\hline
+{\em n\+Cols} & -\/ Number of columns in the overall grid (positive integer) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a08810db4600d739d6caaaad718e226f1}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!addAxisSpec@{addAxisSpec}}
+\index{addAxisSpec@{addAxisSpec}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{addAxisSpec()}{addAxisSpec()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a08810db4600d739d6caaaad718e226f1} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::add\+Axis\+Spec (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Rows}{, }\item[{Input\+Type}]{n\+Cols}{}\end{DoxyParamCaption})}
+
+
+
+Add axis specification for a panel. 
+
+obj = add\+Axis\+Spec(obj, n\+Rows, n\+Cols) adds a specification for an axis that will span the specified number of rows and columns in the tiled layout. Axes are placed automatically in the order they are added.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+{\em n\+Rows} & -\/ Number of rows this axis should span (positive integer) \\
+\hline
+{\em n\+Cols} & -\/ Number of columns this axis should span (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a82a1d5f5b25dbdd9806b8f601e62e1cf}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!computeTileIndices@{computeTileIndices}}
+\index{computeTileIndices@{computeTileIndices}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{computeTileIndices()}{computeTileIndices()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a82a1d5f5b25dbdd9806b8f601e62e1cf} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::compute\+Tile\+Indices (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Compute tile placement for axis specifications. 
+
+compute\+Tile\+Indices(obj) automatically determines where to place each axis specification in the tiled layout, ensuring no overlaps occur. Uses a greedy placement algorithm.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a38926ea95985ed7e437ee1201f18f18c}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!draft@{draft}}
+\index{draft@{draft}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{draft()}{draft()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a38926ea95985ed7e437ee1201f18f18c} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::draft (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Create the tiledlayout and axes. 
+
+obj = draft(obj) creates the MATLAB tiledlayout object and generates all axes according to the added specifications. This method must be called before rendering can occur.
+
+obj = draft(obj, \textquotesingle{}Parameter\+Name\textquotesingle{}, Parameter\+Value) passes additional arguments to the tiledlayout constructor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+{\em varargin} & -\/ Additional arguments for tiledlayout\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a8300bb890fe188e5c4b298ad39dc4162}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!render@{render}}
+\index{render@{render}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a8300bb890fe188e5c4b298ad39dc4162} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::render (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{title\+Text}{, }\item[{Input\+Type}]{dataset}{, }\item[{Input\+Type}]{styleset}{, }\item[{Input\+Type}]{render\+Fn}{}\end{DoxyParamCaption})}
+
+
+
+Render data using the configured strategy. 
+
+obj = render(obj, title\+Text, dataset) renders the provided dataset using the configured strategy with default styling.
+
+obj = render(obj, title\+Text, dataset, styleset) renders with custom styling specifications.
+
+obj = render(obj, title\+Text, dataset, styleset, render\+Fn) uses a custom rendering function instead of the strategy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+{\em title\+Text} & -\/ Overall title for the figure (string) \\
+\hline
+{\em dataset} & -\/ Structure containing data to render \\
+\hline
+{\em styleset} & -\/ Rendering style specifications (optional) \\
+\hline
+{\em render\+Fn} & -\/ Custom rendering function handle (optional)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_ab917e7da5e748132dc50f2803d567d8c}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!setStrategy@{setStrategy}}
+\index{setStrategy@{setStrategy}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{setStrategy()}{setStrategy()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_ab917e7da5e748132dc50f2803d567d8c} 
+function profilers\+::visual\+::\+Tiled\+Plotter\+::set\+Strategy (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{strategy}{}\end{DoxyParamCaption})}
+
+
+
+Configure the rendering strategy. 
+
+obj = set\+Strategy(obj, strategy) sets the strategy object that will be used to render data onto the axes. The strategy determines how data is mapped to visual elements and coordinates the rendering process.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+{\em strategy} & -\/ \doxylink{classprofilers_1_1visual_1_1_strategy}{Strategy} object implementing the rendering logic\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_aa6763930f0167e6251458d9bde1189ca}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!axes@{axes}}
+\index{axes@{axes}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{axes}{axes}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_aa6763930f0167e6251458d9bde1189ca} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::axes}
+
+
+
+Array of axes handles for rendering. 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00042}{42}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_afa2a12cecc6293f24d26e38ca2f9b7e3}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!size@{size}}
+\index{size@{size}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_afa2a12cecc6293f24d26e38ca2f9b7e3} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::size}
+
+
+
+\mbox{[}n\+Rows, n\+Cols\mbox{]} overall grid dimensions 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00039}{39}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a3a0c6a98222205ba1127d6afd578c19c}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!specs@{specs}}
+\index{specs@{specs}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{specs}{specs}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a3a0c6a98222205ba1127d6afd578c19c} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::specs}
+
+
+
+Array of axis specifications with rows/cols fields. 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00045}{45}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!strategy@{strategy}}
+\index{strategy@{strategy}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{strategy}{strategy}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::strategy}
+
+
+
+Rendering strategy object. 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00054}{54}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a658eff76632f4fb582f29a6638ee8b7a}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!tiledObj@{tiledObj}}
+\index{tiledObj@{tiledObj}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{tiledObj}{tiledObj}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a658eff76632f4fb582f29a6638ee8b7a} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::tiled\+Obj}
+
+
+
+Handle to the tiledlayout container. 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00048}{48}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_tiled_plotter_a66eb0662a19e67e9534808aabec54807}\index{profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}!tileIndices@{tileIndices}}
+\index{tileIndices@{tileIndices}!profilers::visual::TiledPlotter@{profilers::visual::TiledPlotter}}
+\doxysubsubsection{\texorpdfstring{tileIndices}{tileIndices}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_tiled_plotter_a66eb0662a19e67e9534808aabec54807} 
+Property profilers\+::visual\+::\+Tiled\+Plotter\+::tile\+Indices}
+
+
+
+Computed tile indices for axis placement. 
+
+
+
+Definition at line \mbox{\hyperlink{_tiled_plotter_8m_source_l00051}{51}} of file \mbox{\hyperlink{_tiled_plotter_8m_source}{Tiled\+Plotter.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++profilers/+visual/\mbox{\hyperlink{_tiled_plotter_8m}{Tiled\+Plotter.\+m}}\end{DoxyCompactItemize}

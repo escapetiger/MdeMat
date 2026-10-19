@@ -1,0 +1,92 @@
+\doxysection{Monte\+Carlo\+Rule.\+m}
+\hypertarget{_monte_carlo_rule_8m_source}{}\label{_monte_carlo_rule_8m_source}\index{+approx/+integrate/MonteCarloRule.m@{+approx/+integrate/MonteCarloRule.m}}
+\mbox{\hyperlink{_monte_carlo_rule_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00001}00001\ classdef\ MonteCarloRule\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}}}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00002}00002\ \ \ \ \ \%\ MONTECARLORULE\ Monte\ Carlo\ numerical\ integration\ rule.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ MonteCarloRule\ provides\ a\ foundation\ \textcolor{keywordflow}{for}\ Monte\ Carlo\ integration}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ methods.\ This\ \textcolor{keyword}{class\ }manages\ random\ number\ generation\ with}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ reproducible\ seeding\ and\ defines\ the\ \textcolor{keyword}{interface\ }for\ Monte\ Carlo}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ quadrature\ implementations.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Create\ a\ 2D\ Monte\ Carlo\ rule\ with\ specific\ seed}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ rule\ =\ MonteCarloRule(2,\ 12345);}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \%\ Generate\ 1000\ random\ integration\ points}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ [X,\ w]\ =\ rule.generate(1000);}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00016}00016\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ This\ is\ an\ abstract\ \textcolor{keyword}{class\ }that\ must\ be\ subclassed\ to\ implement}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ specific\ Monte\ Carlo\ integration\ methods.\ The\ generateImpl\ method}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ must\ be\ implemented\ by\ concrete\ subclasses.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00021}00021\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule}{IntegrationRule}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_spherical_monte_carlo_rule}{SphericalMonteCarloRule}}}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00024}00024\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ seed\ \%\ Random\ number\ generator\ seed\ for\ reproducibility}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00026}00026\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00027}\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule}{00027}}\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00028}00028\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}},\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}})}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MONTECARLORULE\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00031}\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}})\ creates\ a\ Monte\ Carlo\ rule}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ the\ specified\ number\ of\ dimensions\ with\ default\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}},\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}})\ creates\ a\ Monte\ Carlo}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ rule\ with\ the\ specified\ random\ number\ generator\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}}\ -\/\ Number\ of\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}\ -\/\ Random\ number\ generator\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}\ (optional,\ default:\ current\ rng\ state)}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2,\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}\ =\ rng;\ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_abe015439628bfeabf835a6c55dd9fa2b}{IntegrationRule}}(\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_rule_a8aaaca1142303f121fd1ae311fdc454f}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}}\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}};}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{00050}}\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ function\ [X,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_adc380acbe5afb4a20888cf1631ef0e65}{generate}}(obj,\ n,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Generate\ Monte\ Carlo\ integration\ nodes\ and\ weights.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [X,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_adc380acbe5afb4a20888cf1631ef0e65}{generate}}(obj,\ n)\ generates\ n\ Monte\ Carlo}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration\ points\ and\ corresponding\ weights.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [X,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_adc380acbe5afb4a20888cf1631ef0e65}{generate}}(obj,\ n,\ varargin)\ passes\ additional}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ arguments\ to\ the\ concrete\ implementation.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a574afc0443996b9e6c72c10769d6e7c0}{MonteCarloRule}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ Monte\ Carlo\ points\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Additional\ arguments\ for\ specific\ implementations}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ d×n\ matrix\ of\ integration\ nodes}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ w\ -\/\ 1×n\ vector\ of\ integration\ weights}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(msclab.utilities.isPositiveInteger(n),\ ...}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidInput',\ 'n\ must\ be\ a\ positive\ integer.');}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ oldSeed\ =\ rng;}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ rng(obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a57041fec48f6087d5667f88b1c977932}{seed}});}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00075}\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_adc380acbe5afb4a20888cf1631ef0e65}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ w]\ =\ obj.\mbox{\hyperlink{classapprox_1_1integrate_1_1_monte_carlo_rule_a11e3039f52524784e1f2904cd3a27367}{generateImpl}}(n,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ obj.seed\ =\ rng;}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ rng(oldSeed);}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00080}00080\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00082}00082\ \ \ \ \ methods\ (Abstract,\ Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \%\ GENERATEIMPL\ Implementation\ of\ Monte\ Carlo\ point\ generation.}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ [X,\ w]\ =\ generateImpl(obj,\ n,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00085}00085\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_monte_carlo_rule_8m_source_l00086}00086\ end}
+
+\end{DoxyCode}

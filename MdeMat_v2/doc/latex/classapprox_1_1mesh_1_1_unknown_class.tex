@@ -1,0 +1,503 @@
+\doxysection{approx\+::mesh\+::Unknown\+Class Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_unknown_class}{}\label{classapprox_1_1mesh_1_1_unknown_class}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+
+
+Abstract base class for multi-\/dimensional grids.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a85682f30e9c1199cfe1d5cd23156d69b}{Grid}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a1f7f1e8b79c4becc00b67d327145a960}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for grid. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_abb1a1d34f983413285bf4ed2467b9be1}{collocate}} (Input\+Type obj, Input\+Type nodes, Input\+Type indices)
+\begin{DoxyCompactList}\small\item\em collocate\+: Collocate a set of points to the grid \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ab562139c140e3c02eb7a89a1b59123dc}{refine}} (Input\+Type obj, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em refine\+: Refine the grid in-\/place \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a024a4795a9f61a79a1ab75799ddbb1d9}{final}} (1, 1) double
+\begin{DoxyCompactList}\small\item\em Final time. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a1f03085ead29578d33f82720b6416e06}{now}} (1, 1) double=0
+\begin{DoxyCompactList}\small\item\em Current time. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_aa870002c4dc430f124da480b8e62bb30}{count}} (1, 1) double
+\begin{DoxyCompactList}\small\item\em Event counter. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a34c889a1b0ffacb7cd4c74b50cd1b94f}{Timeline}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a024a4795a9f61a79a1ab75799ddbb1d9}{final}})
+\begin{DoxyCompactList}\small\item\em Constructor for Timeline. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a43c3b79211145f7e663aef07c7e1153d}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset the timeline to the initial state. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ae1767d5eb97e14cde1af16e4277f6ed6}{advance}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance the timeline by one time step. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_aeff1fae04f01a104462e3a4d20e55717}{is\+Finished}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Check if the timeline has reached its final time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a1f7f1e8b79c4becc00b67d327145a960}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Scalar indicating the number of dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a2d9dc002d557b9b67f4435b07b484244}{bbox}}
+\begin{DoxyCompactList}\small\item\em Bounding box. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a70a3b850273e27b311a98b1fdb5ea36d}{resolution}}
+\begin{DoxyCompactList}\small\item\em Vector of grid dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a2170a96891861f25ad451d2669151b4d}{centroids}}
+\begin{DoxyCompactList}\small\item\em Cell array of centroids. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a0f2a1b64d02a7ca86af119f60bed1473}{spacings}}
+\begin{DoxyCompactList}\small\item\em Cell array of spacings. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_addb0c45088a4c48a7a4bace9a7288e8f}{elements}}
+\begin{DoxyCompactList}\small\item\em Cell array of element indices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_aeecac51a58c335b46d54a98de2d004c0}{boundary}}
+\begin{DoxyCompactList}\small\item\em Cell array of boundary element indices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ac2262c0533880fe43326dbd2c4160c18}{indexer}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indexer. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a5937e322f17cca02978d2659c59ed71a}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Number of total elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a9686c5d65a86d04706259379e9e46d3d}{all\+Element\+Linear\+Indices}}
+\begin{DoxyCompactList}\small\item\em Linear indices of all elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_aba63152b10ca2415445c14dfaa81c77a}{all\+Element\+Multi\+Indices}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indices of all elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a9792aac92834400e33f766b31edaf399}{boundary\+Element\+Linear\+Indices}}
+\begin{DoxyCompactList}\small\item\em Linear indices of bounday elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ac96d87260555d9266f5fed6ed574f8eb}{boundary\+Element\+Multi\+Indices}}
+\begin{DoxyCompactList}\small\item\em Multi-\/indices of boundary elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a7b8c46359a54795e5bab3dc336986bcd}{measure}}
+\begin{DoxyCompactList}\small\item\em Minimal spacing. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ae54e6d364220dece5d9f9677e25d1757}{magnitudes}}
+\begin{DoxyCompactList}\small\item\em Magnitudes of all elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a694349aacd107230390a55d8e952ac47}{graph}}
+\begin{DoxyCompactList}\small\item\em Underlying separable graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a16f191bac62c8d68007c37355450ce5e}{get\+Min\+Spacing}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em get\+Min\+Spacing\+: Get the minmal spacing \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a69759a89f944430fd31442f636899fbe}{get\+All\+Element\+Magnitudes}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em get\+All\+Element\+Magnitudes\+: Get the magnitudes of all elements \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_af616f6485bbdfee4c55c777c55570952}{get\+Separable\+Graph}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em get\+Separable\+Graph\+: Get the underlying separable graph \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a79a741f4601196f46667867e38a10b80}{set\+Indexer}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set internal indexer from resolution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_a1f5f67e21bab90ce7e3062a7b06503ee}{set\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set element factor indices from resolution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_unknown_class_ac184fef5a118cc8d95fe3a2605368b36}{set\+Boundary}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Set boundary factor indices from resolution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for multi-\/dimensional grids. 
+
+Abstract base class for time discretization.
+
+This abstract class defines common properties for representing multi-\/dimensional structured grids using memory-\/efficient tensor-\/based storage. It provides methods to query grid properties and connectivity.
+
+Timeline represents a sequence of time points and provides basic functionality for time stepping in numerical simulations. 
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00013}{13}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ae1767d5eb97e14cde1af16e4277f6ed6}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!advance@{advance}}
+\index{advance@{advance}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{advance()}{advance()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ae1767d5eb97e14cde1af16e4277f6ed6} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::advance (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Advance the timeline by one time step. 
+
+Advances the timeline by one time step and updates the current time and event counter. \Hypertarget{classapprox_1_1mesh_1_1_unknown_class_abb1a1d34f983413285bf4ed2467b9be1}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_abb1a1d34f983413285bf4ed2467b9be1} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{nodes}{, }\item[{Input\+Type}]{indices}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+collocate\+: Collocate a set of points to the grid 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_aa870002c4dc430f124da480b8e62bb30}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!count@{count}}
+\index{count@{count}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{count()}{count()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_aa870002c4dc430f124da480b8e62bb30} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::count (\begin{DoxyParamCaption}\item[{1}]{}{, }\item[{1}]{}{}\end{DoxyParamCaption})}
+
+
+
+Event counter. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a024a4795a9f61a79a1ab75799ddbb1d9}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!final@{final}}
+\index{final@{final}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{final()}{final()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a024a4795a9f61a79a1ab75799ddbb1d9} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::final (\begin{DoxyParamCaption}\item[{1}]{}{, }\item[{1}]{}{}\end{DoxyParamCaption})}
+
+
+
+Final time. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a69759a89f944430fd31442f636899fbe}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!getAllElementMagnitudes@{getAllElementMagnitudes}}
+\index{getAllElementMagnitudes@{getAllElementMagnitudes}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{getAllElementMagnitudes()}{getAllElementMagnitudes()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a69759a89f944430fd31442f636899fbe} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::get\+All\+Element\+Magnitudes (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+get\+All\+Element\+Magnitudes\+: Get the magnitudes of all elements 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a16f191bac62c8d68007c37355450ce5e}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!getMinSpacing@{getMinSpacing}}
+\index{getMinSpacing@{getMinSpacing}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{getMinSpacing()}{getMinSpacing()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a16f191bac62c8d68007c37355450ce5e} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::get\+Min\+Spacing (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+get\+Min\+Spacing\+: Get the minmal spacing 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_af616f6485bbdfee4c55c777c55570952}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!getSeparableGraph@{getSeparableGraph}}
+\index{getSeparableGraph@{getSeparableGraph}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{getSeparableGraph()}{getSeparableGraph()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_af616f6485bbdfee4c55c777c55570952} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::get\+Separable\+Graph (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+get\+Separable\+Graph\+: Get the underlying separable graph 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a85682f30e9c1199cfe1d5cd23156d69b}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!Grid@{Grid}}
+\index{Grid@{Grid}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{Grid()}{Grid()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a85682f30e9c1199cfe1d5cd23156d69b} 
+function approx\+::mesh\+::\+Unknown\+Class\+::\+Grid (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for grid. 
+
+Syntax\+: obj = Grid(n\+Dims) 
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of dimensions \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_aeff1fae04f01a104462e3a4d20e55717}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!isFinished@{isFinished}}
+\index{isFinished@{isFinished}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{isFinished()}{isFinished()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_aeff1fae04f01a104462e3a4d20e55717} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::is\+Finished (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Check if the timeline has reached its final time. 
+
+Returns\+: flag -\/ True if the timeline has reached the final time \Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a1f03085ead29578d33f82720b6416e06}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!now@{now}}
+\index{now@{now}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{now()}{now()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a1f03085ead29578d33f82720b6416e06} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::now (\begin{DoxyParamCaption}\item[{1}]{}{, }\item[{1}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Current time. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ab562139c140e3c02eb7a89a1b59123dc}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ab562139c140e3c02eb7a89a1b59123dc} 
+virtual function approx\+::mesh\+::\+Unknown\+Class\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+refine\+: Refine the grid in-\/place 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a43c3b79211145f7e663aef07c7e1153d}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!reset@{reset}}
+\index{reset@{reset}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a43c3b79211145f7e663aef07c7e1153d} 
+function approx\+::mesh\+::\+Unknown\+Class\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset the timeline to the initial state. 
+
+Resets the current time to 0 and the event counter to 1. \Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ac184fef5a118cc8d95fe3a2605368b36}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!setBoundary@{setBoundary}}
+\index{setBoundary@{setBoundary}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{setBoundary()}{setBoundary()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ac184fef5a118cc8d95fe3a2605368b36} 
+function approx\+::mesh\+::\+Unknown\+Class\+::set\+Boundary (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Set boundary factor indices from resolution. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a1f5f67e21bab90ce7e3062a7b06503ee}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!setElements@{setElements}}
+\index{setElements@{setElements}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{setElements()}{setElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a1f5f67e21bab90ce7e3062a7b06503ee} 
+function approx\+::mesh\+::\+Unknown\+Class\+::set\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Set element factor indices from resolution. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a79a741f4601196f46667867e38a10b80}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!setIndexer@{setIndexer}}
+\index{setIndexer@{setIndexer}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{setIndexer()}{setIndexer()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a79a741f4601196f46667867e38a10b80} 
+function approx\+::mesh\+::\+Unknown\+Class\+::set\+Indexer (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Set internal indexer from resolution. 
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a34c889a1b0ffacb7cd4c74b50cd1b94f}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!Timeline@{Timeline}}
+\index{Timeline@{Timeline}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{Timeline()}{Timeline()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a34c889a1b0ffacb7cd4c74b50cd1b94f} 
+function approx\+::mesh\+::\+Unknown\+Class\+::\+Timeline (\begin{DoxyParamCaption}\item[{Input\+Type}]{final}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for Timeline. 
+
+Syntax\+: obj = Timeline(final) 
+\begin{DoxyParams}{Parameters}
+{\em final} & -\/ Final time \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a9686c5d65a86d04706259379e9e46d3d}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!allElementLinearIndices@{allElementLinearIndices}}
+\index{allElementLinearIndices@{allElementLinearIndices}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{allElementLinearIndices}{allElementLinearIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a9686c5d65a86d04706259379e9e46d3d} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::all\+Element\+Linear\+Indices}
+
+
+
+Linear indices of all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00047}{47}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_aba63152b10ca2415445c14dfaa81c77a}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!allElementMultiIndices@{allElementMultiIndices}}
+\index{allElementMultiIndices@{allElementMultiIndices}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{allElementMultiIndices}{allElementMultiIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_aba63152b10ca2415445c14dfaa81c77a} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::all\+Element\+Multi\+Indices}
+
+
+
+Multi-\/indices of all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00050}{50}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a2d9dc002d557b9b67f4435b07b484244}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!bbox@{bbox}}
+\index{bbox@{bbox}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{bbox}{bbox}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a2d9dc002d557b9b67f4435b07b484244} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::bbox}
+
+
+
+Bounding box. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00020}{20}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_aeecac51a58c335b46d54a98de2d004c0}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!boundary@{boundary}}
+\index{boundary@{boundary}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{boundary}{boundary}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_aeecac51a58c335b46d54a98de2d004c0} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::boundary}
+
+
+
+Cell array of boundary element indices. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00035}{35}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a9792aac92834400e33f766b31edaf399}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!boundaryElementLinearIndices@{boundaryElementLinearIndices}}
+\index{boundaryElementLinearIndices@{boundaryElementLinearIndices}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{boundaryElementLinearIndices}{boundaryElementLinearIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a9792aac92834400e33f766b31edaf399} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::boundary\+Element\+Linear\+Indices}
+
+
+
+Linear indices of bounday elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00053}{53}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ac96d87260555d9266f5fed6ed574f8eb}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!boundaryElementMultiIndices@{boundaryElementMultiIndices}}
+\index{boundaryElementMultiIndices@{boundaryElementMultiIndices}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{boundaryElementMultiIndices}{boundaryElementMultiIndices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ac96d87260555d9266f5fed6ed574f8eb} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::boundary\+Element\+Multi\+Indices}
+
+
+
+Multi-\/indices of boundary elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00056}{56}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a2170a96891861f25ad451d2669151b4d}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!centroids@{centroids}}
+\index{centroids@{centroids}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{centroids}{centroids}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a2170a96891861f25ad451d2669151b4d} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::centroids}
+
+
+
+Cell array of centroids. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00026}{26}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_addb0c45088a4c48a7a4bace9a7288e8f}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!elements@{elements}}
+\index{elements@{elements}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{elements}{elements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_addb0c45088a4c48a7a4bace9a7288e8f} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::elements}
+
+
+
+Cell array of element indices. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00032}{32}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a694349aacd107230390a55d8e952ac47}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!graph@{graph}}
+\index{graph@{graph}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{graph}{graph}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a694349aacd107230390a55d8e952ac47} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::graph}
+
+
+
+Underlying separable graph. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00065}{65}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ac2262c0533880fe43326dbd2c4160c18}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!indexer@{indexer}}
+\index{indexer@{indexer}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{indexer}{indexer}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ac2262c0533880fe43326dbd2c4160c18} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::indexer}
+
+
+
+Multi-\/indexer. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00038}{38}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_ae54e6d364220dece5d9f9677e25d1757}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!magnitudes@{magnitudes}}
+\index{magnitudes@{magnitudes}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{magnitudes}{magnitudes}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_ae54e6d364220dece5d9f9677e25d1757} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::magnitudes}
+
+
+
+Magnitudes of all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00062}{62}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a7b8c46359a54795e5bab3dc336986bcd}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!measure@{measure}}
+\index{measure@{measure}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{measure}{measure}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a7b8c46359a54795e5bab3dc336986bcd} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::measure}
+
+
+
+Minimal spacing. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00059}{59}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a1f7f1e8b79c4becc00b67d327145a960}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a1f7f1e8b79c4becc00b67d327145a960} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::n\+Dims}
+
+
+
+Scalar indicating the number of dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00017}{17}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a5937e322f17cca02978d2659c59ed71a}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!nTotalElements@{nTotalElements}}
+\index{nTotalElements@{nTotalElements}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nTotalElements}{nTotalElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a5937e322f17cca02978d2659c59ed71a} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::n\+Total\+Elements}
+
+
+
+Number of total elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00044}{44}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a70a3b850273e27b311a98b1fdb5ea36d}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!resolution@{resolution}}
+\index{resolution@{resolution}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{resolution}{resolution}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a70a3b850273e27b311a98b1fdb5ea36d} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::resolution}
+
+
+
+Vector of grid dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00023}{23}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_unknown_class_a0f2a1b64d02a7ca86af119f60bed1473}\index{approx::mesh::UnknownClass@{approx::mesh::UnknownClass}!spacings@{spacings}}
+\index{spacings@{spacings}!approx::mesh::UnknownClass@{approx::mesh::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{spacings}{spacings}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_unknown_class_a0f2a1b64d02a7ca86af119f60bed1473} 
+Property approx\+::mesh\+::\+Unknown\+Class\+::spacings}
+
+
+
+Cell array of spacings. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_8m_source_l00029}{29}} of file \mbox{\hyperlink{_grid_8m_source}{Grid.\+m}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_grid_8m}{Grid.\+m}}\item 
++approx/+mesh/\mbox{\hyperlink{_timeline_8m}{Timeline.\+m}}\end{DoxyCompactItemize}

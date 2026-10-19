@@ -1,0 +1,107 @@
+\doxysection{approx\+::element\+::Element\+Operator Class Reference}
+\hypertarget{classapprox_1_1element_1_1_element_operator}{}\label{classapprox_1_1element_1_1_element_operator}\index{approx::element::ElementOperator@{approx::element::ElementOperator}}
+
+
+Base class for element operators.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element_operator}{approx\+::element\+::\+C0\+Element\+Operator}}, and \mbox{\hyperlink{classapprox_1_1element_1_1_semi_lagrangian_element_operator}{approx\+::element\+::\+Semi\+Lagrangian\+Element\+Operator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a1f9ef0925170d8b0afd257318ef54e39}{Element\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element_operator}{Element\+Operator}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}{element}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1element_1_1_element}{Element} object on which the operator acts. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_operator_a0ddf5ecb48de965748dbd3943e536ab4}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for element operators. 
+
+\doxylink{classapprox_1_1element_1_1_element_operator}{Element\+Operator} encapsulates the discrete forms of differential operators, bridging the gap between continuous differential operators and their discrete representations on finite elements.
+
+The class serves as a common interface for operators that act on element-\/level data, including gradients, divergences, and other differential operators. Concrete subclasses implement specific operator types for different element conformity requirements (C0, L2) and discretization approaches (standard, semi-\/\+Lagrangian).
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1element_1_1_c0_element_operator}{approx.\+element.\+C0\+Element\+Operator} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element_operator}{approx.\+element.\+L2\+Element\+Operator} 
+
+\doxylink{classapprox_1_1element_1_1_semi_lagrangian_element_operator}{approx.\+element.\+Semi\+Lagrangian\+Element\+Operator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_element_operator_8m_source_l00022}{22}} of file \mbox{\hyperlink{_element_operator_8m_source}{Element\+Operator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_element_operator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_operator_a1f9ef0925170d8b0afd257318ef54e39}\index{approx::element::ElementOperator@{approx::element::ElementOperator}!ElementOperator@{ElementOperator}}
+\index{ElementOperator@{ElementOperator}!approx::element::ElementOperator@{approx::element::ElementOperator}}
+\doxysubsubsection{\texorpdfstring{ElementOperator()}{ElementOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_operator_a1f9ef0925170d8b0afd257318ef54e39} 
+function approx\+::element\+::\+Element\+Operator\+::\+Element\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_element_operator}{Element\+Operator}. 
+
+obj = Element\+Operator(element) creates an operator associated with the specified element. This constructor establishes the connection between the operator and its underlying element representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & -\/ \doxylink{classapprox_1_1element_1_1_element}{Element} object on which the operator will act \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_element_operator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75}\index{approx::element::ElementOperator@{approx::element::ElementOperator}!element@{element}}
+\index{element@{element}!approx::element::ElementOperator@{approx::element::ElementOperator}}
+\doxysubsubsection{\texorpdfstring{element}{element}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_operator_a60e246119fcf64839b348f080ac99b75} 
+Property approx\+::element\+::\+Element\+Operator\+::element}
+
+
+
+\doxylink{classapprox_1_1element_1_1_element}{Element} object on which the operator acts. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_operator_8m_source_l00026}{26}} of file \mbox{\hyperlink{_element_operator_8m_source}{Element\+Operator.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_operator_a0ddf5ecb48de965748dbd3943e536ab4}\index{approx::element::ElementOperator@{approx::element::ElementOperator}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!approx::element::ElementOperator@{approx::element::ElementOperator}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_operator_a0ddf5ecb48de965748dbd3943e536ab4} 
+Property approx\+::element\+::\+Element\+Operator\+::n\+Dofs}
+
+
+
+Number of degrees of freedom (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_operator_8m_source_l00032}{32}} of file \mbox{\hyperlink{_element_operator_8m_source}{Element\+Operator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_element_operator_8m}{Element\+Operator.\+m}}\end{DoxyCompactItemize}

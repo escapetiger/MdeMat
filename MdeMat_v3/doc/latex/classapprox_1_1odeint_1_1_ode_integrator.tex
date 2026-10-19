@@ -1,0 +1,576 @@
+\doxysection{approx\+::odeint\+::Ode\+Integrator Class Reference}
+\hypertarget{classapprox_1_1odeint_1_1_ode_integrator}{}\label{classapprox_1_1odeint_1_1_ode_integrator}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+
+
+Abstract base class for ODE integrators.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1odeint_1_1_bdf_integrator}{approx\+::odeint\+::\+Bdf\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{approx\+::odeint\+::\+Be\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{approx\+::odeint\+::\+Dirk\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{approx\+::odeint\+::\+Exrk\+Integrator}}, \mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{approx\+::odeint\+::\+Fe\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1odeint_1_1_imexrk_integrator}{approx\+::odeint\+::\+Imexrk\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{Ode\+Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6}{n\+Steps}}, Input\+Type \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{n\+Stages}}, Input\+Type final)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a9288228bd19616a463989a89c2e98094}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset the integrator to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}} (Input\+Type obj, Input\+Type U)
+\begin{DoxyCompactList}\small\item\em Update the solution history with a new solution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96}{advance}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Advance the timeline to the next time step. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a1a09d8b2bcae6b332ddbddecdc2fa055}{set\+Time\+Step}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set time step for the integrator timeline. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ac484b3583fe8aebd902199950fc9fe85}{set\+Lhs}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab6db54cf0cdf055d21ce0c2be803d07d}{set\+Rhs}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4ae133737b29d767fcdbd1e37c62847a}{stage}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advance one stage of the integration method. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d24a1f3edcbfaaadc571b653b6b589a}{step}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advance one complete time step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6}{n\+Steps}}
+\begin{DoxyCompactList}\small\item\em Number of time steps required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{n\+Stages}}
+\begin{DoxyCompactList}\small\item\em Number of stages required for the method. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}{timeline}}
+\begin{DoxyCompactList}\small\item\em Timeline object for time step management. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}
+\begin{DoxyCompactList}\small\item\em Cell array of solution history. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side matrix/matrices for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_af034c906dea1004c90f0fb31eed459af}{rhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side vector/vectors for linear systems. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}{MLhs}}
+\begin{DoxyCompactList}\small\item\em Left-\/hand side mass term. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}{MRhs}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side mass term(s) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a10795e6e1de436d2f1f98e53d95510b3}{solver}}
+\begin{DoxyCompactList}\small\item\em Linear solver for all integrators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a8a39ab45e64d1ce1418925ac778a8a7d}{evaluate\+Lhs\+Mass}} (Input\+Type obj, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for left-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a7027a6cb5803fdc2a39502a6067543e9}{evaluate\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate mass operator for right-\/hand side. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a98c737f7030604ab3da579a6934e3d29}{evaluate\+Operator}} (ignored\+Arg, Input\+Type O, Input\+Type U, Input\+Type t)
+\begin{DoxyCompactList}\small\item\em Evaluate a general operator (L, F, or S). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aafda7e9223fd5ed0a3f733bf7b2e995b}{should\+Update\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Check if RHS mass cache should be updated. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a4b2918a8135f078719c68f3e0e58351e}{set\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Update the RHS mass operator cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ad779fc8c865052aca2159e039601efd3}{get\+Rhs\+Mass}} (Input\+Type obj, Input\+Type i)
+\begin{DoxyCompactList}\small\item\em Retrieve mass operator from cache. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for ODE integrators. 
+
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} provides a common interface and shared functionality for all ODE integration methods. This base class manages solution history, timeline operations, and linear system solving infrastructure. Concrete integrators must implement the abstract methods for specific integration schemes.
+
+The class focuses on solving ordinary differential equations of the form\+:
+
+\[\frac{\mathrm{d}(Mu)}{\mathrm{d}t} = Lu + F(u) + S(t),
+\]
+
+where $M$ is a mass operator, $L$ is a linear operator, $F(u)$ is a nonlinear operator, and $S(t)$ is a source term. Any of these terms can be empty. In particular, M = \mbox{[}\mbox{]} means the mass operator reduces to an identity operator; \{L, F, S\} = \mbox{[}\mbox{]} means they vanish from the equation.
+
+The contribution of mass operator M is determined by the physical simulation framework\+:
+\begin{DoxyItemize}
+\item In the Eulerian framework, M is space-\/only so that it can be represented by a unique static matrix.
+\item In the Semi-\/\+Lagrangian framework, M is time-\/dependent. The LHS mass term is forced to be a unique static matrix as in Eulerian framework. However, the RHS mass term should be updated as time evolves. In particular, M is a matrix under periodic boundary conditions, while M is a pair formed by a matrix and a vector under Dirichlet boundary conditions.
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1odeint_1_1_be_integrator}{approx.\+odeint.\+Be\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_bdf_integrator}{approx.\+odeint.\+Bdf\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_dirk_integrator}{approx.\+odeint.\+Dirk\+Integrator} 
+
+\doxylink{classapprox_1_1odeint_1_1_exrk_integrator}{approx.\+odeint.\+Exrk\+Integrator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00043}{43}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!OdeIntegrator@{OdeIntegrator}}
+\index{OdeIntegrator@{OdeIntegrator}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{OdeIntegrator()}{OdeIntegrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::\+Ode\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Steps}{, }\item[{Input\+Type}]{n\+Stages}{, }\item[{Input\+Type}]{final}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator}. 
+
+obj = Ode\+Integrator(n\+Steps, n\+Stages, final) creates an ODE integrator with the specified parameters. This constructor is called by concrete subclasses to initialize the base class functionality.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Steps} & -\/ Number of time steps required for the method (positive integer) \\
+\hline
+{\em n\+Stages} & -\/ Number of stages required for the method (positive integer) \\
+\hline
+{\em final} & -\/ Final time for integration (positive scalar) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!advance@{advance}}
+\index{advance@{advance}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{advance()}{advance()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a0f01332c79b90eada29f82acd566aa96} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::advance (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Advance the timeline to the next time step. 
+
+obj = advance(obj) updates the timeline\textquotesingle{}s internal time counter and step size information. Should be called after each successful integration step to maintain proper time synchronization.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a8a39ab45e64d1ce1418925ac778a8a7d}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!evaluateLhsMass@{evaluateLhsMass}}
+\index{evaluateLhsMass@{evaluateLhsMass}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{evaluateLhsMass()}{evaluateLhsMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a8a39ab45e64d1ce1418925ac778a8a7d} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::evaluate\+Lhs\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Evaluate mass operator for left-\/hand side. 
+
+Me = evaluate\+Lhs\+Mass(obj, M, t) evaluates the mass operator for use in the left-\/hand side matrix construction. Handles empty, constant, and time-\/dependent mass operators.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em M} & -\/ Mass operator (empty, matrix, or function handle) \\
+\hline
+{\em t} & -\/ Time(s) for evaluation (scalar or vector) \\
+\hline
+{\em Scalar} & single evaluation time \\
+\hline
+{\em Vector} & \mbox{[}t1, t2, ...\mbox{]} uses first element for LHS\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Me} & -\/ Evaluated mass operator (matrix) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a98c737f7030604ab3da579a6934e3d29}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!evaluateOperator@{evaluateOperator}}
+\index{evaluateOperator@{evaluateOperator}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{evaluateOperator()}{evaluateOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a98c737f7030604ab3da579a6934e3d29} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::evaluate\+Operator (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{O}{, }\item[{Input\+Type}]{U}{, }\item[{Input\+Type}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Evaluate a general operator (L, F, or S). 
+
+Oe = evaluate\+Operator(obj, O, U, t) evaluates linear, nonlinear, or source operators with flexible argument handling.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em O} & -\/ Operator to evaluate (empty, matrix, or function handle) \\
+\hline
+{\em U} & -\/ Current solution vector \\
+\hline
+{\em t} & -\/ Time(s) for evaluation (scalar or vector) \\
+\hline
+{\em Scalar} & single evaluation time \\
+\hline
+{\em Vector} & \mbox{[}t1, t2, ...\mbox{]} for multi-\/time evaluation\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Oe} & -\/ Evaluated operator result \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a7027a6cb5803fdc2a39502a6067543e9}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!evaluateRhsMass@{evaluateRhsMass}}
+\index{evaluateRhsMass@{evaluateRhsMass}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{evaluateRhsMass()}{evaluateRhsMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a7027a6cb5803fdc2a39502a6067543e9} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::evaluate\+Rhs\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{M}{, }\item[{Input\+Type}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Evaluate mass operator for right-\/hand side. 
+
+Me = evaluate\+Rhs\+Mass(obj, i, M, t) evaluates the mass operator for use in right-\/hand side vector construction. Handles caching for efficiency.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em i} & -\/ Index for caching (stage or step) \\
+\hline
+{\em M} & -\/ Mass operator (empty, matrix, or function handle) \\
+\hline
+{\em t} & -\/ Time(s) for evaluation (scalar or vector) \\
+\hline
+{\em Scalar} & single time for evaluation \\
+\hline
+{\em Vector} & \mbox{[}t\+Current, t\+Previous, ...\mbox{]} for multi-\/time evaluation\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Me} & -\/ Evaluated mass operator (matrix, cell, or empty) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ad779fc8c865052aca2159e039601efd3}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!getRhsMass@{getRhsMass}}
+\index{getRhsMass@{getRhsMass}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{getRhsMass()}{getRhsMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ad779fc8c865052aca2159e039601efd3} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::get\+Rhs\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Retrieve mass operator from cache. 
+
+M = get\+Rhs\+Mass(obj, i) retrieves the cached RHS mass operator value for the specified index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em i} & -\/ Index for cache retrieval (stage or step index)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em M} & -\/ Cached RHS mass operator value \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a9288228bd19616a463989a89c2e98094}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!reset@{reset}}
+\index{reset@{reset}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a9288228bd19616a463989a89c2e98094} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset the integrator to initial state. 
+
+obj = reset(obj) clears solution history, resets the timeline, and initializes storage arrays for left-\/hand side matrices and right-\/hand side vectors. Also creates a fresh linear solver instance. This method is called automatically during construction and can be called to restart integration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ac484b3583fe8aebd902199950fc9fe85}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!setLhs@{setLhs}}
+\index{setLhs@{setLhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{setLhs()}{setLhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ac484b3583fe8aebd902199950fc9fe85} 
+virtual function approx\+::odeint\+::\+Ode\+Integrator\+::set\+Lhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set left-\/hand side matrix/matrices for linear systems. 
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ab6db54cf0cdf055d21ce0c2be803d07d}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!setRhs@{setRhs}}
+\index{setRhs@{setRhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhs()}{setRhs()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ab6db54cf0cdf055d21ce0c2be803d07d} 
+virtual function approx\+::odeint\+::\+Ode\+Integrator\+::set\+Rhs (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Set right-\/hand side vector/vectors for linear systems. 
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a4b2918a8135f078719c68f3e0e58351e}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!setRhsMass@{setRhsMass}}
+\index{setRhsMass@{setRhsMass}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{setRhsMass()}{setRhsMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a4b2918a8135f078719c68f3e0e58351e} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::set\+Rhs\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Update the RHS mass operator cache. 
+
+obj = set\+Rhs\+Mass(obj, i, M) stores the evaluated RHS mass operator in the appropriate cache location.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em i} & -\/ Index for cache storage (stage or step index) \\
+\hline
+{\em M} & -\/ Evaluated RHS mass operator to cache\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a1a09d8b2bcae6b332ddbddecdc2fa055}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!setTimeStep@{setTimeStep}}
+\index{setTimeStep@{setTimeStep}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{setTimeStep()}{setTimeStep()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a1a09d8b2bcae6b332ddbddecdc2fa055} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::set\+Time\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set time step for the integrator timeline. 
+
+obj = set\+Time\+Step(obj, h, C) sets time step as dt = C\texorpdfstring{$\ast$}{*}h for dynamic timelines.
+
+obj = set\+Time\+Step(obj, h, C, p) sets time step as dt = C\texorpdfstring{$\ast$}{*}h\texorpdfstring{$^\wedge$}{\string^}p for dynamic timelines.
+
+obj = set\+Time\+Step(obj, dt) directly sets the time step for manual control (use with caution).
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_aafda7e9223fd5ed0a3f733bf7b2e995b}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!shouldUpdateRhsMass@{shouldUpdateRhsMass}}
+\index{shouldUpdateRhsMass@{shouldUpdateRhsMass}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{shouldUpdateRhsMass()}{shouldUpdateRhsMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_aafda7e9223fd5ed0a3f733bf7b2e995b} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::should\+Update\+Rhs\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Check if RHS mass cache should be updated. 
+
+tf = should\+Update\+Rhs\+Mass(obj, i) determines whether the RHS mass operator cache needs updating based on step size changes and cache state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em i} & -\/ Index for cache lookup (stage or step index)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em tf} & -\/ True if cache should be updated (logical) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a4ae133737b29d767fcdbd1e37c62847a}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!stage@{stage}}
+\index{stage@{stage}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{stage()}{stage()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a4ae133737b29d767fcdbd1e37c62847a} 
+virtual function approx\+::odeint\+::\+Ode\+Integrator\+::stage (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Advance one stage of the integration method. 
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a0d24a1f3edcbfaaadc571b653b6b589a}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!step@{step}}
+\index{step@{step}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a0d24a1f3edcbfaaadc571b653b6b589a} 
+virtual function approx\+::odeint\+::\+Ode\+Integrator\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Advance one complete time step. 
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!update@{update}}
+\index{update@{update}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6} 
+function approx\+::odeint\+::\+Ode\+Integrator\+::update (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{}\end{DoxyParamCaption})}
+
+
+
+Update the solution history with a new solution. 
+
+obj = update(obj, U) shifts the existing solution history and adds the new solution at the most recent position. For multi-\/step methods, this maintains the required number of previous solutions. For single-\/step methods, simply stores the current solution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+{\em U} & -\/ The new solution to add to history\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1odeint_1_1_ode_integrator}{Ode\+Integrator} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!lhs@{lhs}}
+\index{lhs@{lhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{lhs}{lhs}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::lhs}
+
+
+
+Left-\/hand side matrix/matrices for linear systems. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00059}{59}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!MLhs@{MLhs}}
+\index{MLhs@{MLhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{MLhs}{MLhs}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a0d526be6ac8d26edc97d9a6e37d316a4} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::\+MLhs}
+
+
+
+Left-\/hand side mass term. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00065}{65}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!MRhs@{MRhs}}
+\index{MRhs@{MRhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{MRhs}{MRhs}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ab05aa42d319c2be226ac24f837f4e521} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::\+MRhs}
+
+
+
+Right-\/hand side mass term(s) 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00068}{68}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!nStages@{nStages}}
+\index{nStages@{nStages}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{nStages}{nStages}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::n\+Stages}
+
+
+
+Number of stages required for the method. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00050}{50}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!nSteps@{nSteps}}
+\index{nSteps@{nSteps}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{nSteps}{nSteps}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_afdd31424322a8a58693f3f826dcf2cf6} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::n\+Steps}
+
+
+
+Number of time steps required for the method. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00047}{47}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_af034c906dea1004c90f0fb31eed459af}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!rhs@{rhs}}
+\index{rhs@{rhs}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{rhs}{rhs}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_af034c906dea1004c90f0fb31eed459af} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::rhs}
+
+
+
+Right-\/hand side vector/vectors for linear systems. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00062}{62}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a10795e6e1de436d2f1f98e53d95510b3}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!solver@{solver}}
+\index{solver@{solver}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{solver}{solver}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a10795e6e1de436d2f1f98e53d95510b3} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::solver}
+
+
+
+Linear solver for all integrators. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00071}{71}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!timeline@{timeline}}
+\index{timeline@{timeline}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{timeline}{timeline}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_a2616a32dc9a2699e9534fd5c317bd55c} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::timeline}
+
+
+
+Timeline object for time step management. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00053}{53}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}\index{approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}!U0@{U0}}
+\index{U0@{U0}!approx::odeint::OdeIntegrator@{approx::odeint::OdeIntegrator}}
+\doxysubsubsection{\texorpdfstring{U0}{U0}}
+{\footnotesize\ttfamily \label{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09} 
+Property approx\+::odeint\+::\+Ode\+Integrator\+::\+U0}
+
+
+
+Cell array of solution history. 
+
+
+
+Definition at line \mbox{\hyperlink{_ode_integrator_8m_source_l00056}{56}} of file \mbox{\hyperlink{_ode_integrator_8m_source}{Ode\+Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+odeint/\mbox{\hyperlink{_ode_integrator_8m}{Ode\+Integrator.\+m}}\end{DoxyCompactItemize}

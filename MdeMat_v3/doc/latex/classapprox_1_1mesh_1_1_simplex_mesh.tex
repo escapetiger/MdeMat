@@ -1,0 +1,704 @@
+\doxysection{approx\+::mesh\+::Simplex\+Mesh Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_simplex_mesh}{}\label{classapprox_1_1mesh_1_1_simplex_mesh}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+
+
+Computational mesh using simplicial elements.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{Simplex\+Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate graph representation from simplex connectivity. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a33c779c4d05b75f33e91729202152905}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a703a082886ed6876390c8de0124131a0}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Perform uniform subdivision of simplicial mesh. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_afd152432dc5c9b4afca7861442c54340}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic mesh size. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a369efa0f320ea1583929e6ed8c38923a}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian matrices for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8097f08f664078f0c8e4e2ada6c645ed}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian determinants for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute inverse Jacobian matrices for all elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a58dc0dde4b98570a64b421373dc85c0c}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants for all faces. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_afd6acbbd6a55ea889b64d0282d17dea8}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors for all faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{Polytopal\+Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{find\+Element\+Vertices}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Extract vertex coordinates for specified elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{set\+Periodic}} (Input\+Type obj, Input\+Type shift, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Establish periodic boundary mappings. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}{find\+Interior\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Find linear indices of interior elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{find\+Boundary\+Elements}} (Input\+Type obj, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Find linear indices of boundary elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}{find\+Neighbor\+Elements}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE, Input\+Type BC)
+\begin{DoxyCompactList}\small\item\em Find neighboring elements across faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a142fb2e0bd3bee828cf136414c8ccf8c}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3cac6b1720b306a9725fe711334843}{set\+Faces}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate face connectivity from simplex elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}{force\+Positive\+Orientation}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Ensure positive element orientations. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0}{refine\+Lines}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em ======================================================================== \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9}{refine\+Triangles}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em Refine triangular elements by edge subdivision. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5}{refine\+Tetrahedra}} (Input\+Type V0, Input\+Type E0)
+\begin{DoxyCompactList}\small\item\em Refine tetrahedral elements by edge subdivision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx\+::mesh\+::\+Polytopal\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}
+\begin{DoxyCompactList}\small\item\em Vertex coordinates (n\+Vertices × n\+Dims) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}
+\begin{DoxyCompactList}\small\item\em Element connectivity (n\+Elements × n\+Vertices\+Per\+Element) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}
+\begin{DoxyCompactList}\small\item\em Face connectivity (n\+Faces × n\+Vertices\+Per\+Face) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}
+\begin{DoxyCompactList}\small\item\em Boundary face indices (n\+Boundary\+Faces × 1) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{face\+To\+Element\+Table}}
+\begin{DoxyCompactList}\small\item\em Face-\/element connectivity (sparse n\+Faces × n\+Elements) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertex\+To\+Vertex\+Table}}
+\begin{DoxyCompactList}\small\item\em Periodic vertex mapping (sparse n\+Vertices × n\+Vertices) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{face\+To\+Face\+Table}}
+\begin{DoxyCompactList}\small\item\em Periodic face mapping (sparse n\+Faces × n\+Faces) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{n\+Vertices}}
+\begin{DoxyCompactList}\small\item\em Number of vertices in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{n\+Elements}}
+\begin{DoxyCompactList}\small\item\em Number of elements in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{n\+Vertices\+Per\+Element}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per element (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{n\+Faces}}
+\begin{DoxyCompactList}\small\item\em Number of faces in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{n\+Vertices\+Per\+Face}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per face (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}{n\+Boundary\+Faces}}
+\begin{DoxyCompactList}\small\item\em Number of boundary faces (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}
+\begin{DoxyCompactList}\small\item\em Domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}
+\begin{DoxyCompactList}\small\item\em Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Computational mesh using simplicial elements. 
+
+\doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} provides a concrete implementation of \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} for simplicial elements (line segments in 1D, triangles in 2D, tetrahedra in 3D). It leverages the \doxylink{classcore_1_1geometry_1_1_simplex}{core.\+geometry.\+Simplex} class for geometric operations and implements efficient algorithms for mesh refinement, coordinate transformations, and Jacobian computations.
+
+Simplicial meshes are fundamental in finite element methods due to their mathematical properties\+:
+\begin{DoxyItemize}
+\item Linear coordinate transformations with constant Jacobians per element
+\item Natural barycentric coordinate systems for interpolation
+\item Efficient mesh generation and refinement algorithms
+\item Well-\/established quadrature rules and basis functions
+\end{DoxyItemize}
+
+Element types by dimension\+:
+\begin{DoxyItemize}
+\item 1D\+: Line segments (2 vertices, 2 faces as endpoints)
+\item 2D\+: Triangles (3 vertices, 3 edges as faces)
+\item 3D\+: Tetrahedra (4 vertices, 4 triangular faces)
+\item nD\+: n-\/simplices (n+1 vertices, n+1 (n-\/1)-\/simplex faces)
+\end{DoxyItemize}
+
+The class uses affine coordinate transformations between reference and physical coordinates, where the reference simplex has vertices at the origin and unit coordinate vectors\+: \{0, e₁, e₂, ..., eₙ\}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ 2D\ triangular\ mesh}
+\DoxyCodeLine{vertices2D\ =\ [0,\ 0;\ 1,\ 0;\ 0.5,\ 1;\ 1,\ 1];}
+\DoxyCodeLine{elements2D\ =\ [1,\ 2,\ 3;\ 2,\ 4,\ 3];}
+\DoxyCodeLine{domain2D\ =\ core.geometry.Rectangle([0,\ 1,\ 0,\ 1]);}
+\DoxyCodeLine{triMesh\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}(domain2D,\ vertices2D,\ elements2D);}
+\DoxyCodeLine{\%\ Create\ 3D\ tetrahedral\ mesh}
+\DoxyCodeLine{vertices3D\ =\ [0,\ 0,\ 0;\ 1,\ 0,\ 0;\ 0,\ 1,\ 0;\ 0,\ 0,\ 1];}
+\DoxyCodeLine{elements3D\ =\ [1,\ 2,\ 3,\ 4];}
+\DoxyCodeLine{domain3D\ =\ core.geometry.Tetrahedron();}
+\DoxyCodeLine{tetMesh\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}(domain3D,\ vertices3D,\ elements3D);}
+\DoxyCodeLine{\%\ Map\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ coordinates\ to\ physical\ coordinates}
+\DoxyCodeLine{xRef\ =\ [0.2;\ 0.3];\ \ \%\ Reference\ coordinates\ in\ triangle}
+\DoxyCodeLine{xPhys\ =\ triMesh.collocate(xRef,\ 1);\ \ \%\ Map\ to\ element\ 1}
+\DoxyCodeLine{\%\ Perform\ uniform\ mesh\ refinement}
+\DoxyCodeLine{refinedMesh\ =\ triMesh.refine(2);\ \ \%\ 2\ levels:\ 4\string^2\ =\ 16×\ more\ triangles}
+\DoxyCodeLine{\%\ Compute\ geometric\ quantities}
+\DoxyCodeLine{h\ =\ triMesh.computeMeasure();\ \ \ \ \ \ \ \ \ \ \ \%\ Minimum\ edge\ length}
+\DoxyCodeLine{detJ\ =\ triMesh.computeElementJacobianDeterminants([1,\ 2]);}
+\DoxyCodeLine{graph\ =\ triMesh.graphify();\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Extract\ connectivity\ graph}
+\DoxyCodeLine{\%\ Access\ mesh\ topology}
+\DoxyCodeLine{nVerts\ =\ triMesh.nVertices;\ \ \ \ \ \ \ \%\ Number\ of\ mesh\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{nElems\ =\ triMesh.nElements;\ \ \ \ \ \ \ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{V\ =\ triMesh.findElementVertices([1,\ 3]);\ \ \%\ Vertices\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ 1,3}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Reference coordinates use the standard simplex with vertices at 
+
+\{0, e₁, e₂, ..., eₙ\} where eᵢ are unit coordinate vectors. This 
+
+differs from some references that use centered or symmetric simplices. 
+
+\doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} refinement follows standard subdivision rules\+: 
+
+-\/ 1D\+: Each edge splits into 2 segments 
+
+-\/ 2D\+: Each triangle splits into 4 triangles 
+
+-\/ 3D\+: Each tetrahedron splits into 8 tetrahedra 
+
+-\/ General\+: Each k-\/level refinement produces 2\texorpdfstring{$^\wedge$}{\string^}(k×d) sub-\/elements
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{approx.\+mesh.\+Polytopal\+Mesh} 
+
+\doxylink{classapprox_1_1mesh_1_1_mesh}{approx.\+mesh.\+Mesh} 
+
+\doxylink{classcore_1_1geometry_1_1_simplex}{core.\+geometry.\+Simplex} 
+
+\doxylink{classapprox_1_1mesh_1_1_graph}{approx.\+mesh.\+Graph} 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{approx.\+mesh.\+Polytopal\+Mesh\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_simplex_mesh_8m_source_l00072}{72}} of file \mbox{\hyperlink{_simplex_mesh_8m_source}{Simplex\+Mesh.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!SimplexMesh@{SimplexMesh}}
+\index{SimplexMesh@{SimplexMesh}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{SimplexMesh()}{SimplexMesh()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::\+Simplex\+Mesh (\begin{DoxyParamCaption}\item[{Input\+Type}]{domain}{, }\item[{Input\+Type}]{vertices}{, }\item[{Input\+Type}]{elements}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh}. 
+
+obj = Simplex\+Mesh(domain, vertices, elements) creates a simplex mesh from vertex coordinates and element connectivity, automatically setting up the reference simplex geometry.
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & -\/ Physical domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry}) \\
+\hline
+{\em vertices} & -\/ Vertex coordinate matrix (n\+Vertices × n\+Dims) \\
+\hline
+{\em elements} & -\/ Element connectivity matrix (n\+Elements × n\+Vertices\+Per\+Element)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The reference simplex is automatically constructed with vertices 
+
+at \{0, e₁, e₂, ..., eₙ\} where eᵢ are unit coordinate vectors. 
+
+This provides the standard reference domain for finite element 
+
+basis functions and quadrature rules. 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a33c779c4d05b75f33e91729202152905}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a33c779c4d05b75f33e91729202152905} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Map reference coordinates to physical coordinates. 
+
+Y = collocate(obj, X, L) transforms reference Cartesian coordinates to physical Cartesian coordinates using affine transformations defined by simplex element vertices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object \\
+\hline
+{\em X} & -\/ Reference coordinates (n\+Dims × n\+Points) \\
+\hline
+{\em L} & -\/ Element linear indices (n\+Elements × 1)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Physical coordinates (n\+Dims × n\+Points × n\+Elements)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The transformation uses the affine mapping F(ξ) = V₀ + J×ξ 
+
+where V₀ is the first vertex, J is the Jacobian matrix 
+
+formed by edge vectors, and ξ are reference coordinates. 
+
+For a triangle with vertices \mbox{[}V₀, V₁, V₂\mbox{]}, the Jacobian is 
+
+J = \mbox{[}V₁-\/\+V₀, V₂-\/\+V₀\mbox{]} and the mapping is F(ξ) = V₀ + J×ξ. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a144648013076ba21a3dab384fde72d56}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeAllElementInverseJacobians@{computeAllElementInverseJacobians}}
+\index{computeAllElementInverseJacobians@{computeAllElementInverseJacobians}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementInverseJacobians()}{computeAllElementInverseJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+All\+Element\+Inverse\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute inverse Jacobian matrices for all elements. 
+
+inv\+EJ = compute\+All\+Element\+Inverse\+Jacobians(obj) computes the inverse of the Jacobian matrix for each element, used in gradient computations and coordinate transformations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em inv\+EJ} & -\/ Inverse Jacobian matrices (n\+Dims × n\+Dims × n\+Elements) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a8097f08f664078f0c8e4e2ada6c645ed}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}}
+\index{computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobianDeterminants()}{computeAllElementJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a8097f08f664078f0c8e4e2ada6c645ed} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+All\+Element\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian determinants for all elements. 
+
+det\+EJ = compute\+All\+Element\+Jacobian\+Determinants(obj) computes the determinant of the Jacobian matrix for each simplex element, used in integration and volume calculations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em det\+EJ} & -\/ Jacobian determinants (n\+Elements × 1) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a369efa0f320ea1583929e6ed8c38923a}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeAllElementJacobians@{computeAllElementJacobians}}
+\index{computeAllElementJacobians@{computeAllElementJacobians}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobians()}{computeAllElementJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a369efa0f320ea1583929e6ed8c38923a} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+All\+Element\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian matrices for all elements. 
+
+EJ = compute\+All\+Element\+Jacobians(obj) computes the Jacobian matrix for coordinate transformation from reference to physical coordinates for every element in the mesh.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em EJ} & -\/ Jacobian matrices (n\+Dims × n\+Dims × n\+Elements)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For simplex element with vertices  $[V_0, V_1, ...,
+@note V_n]$, the Jacobian matrix is  $J = [V_1-V_0, V_2-V_0,
+@note ..., V_n-V_0]$. This matrix transforms reference 
+
+coordinates to physical coordinates via the affine mapping 
+
+$F(\xi) = V_0 + J\xi$. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a58dc0dde4b98570a64b421373dc85c0c}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}}
+\index{computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeAllFaceJacobianDeterminants()}{computeAllFaceJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a58dc0dde4b98570a64b421373dc85c0c} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+All\+Face\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute face Jacobian determinants for all faces. 
+
+det\+FJ = compute\+All\+Face\+Jacobian\+Determinants(obj) computes Jacobian determinants for coordinate transformation on all element faces, used in boundary and interface integration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em det\+FJ} & -\/ Face Jacobian determinants (cell array by local face index) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_afd6acbbd6a55ea889b64d0282d17dea8}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeAllOutwardNormals@{computeAllOutwardNormals}}
+\index{computeAllOutwardNormals@{computeAllOutwardNormals}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeAllOutwardNormals()}{computeAllOutwardNormals()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_afd6acbbd6a55ea889b64d0282d17dea8} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+All\+Outward\+Normals (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute outward normal vectors for all faces. 
+
+outN = compute\+All\+Outward\+Normals(obj) computes unit outward normal vectors for all element faces, essential for boundary conditions and flux computations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em outN} & -\/ Outward normal vectors (cell array by local face index) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_afd152432dc5c9b4afca7861442c54340}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!computeMeasure@{computeMeasure}}
+\index{computeMeasure@{computeMeasure}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{computeMeasure()}{computeMeasure()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_afd152432dc5c9b4afca7861442c54340} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::compute\+Measure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute characteristic mesh size. 
+
+h = compute\+Measure(obj) returns the minimum edge length among all edges in the simplicial mesh, which serves as a characteristic measure of mesh resolution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em h} & -\/ Minimum edge length (positive scalar) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!forcePositiveOrientation@{forcePositiveOrientation}}
+\index{forcePositiveOrientation@{forcePositiveOrientation}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{forcePositiveOrientation()}{forcePositiveOrientation()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::force\+Positive\+Orientation (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Ensure positive element orientations. 
+
+obj = force\+Positive\+Orientation(obj) reorders element vertices to ensure positive Jacobian determinants, which is essential for proper integration and geometric computations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object with corrected orientations\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Element orientation is determined by the sign of the 
+
+Jacobian determinant. Negative determinants indicate 
+
+"{}inside-\/out"{} elements that must be corrected by vertex 
+
+reordering. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!graphify@{graphify}}
+\index{graphify@{graphify}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{graphify()}{graphify()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::graphify (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Generate graph representation from simplex connectivity. 
+
+graph\+Obj = graphify(obj) creates a graph representation by extracting all edges (vertex pairs) from the simplex elements and eliminating duplicates.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em graph\+Obj} & -\/ \doxylink{classapprox_1_1mesh_1_1_graph}{Graph} object with mesh vertices and edges\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For simplicial meshes, edges are naturally defined as all 
+
+possible vertex pairs within each element. The resulting 
+
+graph captures the mesh connectivity for visualization 
+
+and topological analysis. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a703a082886ed6876390c8de0124131a0}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a703a082886ed6876390c8de0124131a0} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Levels}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Perform uniform subdivision of simplicial mesh. 
+
+new\+Obj = refine(obj, n\+Levels) creates a refined mesh by uniformly subdividing each simplex element. The number of refinement levels determines the subdivision density.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object \\
+\hline
+{\em n\+Levels} & -\/ Number of refinement levels (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em new\+Obj} & -\/ Refined \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Refinement follows standard simplex subdivision\+: 
+
+-\/ Level 0\+: Original mesh (no refinement) 
+
+-\/ Level 1\+: Each element splits into 2\texorpdfstring{$^\wedge$}{\string^}d sub-\/elements 
+
+-\/ Level k\+: Each element splits into 2\texorpdfstring{$^\wedge$}{\string^}(k×d) sub-\/elements 
+
+For triangles\+: 1 → 4 → 16 → 64 triangles per original 
+
+For tetrahedra\+: 1 → 8 → 64 → 512 tetrahedra per original 
+
+The refined mesh maintains the same boundary geometry 
+
+and element orientation as the original mesh. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!refineLines@{refineLines}}
+\index{refineLines@{refineLines}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{refineLines()}{refineLines()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::refine\+Lines (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+======================================================================== 
+
+\hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_autotoc_md0}{}\doxysubsection{\texorpdfstring{REFINEMENT HELPER FUNCTIONS}{REFINEMENT HELPER FUNCTIONS}}\label{classapprox_1_1mesh_1_1_simplex_mesh_autotoc_md0}
+Refine 1D line segments by midpoint subdivision.
+
+\mbox{[}V, E\mbox{]} = refine\+Lines(\+V0, E0) subdivides each line segment into two segments by adding midpoint vertices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em V0} & -\/ Original vertices (n\+Vertices × n\+Dims) \\
+\hline
+{\em E0} & -\/ Original elements (n\+Elements × 2)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em V} & -\/ Refined vertices including midpoints (n\+Vertices + n\+Elements × n\+Dims) \\
+\hline
+{\em E} & -\/ Refined elements (2×n\+Elements × 2) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!refineTetrahedra@{refineTetrahedra}}
+\index{refineTetrahedra@{refineTetrahedra}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{refineTetrahedra()}{refineTetrahedra()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::refine\+Tetrahedra (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Refine tetrahedral elements by edge subdivision. 
+
+\mbox{[}V, E\mbox{]} = refine\+Tetrahedra(\+V0, E0) subdivides each tetrahedron into eight tetrahedra by adding midpoint vertices on all edges.
+
+
+\begin{DoxyParams}{Parameters}
+{\em V0} & -\/ Original vertices (n\+Vertices × 3) \\
+\hline
+{\em E0} & -\/ Original tetrahedral elements (n\+Elements × 4)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em V} & -\/ Refined vertices including edge midpoints \\
+\hline
+{\em E} & -\/ Refined tetrahedral elements (8×n\+Elements × 4)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Each tetrahedron has 6 edges, creating 6 new midpoint vertices. 
+
+The 8 sub-\/tetrahedra consist of\+: 
+
+-\/ 4 corner tetrahedra (one at each original vertex) 
+
+-\/ 4 interior tetrahedra (connecting midpoints) 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!refineTriangles@{refineTriangles}}
+\index{refineTriangles@{refineTriangles}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{refineTriangles()}{refineTriangles()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::refine\+Triangles (\begin{DoxyParamCaption}\item[{Input\+Type}]{V0}{, }\item[{Input\+Type}]{E0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Refine triangular elements by edge subdivision. 
+
+\mbox{[}V, E\mbox{]} = refine\+Triangles(\+V0, E0) subdivides each triangle into four triangles by adding midpoint vertices on all edges.
+
+
+\begin{DoxyParams}{Parameters}
+{\em V0} & -\/ Original vertices (n\+Vertices × 2) \\
+\hline
+{\em E0} & -\/ Original triangular elements (n\+Elements × 3)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em V} & -\/ Refined vertices including edge midpoints \\
+\hline
+{\em E} & -\/ Refined triangular elements (4×n\+Elements × 3)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Each triangle is subdivided into 4 sub-\/triangles\+: 
+
+-\/ 3 corner triangles (one at each original vertex) 
+
+-\/ 1 central triangle (connecting the 3 edge midpoints) 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_simplex_mesh_aad3cac6b1720b306a9725fe711334843}\index{approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}!setFaces@{setFaces}}
+\index{setFaces@{setFaces}!approx::mesh::SimplexMesh@{approx::mesh::SimplexMesh}}
+\doxysubsubsection{\texorpdfstring{setFaces()}{setFaces()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_simplex_mesh_aad3cac6b1720b306a9725fe711334843} 
+function approx\+::mesh\+::\+Simplex\+Mesh\+::set\+Faces (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Generate face connectivity from simplex elements. 
+
+obj = set\+Faces(obj) extracts face definitions from element connectivity and builds the face-\/to-\/element mapping table for simplicial meshes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_simplex_mesh}{Simplex\+Mesh} object with face connectivity\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For d-\/dimensional simplices, faces are (d-\/1)-\/dimensional 
+
+simplices formed by choosing d vertices from each element. 
+
+The face-\/to-\/element table stores which elements share each 
+
+face and the local face index within each element. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{approx\+::mesh\+::\+Polytopal\+Mesh}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_simplex_mesh_8m}{Simplex\+Mesh.\+m}}\end{DoxyCompactItemize}

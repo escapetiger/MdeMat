@@ -1,0 +1,71 @@
+\doxysection{distmesh/distmeshsurface.m File Reference}
+\hypertarget{distmeshsurface_8m}{}\label{distmeshsurface_8m}\index{distmesh/distmeshsurface.m@{distmesh/distmeshsurface.m}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{distmeshsurface_8m_a7b67bc2920e8c3e03a5bf0c6802abed8}{distmeshsurface}} (Input\+Type fd, Input\+Type fh, Input\+Type h0, Input\+Type bbox, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em 3-\/D Surface Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESHSURFACE(\+FD,\+FH,\+H0,\+BBOX,\+FPARAMS) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{distmeshsurface_8m_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{distmeshsurface_8m_a7b67bc2920e8c3e03a5bf0c6802abed8}\index{distmeshsurface.m@{distmeshsurface.m}!distmeshsurface@{distmeshsurface}}
+\index{distmeshsurface@{distmeshsurface}!distmeshsurface.m@{distmeshsurface.m}}
+\doxysubsubsection{\texorpdfstring{distmeshsurface()}{distmeshsurface()}}
+{\footnotesize\ttfamily \label{distmeshsurface_8m_a7b67bc2920e8c3e03a5bf0c6802abed8} 
+function distmeshsurface (\begin{DoxyParamCaption}\item[{Input\+Type}]{fd}{, }\item[{Input\+Type}]{fh}{, }\item[{Input\+Type}]{h0}{, }\item[{Input\+Type}]{bbox}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+3-\/D Surface Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESHSURFACE(\+FD,\+FH,\+H0,\+BBOX,\+FPARAMS) 
+
+\begin{DoxyNote}{Note}
+Doesn\textquotesingle{}t work too well for nonuniform size functions... need a 
+
+better initial grid or density control. Also no support for 
+
+fixed points, again because of the initial grid. 
+
+P\+: Node positions (Nx2) 
+
+T\+: Triangle indices (NTx3) 
+
+FD\+: Distance function \doxylink{ddiff_8m_a1aabac6d068eef6a7bad3fdf50a05cc8}{d(x,y)} 
+
+FH\+: Scaled edge length function h(x,y) 
+
+H0\+: Initial edge length 
+
+BBOX\+: Bounding box \mbox{[}xmin,ymin; xmax,ymax\mbox{]} 
+
+FPARAMS\+: Additional parameters passed to FD and FH 
+
+Example\+: (Uniform Mesh on Unit Sphere) 
+
+fd=@(p) dsphere(p,0,0,0,1); 
+
+\mbox{[}p,t\mbox{]}=distmeshsurface(fd,@huniform,0.\+2,1.\+1\texorpdfstring{$\ast$}{*}\mbox{[}-\/1,-\/1,-\/1;1,1,1\mbox{]}); 
+
+Example\+: (Graded Mesh on Unit Sphere) 
+
+fd=@(p) dsphere(p,0,0,0,1); 
+
+fh=@(p) 0.\+05+0.\+5\texorpdfstring{$\ast$}{*}dsphere(p,0,0,1,0); 
+
+\mbox{[}p,t\mbox{]}=distmeshsurface(fd,fh,0.\+15,1.\+1\texorpdfstring{$\ast$}{*}\mbox{[}-\/1,-\/1,-\/1;1,1,1\mbox{]}); 
+
+Example\+: (Uniform Mesh on Torus) 
+
+fd=@(p) (sum(p.\texorpdfstring{$^\wedge$}{\string^}2,2)+.8\texorpdfstring{$^\wedge$}{\string^}2-\/.2\texorpdfstring{$^\wedge$}{\string^}2).\texorpdfstring{$^\wedge$}{\string^}2-\/4\texorpdfstring{$\ast$}{*}.8\texorpdfstring{$^\wedge$}{\string^}2\texorpdfstring{$\ast$}{*}(p(\+:,1).\texorpdfstring{$^\wedge$}{\string^}2+p(\+:,2).\texorpdfstring{$^\wedge$}{\string^}2); 
+
+\mbox{[}p,t\mbox{]}=distmeshsurface(fd,@huniform,0.\+1,\mbox{[}-\/1.\+1,-\/1.\+1,-\/.\+25;1.\+1,1.\+1,.25\mbox{]}); 
+
+Example\+: (Uniform Mesh on Ellipsoid) 
+
+fd=@(p) p(\+:,1).\texorpdfstring{$^\wedge$}{\string^}2/4+p(\+:,2).\texorpdfstring{$^\wedge$}{\string^}2/1+p(\+:,3).\texorpdfstring{$^\wedge$}{\string^}2/1.5\texorpdfstring{$^\wedge$}{\string^}2-\/1; 
+
+\mbox{[}p,t\mbox{]}=distmeshsurface(fd,@huniform,0.\+2,\mbox{[}-\/2.\+1,-\/1.\+1,-\/1.\+6; 2.\+1,1.\+1,1.\+6\mbox{]}); 
+
+Copyright (C) 2004-\/2012 Per-\/\+Olof Persson. See COPYRIGHT.\+TXT for details. 
+\end{DoxyNote}

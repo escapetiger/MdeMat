@@ -1,0 +1,311 @@
+\doxysection{Mesh.\+m}
+\hypertarget{_mesh_8m_source}{}\label{_mesh_8m_source}\index{+approx/+mesh/Mesh.m@{+approx/+mesh/Mesh.m}}
+\mbox{\hyperlink{_mesh_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00001}00001\ classdef\ Mesh\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00002}00002\ \ \ \ \ \%\ MESH\ Base\ \textcolor{keyword}{class\ }for\ computational\ meshes.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Mesh\ provides\ foundational\ functionality\ \textcolor{keywordflow}{for}\ computational\ meshes}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ in\ numerical\ approximation\ methods.\ It\ defines\ common\ interfaces}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ coordinate\ transformations,\ mesh\ refinement,\ and\ geometric}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ computations\ \textcolor{keywordflow}{while}\ supporting\ efficient\ caching\ of\ expensive}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ operations.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }manages\ coordinate\ transformations\ between\ reference\ and}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ physical\ coordinate\ systems,\ computes\ Jacobian\ matrices\ and\ their}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ determinants\ \textcolor{keywordflow}{for}\ integration\ quadrature,\ and\ provides\ mesh}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ refinement\ capabilities\ \textcolor{keywordflow}{for}\ adaptive\ algorithms.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ Transformation\ data\ is\ cached\ \textcolor{keyword}{using\ }bitwise\ flags\ to\ avoid}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ redundant\ computations:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ -\/\ 0b00001:\ Outward\ normals\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ 0b00010:\ Face\ Jacobian\ determinants\ computed\ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ -\/\ 0b00100:\ Element\ inverse\ Jacobians\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ -\/\ 0b01000:\ Element\ Jacobian\ determinants\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ -\/\ 0b10000:\ Element\ Jacobians\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00023}00023\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{Geometry}}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00025}00025\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00026}00026\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ domain\ \ \ \ \%\ Domain\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry\ \textcolor{keywordtype}{object})}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ reference\ \%\ Reference\ element\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry\ \textcolor{keywordtype}{object})}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{00029}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}\ \%\ Transformation\ data\ cache\ (struct)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00030}00030\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00031}00031\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00032}00032\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{00033}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MESH\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ base\ class.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})\ creates\ a\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ and\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ geometries.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00039}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ -\/\ Physical\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ -\/\ Reference\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}};}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}};}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{resetTransform}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{resetTransform}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RESETTRANSFORM\ Reset\ transformation\ data\ cache.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{resetTransform}}(obj)\ clears\ all\ cached\ transformation}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00055}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ data\ and\ resets\ the\ computation\ flags.\ This\ method\ should}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ be\ called\ whenever\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ geometry\ changes.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}\ with\ cleared\ cache}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}\ =\ struct(\ ...}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'EJ',\ [],\ ...\ \ \ \ \ \ \%\ Element\ Jacobian\ matrices}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'detEJ',\ [],\ ...\ \ \ \%\ Element\ Jacobian\ determinants}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'invEJ',\ [],\ ...\ \ \ \%\ Element\ inverse\ Jacobian\ matrices}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'detFJ',\ [],\ ...\ \ \ \%\ Face\ Jacobian\ determinants}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'outN',\ [],\ ...\ \ \ \ \%\ Outward\ normal\ vectors}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'flag',\ 0b00000);\ \ \%\ Computation\ status\ flags}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ function\ EJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{computeElementJacobians}}(obj,\ IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00074}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEELEMENTJACOBIANS\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ Jacobian\ matrices.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ EJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{computeElementJacobians}}(obj)\ computes\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrices\ for\ coordinate\ transformation\ from\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ to}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ physical\ coordinates\ for\ all\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ EJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{computeElementJacobians}}(obj,\ IE)\ computes\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrices\ only\ for\ the\ specified\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (optional,\ vector)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ EJ\ -\/\ Jacobian\ matrices\ (nDims\ ×\ nDims\ ×\ nElements)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ Jacobian\ matrix\ \(\backslash\)f\$J\_\{ij\}\ =\ \(\backslash\)frac\{\(\backslash\)partial}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x\_i\}\{\(\backslash\)partial\(\backslash\)xi\_j\}\(\backslash\)f\$\ where\ \(\backslash\)f\$x\(\backslash\)f\$\ are\ physical}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinates\ and\ \(\backslash\)f\$\(\backslash\)xi\(\backslash\)f\$\ are\ reference\ coordinates.\ For}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinate\ transformations:\ \(\backslash\)f\$dx\ =\ J\ d\(\backslash\)xi\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ \textcolor{keywordflow}{if}\ Jacobians\ are\ already\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~bitand(obj.transform.flag,\ 0b10000)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.EJ\ =\ obj.computeAllElementJacobians();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.flag\ =\ bitor(obj.transform.flag,\ 0b10000);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ all\ or\ subset\ of\ Jacobians}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2\ ||\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.transform.EJ;}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.transform.EJ(:,\ :,\ IE);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00107}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{00107}}\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ function\ detEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{computeElementJacobianDeterminants}}(obj,\ IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEELEMENTJACOBIANDETERMINANTS\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ determinants.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{computeElementJacobianDeterminants}}(obj)\ computes}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Jacobian\ determinants\ for\ coordinate\ transformation\ from}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ to\ physical\ coordinates\ for\ all\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{computeElementJacobianDeterminants}}(obj,\ IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computes\ Jacobian\ determinants\ only\ for\ the\ specified}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (optional,\ vector)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detEJ\ -\/\ Element\ Jacobian\ determinants\ (vector)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ Jacobian\ determinant\ appears\ in\ integration\ formulas:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \(\backslash\)int\_\{\(\backslash\)Omega\}\ f(x)\ dx\ =\ \(\backslash\)int\_\{\(\backslash\)hat\{\(\backslash\)Omega\}\}\ f(F(\(\backslash\)xi))}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ |det(J)|\ d\(\backslash\)xi}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$F\(\backslash\)f\$\ is\ the\ coordinate\ transformation\ and}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$\(\backslash\)partial\(\backslash\)hat\{Ω̂\}\(\backslash\)f\$\ is\ the\ reference\ element.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ \textcolor{keywordflow}{if}\ determinants\ are\ already\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~bitand(obj.transform.flag,\ 0b01000)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.detEJ\ =\ obj.computeAllElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.flag\ =\ bitor(obj.transform.flag,\ 0b01000);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ all\ or\ subset\ of\ determinants}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2\ ||\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00148}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{00148}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.detEJ;}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.detEJ(IE);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ function\ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{computeElementInverseJacobians}}(obj,\ IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEELEMENTINVERSEJACOBIANS\ Compute\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ inverse}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Jacobian\ matrices.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{computeElementInverseJacobians}}(obj)\ computes}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ inverse\ Jacobian\ matrices\ for\ coordinate\ transformation}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ from\ physical\ to\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ coordinates\ for\ all\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{computeElementInverseJacobians}}(obj,\ IE)\ computes}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ inverse\ Jacobian\ matrices\ only\ for\ the\ specified\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (optional,\ vector)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invEJ\ -\/\ Inverse\ Jacobian\ matrices\ (nDims\ ×\ nDims\ ×\ nElements)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ inverse\ Jacobian\ matrix\ appears\ in\ gradient}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computations:\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \(\backslash\)nabla\_x\ f\ =\ J\string^\{-\/T\}\ \(\backslash\)nabla\_ξ\ f\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$\(\backslash\)nabla\_x\(\backslash\)f\$\ and\ \(\backslash\)f\$\(\backslash\)nabla\_\(\backslash\)xi\(\backslash\)f\$\ are\ gradients\ in}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ physical\ and\ reference\ coordinates\ respectively.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ \textcolor{keywordflow}{if}\ inverse\ Jacobians\ are\ already\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~bitand(obj.transform.flag,\ 0b00100)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.invEJ\ =\ obj.computeAllElementInverseJacobians();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.flag\ =\ bitor(obj.transform.flag,\ 0b00100);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00188}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{00188}}\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ all\ or\ subset\ of\ inverse\ Jacobians}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2\ ||\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.invEJ;}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.invEJ(:,\ :,\ IE);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ function\ detFJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{computeFaceJacobianDeterminants}}(obj,\ IE,\ IFE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEFACEJACOBIANDETERMINANTS\ Compute\ face\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ determinants.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{computeFaceJacobianDeterminants}}(obj,\ IE,\ IFE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computes\ Jacobian\ determinants\ for\ coordinate\ transformation}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ on\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ faces\ for\ integration\ over\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (vector\ or\ [])}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Local\ face\ index\ (scalar,\ 1\ to\ nFaces)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ -\/\ Face\ Jacobian\ determinants\ (vector)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Face\ Jacobian\ determinants\ are\ used\ in\ boundary}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integration:\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \(\backslash\)int\_\{\(\backslash\)partial\(\backslash\)Omega\}\ f(x)\ dS\ =}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \(\backslash\)int\_\{\(\backslash\)partial\(\backslash\)hat\{\(\backslash\)Omega\}\}\ f(F(\(\backslash\)xi))\ |det(J\_F)|\ d\(\backslash\)xi}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f]\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$\(\backslash\)partial\(\backslash\)Omega\(\backslash\)f\$\ is\ the\ boundary\ and\ \(\backslash\)f\$J\_F\(\backslash\)f\$\ is}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ face\ Jacobian.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ \textcolor{keywordflow}{if}\ face\ Jacobians\ are\ already\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~bitand(obj.transform.flag,\ 0b00010)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00227}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{00227}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.detFJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{computeAllFaceJacobianDeterminants}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.flag\ =\ bitor(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.flag,\ 0b00010);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ all\ or\ subset\ of\ face\ determinants}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detFJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.detFJ\{IFE\};}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detFJ\ =\ obj.transform.detFJ\{IFE\}(IE);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ function\ outN\ =\ computeOutwardNormals(obj,\ IE,\ IFE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEOUTWARDNORMALS\ Compute\ outward\ normal\ vectors.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ =\ computeOutwardNormals(obj,\ IE,\ IFE)\ computes\ unit}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outward\ normal\ vectors\ on\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ faces\ \textcolor{keywordflow}{for}\ boundary}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ conditions\ and\ flux\ computations.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Mesh\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (vector\ or\ [])}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Local\ face\ index\ (scalar,\ 1\ to\ nFaces)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ -\/\ Outward\ unit\ normal\ vectors\ (nDims\ ×\ nElements)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Outward\ normals\ are\ used\ in\ boundary\ conditions\ and\ flux}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ computations.\ The\ direction\ is\ defined\ such\ that\ the\ normal}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ points\ away\ from\ the\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ interior.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ \textcolor{keywordflow}{if}\ outward\ normals\ are\ already\ computed}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~bitand(obj.transform.flag,\ 0b00001)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00261}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a142fb2e0bd3bee828cf136414c8ccf8c}{00261}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.outN\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{computeAllOutwardNormals}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.flag\ =\ bitor(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.flag,\ 0b00001);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ all\ or\ subset\ of\ outward\ normals}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}.outN\{IFE\};}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\ =\ obj.transform.outN\{IFE\}(:,\ IE);}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00272}00272\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00274}00274\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \%\ GRAPHIFY\ Convert\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ to\ graph\ representation.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ graphObj\ =\ graphify(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \%\ COLLOCATE\ Map\ reference\ coordinates\ to\ physical\ coordinates.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ Y\ =\ collocate(obj,\ X,\ IE)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00280}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{00280}}\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \%\ REFINE\ Create\ refined\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ with\ smaller\ elements.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ newObj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{refine}}(obj,\ nLevels)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \%\ COMPUTEMEASURE\ Compute\ characteristic\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ size.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ h\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{computeMeasure}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00286}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a144648013076ba21a3dab384fde72d56}{00286}}\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00287}00287\ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANS\ Compute\ all\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ Jacobian\ matrices.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ EJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{computeAllElementJacobians}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANDETERMINANTS\ Compute\ all\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \%\ Jacobian\ determinants.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00292}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{00292}}\ \ \ \ \ \ \ \ \ detEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{computeAllElementJacobianDeterminants}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTINVERSEJACOBIANS\ Compute\ all\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ inverse}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \%\ Jacobian\ matrices.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00296}00296\ \ \ \ \ \ \ \ \ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{computeAllElementInverseJacobians}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00298}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{00298}}\ \ \ \ \ \ \ \ \ \%\ COMPUTEALLFACEJACOBIANDETERMINANTS\ Compute\ all\ face\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \%\ determinants.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ detFJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{computeAllFaceJacobianDeterminants}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \%\ COMPUTEALLOUTWARDNORMALS\ Compute\ all\ outward\ normal\ vectors.}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00303}00303\ \ \ \ \ \ \ \ \ outN\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{computeAllOutwardNormals}}(obj)}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00304}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{00304}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_mesh_8m_source_l00305}00305\ end}
+
+\end{DoxyCode}

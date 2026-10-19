@@ -1,0 +1,149 @@
+\doxysection{profilers\+::metrics\+::Function\+Metric Class Reference}
+\hypertarget{classprofilers_1_1metrics_1_1_function_metric}{}\label{classprofilers_1_1metrics_1_1_function_metric}\index{profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}}
+
+
+Error computation for function-\/based solutions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{profilers\+::metrics\+::\+Metric}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{Function\+Metric}} (Input\+Type \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}, Input\+Type \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1metrics_1_1_function_metric}{Function\+Metric}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}{evaluate}} (Input\+Type obj, Input\+Type U, Input\+Type V)
+\begin{DoxyCompactList}\small\item\em Compute error between function-\/based solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{profilers\+::metrics\+::\+Metric}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_abdd1646d4e58932ab23704acaa79f762}{Metric}} (Input\+Type \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1metrics_1_1_metric}{Metric} base class. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_a35b47ba9bbb3beaef1bff5a471ad5fbb}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate error or distance between objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}}
+\begin{DoxyCompactList}\small\item\em Numerical integrator providing nodes and weights. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric}{profilers\+::metrics\+::\+Metric}}}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_abe0cc805521fa988af8043cd27dc1bb2}{VALID\+\_\+\+REDUCTION}} = \{\textquotesingle{}L1\textquotesingle{}, \textquotesingle{}L2\textquotesingle{}, \textquotesingle{}Lx\textquotesingle{}, \textquotesingle{}none\textquotesingle{}\}
+\begin{DoxyCompactList}\small\item\em Valid error reduction types. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1metrics_1_1_metric_af6b712962ae7c9dd9cebfa46dcf64ad8}{reduction}}
+\begin{DoxyCompactList}\small\item\em Cell array of reduction types to compute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Error computation for function-\/based solutions. 
+
+\doxylink{classprofilers_1_1metrics_1_1_function_metric}{Function\+Metric} implements error computation between discrete function values evaluated at specified integration nodes with associated quadrature weights. This class is designed for computing various error norms (L1, L2, Lx) between numerical and reference solutions represented as function values.
+
+The metric uses numerical integration to compute weighted error norms, making it suitable for finite element error analysis where solutions are evaluated at quadrature points with appropriate integration weights.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ function\ metric\ with\ L2\ norm}
+\DoxyCodeLine{metric\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}(\{\textcolor{stringliteral}{'L2'}\},\ gaussIntegrator);}
+\DoxyCodeLine{\%\ Compute\ error\ between\ numerical\ and\ exact\ solutions}
+\DoxyCodeLine{numericalValues\ =\ [1.1,\ 2.05,\ 2.98];\ \%\ at\ integration\ points}
+\DoxyCodeLine{exactValues\ =\ [1.0,\ 2.0,\ 3.0];}
+\DoxyCodeLine{error\ =\ metric.evaluate(numericalValues,\ exactValues);}
+\DoxyCodeLine{\%\ Multiple\ error\ norms\ simultaneously}
+\DoxyCodeLine{metric\ =\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}{FunctionMetric}}(\{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'}\},\ \mbox{\hyperlink{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}{integrator}});}
+\DoxyCodeLine{errors\ =\ metric.evaluate(numerical,\ exact);\ \%\ returns\ cell\ array}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classprofilers_1_1metrics_1_1_metric}{profilers.\+metrics.\+Metric} 
+
+\doxylink{classprofilers_1_1metrics_1_1_mesh_space_absolute_metric}{profilers.\+metrics.\+Mesh\+Space\+Absolute\+Metric} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_function_metric_8m_source_l00034}{34}} of file \mbox{\hyperlink{_function_metric_8m_source}{Function\+Metric.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16}\index{profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}!FunctionMetric@{FunctionMetric}}
+\index{FunctionMetric@{FunctionMetric}!profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}}
+\doxysubsubsection{\texorpdfstring{FunctionMetric()}{FunctionMetric()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1metrics_1_1_function_metric_a6e92752af39b97d51b301e19dc004c16} 
+function profilers\+::metrics\+::\+Function\+Metric\+::\+Function\+Metric (\begin{DoxyParamCaption}\item[{Input\+Type}]{reduction}{, }\item[{Input\+Type}]{integrator}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classprofilers_1_1metrics_1_1_function_metric}{Function\+Metric}. 
+
+obj = Function\+Metric(reduction, integrator) creates a function metric that computes errors between function values using the specified integration rule for weighted error norms.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reduction} & -\/ Cell array of error reduction types \\
+\hline
+{\em integrator} & -\/ Integrator object providing nodes and weights \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693}\index{profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1metrics_1_1_function_metric_a8486de86d694f1038a82975bf6c97693} 
+function profilers\+::metrics\+::\+Function\+Metric\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{U}{, }\item[{Input\+Type}]{V}{}\end{DoxyParamCaption})}
+
+
+
+Compute error between function-\/based solutions. 
+
+E = evaluate(obj, U, V) computes errors between numerical solution U and reference solution V using the specified error reduction types. For L1 and L2 norms, integration weights are applied for proper numerical integration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1metrics_1_1_function_metric}{Function\+Metric} object \\
+\hline
+{\em U} & -\/ Numerical solution values at integration points \\
+\hline
+{\em V} & -\/ Reference solution values (same points) or scalar\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em E} & -\/ Cell array of computed errors for each reduction type \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9}\index{profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}!integrator@{integrator}}
+\index{integrator@{integrator}!profilers::metrics::FunctionMetric@{profilers::metrics::FunctionMetric}}
+\doxysubsubsection{\texorpdfstring{integrator}{integrator}}
+{\footnotesize\ttfamily \label{classprofilers_1_1metrics_1_1_function_metric_a479005c16110c7539959a0f62ce092d9} 
+Property profilers\+::metrics\+::\+Function\+Metric\+::integrator}
+
+
+
+Numerical integrator providing nodes and weights. 
+
+
+
+Definition at line \mbox{\hyperlink{_function_metric_8m_source_l00038}{38}} of file \mbox{\hyperlink{_function_metric_8m_source}{Function\+Metric.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++profilers/+metrics/\mbox{\hyperlink{_function_metric_8m}{Function\+Metric.\+m}}\end{DoxyCompactItemize}

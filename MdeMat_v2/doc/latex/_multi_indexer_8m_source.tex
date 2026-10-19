@@ -1,0 +1,233 @@
+\doxysection{Multi\+Indexer.\+m}
+\hypertarget{_multi_indexer_8m_source}{}\label{_multi_indexer_8m_source}\index{+core/+linalg/MultiIndexer.m@{+core/+linalg/MultiIndexer.m}}
+\mbox{\hyperlink{_multi_indexer_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00001}00001\ classdef\ MultiIndexer\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{Indexer}}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00002}00002\ \ \ \ \ \%\ MULTIINDEXER\ Indexers\ handling\ multi-\/dimensional\ indexing.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ MultiIndexer\ generates\ multi-\/indices\ \textcolor{keywordflow}{for}\ tensor\ operations\ and}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ provides\ methods\ to\ convert\ between\ multi-\/indices\ and\ linear}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ indices.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00008}00008\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \%\ Create\ 3D\ multi-\/indexer\ and\ generate\ indices}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ indexer\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{MultiIndexer}}([2,3,4]);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ M\ =\ indexer.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}{generate}}();}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ L\ =\ indexer.multiToLinear(M);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00014}00014\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer}{Indexer}},\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_cached_multi_indexer}{CachedMultiIndexer}}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00017}00017\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ shape\ \%\ Tensor\ dimensions\ as\ row\ vector\ of\ positive\ integers}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00019}00019\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00021}00021\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00022}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{00022}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a038c0b47ad9a33dcc06cd04b5a259610}{nDims}}\ \%\ Number\ of\ dimensions,\ derived\ from\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00023}00023\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00025}00025\ \ \ \ \ properties\ (Access\ =\ protected)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00026}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{00026}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ \%\ Tensor\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ for\ linear\ index\ computation}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00027}00027\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00029}00029\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}},\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MULTIINDEXER\ Constructor\ for\ multi-\/dimensional\ indexer.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00032}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a038c0b47ad9a33dcc06cd04b5a259610}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}()\ creates\ empty\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}})\ creates\ with\ specified\ @a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}},\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}})\ creates\ with\ @a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ and}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00038}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ -\/\ Tensor\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ (optional)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ -\/\ Storage\ ordering\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ (optional,\ default:\ \textcolor{charliteral}{'F'})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2,\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}\ =\ \textcolor{charliteral}{'F'};\ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 1,\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ =\ [];\ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a12d8bc7603ef209ce913682b105a9c2e}{Indexer}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~isempty(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}),\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}{setShape}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}});\ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ n\ =\ get.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a038c0b47ad9a33dcc06cd04b5a259610}{nDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ number\ of\ dimensions\ based\ on\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00058}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}{setShape}}(obj,\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETSHAPE\ Set\ tensor\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ and\ stride\ for\ indexer.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}{setShape}}(obj,\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}})\ validates\ and\ sets\ @a\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ property,\ then\ updates\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ based\ on\ storage\ \mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ -\/\ Tensor\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ >\ 0),\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'InvalidShape',\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Shape\ must\ be\ a\ vector\ of\ positive\ integers.');}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}(:).';}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a8c27df30a3c3f775a6c2e58459f20393}{setStrides}}();}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}{generate}}(obj)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Return\ all\ one-\/based\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00084}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a524064a66c6eed668ee5602195ffd94e}{00084}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}{generate}}(obj)\ returns\ matrix\ where\ each\ row\ is}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multi-\/index\ satisfying\ 1\ <=\ M(i,j)\ <=\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}(j).}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Matrix\ where\ each\ row\ represents\ a\ multi-\/index}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}),\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'MissingShape',\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Shape\ must\ be\ set\ before\ using\ this\ method.');}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a038c0b47ad9a33dcc06cd04b5a259610}{nDims}}\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ (1:obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}).';}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ N\ =\ arrayfun(@(x)\ 1:x,\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}},\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}},\ \textcolor{charliteral}{'F'})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00105}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad9e7c7ff94c666f3ad98b3bcfc5f9c10}{00105}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [N\{:\}]\ =\ ndgrid(N\{:\});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [N\{end:-\/1:1\}]\ =\ ndgrid(N\{end:-\/1:1\});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ N\ =\ cellfun(@(x)\ x(:),\ N,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ cat(2,\ N\{:\});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ function\ L\ =\ multiToLinear(obj,\ M,\ bc)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ MULTITOLINEAR\ Convert\ multi-\/indices\ to\ linear\ indices.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ =\ multiToLinear(obj,\ M)\ converts\ multi-\/indices\ @a\ M\ to}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ linear\ indices\ based\ on\ tensor\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ =\ multiToLinear(obj,\ M,\ bc)\ uses\ boundary\ condition\ @a}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bc.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ MultiIndexer\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Multi-\/indices\ (matrix\ or\ cell\ array)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bc\ -\/\ Boundary\ condition\ (optional,\ \textcolor{keywordflow}{default}:\ 1)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ *\ 0:\ periodic\ boundary\ (wrap-\/around)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ \ *\ 1:\ strict\ boundary\ (\textcolor{keywordflow}{default},\ out-\/of-\/range\ set\ to\ 0)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ indices\ (vector)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 3,\ bc\ =\ 1;\ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.shape),\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'MissingShape'},\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Shape\ must\ be\ set\ before\ using\ this\ method.'});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(M)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.factorToMulti(M);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ismatrix(M)\ \&\&\ size(M,\ 2)\ ==\ obj.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00144}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a9612bd4b46132250e67b5c2a6265a971}{00144}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Multi-\/indices\ must\ has\ \%d\ columns.'},\ obj.nDims);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ bc\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ mod(M\ -\/\ 1,\ obj.shape)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ (M\ -\/\ 1)\ *\ obj.strides(:)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ bc\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L(any(M\ <\ 1,\ 2)\ |\ any(M\ >\ obj.shape,\ 2))\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc}{linearToMulti}}(obj,\ L)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINEARTOMULTI\ Convert\ linear\ indices\ to\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc}{linearToMulti}}(obj,\ L)\ converts\ linear\ indices\ @a\ L\ to}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multi-\/indices\ \textcolor{keywordflow}{for}\ tensor\ with\ specified\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ indices\ (vector)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Multi-\/indices\ (matrix)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.shape),\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'MissingShape'},\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Shape\ must\ be\ set\ before\ using\ this\ method.'});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ upper\ =\ prod(obj.shape);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(L\ <=\ upper)\ \&\&\ all(L\ >=\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'IndexOutOfBounds'},\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Linear\ index\ out\ of\ range\ (min:\ 1,\ max:\ \%d).'},\ upper);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ mod(floor((L(:)\ -\/\ 1)./obj.strides),\ obj.shape)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f}{factorToMulti}}(obj,\ F)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00184}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ad43ee41a2734b89210689408f6f4f1dc}{00184}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FACTORTOMULTI\ Convert\ factor\ indices\ to\ multi-\/indices.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f}{factorToMulti}}(obj,\ F)\ converts\ factor\ indices\ @a\ F\ to}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ multi-\/indices\ \textcolor{keywordflow}{for}\ tensor\ with\ specified\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5f2d36f3c9f788f0707cfe80de67d73}{MultiIndexer}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Cell\ array\ where\ each\ entry\ is\ factor\ indices}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Multi-\/indices\ (matrix)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(length(F)\ ==\ obj.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Factor\ number\ must\ be\ (\%d)'},\ obj.nDims);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmp(obj.style,\ \textcolor{charliteral}{'F'})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [F\{:\}]\ =\ ndgrid(F\{:\});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [F\{end:-\/1:1\}]\ =\ ndgrid(F\{end:-\/1:1\});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ cell2mat(cellfun(@(x)\ x(:),\ F,\ \textcolor{stringliteral}{'Un'},\ 0));}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00207}00207\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00209}00209\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00210}\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ace958114b64e7a41e303a4fe1bab108f}{00210}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a8c27df30a3c3f775a6c2e58459f20393}{setStrides}}(obj)}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETSTRIDES\ Set\ tensor\ \mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ for\ indexer.}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}\ =\ ones(1,\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a038c0b47ad9a33dcc06cd04b5a259610}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmp(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_indexer_a8d6a6c458a804f35ace3b2e109180bcc}{style}},\ \textcolor{charliteral}{'F'})}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}(2:end)\ =\ cumprod(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}(1:end-\/1),\ 2);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_ae5ce540a75e99595c5c954178d1ca3d3}{strides}}(1:end-\/1)\ =\ flip(cumprod(flip(obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer_a5693b102434a5e63698735e929d66e54}{shape}}(2:end),\ 2),\ 2),\ 2);}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00226}00226\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_multi_indexer_8m_source_l00227}00227\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,149 @@
+\doxysection{Differentiable\+Function.\+m}
+\hypertarget{_differentiable_function_8m_source}{}\label{_differentiable_function_8m_source}\index{+core/+function/DifferentiableFunction.m@{+core/+function/DifferentiableFunction.m}}
+\mbox{\hyperlink{_differentiable_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00001}00001\ classdef\ DifferentiableFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00002}00002\ \ \ \ \ \%\ DIFFERENTIABLEFUNCTION\ Base\ \textcolor{keyword}{class\ }for\ all\ differentiable\ functions.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ DifferentiableFunction\ extends\ the\ Function\ \textcolor{keyword}{class\ }to\ add\ support}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ computing\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ The\ implementation\ uses\ a\ two-\/step\ approach\ \textcolor{keywordflow}{for}\ derivatives:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ 1.\ The\ \textcolor{keyword}{public}\ derivative\ method\ handles\ input/output\ reshaping}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ 2.\ The\ \textcolor{keyword}{protected}\ derivativeImpl\ method\ handles\ the\ actual\ computation}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00011}00011\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_function}{Function}}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00013}00013\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00014}00014\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00015}00015\ \ \ \ \ \ \ \ \ function\ dY\ =\ derivative(obj,\ X,\ r)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DERIVATIVE\ Compute\ the\ derivative\ of\ specified\ order\ at\ given\ points.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00017}\mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{00017}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}(obj,\ X,\ r)\ computes\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}\ of\ order}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ by\ the\ vector\ r\ at\ the\ points\ X.\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ order\ vector\ r\ specifies\ the\ partial\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}\ order\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ each\ input\ dimension.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{DifferentiableFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Points\ where\ to\ \mbox{\hyperlink{classcore_1_1function_1_1_function_ab6aaaf6376df339142ae246211b0a391}{evaluate}}\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ r\ -\/\ Derivative\ order\ vector\ (1\ x\ \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dY\ -\/\ Derivative\ values\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isWellDefined,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotWellDefined'},\ \textcolor{stringliteral}{'Function\ is\ not\ well-\/defined.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isvector(r)\ \&\&\ isnumeric(r)\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00036}\mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ length(r)\ ==\ n\ \&\&\ all(r\ >=\ 0)\ \&\&\ sum(r)\ >\ 0,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Bad\ derivative\ order.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(X,\ 1)\ ==\ n,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Input\ dimension\ mismatch.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ size(X);\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ n,\ []);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ obj.derivativeImpl(X,\ r);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.nCodims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(dY,\ 1)\ ==\ m,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidOutput'},\ \textcolor{stringliteral}{'Output\ dimension\ mismatch.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(s)\ >\ 2}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ reshape(dY,\ [m,\ s(2:end)]);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ J\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_aa2e3281fa9e863f09ea088fec05f3ed9}{jacobian}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ JACOBIAN\ Compute\ the\ Jacobian\ matrix\ at\ specified\ points.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_aa2e3281fa9e863f09ea088fec05f3ed9}{jacobian}}(obj,\ X)\ computes\ the\ Jacobian\ matrix\ of\ the}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ at\ the\ specified\ points.\ For\ a\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ from}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$R\string^n\(\backslash\)f\$\ to\ \(\backslash\)f\$R\string^m\(\backslash\)f\$,\ the\ Jacobian\ is\ an\ \(\backslash\)f\$m\(\backslash\)times\ n\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ of\ first\ partial\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{DifferentiableFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Coordinates\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ -\/\ Jacobian\ tensor\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{nCodims}}\ x\ \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(obj.isWellDefined,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotWellDefined'},\ \textcolor{stringliteral}{'Function\ is\ not\ well-\/defined.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(X,\ 1)\ ==\ n,\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Input\ dimension\ mismatch.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00076}\mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_aa2e3281fa9e863f09ea088fec05f3ed9}{00076}}\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ size(X);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ n,\ []);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ size(X,\ 2);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.nCodims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ zeros(m,\ n,\ p);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ zeros(1,\ n);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r(j)\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ p\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dYj\ =\ obj.derivativeImpl(X,\ r);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ size(dYj,\ 1)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(i,\ j,\ :)\ =\ dYj;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(i,\ j,\ :)\ =\ dYj(i,\ :);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(s)\ >\ 2}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ reshape(J,\ [m,\ n,\ s(2:end)]);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ G\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GRADIENT\ Compute\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}}\ at\ specified\ points.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}}(obj,\ X)\ computes\ the\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}}\ vector\ of\ a}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ scalar-\/valued\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ at\ the\ specified\ points.\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{gradient}}\ is\ only\ defined\ \textcolor{keywordflow}{for}\ scalar-\/valued\ functions.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function}{DifferentiableFunction}}\ object\ (must\ be\ scalar-\/valued)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Points\ where\ to\ \mbox{\hyperlink{classcore_1_1function_1_1_function_ab6aaaf6376df339142ae246211b0a391}{evaluate}}\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ -\/\ Gradient\ vector\ (\mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{nDims}}\ x\ ...)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ obj.nCodims;}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(m\ ==\ 1,\ \textcolor{stringliteral}{'NotScalarValued'},\ ...}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Gradient\ is\ only\ defined\ for\ scalar-\/valued\ functions.'});}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ obj.jacobian(X);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00126}\mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a694f03669bef0ef9f155e4068bba8aa6}{00126}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ size(X);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(s)\ >\ 2}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ reshape(squeeze(J(1,\ :,\ :)),\ [n,\ s(2:end)]);}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ squeeze(J(1,\ :,\ :));}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00134}00134\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00135}00135\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00136}00136\ \ \ \ \ methods\ (Abstract,\ Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \%\ EVALUATEIMPL\ Implement\ the\ actual\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ Y\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a44eaf9f4446f62e3849901b98dac6e4c}{evaluateImpl}}(obj,\ X)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \%\ DERIVATIVEIMPL\ Implement\ the\ actual\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a55dad902c04bbdfec77e98eeae27aa6f}{derivative}}\ evaluation.}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ dY\ =\ \mbox{\hyperlink{classcore_1_1function_1_1_differentiable_function_a9ec44d60e583a774641604a5941b0afc}{derivativeImpl}}(obj,\ X,\ r)}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00142}00142\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_differentiable_function_8m_source_l00143}00143\ end}
+
+\end{DoxyCode}

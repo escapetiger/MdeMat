@@ -1,0 +1,45 @@
+\doxysection{distmesh/distmesh2dnew.m File Reference}
+\hypertarget{distmesh2dnew_8m}{}\label{distmesh2dnew_8m}\index{distmesh/distmesh2dnew.m@{distmesh/distmesh2dnew.m}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{distmesh2dnew_8m_acf3212809e2c72cc8d13197fbc68c2ba}{distmesh2dnew}} (Input\+Type fd, Input\+Type fh, Input\+Type h0, Input\+Type bbox, Input\+Type pfix, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em 2-\/D Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESH2\+D(\+FD,\+FH,\+H0,\+BBOX,\+PFIX,\+FPARAMS) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{distmesh2dnew_8m_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{distmesh2dnew_8m_acf3212809e2c72cc8d13197fbc68c2ba}\index{distmesh2dnew.m@{distmesh2dnew.m}!distmesh2dnew@{distmesh2dnew}}
+\index{distmesh2dnew@{distmesh2dnew}!distmesh2dnew.m@{distmesh2dnew.m}}
+\doxysubsubsection{\texorpdfstring{distmesh2dnew()}{distmesh2dnew()}}
+{\footnotesize\ttfamily \label{distmesh2dnew_8m_acf3212809e2c72cc8d13197fbc68c2ba} 
+function distmesh2dnew (\begin{DoxyParamCaption}\item[{Input\+Type}]{fd}{, }\item[{Input\+Type}]{fh}{, }\item[{Input\+Type}]{h0}{, }\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{pfix}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+2-\/D Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESH2\+D(\+FD,\+FH,\+H0,\+BBOX,\+PFIX,\+FPARAMS) 
+
+P\+: Node positions (Nx2) T\+: Triangle indices (NTx3) FD\+: Distance function \doxylink{ddiff_8m_a1aabac6d068eef6a7bad3fdf50a05cc8}{d(x,y)} FH\+: Scaled edge length function h(x,y) H0\+: Initial edge length BBOX\+: Bounding box \mbox{[}xmin,ymin; xmax,ymax\mbox{]} PFIX\+: Fixed node positions (NFIXx2) FPARAMS\+: Additional parameters passed to FD and FH
+
+Example\+: (Uniform Mesh on Unit Circle) fd=@(p) sqrt(sum(p.\texorpdfstring{$^\wedge$}{\string^}2,2))-\/1; \mbox{[}p,t\mbox{]}=distmesh2d(fd,@huniform,0.\+2,\mbox{[}-\/1,-\/1;1,1\mbox{]},\mbox{[}\mbox{]});
+
+Example\+: (Rectangle with circular hole, refined at circle boundary) fd=@(p) ddiff(drectangle(p,-\/1,1,-\/1,1),dcircle(p,0,0,0.\+5)); fh=@(p) 0.\+05+0.\+3\texorpdfstring{$\ast$}{*}dcircle(p,0,0,0.\+5); \mbox{[}p,t\mbox{]}=distmesh2d(fd,fh,0.\+05,\mbox{[}-\/1,-\/1;1,1\mbox{]},\mbox{[}-\/1,-\/1;-\/1,1;1,-\/1;1,1\mbox{]});
+
+Example\+: (Polygon) pv=\mbox{[}-\/0.\+4 -\/0.\+5;0.\+4 -\/0.\+2;0.\+4 -\/0.\+7;1.\+5 -\/0.\+4;0.\+9 0.\+1; 1.\+6 0.\+8;0.\+5 0.\+5;0.\+2 1;0.\+1 0.\+4;-\/0.\+7 0.\+7;-\/0.\+4 -\/0.\+5\mbox{]}; \mbox{[}p,t\mbox{]}=distmesh2d(@dpoly,@huniform,0.\+1,\mbox{[}-\/1,-\/1; 2,1\mbox{]},pv,pv);
+
+Example\+: (Ellipse) fd=@(p) p(\+:,1).\texorpdfstring{$^\wedge$}{\string^}2/2\texorpdfstring{$^\wedge$}{\string^}2+p(\+:,2).\texorpdfstring{$^\wedge$}{\string^}2/1\texorpdfstring{$^\wedge$}{\string^}2-\/1; \mbox{[}p,t\mbox{]}=distmesh2d(fd,@huniform,0.\+2,\mbox{[}-\/2,-\/1;2,1\mbox{]},\mbox{[}\mbox{]});
+
+Example\+: (Square, with size function point and line sources) fd=@(p) drectangle(p,0,1,0,1); fh=@(p) min(min(0.\+01+0.\+3\texorpdfstring{$\ast$}{*}abs(dcircle(p,0,0,0)), ... 0.\+025+0.\+3\texorpdfstring{$\ast$}{*}abs(dpoly(p,\mbox{[}0.\+3,0.\+7; 0.\+7,0.\+5\mbox{]}))),0.\+15); \mbox{[}p,t\mbox{]}=distmesh2d(fd,fh,0.\+01,\mbox{[}0,0;1,1\mbox{]},\mbox{[}0,0;1,0;0,1;1,1\mbox{]});
+
+Example\+: (NACA0012 airfoil) hlead=0.\+01; htrail=0.\+04; hmax=2; circx=2; circr=4; a=.12/.2\texorpdfstring{$\ast$}{*}\mbox{[}0.\+2969,-\/0.\+1260,-\/0.\+3516,0.\+2843,-\/0.\+1036\mbox{]};
+
+fd=@(p) ddiff(dcircle(p,circx,0,circr),(abs(p(\+:,2))-\/polyval(\mbox{[}a(5\+:-\/1\+:2),0\mbox{]},p(\+:,1))).\texorpdfstring{$^\wedge$}{\string^}2-\/a(1)\texorpdfstring{$^\wedge$}{\string^}2\texorpdfstring{$\ast$}{*}p(\+:,1)); fh=@(p) min(min(hlead+0.3\texorpdfstring{$\ast$}{*}dcircle(p,0,0,0),htrail+0.3\texorpdfstring{$\ast$}{*}dcircle(p,1,0,0)),hmax);
+
+fixx=1-\/htrail\texorpdfstring{$\ast$}{*}cumsum(1.\+3.\texorpdfstring{$^\wedge$}{\string^}(0\+:4)\textquotesingle{}); fixy=a(1)\texorpdfstring{$\ast$}{*}sqrt(fixx)+polyval(\mbox{[}a(5\+:-\/1\+:2),0\mbox{]},fixx); fix=\mbox{[}\mbox{[}circx+\mbox{[}-\/1,1,0,0\mbox{]}\texorpdfstring{$\ast$}{*}circr; 0,0,circr\texorpdfstring{$\ast$}{*}\mbox{[}-\/1,1\mbox{]}\mbox{]}\textquotesingle{}; 0,0; 1,0; fixx,fixy; fixx,-\/fixy\mbox{]}; box=\mbox{[}circx-\/circr,-\/circr; circx+circr,circr\mbox{]}; h0=min(\mbox{[}hlead,htrail,hmax\mbox{]});
+
+\mbox{[}p,t\mbox{]}=distmesh2d(fd,fh,h0,box,fix);
+
+See also\+: MESHDEMO2D, DISTMESHND, DELAUNAYN, TRIMESH.
+
+\doxylink{distmesh2d_8m}{distmesh2d.\+m} v1.\+1 Copyright (C) 2004-\/2012 Per-\/\+Olof Persson. See COPYRIGHT.\+TXT for details. 

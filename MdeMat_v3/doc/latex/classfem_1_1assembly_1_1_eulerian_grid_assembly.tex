@@ -1,0 +1,674 @@
+\doxysection{fem\+::assembly\+::Eulerian\+Grid\+Assembly Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly}{}\label{classfem_1_1assembly_1_1_eulerian_grid_assembly}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+
+
+Eulerian grid-\/based assembly.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly}{fem\+::assembly\+::\+Mixed\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_upwind_grid_assembly}{fem\+::assembly\+::\+Upwind\+Grid\+Assembly}}.
+
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0c66bde5f885b204258501e02c2a3741}{assemble\+Volume\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble volume integral terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6b1aa4e325ec81b05bdc9cc0ceee98c4}{assemble\+Left\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble left-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1b65be92ff914a6e8a859a2f27122a5b}{assemble\+Right\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble right-\/biased flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab8e143041b4b239082acd02412deff80}{assemble\+Central\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble central flux terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_aa6e49e2b998a9d6519d7d9061bcce905}{assemble\+Inner\+Left\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0efc77f0c2d2732618adc6cf7f81a7a5}{assemble\+Inner\+Right\+Flux\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a940c53f22de0a366fc8ffa9ab2cac380}{assemble\+Inner\+Left\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab2db84fedb07bdc6e61119ac083026ca}{assemble\+Inner\+Right\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a369fdb2a3a237065203c421bc237766a}{assemble\+Inner\+Left\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a69f3108844adda0da04d4326e332be87}{assemble\+Inner\+Right\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a871c48a6da5ed6ca04c68922fba0ab6f}{assemble\+Outer\+Left\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a21b4720bca1523759f799adcdf01fd4d}{assemble\+Outer\+Right\+Flux\+Interior\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux interior terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1d64b0f882711932a2036df04881a4d2}{assemble\+Outer\+Left\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab80df3bdd93000e9c2e5f3d0a048edfc}{assemble\+Outer\+Right\+Flux\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5f77aa8363a7da2641a56e4ead471640}{assemble\+Inner\+Left\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner left flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a104596a1941cab05c5f9688f309d2b2c}{assemble\+Inner\+Right\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble inner right flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a11616405b79ee25d11c3e430cfb51dba}{assemble\+Outer\+Left\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer left flux periodic boundary terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_ac7df20644eb21c4e426669f53bf47e77}{assemble\+Outer\+Right\+Flux\+Periodic\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Assemble outer right flux periodic boundary terms. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a55b078a689417077b5e9633b744f159f}{assemble\+Inner\+Left\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Inner contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6cca6f0483aa7703a3ee27851099d4ff}{assemble\+Outer\+Left\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Outer contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_afa96e50b041f318f3a9f5873cef89030}{assemble\+Inner\+Right\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Inner contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5ce5adf210ad68dee899b8cc81c05b85}{assemble\+Outer\+Right\+Flux\+Dirichlet\+Boundary\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c)
+\begin{DoxyCompactList}\small\item\em Outer contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a5665273508dad4e9455064dfc6cb114c}{assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6f43fe1c88de27345a4c96d026ef94c8}{assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6b9ffe199b1b0ecc4e7b0e8340d99723}{assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_abc21312f9531f69774d7a8dc3d826e99}{assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_ad918c35d7bffdf55e985b05b1783300a}{Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembly}{Grid\+Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}{Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type (0=periodic, 1=Dirichlet) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Eulerian grid-\/based assembly. 
+
+\doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} provides assembly methods for finite element operators on structured grid meshes using an Eulerian approach. This class handles volume and flux contributions with support for different boundary condition types including periodic and Dirichlet conditions.
+
+The assembly supports various flux formulations (left-\/biased, right-\/biased, and central) and handles both interior and boundary contributions for each type.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ Eulerian\ grid\ assembly}
+\DoxyCodeLine{assembly\ =\ EulerianGridAssembly(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ 0);\ \%\ Periodic\ BC}
+\DoxyCodeLine{\%\ Assemble\ different\ flux\ types}
+\DoxyCodeLine{T\_left\ =\ assembly.assembleLeftFluxTerms(1,\ coeffs);}
+\DoxyCodeLine{T\_central\ =\ assembly.assembleCentralFluxTerms(1,\ coeffs);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_grid_assembly}{fem.\+assembly.\+Grid\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_assembly}{fem.\+assembly.\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_eulerian_grid_assembly_8m_source_l00029}{29}} of file \mbox{\hyperlink{_eulerian_grid_assembly_8m_source}{Eulerian\+Grid\+Assembly.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab8e143041b4b239082acd02412deff80}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleCentralFluxTerms@{assembleCentralFluxTerms}}
+\index{assembleCentralFluxTerms@{assembleCentralFluxTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleCentralFluxTerms()}{assembleCentralFluxTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab8e143041b4b239082acd02412deff80} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Central\+Flux\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble central flux terms. 
+
+T = assemble\+Central\+Flux\+Terms(obj, d, c) combines left and right flux contributions with equal weighting to create central difference-\/type operators.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for central flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a369fdb2a3a237065203c421bc237766a}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerLeftFluxBoundaryTerms@{assembleInnerLeftFluxBoundaryTerms}}
+\index{assembleInnerLeftFluxBoundaryTerms@{assembleInnerLeftFluxBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxBoundaryTerms()}{assembleInnerLeftFluxBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a369fdb2a3a237065203c421bc237766a} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner left flux boundary terms. 
+
+T = assemble\+Inner\+Left\+Flux\+Boundary\+Terms(obj, d, c) computes the inner contribution to a left flux along the specified dimension on the boundary, dispatching to appropriate boundary condition methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a55b078a689417077b5e9633b744f159f}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerLeftFluxDirichletBoundaryTerms@{assembleInnerLeftFluxDirichletBoundaryTerms}}
+\index{assembleInnerLeftFluxDirichletBoundaryTerms@{assembleInnerLeftFluxDirichletBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxDirichletBoundaryTerms()}{assembleInnerLeftFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a55b078a689417077b5e9633b744f159f} 
+virtual function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Inner contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_aec826b4f92f6d782392b6176f1dcf5e5}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a61f1cc3b75e025c120b5ebfc1e34b698}{fem\+::assembly\+::\+Mixed\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a7a72dd653a72e55f3c5536940d291d9c}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_upwind_grid_assembly_a2a47b838ba818feb52ac99adfdd5486a}{fem\+::assembly\+::\+Upwind\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a940c53f22de0a366fc8ffa9ab2cac380}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerLeftFluxInteriorTerms@{assembleInnerLeftFluxInteriorTerms}}
+\index{assembleInnerLeftFluxInteriorTerms@{assembleInnerLeftFluxInteriorTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxInteriorTerms()}{assembleInnerLeftFluxInteriorTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a940c53f22de0a366fc8ffa9ab2cac380} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Interior\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner left flux interior terms. 
+
+T = assemble\+Inner\+Left\+Flux\+Interior\+Terms(obj, d, c) computes the inner contribution to a left flux along the specified dimension for elements in the domain interior.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for interior contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5f77aa8363a7da2641a56e4ead471640}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerLeftFluxPeriodicBoundaryTerms@{assembleInnerLeftFluxPeriodicBoundaryTerms}}
+\index{assembleInnerLeftFluxPeriodicBoundaryTerms@{assembleInnerLeftFluxPeriodicBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxPeriodicBoundaryTerms()}{assembleInnerLeftFluxPeriodicBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5f77aa8363a7da2641a56e4ead471640} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Periodic\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner left flux periodic boundary terms. 
+
+T = assemble\+Inner\+Left\+Flux\+Periodic\+Boundary\+Terms(obj, d, c) computes the inner contribution to a left flux along the specified dimension on boundaries with periodic boundary conditions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for periodic boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_aa6e49e2b998a9d6519d7d9061bcce905}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerLeftFluxTerms@{assembleInnerLeftFluxTerms}}
+\index{assembleInnerLeftFluxTerms@{assembleInnerLeftFluxTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerLeftFluxTerms()}{assembleInnerLeftFluxTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_aa6e49e2b998a9d6519d7d9061bcce905} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Left\+Flux\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner left flux contribution. 
+
+T = assemble\+Inner\+Left\+Flux\+Terms(obj, d, c) computes the inner contribution to a left flux along the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for inner left flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a69f3108844adda0da04d4326e332be87}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerRightFluxBoundaryTerms@{assembleInnerRightFluxBoundaryTerms}}
+\index{assembleInnerRightFluxBoundaryTerms@{assembleInnerRightFluxBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxBoundaryTerms()}{assembleInnerRightFluxBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a69f3108844adda0da04d4326e332be87} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner right flux boundary terms. 
+
+T = assemble\+Inner\+Right\+Flux\+Boundary\+Terms(obj, d, c) computes the inner contribution to a right flux along the specified dimension on the boundary, dispatching to appropriate boundary condition methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_afa96e50b041f318f3a9f5873cef89030}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerRightFluxDirichletBoundaryTerms@{assembleInnerRightFluxDirichletBoundaryTerms}}
+\index{assembleInnerRightFluxDirichletBoundaryTerms@{assembleInnerRightFluxDirichletBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxDirichletBoundaryTerms()}{assembleInnerRightFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_afa96e50b041f318f3a9f5873cef89030} 
+virtual function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Inner contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_a5e3705003eb8f79a5940a3273a082070}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_a4c60081af71b85e107389bf28be82fb9}{fem\+::assembly\+::\+Mixed\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a2d561e97f1040370503d3f86c5c8e722}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_upwind_grid_assembly_a5305ed2e6960eca97a05eb5eddcf6105}{fem\+::assembly\+::\+Upwind\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab2db84fedb07bdc6e61119ac083026ca}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerRightFluxInteriorTerms@{assembleInnerRightFluxInteriorTerms}}
+\index{assembleInnerRightFluxInteriorTerms@{assembleInnerRightFluxInteriorTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxInteriorTerms()}{assembleInnerRightFluxInteriorTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab2db84fedb07bdc6e61119ac083026ca} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Interior\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner right flux interior terms. 
+
+T = assemble\+Inner\+Right\+Flux\+Interior\+Terms(obj, d, c) computes the inner contribution to a right flux along the specified dimension for elements in the domain interior.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for interior contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a104596a1941cab05c5f9688f309d2b2c}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerRightFluxPeriodicBoundaryTerms@{assembleInnerRightFluxPeriodicBoundaryTerms}}
+\index{assembleInnerRightFluxPeriodicBoundaryTerms@{assembleInnerRightFluxPeriodicBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxPeriodicBoundaryTerms()}{assembleInnerRightFluxPeriodicBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a104596a1941cab05c5f9688f309d2b2c} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Periodic\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner right flux periodic boundary terms. 
+
+T = assemble\+Inner\+Right\+Flux\+Periodic\+Boundary\+Terms(obj, d, c) computes the inner contribution to a right flux along the specified dimension on boundaries with periodic boundary conditions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for periodic boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0efc77f0c2d2732618adc6cf7f81a7a5}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleInnerRightFluxTerms@{assembleInnerRightFluxTerms}}
+\index{assembleInnerRightFluxTerms@{assembleInnerRightFluxTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleInnerRightFluxTerms()}{assembleInnerRightFluxTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0efc77f0c2d2732618adc6cf7f81a7a5} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Inner\+Right\+Flux\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble inner right flux contribution. 
+
+T = assemble\+Inner\+Right\+Flux\+Terms(obj, d, c) computes the inner contribution to a right flux along the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for inner right flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6b1aa4e325ec81b05bdc9cc0ceee98c4}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleLeftFluxTerms@{assembleLeftFluxTerms}}
+\index{assembleLeftFluxTerms@{assembleLeftFluxTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleLeftFluxTerms()}{assembleLeftFluxTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6b1aa4e325ec81b05bdc9cc0ceee98c4} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Left\+Flux\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble left-\/biased flux terms. 
+
+T = assemble\+Left\+Flux\+Terms(obj, d, c) combines interior and boundary contributions for left-\/biased flux terms along the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for left flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1d64b0f882711932a2036df04881a4d2}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterLeftFluxBoundaryTerms@{assembleOuterLeftFluxBoundaryTerms}}
+\index{assembleOuterLeftFluxBoundaryTerms@{assembleOuterLeftFluxBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFluxBoundaryTerms()}{assembleOuterLeftFluxBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1d64b0f882711932a2036df04881a4d2} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Left\+Flux\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer left flux boundary terms. 
+
+T = assemble\+Outer\+Left\+Flux\+Boundary\+Terms(obj, d, c) computes the outer contribution to a left flux along the specified dimension on the boundary, dispatching to appropriate boundary condition methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6cca6f0483aa7703a3ee27851099d4ff}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterLeftFluxDirichletBoundaryTerms@{assembleOuterLeftFluxDirichletBoundaryTerms}}
+\index{assembleOuterLeftFluxDirichletBoundaryTerms@{assembleOuterLeftFluxDirichletBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFluxDirichletBoundaryTerms()}{assembleOuterLeftFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a6cca6f0483aa7703a3ee27851099d4ff} 
+virtual function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Left\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Outer contribution to a left flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_aab1f7f4087f9a49a919ed5ea79cb7e33}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_aa7f1bb5122fe587ad778f4ec6e761c81}{fem\+::assembly\+::\+Mixed\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_a073d18dcef7e4837d387b2de266c2500}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_upwind_grid_assembly_af0d0254fe01356c22bfdcadc8744ef39}{fem\+::assembly\+::\+Upwind\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a871c48a6da5ed6ca04c68922fba0ab6f}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterLeftFluxInteriorTerms@{assembleOuterLeftFluxInteriorTerms}}
+\index{assembleOuterLeftFluxInteriorTerms@{assembleOuterLeftFluxInteriorTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFluxInteriorTerms()}{assembleOuterLeftFluxInteriorTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a871c48a6da5ed6ca04c68922fba0ab6f} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Left\+Flux\+Interior\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer left flux interior terms. 
+
+T = assemble\+Outer\+Left\+Flux\+Interior\+Terms(obj, d, c) computes the outer contribution to a left flux along the specified dimension for elements in the domain interior. This handles coupling between adjacent elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for outer contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a11616405b79ee25d11c3e430cfb51dba}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterLeftFluxPeriodicBoundaryTerms@{assembleOuterLeftFluxPeriodicBoundaryTerms}}
+\index{assembleOuterLeftFluxPeriodicBoundaryTerms@{assembleOuterLeftFluxPeriodicBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterLeftFluxPeriodicBoundaryTerms()}{assembleOuterLeftFluxPeriodicBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a11616405b79ee25d11c3e430cfb51dba} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Left\+Flux\+Periodic\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer left flux periodic boundary terms. 
+
+T = assemble\+Outer\+Left\+Flux\+Periodic\+Boundary\+Terms(obj, d, c) computes the outer contribution to a left flux along the specified dimension on boundaries with periodic boundary conditions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for periodic boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab80df3bdd93000e9c2e5f3d0a048edfc}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterRightFluxBoundaryTerms@{assembleOuterRightFluxBoundaryTerms}}
+\index{assembleOuterRightFluxBoundaryTerms@{assembleOuterRightFluxBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFluxBoundaryTerms()}{assembleOuterRightFluxBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_ab80df3bdd93000e9c2e5f3d0a048edfc} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Right\+Flux\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer right flux boundary terms. 
+
+T = assemble\+Outer\+Right\+Flux\+Boundary\+Terms(obj, d, c) computes the outer contribution to a right flux along the specified dimension on the boundary, dispatching to appropriate boundary condition methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5ce5adf210ad68dee899b8cc81c05b85}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterRightFluxDirichletBoundaryTerms@{assembleOuterRightFluxDirichletBoundaryTerms}}
+\index{assembleOuterRightFluxDirichletBoundaryTerms@{assembleOuterRightFluxDirichletBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFluxDirichletBoundaryTerms()}{assembleOuterRightFluxDirichletBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a5ce5adf210ad68dee899b8cc81c05b85} 
+virtual function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Right\+Flux\+Dirichlet\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Outer contribution to a right flux along a specific dimension on the boundary with Dirichlet boundary conditions. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classfem_1_1assembly_1_1_auxiliary_grid_assembly_a96ed324ed6cc118b982502cdd0371b4d}{fem\+::assembly\+::\+Auxiliary\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_mixed_grid_assembly_ae45b6dc19d7ad36c7f8b5c37f6294674}{fem\+::assembly\+::\+Mixed\+Grid\+Assembly}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_primal_grid_assembly_abd8c4797fb26260c66f1fe543266fea9}{fem\+::assembly\+::\+Primal\+Grid\+Assembly}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_upwind_grid_assembly_a8db24e237bbafd1ee2ca35fcf5ed5def}{fem\+::assembly\+::\+Upwind\+Grid\+Assembly}}.
+
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a21b4720bca1523759f799adcdf01fd4d}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterRightFluxInteriorTerms@{assembleOuterRightFluxInteriorTerms}}
+\index{assembleOuterRightFluxInteriorTerms@{assembleOuterRightFluxInteriorTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFluxInteriorTerms()}{assembleOuterRightFluxInteriorTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a21b4720bca1523759f799adcdf01fd4d} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Right\+Flux\+Interior\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer right flux interior terms. 
+
+T = assemble\+Outer\+Right\+Flux\+Interior\+Terms(obj, d, c) computes the outer contribution to a right flux along the specified dimension for elements in the domain interior. This handles coupling between adjacent elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for outer contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_ac7df20644eb21c4e426669f53bf47e77}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleOuterRightFluxPeriodicBoundaryTerms@{assembleOuterRightFluxPeriodicBoundaryTerms}}
+\index{assembleOuterRightFluxPeriodicBoundaryTerms@{assembleOuterRightFluxPeriodicBoundaryTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleOuterRightFluxPeriodicBoundaryTerms()}{assembleOuterRightFluxPeriodicBoundaryTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_ac7df20644eb21c4e426669f53bf47e77} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Outer\+Right\+Flux\+Periodic\+Boundary\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble outer right flux periodic boundary terms. 
+
+T = assemble\+Outer\+Right\+Flux\+Periodic\+Boundary\+Terms(obj, d, c) computes the outer contribution to a right flux along the specified dimension on boundaries with periodic boundary conditions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for periodic boundary contribution \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1b65be92ff914a6e8a859a2f27122a5b}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleRightFluxTerms@{assembleRightFluxTerms}}
+\index{assembleRightFluxTerms@{assembleRightFluxTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleRightFluxTerms()}{assembleRightFluxTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a1b65be92ff914a6e8a859a2f27122a5b} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Right\+Flux\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble right-\/biased flux terms. 
+
+T = assemble\+Right\+Flux\+Terms(obj, d, c) combines interior and boundary contributions for right-\/biased flux terms along the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Combined triplet matrix for right flux terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0c66bde5f885b204258501e02c2a3741}\index{fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}!assembleVolumeTerms@{assembleVolumeTerms}}
+\index{assembleVolumeTerms@{assembleVolumeTerms}!fem::assembly::EulerianGridAssembly@{fem::assembly::EulerianGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleVolumeTerms()}{assembleVolumeTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_eulerian_grid_assembly_a0c66bde5f885b204258501e02c2a3741} 
+function fem\+::assembly\+::\+Eulerian\+Grid\+Assembly\+::assemble\+Volume\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble volume integral terms. 
+
+T = assemble\+Volume\+Terms(obj, d, c) creates triplets for the volume contribution of differential operators along the specified spatial dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembly}{Eulerian\+Grid\+Assembly} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector, one per element\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, value\mbox{]} for volume terms \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_eulerian_grid_assembly_8m}{Eulerian\+Grid\+Assembly.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,260 @@
+\doxysection{approx\+::integrate\+::Integrator Class Reference}
+\hypertarget{classapprox_1_1integrate_1_1_integrator}{}\label{classapprox_1_1integrate_1_1_integrator}\index{approx::integrate::Integrator@{approx::integrate::Integrator}}
+
+
+Base class for all integrators.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator}{approx\+::integrate\+::\+Hypersphere\+Integrator}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_face_integrator}{approx\+::integrate\+::\+Orthotope\+Face\+Integrator}}, \mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{approx\+::integrate\+::\+Orthotope\+Integrator}}, and \mbox{\hyperlink{classapprox_1_1integrate_1_1_richardson_integrator}{approx\+::integrate\+::\+Richardson\+Integrator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}{Integrator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}{copy}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Create a deep copy of the integrator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982}{set\+Points}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set integration points using the underlying rule. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd414c1c0277de51e60053049f95778e}{add\+Weight\+Function}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Add weight function for integral. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}{integrate}} (Input\+Type obj, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Evaluate the integral of function f. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}{rule}}
+\begin{DoxyCompactList}\small\item\em Integration rule object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}{nodes}}
+\begin{DoxyCompactList}\small\item\em Integration nodes. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}{weights}}
+\begin{DoxyCompactList}\small\item\em Integration weights. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a90ad5b80bdf0daaed818c2cad28bef47}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Number of integration points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all integrators. 
+
+\doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} provides a common interface for numerical integration across different domains and methods. It manages integration rules, nodes, weights, and provides the fundamental integration functionality that can be specialized by concrete subclasses.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_orthotope_integrator}{approx.\+integrate.\+Orthotope\+Integrator} 
+
+\doxylink{classapprox_1_1integrate_1_1_hypersphere_integrator}{approx.\+integrate.\+Hypersphere\+Integrator} 
+
+\doxylink{classapprox_1_1integrate_1_1_integration_rule}{approx.\+integrate.\+Integration\+Rule} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00017}{17}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!Integrator@{Integrator}}
+\index{Integrator@{Integrator}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{Integrator()}{Integrator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a8c25efae37ba299bb44a65df2c2d6400} 
+function approx\+::integrate\+::\+Integrator\+::\+Integrator (\begin{DoxyParamCaption}\item[{Input\+Type}]{rule}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator}. 
+
+obj = Integrator(rule) creates a numerical integrator using the specified integration rule.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule} & -\/ \doxylink{classapprox_1_1integrate_1_1_integration_rule}{Integration\+Rule} object \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_abd414c1c0277de51e60053049f95778e}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!addWeightFunction@{addWeightFunction}}
+\index{addWeightFunction@{addWeightFunction}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{addWeightFunction()}{addWeightFunction()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_abd414c1c0277de51e60053049f95778e} 
+function approx\+::integrate\+::\+Integrator\+::add\+Weight\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{f}{}\end{DoxyParamCaption})}
+
+
+
+Add weight function for integral. 
+
+obj = add\+Weights(obj, f) scales the integration weights according to the specified weight function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object \\
+\hline
+{\em f} & -\/ Weight function handle\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!copy@{copy}}
+\index{copy@{copy}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a26fc98c171cbc7a75727b6964eac197d} 
+function approx\+::integrate\+::\+Integrator\+::copy (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Create a deep copy of the integrator. 
+
+new\+Obj = copy(obj) creates a new \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object with the same rule, nodes, and weights as the original.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object to copy\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em new\+Obj} & -\/ Deep copy of the original integrator \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!integrate@{integrate}}
+\index{integrate@{integrate}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a2d5dfb2abd23ffd234cce61d6c3b5c8a} 
+function approx\+::integrate\+::\+Integrator\+::integrate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{f}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate the integral of function f. 
+
+I = \doxylink{namespaceapprox_1_1integrate}{integrate(obj, f)} approximates the integral of function f over the integration domain using the precomputed nodes and weights.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object \\
+\hline
+{\em f} & -\/ Function handle or cell array of functions to integrate\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em I} & -\/ Approximate value of the integral \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982} 
+function approx\+::integrate\+::\+Integrator\+::set\+Points (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set integration points using the underlying rule. 
+
+obj = set\+Points(obj, varargin) generates integration nodes and weights using the underlying integration rule and stores them in the integrator object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object \\
+\hline
+{\em varargin} & -\/ Arguments passed to the integration rule\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1integrate_1_1_integrator}{Integrator} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a1ab65f33df5f1183180eb8580b019edf} 
+Property approx\+::integrate\+::\+Integrator\+::n\+Dims}
+
+
+
+Number of dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00033}{33}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!nodes@{nodes}}
+\index{nodes@{nodes}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_abd84708d871089166a1b83370cba0e8b} 
+Property approx\+::integrate\+::\+Integrator\+::nodes}
+
+
+
+Integration nodes. 
+
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00024}{24}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a90ad5b80bdf0daaed818c2cad28bef47}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!nPoints@{nPoints}}
+\index{nPoints@{nPoints}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{nPoints}{nPoints}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a90ad5b80bdf0daaed818c2cad28bef47} 
+Property approx\+::integrate\+::\+Integrator\+::n\+Points}
+
+
+
+Number of integration points. 
+
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00036}{36}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!rule@{rule}}
+\index{rule@{rule}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{rule}{rule}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_ae5867adfb6f6d66f348b91a7288ef73c} 
+Property approx\+::integrate\+::\+Integrator\+::rule}
+
+
+
+Integration rule object. 
+
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00021}{21}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+\Hypertarget{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b}\index{approx::integrate::Integrator@{approx::integrate::Integrator}!weights@{weights}}
+\index{weights@{weights}!approx::integrate::Integrator@{approx::integrate::Integrator}}
+\doxysubsubsection{\texorpdfstring{weights}{weights}}
+{\footnotesize\ttfamily \label{classapprox_1_1integrate_1_1_integrator_a354b72dff2507cfa74e147a38c4fc45b} 
+Property approx\+::integrate\+::\+Integrator\+::weights}
+
+
+
+Integration weights. 
+
+
+
+Definition at line \mbox{\hyperlink{_integrator_8m_source_l00027}{27}} of file \mbox{\hyperlink{_integrator_8m_source}{Integrator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+integrate/\mbox{\hyperlink{_integrator_8m}{Integrator.\+m}}\end{DoxyCompactItemize}

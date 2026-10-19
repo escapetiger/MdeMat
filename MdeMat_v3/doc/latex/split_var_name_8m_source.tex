@@ -1,0 +1,13 @@
+\doxysection{split\+Var\+Name.\+m}
+\hypertarget{split_var_name_8m_source}{}\label{split_var_name_8m_source}\index{+profilers/+visual/private/splitVarName.m@{+profilers/+visual/private/splitVarName.m}}
+\mbox{\hyperlink{split_var_name_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00001}00001\ function\ [fieldName,\ varIdx]\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_a733889fbbf19bead64b9a779c93a3e58}{splitVarName}}(str)}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00002}00002\ tokens\ =\ regexp(str,\ \textcolor{stringliteral}{'\string^([a-\/zA-\/Z\_]+)(\(\backslash\)d+)\$'},\ \textcolor{stringliteral}{'tokens'});}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00003}00003\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(tokens),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00004}00004\ \ \ \ \ \textcolor{stringliteral}{'Input\ does\ not\ match\ the\ expected\ format.'});}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00005}00005\ fieldName\ =\ tokens\{1\}\{1\};}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00006}00006\ varIdx\ =\ str2double(tokens\{1\}\{2\});}
+\DoxyCodeLine{\Hypertarget{split_var_name_8m_source_l00007}\mbox{\hyperlink{namespaceprofilers_1_1visual_a733889fbbf19bead64b9a779c93a3e58}{00007}}\ end}
+
+\end{DoxyCode}

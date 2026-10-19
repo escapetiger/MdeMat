@@ -1,0 +1,154 @@
+\doxysection{approx\+::assembly\+::Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_assembly}{}\label{classapprox_1_1assembly_1_1_assembly}\index{approx::assembly::Assembly@{approx::assembly::Assembly}}
+
+
+Base class for assembly operations.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly}{approx\+::assembly\+::\+Flux\+Assembly}}, and \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{approx\+::assembly\+::\+Volume\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{Mesh\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}})
+\begin{DoxyCompactList}\small\item\em Constructor for Operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{assemble\+Matrix}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type JE, Input\+Type JL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble matrix contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{assemble\+Vector}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble vector contribution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh\+Space object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for assembly operations. 
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} provides the foundation for assembling discrete operators from element-\/level contributions in finite element methods. The assembly process involves iterating over mesh elements, computing local data, and accumulating contributions into global sparse data using appropriate connectivity information from the mesh space.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1space_1_1_mesh_space}{approx.\+space.\+Mesh\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00016}{16}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}\index{approx::assembly::Assembly@{approx::assembly::Assembly}!assembleMatrix@{assembleMatrix}}
+\index{assembleMatrix@{assembleMatrix}!approx::assembly::Assembly@{approx::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{assembleMatrix()}{assembleMatrix()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811} 
+function approx\+::assembly\+::\+Assembly\+::assemble\+Matrix (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IE}{, }\item[{Input\+Type}]{IL}{, }\item[{Input\+Type}]{JE}{, }\item[{Input\+Type}]{JL}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})}
+
+
+
+Assemble matrix contribution. 
+
+G = assemble\+Matrix(obj, IE, IL, JE, JL, L) assembles local matrices {\itshape L} to a global block diagonal matrix {\itshape G} with specified elements ({\itshape IE}, {\itshape JE}) and local Dofs ({\itshape IL}, {\itshape JL}) for test space and trial space, respectively.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The Mesh\+Operator object \\
+\hline
+{\em IE} & -\/ Element linear indices for test space (ne x 1 vector) \\
+\hline
+{\em IL} & -\/ Local DoF indices for test space (ni x 1 vector) \\
+\hline
+{\em JE} & -\/ Element linear indices for trial space (ne x 1 vector) \\
+\hline
+{\em JL} & -\/ Local DoF indices for trial space (nj x 1 vector) \\
+\hline
+{\em L} & -\/ Local matrices (nl x nl matrix or nl × nl × ne array)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Global matrix (ng x ng sparse) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}\index{approx::assembly::Assembly@{approx::assembly::Assembly}!assembleVector@{assembleVector}}
+\index{assembleVector@{assembleVector}!approx::assembly::Assembly@{approx::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{assembleVector()}{assembleVector()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423} 
+function approx\+::assembly\+::\+Assembly\+::assemble\+Vector (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IE}{, }\item[{Input\+Type}]{IL}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})}
+
+
+
+Assemble vector contribution. 
+
+G = assemble\+Vector(obj, IE, IL, L) assembles local vectors {\itshape L} to a global block diagonal matrix {\itshape G} with specified elements {\itshape IE} and local Dofs {\itshape IL}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The Mesh\+Operator object \\
+\hline
+{\em IE} & -\/ Element linear indices (ne x 1 vector) \\
+\hline
+{\em IL} & -\/ Local DoF indices (ni x 1 vector) \\
+\hline
+{\em L} & -\/ Local vectors (nl x nc matrix or nl x ne x nc array)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Global matrix (ng x nc sparse) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}\index{approx::assembly::Assembly@{approx::assembly::Assembly}!MeshOperator@{MeshOperator}}
+\index{MeshOperator@{MeshOperator}!approx::assembly::Assembly@{approx::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{MeshOperator()}{MeshOperator()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea} 
+function approx\+::assembly\+::\+Assembly\+::\+Mesh\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{space}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for Operator. 
+
+obj = Mesh\+Operator(space) creates an operator with the specified mesh space.
+
+
+\begin{DoxyParams}{Parameters}
+{\em space} & -\/ Mesh\+Space object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ Constructed Operator object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}\index{approx::assembly::Assembly@{approx::assembly::Assembly}!space@{space}}
+\index{space@{space}!approx::assembly::Assembly@{approx::assembly::Assembly}}
+\doxysubsubsection{\texorpdfstring{space}{space}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b} 
+Property approx\+::assembly\+::\+Assembly\+::space}
+
+
+
+Mesh\+Space object. 
+
+
+
+Definition at line \mbox{\hyperlink{_assembly_8m_source_l00020}{20}} of file \mbox{\hyperlink{_assembly_8m_source}{Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_assembly_8m}{Assembly.\+m}}\end{DoxyCompactItemize}

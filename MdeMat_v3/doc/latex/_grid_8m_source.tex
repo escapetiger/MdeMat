@@ -1,0 +1,247 @@
+\doxysection{Grid.\+m}
+\hypertarget{_grid_8m_source}{}\label{_grid_8m_source}\index{+approx/+mesh/Grid.m@{+approx/+mesh/Grid.m}}
+\mbox{\hyperlink{_grid_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00001}00001\ classdef\ Grid\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00002}00002\ \ \ \ \ \%\ GRID\ Base\ \textcolor{keyword}{class\ }for\ multidimensional\ structured\ grids.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ Grid\ provides\ a\ foundational\ framework\ \textcolor{keywordflow}{for}\ representing\ structured}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ computational\ grids\ \textcolor{keyword}{using\ }memory-\/efficient\ tensor-\/based\ storage.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ Unlike\ unstructured\ meshes\ that\ store\ \textcolor{keyword}{explicit}\ connectivity,}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ structured\ grids\ leverage\ their\ regular\ topology\ to\ achieve\ O(d×n)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ memory\ usage\ instead\ of\ O(n\string^d)\ \textcolor{keywordflow}{for}\ d-\/dimensional\ grids\ with\ n}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ elements\ per\ dimension.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }implements\ a\ tensor-\/product\ structure\ where:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ Grid\ vertices\ form\ a\ Cartesian\ product\ of\ 1D\ coordinate\ arrays}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ Element\ connectivity\ follows\ regular\ patterns\ in\ each\ dimension}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ -\/\ Neighbor\ relationships\ are\ computed\ algorithmically\ rather\ than\ stored}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ Boundary\ faces\ are\ identified\ by\ coordinate\ extrema}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ Reference\ coordinate\ system\ uses\ the\ hypercube\ [-\/1/2,\ 1/2]\string^d,}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ providing\ a\ canonical\ domain\ for\ finite\ element\ basis\ functions\ and}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ quadrature\ rules.\ Coordinate\ transformations\ between\ reference\ and}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ physical\ spaces\ are\ handled\ by\ concrete\ subclasses\ (UniformGrid,}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ NonuniformGrid).}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ The\ MultiIndexer\ facilitates\ efficient\ conversion\ between:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ -\/\ Linear\ indices:\ Single\ integers\ identifying\ grid\ elements\ [1,\ N]}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ -\/\ Multi-\/indices:\ d-\/tuples\ specifying\ position\ in\ each\ dimension}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ -\/\ Factor\ indices:\ Separate\ indexing\ within\ each\ dimensional\ factor}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00028}00028\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.Mesh,\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.SeparableGraph}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00031}00031\ \ \ \ \ properties\ (Access\ =\ public)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ resolution\ \ \%\ Element\ count\ per\ dimension\ (1\ ×\ nDims\ vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ centroids\ \ \ \%\ Element\ center\ coordinates\ per\ dimension\ (1\ ×\ nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ spacings\ \ \ \ \%\ Element\ spacing\ per\ dimension\ (1\ ×\ nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00035}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{00035}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ \ \ \ \%\ Element\ index\ ranges\ per\ dimension\ (1\ ×\ nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}\ \ \ \ \%\ Boundary\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ specifications\ (1\ ×\ 2nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}{indexer}}\ \ \ \ \ \%\ Multi-\/index\ converter\ (core.linalg.MultiIndexer)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00038}00038\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00039}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{00039}}\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00040}00040\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{nDims}}\ \ \ \ \ \ \ \%\ Number\ of\ spatial\ dimensions\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00042}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{00042}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}{nElements}}\ \ \ \%\ Total\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ in\ the\ grid\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00043}00043\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00045}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{00045}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}}(domain,\ reference,\ resolution,\ centroids,\ spacings)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GRID\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}}\ base\ class.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00048}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{00048}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}}(domain,\ reference,\ resolution,\ centroids,}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spacings)\ creates\ a\ structured\ grid\ with\ the\ specified}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00051}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ geometric\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}},\ and}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spacing\ information.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00054}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ -\/\ Physical\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ geometry\ (core.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ -\/\ Reference\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ geometry\ (core.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}\ -\/\ Elements\ per\ dimension\ (1\ ×\ nDims\ vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}\ -\/\ Element\ centers\ per\ dimension\ (1\ ×\ nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}\ -\/\ Element\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}\ per\ dimension\ (1\ ×\ nDims\ cell)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00060}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}}\ object}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00063}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}{00063}}\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ constructor\ with\ domain\ and\ reference\ geometry}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ obj@approx.mesh.Mesh(domain,\ reference);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Store\ grid\ structure\ information}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj.resolution\ =\ resolution;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ obj.centroids\ =\ centroids;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ obj.spacings\ =\ spacings;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ up\ multi-\/index\ converter\ for\ efficient\ transformations}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ obj.indexer\ =\ core.linalg.MultiIndexer(obj.resolution);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ element\ indices:\ [1,\ 2,\ ...,\ n\_i]\ for\ dimension\ i}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ obj.elements\ =\ arrayfun(@(n)\ 1:n,\ obj.resolution,\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ boundary\ face\ specifications}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ obj.boundary\ =\ cell(1,\ 2*obj.nDims);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:obj.nDims}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ template\ with\ all\ elements\ in\ each\ dimension}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ arrayfun(@(k)\ 1:k,\ obj.resolution,\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Lower\ boundary:\ first\ element\ in\ dimension\ i}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00085}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{00085}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\{i\}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.boundary\{2*i-\/1\}\ =\ f;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Upper\ boundary:\ last\ element\ in\ dimension\ i}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\{i\}\ =\ obj.resolution(i);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.boundary\{2*i\}\ =\ f;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nDims(obj)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.resolution);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nElements(obj)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NELEMENTS\ Get\ the\ total\ number\ of\ elements.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ prod(obj.resolution);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ function\ IE\ =\ findInteriorElements(obj)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDINTERIORELEMENTS\ Find\ linear\ indices\ of\ interior\ elements.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ =\ findInteriorElements(obj)\ computes\ linear\ indices\ of}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements\ that\ do\ not\ touch\ the\ domain\ boundary,\ useful\ for}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ applying\ different\ numerical\ schemes\ to\ interior\ and\ boundary}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ regions.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Grid\ object}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ interior\ elements\ (vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Interior\ elements\ are\ those\ with\ indices\ [2,\ n\_i-\/1]\ in}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ every\ dimension\ i,\ where\ n\_i\ is\ the\ number\ of\ elements\ in}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimension\ i.\ This\ excludes\ the\ first\ and\ last\ layer\ of}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements\ which\ touch\ the\ boundary.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ a\ 2D\ grid\ with\ resolution\ [nx,\ ny],\ interior\ elements}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ have\ multi-\/indices\ (i,j)\ where\ 2\ ≤\ i\ ≤\ nx-\/1\ and\ 2\ ≤\ j\ ≤}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ny-\/1.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ interior\ element\ ranges:\ exclude\ boundary\ layers}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ cellfun(@(I)\ I(2:end-\/1),\ obj.elements,\ 'Un',\ 0);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ factor\ indices\ to\ multi-\/indices}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.indexer.factorToMulti(ME);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ multi-\/indices\ to\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ obj.indexer.multiToLinear(ME);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ function\ IE\ =\ findBoundaryElements(obj,\ IFE)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDBOUNDARYELEMENTS\ Find\ linear\ indices\ of\ boundary\ elements.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ =\ findBoundaryElements(obj,\ IFE)\ computes\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ elements\ that\ share\ the\ specified\ boundary\ face,}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ essential\ for\ applying\ boundary\ conditions\ in\ numerical}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00146}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a5b2b5cd3fe674234c240b42fed9d1be6}{00146}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ methods.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Grid\ object}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Boundary\ face\ index\ (1\ to\ 2×nDims)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ boundary\ elements\ (vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Face\ numbering\ follows\ the\ convention:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 1:\ Lower\ boundary\ in\ dimension\ 1\ (x\_min)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 2:\ Upper\ boundary\ in\ dimension\ 1\ (x\_max)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 3:\ Lower\ boundary\ in\ dimension\ 2\ (y\_min)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Face\ 4:\ Upper\ boundary\ in\ dimension\ 2\ (y\_max)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ And\ so\ forth\ for\ higher\ dimensions}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Boundary\ elements\ have\ one\ coordinate\ at\ the\ domain\ extremum}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ while\ others\ vary\ over\ the\ full\ range.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ boundary\ face\ specification\ for\ the\ requested\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ IF\ =\ obj.boundary\{IFE\};}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ factor\ indices\ to\ multi-\/indices\ for\ boundary\ elements}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.indexer.factorToMulti(IF);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ multi-\/indices\ to\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ obj.indexer.multiToLinear(ME);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00175}00175\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ function\ [JE,\ JFE]\ =\ findNeighborElements(obj,\ IE,\ IFE,\ BC)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDNEIGHBORELEMENTS\ Find\ neighboring\ elements\ across\ faces.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [JE,\ JFE]\ =\ findNeighborElements(obj,\ IE,\ IFE,\ BC)\ computes}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ neighbor\ elements\ sharing\ the\ specified\ local\ face\ of\ given}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00181}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a8f47f77588cc3357af1633499b5f593c}{00181}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements,\ with\ appropriate\ boundary\ condition\ treatment.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ Grid\ object}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ primary\ elements\ (vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Local\ face\ index\ (1\ to\ 2×nDims)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ BC\ -\/\ Boundary\ condition\ ('periodic'\ or\ 'dirichlet')}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JE\ -\/\ Linear\ indices\ of\ neighbor\ elements\ (vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JFE\ -\/\ Local\ face\ indices\ of\ neighbors\ (vector)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Local\ face\ numbering\ matches\ global\ boundary\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ numbering.\ For\ structured\ grids,\ neighbors\ are\ found\ by}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ shifting\ element\ coordinates\ by\ ±1\ in\ the\ appropriate}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ dimension.}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Boundary\ condition\ handling:}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ 'periodic':\ Wrap\ around\ at\ domain\ boundaries\ (torus\ topology)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ 'dirichlet':\ No\ neighbors\ across\ domain\ boundaries\ (JE\ =\ 0)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ neighbor's\ local\ face\ index\ JFE\ is\ always\ opposite\ to}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE:\ if\ element\ E\ has\ neighbor\ N\ across\ face\ IFE,\ then\ N}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ has\ E\ across\ face\ JFE\ where\ JFE\ =\ 2×ceil(IFE/2)\ -\/}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ mod(IFE-\/1,2).}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Convert\ element\ linear\ indices\ to\ multi-\/indices}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ ME\ =\ obj.indexer.linearToMulti(IE);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ which\ dimension\ contains\ the\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ dim\ =\ ceil(IFE\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Shift\ coordinates\ to\ find\ neighbors\ and\ determine\ opposite\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ if\ mod(IFE,\ 2)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Lower\ face:\ neighbor\ is\ at\ higher\ coordinate}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME(:,\ dim)\ =\ ME(:,\ dim)\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JFE\ =\ 2\ *\ dim;\ \ \ \ \ \ \%\ Opposite\ is\ upper\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Upper\ face:\ neighbor\ is\ at\ lower\ coordinate\ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00221}\mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a721539c3d02a74338391dbb0bbdc9635}{00221}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ME(:,\ dim)\ =\ ME(:,\ dim)\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JFE\ =\ 2\ *\ dim\ -\/\ 1;\ \ \%\ Opposite\ is\ lower\ face}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ boundary\ condition\ treatment}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ switch\ lower(BC)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 'periodic'}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Wrap\ around\ at\ boundaries\ (modular\ arithmetic)}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ obj.indexer.multiToLinear(ME,\ 'wrap');}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 'dirichlet'}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ boundary\ neighbors\ to\ empty/invalid}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ obj.indexer.multiToLinear(ME,\ 'empty');}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(false,\ 'InvalidBoundaryCondition',\ ...}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Boundary\ condition\ must\ be\ ''periodic''\ or\ ''dirichlet''.');}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00240}00240\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_grid_8m_source_l00241}00241\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,60 @@
+\doxysection{throw\+Error.\+m}
+\hypertarget{throw_error_8m_source}{}\label{throw_error_8m_source}\index{+lib/+core/+except/throwError.m@{+lib/+core/+except/throwError.m}}
+\mbox{\hyperlink{throw_error_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00001}\mbox{\hyperlink{throw_error_8m_aeba1974407a897910b2163747af5962b}{00001}}\ function\ \mbox{\hyperlink{throw_error_8m_aeba1974407a897910b2163747af5962b}{throwError}}(identifier,\ message,\ varargin)}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00002}00002\ \%\ THROWERROR\ Throw\ an\ error\ with\ identifier\ and\ formatted\ message.}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00004}00004\ \%\ Throws\ an\ error\ with\ the\ specified\ identifier\ and\ message.\ The\ identifier}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00005}00005\ \%\ is\ automatically\ enhanced\ with\ module\ and\ function\ context\ information}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00006}00006\ \%\ to\ provide\ a\ hierarchical\ error\ identification\ system.}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00007}00007\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00008}00008\ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00009}00009\ \%\ \ \ \mbox{\hyperlink{throw_error_8m_aeba1974407a897910b2163747af5962b}{throwError}}(identifier,\ message)}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00010}00010\ \%\ \ \ \mbox{\hyperlink{throw_error_8m_aeba1974407a897910b2163747af5962b}{throwError}}(identifier,\ message,\ varargin)}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00011}00011\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00012}00012\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00013}00013\ \%\ \ \ identifier\ -\/\ Error\ identifier\ (e.g.,\ \textcolor{stringliteral}{'InvalidInput'}\ or\ \textcolor{stringliteral}{'OutOfRange'})}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00014}00014\ \%\ \ \ message\ \ \ \ -\/\ Error\ message\ format\ \textcolor{keywordtype}{string}}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00015}00015\ \%\ \ \ varargin\ \ \ -\/\ Optional\ variables\ \textcolor{keywordflow}{for}\ the\ format\ \textcolor{keywordtype}{string}}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00017}00017\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00018}00018\ \%\ \ \ None\ (function\ \textcolor{keywordflow}{throws}\ an\ error)}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00019}00019\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00020}00020\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00021}00021\ \%\ \ \ \%\ Example\ 1:\ Simple\ error}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00022}00022\ \%\ \ \ core.except.throwError(\textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00023}00023\ \%\ \ \ \ \ \ \ \textcolor{stringliteral}{'Input\ must\ be\ a\ positive\ scalar'});}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00024}00024\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00025}00025\ \%\ \ \ \%\ Example\ 2:\ Formatted\ error\ message}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00026}00026\ \%\ \ \ core.except.throwError(\textcolor{stringliteral}{'OutOfRange'},\ ...}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00027}00027\ \%\ \ \ \ \ \ \ \textcolor{stringliteral}{'Value\ \%g\ is\ outside\ valid\ range\ [\%g,\ \%g]'},\ x,\ minVal,\ maxVal);}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00028}00028\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00029}00029\ \%\ \ \ \%\ Example\ 3:\ Error\ with\ component\ prefix}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00030}00030\ \%\ \ \ core.except.throwError(\textcolor{stringliteral}{'Dataset:KeyNotFound'},\ ...}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00031}00031\ \%\ \ \ \ \ \ \ \textcolor{stringliteral}{'Key\ "{}\%s"{}\ not\ found\ in\ dataset'},\ keyName);}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00032}00032\ \%}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00033}00033\ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00034}00034\ \%\ \ \ core.except.assert,\ core.except.throwWarning}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00036}00036\ \%\ Validate\ inputs}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00037}00037\ \textcolor{keywordflow}{if}\ nargin\ <\ 2}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00038}00038\ \ \ \ \ error(\textcolor{stringliteral}{'core:except:throwError:InsufficientInputs'},\ ...}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'At\ least\ identifier\ and\ message\ must\ be\ provided.'});}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00040}00040\ end}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00042}00042\ \%\ Construct\ the\ full\ identifier\ \textcolor{keyword}{using\ }the\ \textcolor{keyword}{private}\ helper}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00043}00043\ fullIdentifier\ =\ \mbox{\hyperlink{construct_identifier_8m_afef086a0bb7ce5d8b53bad1b12dbe2e3}{constructIdentifier}}(identifier);}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00045}00045\ \%\ Format\ the\ message\ \textcolor{keywordflow}{if}\ varargin\ is\ provided}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00046}00046\ \textcolor{keywordflow}{if}\ \string~isempty(varargin)}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00047}00047\ \ \ \ \ formattedMessage\ =\ sprintf(message,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00048}00048\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00049}00049\ \ \ \ \ formattedMessage\ =\ message;}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00050}00050\ end}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00052}00052\ \%\ Throw\ the\ error}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00053}00053\ error(fullIdentifier,\ formattedMessage);}
+\DoxyCodeLine{\Hypertarget{throw_error_8m_source_l00054}00054\ end}
+
+\end{DoxyCode}

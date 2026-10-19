@@ -1,0 +1,183 @@
+\doxysection{Scaled\+Affine\+Space.\+m}
+\hypertarget{_scaled_affine_space_8m_source}{}\label{_scaled_affine_space_8m_source}\index{+approx/+space/ScaledAffineSpace.m@{+approx/+space/ScaledAffineSpace.m}}
+\mbox{\hyperlink{_scaled_affine_space_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00001}00001\ classdef\ ScaledAffineSpace\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00002}00002\ \ \ \ \ \%\ SCALEDAFFINESPACE\ Scaled\ affine\ transformation\ of\ function\ space.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ ScaledAffineSpace\ extends\ the\ affine\ space\ with\ individual\ scaling}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ parameters\ \textcolor{keywordflow}{for}\ both\ the\ coefficients\ and\ the\ directional\ component.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ Functions\ in\ \textcolor{keyword}{this}\ space\ have\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ f(x)\ =\ \(\backslash\)varepsilon\_u\ \(\backslash\)cdot\ u(x)\ +\ \(\backslash\)varepsilon\_g\ \(\backslash\)cdot\ g(x)}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$s\_u\(\backslash\)f\$\ are\ scaling\ factors\ applied\ to\ the\ finite\ element}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ coefficients,\ \(\backslash\)f\$u(x)\(\backslash\)f\$\ is\ the\ finite\ element\ function,\ \(\backslash\)f\$s\_g\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ is\ the\ scaling\ factor\ \textcolor{keywordflow}{for}\ the\ directional\ component,\ and\ \(\backslash\)f\$g\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ is\ the\ directional\ shift.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00017}00017\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \%\ Create\ scaled\ affine\ space\ with\ coefficient\ and\ direction\ scaling}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ coeffScales\ =\ [1.5;\ 2.0;\ 0.8];\ \%\ scale\ each\ FE\ coefficient}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ directionScale\ =\ 0.5;\ \ \ \ \ \ \ \ \ \ \ \%\ scale\ directional\ component}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ scales\ =\ [coeffScales;\ directionScale];}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ space\ =\ ScaledAffineSpace(finiteElement,\ scales);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \%\ Evaluate\ with\ automatic\ scaling\ applied}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ points\ =\ [0,\ 0.5,\ 1.0;\ 0,\ 0,\ 0];}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ coeffs\ =\ [1;\ 1;\ 1];\ \ \ \ \ \ \ \%\ unit\ coefficients}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ direction\ =\ [1,\ 1,\ 1];\ \ \ \ \%\ unit\ direction}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ values\ =\ space.evaluate(points,\ coeffs,\ direction);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Result:\ values\ =\ 1.5*element1\ +\ 2.0*element2\ +\ 0.8*element3\ +\ 0.5*[1,1,1]}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00030}00030\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00031}00031\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_function_space}{FunctionSpace}}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00034}00034\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ scales\ \%\ Scaling\ parameters\ vector\ [coeffScales;\ directionScale]}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00036}00036\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00038}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space}{00038}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}(\mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}},\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}})}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SCALEDAFFINESPACE\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00042}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}(\mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}},\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}})\ creates\ a\ scaled}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ affine\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ with\ the\ specified\ scaling\ parameters\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ and\ directional\ components.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}}\ -\/\ Element\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ the\ underlying\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}}\ -\/\ (\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a3327229dfcab627afa1fd207eab1ab7b}{nDofs}}+1,\ 1)\ scaling\ parameter\ vector\ where:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}\ object}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2,\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}}\ =\ [];\ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}(\mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}});}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setScales(\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}});}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00059}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{00059}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a60ad99b97c7155679a1e6542e50c7cee}{setScales}}(obj,\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}})}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETSCALES\ Set\ the\ scaling\ parameters.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a60ad99b97c7155679a1e6542e50c7cee}{setScales}}(obj,\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}})\ sets\ the\ scaling\ parameters}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ the\ finite\ \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}}\ coefficients\ and\ directional}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ component.\ The\ scaling\ vector\ must\ have\ length\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a3327229dfcab627afa1fd207eab1ab7b}{nDofs}}\ +\ 1.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}}\ -\/\ (\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a3327229dfcab627afa1fd207eab1ab7b}{nDofs}}+1,\ 1)\ scaling\ parameter\ vector}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}\ object}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(length(\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}})\ ==\ (obj.\mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a3327229dfcab627afa1fd207eab1ab7b}{nDofs}}\ +\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Invalid\ scaling\ parameters.'});}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ obj.scales\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aac57234cefe1ddcec315192baafb5e65}{evaluate}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATE\ Evaluate\ functions\ in\ the\ scaled\ affine\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00080}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a60ad99b97c7155679a1e6542e50c7cee}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aac57234cefe1ddcec315192baafb5e65}{evaluate}}(obj,\ Z)\ evaluates\ the\ scaled\ affine\ function}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{using\ }a\ combined\ input\ matrix,\ applying\ scaling\ to\ both}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ and\ directional\ components.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aac57234cefe1ddcec315192baafb5e65}{evaluate}}(obj,\ Z,\ G)\ evaluates\ with\ separate\ directional}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ component\ matrix,\ applying\ appropriate\ scaling.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aac57234cefe1ddcec315192baafb5e65}{evaluate}}(obj,\ X,\ C,\ G)\ evaluates\ with\ explicitly}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ separated\ components,\ applying\ scaling\ to\ coefficients}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ directional\ components.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aa3d0ae8724d81ededadc0d55949fcf18}{ScaledAffineSpace}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ Z\ -\/\ Combined\ matrix\ [X;\ C]\ or\ [X;\ C;\ G]}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ X\ -\/\ (\mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a6f92c04812761859f44edc64e20298cd}{nDims}},\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aa18917e7b2095438d8deeb2120848c6f}{nPoints}})\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ C\ -\/\ (\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_a3327229dfcab627afa1fd207eab1ab7b}{nDofs}},\ nVars)\ coefficients}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ G\ -\/\ (nComponents,\ \mbox{\hyperlink{classapprox_1_1space_1_1_affine_space_aa18917e7b2095438d8deeb2120848c6f}{nPoints}})\ directional\ components}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Scaled\ function\ values\ at\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ sU\ =\ obj.\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a941460990291a5343fea3d8f164905f6}{scales}}(1:end-\/1);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ sG\ =\ obj.scales(end);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.element;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ length(varargin)}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ reshape(Z,\ size(Z,\ 1),\ []);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00111}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_aac57234cefe1ddcec315192baafb5e65}{00111}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ E.nDims;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ E.nDofs;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z(n+(1:m),\ :)\ =\ sU(:)\ .*\ Z(n+(1:m),\ :);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ E.evaluate(Z(1:(n+m),\ :));}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ sG\ *\ Z((n\ +\ m\ +\ 1):end,\ :);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ U\ +\ G;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [Z,\ G]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ E.nDims;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z((n+1):end,\ :)\ =\ sU(:)\ .*\ Z((n+1):end,\ :);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ E.evaluate(Z);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ sG\ *\ G;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ U\ +\ G;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ C,\ G]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ sU(:)\ .*\ C;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ E.evaluate(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ sG\ *\ G;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ U\ +\ G;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ function\ G\ =\ direction(obj,\ Y,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ DIRECTION\ Compute\ scaled\ directional\ component\ \textcolor{keywordflow}{for}\ target}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ values.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ direction(obj,\ Y,\ Z)\ computes\ the\ directional\ component}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ needed\ to\ reach\ target\ values,\ accounting\ \textcolor{keywordflow}{for}\ scaling}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ factors\ applied\ to\ both\ coefficients\ and\ the\ directional}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ component.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ direction(obj,\ Y,\ X,\ C)\ computes\ the\ direction\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00143}00143\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\%\ \ \ explicitly\ separated\ evaluation\ points\ and\ coefficients,}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ applying\ appropriate\ scaling\ transformations.}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ ScaledAffineSpace\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ (nComponents,\ nPoints)\ target\ function\ values}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ Z\ -\/\ (nDims+nDofs,\ nPoints)\ combined\ matrix\ [X;\ C]}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ X\ -\/\ (nDims,\ nPoints)\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ C\ -\/\ (nDofs,\ nFunctions)\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ coefficients}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ -\/\ (nComponents,\ nPoints)\ scaled\ directional\ component}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ sU\ =\ obj.scales(1:end-\/1);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ sG\ =\ obj.scales(end);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ length(varargin)}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ K\ =\ obj.element;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ K.nDims;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00165}\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space_a156e3618c090ad612e3282017abfbd68}{00165}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z((n+1):end,\ :)\ =\ sU(:)\ .*\ Z((n+1):end,\ :);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.element.evaluate(Z);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ (Y\ -\/\ U)\ /\ sG;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ C]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ sU(:)\ .*\ C;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ K\ =\ obj.element;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ K.evaluate(X,\ C);}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ (Y\ -\/\ U)\ /\ sG;}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00176}00176\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_scaled_affine_space_8m_source_l00177}00177\ end}
+
+\end{DoxyCode}

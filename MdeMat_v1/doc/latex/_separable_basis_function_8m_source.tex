@@ -1,0 +1,191 @@
+\doxysection{Separable\+Basis\+Function.\+m}
+\hypertarget{_separable_basis_function_8m_source}{}\label{_separable_basis_function_8m_source}\index{+approx/+basis/SeparableBasisFunction.m@{+approx/+basis/SeparableBasisFunction.m}}
+\mbox{\hyperlink{_separable_basis_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00001}00001\ classdef\ SeparableBasisFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_separable_function}{SeparableFunction}}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00002}00002\ \ \ \ \ \%\ SEPARABLEBASISFUNCTION\ Separable\ function\ composed\ of\ basis\ function\ factors\ with\ optional\ sparse\ structure.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SeparableBasisFunction\ represents\ a\ separable\ function\ where\ each}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ factor\ is\ either\ an\ InterpolationBasisFunction\ or\ an}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ OrthogonalBasisFunction.\ This\ provides\ a\ unified\ framework\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ creating\ tensor\ product\ basis\ functions\ with\ optional\ sparsity}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ patterns\ \textcolor{keywordflow}{for}\ high-\/dimensional\ approximation.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ both\ dense\ (full\ tensor\ product)\ and\ sparse}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ (reduced\ set\ of\ multi-\/indices)\ evaluation\ patterns\ \textcolor{keywordflow}{for}\ both}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ function\ values\ and\ derivatives,\ with\ automatic\ metadata\ loading}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ from\ the\ compiled\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ Key\ features:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ -\/\ Mixed\ basis\ types:\ combine\ orthogonal\ and\ interpolation\ polynomials}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ -\/\ Sparse\ evaluation:\ \(\backslash\)f\$L\string^1\(\backslash\)f\$\ or\ \(\backslash\)f\$L\string^\(\backslash\)infty\(\backslash\)f\$\ constrained\ index\ sets}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ Automatic\ metadata\ management\ \textcolor{keywordflow}{for}\ all\ factor\ functions}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ -\/\ Efficient\ derivative\ computation\ through\ precompiled\ handles}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00020}00020\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00021}00021\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Dense\ separable\ basis\ with\ Legendre\ polynomials}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ factors\ =\ \{OrthogonalBasisFunction(5,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'canonical'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ OrthogonalBasisFunction(4,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'canonical'})\};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ basis\ =\ SeparableBasisFunction(factors);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ basis\ =\ basis.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \%\ Sparse\ basis\ with\ L1\ constraint\ \textcolor{keyword}{using\ }Lagrange\ interpolation}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ factors\ =\ \{InterpolationBasisFunction(6,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_legendre'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ InterpolationBasisFunction(5,\ \textcolor{stringliteral}{'lagrange'},\ \textcolor{stringliteral}{'unit'},\ \textcolor{stringliteral}{'gauss\_legendre'})\};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ basis\ =\ SeparableBasisFunction(factors,\ \textcolor{stringliteral}{'l1'});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ basis\ =\ basis.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \%\ Mixed\ basis\ types\ with\ evaluation}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ factors\ =\ \{OrthogonalBasisFunction(4,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'unit'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ InterpolationBasisFunction(3,\ \textcolor{stringliteral}{'hermite'},\ \textcolor{stringliteral}{'canonical'},\ \textcolor{stringliteral}{'gauss\_lobatto'})\};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ basis\ =\ SeparableBasisFunction(factors);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ basis\ =\ basis.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ y\ =\ basis.evaluate([0.5;\ 0.3]);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ dy\ =\ basis.derivative([0.5;\ 0.3],\ [1,\ 0]);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00041}00041\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00042}00042\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_separable_function}{SeparableFunction}},}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.InterpolationBasisFunction,}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00045}00045\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.OrthogonalBasisFunction}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00047}00047\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ hasMetadata\ \%\ True\ \textcolor{keywordflow}{if}\ all\ factors\ have\ loaded\ metadata}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00049}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{00049}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a26814062e4ea7543494687fc6eceb6ba}{metasource}}\ \ \%\ Cell\ array\ of\ available\ metadata\ sources\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00052}00052\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00053}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956d041e2c3ef577bc29e1cf47b47d9a}{00053}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{autoLoad}}(obj)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ AUTOLOAD\ Automatically\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956bdab4f7bc8ac05fe2991b10218e04}{load}}\ metadata\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00056}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a26814062e4ea7543494687fc6eceb6ba}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{autoLoad}}(obj)\ calls\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{autoLoad}}()\ on\ each\ factor}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ to\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956bdab4f7bc8ac05fe2991b10218e04}{load}}\ appropriate\ compiled\ metadata.\ This}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ enables\ efficient\ evaluation\ of\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ and\ their}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ derivatives\ by\ loading\ precompiled\ function\ handles\ for\ all}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Modified\ \textcolor{keywordtype}{object}\ with\ loaded\ metadata\ for\ all\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ obj.\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ if\ isempty(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ if\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:length(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\{i\}\ =\ F\{i\}.autoLoad();}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00076}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a1e35535d6935af5d520efa90faae63a9}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFactors(F);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F(i)\ =\ F(i).autoLoad();}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFactors(F);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956bdab4f7bc8ac05fe2991b10218e04}{load}}(obj,\ filenames)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LOAD\ Load\ metadata\ from\ specified\ files\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956bdab4f7bc8ac05fe2991b10218e04}{load}}(obj,\ filenames)\ loads\ compiled\ metadata\ from\ the}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ filenames\ \textcolor{keywordflow}{for\ each}\ factor\ function.\ The\ number\ of}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filenames\ must\ match\ the\ number\ of\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}.\ This\ provides}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ manual\ control\ over\ which\ metadata\ files\ are\ loaded.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function}{SeparableBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ filenames\ -\/\ Metadata\ files\ \textcolor{keywordflow}{for\ each}\ factor}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Modified\ \textcolor{keywordtype}{object}\ with\ loaded\ metadata\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_object_a0ec693c93047eb2f8c0d0cc4470c83df}{factors}}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ obj.factors;}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(iscell(filenames),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Filenames\ must\ be\ a\ cell\ array.'});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00110}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a956bdab4f7bc8ac05fe2991b10218e04}{00110}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(length(filenames)\ ==\ length(F),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Number\ of\ filenames\ (\%d)\ must\ match\ number\ of\ factors\ (\%d).'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ length(filenames),\ length(F));}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\{i\}\ =\ F\{i\}.load(filenames\{i\});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFactors(F);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:length(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F(i)\ =\ F(i).load(filenames\{i\});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFactors(F);}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.hasMetadata(obj)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.HASMETADATA\ Getter\ \textcolor{keywordflow}{for}\ hasMetadata\ dependent\ \textcolor{keyword}{property}.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ obj.factors;}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ all(cellfun(@(f)\ f.hasMetadata,\ F));}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ all(arrayfun(@(f)\ f.hasMetadata,\ F));}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ function\ sources\ =\ get.metasource(obj)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.METASOURCE\ Getter\ \textcolor{keywordflow}{for}\ metasource\ dependent\ \textcolor{keyword}{property}.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ obj.factors;}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sources\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ iscell(F)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sources\ =\ cellfun(@(f)\ f.metasource,\ F,\ \textcolor{stringliteral}{'UniformOutput'},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sources\ =\ arrayfun(@(f)\ f.metasource,\ F,\ \textcolor{stringliteral}{'UniformOutput'},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00159}00159\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00161}00161\ \ \ \ \ methods\ (Static)}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ function\ validateFactors(F)\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ VALIDATEFACTORS\ Validate\ that\ all\ the\ factors\ are\ valid\ basis}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ functions.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ validateFactors(F)\ verifies\ that\ all\ factor\ functions\ in}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ array\ or\ cell\ array\ F\ are\ instances\ of\ either}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ InterpolationBasisFunction\ or\ OrthogonalBasisFunction,}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ensuring\ compatibility\ with\ the\ separable\ basis\ framework.}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Array\ or\ cell\ array\ of\ factor\ functions}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ NULL}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ cls\ =\ \{\textcolor{stringliteral}{'approx.basis.InterpolationBasisFunction'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'approx.basis.OrthogonalBasisFunction'}\};}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1validate}{validate}}.isAllClass(F,\ cls),\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidFactor'},\ ...}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00182}\mbox{\hyperlink{classapprox_1_1basis_1_1_separable_basis_function_a0e21e04ec0da7da60b83469e65169ef3}{00182}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Factors\ must\ be\ one\ of\ \{\%s\}.'},\ strjoin(cls,\ \textcolor{stringliteral}{',\ '}));}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00184}00184\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_separable_basis_function_8m_source_l00185}00185\ end}
+
+\end{DoxyCode}

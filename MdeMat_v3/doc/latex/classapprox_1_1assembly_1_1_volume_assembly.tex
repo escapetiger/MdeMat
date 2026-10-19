@@ -1,0 +1,93 @@
+\doxysection{approx\+::assembly\+::Volume\+Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_volume_assembly}{}\label{classapprox_1_1assembly_1_1_volume_assembly}\index{approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for volume terms.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a71370d0b1885b9c2e78c4864aa39a16e}{assemble\+Partial}} (Input\+Type obj, Input\+Type dim)
+\begin{DoxyCompactList}\small\item\em Assemble the partial derivative. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_aae3d0bb8bd4deb084dd5f29622617699}{assemble\+Colinear\+Divergence}} (Input\+Type obj, Input\+Type field)
+\begin{DoxyCompactList}\small\item\em Assemble the divergence of a colinear vector field. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a828249e924983200f572e653934a100e}{assemble\+Pointwise\+Colinear\+Divergence}} (Input\+Type obj, Input\+Type field)
+\begin{DoxyCompactList}\small\item\em Assemble the divergence of a pointwise colinear vector field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{Mesh\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}})
+\begin{DoxyCompactList}\small\item\em Constructor for Operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{assemble\+Matrix}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type JE, Input\+Type JL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble matrix contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{assemble\+Vector}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble vector contribution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh\+Space object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for volume terms. 
+
+\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{Volume\+Assembly} handles the assembly of volume integral terms that arises in the finite element methods.
+
+The class supports both grid and non-\/grid meshes, following the unified assembly procedure\+: iterate over elements, compute local volume integrals, insert them into the global sparse based on mesh connectivity.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1space_1_1_mesh_space}{approx.\+space.\+Mesh\+Space} 
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_volume_assembly_8m_source_l00019}{19}} of file \mbox{\hyperlink{_volume_assembly_8m_source}{Volume\+Assembly.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1assembly_1_1_volume_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_volume_assembly_aae3d0bb8bd4deb084dd5f29622617699}\index{approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}!assembleColinearDivergence@{assembleColinearDivergence}}
+\index{assembleColinearDivergence@{assembleColinearDivergence}!approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleColinearDivergence()}{assembleColinearDivergence()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_volume_assembly_aae3d0bb8bd4deb084dd5f29622617699} 
+function approx\+::assembly\+::\+Volume\+Assembly\+::assemble\+Colinear\+Divergence (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{field}{}\end{DoxyParamCaption})}
+
+
+
+Assemble the divergence of a colinear vector field. 
+
+\Hypertarget{classapprox_1_1assembly_1_1_volume_assembly_a71370d0b1885b9c2e78c4864aa39a16e}\index{approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}!assemblePartial@{assemblePartial}}
+\index{assemblePartial@{assemblePartial}!approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}}
+\doxysubsubsection{\texorpdfstring{assemblePartial()}{assemblePartial()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_volume_assembly_a71370d0b1885b9c2e78c4864aa39a16e} 
+function approx\+::assembly\+::\+Volume\+Assembly\+::assemble\+Partial (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{dim}{}\end{DoxyParamCaption})}
+
+
+
+Assemble the partial derivative. 
+
+\Hypertarget{classapprox_1_1assembly_1_1_volume_assembly_a828249e924983200f572e653934a100e}\index{approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}!assemblePointwiseColinearDivergence@{assemblePointwiseColinearDivergence}}
+\index{assemblePointwiseColinearDivergence@{assemblePointwiseColinearDivergence}!approx::assembly::VolumeAssembly@{approx::assembly::VolumeAssembly}}
+\doxysubsubsection{\texorpdfstring{assemblePointwiseColinearDivergence()}{assemblePointwiseColinearDivergence()}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_volume_assembly_a828249e924983200f572e653934a100e} 
+function approx\+::assembly\+::\+Volume\+Assembly\+::assemble\+Pointwise\+Colinear\+Divergence (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{field}{}\end{DoxyParamCaption})}
+
+
+
+Assemble the divergence of a pointwise colinear vector field. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_volume_assembly_8m}{Volume\+Assembly.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['scaledaffinespace_0',['ScaledAffineSpace',['../classapprox_1_1space_1_1_scaled_affine_space.html',1,'approx::space']]],
+  ['sdirk2integrator_1',['Sdirk2Integrator',['../classapprox_1_1odeint_1_1_sdirk2_integrator.html',1,'approx::odeint']]],
+  ['sdirk3integrator_2',['Sdirk3Integrator',['../classapprox_1_1odeint_1_1_sdirk3_integrator.html',1,'approx::odeint']]],
+  ['sdirk4integrator_3',['Sdirk4Integrator',['../classapprox_1_1odeint_1_1_sdirk4_integrator.html',1,'approx::odeint']]],
+  ['separable_4',['Separable',['../classcore_1_1linalg_1_1_separable.html',1,'core::linalg']]],
+  ['separablebasisfunction_5',['SeparableBasisFunction',['../classapprox_1_1basis_1_1_separable_basis_function.html',1,'approx::basis']]],
+  ['separablefunction_6',['SeparableFunction',['../classcore_1_1function_1_1_separable_function.html',1,'core::function']]],
+  ['separablegraph_7',['SeparableGraph',['../classapprox_1_1mesh_1_1_separable_graph.html',1,'approx::mesh']]],
+  ['separablerule_8',['SeparableRule',['../classapprox_1_1integrate_1_1_separable_rule.html',1,'approx::integrate']]],
+  ['simplex_9',['Simplex',['../classcore_1_1geometry_1_1_simplex.html',1,'core::geometry']]],
+  ['simplexmesh_10',['SimplexMesh',['../classapprox_1_1mesh_1_1_simplex_mesh.html',1,'approx::mesh']]],
+  ['sphericalgausstrapezoidalrule_11',['SphericalGaussTrapezoidalRule',['../classapprox_1_1integrate_1_1_spherical_gauss_trapezoidal_rule.html',1,'approx::integrate']]],
+  ['sphericalharmonicbasiscompiler_12',['SphericalHarmonicBasisCompiler',['../classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler.html',1,'core::symbolic']]],
+  ['sphericalharmonicbasisfunction_13',['SphericalHarmonicBasisFunction',['../classcore_1_1symbolic_1_1_spherical_harmonic_basis_function.html',1,'core::symbolic']]],
+  ['sphericalmontecarlorule_14',['SphericalMonteCarloRule',['../classapprox_1_1integrate_1_1_spherical_monte_carlo_rule.html',1,'approx::integrate']]],
+  ['ssprk2integrator_15',['Ssprk2Integrator',['../classapprox_1_1odeint_1_1_ssprk2_integrator.html',1,'approx::odeint']]],
+  ['ssprk3integrator_16',['Ssprk3Integrator',['../classapprox_1_1odeint_1_1_ssprk3_integrator.html',1,'approx::odeint']]],
+  ['statictimeline_17',['StaticTimeline',['../classapprox_1_1mesh_1_1_static_timeline.html',1,'approx::mesh']]],
+  ['strangintegrator_18',['StrangIntegrator',['../classapprox_1_1odeint_1_1_strang_integrator.html',1,'approx::odeint']]],
+  ['strategy_19',['Strategy',['../classprofilers_1_1visual_1_1_strategy.html',1,'profilers::visual']]],
+  ['symbolicfunction_20',['SymbolicFunction',['../classcore_1_1symbolic_1_1_symbolic_function.html',1,'core::symbolic']]]
+];

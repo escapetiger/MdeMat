@@ -1,0 +1,138 @@
+\doxysection{Semi\+Lagrangian\+Convection\+Operator.\+m}
+\hypertarget{_semi_lagrangian_convection_operator_8m_source}{}\label{_semi_lagrangian_convection_operator_8m_source}\index{+approx/+assembly/SemiLagrangianConvectionOperator.m@{+approx/+assembly/SemiLagrangianConvectionOperator.m}}
+\mbox{\hyperlink{_semi_lagrangian_convection_operator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00001}00001\ classdef\ SemiLagrangianConvectionOperator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00002}00002\ \ \ \ \ \%\ SEMILAGRANGIANCONVECTIONOPERATOR\ Assembly\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00003}00003\ \ \ \ \ \%\ convection\ \textcolor{keyword}{operator}.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ SemiLagrangianConvectionOperator\ assembles\ linear\ transport}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ operators\ \textcolor{keywordflow}{for}\ semi-\/Lagrangian\ methods.\ It\ handles\ characteristic}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ tracing\ and\ flux\ reconstruction\ across\ element\ boundaries\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ advection-\/dominated\ problems,\ supporting\ both\ periodic\ and}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ Dirichlet\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{operator}\ uses\ backward\ characteristic\ tracing\ to\ compute\ the}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ contribution\ from\ departure\ points\ to\ arrival\ points,\ enabling}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ stable\ time\ stepping\ \textcolor{keywordflow}{for}\ convection\ problems\ without\ CFL}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ restrictions.\ The\ assembly\ process\ coordinates\ volume\ integrals\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ interior\ contributions\ and\ boundary\ integrals\ \textcolor{keywordflow}{for}\ flux\ conditions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00017}00017\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \%\ Create\ semi-\/Lagrangian\ convection\ \textcolor{keyword}{operator}\ with\ periodic\ BCs}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ space\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}(element,\ mesh);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ slOperator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_l2_semi_lagrangian_element_operator}{L2SemiLagrangianElementOperator}}(element,\ clipper);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ convOp\ =\ SemiLagrangianConvectionOperator(space,\ slOperator,\ \textcolor{stringliteral}{'periodic'});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Assemble\ \textcolor{keywordflow}{for}\ pure\ advection\ (periodic\ \textcolor{keywordflow}{case})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ A\ =\ convOp.linear();}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \%\ Assemble\ with\ Dirichlet\ boundary\ conditions}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ convOpDir\ =\ SemiLagrangianConvectionOperator(space,\ slOperator,\ \textcolor{stringliteral}{'dirichlet'});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ tStart\ =\ 0.0;\ tEnd\ =\ 0.1;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ bcFunc\ =\ @(x,\ t)\ sin(pi\ *\ x);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ [b,\ A]\ =\ convOpDir.linear(tStart,\ tEnd,\ bcFunc);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \%\ Use\ in\ time\ stepping}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ U\_new\ =\ A\ *\ U\_old\ +\ b;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00034}00034\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00035}00035\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ Element\ \textcolor{keyword}{operator}\ must\ be\ a\ semi-\/Lagrangian\ type.\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ type\ determines\ the\ assembly\ strategy:\ periodic\ uses\ volume}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ integrals\ only,\ \textcolor{keywordflow}{while}\ Dirichlet\ includes\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ contributions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00040}00040\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00041}00041\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}},\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_semi_lagrangian_element_operator}{SemiLagrangianElementOperator}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly}{SemiLagrangianPeriodicAssembly}},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00045}00045\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_dirichlet_assembly}{SemiLagrangianDirichletAssembly}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator}{00046}}\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00047}00047\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{dynamic}}\ \%\ Dynamic\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00049}00049\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{00050}}\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00051}00051\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_acb3a6831405f5e68e7bb3bf2b0536401}{SemiLagrangianConvectionOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator},\ bcType)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SEMILAGRANGIANCONVECTIONOPERATOR\ Constructor\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_acb3a6831405f5e68e7bb3bf2b0536401}{SemiLagrangianConvectionOperator}}.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_acb3a6831405f5e68e7bb3bf2b0536401}{SemiLagrangianConvectionOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator},}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bcType)\ creates\ a\ semi-\/Lagrangian\ convection\ \textcolor{keyword}{operator}\ with}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ specified\ function\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \textcolor{keyword}{operator},\ and}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ boundary\ condition\ type.\ The\ constructor\ validates\ inputs}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ configures\ the\ appropriate\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ strategy.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ -\/\ Function\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ object\ (MeshSpace\ or\ similar)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator}\ -\/\ Semi-\/Lagrangian\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ bcType\ -\/\ Boundary\ condition\ type:\ \{\textcolor{stringliteral}{'periodic'},\ \textcolor{stringliteral}{'dirichlet'}\}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator}{SemiLagrangianConvectionOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00070}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_acb3a6831405f5e68e7bb3bf2b0536401}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isa(\textcolor{keyword}{operator},\ \textcolor{stringliteral}{'approx.element.SemiLagrangianElementOperator'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'SemiLagrangianConvectionOperator:InvalidOperator'},\ ...}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Element\ operator\ must\ be\ a\ Semi-\/Lagrangian\ element\ operator.'});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{keyword}{operator});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ strcmpi(bcType,\ \textcolor{stringliteral}{'periodic'})}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{dynamic}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_periodic_assembly}{SemiLagrangianPeriodicAssembly}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{dynamic}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_dirichlet_assembly}{SemiLagrangianDirichletAssembly}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}});}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ function\ [b,\ A]\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINEAR\ Assemble\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}\ transport\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ components.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}(obj)\ assembles\ boundary\ condition\ vector\ for\ the}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}\ transport\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ with\ current\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ periodic\ boundary\ conditions,\ returns\ empty\ vector.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [b,\ A]\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}(obj)\ assembles\ both\ the\ boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ and\ the\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}\ transport\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ matrix.\ The\ matrix}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ represents\ the\ semi-\/Lagrangian\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ of\ the\ advection}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a8dd4814b353dbdc48a55c74c8483f5c8}{operator}}\ using\ characteristic\ tracing.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [b,\ A]\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}(obj,\ tBegin,\ tEnd,\ f)\ assembles\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{linear}}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ transport\ components\ with\ specified\ time\ interval\ and}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ boundary\ condition\ function.\ Time\ interval\ [tBegin,\ tEnd]}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ defines\ the\ characteristic\ tracing\ period.}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_acb3a6831405f5e68e7bb3bf2b0536401}{SemiLagrangianConvectionOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Variable\ input\ arguments\ for\ Dirichlet\ conditions:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ tBegin\ -\/\ Beginning\ time\ for\ characteristic\ tracking\ (scalar)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ tEnd\ -\/\ End\ time\ for\ characteristic\ tracking\ (scalar)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ f\ -\/\ Boundary\ condition\ function\ handle\ f(x,\ t)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Boundary\ contribution\ vector\ (sparse\ column\ vector)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ A\ -\/\ Interior\ contribution\ matrix\ (sparse\ matrix)}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00113}\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_ab9e785b1c2dc054463d27dd5b9d43fbb}{00113}}\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Interior\ contribution\ via\ characteristic\ tracing}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargout\ >=\ 2}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{dynamic}}.assembleVolume();}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ \mbox{\hyperlink{namespacecore}{core}}.linalg.sparseFromTriplets(T,\ n,\ n);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Boundary\ contribution\ for\ Dirichlet\ conditions}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargout\ >=\ 1}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ strcmpi(obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_semi_lagrangian_convection_operator_a3b862bcc85dcccf1ac3b9aef764b11ed}{dynamic}}.BC\_TYPE,\ 'dirichlet')}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [tBegin,\ tEnd,\ f]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(tBegin-\/tEnd)\ <\ 1e-\/8,\ \textcolor{keywordflow}{return};\ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ obj.dynamic.assembleBoundaryCondition(tBegin,\ tEnd,\ f);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.sparseFromTriplets(T,\ n,\ 1);}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00131}00131\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_semi_lagrangian_convection_operator_8m_source_l00132}00132\ end}
+
+\end{DoxyCode}

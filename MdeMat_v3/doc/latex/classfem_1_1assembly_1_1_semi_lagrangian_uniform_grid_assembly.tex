@@ -1,0 +1,222 @@
+\doxysection{fem\+::assembly\+::Semi\+Lagrangian\+Uniform\+Grid\+Assembly Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{}\label{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}\index{fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}}
+
+
+Grid-\/based assembly for semi-\/\+Lagrangian methods.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for semi-\/\+Lagrangian assembly. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble semi-\/\+Lagrangian transport operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_ad918c35d7bffdf55e985b05b1783300a}{Grid\+Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembly}{Grid\+Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad534a3dfd6d133b194ccb243bfd0057e}{Assembly}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembly}{Assembly}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_acb26deb9ea784affa8d2747583066812}{assemble\+Free\+Transport}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Assemble free transport operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a485f04fd675ba544ddc314d67994af8d}{assemble\+Boundary\+Condition}} (Input\+Type obj, Input\+Type t\+Begin, Input\+Type t\+End, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Assemble boundary condition terms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a5665273508dad4e9455064dfc6cb114c}{assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6f43fe1c88de27345a4c96d026ef94c8}{assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a6b9ffe199b1b0ecc4e7b0e8340d99723}{assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_abc21312f9531f69774d7a8dc3d826e99}{assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a53e771864075d1797463c4894db2cbe5}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly}{fem\+::assembly\+::\+Grid\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembly_a77598c11454ab1856562d68eb03c3509}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type (0=periodic, 1=Dirichlet) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly}{fem\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ab348dd44c17cad8f7744b1a78206597f}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_ad2520adde901ee9b6a3bfa7ce75236bb}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a70ee3f0584970e7aab6c94c112df5ba2}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a0b3eab9b83165001ee04200fcc6e8f58}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grid-\/based assembly for semi-\/\+Lagrangian methods. 
+
+\doxylink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly} provides assembly methods for semi-\/\+Lagrangian finite element operators on uniform structured grids. This specialized assembly handles transport operators and boundary conditions for semi-\/\+Lagrangian discretizations.
+
+The assembly supports both free transport operators and boundary condition assembly, with particular emphasis on handling characteristic tracing and interpolation required by semi-\/\+Lagrangian methods.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ semi-\/Lagrangian\ assembly\ with\ periodic\ boundaries}
+\DoxyCodeLine{assembly\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}{SemiLagrangianUniformGridAssembly}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a01355931edb5c719c28246df024374a3}{fe}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_aec06d0fc82ea5dc63edfa6672e582183}{mesh}},\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembly_a5103cc21e3b8c88be954ebd12cd650ac}{op}},\ 0);}
+\DoxyCodeLine{\%\ Assemble\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ \textcolor{keyword}{operator}\ only}
+\DoxyCodeLine{A\ =\ assembly.transport();}
+\DoxyCodeLine{\%\ Assemble\ both\ \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}{transport}}\ and\ boundary\ conditions}
+\DoxyCodeLine{[b,\ A]\ =\ assembly.transport(t0,\ t1,\ boundaryFunction);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_grid_assembly}{fem.\+assembly.\+Grid\+Assembly} 
+
+\doxylink{classfem_1_1assembly_1_1_assembly}{fem.\+assembly.\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_semi_lagrangian_uniform_grid_assembly_8m_source_l00030}{30}} of file \mbox{\hyperlink{_semi_lagrangian_uniform_grid_assembly_8m_source}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488}\index{fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}!SemiLagrangianUniformGridAssembly@{SemiLagrangianUniformGridAssembly}}
+\index{SemiLagrangianUniformGridAssembly@{SemiLagrangianUniformGridAssembly}!fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}}
+\doxysubsubsection{\texorpdfstring{SemiLagrangianUniformGridAssembly()}{SemiLagrangianUniformGridAssembly()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a57e429fb27db2d95757bc3b9ea97f488} 
+function fem\+::assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembly (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{op}{, }\item[{Input\+Type}]{bc\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for semi-\/\+Lagrangian assembly. 
+
+obj = Semi\+Lagrangian\+Uniform\+Grid\+Assembly(fe, mesh, op, bc\+Type) creates an assembly for semi-\/\+Lagrangian finite element operators on uniform structured grids.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object \\
+\hline
+{\em mesh} & -\/ Uniform grid mesh object \\
+\hline
+{\em op} & -\/ Semi-\/\+Lagrangian finite element operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type (0=periodic, 1=Dirichlet) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a485f04fd675ba544ddc314d67994af8d}\index{fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}!assembleBoundaryCondition@{assembleBoundaryCondition}}
+\index{assembleBoundaryCondition@{assembleBoundaryCondition}!fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleBoundaryCondition()}{assembleBoundaryCondition()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a485f04fd675ba544ddc314d67994af8d} 
+function fem\+::assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembly\+::assemble\+Boundary\+Condition (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{t\+Begin}{, }\item[{Input\+Type}]{t\+End}{, }\item[{Input\+Type}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble boundary condition terms. 
+
+T = assemble\+Boundary\+Condition(obj, t\+Begin, t\+End, f) assembles the boundary condition contribution for semi-\/\+Lagrangian transport, handling characteristic tracing to domain boundaries and evaluation of boundary data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly} object \\
+\hline
+{\em t\+Begin} & -\/ Beginning time for integration \\
+\hline
+{\em t\+End} & -\/ End time for integration \\
+\hline
+{\em f} & -\/ Boundary condition function handle f(x, t)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, value\mbox{]} for boundary conditions \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_acb26deb9ea784affa8d2747583066812}\index{fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}!assembleFreeTransport@{assembleFreeTransport}}
+\index{assembleFreeTransport@{assembleFreeTransport}!fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}}
+\doxysubsubsection{\texorpdfstring{assembleFreeTransport()}{assembleFreeTransport()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_acb26deb9ea784affa8d2747583066812} 
+function fem\+::assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembly\+::assemble\+Free\+Transport (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble free transport operator. 
+
+T = assemble\+Free\+Transport(obj) assembles the triplet representation of the free transport operator matrix, handling characteristic tracing and interpolation for semi-\/\+Lagrangian methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix \mbox{[}row, col, value\mbox{]} for transport operator \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392}\index{fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}!transport@{transport}}
+\index{transport@{transport}!fem::assembly::SemiLagrangianUniformGridAssembly@{fem::assembly::SemiLagrangianUniformGridAssembly}}
+\doxysubsubsection{\texorpdfstring{transport()}{transport()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly_a5e9d066333899631f928f3d99ddcc392} 
+function fem\+::assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembly\+::transport (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Assemble semi-\/\+Lagrangian transport operator. 
+
+b = transport(obj) assembles boundary condition vector for the transport operator with current boundary conditions.
+
+\mbox{[}b, A\mbox{]} = transport(obj) assembles both the boundary condition vector and the free transport operator matrix.
+
+\mbox{[}b, A\mbox{]} = transport(obj, t\+Begin, t\+End, f) assembles transport components with specified time interval and boundary function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembly}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly} object \\
+\hline
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em b} & -\/ Boundary condition vector (sparse column vector) \\
+\hline
+{\em A} & -\/ Free transport operator matrix (sparse matrix) \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_semi_lagrangian_uniform_grid_assembly_8m}{Semi\+Lagrangian\+Uniform\+Grid\+Assembly.\+m}}\end{DoxyCompactItemize}

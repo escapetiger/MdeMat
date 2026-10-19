@@ -1,0 +1,75 @@
+\doxysection{Volume\+Assembly.\+m}
+\hypertarget{_volume_assembly_8m_source}{}\label{_volume_assembly_8m_source}\index{+approx/+assembly/VolumeAssembly.m@{+approx/+assembly/VolumeAssembly.m}}
+\mbox{\hyperlink{_volume_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00001}00001\ classdef\ VolumeAssembly\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00002}00002\ \ \ \ \ \%\ VOLUMEASSEMBLY\ Assembly\ \textcolor{keywordflow}{for}\ volume\ terms.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ VolumeAssembly\ handles\ the\ assembly\ of\ volume\ integral\ terms\ that}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ arises\ in\ the\ finite\ element\ methods.\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ both\ grid\ and\ non-\/grid\ meshes,\ following\ the}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ unified\ assembly\ procedure:\ iterate\ over\ elements,\ compute\ local}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ volume\ integrals,\ insert\ them\ into\ the\ global\ sparse\ based\ on\ mesh}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ connectivity.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00012}00012\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00015}00015\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00016}00016\ \ \ \ \ \ \ \ \ function\ G\ =\ assemblePartial(obj,\ dim)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEPARTIAL\ Assemble\ the\ partial\ derivative.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00019}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly}{00019}}\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.nDims;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ invJ\ =\ obj.space.mesh.computeElementInverseJacobians();}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.space.element.volume.weights);\ \%\ nq\ x\ nq}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.space.element.volume.derivatives\{1\};\ \%\ nl\ x\ nq\ x\ d\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.space.element.volume.values;\ \ \%\ nl\ x\ nq}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ pagemtimes(pagemtimes(V,\ W),\ U.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ [],\ d)\ *\ reshape(invJ(:,\ dim,\ :),\ d,\ []);}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ size(V,\ 1),\ size(U,\ 1),\ d,\ size(invJ,\ 3));}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00027}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a71370d0b1885b9c2e78c4864aa39a16e}{00027}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleMatrix([],\ [],\ [],\ [],\ L);}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00029}00029\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ G\ =\ assembleColinearDivergence(obj,\ field)}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLECOLINEARDIVERGENCE\ Assemble\ the\ divergence\ of\ a}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ colinear\ vector\ field.}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00033}00033\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.space.nDims;}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ isscalar(field),\ field\ =\ repmat(field,\ d,\ 1);\ end}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00036}00036\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ invJ\ =\ obj.space.mesh.computeElementInverseJacobians();\ \%\ d\ x\ d\ x\ ne}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ W\ =\ diag(obj.space.element.volume.weights);\ \%\ nq\ x\ nq}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.space.element.volume.derivatives\{1\};\ \%\ nl\ x\ nq\ x\ d}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.space.element.volume.values;\ \%\ nl\ x\ nq}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ L\ =\ pagemtimes(pagemtimes(V,\ W),\ U.'});\ \%\ nl\ x\ nl\ x\ d}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ [],\ d)\ *\ reshape(invJ,\ d,\ []);\ \%\ nl\string^2\ x\ d\ x\ ne}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ size(V,\ 1),\ size(U,\ 1),\ d,\ size(invJ,\ 3));}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00044}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_aae3d0bb8bd4deb084dd5f29622617699}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ L\ .*\ reshape(field,\ 1,\ 1,\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleMatrix([],\ [],\ [],\ [],\ L);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a828249e924983200f572e653934a100e}{assemblePointwiseColinearDivergence}}(obj,\ field)}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEPOINTWISECOLINEARDIVERGENCE\ Assemble\ the\ divergence}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ of\ a\ pointwise\ colinear\ vector\ field.}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.space.nDims;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ invJ\ =\ obj.space.mesh.computeElementInverseJacobians();\ \%\ d\ x\ d\ x\ ne}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ obj.space.element.volume.nodes;}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ obj.space.mesh.collocate(X,\ []);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ obj.space.element.volume.weights(:).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ .*\ reshape(field(X).'},\ [],\ d);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ arrayfun(@(i)\ diag(W(:,\ i)),\ 1:d,\ \textcolor{stringliteral}{'Un'},\ 0);}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ cat(3,\ W\{:\});\ \%\ nq\ x\ nq\ x\ d}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.space.element.volume.derivatives\{1\};\ \%\ nl\ x\ nq\ x\ d}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.space.element.volume.values;\ \%\ nl\ x\ nq}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ pagemtimes(pagemtimes(V,\ W),\ U.\textcolor{stringliteral}{');\ \%\ nl\ x\ nl\ x\ d}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ [],\ d)\ *\ reshape(invJ,\ d,\ []);\ \%\ nl\string^2\ x\ d\ x\ ne}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00064}\mbox{\hyperlink{classapprox_1_1assembly_1_1_volume_assembly_a828249e924983200f572e653934a100e}{00064}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ size(V,\ 1),\ size(U,\ 1),\ d,\ size(invJ,\ 3));}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ G\ =\ obj.assembleMatrix([],\ [],\ [],\ [],\ L);}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00068}00068\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_volume_assembly_8m_source_l00069}00069\ \textcolor{stringliteral}{}}
+
+\end{DoxyCode}

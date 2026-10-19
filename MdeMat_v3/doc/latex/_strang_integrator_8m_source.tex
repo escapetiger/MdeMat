@@ -1,0 +1,128 @@
+\doxysection{Strang\+Integrator.\+m}
+\hypertarget{_strang_integrator_8m_source}{}\label{_strang_integrator_8m_source}\index{+approx/+odeint/StrangIntegrator.m@{+approx/+odeint/StrangIntegrator.m}}
+\mbox{\hyperlink{_strang_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00001}00001\ classdef\ StrangIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.SeparableOdeIntegrator}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ STRANGINTEGRATOR\ Second-\/order\ Strang\ \textcolor{keyword}{operator}\ splitting.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ StrangIntegrator\ implements\ the\ second-\/order\ Strang\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ splitting\ method\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential\ equations\ of}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ the\ form:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ \(\backslash\)sum\_\{i=1\}\string^\{n\}\ (L\_i\ u\ +}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \ \ F\_i(u)\ +\ S\_i)}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00012}00012\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ by\ decomposing\ it\ into\ n\ separate\ sub-\/problems:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00014}00014\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ L\_i\ u\ +\ F\_i(u)\ +\ S\_i,\ \(\backslash\)quad}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \ \ i\ =\ 1,\ 2,\ \(\backslash\)ldots,\ n}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ The\ Strang\ method\ uses\ the\ symmetric\ splitting\ formula\ \textcolor{keywordflow}{for}\ n}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ operators:\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \ \ e\string^\{(A\_1+A\_2+\(\backslash\)cdots+A\_n)\(\backslash\)Delta\ t\}\ \(\backslash\)\mbox{\hyperlink{namespaceapprox}{approx}}\ e\string^\{A\_1\(\backslash\)Delta\ t/2\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \ \ e\string^\{A\_2\(\backslash\)Delta\ t/2\}\ \(\backslash\)cdots\ e\string^\{A\_n\(\backslash\)Delta\ t/2\}\ e\string^\{A\_n\(\backslash\)Delta\ t/2\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)cdots\ e\string^\{A\_2\(\backslash\)Delta\ t/2\}\ e\string^\{A\_1\(\backslash\)Delta\ t/2\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ This\ achieves\ second-\/order\ accuracy\ with\ global\ error\ \(\backslash\)f\$O(\(\backslash\)Delta}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ t\string^2)\(\backslash\)f\$.\ The\ symmetric\ structure\ causes\ second-\/order\ commutator}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ terms\ to\ cancel\ exactly,\ providing\ superior\ accuracy\ compared\ to}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ first-\/order\ Lie-\/Trotter\ splitting.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ The\ splitting\ sequence\ applies\ operators\ in\ forward\ order\ with}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ half\ time\ steps,\ then\ in\ reverse\ order\ with\ half\ time\ steps.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00036}00036\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00037}00037\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \%\ Reaction-\/diffusion:\ implicit\ diffusion\ +\ \textcolor{keyword}{explicit}\ reaction}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ integrators\ =\ \{\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0)\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ splitter\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{StrangIntegrator}}(integrators);}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ \%\ Step\ with\ operators\ [diffusion,\ reaction]}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ L\ =\ \{diffusionMatrix,\ []\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00045}00045\ \ \ \ \ \%\ \ \ F\ =\ \{[],\ @(u,t)\ reactionTerm(u)\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00046}00046\ \ \ \ \ \%\ \ \ S\ =\ \{[],\ []\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00047}00047\ \ \ \ \ \%\ \ \ U\_new\ =\ splitter.\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{step}}(L,\ F,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00048}00048\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00049}00049\ \ \ \ \ \%\ \ \ \%\ Three-\/way\ Strang\ split:\ A\_dt/2,\ B\_dt/2,\ C\_dt,\ B\_dt/2,\ A\_dt/2}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00050}00050\ \ \ \ \ \%\ \ \ integrators\ =\ \{\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00051}00051\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00052}00052\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0)\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00053}00053\ \ \ \ \ \%\ \ \ L\ =\ \{diffusionMatrix,\ advectionMatrix,\ []\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00054}00054\ \ \ \ \ \%\ \ \ F\ =\ \{[],\ [],\ @(u,t)\ reactionTerm(u)\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00055}00055\ \ \ \ \ \%\ \ \ S\ =\ \{sourceVector,\ [],\ []\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00056}00056\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00057}00057\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00058}00058\ \ \ \ \ \%\ \ \ For\ n\ operators,\ the\ method\ applies\ 2n-\/1\ sub-\/steps\ per\ time\ step.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00059}00059\ \ \ \ \ \%\ \ \ The\ middle\ operator\ (when\ n\ is\ odd)\ gets\ applied\ once\ with\ full}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00060}00060\ \ \ \ \ \%\ \ \ time\ step,\ \textcolor{keywordflow}{while}\ others\ get\ applied\ twice\ with\ half\ time\ steps.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00061}00061\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00062}00062\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00063}00063\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.SeparableOdeIntegrator,\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00064}00064\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{LieTrotterIntegrator}},}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00065}00065\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}},\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00066}00066\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00068}00068\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00069}\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{00069}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_a9fed328c2fae37b39e9e3ea4db949709}{ORDER}}\ =\ 2\ \%\ Accuracy\ order\ of\ the\ Strang\ method}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00070}00070\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00072}00072\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00073}\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_a9fed328c2fae37b39e9e3ea4db949709}{00073}}\ \ \ \ \ \ \ \ \ function\ U\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{step}}(obj,\ L,\ F,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Advance\ one\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{step}}\ using\ Strang\ splitting.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{step}}(obj,\ L,\ F,\ S,\ M)\ performs\ one\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{step}}\ using}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ symmetric\ Strang\ splitting:\ forward\ half-\/steps,\ then}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ backward\ half-\/steps.}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{StrangIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Cell\ array\ of\ linear\ operators\ \{L1,\ L2,\ ...,\ Ln\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Li\ can\ be\ matrix,\ function,\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Cell\ array\ of\ nonlinear\ operators\ \{F1,\ F2,\ ...,\ Fn\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Fi\ can\ be\ function\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Cell\ array\ of\ source\ terms\ \{S1,\ S2,\ ...,\ Sn\}}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Si\ can\ be\ vector,\ function,\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Same\ mass\ \textcolor{keyword}{operator}\ used\ \textcolor{keywordflow}{for}\ all\ sub-\/problems}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ at\ the\ next\ time\ step}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.nFactors;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.getFactor(1).U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ forward\ half-\/steps:\ A1\_dt/2,\ A2\_dt/2,\ ...,\ A\_\{n-\/1\}\_dt/2}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00099}\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator_af0e04b59a8dea31edf892d5d794a7d1b}{00099}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:(n-\/1)}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.applyFactorStep(i,\ dt/2,\ L\{i\},\ F\{i\},\ S\{i\},\ M);}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(i+1).U0\{1\}\ =\ U;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ middle\ full\ step:\ An\_dt}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.applyFactorStep(n,\ dt,\ L\{n\},\ F\{n\},\ S\{n\},\ M);}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(n-\/1).U0\{1\}\ =\ U;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ backward\ half-\/steps:\ A\_\{n-\/1\}\_dt/2,\ ...,\ A2\_dt/2,\ A1\_dt/2}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ (n-\/1):-\/1:1}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.applyFactorStep(i,\ dt/2,\ L\{i\},\ F\{i\},\ S\{i\},\ M);}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ >\ 1}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(i-\/1).U0\{1\}\ =\ U;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Recovery}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(i).U0\{1\}\ =\ U0;}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00121}00121\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_strang_integrator_8m_source_l00122}00122\ end}
+
+\end{DoxyCode}

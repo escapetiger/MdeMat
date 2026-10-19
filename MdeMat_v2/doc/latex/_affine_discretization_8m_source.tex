@@ -1,0 +1,210 @@
+\doxysection{Affine\+Discretization.\+m}
+\hypertarget{_affine_discretization_8m_source}{}\label{_affine_discretization_8m_source}\index{+approx/+discretization/AffineDiscretization.m@{+approx/+discretization/AffineDiscretization.m}}
+\mbox{\hyperlink{_affine_discretization_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00001}00001\ classdef\ AffineDiscretization\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1discretization}{00002}}\ \ \ \ \ \%\ AFFINEDISCRETIZATION\ Affine\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ \textcolor{keywordflow}{for}\ function}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00003}00003\ \ \ \ \ \%\ approximation.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00004}00004\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{AffineDiscretization}}\ provides\ a\ framework\ \textcolor{keywordflow}{for}\ constructing\ affine}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ function\ spaces\ on\ spherical\ and\ orthotopal\ domains.\ It\ manages}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ construction\ with\ various\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ including}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ Legendre,\ Fourier,\ and\ spherical\ harmonics,\ along\ with\ appropriate}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ integration\ schemes.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ C0\ sphere\ elements\ with\ different\ dimensional}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ reductions\ and\ scaling\ parameters.\ It\ encapsulates\ the\ complex}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ process\ of\ coordinating\ geometry,\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions,\ projectors,}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ and\ integrators\ \textcolor{keywordflow}{for}\ spherical\ approximation\ problems.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00016}00016\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \%\ Create\ 1D\ affine\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ with\ Legendre\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ disc\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{AffineDiscretization}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ disc.setC0SphereElement(\textcolor{stringliteral}{'nDims'},\ 1,\ \textcolor{stringliteral}{'order'},\ 3,\ \textcolor{stringliteral}{'nPoints'},\ 10);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ disc.setAffineSpace();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Create\ 2D\ spherical\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ with\ Fourier\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ disc\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{AffineDiscretization}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ disc.setC0SphereElement(\textcolor{stringliteral}{'nDims'},\ 2,\ \textcolor{stringliteral}{'reduction'},\ 1,\ \textcolor{stringliteral}{'radius'},\ 2.0);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ disc.setScaledAffineSpace([1.0,\ 0.5]);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \%\ Set\ up\ derivative\ computation}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ disc.setDerivativeOrder(2);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00029}00029\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00030}00030\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{C0Element}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}},}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space}{ScaledAffineSpace}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00034}00034\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \%\ Element\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ spatial\ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{00036}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}\ \ \ \%\ Function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}\ \textcolor{keywordtype}{object}\ \textcolor{keywordflow}{for}\ approximation}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00037}00037\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00039}00039\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00040}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{00040}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}()}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ AFFINEDISCRETIZATION\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00043}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}()\ creates\ an\ empty\ affine}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}\ \textcolor{keywordtype}{object}.\ Element\ and\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}\ must\ be\ set}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ using\ the\ appropriate\ setter\ methods.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96}{setC0SphereElement}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETC0SPHEREELEMENT\ Set\ C0\ sphere\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}\ with\ specified}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ configuration.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00057}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96}{setC0SphereElement}}(obj,\ varargin)\ creates\ a\ C0\ sphere}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}\ with\ the\ specified\ parameters\ and\ assigns\ it\ to\ the}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1discretization}{discretization}}.\ The\ method\ configures\ geometry,\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ functions,\ integrators,\ and\ projectors\ based\ on\ dimensional}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ reduction\ parameters.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Name-\/value\ parameter\ pairs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'nDims'\ -\/\ Number\ of\ spatial\ dimensions\ (1,\ 2,\ or\ 3)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'reduction'\ -\/\ Reduction\ parameter\ (1\ or\ 2,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'order'\ -\/\ Polynomial\ order\ (positive\ integer,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'radius'\ -\/\ Sphere\ radius\ (positive\ scalar,\ default:\ 1)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ \ 'nPoints'\ -\/\ Number\ of\ integration\ points\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Reduction\ parameter\ affects\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ choice:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ -\/\ nDims=1,\ reduction=1:\ Legendre\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ on\ hypersphere}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ -\/\ nDims=1,\ reduction=2:\ Legendre\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ on\ orthotope}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ -\/\ nDims=2,\ reduction=1:\ Fourier\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ on\ circle}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ -\/\ nDims=3:\ Spherical\ harmonic\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ on\ sphere}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ p\ =\ inputParser;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'nDims',\ [],\ @(x)\ x\ >=\ 1\ \&\&\ x\ <=\ 3);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'reduction',\ 1,\ @(x)\ x\ >=\ 1\ \&\&\ x\ <=\ 2);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'order',\ 1,\ @(x)\ x\ >=\ 1);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'radius',\ 1,\ @(x)\ x\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ addParameter(p,\ 'nPoints',\ [],\ @(x)\ isnumeric(x));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00089}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ab0b65366c0f0bbc591c523c3cb319e96}{00089}}\ \ \ \ \ \ \ \ \ \ \ \ \ parse(p,\ varargin\{:\});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ p.Results.nDims;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ p.Results.nPoints;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ k\ =\ p.Results.order;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ p.Results.reduction;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ p.Results.radius;}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ d\ ==\ 1\ \&\&\ t\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}(0);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'canonical'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_constant_function}{ConstantFunction}}(1,\ 1/2);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator}{HypersphereIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1,\ \textcolor{stringliteral}{'gauss\_trapezoidal'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982}{setPoints}}(n);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.addWeightFunction(@(v)\ 1./E.evaluate(v));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ d\ ==\ 1\ \&\&\ t\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}([-\/1,\ 1]);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'legendre'},\ \textcolor{stringliteral}{'canonical'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_constant_function}{ConstantFunction}}(1,\ 1/(2\ *\ r));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator}{OrthotopeIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1,\ \textcolor{stringliteral}{'gauss\_legendre'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.\mbox{\hyperlink{classapprox_1_1integrate_1_1_orthotope_integrator_a0f1662137150ccd409a410bfd4c3bb11}{setPoints}}(n,\ -\/r,\ r);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.addWeightFunction(@(v)\ 1./E.evaluate(v));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ d\ ==\ 2\ \&\&\ t\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}(1);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'fourier'},\ \textcolor{stringliteral}{'canonical'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_constant_function}{ConstantFunction}}(1,\ 1/(2\ *\ pi\ *\ r));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator}{HypersphereIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2,\ \textcolor{stringliteral}{'gauss\_trapezoidal'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982}{setPoints}}(n,\ zeros(1,\ 2),\ r,\ 3);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.addWeightFunction(@(v)\ 1./E.evaluate(v));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_hypersphere}{Hypersphere}}(2);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.\mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{OrthogonalBasisFunction}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k,\ \textcolor{stringliteral}{'spherical\_harmonic'},\ \textcolor{stringliteral}{'canonical'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F.\mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{autoLoad}}();}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_constant_function}{ConstantFunction}}(2,\ 1/(4\ *\ pi\ *\ r\string^2));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_hypersphere_integrator}{HypersphereIntegrator}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 3,\ \textcolor{stringliteral}{'gauss\_trapezoidal'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integrator_a6d5eedd451bb9175b024eb439464e982}{setPoints}}(n,\ zeros(1,\ 3),\ r,\ 3);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I.addWeightFunction(@(v)\ 1./E.evaluate(v));}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1function}{function}}.\mbox{\hyperlink{classcore_1_1function_1_1_product_function}{ProductFunction}}(F,\ E);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector}{ModalProjector}}(B);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ P.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector_a1202dfa82b8c4d73556f444cf4334a20}{setMass}}(I.nodes,\ I.weights);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ obj.element\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{C0Element}}(G,\ P,\ I);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ function\ obj\ =\ setAffineSpace(obj)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETAFFINESPACE\ Set\ affine\ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setAffineSpace(obj,\ varargin)\ creates\ an\ affine}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ based\ on\ the\ current\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\ The\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ provides\ the\ computational\ framework\ \textcolor{keywordflow}{for}\ function}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ approximation\ on\ the\ configured\ domain.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.element),\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotPrepared'},\ \textcolor{stringliteral}{'Element\ must\ be\ set\ before\ space.'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ obj.space\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_affine_space}{AffineSpace}}(obj.element);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ function\ obj\ =\ setScaledAffineSpace(obj,\ scales)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00165}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_ad61fffaafb73828c91da113c7d01c77f}{00165}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETSCALEDAFFINESPACE\ Set\ scaled\ affine\ function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a957af193b331d0f348c2b21604105704}{setScaledAffineSpace}}(obj,\ scales)\ creates\ a\ scaled}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ affine\ function\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a8a8af018e7116ead36f2752fec7d2abb}{space}}\ with\ the\ specified\ scaling}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ parameters.\ This\ allows\ \textcolor{keywordflow}{for}\ anisotropic\ scaling\ of\ the}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ in\ different\ coordinate\ directions.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ scales\ -\/\ Scaling\ parameter\ vector\ (positive\ values)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.element),\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotPrepared'},\ \textcolor{stringliteral}{'Element\ must\ be\ set\ before\ space.'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ obj.space\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_scaled_affine_space}{ScaledAffineSpace}}(obj.element,\ scales);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a6eccdb44120fc32475a8f52d466998d9}{setDerivativeOrder}}(obj,\ order)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETDERIVATIVEORDER\ Set\ derivative\ order\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}\ data.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00187}\mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a957af193b331d0f348c2b21604105704}{00187}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_a6eccdb44120fc32475a8f52d466998d9}{setDerivativeOrder}}(obj,\ order)\ configures\ the\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af36740e0275b379a94b43bf0cdbd1147}{element}}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ compute\ function\ data\ up\ to\ the\ specified\ derivative}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ order.\ This\ is\ required\ \textcolor{keywordflow}{for}\ problems\ involving\ derivatives.}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ order\ -\/\ Maximum\ derivative\ order\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1discretization_1_1_affine_discretization_af5190cc3639ab3f7266404fcdb3e5243}{AffineDiscretization}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(obj.element),\ ...}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'NotPrepared'},\ \textcolor{stringliteral}{'Element\ must\ be\ set\ before\ setting\ derivative\ order.'});}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ obj.element.setVolumeData(order);}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00203}00203\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_affine_discretization_8m_source_l00204}00204\ end}
+
+\end{DoxyCode}

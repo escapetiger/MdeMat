@@ -1,0 +1,177 @@
+\doxysection{core\+::linalg\+::Unknown\+Class Class Reference}
+\hypertarget{classcore_1_1linalg_1_1_unknown_class}{}\label{classcore_1_1linalg_1_1_unknown_class}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+
+
+Abstract base class for indexers with cached.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_aea9d6c3121f2c3f3ebe5093d65241a6f}{Cached\+Multi\+Indexer}} (Input\+Type style)
+\begin{DoxyCompactList}\small\item\em Creates a cached multi-\/indexer. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_aeb2b1a29ee5ce4ba8fc3d86c2c308b5b}{multi\+To\+Linear}} (Input\+Type obj, Input\+Type M)
+\begin{DoxyCompactList}\small\item\em Converts multi-\/indices to linear indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_a49dbf1c97c14808ab87eaa95c0f6e1f8}{linear\+To\+Multi}} (Input\+Type obj, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Converts linear indices to cached. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_a8ad866783bcd4635e9797200fe1a8bee}{set\+Cache}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Method to generate and cache indices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_a7eea82a0e73c0eeb5edb291f4c074d8c}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions, derived from cache. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_ab18b5781719554ad662b6c16611c32fd}{n\+Indices}}
+\begin{DoxyCompactList}\small\item\em Number of cached indices, derived from cache. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_unknown_class_a8d5534cdb4c3c7669ea80a40b16a5881}{cache}} = \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em Cache matrix where each row represents a multi-\/index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for indexers with cached. 
+
+indices.
+
+Provides a foundation for index generation strategies that benefit from caching generated indices. This abstract class implements caching mechanisms and methods for index conversion using the cache. Subclasses implement specific index generation strategies while inheriting common caching functionality.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1linalg_1_1_indexer}{core.\+linalg.\+Indexer} 
+
+\doxylink{classcore_1_1linalg_1_1_multi_indexer}{core.\+linalg.\+Multi\+Indexer} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_cached_multi_indexer_8m_source_l00019}{19}} of file \mbox{\hyperlink{_cached_multi_indexer_8m_source}{Cached\+Multi\+Indexer.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_aea9d6c3121f2c3f3ebe5093d65241a6f}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!CachedMultiIndexer@{CachedMultiIndexer}}
+\index{CachedMultiIndexer@{CachedMultiIndexer}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{CachedMultiIndexer()}{CachedMultiIndexer()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_aea9d6c3121f2c3f3ebe5093d65241a6f} 
+function core\+::linalg\+::\+Unknown\+Class\+::\+Cached\+Multi\+Indexer (\begin{DoxyParamCaption}\item[{Input\+Type}]{style}{}\end{DoxyParamCaption})}
+
+
+
+Creates a cached multi-\/indexer. 
+
+Creates a Cached\+Multi\+Indexer object with specified storage ordering style. If not provided, style defaults to \textquotesingle{}F\textquotesingle{} (column-\/major, Fortran-\/style ordering).
+
+Syntax\+: obj = \doxylink{classcore_1_1linalg_1_1_unknown_class_aea9d6c3121f2c3f3ebe5093d65241a6f}{Cached\+Multi\+Indexer()} obj = Cached\+Multi\+Indexer(style) 
+\begin{DoxyParams}{Parameters}
+{\em style} & -\/ (Optional) Storage ordering style \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_a49dbf1c97c14808ab87eaa95c0f6e1f8}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!linearToMulti@{linearToMulti}}
+\index{linearToMulti@{linearToMulti}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{linearToMulti()}{linearToMulti()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_a49dbf1c97c14808ab87eaa95c0f6e1f8} 
+function core\+::linalg\+::\+Unknown\+Class\+::linear\+To\+Multi (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})}
+
+
+
+Converts linear indices to cached. 
+
+multi-\/indices.
+
+Converts linear indices to multi-\/indices from the cached set. The linear indices represent positions in the order that indices were generated and cached.
+
+Syntax\+: M = linear\+To\+Multi(obj, L) 
+\begin{DoxyParams}{Parameters}
+{\em L} & -\/ Vector of linear indices \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em M} & -\/ Matrix where each row is the corresponding multi-\/index \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_aeb2b1a29ee5ce4ba8fc3d86c2c308b5b}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!multiToLinear@{multiToLinear}}
+\index{multiToLinear@{multiToLinear}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{multiToLinear()}{multiToLinear()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_aeb2b1a29ee5ce4ba8fc3d86c2c308b5b} 
+function core\+::linalg\+::\+Unknown\+Class\+::multi\+To\+Linear (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Converts multi-\/indices to linear indices. 
+
+Converts multi-\/indices to linear indices within the cached set of indices. The linear indices represent positions in the order that indices were generated and cached.
+
+Syntax\+: L = multi\+To\+Linear(obj, M) 
+\begin{DoxyParams}{Parameters}
+{\em M} & -\/ Matrix where each row is a multi-\/index \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em L} & -\/ Column vector of linear indices \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_a8ad866783bcd4635e9797200fe1a8bee}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!setCache@{setCache}}
+\index{setCache@{setCache}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{setCache()}{setCache()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_a8ad866783bcd4635e9797200fe1a8bee} 
+virtual function core\+::linalg\+::\+Unknown\+Class\+::set\+Cache (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Method to generate and cache indices. 
+
+This method must be implemented by subclasses to generate indices according to their specific patterns and store them in the cache.
+
+Syntax\+: obj.\+set\+Cache(...) 
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_a8d5534cdb4c3c7669ea80a40b16a5881}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!cache@{cache}}
+\index{cache@{cache}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{cache}{cache}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_a8d5534cdb4c3c7669ea80a40b16a5881} 
+Property core\+::linalg\+::\+Unknown\+Class\+::cache = \mbox{[}$\,$\mbox{]}}
+
+
+
+Cache matrix where each row represents a multi-\/index. 
+
+
+
+Definition at line \mbox{\hyperlink{_cached_multi_indexer_8m_source_l00032}{32}} of file \mbox{\hyperlink{_cached_multi_indexer_8m_source}{Cached\+Multi\+Indexer.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_a7eea82a0e73c0eeb5edb291f4c074d8c}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!nDims@{nDims}}
+\index{nDims@{nDims}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_a7eea82a0e73c0eeb5edb291f4c074d8c} 
+Property core\+::linalg\+::\+Unknown\+Class\+::n\+Dims}
+
+
+
+Number of dimensions, derived from cache. 
+
+
+
+Definition at line \mbox{\hyperlink{_cached_multi_indexer_8m_source_l00023}{23}} of file \mbox{\hyperlink{_cached_multi_indexer_8m_source}{Cached\+Multi\+Indexer.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_unknown_class_ab18b5781719554ad662b6c16611c32fd}\index{core::linalg::UnknownClass@{core::linalg::UnknownClass}!nIndices@{nIndices}}
+\index{nIndices@{nIndices}!core::linalg::UnknownClass@{core::linalg::UnknownClass}}
+\doxysubsubsection{\texorpdfstring{nIndices}{nIndices}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_unknown_class_ab18b5781719554ad662b6c16611c32fd} 
+Property core\+::linalg\+::\+Unknown\+Class\+::n\+Indices}
+
+
+
+Number of cached indices, derived from cache. 
+
+
+
+Definition at line \mbox{\hyperlink{_cached_multi_indexer_8m_source_l00026}{26}} of file \mbox{\hyperlink{_cached_multi_indexer_8m_source}{Cached\+Multi\+Indexer.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+linalg/\mbox{\hyperlink{_cached_multi_indexer_8m}{Cached\+Multi\+Indexer.\+m}}\end{DoxyCompactItemize}

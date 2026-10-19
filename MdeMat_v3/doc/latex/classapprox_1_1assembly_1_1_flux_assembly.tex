@@ -1,0 +1,111 @@
+\doxysection{approx\+::assembly\+::Flux\+Assembly Class Reference}
+\hypertarget{classapprox_1_1assembly_1_1_flux_assembly}{}\label{classapprox_1_1assembly_1_1_flux_assembly}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+
+
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for flux terms in DG methods.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}.
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a5dce39f5053f76c269b916462533da30}{VALID\+\_\+\+BC\+\_\+\+TYPES}} = \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_ae014525c83e9e768a4c97e65bdf862f2}{VALID\+\_\+\+FLUX\+\_\+\+TYPES}} = \{\textquotesingle{}upwind\textquotesingle{}, \textquotesingle{}central\textquotesingle{}, \textquotesingle{}outward\textquotesingle{}, \textquotesingle{}inward\textquotesingle{}\}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a16495c8bea028328c7fdce2ff6b91dcd}{VALID\+\_\+\+PERIODIC\+\_\+\+FLUX\+\_\+\+MODES}} = \{\textquotesingle{}periodic\textquotesingle{}\}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_flux_assembly_a220ac41a4a0d9ffea52d25fb7136606e}{VALID\+\_\+\+DIRICHLET\+\_\+\+FLUX\+\_\+\+MODES}} = \{\textquotesingle{}extrapolate\textquotesingle{}, \textquotesingle{}truncate\textquotesingle{}, \textquotesingle{}inflow\textquotesingle{}\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}
+\begin{DoxyCompactList}\small\item\em Mesh\+Space object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{approx\+::assembly\+::\+Assembly}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{Mesh\+Operator}} (Input\+Type \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}})
+\begin{DoxyCompactList}\small\item\em Constructor for Operator. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{assemble\+Matrix}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type JE, Input\+Type JL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble matrix contribution. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{assemble\+Vector}} (Input\+Type obj, Input\+Type IE, Input\+Type IL, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Assemble vector contribution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{Assembly} for flux terms in DG methods. 
+
+\doxylink{classapprox_1_1assembly_1_1_flux_assembly}{Flux\+Assembly} handles the assembly of flux terms that arise in discontinuous Galerkin methods. These flux terms provide inter-\/element coupling, where the solution is allowed to be discontinuous across element boundaries.
+
+The class supports both grid and non-\/grid meshes, following the unified assembly procedure\+:
+\begin{DoxyEnumerate}
+\item iterate over interior elements and sum up interface integrals
+\item iterate over boundary elements and sum up interface integrals
+\end{DoxyEnumerate}
+
+Flux terms are essential for stability and accuracy in DG methods, as they control the flow of information across element interfaces and enforce appropriate boundary conditions. The choice of flux type affects the stability properties and numerical diffusion characteristics of the resulting scheme.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1assembly_1_1_assembly}{approx.\+assembly.\+Assembly} 
+
+\doxylink{classapprox_1_1assembly_1_1_volume_assembly}{approx.\+assembly.\+Volume\+Assembly} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00027}{27}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a5dce39f5053f76c269b916462533da30}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!VALID\_BC\_TYPES@{VALID\_BC\_TYPES}}
+\index{VALID\_BC\_TYPES@{VALID\_BC\_TYPES}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{VALID\_BC\_TYPES}{VALID\_BC\_TYPES}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a5dce39f5053f76c269b916462533da30} 
+Constant Property approx\+::assembly\+::\+Flux\+Assembly\+::\+VALID\+\_\+\+BC\+\_\+\+TYPES = \{\textquotesingle{}periodic\textquotesingle{}, \textquotesingle{}dirichlet\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00031}{31}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a220ac41a4a0d9ffea52d25fb7136606e}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!VALID\_DIRICHLET\_FLUX\_MODES@{VALID\_DIRICHLET\_FLUX\_MODES}}
+\index{VALID\_DIRICHLET\_FLUX\_MODES@{VALID\_DIRICHLET\_FLUX\_MODES}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{VALID\_DIRICHLET\_FLUX\_MODES}{VALID\_DIRICHLET\_FLUX\_MODES}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a220ac41a4a0d9ffea52d25fb7136606e} 
+Constant Property approx\+::assembly\+::\+Flux\+Assembly\+::\+VALID\+\_\+\+DIRICHLET\+\_\+\+FLUX\+\_\+\+MODES = \{\textquotesingle{}extrapolate\textquotesingle{}, \textquotesingle{}truncate\textquotesingle{}, \textquotesingle{}inflow\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00040}{40}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_ae014525c83e9e768a4c97e65bdf862f2}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!VALID\_FLUX\_TYPES@{VALID\_FLUX\_TYPES}}
+\index{VALID\_FLUX\_TYPES@{VALID\_FLUX\_TYPES}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{VALID\_FLUX\_TYPES}{VALID\_FLUX\_TYPES}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_ae014525c83e9e768a4c97e65bdf862f2} 
+Constant Property approx\+::assembly\+::\+Flux\+Assembly\+::\+VALID\+\_\+\+FLUX\+\_\+\+TYPES = \{\textquotesingle{}upwind\textquotesingle{}, \textquotesingle{}central\textquotesingle{}, \textquotesingle{}outward\textquotesingle{}, \textquotesingle{}inward\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00034}{34}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+\Hypertarget{classapprox_1_1assembly_1_1_flux_assembly_a16495c8bea028328c7fdce2ff6b91dcd}\index{approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}!VALID\_PERIODIC\_FLUX\_MODES@{VALID\_PERIODIC\_FLUX\_MODES}}
+\index{VALID\_PERIODIC\_FLUX\_MODES@{VALID\_PERIODIC\_FLUX\_MODES}!approx::assembly::FluxAssembly@{approx::assembly::FluxAssembly}}
+\doxysubsubsection{\texorpdfstring{VALID\_PERIODIC\_FLUX\_MODES}{VALID\_PERIODIC\_FLUX\_MODES}}
+{\footnotesize\ttfamily \label{classapprox_1_1assembly_1_1_flux_assembly_a16495c8bea028328c7fdce2ff6b91dcd} 
+Constant Property approx\+::assembly\+::\+Flux\+Assembly\+::\+VALID\+\_\+\+PERIODIC\+\_\+\+FLUX\+\_\+\+MODES = \{\textquotesingle{}periodic\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_flux_assembly_8m_source_l00037}{37}} of file \mbox{\hyperlink{_flux_assembly_8m_source}{Flux\+Assembly.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+assembly/\mbox{\hyperlink{_flux_assembly_8m}{Flux\+Assembly.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,61 @@
+\doxysection{backtrack.\+m}
+\hypertarget{backtrack_8m_source}{}\label{backtrack_8m_source}\index{+core/+except/private/backtrack.m@{+core/+except/private/backtrack.m}}
+\mbox{\hyperlink{backtrack_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00001}00001\ function\ outId\ =\ \mbox{\hyperlink{namespacecore_1_1except_af5edfa805956df05aec771714cde6a65}{backtrack}}(\textcolor{keywordtype}{id})}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00002}00002\ \%\ BACKTRACK\ Construct\ a\ identifier\ with\ module\ context.}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00004}00004\ \%\ \ \ outId\ =\ \mbox{\hyperlink{namespacecore_1_1except_af5edfa805956df05aec771714cde6a65}{backtrack}}(\textcolor{keywordtype}{id})\ extracts\ context\ information\ from\ the\ call\ stack}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00005}00005\ \%\ \ \ to\ build\ hierarchical\ identifiers\ of\ form\ \textcolor{stringliteral}{'module:identifier'}.}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00007}00007\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00008}00008\ \%\ \ \ \textcolor{keywordtype}{id}\ -\/\ Base\ identifier\ string\ (e.g.,\ \textcolor{stringliteral}{'InvalidInput'})}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00009}00009\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00010}00010\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00011}00011\ \%\ \ \ outId\ -\/\ Full\ identifier\ with\ context\ (e.g.,\ \textcolor{stringliteral}{'core:except:InvalidInput'})}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00012}00012\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00013}00013\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00014}00014\ \%\ \ \ \%\ Basic\ usage\ -\/\ construct\ contextual\ identifier}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00015}00015\ \%\ \ \ \textcolor{keywordtype}{id}\ =\ \mbox{\hyperlink{namespacecore_1_1except_af5edfa805956df05aec771714cde6a65}{backtrack}}(\textcolor{stringliteral}{'InvalidInput'});}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00016}00016\ \%\ \ \ \%\ Returns\ something\ like\ \textcolor{stringliteral}{'core:except:InvalidInput'}}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00017}00017\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00018}00018\ \%\ \ \ \%\ Usage\ in\ error\ handling}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00019}00019\ \%\ \ \ fullId\ =\ \mbox{\hyperlink{namespacecore_1_1except_af5edfa805956df05aec771714cde6a65}{backtrack}}(\textcolor{stringliteral}{'OutOfRange'});}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00020}00020\ \%\ \ \ error(fullId,\ \textcolor{stringliteral}{'Parameter\ value\ is\ out\ of\ acceptable\ range.'});}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00021}00021\ \%}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00022}00022\ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00023}00023\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert,\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00025}00025\ LIBRARY\ =\ \textcolor{stringliteral}{'MdeMat'};}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00027}\mbox{\hyperlink{namespacecore_1_1except_af5edfa805956df05aec771714cde6a65}{00027}}\ stack\ =\ dbstack(2,\ \textcolor{stringliteral}{'-\/completenames'});}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00028}00028\ \textcolor{keywordflow}{if}\ isempty(stack)}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00029}00029\ \ \ \ \ caller\ =\ \textcolor{stringliteral}{'base'};}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00030}00030\ \ \ \ \ \textcolor{keyword}{module}\ =\ 'unknown';}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00031}00031\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00032}00032\ \ \ \ \ [\string~,\ caller,\ \string~]\ =\ fileparts(stack(1).name);}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00033}00033\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00034}00034\ \ \ \ \ path\ =\ strsplit(stack(1).file,\ filesep);}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{module}\ =\ 'unknown';}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00036}00036\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00037}00037\ \ \ \ \ root\ =\ find(strcmp(path,\ LIBRARY),\ 1);}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00038}00038\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(root)\ \&\&\ root\ <\ length(path)}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ module\ =\ \textcolor{stringliteral}{''};}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ root\ +\ 1:length(path)}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ startsWith(path\{i\},\ \textcolor{charliteral}{'+'})}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(module)}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{module}\ =\ strjoin(\{module,\ path\{i\}(2:end)\},\ ':');}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{module}\ =\ path\{i\}(2:end);}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00051}00051\ end}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00053}00053\ outId\ =\ [module,\ \textcolor{charliteral}{':'},\ caller,\ \textcolor{charliteral}{':'},\ id];}
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{backtrack_8m_source_l00055}00055\ end}
+
+\end{DoxyCode}

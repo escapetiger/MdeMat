@@ -1,0 +1,393 @@
+\doxysection{physics\+::Scheme Class Reference}
+\hypertarget{classphysics_1_1_scheme}{}\label{classphysics_1_1_scheme}\index{physics::Scheme@{physics::Scheme}}
+
+
+Base class for all numerical schemes.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{physics\+::advection\+::\+Uwdg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme}{physics\+::diffusion\+::\+Ldg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a7a24ac6dad1ce81e05435e8face449d6}{Scheme}} (Input\+Type \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classphysics_1_1_scheme}{Scheme}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a8848877ce06f8a8b9ea45186687b6e2a}{set\+Timer}} (Input\+Type obj, Input\+Type verbose)
+\begin{DoxyCompactList}\small\item\em Set performance timer with specified verbosity. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_acdb6478e56a463b3ac88c1530602fef9}{set\+Time\+Discretization}} (Input\+Type obj, Input\+Type t\+Disc\+Id, Input\+Type t\+Final)
+\begin{DoxyCompactList}\small\item\em Set temporal discretization method. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab046345780aa4bbc86e9b79d70c26714}{set\+Analyzer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set analysis component for error assessment. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_a77f6eeace68f8d6da5803ba08cfee56a}{set\+Visualizer}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Set visualization component for solution output. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}{run}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Execute the complete time integration loop. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05}{initialize}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Initialize the scheme and solution state. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39}{pre\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Preprocess operations before each time step. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}{step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Perform one time integration step. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681}{post\+Step}} (Input\+Type obj, Input\+Type state)
+\begin{DoxyCompactList}\small\item\em Postprocess operations after each time step. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}{finalize}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Finalize simulation and perform final analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb}{RECORDS}} = \{\textquotesingle{}Integration\textquotesingle{}, \textquotesingle{}Visualization\textquotesingle{}, \textquotesingle{}Analysis\textquotesingle{}\}
+\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}
+\begin{DoxyCompactList}\small\item\em Timer record categories. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{t\+Disc}}
+\begin{DoxyCompactList}\small\item\em Temporal discretization object for time integration. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}
+\begin{DoxyCompactList}\small\item\em Performance timer for monitoring execution phases. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}
+\begin{DoxyCompactList}\small\item\em Visualization object for solution plotting and output. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}
+\begin{DoxyCompactList}\small\item\em Analysis object for error computation and assessment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all numerical schemes. 
+
+\doxylink{classphysics_1_1_scheme}{Scheme} provides the fundamental framework for numerical simulation schemes including time integration, visualization, analysis, and performance monitoring. It defines the common interface and workflow for all concrete scheme implementations.
+
+The class manages the complete simulation lifecycle through abstract methods that must be implemented by subclasses\+: initialize, pre\+Step, step, post\+Step, and finalize. It coordinates temporal discretization, performance timing, visualization, and error analysis components.
+
+\begin{DoxyNote}{Note}
+Subclasses must implement all abstract methods. The run method 
+
+provides the main time integration loop with automatic performance 
+
+monitoring and step management.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1odeint_1_1_ode_integrator}{approx.\+odeint.\+Ode\+Integrator} 
+
+\doxylink{classcore_1_1chrono_1_1_timer}{core.\+chrono.\+Timer} 
+
+\doxylink{classprofilers_1_1analysis_1_1_analyzer}{profilers.\+analysis.\+Analyzer} 
+
+\doxylink{classprofilers_1_1visual_1_1_visualizer}{profilers.\+visual.\+Visualizer} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00028}{28}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classphysics_1_1_scheme_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classphysics_1_1_scheme_a7a24ac6dad1ce81e05435e8face449d6}\index{physics::Scheme@{physics::Scheme}!Scheme@{Scheme}}
+\index{Scheme@{Scheme}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{Scheme()}{Scheme()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a7a24ac6dad1ce81e05435e8face449d6} 
+function physics\+::\+Scheme\+::\+Scheme (\begin{DoxyParamCaption}\item[{Input\+Type}]{config}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classphysics_1_1_scheme}{Scheme}. 
+
+obj = Scheme(config) creates a base scheme object with the specified configuration structure. Initializes all component properties to empty, requiring explicit setup via setter methods.
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & -\/ Configuration structure \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classphysics_1_1_scheme_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def}\index{physics::Scheme@{physics::Scheme}!finalize@{finalize}}
+\index{finalize@{finalize}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_aae9f0e879c8ee0f4c73d9b228f7c7def} 
+virtual function physics\+::\+Scheme\+::finalize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Finalize simulation and perform final analysis. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme_ae2b1f3f761981b4bcde19223955cf45b}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{physics\+::advection\+::\+Uwdg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a33608ab9fe385ca31a4f0b82ea6f190a}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+\Hypertarget{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05}\index{physics::Scheme@{physics::Scheme}!initialize@{initialize}}
+\index{initialize@{initialize}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a28a5dc3e96ac0571ce60666837875d05} 
+virtual function physics\+::\+Scheme\+::initialize (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Initialize the scheme and solution state. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme_a3963f9e7ba1a1dd9436c203452ee4b36}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}{physics\+::advection\+::\+Uwdg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a707bfc92edebcca2294be0e4be1843d7}{physics\+::diffusion\+::\+Ldg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a27699454bcaf2c5636a8e26dace4fac4}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+\Hypertarget{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681}\index{physics::Scheme@{physics::Scheme}!postStep@{postStep}}
+\index{postStep@{postStep}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{postStep()}{postStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_ae57b4506fce1aa5fb4b310e5c424b681} 
+virtual function physics\+::\+Scheme\+::post\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Postprocess operations after each time step. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme_aee854bf5118a06bf38472e883e4e61cf}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}{physics\+::advection\+::\+Uwdg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_ab9c2cbec7633e6f3dfbd012e2af9e040}{physics\+::diffusion\+::\+Ldg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5ba8c3adf16ee868314c08f951467b85}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+\Hypertarget{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39}\index{physics::Scheme@{physics::Scheme}!preStep@{preStep}}
+\index{preStep@{preStep}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{preStep()}{preStep()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_aec7dfeca870217e692da60820f4cee39} 
+virtual function physics\+::\+Scheme\+::pre\+Step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Preprocess operations before each time step. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme_a08e9468a0586e6fab480811438adccbd}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a3a25e5ccda4a37c93483a553e089ee5b}{physics\+::advection\+::\+Uwdg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a97b9d4a994797a7f91c986e15f4d42bf}{physics\+::diffusion\+::\+Ldg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a5f48e934ff00c42cd01ff8bb8066db0f}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+\Hypertarget{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98}\index{physics::Scheme@{physics::Scheme}!run@{run}}
+\index{run@{run}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_ab66eed5419e8ae4061b8d86a48e31c98} 
+function physics\+::\+Scheme\+::run (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Execute the complete time integration loop. 
+
+state = run(obj, state) performs the full time integration from initial to final time, managing preprocessing, integration steps, and postprocessing with performance monitoring throughout the simulation. The method coordinates the abstract step methods defined by subclasses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+{\em state} & -\/ Initial solution state structure\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em state} & -\/ Final solution state after time integration \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classphysics_1_1_scheme_ab046345780aa4bbc86e9b79d70c26714}\index{physics::Scheme@{physics::Scheme}!setAnalyzer@{setAnalyzer}}
+\index{setAnalyzer@{setAnalyzer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{setAnalyzer()}{setAnalyzer()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_ab046345780aa4bbc86e9b79d70c26714} 
+function physics\+::\+Scheme\+::set\+Analyzer (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set analysis component for error assessment. 
+
+obj = set\+Analyzer(obj, varargin) creates and configures an analyzer object for computing solution errors, convergence rates, and other quantitative assessments during simulation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+{\em varargin} & -\/ Name-\/value parameter pairs\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classphysics_1_1_scheme_acdb6478e56a463b3ac88c1530602fef9}\index{physics::Scheme@{physics::Scheme}!setTimeDiscretization@{setTimeDiscretization}}
+\index{setTimeDiscretization@{setTimeDiscretization}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{setTimeDiscretization()}{setTimeDiscretization()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_acdb6478e56a463b3ac88c1530602fef9} 
+function physics\+::\+Scheme\+::set\+Time\+Discretization (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{t\+Disc\+Id}{, }\item[{Input\+Type}]{t\+Final}{}\end{DoxyParamCaption})}
+
+
+
+Set temporal discretization method. 
+
+obj = set\+Time\+Discretization(obj, t\+Disc\+Id, t\+Final) creates and configures the appropriate time integration method based on the specified identifier. Supports various implicit methods including backward Euler, BDF, and SDIRK schemes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+{\em t\+Disc\+Id} & -\/ Time discretization identifier string\+: \\
+\hline
+{\em t\+Final} & -\/ Final integration time (positive scalar)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object with configured time discretization \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classphysics_1_1_scheme_a8848877ce06f8a8b9ea45186687b6e2a}\index{physics::Scheme@{physics::Scheme}!setTimer@{setTimer}}
+\index{setTimer@{setTimer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{setTimer()}{setTimer()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a8848877ce06f8a8b9ea45186687b6e2a} 
+function physics\+::\+Scheme\+::set\+Timer (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{verbose}{}\end{DoxyParamCaption})}
+
+
+
+Set performance timer with specified verbosity. 
+
+obj = set\+Timer(obj, verbose) creates and configures a performance timer for monitoring simulation phases including integration, visualization, and analysis operations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+{\em verbose} & -\/ Verbosity flag for timer output (logical)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object with configured timer \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classphysics_1_1_scheme_a77f6eeace68f8d6da5803ba08cfee56a}\index{physics::Scheme@{physics::Scheme}!setVisualizer@{setVisualizer}}
+\index{setVisualizer@{setVisualizer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{setVisualizer()}{setVisualizer()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a77f6eeace68f8d6da5803ba08cfee56a} 
+function physics\+::\+Scheme\+::set\+Visualizer (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Set visualization component for solution output. 
+
+obj = set\+Visualizer(obj, varargin) creates and configures a visualizer object for plotting solutions, generating animations, and producing graphical output during simulation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+{\em varargin} & -\/ Name-\/value parameter pairs\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classphysics_1_1_scheme}{Scheme} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f}\index{physics::Scheme@{physics::Scheme}!step@{step}}
+\index{step@{step}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a98bcaec10537fb7ff2671a39362fb76f} 
+virtual function physics\+::\+Scheme\+::step (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{state}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Perform one time integration step. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme_ac9edd27cce6f2201b069a37e86fa9371}{physics\+::advection\+::\+Sldg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{physics\+::advection\+::\+Uwdg\+Scheme}}, \mbox{\hyperlink{classphysics_1_1diffusion_1_1_ldg_scheme_a6e3f1f40c701d6b5b24b7224c54f0115}{physics\+::diffusion\+::\+Ldg\+Scheme}}, and \mbox{\hyperlink{classphysics_1_1radiation_1_1_macro_micro_scheme_a481c7a987a885ac77fce5a13e01498cb}{physics\+::radiation\+::\+Macro\+Micro\+Scheme}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classphysics_1_1_scheme_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}\index{physics::Scheme@{physics::Scheme}!analyzer@{analyzer}}
+\index{analyzer@{analyzer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{analyzer}{analyzer}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb} 
+Property physics\+::\+Scheme\+::analyzer}
+
+
+
+Analysis object for error computation and assessment. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00050}{50}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}\index{physics::Scheme@{physics::Scheme}!config@{config}}
+\index{config@{config}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{config}{config}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555} 
+Property physics\+::\+Scheme\+::config}
+
+
+
+Timer record categories. 
+
+Configuration structure containing simulation parameters 
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00038}{38}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb}\index{physics::Scheme@{physics::Scheme}!RECORDS@{RECORDS}}
+\index{RECORDS@{RECORDS}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{RECORDS}{RECORDS}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a33ef4f0b5912eb9677022b25ab01cfdb} 
+Constant Property physics\+::\+Scheme\+::\+RECORDS = \{\textquotesingle{}Integration\textquotesingle{}, \textquotesingle{}Visualization\textquotesingle{}, \textquotesingle{}Analysis\textquotesingle{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00032}{32}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}\index{physics::Scheme@{physics::Scheme}!tDisc@{tDisc}}
+\index{tDisc@{tDisc}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{tDisc}{tDisc}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95} 
+Property physics\+::\+Scheme\+::t\+Disc}
+
+
+
+Temporal discretization object for time integration. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00041}{41}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}\index{physics::Scheme@{physics::Scheme}!timer@{timer}}
+\index{timer@{timer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{timer}{timer}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d} 
+Property physics\+::\+Scheme\+::timer}
+
+
+
+Performance timer for monitoring execution phases. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00044}{44}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+\Hypertarget{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}\index{physics::Scheme@{physics::Scheme}!visualizer@{visualizer}}
+\index{visualizer@{visualizer}!physics::Scheme@{physics::Scheme}}
+\doxysubsubsection{\texorpdfstring{visualizer}{visualizer}}
+{\footnotesize\ttfamily \label{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533} 
+Property physics\+::\+Scheme\+::visualizer}
+
+
+
+Visualization object for solution plotting and output. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheme_8m_source_l00047}{47}} of file \mbox{\hyperlink{_scheme_8m_source}{Scheme.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++physics/\mbox{\hyperlink{_scheme_8m}{Scheme.\+m}}\end{DoxyCompactItemize}

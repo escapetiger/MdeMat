@@ -1,0 +1,304 @@
+\doxysection{core\+::geometry\+::Polytope Class Reference}
+\hypertarget{classcore_1_1geometry_1_1_polytope}{}\label{classcore_1_1geometry_1_1_polytope}\index{core::geometry::Polytope@{core::geometry::Polytope}}
+
+
+Base class for all polytopes.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{core\+::geometry\+::\+Orthotope}}, and \mbox{\hyperlink{classcore_1_1geometry_1_1_simplex}{core\+::geometry\+::\+Simplex}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a0b144f9f1ad95476fff4dd581dd9a208}{Polytope}} (Input\+Type V, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a6b0df0ea91c6cf8b0a9195f314c53ce1}{is\+Inside}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Tests if points are inside the polytope. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a8e585ca8cf1ac24d90dc4370eb4366e1}{is\+On\+Boundary}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Tests if points are on the polytope boundary. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a18e064bc2f6e005fa16f0b388c10e339}{Geometry}} (Input\+Type \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{n\+Dims}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1geometry_1_1_geometry}{Geometry}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a3236c7bd738217cc0cdd57944269a065}{magnitude}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Returns the measure (size) of the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a245810d2340c87126da6b14ea035548c}{is\+Inside}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are inside the geometry. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_a9a403f87832c86f19c2de43902098d11}{is\+On\+Boundary}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Determines if points are on the boundary of the geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property vertices \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_ab8e8ea4ad58055c32c9617b71db61707}{double}}
+\begin{DoxyCompactList}\small\item\em Matrix representing polytope vertices (each column is a vertex) \end{DoxyCompactList}\item 
+Property faces \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a03cd773281753f7c99ac7741483b2226}{cell}}
+\begin{DoxyCompactList}\small\item\em Cell array of face definitions (each cell contains vertex indices) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry}{core\+::geometry\+::\+Geometry}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1geometry_1_1_geometry_aad4a1095afdb66fb3f0e26882d7dff75}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classcore_1_1geometry_1_1_geometry}{Geometry} dimension. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a7f9fdd65a2fab963fcef50cd14ca106b}{is\+On\+Face}} (Input\+Type obj, Input\+Type X, Input\+Type V)
+\begin{DoxyCompactList}\small\item\em Tests if points lie on a specific face. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_af6360fb06bab224973fb5926a8913199}{is\+On\+Face2D}} (ignored\+Arg, Input\+Type X, Input\+Type V, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Tests if points lie on a 2D face (line segment). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_a7b9f8f38761b19c93d2f895c809b2df7}{is\+On\+Face3D}} (ignored\+Arg, Input\+Type X, Input\+Type V, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Tests if points lie on a 3D face (polygon). \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1geometry_1_1_polytope_ae6643b172a478f36a51d849650425742}{is\+On\+Face\+ND}} (Input\+Type obj, Input\+Type X, Input\+Type V, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Tests if points lie on an n-\/dimensional face. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all polytopes. 
+
+\doxylink{classcore_1_1geometry_1_1_polytope}{Polytope} defines a generalized n-\/dimensional polytope, representing geometric objects with flat sides that extend the concept of polygons (2D) and polyhedra (3D) to higher dimensional spaces. A polytope is fundamentally characterized by its vertices and optionally its faces.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Cannot\ instantiate\ directly\ -\/\ use\ concrete\ subclasses}
+\DoxyCodeLine{\%\ simplex\ =\ core.geometry.Simplex(vertices);}
+\DoxyCodeLine{\%\ orthotope\ =\ core.geometry.Orthotope([0,\ 1,\ 0,\ 1]);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1geometry_1_1_simplex}{core.\+geometry.\+Simplex} 
+
+\doxylink{classcore_1_1geometry_1_1_orthotope}{core.\+geometry.\+Orthotope} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_polytope_8m_source_l00023}{23}} of file \mbox{\hyperlink{_polytope_8m_source}{Polytope.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a0b144f9f1ad95476fff4dd581dd9a208}\index{core::geometry::Polytope@{core::geometry::Polytope}!Polytope@{Polytope}}
+\index{Polytope@{Polytope}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{Polytope()}{Polytope()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a0b144f9f1ad95476fff4dd581dd9a208} 
+function core\+::geometry\+::\+Polytope\+::\+Polytope (\begin{DoxyParamCaption}\item[{Input\+Type}]{V}{, }\item[{Input\+Type}]{F}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope}. 
+
+obj = Polytope(\+V, F) creates a polytope from given vertices and optional faces. The constructor validates that the polytope has sufficient vertices for the specified dimension and ensures proper face definitions with valid vertex indices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em V} & -\/ A matrix of size d×m where each column is a vertex \\
+\hline
+{\em F} & -\/ A cell array of faces where each cell contains vertex indices \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a6b0df0ea91c6cf8b0a9195f314c53ce1}\index{core::geometry::Polytope@{core::geometry::Polytope}!isInside@{isInside}}
+\index{isInside@{isInside}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isInside()}{isInside()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a6b0df0ea91c6cf8b0a9195f314c53ce1} 
+function core\+::geometry\+::\+Polytope\+::is\+Inside (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Tests if points are inside the polytope. 
+
+TF = is\+Inside(obj, X) uses barycentric coordinate computation to determine if points lie within the convex hull of the polytope vertices. Points are inside if their barycentric coordinates are all non-\/negative and sum to 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope} object \\
+\hline
+{\em X} & -\/ A matrix of size d×m where each column represents a point\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ True if the point is inside \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a8e585ca8cf1ac24d90dc4370eb4366e1}\index{core::geometry::Polytope@{core::geometry::Polytope}!isOnBoundary@{isOnBoundary}}
+\index{isOnBoundary@{isOnBoundary}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isOnBoundary()}{isOnBoundary()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a8e585ca8cf1ac24d90dc4370eb4366e1} 
+function core\+::geometry\+::\+Polytope\+::is\+On\+Boundary (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})}
+
+
+
+Tests if points are on the polytope boundary. 
+
+TF = is\+On\+Boundary(obj, X) checks if points lie on any of the defined faces of the polytope. This method requires that faces be properly defined in the polytope construction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope} object \\
+\hline
+{\em X} & -\/ A matrix of size d×m where each column represents a point\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ True if the point is on the boundary \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a7f9fdd65a2fab963fcef50cd14ca106b}\index{core::geometry::Polytope@{core::geometry::Polytope}!isOnFace@{isOnFace}}
+\index{isOnFace@{isOnFace}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isOnFace()}{isOnFace()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a7f9fdd65a2fab963fcef50cd14ca106b} 
+function core\+::geometry\+::\+Polytope\+::is\+On\+Face (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{V}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tests if points lie on a specific face. 
+
+TF = is\+On\+Face(obj, X, V) determines if points lie on the face defined by the given vertices. The method dispatches to dimension-\/specific implementations for computational efficiency and accuracy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope} object \\
+\hline
+{\em X} & -\/ A matrix of size d×m where each column represents a point \\
+\hline
+{\em V} & -\/ A matrix where each column is a vertex of the face\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ A logical row vector indicating which points are on the face \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_af6360fb06bab224973fb5926a8913199}\index{core::geometry::Polytope@{core::geometry::Polytope}!isOnFace2D@{isOnFace2D}}
+\index{isOnFace2D@{isOnFace2D}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isOnFace2D()}{isOnFace2D()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_af6360fb06bab224973fb5926a8913199} 
+function core\+::geometry\+::\+Polytope\+::is\+On\+Face2D (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{V}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tests if points lie on a 2D face (line segment). 
+
+TF = is\+On\+Face2\+D(obj, X, V, tol) provides a specialized method for testing point containment on line segments in 2D space. The method checks both distance to the line and position within the segment bounds.
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ A matrix of size 2×m where each column represents a point \\
+\hline
+{\em V} & -\/ A matrix where each column is a vertex of the face \\
+\hline
+{\em tol} & -\/ Numerical tolerance for distance calculations\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ A logical row vector indicating which points are on the face \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a7b9f8f38761b19c93d2f895c809b2df7}\index{core::geometry::Polytope@{core::geometry::Polytope}!isOnFace3D@{isOnFace3D}}
+\index{isOnFace3D@{isOnFace3D}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isOnFace3D()}{isOnFace3D()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a7b9f8f38761b19c93d2f895c809b2df7} 
+function core\+::geometry\+::\+Polytope\+::is\+On\+Face3D (\begin{DoxyParamCaption}\item[{ignored\+Arg}]{}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{V}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tests if points lie on a 3D face (polygon). 
+
+TF = is\+On\+Face3\+D(obj, X, V, tol) provides a specialized method for testing point containment on polygonal faces in 3D space. The method computes the face normal and checks if points lie on the corresponding plane.
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & -\/ A matrix of size 3×m where each column represents a point \\
+\hline
+{\em V} & -\/ A matrix where each column is a vertex of the face \\
+\hline
+{\em tol} & -\/ Numerical tolerance for distance calculations\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ A logical row vector indicating which points are on the face \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_ae6643b172a478f36a51d849650425742}\index{core::geometry::Polytope@{core::geometry::Polytope}!isOnFaceND@{isOnFaceND}}
+\index{isOnFaceND@{isOnFaceND}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{isOnFaceND()}{isOnFaceND()}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_ae6643b172a478f36a51d849650425742} 
+function core\+::geometry\+::\+Polytope\+::is\+On\+Face\+ND (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{V}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tests if points lie on an n-\/dimensional face. 
+
+TF = is\+On\+Face\+ND(obj, X, V, tol) provides a generalized method for testing point containment on hyperplanar faces in n-\/dimensional space. The method uses the null space to compute the hyperplane normal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1geometry_1_1_polytope}{Polytope} object \\
+\hline
+{\em X} & -\/ A matrix of size n\+Dims×m where each column represents a point \\
+\hline
+{\em V} & -\/ A matrix where each column is a vertex of the face \\
+\hline
+{\em tol} & -\/ Numerical tolerance for distance calculations\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em TF} & -\/ A logical row vector indicating which points are on the face \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1geometry_1_1_polytope_a03cd773281753f7c99ac7741483b2226}\index{core::geometry::Polytope@{core::geometry::Polytope}!cell@{cell}}
+\index{cell@{cell}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{cell}{cell}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_a03cd773281753f7c99ac7741483b2226} 
+Property faces core\+::geometry\+::\+Polytope\+::cell}
+
+
+
+Cell array of face definitions (each cell contains vertex indices) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytope_8m_source_l00030}{30}} of file \mbox{\hyperlink{_polytope_8m_source}{Polytope.\+m}}.
+
+\Hypertarget{classcore_1_1geometry_1_1_polytope_ab8e8ea4ad58055c32c9617b71db61707}\index{core::geometry::Polytope@{core::geometry::Polytope}!double@{double}}
+\index{double@{double}!core::geometry::Polytope@{core::geometry::Polytope}}
+\doxysubsubsection{\texorpdfstring{double}{double}}
+{\footnotesize\ttfamily \label{classcore_1_1geometry_1_1_polytope_ab8e8ea4ad58055c32c9617b71db61707} 
+Property vertices core\+::geometry\+::\+Polytope\+::double}
+
+
+
+Matrix representing polytope vertices (each column is a vertex) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytope_8m_source_l00027}{27}} of file \mbox{\hyperlink{_polytope_8m_source}{Polytope.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+geometry/\mbox{\hyperlink{_polytope_8m}{Polytope.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,59 @@
+\doxysection{H1\+Element.\+m}
+\hypertarget{_h1_element_8m_source}{}\label{_h1_element_8m_source}\index{+approx/+element/H1Element.m@{+approx/+element/H1Element.m}}
+\mbox{\hyperlink{_h1_element_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00001}00001\ classdef\ H1Element\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00002}00002\ \ \ \ \ \%\ H1ELEMENT\ H1\ Galerkin\ element.}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ H1Element\ implements\ a\ H1\ element\ function.\ This\ \textcolor{keyword}{class\ }extends\ the}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ base\ Element\ \textcolor{keyword}{class\ }by\ adding\ volume\ integration\ capabilities}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ through\ precomputed\ basis\ values\ and\ first-\/order\ derivatives\ at}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ integration\ points.}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Create\ H1\ element\ with\ quadrature}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ geometry\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope_a65ebc627c59fb3748cb309f410e02da6}{unit}}(2);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.LagrangeBasis(2);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ projector\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}(basis);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ integrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.GaussLegendre(3);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ element\ =\ H1Element(geometry,\ projector,\ integrator);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \%\ Access\ pre-\/computed\ data}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ values\ =\ element.volume.values;}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ derivatives\ =\ element.volume.derivatives;}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ weights\ =\ element.volume.weights;}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00022}00022\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data}{IntegrationData}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00025}00025\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ TYPE\ =\ \textcolor{stringliteral}{'h1'}\ \%\ Element\ type\ identifier}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00027}00027\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1element_1_1_h1_element}{00029}}\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_ab9e76b2f9ad0c3ed143e7259e1d2f9f4}{volume}}\ \%\ Volume\ integration\ data\ (IntegrationData)}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00031}00031\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_a0bfa206c4d2d4336f81ea87af185bbc3}{00033}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_af7f26d7dbf169e5eab6d3dc4b6a6ef9d}{H1Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ integrator)}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ H1ELEMENT\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_af7f26d7dbf169e5eab6d3dc4b6a6ef9d}{H1Element}}.}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_af7f26d7dbf169e5eab6d3dc4b6a6ef9d}{H1Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ integrator)\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ H1\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ with\ the\ specified\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ and}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00039}\mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_ab9e76b2f9ad0c3ed143e7259e1d2f9f4}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_ab9e76b2f9ad0c3ed143e7259e1d2f9f4}{volume}}\ computations.}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}\ -\/\ Geometry\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}\ -\/\ GalerkinProjector\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ integrator\ -\/\ Integrator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1element_1_1_h1_element_af7f26d7dbf169e5eab6d3dc4b6a6ef9d}{H1Element}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\mbox{\hyperlink{classapprox_1_1element_1_1_element}{Element}}(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}});}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ obj.volume\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_integration_data}{IntegrationData}}(integrator,\ 1,\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}.basis);}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00052}00052\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_h1_element_8m_source_l00053}00053\ end}
+
+\end{DoxyCode}

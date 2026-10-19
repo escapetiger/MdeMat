@@ -1,0 +1,142 @@
+\doxysection{ex01\+\_\+periodic.\+m}
+\hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source}{}\label{_09advection_2_09scripts_2ex01__periodic_8m_source}\index{+physics/+advection/+scripts/ex01\_periodic.m@{+physics/+advection/+scripts/ex01\_periodic.m}}
+\mbox{\hyperlink{_09advection_2_09scripts_2ex01__periodic_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00001}00001\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00002}00002\ \%\ FileName:\ ex01\_periodic}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00003}00003\ \%\ Author:\ Yi\ Cai}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00004}00004\ \%\ Date:\ 2025-\/07-\/13}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00005}00005\ \%\ Description:}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00006}00006\ \%\ \ \ Solving\ advection\ equation\ with\ periodic\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00007}\mbox{\hyperlink{namespacephysics_1_1advection_1_1scripts_a7af33903f76adb5523b87b8b7a858e34}{00007}}\ \%==========================================================================}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00009}00009\ clc;}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00010}00010\ clear;}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00011}00011\ close\ all;}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00013}00013\ \%\%\ CONFIGURATION}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00014}00014\ configPath\ =\ fullfile(fileparts(mfilename(\textcolor{stringliteral}{'fullpath'})),\ \textcolor{stringliteral}{'config.txt'});}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00015}00015\ config\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1io}{io}}.\mbox{\hyperlink{classcore_1_1io_1_1_option_parser}{OptionParser}}().\mbox{\hyperlink{classcore_1_1io_1_1_option_parser_a65d519fdd59f11d5e45139e23c3fa6d6}{parse}}(configPath);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00016}00016\ config.nDims\ =\ 1;\ \%\ Dimension}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00017}00017\ config.experimentId\ =\ sprintf(\textcolor{stringliteral}{'A\%d'},\ config.nDims);\ \%\ Experiment\ ID}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00018}00018\ config.schemeId\ =\ sprintf(\textcolor{stringliteral}{'\%s\%s\%d'},\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00019}00019\ \ \ \ \ upper(config.tDiscId),\ upper(config.xDiscId),\ config.xBasisOrder);\ \%\ \mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}}\ ID}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00020}00020\ config.L\ =\ 1;\ \%\ Length}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00021}00021\ config.xBBox\ =\ repmat([-\/config.L,\ config.L],\ 1,\ config.nDims);\ \%\ Spatial\ bounding\ box}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00022}00022\ config.tFinal\ =\ 0.5;\ \%\ Final\ time}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00023}00023\ config.advection\ =\ ones(1,\ config.nDims);\ \%\ Advection\ speed}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00024}00024\ config.omega\ =\ repmat(pi\ /\ config.L,\ 1,\ config.nDims);\ \%\ Wave\ length}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00025}00025\ config.ampl\ =\ [0,\ 1];\ \%\ Wave\ amplitude\ [sine,\ cosine]}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00026}00026\ config.ic\ =\ \mbox{\hyperlink{namespacephysics_1_1advection_1_1scripts_a60b3bda1bb8542ea7bec6183c23442ce}{u0}}(config.omega,\ config.ampl);\ \%\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00027}00027\ config.bc\ =\ [];\ \%\ Boundary\ condition}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00028}00028\ config.exacts.U\ =\ uExact(config.advection,\ config.omega,\ config.ampl);\ \%\ Exact\ solution}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00029}00029\ \%\ config.exacts\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00030}00030\ config.xResolution\ =\ repmat(4,\ 1,\ config.nDims);\ \%\ Grid\ resolution}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00031}00031\ config.verbose\ =\ 1;\ \%\ Verbose\ flag}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00033}00033\ \%\%\ SIMULATION\ SETUP}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00035}00035\ visualizer\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1visual}{visual}}.\mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer}{Visualizer}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00036}00036\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00037}00037\ \ \ \ \ \textcolor{stringliteral}{'nTimeNodes'},\ 10,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00038}00038\ \ \ \ \ \textcolor{stringliteral}{'final'},\ config.tFinal,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00039}00039\ \ \ \ \ \textcolor{stringliteral}{'density'},\ ones(1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00040}00040\ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00041}00041\ \ \ \ \ \textcolor{stringliteral}{'exacts'},\ config.exacts\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00042}00042\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00044}00044\ analyzer\ =\ \mbox{\hyperlink{namespaceprofilers}{profilers}}.\mbox{\hyperlink{namespaceprofilers_1_1analysis}{analysis}}.\mbox{\hyperlink{classprofilers_1_1analysis_1_1_analyzer}{Analyzer}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00045}00045\ \ \ \ \ \textcolor{stringliteral}{'nLevels'},\ 5,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00046}00046\ \ \ \ \ \textcolor{stringliteral}{'reductions'},\ \{\textcolor{stringliteral}{'L1'},\ \textcolor{stringliteral}{'L2'},\ \textcolor{stringliteral}{'Lx'}\},\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00047}00047\ \ \ \ \ \textcolor{stringliteral}{'density'},\ repmat(4,\ 1,\ config.nDims),\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00048}00048\ \ \ \ \ \textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'U'},\ 1),\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00049}00049\ \ \ \ \ \textcolor{stringliteral}{'exacts'},\ config.exacts\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00050}00050\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00052}00052\ \textcolor{keywordflow}{switch}\ config.tDiscId}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'be'}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'BeIntegrator'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'bdf2'}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'Bdf2Integrator'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'bdf3'}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'Bdf3Integrator'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'sdirk2'}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'Sdirk2Integrator'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{'sdirk3'}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'Sdirk3Integrator'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00063}00063\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00064}00064\ tDisc\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.(cls)(config.tFinal);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00066}00066\ \textcolor{keywordflow}{switch}\ config.schemeType}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'UwdgScheme'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ cls\ =\ \textcolor{stringliteral}{'SldgScheme'};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00071}00071\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00072}00072\ scheme\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}.(cls)(config,\ tDisc,\ visualizer,\ analyzer);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00074}00074\ \%\%\ SIMULATION\ EXECUTION}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00075}00075\ xDisc.fe\ =\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_orthotope_finite_element}{L2OrthotopeFiniteElement}}(\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00076}00076\ \ \ \ \ \textcolor{stringliteral}{'nDims'},\ config.nDims,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00077}00077\ \ \ \ \ \textcolor{stringliteral}{'order'},\ config.xBasisOrder,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00078}00078\ \ \ \ \ \textcolor{stringliteral}{'id'},\ config.xBasisId,\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00079}00079\ \ \ \ \ \textcolor{stringliteral}{'pattern'},\ config.xBasisPattern\ ...}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00080}00080\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00081}00081\ xDisc.op\ =\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_operator}{L2FiniteElementOperator}}(xDisc.fe);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00082}00082\ \textcolor{keywordflow}{if}\ config.schemeType\ ==\ 2}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00083}00083\ \ \ \ \ xDisc.clp\ =\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_clipper}{L2FiniteElementClipper}}(xDisc.fe,\ config.advection);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00084}00084\ \ \ \ \ xDisc.slop\ =\ \mbox{\hyperlink{namespacefem}{fem}}.\mbox{\hyperlink{namespacefem_1_1element}{element}}.\mbox{\hyperlink{classfem_1_1element_1_1_l2_semi_lagrangian_finite_element_operator}{L2SemiLagrangianFiniteElementOperator}}(xDisc.fe,\ xDisc.clp);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00085}00085\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00087}00087\ \textcolor{keywordflow}{if}\ isempty(config.exacts)}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00088}00088\ \ \ \ \ xDisc.mesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.UniformGrid(config.xResolution/2,\ config.xBBox);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00089}00089\ \ \ \ \ xDisc.space\ =\ \mbox{\hyperlink{namespacefem}{fem}}.space.MeshSpace(xDisc.fe,\ xDisc.mesh);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00090}00090\ \ \ \ \ coarse\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}.\mbox{\hyperlink{classphysics_1_1advection_1_1_state}{State}}(xDisc);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00091}00091\ \ \ \ \ coarse\ =\ scheme.initialize(coarse);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00092}00092\ \ \ \ \ coarse\ =\ scheme.run(coarse);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00093}00093\ else}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00094}00094\ \ \ \ \ coarse\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00095}00095\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00097}00097\ for\ i\ =\ 1:analyzer.profiler.nLevels}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00098}00098\ \ \ \ \ xDisc.mesh\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.UniformGrid(config.xResolution,\ config.xBBox);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00099}00099\ \ \ \ \ xDisc.space\ =\ \mbox{\hyperlink{namespacefem}{fem}}.space.MeshSpace(xDisc.fe,\ xDisc.mesh);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00100}00100\ \ \ \ \ fine\ =\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}.\mbox{\hyperlink{classphysics_1_1advection_1_1_state}{State}}(xDisc);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00101}00101\ \ \ \ \ fine\ =\ scheme.initialize(fine);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00102}00102\ \ \ \ \ fine\ =\ scheme.run(fine);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00103}00103\ \ \ \ \ if\ isempty(coarse)}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00105}00105\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ fine\ =\ scheme.finalize(fine,\ coarse);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00107}00107\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00108}00108\ \ \ \ \ if\ \string~isempty(coarse),\ coarse\ =\ fine;\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00109}00109\ \ \ \ \ config.xResolution\ =\ config.xResolution\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00110}00110\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00112}00112\ \%\%\ ANALYSIS}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00113}00113\ results\ =\ analyzer.analyze();}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00114}00114\ varNames\ =\ fieldnames(results);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00115}00115\ for\ iVar\ =\ 1:length(varNames)}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00116}00116\ \ \ \ \ varName\ =\ varNames\{iVar\};}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00117}00117\ \ \ \ \ disp(results.(varName));}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00118}00118\ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00120}00120\ \%\%\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00121}00121\ function\ h\ =\ u0(omega,\ ampl)}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00122}00122\ h\ =\ @(x)\ u0Impl(x,\ omega,\ ampl);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00124}00124\ \ \ \ \ function\ f\ =\ u0Impl(x,\ omega,\ ampl)}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00125}00125\ \ \ \ \ z\ =\ omega(:).\textcolor{stringliteral}{'\ *\ x;}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ f\ =\ ampl(1)\ *\ cos(z)\ +\ ampl(2)\ *\ sin(z);}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00128}00128\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00130}00130\ \textcolor{stringliteral}{function\ h\ =\ uExact(c,\ omega,\ ampl)}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00131}00131\ \textcolor{stringliteral}{h\ =\ @(x,\ t)\ uExactImpl(x,\ t,\ c,\ omega,\ ampl);}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ function\ f\ =\ uExactImpl(x,\ t,\ c,\ omega,\ ampl)}}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ z\ =\ omega(:).'}\ *\ (x\ -\/\ c(:)\ *\ t);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ f\ =\ ampl(1)\ *\ cos(z)\ +\ ampl(2)\ *\ sin(z);}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00135}00135\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_09advection_2_09scripts_2ex01__periodic_8m_source_l00136}00136\ end}
+
+\end{DoxyCode}

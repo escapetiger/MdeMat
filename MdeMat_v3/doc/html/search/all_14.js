@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['valid_5fbc_5ftypes_0',['VALID_BC_TYPES',['../classapprox_1_1assembly_1_1_constant_scalar_divergence.html#ae33ef3bb1a014259754f2f823e530caf',1,'approx::assembly::ConstantScalarDivergence::VALID_BC_TYPES'],['../classapprox_1_1assembly_1_1_flux_assembly.html#a5dce39f5053f76c269b916462533da30',1,'approx::assembly::FluxAssembly::VALID_BC_TYPES']]],
+  ['valid_5fdirichlet_5fflux_5fmodes_1',['VALID_DIRICHLET_FLUX_MODES',['../classapprox_1_1assembly_1_1_constant_scalar_divergence.html#a0254ff486d569ba5b44ede2c6a3a1b5d',1,'approx::assembly::ConstantScalarDivergence::VALID_DIRICHLET_FLUX_MODES'],['../classapprox_1_1assembly_1_1_flux_assembly.html#a220ac41a4a0d9ffea52d25fb7136606e',1,'approx::assembly::FluxAssembly::VALID_DIRICHLET_FLUX_MODES']]],
+  ['valid_5fflux_5ftypes_2',['VALID_FLUX_TYPES',['../classapprox_1_1assembly_1_1_constant_scalar_divergence.html#a0d810a794f30934a75a7cb56470c98c3',1,'approx::assembly::ConstantScalarDivergence::VALID_FLUX_TYPES'],['../classapprox_1_1assembly_1_1_flux_assembly.html#ae014525c83e9e768a4c97e65bdf862f2',1,'approx::assembly::FluxAssembly::VALID_FLUX_TYPES']]],
+  ['valid_5fperiodic_5fflux_5fmodes_3',['VALID_PERIODIC_FLUX_MODES',['../classapprox_1_1assembly_1_1_constant_scalar_divergence.html#a4d35e3ccb58f397ccab069419f8bd488',1,'approx::assembly::ConstantScalarDivergence::VALID_PERIODIC_FLUX_MODES'],['../classapprox_1_1assembly_1_1_flux_assembly.html#a16495c8bea028328c7fdce2ff6b91dcd',1,'approx::assembly::FluxAssembly::VALID_PERIODIC_FLUX_MODES']]],
+  ['valid_5freduction_4',['VALID_REDUCTION',['../classprofilers_1_1metrics_1_1_metric.html#abe0cc805521fa988af8043cd27dc1bb2',1,'profilers::metrics::Metric']]],
+  ['validatefactors_5',['validateFactors',['../classapprox_1_1basis_1_1_separable_basis_function.html#a0e21e04ec0da7da60b83469e65169ef3',1,'approx::basis::SeparableBasisFunction']]],
+  ['values_6',['values',['../classapprox_1_1integrate_1_1_integration_data.html#a955bda36c71607016d9e0a533d1678ea',1,'approx::integrate::IntegrationData::values'],['../classcore_1_1data_1_1_ordered_map.html#adff8bf1cb502351dab47bff14c138362',1,'core::data::OrderedMap::values']]],
+  ['valuetype_7',['valueType',['../classcore_1_1data_1_1_ordered_map.html#a15d374df7d3535446dff0bdf3d336eb2',1,'core::data::OrderedMap']]],
+  ['variables_8',['variables',['../classcore_1_1symbolic_1_1_compiler.html#a2fe761a7b9d9ef93ac5e806b660aa253',1,'core::symbolic::Compiler::variables'],['../classcore_1_1symbolic_1_1_symbolic_function.html#a7ed16f07a2389c7fe102cc8356de0ebb',1,'core::symbolic::SymbolicFunction::variables']]],
+  ['varmap_9',['varMap',['../classprofilers_1_1visual_1_1_strategy.html#ad7afc8321819eb2b1d21c1e6a746a515',1,'profilers::visual::Strategy']]],
+  ['verbose_10',['verbose',['../classcore_1_1chrono_1_1_timer.html#a65b38e62a8ff887a17a71866c09a937c',1,'core::chrono::Timer']]],
+  ['verify_11',['verify',['../namespacecore_1_1except.html#a659290750309c58a90d9b3104464cefa',1,'core::except']]],
+  ['verify_2em_12',['verify.m',['../verify_8m.html',1,'']]],
+  ['vertextovertextable_13',['vertexToVertexTable',['../classapprox_1_1mesh_1_1_polytopal_mesh.html#ab29c06389b96ee2de400707446b5bdfd',1,'approx::mesh::PolytopalMesh']]],
+  ['vertices_14',['vertices',['../classapprox_1_1mesh_1_1_graph.html#a8417c65c0cd08747b6d22a282ef3e2fd',1,'approx::mesh::Graph::vertices'],['../classapprox_1_1mesh_1_1_polytopal_mesh.html#a7e849f77e2246168d68edd82932f1d3e',1,'approx::mesh::PolytopalMesh::vertices'],['../classapprox_1_1mesh_1_1_separable_graph.html#a2f0a5b4fb38478f2392dc8740e24aec6',1,'approx::mesh::SeparableGraph::vertices']]],
+  ['visualizer_15',['Visualizer',['../classprofilers_1_1visual_1_1_visualizer.html',1,'profilers::visual::Visualizer'],['../classprofilers_1_1visual_1_1_visualizer.html#aae9d0d2d5cc18a3f988a5297eed9714c',1,'profilers::visual::Visualizer::Visualizer()']]],
+  ['visualizer_2em_16',['Visualizer.m',['../_visualizer_8m.html',1,'']]],
+  ['volume_17',['volume',['../classapprox_1_1element_1_1_c0_element.html#a0e2f6b702570d4d5be0ac7522c535c26',1,'approx::element::C0Element::volume'],['../classapprox_1_1element_1_1_h1_element.html#ab9e76b2f9ad0c3ed143e7259e1d2f9f4',1,'approx::element::H1Element::volume'],['../classapprox_1_1element_1_1_l2_element.html#a15de9bead255fb97ec6ee021254d33f7',1,'approx::element::L2Element::volume'],['../classapprox_1_1element_1_1_o_f_l2_element.html#ac5b48227919209e02c4e870838d089f3',1,'approx::element::OFL2Element::volume']]],
+  ['volumeassembly_18',['VolumeAssembly',['../classapprox_1_1assembly_1_1_volume_assembly.html',1,'approx::assembly']]],
+  ['volumeassembly_2em_19',['VolumeAssembly.m',['../_volume_assembly_8m.html',1,'']]]
+];

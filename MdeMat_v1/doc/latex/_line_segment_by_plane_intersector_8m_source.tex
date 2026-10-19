@@ -1,0 +1,164 @@
+\doxysection{Line\+Segment\+By\+Plane\+Intersector.\+m}
+\hypertarget{_line_segment_by_plane_intersector_8m_source}{}\label{_line_segment_by_plane_intersector_8m_source}\index{+core/+geometry/LineSegmentByPlaneIntersector.m@{+core/+geometry/LineSegmentByPlaneIntersector.m}}
+\mbox{\hyperlink{_line_segment_by_plane_intersector_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00001}00001\ classdef\ LineSegmentByPlaneIntersector\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{Intersector}}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00002}00002\ \ \ \ \ \%\ LINESEGMENTBYPLANEINTERSECTOR\ Computes\ intersections\ between\ line\ segments\ and\ planes.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ LineSegmentByPlaneIntersector\ computes\ intersection\ points\ between}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ line\ segments\ and\ planes\ in\ n-\/dimensional\ space\ (\(\backslash\)f\$n\ \(\backslash\)ge\ 2\(\backslash\)f\$).}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ Line\ segments\ are\ defined\ by\ their\ endpoints,\ and\ planes\ are}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ defined\ by\ normal\ vectors\ and\ offset\ constants.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ line\ segment\ is\ parameterized\ as:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \ \ L(t)\ =\ X1\ +\ t*(X2\ -\/\ X1),\ \ t\ \(\backslash\)in\ [0,1]}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ The\ plane\ is\ defined\ by\ the\ equation:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \ \ a\string^T\ *\ x\ +\ b\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \(\backslash\)f]\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$a\(\backslash\)f\$\ is\ the\ normal\ vector\ to\ the\ plane\ and\ \(\backslash\)f\$b\(\backslash\)f\$\ is}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ the\ offset\ constant.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00019}00019\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00020}00020\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ \%\ Create\ a\ 3D\ line-\/plane\ intersector}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ intersector\ =\ LineSegmentByPlaneIntersector(3);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ \%\ Define\ a\ line\ segment}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ X1\ =\ [0;\ 0;\ 0];\ \ \ \%\ First\ endpoint}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ X2\ =\ [1;\ 1;\ 1];\ \ \ \%\ Second\ endpoint}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00027}00027\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \%\ Define\ a\ plane:\ x\ +\ y\ +\ z\ -\/\ 1\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ a\ =\ [1;\ 1;\ 1];\ \ \ \ \%\ Normal\ vector}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ b\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \%\ Offset\ constant}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00031}00031\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \%\ Compute\ intersection}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ [intersectionPoint,\ isValid]\ =\ intersector.intersect(X1,\ X2,\ a,\ b);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00034}00034\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00035}00035\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ The\ method\ handles\ parallel\ and\ coincident\ cases\ appropriately.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ If\ a\ line\ segment\ lies\ entirely\ on\ a\ plane,\ all\ points\ are}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ considered\ intersection\ points.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00039}00039\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00040}00040\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{Intersector}},}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_line_segment_intersector}{LineSegmentByLineSegmentIntersector}}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00044}\mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector}{00044}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}(\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ LINESEGMENTBYPLANEINTERSECTOR\ Constructor\ \textcolor{keywordflow}{for}\ intersector.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}(\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}})\ creates\ an}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ intersector\ \textcolor{keywordflow}{for}\ computing\ line\ segment-\/plane\ intersections}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ in\ \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}}-\/dimensional\ space.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}}\ -\/\ Dimension\ of\ the\ space\ (must\ be\ >=\ 2)}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ constructed\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Create\ intersector\ \textcolor{keywordflow}{for}\ 2D\ space\ (line-\/line\ intersection)}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ intersector\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}(2);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Create\ intersector\ \textcolor{keywordflow}{for}\ 3D\ space}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ intersector\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}(3);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00065}\mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}}\ >=\ 2,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Dimension\ must\ be\ no\ less\ than\ 2.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector}{Intersector}}(\mbox{\hyperlink{classcore_1_1geometry_1_1_intersector_ada29431aa62ff36e241b7c32dc196e7e}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ [X,\ TF]\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a31297a7a9cd1b0ae5b98f8f132ec9ed7}{intersect}}(obj,\ X1,\ X2,\ a,\ b,\ tol)}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INTERSECT\ Computes\ intersection\ between\ line\ segments\ and\ planes.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [X,\ TF]\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a31297a7a9cd1b0ae5b98f8f132ec9ed7}{intersect}}(obj,\ X1,\ X2,\ a,\ b)\ computes\ the}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ intersection\ between\ line\ segments\ defined\ by\ endpoints}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X1-\/X2\ and\ planes\ defined\ by\ normal\ vectors\ a\ and\ offsets\ b.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [X,\ TF]\ =\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a31297a7a9cd1b0ae5b98f8f132ec9ed7}{intersect}}(obj,\ X1,\ X2,\ a,\ b,\ tol)\ uses\ the}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ numerical\ tolerance.}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_aeb4642230177a752e9385ec1d64585da}{LineSegmentByPlaneIntersector}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X1\ \ -\/\ d×m\ matrix\ of\ first\ endpoints\ of\ line\ segments}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X2\ \ -\/\ d×m\ matrix\ of\ second\ endpoints\ of\ line\ segments}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ \ \ -\/\ d×k\ matrix\ of\ normal\ vectors\ of\ planes}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ \ \ -\/\ 1×k\ vector\ of\ offset\ constants\ of\ planes}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tol\ -\/\ Numerical\ tolerance\ (\textcolor{keywordflow}{default}:\ sqrt(eps))}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ \ -\/\ d×p\ matrix\ of\ valid\ intersection\ points}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ TF\ -\/\ 1×m\ logical\ vector\ indicating\ valid\ intersections}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Basic\ intersection\ computation}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [point,\ hasIntersection]\ =\ intersector.intersect(X1,\ X2,\ a,\ b);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ With\ custom\ tolerance}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [point,\ hasIntersection]\ =\ intersector.intersect(X1,\ X2,\ a,\ b,\ 1e-\/10);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \%\ Multiple\ line\ segments\ and\ planes}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X1\ =\ [X1\_seg1,\ X1\_seg2,\ ...];}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X2\ =\ [X2\_seg1,\ X2\_seg2,\ ...];}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ =\ [a\_plane1,\ a\_plane2,\ ...];}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ =\ [b\_plane1,\ b\_plane2,\ ...];}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [points,\ validIntersections]\ =\ intersector.intersect(X1,\ X2,\ a,\ b);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00107}\mbox{\hyperlink{classcore_1_1geometry_1_1_line_segment_by_plane_intersector_a31297a7a9cd1b0ae5b98f8f132ec9ed7}{00107}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 6\ ||\ isempty(tol)}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ sqrt(eps);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(all(size(X1)\ ==\ size(X2)),\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'X1\ and\ X2\ must\ have\ the\ same\ size.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(X1);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(n(1)\ ==\ d,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Segment\ dimension\ must\ match\ the\ intersector\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ X1\ =\ reshape(X1,\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ X2\ =\ reshape(X2,\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ size(a);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(any(a\ \string~=\ 0),\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Normal\ vector\ a\ cannot\ be\ zero.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(prod(m(2:end))\ ==\ numel(b),\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Normal\ vectors\ a\ and\ offsets\ b\ must\ have\ compatible\ dimensions.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(m(1)\ ==\ d,\ \textcolor{stringliteral}{'DimensionMismatch'},\ ...}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Plane\ dimension\ must\ match\ the\ intersector\ dimension.'});}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ reshape(a,\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ reshape(b,\ 1,\ []);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ nL\ =\ size(X1,\ 2);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ nP\ =\ size(a,\ 2);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ isOneToOne\ =\ nL\ >\ 1\ \&\ nP\ >\ 1;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ X2\ -\/\ X1;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isOneToOne}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ sum(a.*X1+b,\ 1);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ sum(a.*D,\ 1);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ repmat(D,\ 1,\ nP);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X1\ =\ repmat(X1,\ 1,\ nP);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ repelem(a,\ 1,\ nL);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ repelem(b,\ 1,\ nL);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ sum(a.*X1,\ 1)\ +\ b;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ sum(a.*D,\ 1);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ -\/U\ ./\ V;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ P(abs(U)\ <=\ tol)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ (abs(V)\ >\ tol\ \&\ P\ >=\ 0\ \&\ P\ <=\ 1)\ |\ (abs(U)\ <=\ tol\ \&\ sum(D.\string^2,\ 1)\ <\ tol);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sum(TF)\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ X1(:,\ TF)\ +\ D(:,\ TF)\ .*\ P(TF);}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00157}00157\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_line_segment_by_plane_intersector_8m_source_l00158}00158\ end}
+
+\end{DoxyCode}

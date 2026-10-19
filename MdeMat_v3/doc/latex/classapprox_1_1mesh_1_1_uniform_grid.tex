@@ -1,0 +1,537 @@
+\doxysection{approx\+::mesh\+::Uniform\+Grid Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_uniform_grid}{}\label{classapprox_1_1mesh_1_1_uniform_grid}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+
+
+Structured grid with uniform element spacing.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{approx\+::mesh\+::\+Grid}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a0a18f6fd23f6dce37bf1b62c6b718136}{Uniform\+Grid}} (Input\+Type bbox, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a2cedcfd710135049ed1503abcdde8ae6}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Convert uniform grid to separable graph representation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a4d0ca7d95b13fd0deb4e7eba728f0eef}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a593f06bad3f21b0f730a4974df1ada5e}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Create uniformly refined grid with smaller elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a900e4d9a644d3b657ce73f4f8d9ae0d5}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic element size. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a7bb75c2f2e0e73bb209dc386873575b1}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian determinant for coordinate transformation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a0bc246125870c6d60376f44f817b98d3}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute Jacobian matrices for coordinate transformation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_ace956f0da180329bbe24582175c715e4}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute inverse Jacobian matrices for coordinate transformation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_aa3feeb53de70f77ab5bf343d51f52e85}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants for boundary integration. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_ada7b84f562eb6e40b9859fc7b0c280c9}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors for all faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{approx\+::mesh\+::\+Grid}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adde639e1bbdadf47fe79a4194ed80704}{Grid}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_grid}{Grid} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a5b2b5cd3fe674234c240b42fed9d1be6}{find\+Interior\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Find linear indices of interior elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a8f47f77588cc3357af1633499b5f593c}{find\+Boundary\+Elements}} (Input\+Type obj, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Find linear indices of boundary elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a721539c3d02a74338391dbb0bbdc9635}{find\+Neighbor\+Elements}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE, Input\+Type BC)
+\begin{DoxyCompactList}\small\item\em Find neighboring elements across faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a142fb2e0bd3bee828cf136414c8ccf8c}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{approx\+::mesh\+::\+Grid}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}
+\begin{DoxyCompactList}\small\item\em Element count per dimension (1 × n\+Dims vector) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab7674656164813fd8c366eb8fb52ea9b}{centroids}}
+\begin{DoxyCompactList}\small\item\em Element center coordinates per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a37673a7099c179ec35d09aec0f21463b}{spacings}}
+\begin{DoxyCompactList}\small\item\em Element spacing per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}
+\begin{DoxyCompactList}\small\item\em Element index ranges per dimension (1 × n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}
+\begin{DoxyCompactList}\small\item\em Boundary element specifications (1 × 2n\+Dims cell) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_ab257b75ec9f382f433afccdf68c732a4}{indexer}}
+\begin{DoxyCompactList}\small\item\em Multi-\/index converter (\doxylink{classcore_1_1linalg_1_1_multi_indexer}{core.\+linalg.\+Multi\+Indexer}) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_aa0412ba948e7fa6e0c48d453991f9974}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (positive integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a1a7000553114302c5f6653a396b073c8}{n\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements in the grid (positive integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}
+\begin{DoxyCompactList}\small\item\em Domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}
+\begin{DoxyCompactList}\small\item\em Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structured grid with uniform element spacing. 
+
+\doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} represents a structured computational grid where elements have constant spacing within each dimension. This regularity enables highly efficient storage and computation since geometric properties (Jacobians, volumes, outN) are identical for all elements and can be computed once and reused.
+
+The grid is defined by domain bounds and resolution, automatically generating element centers and uniform spacings. All coordinate transformations use simple affine mappings with constant coefficients, making uniform grids ideal for\+:
+\begin{DoxyItemize}
+\item Finite difference methods requiring regular stencils
+\item Spectral methods with tensor-\/product basis functions
+\item Fast Fourier Transform-\/based solvers
+\item Applications where geometric simplicity aids analysis
+\end{DoxyItemize}
+
+Storage efficiency\+: O(d) memory for grid definition vs O(n\texorpdfstring{$^\wedge$}{\string^}d) for explicit storage, where d is spatial dimension and n is resolution per dimension. All geometric computations have O(1) complexity.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ 2D\ uniform\ grid:\ 50×30\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ on\ unit\ square}
+\DoxyCodeLine{bbox2D\ =\ [0,\ 1,\ 0,\ 1];\ \ \%\ [x\_min,\ x\_max,\ y\_min,\ y\_max]}
+\DoxyCodeLine{resolution2D\ =\ [50,\ 30];}
+\DoxyCodeLine{grid2D\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a0a18f6fd23f6dce37bf1b62c6b718136}{UniformGrid}}(bbox2D,\ resolution2D);}
+\DoxyCodeLine{\%\ 3D\ uniform\ grid:\ 20×20×10\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ on\ custom\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}}
+\DoxyCodeLine{bbox3D\ =\ [-\/1,\ 1,\ -\/2,\ 2,\ 0,\ 5];\ \ \%\ [x\_min,\ x\_max,\ y\_min,\ y\_max,\ z\_min,\ z\_max]}
+\DoxyCodeLine{resolution3D\ =\ [20,\ 20,\ 10];}
+\DoxyCodeLine{grid3D\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_uniform_grid_a0a18f6fd23f6dce37bf1b62c6b718136}{UniformGrid}}(bbox3D,\ resolution3D);}
+\DoxyCodeLine{\%\ Query\ uniform\ grid\ properties}
+\DoxyCodeLine{h\ =\ grid2D.computeMeasure();\ \%\ Minimum\ element\ spacing}
+\DoxyCodeLine{detJ\ =\ grid2D.computeElementJacobianDeterminants();\ \%\ Constant\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}}
+\DoxyCodeLine{graph\ =\ grid2D.graphify();\ \%\ SeparableGraph\ representation}
+\DoxyCodeLine{\%\ Coordinate\ transformations}
+\DoxyCodeLine{xRef\ =\ [0.2;\ -\/0.1];\ \ \%\ Reference\ coordinates\ in\ [-\/1/2,\ 1/2]\string^2}
+\DoxyCodeLine{xPhys\ =\ grid2D.collocate(xRef,\ 100);\ \ \%\ Map\ to\ element\ 100}
+\DoxyCodeLine{\%\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}\ refinement\ (preserves\ uniformity)}
+\DoxyCodeLine{fineGrid\ =\ grid2D.refine(2);\ \ \%\ 2\ levels:\ 200×120\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}}
+\DoxyCodeLine{\%\ Access\ grid\ structure}
+\DoxyCodeLine{spacing\ =\ grid2D.spacings;\ \ \ \ \%\ \{h\_x,\ h\_y\}\ constant\ per\ dimension}
+\DoxyCodeLine{centers\ =\ grid2D.centroids;\ \ \ \%\ \{x\_centers,\ y\_centers\}\ vectors}
+\DoxyCodeLine{nTotal\ =\ grid2D.nElements;\ \ \ \ \%\ Total\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ =\ 50×30\ =\ 1500}
+\DoxyCodeLine{\%\ Boundary\ and\ connectivity\ queries}
+\DoxyCodeLine{interior\ =\ grid2D.findInteriorElements();\ \ \ \ \ \ \ \%\ Interior\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}}
+\DoxyCodeLine{leftBdry\ =\ grid2D.findBoundaryElements(1);\ \ \ \ \ \ \%\ Left\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}\ (x\_min)}
+\DoxyCodeLine{rightBdry\ =\ grid2D.findBoundaryElements(2);\ \ \ \ \ \%\ Right\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_adf37adaff42d584cb56d94ed29685145}{boundary}}\ (x\_max)}
+\DoxyCodeLine{[neighbors,\ faces]\ =\ grid2D.findNeighborElements(interior,\ 1,\ \textcolor{stringliteral}{'periodic'});}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Domain specification uses the format \mbox{[}a\+\_\+1, b\+\_\+1, a\+\_\+2, b\+\_\+2, ..., a\+\_\+d, 
+
+b\+\_\+d\mbox{]} where \mbox{[}a\+\_\+i, b\+\_\+i\mbox{]} defines the interval for dimension i. The 
+
+constructor validates that b\+\_\+i \texorpdfstring{$>$}{>} a\+\_\+i for all dimensions. 
+
+Element spacing in dimension i is h\+\_\+i = (b\+\_\+i -\/ a\+\_\+i)/n\+\_\+i where n\+\_\+i 
+
+is the number of elements in that dimension. Element centers are at 
+
+a\+\_\+i + (k+0.5)h\+\_\+i for k = 0, 1, ..., n\+\_\+i-\/1. 
+
+All geometric computations exploit uniformity\+: Jacobian matrices 
+
+are diagonal with constant entries, face outN are axis-\/aligned, 
+
+and volume elements are identical throughout the grid.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid} 
+
+\doxylink{classapprox_1_1mesh_1_1_separable_graph}{approx.\+mesh.\+Separable\+Graph} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_uniform_grid_8m_source_l00069}{69}} of file \mbox{\hyperlink{_uniform_grid_8m_source}{Uniform\+Grid.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a0a18f6fd23f6dce37bf1b62c6b718136}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!UniformGrid@{UniformGrid}}
+\index{UniformGrid@{UniformGrid}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{UniformGrid()}{UniformGrid()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a0a18f6fd23f6dce37bf1b62c6b718136} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::\+Uniform\+Grid (\begin{DoxyParamCaption}\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{resolution}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid}. 
+
+obj = Uniform\+Grid(bbox, resolution) creates a uniform grid with constant element spacing determined by the domain bounds and specified resolution in each dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bbox} & -\/ Domain bounding box \mbox{[}a₁, b₁, a₂, b₂, ..., aₐ, bₐ\mbox{]} \\
+\hline
+{\em resolution} & -\/ Number of elements per dimension (1 × d vector)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The constructor automatically computes\+: 
+
+1. Element spacing\+: hᵢ = (bᵢ -\/ aᵢ)/nᵢ for each dimension i 
+
+2. Element centers\+: aᵢ + (k+0.5)hᵢ for k = 0,1,...,nᵢ-\/1 
+
+3. Node coordinates\+: aᵢ + k·hᵢ for k = 0,1,...,nᵢ 
+
+4. Domain and reference element geometries 
+
+Input validation ensures bᵢ \texorpdfstring{$>$}{>} aᵢ for proper domain definition. 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a4d0ca7d95b13fd0deb4e7eba728f0eef}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!collocate@{collocate}}
+\index{collocate@{collocate}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{collocate()}{collocate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a4d0ca7d95b13fd0deb4e7eba728f0eef} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::collocate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Map reference coordinates to physical coordinates. 
+
+Y = collocate(obj, X) maps reference coordinates from the standard hypercube \mbox{[}-\/1/2,1/2\mbox{]}\texorpdfstring{$^\wedge$}{\string^}d to physical coordinates across all grid elements.
+
+Y = collocate(obj, X, L) maps coordinates to specific elements identified by linear indices L.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object \\
+\hline
+{\em X} & -\/ Reference coordinates (d × n\+Points or cell array) \\
+\hline
+{\em L} & -\/ Element linear indices (optional, vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Physical coordinates (d × n\+Points or cell array)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The uniform grid coordinate transformation is the simple 
+
+affine mapping\+: x = c + h⊙ξ where c is element center, 
+
+h is element spacing, and ξ are reference coordinates. 
+
+This transformation is identical for all elements, differing 
+
+only in the translation vector c. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a144648013076ba21a3dab384fde72d56}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_ace956f0da180329bbe24582175c715e4}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeAllElementInverseJacobians@{computeAllElementInverseJacobians}}
+\index{computeAllElementInverseJacobians@{computeAllElementInverseJacobians}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeAllElementInverseJacobians()}{computeAllElementInverseJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_ace956f0da180329bbe24582175c715e4} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+All\+Element\+Inverse\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute inverse Jacobian matrices for coordinate transformation. 
+
+invJ = compute\+All\+Element\+Inverse\+Jacobians(obj) computes the inverse Jacobian matrix for transforming gradients from physical to reference coordinates. For uniform grids, this matrix is constant for all elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em invJ} & -\/ Inverse Jacobian matrix (d × d)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For uniform grids with spacing h = \mbox{[}h\+\_\+1, h\+\_\+2, ..., h\+\_\+d\mbox{]}\+: 
+
+J\texorpdfstring{$^\wedge$}{\string^}\{-\/1\} = diag(\mbox{[}1/h\+\_\+1, 1/h\+\_\+2, ..., 1/h\+\_\+d\mbox{]}) 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a7bb75c2f2e0e73bb209dc386873575b1}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}}
+\index{computeAllElementJacobianDeterminants@{computeAllElementJacobianDeterminants}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobianDeterminants()}{computeAllElementJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a7bb75c2f2e0e73bb209dc386873575b1} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+All\+Element\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian determinant for coordinate transformation. 
+
+detJ = compute\+All\+Element\+Jacobian\+Determinants(obj) computes the determinant of the coordinate transformation Jacobian. For uniform grids, this value is constant for all elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em detJ} & -\/ Jacobian determinant (positive scalar) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a0bc246125870c6d60376f44f817b98d3}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeAllElementJacobians@{computeAllElementJacobians}}
+\index{computeAllElementJacobians@{computeAllElementJacobians}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeAllElementJacobians()}{computeAllElementJacobians()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a0bc246125870c6d60376f44f817b98d3} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+All\+Element\+Jacobians (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute Jacobian matrices for coordinate transformation. 
+
+J = compute\+All\+Element\+Jacobians(obj) computes the Jacobian matrix for coordinate transformation from reference to physical coordinates. For uniform grids, this matrix is constant for all elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em J} & -\/ Jacobian matrix (d × d)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For uniform grids with spacing h = \mbox{[}h\+\_\+1, h\+\_\+2, ..., h\+\_\+d\mbox{]}\+: 
+
+J = diag(\mbox{[}h\+\_\+1, h\+\_\+2, ..., h\+\_\+d\mbox{]}) 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_aa3feeb53de70f77ab5bf343d51f52e85}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}}
+\index{computeAllFaceJacobianDeterminants@{computeAllFaceJacobianDeterminants}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeAllFaceJacobianDeterminants()}{computeAllFaceJacobianDeterminants()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_aa3feeb53de70f77ab5bf343d51f52e85} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+All\+Face\+Jacobian\+Determinants (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute face Jacobian determinants for boundary integration. 
+
+det\+FJ = compute\+All\+Face\+Jacobian\+Determinants(obj) computes Jacobian determinants for coordinate transformation on element faces. For uniform grids, faces of the same type share identical determinants.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em det\+FJ} & -\/ Face Jacobian determinants (cell array by face type) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_ada7b84f562eb6e40b9859fc7b0c280c9}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeAllOutwardNormals@{computeAllOutwardNormals}}
+\index{computeAllOutwardNormals@{computeAllOutwardNormals}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeAllOutwardNormals()}{computeAllOutwardNormals()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_ada7b84f562eb6e40b9859fc7b0c280c9} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+All\+Outward\+Normals (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute outward normal vectors for all faces. 
+
+outN = compute\+All\+Outward\+Normals(obj) computes unit outward normal vectors for each face type. For uniform grids, outN are axis-\/aligned and constant for faces of the same type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em outN} & -\/ Outward normal vectors (cell array by face type)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Face normal directions follow the standard convention\+: 
+
+-\/ Face 2k-\/1\+: normal = -\/e\+\_\+k (negative k-\/direction, "{}lower"{} face) 
+
+-\/ Face 2k\+: normal = +e\+\_\+k (positive k-\/direction, "{}upper"{} face) 
+
+where e\+\_\+k is the unit vector in dimension k. 
+
+For example, in 2D\+: 
+
+-\/ Face 1 (left)\+: normal = \mbox{[}-\/1, 0\mbox{]}\texorpdfstring{$^\wedge$}{\string^}T 
+
+-\/ Face 2 (right)\+: normal = \mbox{[}+1, 0\mbox{]}\texorpdfstring{$^\wedge$}{\string^}T 
+
+-\/ Face 3 (bottom)\+: normal = \mbox{[}0, -\/1\mbox{]}\texorpdfstring{$^\wedge$}{\string^}T 
+
+-\/ Face 4 (top)\+: normal = \mbox{[}0, +1\mbox{]}\texorpdfstring{$^\wedge$}{\string^}T 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a900e4d9a644d3b657ce73f4f8d9ae0d5}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!computeMeasure@{computeMeasure}}
+\index{computeMeasure@{computeMeasure}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{computeMeasure()}{computeMeasure()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a900e4d9a644d3b657ce73f4f8d9ae0d5} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::compute\+Measure (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Compute characteristic element size. 
+
+h = compute\+Measure(obj) returns the minimum element spacing among all dimensions, providing a characteristic length scale for the uniform grid.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em h} & -\/ Minimum element spacing (positive scalar)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For uniform grids, the measure is simply min(h₁, h₂, ..., hₐ) 
+
+where hᵢ is the constant spacing in dimension i. This quantity 
+
+appears in\+: 
+
+-\/ CFL stability conditions for explicit time integration 
+
+-\/ Error estimates for finite difference and finite element methods 
+
+-\/ Convergence analysis for iterative solvers 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a2cedcfd710135049ed1503abcdde8ae6}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!graphify@{graphify}}
+\index{graphify@{graphify}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{graphify()}{graphify()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a2cedcfd710135049ed1503abcdde8ae6} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::graphify (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Convert uniform grid to separable graph representation. 
+
+graph\+Obj = graphify(obj) creates a \doxylink{classapprox_1_1mesh_1_1_separable_graph}{Separable\+Graph} that efficiently represents the uniform grid\textquotesingle{}s tensor-\/product connectivity structure using 1D factors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em graph\+Obj} & -\/ \doxylink{classapprox_1_1mesh_1_1_separable_graph}{Separable\+Graph} with tensor-\/product structure\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The separable representation stores d 1D graphs instead of 
+
+one d-\/dimensional graph, reducing memory from O(n\texorpdfstring{$^\wedge$}{\string^}d) to O(d×n). 
+
+Each 1D factor contains vertex coordinates and edge connectivity 
+
+for one dimension, with the full grid formed by tensor products. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{approx\+::mesh\+::\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_uniform_grid_a593f06bad3f21b0f730a4974df1ada5e}\index{approx::mesh::UniformGrid@{approx::mesh::UniformGrid}!refine@{refine}}
+\index{refine@{refine}!approx::mesh::UniformGrid@{approx::mesh::UniformGrid}}
+\doxysubsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_uniform_grid_a593f06bad3f21b0f730a4974df1ada5e} 
+function approx\+::mesh\+::\+Uniform\+Grid\+::refine (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n\+Levels}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Create uniformly refined grid with smaller elements. 
+
+new\+Obj = refine(obj, n\+Levels) creates a refined uniform grid by subdividing each element uniformly. The refinement preserves the uniform spacing property while increasing resolution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} object \\
+\hline
+{\em n\+Levels} & -\/ Number of refinement levels (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em new\+Obj} & -\/ Refined \doxylink{classapprox_1_1mesh_1_1_uniform_grid}{Uniform\+Grid} with 2\texorpdfstring{$^\wedge$}{\string^}(n\+Levels) times more elements per dimension\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{-\/\ Level\ 0:\ Original\ grid\ (no\ refinement)}
+\DoxyCodeLine{-\/\ Level\ 1:\ 2×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}\ per\ dimension\ (4×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ in\ 2D)}
+\DoxyCodeLine{-\/\ Level\ 2:\ 4×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a63db5bef138dff12dfbf391f47265d88}{resolution}}\ per\ dimension\ (16×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid_a4c3b78b294442009aeaecd8f328b30c1}{elements}}\ in\ 2D)}
+\DoxyCodeLine{The\ refined\ grid\ maintains\ identical\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ bounds\ and}
+\DoxyCodeLine{uniform\ spacing\ properties\ as\ the\ original.}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Uniform refinement multiplies the resolution by 2\texorpdfstring{$^\wedge$}{\string^}n\+Levels in 
+
+each dimension, resulting in 2\texorpdfstring{$^\wedge$}{\string^}(n\+Levels×d) total elements. 
+
+Element spacing decreases by factor 2\texorpdfstring{$^\wedge$}{\string^}n\+Levels in each dimension. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{approx\+::mesh\+::\+Mesh}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_uniform_grid_8m}{Uniform\+Grid.\+m}}\end{DoxyCompactItemize}

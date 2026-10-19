@@ -1,0 +1,41 @@
+\doxysection{fit\+Nonlinear\+Decay\+Model.\+m File Reference}
+\hypertarget{fit_nonlinear_decay_model_8m}{}\label{fit_nonlinear_decay_model_8m}\index{fitNonlinearDecayModel.m@{fitNonlinearDecayModel.m}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{fit_nonlinear_decay_model_8m_a2baf857eee93fff231f006fe9cbf6480}{fit\+Nonlinear\+Decay\+Model}} ()
+\begin{DoxyCompactList}\small\item\em fit\+Nonlinear\+Decay\+Model \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{fit_nonlinear_decay_model_8m_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{fit_nonlinear_decay_model_8m_a2baf857eee93fff231f006fe9cbf6480}\index{fitNonlinearDecayModel.m@{fitNonlinearDecayModel.m}!fitNonlinearDecayModel@{fitNonlinearDecayModel}}
+\index{fitNonlinearDecayModel@{fitNonlinearDecayModel}!fitNonlinearDecayModel.m@{fitNonlinearDecayModel.m}}
+\doxysubsubsection{\texorpdfstring{fitNonlinearDecayModel()}{fitNonlinearDecayModel()}}
+{\footnotesize\ttfamily \label{fit_nonlinear_decay_model_8m_a2baf857eee93fff231f006fe9cbf6480} 
+function fit\+Nonlinear\+Decay\+Model (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+fit\+Nonlinear\+Decay\+Model 
+
+Fit data using the nonlinear decay model y = a -\/ b\texorpdfstring{$\ast$}{*}(x-\/c)\texorpdfstring{$^\wedge$}{\string^}(-\/d).
+
+Syntax fit\+Result = \doxylink{fit_nonlinear_decay_model_8m_a2baf857eee93fff231f006fe9cbf6480}{fit\+Nonlinear\+Decay\+Model()}
+
+Description This function fits experimental data to a nonlinear decay model of the form y = a -\/ b\texorpdfstring{$\ast$}{*}(x-\/c)\texorpdfstring{$^\wedge$}{\string^}(-\/d), where a, b, c, and d are parameters to be estimated. The parameter \textquotesingle{}a\textquotesingle{} is constrained to be in the range \mbox{[}9, 12\mbox{]}. The function uses nonlinear least squares fitting and displays results with visualization.
+
+Output Arguments fit\+Result -\/ structure containing fitted parameters and statistics
+\begin{DoxyItemize}
+\item parameters -\/ fitted values of a, b, c, and d
+\item rsquared -\/ coefficient of determination
+\item rmse -\/ root mean square error
+\item residuals -\/ fitting residuals
+\end{DoxyItemize}
+
+Example result = \doxylink{fit_nonlinear_decay_model_8m_a2baf857eee93fff231f006fe9cbf6480}{fit\+Nonlinear\+Decay\+Model()}
+
+See also fitnlm, nlinfit, lsqcurvefit
+
+\% Initialize data X-\/axis values 

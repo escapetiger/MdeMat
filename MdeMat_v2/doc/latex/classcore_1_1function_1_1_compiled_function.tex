@@ -1,0 +1,350 @@
+\doxysection{core\+::function\+::Compiled\+Function Class Reference}
+\hypertarget{classcore_1_1function_1_1_compiled_function}{}\label{classcore_1_1function_1_1_compiled_function}\index{core::function::CompiledFunction@{core::function::CompiledFunction}}
+
+
+Base class for all compiled functions.  
+
+
+
+
+Inherits \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function}{approx\+::basis\+::\+Interpolation\+Basis\+Function}}, and \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function}{approx\+::basis\+::\+Orthogonal\+Basis\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e}{Compiled\+Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a1a47215bf176a7a73461bab8634d7923}{load}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Load compiled metadata from specified file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}{auto\+Load}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Automatically find and load appropriate metadata. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a9e7bbafc6479b251de4f9868931534f4}{Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}, Input\+Type \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}})
+\begin{DoxyCompactList}\small\item\em Constructor for the abstract \doxylink{classcore_1_1function_1_1_function}{Function} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab6aaaf6376df339142ae246211b0a391}{evaluate}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Evaluate the function at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_a32423701ae2a8d238b9617bdb16acd87}{derivative}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Compute the derivative of specified order at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_afda3f3a9615b3bc8e942a364a8ed8ce7}{jacobian}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian matrix at specified points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_function_ab9086461d8e0eb55ff0abb158cfd2f61}{gradient}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Compute the gradient at specified points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665}{metadata}}
+\begin{DoxyCompactList}\small\item\em Loaded metadata structure containing function handles. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a3e96d75334f388a652eec3455790dbd8}{has\+Metadata}}
+\begin{DoxyCompactList}\small\item\em True if metadata is loaded and available. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a2dd1265e1ff3ccaf369b2342a2a1eede}{metasource}}
+\begin{DoxyCompactList}\small\item\em Cell array of available metadata filenames. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1function_1_1_function}{core\+::function\+::\+Function}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_abfa8f554857420757178646d6b5bb958}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of input space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a4d4d9f22c77dfb11d3d7f78137f49d7d}{n\+Codims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions of output space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a0cf6eefccda4a1dab1b5562f1fa0663d}{parameters}}
+\begin{DoxyCompactList}\small\item\em Parameter registry. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_aa2558ddec64294f183c1d0c0adaa3893}{is\+Well\+Defined}}
+\begin{DoxyCompactList}\small\item\em True if both input and output dimensions are positive. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1function_1_1_function_a50b67a234eba67fc06ec18e9ed411e14}{has\+Parameters}}
+\begin{DoxyCompactList}\small\item\em True if the function has registered parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a283eb1095a9314b5bfc1fdc00bb6b274}{evaluate\+Impl}} (Input\+Type obj, Input\+Type X)
+\begin{DoxyCompactList}\small\item\em Implementation of function evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a25afcb8c833a3dcfdbb6eea252376177}{derivative\+Impl}} (Input\+Type obj, Input\+Type X, Input\+Type r)
+\begin{DoxyCompactList}\small\item\em Implementation of function derivative evaluation. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_aa69c5ebaa25b5540098c1c6534f81b41}{get\+Full\+Path}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Construct full file path from filename. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a7671bc7c20cb0aebc95d958fdac60a38}{auto\+Filename}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Abstract method to generate appropriate metadata filename. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_afc38ffab641909763d78a512ca1a2316}{METADATA\+\_\+\+DIR}} = \textquotesingle{}config/functions\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Directory containing metadata files. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classcore_1_1function_1_1_compiled_function_a954241a60ae13de0ee06df84a25440a8}{FILE\+\_\+\+EXTENSION}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em File extension for metadata files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all compiled functions. 
+
+\doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} provides a bridge between symbolic function definitions and efficient numerical evaluation by automatically loading precompiled function handles and metadata from the configuration directory.
+
+The class supports automatic metadata discovery, caching, and efficient function evaluation using precompiled function handles stored in MAT files.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1function_1_1_function}{core.\+function.\+Function} 
+
+core.\+function.\+Differentiable\+Function 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00020}{20}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!CompiledFunction@{CompiledFunction}}
+\index{CompiledFunction@{CompiledFunction}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{CompiledFunction()}{CompiledFunction()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e} 
+function core\+::function\+::\+Compiled\+Function\+::\+Compiled\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{n\+Dims}{, }\item[{Input\+Type}]{n\+Codims}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} class. 
+
+obj = \doxylink{classcore_1_1function_1_1_compiled_function_a0160719d7bb8b6e9860b95a5118dac2e}{Compiled\+Function()} creates a \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} with default dimensions (both n\+Dims and n\+Codims are 0).
+
+obj = Compiled\+Function(n\+Dims) creates a \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} with specified input dimension and default output dimension (0).
+
+obj = Compiled\+Function(n\+Dims, n\+Codims) creates a \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} with specified input and output dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Dims} & -\/ Number of input dimensions (optional, default\+:0) \\
+\hline
+{\em n\+Codims} & -\/ Number of output dimensions (optional, default\+: 0) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a7671bc7c20cb0aebc95d958fdac60a38}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!autoFilename@{autoFilename}}
+\index{autoFilename@{autoFilename}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{autoFilename()}{autoFilename()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a7671bc7c20cb0aebc95d958fdac60a38} 
+virtual function core\+::function\+::\+Compiled\+Function\+::auto\+Filename (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Abstract method to generate appropriate metadata filename. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1basis_1_1_interpolation_basis_function_a585f6681952e7680b68f925101c089cb}{approx\+::basis\+::\+Interpolation\+Basis\+Function}}, and \mbox{\hyperlink{classapprox_1_1basis_1_1_orthogonal_basis_function_a2603fca64f319ecaaa5d552a957e835f}{approx\+::basis\+::\+Orthogonal\+Basis\+Function}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!autoLoad@{autoLoad}}
+\index{autoLoad@{autoLoad}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{autoLoad()}{autoLoad()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_aceef4948d8e708adfd0e0ad3f5564af7} 
+function core\+::function\+::\+Compiled\+Function\+::auto\+Load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Automatically find and load appropriate metadata. 
+
+obj = auto\+Load(obj) automatically determines the appropriate metadata file for this function type and loads it. The filename is determined by the abstract auto\+Filename method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a25afcb8c833a3dcfdbb6eea252376177}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!derivativeImpl@{derivativeImpl}}
+\index{derivativeImpl@{derivativeImpl}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{derivativeImpl()}{derivativeImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a25afcb8c833a3dcfdbb6eea252376177} 
+function core\+::function\+::\+Compiled\+Function\+::derivative\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{, }\item[{Input\+Type}]{r}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implementation of function derivative evaluation. 
+
+dY = derivative\+Impl(obj, X, r) computes derivatives of the compiled function at the specified points using precompiled derivative handles from the loaded metadata.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The Differentiable\+Compiled\+Function object \\
+\hline
+{\em X} & -\/ Coordinates (n\+Dims x n\+Points) \\
+\hline
+{\em r} & -\/ Derivative order vector (1 x n\+Dims)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em dY} & -\/ Derivative values (n\+Codims x n\+Points) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1function_1_1_function_ab60ffdff5fafbe558f28b63ba68cff36}{core\+::function\+::\+Function}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a283eb1095a9314b5bfc1fdc00bb6b274}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!evaluateImpl@{evaluateImpl}}
+\index{evaluateImpl@{evaluateImpl}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{evaluateImpl()}{evaluateImpl()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a283eb1095a9314b5bfc1fdc00bb6b274} 
+function core\+::function\+::\+Compiled\+Function\+::evaluate\+Impl (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{X}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implementation of function evaluation. 
+
+Y = evaluate\+Impl(obj, X) evaluates the compiled function at the specified points using the loaded metadata handles.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object \\
+\hline
+{\em X} & -\/ Coordinates (n\+Dims x n\+Points)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ \doxylink{classcore_1_1function_1_1_function}{Function} values (n\+Codims x n\+Points) \\
+\hline
+\end{DoxyRetVals}
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1function_1_1_function_a2c75b468d03b2f6c0c19e529e9ebe133}{core\+::function\+::\+Function}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_aa69c5ebaa25b5540098c1c6534f81b41}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!getFullPath@{getFullPath}}
+\index{getFullPath@{getFullPath}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{getFullPath()}{getFullPath()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_aa69c5ebaa25b5540098c1c6534f81b41} 
+function core\+::function\+::\+Compiled\+Function\+::get\+Full\+Path (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Construct full file path from filename. 
+
+full\+Path = get\+Full\+Path(obj, filename) constructs the full path to a metadata file, adding the file extension if needed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object \\
+\hline
+{\em filename} & -\/ Base filename string\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em full\+Path} & -\/ Full path to the metadata file \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a1a47215bf176a7a73461bab8634d7923}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!load@{load}}
+\index{load@{load}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a1a47215bf176a7a73461bab8634d7923} 
+function core\+::function\+::\+Compiled\+Function\+::load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Load compiled metadata from specified file. 
+
+obj = load(obj, filename) loads precompiled function metadata from the specified file and updates the object\textquotesingle{}s function dimensions based on the loaded metadata.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object \\
+\hline
+{\em filename} & -\/ Metadata filename\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1function_1_1_compiled_function}{Compiled\+Function} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a954241a60ae13de0ee06df84a25440a8}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!FILE\_EXTENSION@{FILE\_EXTENSION}}
+\index{FILE\_EXTENSION@{FILE\_EXTENSION}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{FILE\_EXTENSION}{FILE\_EXTENSION}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a954241a60ae13de0ee06df84a25440a8} 
+Constant Property core\+::function\+::\+Compiled\+Function\+::\+FILE\+\_\+\+EXTENSION = \textquotesingle{}.mat\textquotesingle{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+File extension for metadata files. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00027}{27}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a3e96d75334f388a652eec3455790dbd8}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!hasMetadata@{hasMetadata}}
+\index{hasMetadata@{hasMetadata}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{hasMetadata}{hasMetadata}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a3e96d75334f388a652eec3455790dbd8} 
+Property core\+::function\+::\+Compiled\+Function\+::has\+Metadata}
+
+
+
+True if metadata is loaded and available. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00039}{39}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!metadata@{metadata}}
+\index{metadata@{metadata}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{metadata}{metadata}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a63ace8b63c0a1c20b05b70a51f6d8665} 
+Property core\+::function\+::\+Compiled\+Function\+::metadata}
+
+
+
+Loaded metadata structure containing function handles. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00033}{33}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_afc38ffab641909763d78a512ca1a2316}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!METADATA\_DIR@{METADATA\_DIR}}
+\index{METADATA\_DIR@{METADATA\_DIR}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{METADATA\_DIR}{METADATA\_DIR}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_afc38ffab641909763d78a512ca1a2316} 
+Constant Property core\+::function\+::\+Compiled\+Function\+::\+METADATA\+\_\+\+DIR = \textquotesingle{}config/functions\textquotesingle{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Directory containing metadata files. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00024}{24}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1function_1_1_compiled_function_a2dd1265e1ff3ccaf369b2342a2a1eede}\index{core::function::CompiledFunction@{core::function::CompiledFunction}!metasource@{metasource}}
+\index{metasource@{metasource}!core::function::CompiledFunction@{core::function::CompiledFunction}}
+\doxysubsubsection{\texorpdfstring{metasource}{metasource}}
+{\footnotesize\ttfamily \label{classcore_1_1function_1_1_compiled_function_a2dd1265e1ff3ccaf369b2342a2a1eede} 
+Property core\+::function\+::\+Compiled\+Function\+::metasource}
+
+
+
+Cell array of available metadata filenames. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiled_function_8m_source_l00042}{42}} of file \mbox{\hyperlink{_compiled_function_8m_source}{Compiled\+Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+function/\mbox{\hyperlink{_compiled_function_8m}{Compiled\+Function.\+m}}\end{DoxyCompactItemize}

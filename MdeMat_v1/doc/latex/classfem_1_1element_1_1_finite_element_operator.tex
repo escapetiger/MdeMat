@@ -1,0 +1,107 @@
+\doxysection{fem\+::element\+::Finite\+Element\+Operator Class Reference}
+\hypertarget{classfem_1_1element_1_1_finite_element_operator}{}\label{classfem_1_1element_1_1_finite_element_operator}\index{fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}}
+
+
+Base class for finite element operators.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_operator}{fem\+::element\+::\+C0\+Finite\+Element\+Operator}}, and \mbox{\hyperlink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator}{fem\+::element\+::\+Semi\+Lagrangian\+Finite\+Element\+Operator}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}{Finite\+Element\+Operator}} (Input\+Type \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1element_1_1_finite_element_operator}{Finite\+Element\+Operator}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object on which the operator acts. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_operator_a085d60e44af7d95abca0300f19aa1bb3}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (dependent property) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for finite element operators. 
+
+\doxylink{classfem_1_1element_1_1_finite_element_operator}{Finite\+Element\+Operator} provides a foundation for operators that act on finite element spaces, such as gradient, divergence, curl, and other differential operators. This abstract base class maintains a reference to the underlying finite element and provides common functionality for all derived operator classes.
+
+Finite element operators encapsulate the discrete forms of differential operators, enabling efficient computation of terms in weak formulations of partial differential equations. They bridge the gap between continuous differential operators and their discrete matrix representations.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1element_1_1_c0_finite_element_operator}{fem.\+element.\+C0\+Finite\+Element\+Operator} 
+
+\doxylink{classfem_1_1element_1_1_l2_finite_element_operator}{fem.\+element.\+L2\+Finite\+Element\+Operator} 
+
+\doxylink{classfem_1_1element_1_1_semi_lagrangian_finite_element_operator}{fem.\+element.\+Semi\+Lagrangian\+Finite\+Element\+Operator} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_finite_element_operator_8m_source_l00024}{24}} of file \mbox{\hyperlink{_finite_element_operator_8m_source}{Finite\+Element\+Operator.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1element_1_1_finite_element_operator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0}\index{fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}!FiniteElementOperator@{FiniteElementOperator}}
+\index{FiniteElementOperator@{FiniteElementOperator}!fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}}
+\doxysubsubsection{\texorpdfstring{FiniteElementOperator()}{FiniteElementOperator()}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_operator_a7c3da52481e03dfb4f6657c4dd5eb5c0} 
+function fem\+::element\+::\+Finite\+Element\+Operator\+::\+Finite\+Element\+Operator (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1element_1_1_finite_element_operator}{Finite\+Element\+Operator}. 
+
+obj = Finite\+Element\+Operator(fe) creates a finite element operator associated with the specified finite element. This constructor is called by concrete subclasses to initialize the base class functionality.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object (\doxylink{classfem_1_1element_1_1_finite_element}{Finite\+Element}) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1element_1_1_finite_element_operator_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db}\index{fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}!fe@{fe}}
+\index{fe@{fe}!fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}}
+\doxysubsubsection{\texorpdfstring{fe}{fe}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_operator_a4dd5879b71a00b1f11df67dc7830c5db} 
+Property fem\+::element\+::\+Finite\+Element\+Operator\+::fe}
+
+
+
+Finite element object on which the operator acts. 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_operator_8m_source_l00028}{28}} of file \mbox{\hyperlink{_finite_element_operator_8m_source}{Finite\+Element\+Operator.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_finite_element_operator_a085d60e44af7d95abca0300f19aa1bb3}\index{fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!fem::element::FiniteElementOperator@{fem::element::FiniteElementOperator}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_finite_element_operator_a085d60e44af7d95abca0300f19aa1bb3} 
+Property fem\+::element\+::\+Finite\+Element\+Operator\+::n\+Dofs}
+
+
+
+Number of degrees of freedom (dependent property) 
+
+
+
+Definition at line \mbox{\hyperlink{_finite_element_operator_8m_source_l00034}{34}} of file \mbox{\hyperlink{_finite_element_operator_8m_source}{Finite\+Element\+Operator.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+element/\mbox{\hyperlink{_finite_element_operator_8m}{Finite\+Element\+Operator.\+m}}\end{DoxyCompactItemize}

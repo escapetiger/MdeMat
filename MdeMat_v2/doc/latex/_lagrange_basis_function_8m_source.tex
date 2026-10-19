@@ -1,0 +1,62 @@
+\doxysection{Lagrange\+Basis\+Function.\+m}
+\hypertarget{_lagrange_basis_function_8m_source}{}\label{_lagrange_basis_function_8m_source}\index{+core/+symbolic/LagrangeBasisFunction.m@{+core/+symbolic/LagrangeBasisFunction.m}}
+\mbox{\hyperlink{_lagrange_basis_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00001}00001\ classdef\ LagrangeBasisFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function}{InterpolationPolynomialBasisFunction}}}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00002}00002\ \ \ \ \ \%\ LAGRANGEBASISFUNCTION\ Lagrange\ interpolation\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ LagrangeBasisFunction\ generates\ Lagrange\ interpolation\ basis}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ functions\ associated\ with\ a\ specified\ set\ of\ nodes.\ Each\ basis}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ function\ satisfies\ the\ Kronecker\ delta\ \textcolor{keyword}{property}\ at\ the}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ interpolation\ nodes\ and\ can\ be\ in\ standard\ or\ monic\ form.}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Standard\ Lagrange\ basis\ \textcolor{keywordflow}{for}\ first\ node}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ nodes\ =\ [0,\ 1,\ 2];}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function}{LagrangeBasisFunction}}(nodes,\ 1);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00013}00013\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \%\ Monic\ form\ \textcolor{keywordflow}{for}\ second\ node\ with\ custom\ variable}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ basis\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function}{LagrangeBasisFunction}}(nodes,\ 2,\ sym(\textcolor{charliteral}{'t'}),\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00017}00017\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function}{InterpolationPolynomialBasisFunction}}}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00019}00019\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00020}00020\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ function\ expr\ =\ generate(obj)}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Generates\ the\ Lagrange\ basis\ function.}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00023}\mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ expr\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function_af53f0061e96f69e075108fb6c58acefd}{generate}}(obj)\ creates\ the\ \mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ for}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ Lagrange\ interpolation\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ using\ the\ product}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ formula.\ The\ resulting\ polynomial\ equals\ 1\ at\ the\ specified}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ node\ and\ 0\ at\ all\ other\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function_ae55cf32686dac9597ff035c97116c9e4}{nodes}}.}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function}{LagrangeBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ expr\ -\/\ Symbolic\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ for\ the\ Lagrange\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}\{1\};}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.nodes);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ obj.index;}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ nodes\ =\ obj.nodes;}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00040}\mbox{\hyperlink{classcore_1_1symbolic_1_1_lagrange_basis_function_af53f0061e96f69e075108fb6c58acefd}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ sym(1);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:n}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ j\ \string~=\ i}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ L\ *\ (x\ -\/\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function_ae55cf32686dac9597ff035c97116c9e4}{nodes}}(j))\ /\ (\mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function_ae55cf32686dac9597ff035c97116c9e4}{nodes}}(i)\ -\/\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_function_ae55cf32686dac9597ff035c97116c9e4}{nodes}}(j));}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.monic}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coeffs\ =\ sym2poly(L);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ leadingCoeff\ =\ coeffs(1);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ horner(simplify(L\ /\ leadingCoeff),\ x);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ horner(simplify(L),\ x);}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00055}00055\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lagrange_basis_function_8m_source_l00056}00056\ end}
+
+\end{DoxyCode}

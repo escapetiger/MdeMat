@@ -1,0 +1,31 @@
+\doxysection{distmesh/distmesh2doriginal.m File Reference}
+\hypertarget{distmesh2doriginal_8m}{}\label{distmesh2doriginal_8m}\index{distmesh/distmesh2doriginal.m@{distmesh/distmesh2doriginal.m}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{distmesh2doriginal_8m_ad52b4740651fa15f380ddda1e421d1af}{distmesh2doriginal}} (Input\+Type fd, Input\+Type fh, Input\+Type h0, Input\+Type bbox, Input\+Type pfix, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em 2-\/D Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESH2\+D(\+FD,\+FH,\+H0,\+BBOX,\+PFIX,\+FPARAMS) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{distmesh2doriginal_8m_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{distmesh2doriginal_8m_ad52b4740651fa15f380ddda1e421d1af}\index{distmesh2doriginal.m@{distmesh2doriginal.m}!distmesh2doriginal@{distmesh2doriginal}}
+\index{distmesh2doriginal@{distmesh2doriginal}!distmesh2doriginal.m@{distmesh2doriginal.m}}
+\doxysubsubsection{\texorpdfstring{distmesh2doriginal()}{distmesh2doriginal()}}
+{\footnotesize\ttfamily \label{distmesh2doriginal_8m_ad52b4740651fa15f380ddda1e421d1af} 
+function distmesh2doriginal (\begin{DoxyParamCaption}\item[{Input\+Type}]{fd}{, }\item[{Input\+Type}]{fh}{, }\item[{Input\+Type}]{h0}{, }\item[{Input\+Type}]{bbox}{, }\item[{Input\+Type}]{pfix}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+2-\/D Mesh Generator using Distance Functions. \mbox{[}P,T\mbox{]}=DISTMESH2\+D(\+FD,\+FH,\+H0,\+BBOX,\+PFIX,\+FPARAMS) 
+
+P\+: Node positions (Nx2) T\+: Triangle indices (NTx3) FD\+: Distance function \doxylink{ddiff_8m_a1aabac6d068eef6a7bad3fdf50a05cc8}{d(x,y)} FH\+: Scaled edge length function h(x,y) H0\+: Initial edge length BBOX\+: Bounding box \mbox{[}xmin,ymin; xmax,ymax\mbox{]} PFIX\+: Fixed node positions (NFIXx2) FPARAMS\+: Additional parameters passed to FD and FH
+
+Example\+: (Uniform Mesh on Unit Circle) fd=inline(\textquotesingle{}sqrt(sum(p.\texorpdfstring{$^\wedge$}{\string^}2,2))-\/1\textquotesingle{},\textquotesingle{}p\textquotesingle{}); \mbox{[}p,t\mbox{]}=distmesh2d(fd,@huniform,0.\+2,\mbox{[}-\/1,-\/1;1,1\mbox{]},\mbox{[}\mbox{]});
+
+Example\+: (Rectangle with circular hole, refined at circle boundary) fd=inline(\textquotesingle{}ddiff(drectangle(p,-\/1,1,-\/1,1),dcircle(p,0,0,0.\+5))\textquotesingle{},\textquotesingle{}p\textquotesingle{}); fh=inline(\textquotesingle{}min(4\texorpdfstring{$\ast$}{*}sqrt(sum(p.\texorpdfstring{$^\wedge$}{\string^}2,2))-\/1,2)\textquotesingle{},\textquotesingle{}p\textquotesingle{}); \mbox{[}p,t\mbox{]}=distmesh2d(fd,fh,0.\+05,\mbox{[}-\/1,-\/1;1,1\mbox{]},\mbox{[}-\/1,-\/1;-\/1,1;1,-\/1;1,1\mbox{]});
+
+See also\+: MESHDEMO2D, DISTMESHND, DELAUNAYN, TRIMESH.
+
+Copyright (C) 2004-\/2012 Per-\/\+Olof Persson. See COPYRIGHT.\+TXT for details. 

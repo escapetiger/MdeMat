@@ -1,0 +1,213 @@
+\doxysection{approx\+::element\+::Element Class Reference}
+\hypertarget{classapprox_1_1element_1_1_element}{}\label{classapprox_1_1element_1_1_element}\index{approx::element::Element@{approx::element::Element}}
+
+
+Base class for element representations.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1element_1_1_c0_element}{approx\+::element\+::\+C0\+Element}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_afae4d7173f5e658eee37e7ca51d564f2}{Element}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}, Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element}{Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a1da7e04ed31549bf3777e3e900d73d53}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate a function over the element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}
+\begin{DoxyCompactList}\small\item\em Geometry object defining the element domain. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}
+\begin{DoxyCompactList}\small\item\em Function space projector for basis functions. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_ab295899409d2ba72ce1b33a941291256}{outer\+Normals}}
+\begin{DoxyCompactList}\small\item\em Outer normal vectors at geometry boundaries. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for element representations. 
+
+\doxylink{classapprox_1_1element_1_1_element}{Element} encapsulates geometry information and function space used in Galerkin methods. The main idea of Galerkin methods is to approximate an infinite-\/dimensional function space by a finite-\/dimensional function space, called the "{}ansatz space"{}.
+
+In the spectral method (SPM), the ansatz space consists of high-\/order polynomials on an element. In the finite element method (FEM), the ansatz space comprises piecewise low-\/order polynomials over a mesh of elements. \doxylink{classapprox_1_1element_1_1_element}{Element} serves as a building block for both SPM and FEM to define the ansatz space.
+
+This abstract base class provides the fundamental interface for element-\/based computations, including function evaluation and access to geometric properties.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Cannot\ instantiate\ abstract\ \textcolor{keyword}{class\ }directly}
+\DoxyCodeLine{\%\ Use\ concrete\ subclasses\ instead:}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}\ =\ core.geometry.Orthotope.unit(2);}
+\DoxyCodeLine{basis\ =\ approx.basis.LagrangeBasis(2);}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}\ =\ approx.project.NodalProjector(basis);}
+\DoxyCodeLine{integrator\ =\ approx.integrate.GaussLegendre(3);}
+\DoxyCodeLine{element\ =\ approx.element.C0Element(\mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}},\ \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}},\ integrator);}
+\DoxyCodeLine{\%\ Access\ element\ properties}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}{nDims}}\ =\ element.nDims;}
+\DoxyCodeLine{\mbox{\hyperlink{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c}{nDofs}}\ =\ element.nDofs;}
+\DoxyCodeLine{normals\ =\ element.outerNormals;}
+\DoxyCodeLine{\%\ Evaluate\ functions}
+\DoxyCodeLine{Y\ =\ element.evaluate(X,\ C);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} 
+
+approx.\+project.\+Projector 
+
+\doxylink{classapprox_1_1element_1_1_c0_element}{approx.\+element.\+C0\+Element} 
+
+\doxylink{classapprox_1_1element_1_1_l2_element}{approx.\+element.\+L2\+Element} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00044}{44}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_afae4d7173f5e658eee37e7ca51d564f2}\index{approx::element::Element@{approx::element::Element}!Element@{Element}}
+\index{Element@{Element}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{Element()}{Element()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_afae4d7173f5e658eee37e7ca51d564f2} 
+function approx\+::element\+::\+Element\+::\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{geometry}{, }\item[{Input\+Type}]{projector}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_element}{Element}. 
+
+obj = Element(geometry, projector) creates an element with the specified geometry and function space projector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em geometry} & -\/ Geometry object defining the element domain \\
+\hline
+{\em projector} & -\/ Galerkin\+Projector object for basis functions \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1element_1_1_element_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_a1da7e04ed31549bf3777e3e900d73d53}\index{approx::element::Element@{approx::element::Element}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_a1da7e04ed31549bf3777e3e900d73d53} 
+function approx\+::element\+::\+Element\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate a function over the element. 
+
+Y = evaluate(obj, Z) evaluates the basis functions at points specified in Z = \mbox{[}X; C\mbox{]}, where X contains evaluation points and C contains coefficients.
+
+Y = evaluate(obj, X, C) evaluates the finite element function defined by coefficients C at the evaluation points X.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1element_1_1_element}{Element} object \\
+\hline
+{\em varargin} & -\/ Variable input arguments\+:\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values at evaluation points\+: \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_element_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}\index{approx::element::Element@{approx::element::Element}!geometry@{geometry}}
+\index{geometry@{geometry}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{geometry}{geometry}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c} 
+Property approx\+::element\+::\+Element\+::geometry}
+
+
+
+Geometry object defining the element domain. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00048}{48}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}\index{approx::element::Element@{approx::element::Element}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca} 
+Property approx\+::element\+::\+Element\+::n\+Dims}
+
+
+
+Number of spatial dimensions (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00057}{57}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c}\index{approx::element::Element@{approx::element::Element}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c} 
+Property approx\+::element\+::\+Element\+::n\+Dofs}
+
+
+
+Number of degrees of freedom (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00060}{60}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_ab295899409d2ba72ce1b33a941291256}\index{approx::element::Element@{approx::element::Element}!outerNormals@{outerNormals}}
+\index{outerNormals@{outerNormals}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{outerNormals}{outerNormals}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_ab295899409d2ba72ce1b33a941291256} 
+Property approx\+::element\+::\+Element\+::outer\+Normals}
+
+
+
+Outer normal vectors at geometry boundaries. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00063}{63}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}\index{approx::element::Element@{approx::element::Element}!projector@{projector}}
+\index{projector@{projector}!approx::element::Element@{approx::element::Element}}
+\doxysubsubsection{\texorpdfstring{projector}{projector}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca} 
+Property approx\+::element\+::\+Element\+::projector}
+
+
+
+Function space projector for basis functions. 
+
+
+
+Definition at line \mbox{\hyperlink{_element_8m_source_l00051}{51}} of file \mbox{\hyperlink{_element_8m_source}{Element.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_element_8m}{Element.\+m}}\end{DoxyCompactItemize}

@@ -1,0 +1,226 @@
+\doxysection{core\+::linalg\+::Separable Class Reference}
+\hypertarget{classcore_1_1linalg_1_1_separable}{}\label{classcore_1_1linalg_1_1_separable}\index{core::linalg::Separable@{core::linalg::Separable}}
+
+
+Base class for all separable objects.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1integrate_1_1_separable_rule}{approx\+::integrate\+::\+Separable\+Rule}}, \mbox{\hyperlink{classapprox_1_1mesh_1_1_separable_graph}{approx\+::mesh\+::\+Separable\+Graph}}, and \mbox{\hyperlink{classcore_1_1function_1_1_separable_function}{core\+::function\+::\+Separable\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44}{Separable}} (Input\+Type \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}})
+\begin{DoxyCompactList}\small\item\em Constructor for separable object. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a7ba5fc11b95f55c552d1a479b4ba7b36}{set\+Factors}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}})
+\begin{DoxyCompactList}\small\item\em Set the factors. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a330be113649cb5407373097ec4f131c2}{set\+Factor}} (Input\+Type obj, Input\+Type index, Input\+Type factor)
+\begin{DoxyCompactList}\small\item\em Set a specific factor. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_aa2c64f10ccd85caf6d92bb891a3a3c57}{get\+Factor}} (Input\+Type obj, Input\+Type index)
+\begin{DoxyCompactList}\small\item\em Get a specific factor integrator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ac5e323c66579ff675f6b843636acf17c}{create\+Factors}} (Input\+Type factory, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Create cell array of factors using factory function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}
+\begin{DoxyCompactList}\small\item\em Array of factor objects. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_a1c9067638d87eadbb14bd0f9a6a0109a}{n\+Factors}}
+\begin{DoxyCompactList}\small\item\em Number of factors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all separable objects. 
+
+\doxylink{classcore_1_1linalg_1_1_separable}{Separable} represents mathematical entity that can be decomposed as result of operation on multiple factors. Provides common functionality for all separable object types.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ with\ uniform\ vector\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}}
+\DoxyCodeLine{\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}\ =\ \{Vector([1,2,3]),\ Vector([4,5,6]),\ Vector([7,8,9])\};}
+\DoxyCodeLine{obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44}{Separable}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}});}
+\DoxyCodeLine{factor2\ =\ obj(2);\ \ \%\ Access\ \textcolor{keyword}{using\ }parentheses}
+\DoxyCodeLine{\%\ Create\ with\ mixed\ factor\ types}
+\DoxyCodeLine{\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}}\ =\ \{Vector([1,2,3]),\ Matrix([4,5;6,7]),\ Scalar(8)\};}
+\DoxyCodeLine{obj\ =\ \mbox{\hyperlink{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44}{Separable}}(\mbox{\hyperlink{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}{factors}});}
+\DoxyCodeLine{factor2\ =\ obj\{2\};\ \%\ Access\ \textcolor{keyword}{using\ }curly\ braces}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{_separable_8m_source_l00023}{23}} of file \mbox{\hyperlink{_separable_8m_source}{Separable.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1linalg_1_1_separable_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44}\index{core::linalg::Separable@{core::linalg::Separable}!Separable@{Separable}}
+\index{Separable@{Separable}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{Separable()}{Separable()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44} 
+function core\+::linalg\+::\+Separable\+::\+Separable (\begin{DoxyParamCaption}\item[{Input\+Type}]{factors}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for separable object. 
+
+obj = \doxylink{classcore_1_1linalg_1_1_separable_aa088c4c822bf2bb684096a149df35b44}{Separable()} creates empty \doxylink{classcore_1_1linalg_1_1_separable}{Separable}.
+
+obj = Separable(factors) creates \doxylink{classcore_1_1linalg_1_1_separable}{Separable} with specified factors {\itshape factors}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em factors} & -\/ Factor instances (cell array or object array) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1linalg_1_1_separable_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_separable_ac5e323c66579ff675f6b843636acf17c}\index{core::linalg::Separable@{core::linalg::Separable}!createFactors@{createFactors}}
+\index{createFactors@{createFactors}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{createFactors()}{createFactors()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_ac5e323c66579ff675f6b843636acf17c} 
+function core\+::linalg\+::\+Separable\+::create\+Factors (\begin{DoxyParamCaption}\item[{Input\+Type}]{factory}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Create cell array of factors using factory function. 
+
+F = Separable.\+create\+Factors(factory, arg1, arg2, ...) creates multiple factor objects using factory function {\itshape factory}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em factory} & -\/ Function handle for creating factor objects \\
+\hline
+{\em varargin} & -\/ Arguments passed to factory function\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em F} & -\/ Cell array of created factor objects \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1linalg_1_1_separable_aa2c64f10ccd85caf6d92bb891a3a3c57}\index{core::linalg::Separable@{core::linalg::Separable}!getFactor@{getFactor}}
+\index{getFactor@{getFactor}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{getFactor()}{getFactor()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_aa2c64f10ccd85caf6d92bb891a3a3c57} 
+function core\+::linalg\+::\+Separable\+::get\+Factor (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{index}{}\end{DoxyParamCaption})}
+
+
+
+Get a specific factor integrator. 
+
+F = get\+Factor(obj, index) returns the factor at the specified index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1linalg_1_1_separable}{Separable} object \\
+\hline
+{\em index} & -\/ Index of the factor (positive integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em F} & -\/ The factor at the specified index \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1linalg_1_1_separable_a330be113649cb5407373097ec4f131c2}\index{core::linalg::Separable@{core::linalg::Separable}!setFactor@{setFactor}}
+\index{setFactor@{setFactor}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{setFactor()}{setFactor()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_a330be113649cb5407373097ec4f131c2} 
+function core\+::linalg\+::\+Separable\+::set\+Factor (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{index}{, }\item[{Input\+Type}]{factor}{}\end{DoxyParamCaption})}
+
+
+
+Set a specific factor. 
+
+obj = set\+Factor(obj, index, fatcor) sets the factor at the specified index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1linalg_1_1_separable}{Separable} object \\
+\hline
+{\em index} & -\/ Index of the factor (positive integer) \\
+\hline
+{\em factor} & -\/ Factor instance\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1linalg_1_1_separable}{Separable} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1linalg_1_1_separable_a7ba5fc11b95f55c552d1a479b4ba7b36}\index{core::linalg::Separable@{core::linalg::Separable}!setFactors@{setFactors}}
+\index{setFactors@{setFactors}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{setFactors()}{setFactors()}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_a7ba5fc11b95f55c552d1a479b4ba7b36} 
+function core\+::linalg\+::\+Separable\+::set\+Factors (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{factors}{}\end{DoxyParamCaption})}
+
+
+
+Set the factors. 
+
+obj = set\+Factors(obj, factors) sets factors {\itshape factors} for the separable object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1linalg_1_1_separable}{Separable} object \\
+\hline
+{\em factors} & -\/ Factor instances (cell array or object array)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & = The \doxylink{classcore_1_1linalg_1_1_separable}{Separable} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1linalg_1_1_separable_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb}\index{core::linalg::Separable@{core::linalg::Separable}!factors@{factors}}
+\index{factors@{factors}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{factors}{factors}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_ad854106149ef46cbd2e7dabbb0fc61fb} 
+Property core\+::linalg\+::\+Separable\+::factors}
+
+
+
+Array of factor objects. 
+
+
+
+Definition at line \mbox{\hyperlink{_separable_8m_source_l00027}{27}} of file \mbox{\hyperlink{_separable_8m_source}{Separable.\+m}}.
+
+\Hypertarget{classcore_1_1linalg_1_1_separable_a1c9067638d87eadbb14bd0f9a6a0109a}\index{core::linalg::Separable@{core::linalg::Separable}!nFactors@{nFactors}}
+\index{nFactors@{nFactors}!core::linalg::Separable@{core::linalg::Separable}}
+\doxysubsubsection{\texorpdfstring{nFactors}{nFactors}}
+{\footnotesize\ttfamily \label{classcore_1_1linalg_1_1_separable_a1c9067638d87eadbb14bd0f9a6a0109a} 
+Property core\+::linalg\+::\+Separable\+::n\+Factors}
+
+
+
+Number of factors. 
+
+
+
+Definition at line \mbox{\hyperlink{_separable_8m_source_l00033}{33}} of file \mbox{\hyperlink{_separable_8m_source}{Separable.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+linalg/\mbox{\hyperlink{_separable_8m}{Separable.\+m}}\end{DoxyCompactItemize}

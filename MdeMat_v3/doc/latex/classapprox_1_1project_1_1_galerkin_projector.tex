@@ -1,0 +1,251 @@
+\doxysection{approx\+::project\+::Galerkin\+Projector Class Reference}
+\hypertarget{classapprox_1_1project_1_1_galerkin_projector}{}\label{classapprox_1_1project_1_1_galerkin_projector}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+
+
+Base class for all Galerkin-\/type projectors.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector}{approx\+::project\+::\+Modal\+Projector}}, and \mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{approx\+::project\+::\+Nodal\+Projector}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{Galerkin\+Projector}} (Input\+Type \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate functions in the approximation space at given points. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a8ea850a603a417da7fe712fc6978b065}{project}} (Input\+Type obj, Input\+Type F)
+\begin{DoxyCompactList}\small\item\em Project data onto the function space. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}{set\+Mass}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab45e01409af3e30ebd6dab36c5fbfd19}{embed}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Embed data into the latent space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}
+\begin{DoxyCompactList}\small\item\em Basis functions that span the approximation space. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}
+\begin{DoxyCompactList}\small\item\em Mass operator matrix for the Galerkin system. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}{is\+Well\+Posed}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is well-\/posed. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}{is\+Overdetermined}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is overdetermined. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}{is\+Underdetermined}}
+\begin{DoxyCompactList}\small\item\em Whether the Galerkin system is underdetermined. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all Galerkin-\/type projectors. 
+
+\doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector} provides the foundation for Galerkin approximation methods where functions are projected onto finite-\/dimensional spaces using mass operators to solve linear systems. The class implements the core Galerkin methodology for function approximation.
+
+The Galerkin method seeks an approximation $u_h \in V_h$ of a function $u$ such that   \[\langle u_h, v_h\rangle = \langle f, v_h\rangle, \forall v_h ∈ V_h,
+\] where $V_h$ is the finite-\/dimensional function space spanned by the basis.
+
+This class defines the interface for concrete implementations such as modal and nodal projectors, which differ in how they construct the mass operator and embed data into the latent space.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1project_1_1_modal_projector}{approx.\+project.\+Modal\+Projector} 
+
+\doxylink{classapprox_1_1project_1_1_nodal_projector}{approx.\+project.\+Nodal\+Projector} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00029}{29}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!GalerkinProjector@{GalerkinProjector}}
+\index{GalerkinProjector@{GalerkinProjector}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{GalerkinProjector()}{GalerkinProjector()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1} 
+function approx\+::project\+::\+Galerkin\+Projector\+::\+Galerkin\+Projector (\begin{DoxyParamCaption}\item[{Input\+Type}]{basis}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector}. 
+
+obj = Galerkin\+Projector(basis) creates a new \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector} object with the specified basis functions. The mass operator is initialized as empty and must be set by calling \doxylink{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}{set\+Mass()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em basis} & -\/ Basis functions that span the approximation space \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_ab45e01409af3e30ebd6dab36c5fbfd19}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!embed@{embed}}
+\index{embed@{embed}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{embed()}{embed()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_ab45e01409af3e30ebd6dab36c5fbfd19} 
+virtual function approx\+::project\+::\+Galerkin\+Projector\+::embed (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Embed data into the latent space. 
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5} 
+function approx\+::project\+::\+Galerkin\+Projector\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate functions in the approximation space at given points. 
+
+Y = evaluate(obj, Z) evaluates functions represented by coefficients embedded in the augmented vector Z = \mbox{[}X; C\mbox{]} at evaluation points X.
+
+Y = evaluate(obj, X, C) evaluates functions with coefficient matrix C at evaluation points X.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector} object \\
+\hline
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values ((1 x p) or (q x p)) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a8ea850a603a417da7fe712fc6978b065}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!project@{project}}
+\index{project@{project}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{project()}{project()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a8ea850a603a417da7fe712fc6978b065} 
+function approx\+::project\+::\+Galerkin\+Projector\+::project (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{F}{}\end{DoxyParamCaption})}
+
+
+
+Project data onto the function space. 
+
+U = \doxylink{namespaceapprox_1_1project}{project(obj, F)} projects data from the latent space onto the function space by solving the Galerkin system M\texorpdfstring{$\ast$}{*}U = F, where M is the mass operator. Handles well-\/posed and overdetermined systems automatically.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1project_1_1_galerkin_projector}{Galerkin\+Projector} object \\
+\hline
+{\em F} & -\/ Data in the latent space (m x ...)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em U} & -\/ Coefficients of the basis functions (m x ...) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!setMass@{setMass}}
+\index{setMass@{setMass}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{setMass()}{setMass()}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038} 
+virtual function approx\+::project\+::\+Galerkin\+Projector\+::set\+Mass (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!basis@{basis}}
+\index{basis@{basis}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{basis}{basis}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::basis}
+
+
+
+Basis functions that span the approximation space. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00033}{33}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!isOverdetermined@{isOverdetermined}}
+\index{isOverdetermined@{isOverdetermined}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{isOverdetermined}{isOverdetermined}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::is\+Overdetermined}
+
+
+
+Whether the Galerkin system is overdetermined. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00048}{48}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!isUnderdetermined@{isUnderdetermined}}
+\index{isUnderdetermined@{isUnderdetermined}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{isUnderdetermined}{isUnderdetermined}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::is\+Underdetermined}
+
+
+
+Whether the Galerkin system is underdetermined. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00051}{51}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!isWellPosed@{isWellPosed}}
+\index{isWellPosed@{isWellPosed}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{isWellPosed}{isWellPosed}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::is\+Well\+Posed}
+
+
+
+Whether the Galerkin system is well-\/posed. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00045}{45}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!mass@{mass}}
+\index{mass@{mass}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{mass}{mass}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::mass}
+
+
+
+Mass operator matrix for the Galerkin system. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00036}{36}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+\Hypertarget{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff}\index{approx::project::GalerkinProjector@{approx::project::GalerkinProjector}!nDofs@{nDofs}}
+\index{nDofs@{nDofs}!approx::project::GalerkinProjector@{approx::project::GalerkinProjector}}
+\doxysubsubsection{\texorpdfstring{nDofs}{nDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff} 
+Property approx\+::project\+::\+Galerkin\+Projector\+::n\+Dofs}
+
+
+
+Number of degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_galerkin_projector_8m_source_l00042}{42}} of file \mbox{\hyperlink{_galerkin_projector_8m_source}{Galerkin\+Projector.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+project/\mbox{\hyperlink{_galerkin_projector_8m}{Galerkin\+Projector.\+m}}\end{DoxyCompactItemize}

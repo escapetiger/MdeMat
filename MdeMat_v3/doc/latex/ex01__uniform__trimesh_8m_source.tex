@@ -1,0 +1,630 @@
+\doxysection{ex01\+\_\+uniform\+\_\+trimesh.\+m}
+\hypertarget{ex01__uniform__trimesh_8m_source}{}\label{ex01__uniform__trimesh_8m_source}\index{+approx/+mesh/+scripts/ex01\_uniform\_trimesh.m@{+approx/+mesh/+scripts/ex01\_uniform\_trimesh.m}}
+\mbox{\hyperlink{ex01__uniform__trimesh_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00001}00001\ clear;\ close\ all;\ clc;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1mesh_1_1scripts}{00002}}\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00003}00003\ fprintf(\textcolor{stringliteral}{'Starting\ Mesh\ Validation\ Example...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00004}00004\ fprintf(\textcolor{stringliteral}{'=======================================\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00006}00006\ \%\%\ Generate\ uniform\ 4x4\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{SimplexMesh}}\ on\ unit\ box}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00007}00007\ fprintf(\textcolor{stringliteral}{'Step\ 1:\ Generating\ uniform\ 4x4\ SimplexMesh\ on\ [0,1]x[0,1]...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00009}00009\ domain\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_orthotope}{Orthotope}}([0,\ 1,\ 0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00010}00010\ [vertices,\ elements]\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh_1_1scripts_a79b92bcc6504b11c4b383bb72bac93b1}{generateUniformBoxMesh}}(4,\ 4,\ [0,\ 1],\ [0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00012}00012\ fprintf(\textcolor{stringliteral}{'Generated\ mesh\ with\ \%d\ vertices\ and\ \%d\ elements.\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00013}00013\ \ \ \ \ size(vertices,\ 1),\ size(elements,\ 1));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00015}00015\ \%\ Create\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{SimplexMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00016}00016\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{SimplexMesh}}(domain,\ vertices,\ elements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00018}00018\ fprintf(\textcolor{stringliteral}{'SimplexMesh\ properties:\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00019}00019\ fprintf(\textcolor{stringliteral}{'\ \ Dimensions:\ \%d\(\backslash\)n'},\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nDims);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00020}\mbox{\hyperlink{namespaceapprox_1_1mesh_1_1scripts_a79b92bcc6504b11c4b383bb72bac93b1}{00020}}\ fprintf(\textcolor{stringliteral}{'\ \ Vertices:\ \%d\(\backslash\)n'},\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVertices);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00021}00021\ fprintf(\textcolor{stringliteral}{'\ \ Elements:\ \%d\(\backslash\)n'},\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00022}00022\ fprintf(\textcolor{stringliteral}{'\ \ Faces:\ \%d\(\backslash\)n'},\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nFaces);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00023}00023\ fprintf(\textcolor{stringliteral}{'\ \ Boundary\ faces:\ \%d\(\backslash\)n'},\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nBoundaryFaces);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00025}00025\ \%\%\ Set\ up\ periodic\ boundaries}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00026}00026\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nStep\ 2:\ Setting\ up\ periodic\ boundaries...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00028}00028\ \%\ Define\ periodic\ shifts\ \textcolor{keywordflow}{for}\ unit\ box}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00029}00029\ \%\ Left-\/right:\ shift\ by\ [1,\ 0]}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00030}00030\ \%\ Top-\/bottom:\ shift\ by\ [0,\ 1]}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00031}00031\ \%\ Corner\ connections:\ shift\ by\ [1,\ 1],\ [1,\ -\/1],\ [-\/1,\ 1],\ [-\/1,\ -\/1]}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00032}00032\ periodicShifts\ =\ [}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00033}00033\ \ \ \ \ 1.0,\ \ 0.0;\ \ \ \%\ Right\ boundary\ to\ left}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00034}00034\ \ \ \ -\/1.0,\ \ 0.0;\ \ \ \%\ Left\ boundary\ to\ right}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00035}00035\ \ \ \ \ 0.0,\ \ 1.0;\ \ \ \%\ Top\ boundary\ to\ bottom}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00036}00036\ \ \ \ \ 0.0,\ -\/1.0;\ \ \ \%\ Bottom\ boundary\ to\ top}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00037}00037\ \ \ \ \ 1.0,\ \ 1.0;\ \ \ \%\ Top-\/right\ to\ bottom-\/left}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00038}00038\ \ \ \ -\/1.0,\ -\/1.0;\ \ \ \%\ Bottom-\/left\ to\ top-\/right}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00039}00039\ \ \ \ \ 1.0,\ -\/1.0;\ \ \ \%\ Bottom-\/right\ to\ top-\/left}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00040}00040\ \ \ \ -\/1.0,\ \ 1.0\ \ \ \ \%\ Top-\/left\ to\ bottom-\/right}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00041}00041\ ];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00043}00043\ tolerance\ =\ 1e-\/10;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00044}00044\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.setPeriodic(periodicShifts,\ tolerance);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00046}00046\ fprintf(\textcolor{stringliteral}{'Periodic\ mapping\ established\ with\ tolerance\ =\ \%.2e\(\backslash\)n'},\ tolerance);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00047}00047\ fprintf(\textcolor{stringliteral}{'Vertex-\/to-\/vertex\ connections:\ \%d\(\backslash\)n'},\ nnz(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertexToVertexTable));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00048}00048\ fprintf(\textcolor{stringliteral}{'Face-\/to-\/face\ connections:\ \%d\(\backslash\)n'},\ nnz(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.faceToFaceTable));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00050}00050\ \%\%\ Validate\ periodic\ connections}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00051}00051\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nStep\ 3:\ Validating\ periodic\ connections...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00053}00053\ validatePeriodicConnections(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}},\ periodicShifts,\ tolerance);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00055}00055\ \%\%\ Test\ find\ functionality}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00056}00056\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nStep\ 4:\ Testing\ find\ functionality...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00058}00058\ testFindFunctionality(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00060}00060\ \%\%\ Validate\ Jacobian\ computations}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00061}00061\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nStep\ 5:\ Validating\ Jacobian\ computations...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00063}00063\ validateJacobianComputations(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00065}00065\ \%\%\ Create\ visualizations}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00066}00066\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nStep\ 6:\ Creating\ visualizations...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00068}00068\ createMeshStructureFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00069}00069\ createValidationResultsFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00071}00071\ fprintf(\textcolor{stringliteral}{'\(\backslash\)nMesh\ validation\ completed\ successfully!\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00072}00072\ fprintf(\textcolor{stringliteral}{'=====================================\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00074}00074\ \%\%\ Helper\ Functions}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00076}00076\ function\ [vertices,\ elements]\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh_1_1scripts_a79b92bcc6504b11c4b383bb72bac93b1}{generateUniformBoxMesh}}(nx,\ ny,\ xRange,\ yRange)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00077}00077\ \%\ GENERATEUNIFORMBOXMESH\ Generate\ uniform\ triangular\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ on\ rectangular\ box.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00078}00078\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00079}00079\ \%\ \ \ [vertices,\ elements]\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh_1_1scripts_a79b92bcc6504b11c4b383bb72bac93b1}{generateUniformBoxMesh}}(nx,\ ny,\ xRange,\ yRange)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00080}00080\ \%\ \ \ creates\ a\ uniform\ triangular\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ on\ a\ rectangular\ domain.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00081}00081\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00082}00082\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00083}00083\ \%\ \ \ nx\ -\/\ Number\ of\ divisions\ in\ x-\/direction}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00084}00084\ \%\ \ \ ny\ -\/\ Number\ of\ divisions\ in\ y-\/direction\ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00085}00085\ \%\ \ \ xRange\ -\/\ [xMin,\ xMax]\ range\ in\ x-\/direction}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00086}00086\ \%\ \ \ yRange\ -\/\ [yMin,\ yMax]\ range\ in\ y-\/direction}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00087}00087\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00088}00088\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00089}00089\ \%\ \ \ vertices\ -\/\ Vertex\ coordinates\ (nVertices\ ×\ 2)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00090}00090\ \%\ \ \ elements\ -\/\ Element\ connectivity\ (nElements\ ×\ 3)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00092}00092\ \%\ Generate\ grid\ points}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00093}00093\ xPoints\ =\ linspace(xRange(1),\ xRange(2),\ nx\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00094}00094\ yPoints\ =\ linspace(yRange(1),\ yRange(2),\ ny\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00095}00095\ [X,\ Y]\ =\ meshgrid(xPoints,\ yPoints);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00097}00097\ \%\ Convert\ to\ vertex\ list}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00098}00098\ vertices\ =\ [X(:),\ Y(:)];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00099}00099\ nVertices\ =\ size(vertices,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00101}00101\ \%\ Generate\ triangular\ elements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00102}00102\ \%\ Each\ grid\ cell\ (i,j)\ creates\ two\ triangles}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00103}00103\ elements\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00104}00104\ \textcolor{keywordflow}{for}\ j\ =\ 1:ny}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:nx}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_grid}{Grid}}\ indices\ \textcolor{keywordflow}{for}\ current\ cell}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ v1\ =\ (j-\/1)\ *\ (nx+1)\ +\ i;\ \ \ \ \ \ \ \%\ Bottom-\/left}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ v2\ =\ (j-\/1)\ *\ (nx+1)\ +\ i\ +\ 1;\ \ \ \%\ Bottom-\/right\ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ v3\ =\ j\ *\ (nx+1)\ +\ i;\ \ \ \ \ \ \ \ \ \ \ \%\ Top-\/left}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ v4\ =\ j\ *\ (nx+1)\ +\ i\ +\ 1;\ \ \ \ \ \ \ \%\ Top-\/right}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \%\ Two\ triangles\ per\ cell}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ elements\ =\ [elements;\ v1,\ v2,\ v3];\ \ \%\ Lower\ triangle}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ elements\ =\ [elements;\ v2,\ v4,\ v3];\ \ \%\ Upper\ triangle}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00115}00115\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00116}00116\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00118}00118\ fprintf(\textcolor{stringliteral}{'Generated\ \%d\ vertices\ and\ \%d\ triangular\ elements.\(\backslash\)n'},\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00119}00119\ \ \ \ \ nVertices,\ size(elements,\ 1));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00121}00121\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00123}00123\ function\ validatePeriodicConnections(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}},\ shifts,\ tolerance)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00124}00124\ \%\ VALIDATEPERIODICCONNECTIONS\ Validate\ periodic\ vertex\ and\ face\ mappings.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00125}00125\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00126}00126\ \%\ \ \ validatePeriodicConnections(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}},\ shifts,\ tolerance)\ checks\ that}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00127}00127\ \%\ \ \ periodic\ connections\ are\ correctly\ established.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00129}00129\ fprintf(\textcolor{stringliteral}{'Validating\ periodic\ vertex\ connections...\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00131}00131\ \%\ Test\ vertex-\/to-\/vertex\ mapping}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00132}00132\ V2V\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertexToVertexTable;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00133}00133\ vertices\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertices;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00134}00134\ nConnections\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00136}00136\ \textcolor{keywordflow}{for}\ i\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00137}00137\ \ \ \ \ \%\ Find\ connected\ vertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00138}00138\ \ \ \ \ connectedVertices\ =\ find(V2V(i,\ :));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00139}00139\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(connectedVertices)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ connectedVertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ \string~=\ j}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Check\ \textcolor{keywordflow}{if}\ connection\ corresponds\ to\ a\ periodic\ shift}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ displacement\ =\ vertices(j,\ :)\ -\/\ vertices(i,\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Find\ matching\ shift}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shiftFound\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ k\ =\ 1:size(shifts,\ 1)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ norm(displacement\ -\/\ shifts(k,\ :))\ <\ tolerance}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shiftFound\ =\ true;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nConnections\ =\ nConnections\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ break;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~shiftFound}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('Warning:\ Unexpected\ connection\ between\ vertices\ \%d\ and\ \%d\(\backslash\)n',\ i,\ j);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00161}00161\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00162}00162\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00164}00164\ fprintf('Validated\ \%d\ periodic\ vertex\ connections.\(\backslash\)n',\ nConnections);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00166}00166\ \%\ Test\ face-\/to-\/face\ mapping}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00167}00167\ F2F\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.faceToFaceTable;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00168}00168\ faces\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.faces;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00169}00169\ nFaceConnections\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00171}00171\ fprintf('Validating\ periodic\ face\ connections...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00173}00173\ for\ i\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nFaces}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00174}00174\ \ \ \ \ connectedFaces\ =\ find(F2F(i,\ :));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00175}00175\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00176}00176\ \ \ \ \ for\ j\ =\ connectedFaces}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ if\ i\ \string~=\ j}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Check\ if\ face\ connection\ is\ consistent\ with\ vertex\ connections}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ face1Vertices\ =\ faces(i,\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ face2Vertices\ =\ faces(j,\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ All\ vertices\ in\ face1\ should\ map\ to\ vertices\ in\ face2}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ mappingConsistent\ =\ true;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ for\ v1\ =\ face1Vertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mapped\ =\ false;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ v2\ =\ face2Vertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ V2V(v1,\ v2)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mapped\ =\ true;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ break;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ \string~mapped}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mappingConsistent\ =\ false;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ break;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ if\ mappingConsistent}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nFaceConnections\ =\ nFaceConnections\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf('Warning:\ Inconsistent\ face\ mapping\ between\ faces\ \%d\ and\ \%d\(\backslash\)n',\ i,\ j);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00204}00204\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00205}00205\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00207}00207\ fprintf('Validated\ \%d\ periodic\ face\ connections.\(\backslash\)n',\ nFaceConnections);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00209}00209\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00211}00211\ function\ testFindFunctionality(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00212}00212\ \%\ TESTFINDFUNCTIONALITY\ Test\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ finding\ methods.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00213}00213\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00214}00214\ \%\ \ \ testFindFunctionality(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})\ tests\ various\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ finding\ methods}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00215}00215\ \%\ \ \ including\ interior\ elements,\ boundary\ elements,\ and\ neighbors.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00217}00217\ fprintf('Testing\ findInteriorElements...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00218}00218\ interiorElements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findInteriorElements();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00219}00219\ fprintf('Found\ \%d\ interior\ elements\ (out\ of\ \%d\ total).\(\backslash\)n',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00220}00220\ \ \ \ \ length(interiorElements),\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00222}00222\ fprintf('Testing\ findBoundaryElements...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00223}00223\ nFacesPerElement\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVerticesPerElement;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00224}00224\ totalBoundaryElements\ =\ [];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00226}00226\ for\ iFace\ =\ 1:nFacesPerElement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00227}00227\ \ \ \ \ boundaryElements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findBoundaryElements(iFace);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00228}00228\ \ \ \ \ totalBoundaryElements\ =\ [totalBoundaryElements;\ boundaryElements(:)];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00229}00229\ \ \ \ \ fprintf('\ \ Face\ \%d:\ \%d\ boundary\ elements\(\backslash\)n',\ iFace,\ length(boundaryElements));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00230}00230\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00232}00232\ uniqueBoundaryElements\ =\ unique(totalBoundaryElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00233}00233\ fprintf('Total\ unique\ boundary\ elements:\ \%d\(\backslash\)n',\ length(uniqueBoundaryElements));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00235}00235\ \%\ Verify\ interior\ +\ boundary\ =\ total}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00236}00236\ allElements\ =\ union(interiorElements,\ uniqueBoundaryElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00237}00237\ if\ length(allElements)\ ==\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00238}00238\ \ \ \ \ fprintf('✓\ Interior\ and\ boundary\ elements\ cover\ all\ elements.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00239}00239\ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00240}00240\ \ \ \ \ fprintf('✗\ Element\ coverage\ mismatch!\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00241}00241\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00243}00243\ fprintf('Testing\ findNeighborElements...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00245}00245\ \%\ Test\ with\ a\ sample\ of\ elements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00246}00246\ testElements\ =\ [1,\ ceil(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements/2),\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00247}00247\ testElements\ =\ testElements(testElements\ <=\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00249}00249\ for\ iElement\ =\ testElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00250}00250\ \ \ \ \ fprintf('\ \ Element\ \%d\ neighbors:\(\backslash\)n',\ iElement);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00251}00251\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00252}00252\ \ \ \ \ for\ iFace\ =\ 1:nFacesPerElement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \%\ Test\ strict\ boundary\ conditions}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ neighborsStrict\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findNeighborElements(iElement,\ iFace,\ 'strict');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \%\ Test\ periodic\ boundary\ conditions\ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ neighborsPeriodic\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findNeighborElements(iElement,\ iFace,\ 'periodic');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ fprintf('\ \ \ \ Face\ \%d:\ \%d\ strict,\ \%d\ periodic\(\backslash\)n',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ iFace,\ length(neighborsStrict),\ length(neighborsPeriodic));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00261}00261\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00262}00262\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00264}00264\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00266}00266\ function\ validateJacobianComputations(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00267}00267\ \%\ VALIDATEJACOBIANCOMPUTATIONS\ Validate\ Jacobian\ computation\ methods.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00268}00268\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00269}00269\ \%\ \ \ validateJacobianComputations(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})\ tests\ and\ validates\ various}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00270}00270\ \%\ \ \ Jacobian-\/related\ computations\ for\ geometric\ consistency.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00272}00272\ fprintf('Computing\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ Jacobian\ determinants...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00273}00273\ detJ\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00274}00274\ fprintf('Jacobian\ determinants:\ min=\%.6f,\ max=\%.6f,\ mean=\%.6f\(\backslash\)n',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00275}00275\ \ \ \ \ min(detJ),\ max(detJ),\ mean(detJ));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00277}00277\ \%\ Check\ for\ positive\ determinants\ (proper\ orientation)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00278}00278\ negativeDetJ\ =\ sum(detJ\ <\ 0);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00279}00279\ if\ negativeDetJ\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00280}00280\ \ \ \ \ fprintf('✓\ All\ elements\ have\ positive\ orientation.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00281}00281\ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00282}00282\ \ \ \ \ fprintf('✗\ Warning:\ \%d\ elements\ have\ negative\ orientation!\(\backslash\)n',\ negativeDetJ);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00283}00283\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00285}00285\ fprintf('Computing\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ inverse\ Jacobians...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00286}00286\ invJ\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeElementInverseJacobians();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00287}00287\ fprintf('Inverse\ Jacobians\ computed\ for\ \%d\ elements.\(\backslash\)n',\ size(invJ,\ 3));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00289}00289\ \%\ Validate\ J\ *\ inv(J)\ =\ I\ for\ a\ few\ elements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00290}00290\ fprintf('Validating\ Jacobian\ inversion...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00291}00291\ J\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeElementJacobians();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00292}00292\ testElements\ =\ [1,\ ceil(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements/2),\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements];}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00293}00293\ maxError\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00295}00295\ for\ iElement\ =\ testElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00296}00296\ \ \ \ \ if\ iElement\ <=\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ Ji\ =\ J(:,\ :,\ iElement);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ invJi\ =\ invJ(:,\ :,\ iElement);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ product\ =\ Ji\ *\ invJi;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ identity\ =\ eye(size(product));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ error\ =\ norm(product\ -\/\ identity,\ 'fro');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ maxError\ =\ max(maxError,\ error);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00303}00303\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00304}00304\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00306}00306\ fprintf('Maximum\ Jacobian\ inversion\ error:\ \%.2e\(\backslash\)n',\ maxError);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00307}00307\ if\ maxError\ <\ 1e-\/12}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00308}00308\ \ \ \ \ fprintf('✓\ Jacobian\ inversion\ is\ accurate.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00309}00309\ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00310}00310\ \ \ \ \ fprintf('✗\ Warning:\ Jacobian\ inversion\ has\ significant\ errors!\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00311}00311\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00313}00313\ fprintf('Computing\ face\ Jacobian\ determinants...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00314}00314\ nFacesPerElement\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVerticesPerElement;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00315}00315\ for\ iFace\ =\ 1:nFacesPerElement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00316}00316\ \ \ \ \ detJFace\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeFaceJacobianDeterminants([],\ iFace);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00317}00317\ \ \ \ \ fprintf('Face\ \%d:\ min=\%.6f,\ max=\%.6f,\ mean=\%.6f\(\backslash\)n',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00318}00318\ \ \ \ \ \ \ \ \ iFace,\ min(detJFace),\ max(detJFace),\ mean(detJFace));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00319}00319\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00321}00321\ fprintf('Computing\ outward\ normal\ vectors...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00322}00322\ for\ iFace\ =\ 1:nFacesPerElement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00323}00323\ \ \ \ \ normals\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeOutwardNormals([],\ iFace);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00324}00324\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00325}00325\ \ \ \ \ \%\ Check\ unit\ length}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00326}00326\ \ \ \ \ normLengths\ =\ sqrt(sum(normals.\string^2,\ 1));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00327}00327\ \ \ \ \ maxNormError\ =\ max(abs(normLengths\ -\/\ 1));}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00328}00328\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00329}00329\ \ \ \ \ fprintf('Face\ \%d\ normals:\ max\ deviation\ from\ unit\ length\ =\ \%.2e\(\backslash\)n',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00330}00330\ \ \ \ \ \ \ \ \ iFace,\ maxNormError);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00331}00331\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00333}00333\ fprintf('Computing\ Jacobian\ determinants...\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00334}00334\ detJ\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00335}00335\ elementMeasures\ =\ sum(detJ)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00336}00336\ fprintf('Total\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ measure:\ \%.6f\(\backslash\)n',\ elementMeasures);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00338}00338\ \%\ For\ unit\ square,\ total\ area\ should\ be\ 1}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00339}00339\ expectedArea\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00340}00340\ areaError\ =\ abs(elementMeasures\ -\/\ expectedArea);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00341}00341\ fprintf('Area\ error\ compared\ to\ unit\ square:\ \%.6f\(\backslash\)n',\ areaError);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00343}00343\ if\ areaError\ <\ 1e-\/10}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00344}00344\ \ \ \ \ fprintf('✓\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}\ area\ computation\ is\ accurate.\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00345}00345\ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00346}00346\ \ \ \ \ fprintf('✗\ Warning:\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}\ area\ computation\ has\ errors!\(\backslash\)n');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00347}00347\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00349}00349\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00351}00351\ function\ createMeshStructureFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00352}00352\ \%\ CREATEMESHSTRUCTUREFIGURE\ Create\ figure\ showing\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ structure\ and\ connections.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00353}00353\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00354}00354\ \%\ \ \ createMeshStructureFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})\ creates\ a\ comprehensive\ figure\ showing}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00355}00355\ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ structure,\ periodic\ connections,\ and\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ classification\ using}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00356}00356\ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{PolytopalMeshPlotter}}\ for\ professional\ visualization.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00358}00358\ \%\ Create\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ plotter}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00359}00359\ meshPlotter\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{PolytopalMeshPlotter}}();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00361}00361\ figure('Name',\ '\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}\ Structure\ and\ Periodic\ Connections',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00362}00362\ \ \ \ \ 'Position',\ [100,\ 100,\ 1400,\ 500]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00363}00363\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00364}00364\ \%\%\ Subplot\ 1:\ Basic\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ structure\ with\ boundary\ highlighting}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00365}00365\ subplot(1,\ 3,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00366}00366\ meshPlotter.plot(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}},\ 'ShowElements',\ true,\ 'ElementColor',\ [0.9,\ 0.9,\ 0.9],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00367}00367\ \ \ \ \ 'ShowBoundary',\ true,\ 'BoundaryColor',\ 'red',\ 'ShowVertices',\ true,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00368}00368\ \ \ \ \ 'VertexColor',\ 'black',\ 'VertexSize',\ 50,\ 'EdgeColor',\ [0.5,\ 0.5,\ 0.5],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00369}00369\ \ \ \ \ 'Alpha',\ 0.8);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00371}00371\ \%\ Add\ vertex\ labels}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00372}00372\ vertices\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertices;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00373}00373\ for\ iVertex\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVertices}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00374}00374\ \ \ \ \ text(vertices(iVertex,\ 1)\ +\ 0.02,\ vertices(iVertex,\ 2)\ +\ 0.02,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ sprintf('\%d',\ iVertex),\ 'FontSize',\ 8,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00376}00376\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00377}00377\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00378}00378\ xlim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00379}00379\ ylim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00380}00380\ title('\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}\ Structure\ with\ Boundary',\ 'FontSize',\ 14,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00382}00382\ \%\%\ Subplot\ 2:\ Periodic\ connections}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00383}00383\ subplot(1,\ 3,\ 2);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00384}00384\ meshPlotter.plot(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}},\ 'ShowElements',\ true,\ 'ElementColor',\ [0.95,\ 0.95,\ 0.95],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00385}00385\ \ \ \ \ 'ShowVertices',\ true,\ 'VertexColor',\ 'black',\ 'VertexSize',\ 40,\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00386}00386\ \ \ \ \ 'ShowEdges',\ false,\ 'ShowBoundary',\ false,\ 'Alpha',\ 0.3);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00388}00388\ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00390}00390\ \%\ Add\ periodic\ connections\ with\ different\ colors\ for\ different\ types}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00391}00391\ V2V\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertexToVertexTable;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00392}00392\ [i,\ j]\ =\ find(V2V);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00393}00393\ connectionColors\ =\ lines(4);\ \%\ Different\ colors\ for\ different\ connection\ types}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00395}00395\ for\ k\ =\ 1:length(i)}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00396}00396\ \ \ \ \ if\ i(k)\ \string~=\ j(k)\ \ \%\ Avoid\ self-\/connections}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00397}00397\ \ \ \ \ \ \ \ \ v1\ =\ vertices(i(k),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00398}00398\ \ \ \ \ \ \ \ \ v2\ =\ vertices(j(k),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00399}00399\ \ \ \ \ \ \ \ \ displacement\ =\ v2\ -\/\ v1;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00400}00400\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00401}00401\ \ \ \ \ \ \ \ \ \%\ Determine\ connection\ type\ based\ on\ displacement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00402}00402\ \ \ \ \ \ \ \ \ if\ abs(displacement(1))\ >\ 0.5\ \&\&\ abs(displacement(2))\ <\ 0.1}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ colorIdx\ =\ 1;\ \%\ Horizontal}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00404}00404\ \ \ \ \ \ \ \ \ elseif\ abs(displacement(2))\ >\ 0.5\ \&\&\ abs(displacement(1))\ <\ 0.1}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ colorIdx\ =\ 2;\ \%\ Vertical}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00406}00406\ \ \ \ \ \ \ \ \ elseif\ abs(displacement(1))\ >\ 0.5\ \&\&\ abs(displacement(2))\ >\ 0.5}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ colorIdx\ =\ 3;\ \%\ Diagonal}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00408}00408\ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ colorIdx\ =\ 4;\ \%\ Other}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00410}00410\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00411}00411\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00412}00412\ \ \ \ \ \ \ \ \ plot([v1(1),\ v2(1)],\ [v1(2),\ v2(2)],\ '-\/-\/',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ 'Color',\ connectionColors(colorIdx,\ :),\ 'LineWidth',\ 2);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00414}00414\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00415}00415\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00417}00417\ xlim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00418}00418\ ylim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00419}00419\ title('Periodic\ Connections',\ 'FontSize',\ 14,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00420}00420\ legend('Elements',\ 'Vertices',\ 'Horizontal',\ 'Vertical',\ 'Diagonal',\ 'Other',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00421}00421\ \ \ \ \ 'Location',\ 'northeastoutside');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00423}00423\ \%\%\ Subplot\ 3:\ Element\ classification}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00424}00424\ subplot(1,\ 3,\ 3);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00426}00426\ \%\ Find\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ classifications}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00427}00427\ interiorElements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findInteriorElements();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00428}00428\ allElements\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00429}00429\ boundaryElements\ =\ setdiff(allElements,\ interiorElements);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00430}00430\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00431}00431\ \%\ Create\ custom\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ visualization}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00432}00432\ elements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.elements;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00433}00433\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00434}00434\ \%\ Plot\ interior\ elements\ in\ blue}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00435}00435\ for\ iElement\ =\ interiorElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00436}00436\ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00437}00437\ \ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ [0.2,\ 0.6,\ 1.0],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00438}00438\ \ \ \ \ \ \ \ \ 'EdgeColor',\ [0.1,\ 0.3,\ 0.5],\ 'LineWidth',\ 1,\ 'FaceAlpha',\ 0.8);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00439}00439\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00440}00440\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00441}00441\ \ \ \ \ \%\ Add\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ number}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00442}00442\ \ \ \ \ centroid\ =\ mean(elementVertices,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00443}00443\ \ \ \ \ text(centroid(1),\ centroid(2),\ sprintf('\%d',\ iElement),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00444}00444\ \ \ \ \ \ \ \ \ 'FontSize',\ 10,\ 'FontWeight',\ 'bold',\ 'HorizontalAlignment',\ 'center',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00445}00445\ \ \ \ \ \ \ \ \ 'Color',\ 'white');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00446}00446\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00447}00447\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00448}00448\ \%\ Plot\ boundary\ elements\ in\ orange}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00449}00449\ for\ iElement\ =\ boundaryElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00450}00450\ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00451}00451\ \ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ [1.0,\ 0.6,\ 0.2],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00452}00452\ \ \ \ \ \ \ \ \ 'EdgeColor',\ [0.5,\ 0.3,\ 0.1],\ 'LineWidth',\ 1,\ 'FaceAlpha',\ 0.8);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00453}00453\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00454}00454\ \ \ \ \ \%\ Add\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ number}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00455}00455\ \ \ \ \ centroid\ =\ mean(elementVertices,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00456}00456\ \ \ \ \ text(centroid(1),\ centroid(2),\ sprintf('\%d',\ iElement),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00457}00457\ \ \ \ \ \ \ \ \ 'FontSize',\ 10,\ 'FontWeight',\ 'bold',\ 'HorizontalAlignment',\ 'center',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00458}00458\ \ \ \ \ \ \ \ \ 'Color',\ 'white');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00459}00459\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00460}00460\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00461}00461\ axis\ equal;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00462}00462\ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00463}00463\ xlim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00464}00464\ ylim([-\/0.1,\ 1.1]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00465}00465\ xlabel(\textcolor{charliteral}{'x'},\ 'FontSize',\ 12,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00466}00466\ ylabel(\textcolor{charliteral}{'y'},\ 'FontSize',\ 12,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00467}00467\ title('Element\ Classification',\ 'FontSize',\ 14,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00468}00468\ legend('Interior\ Elements',\ 'Location',\ 'northeastoutside');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00470}00470\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00471}00471\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00472}00472\ function\ createValidationResultsFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00473}00473\ \%\ CREATEVALIDATIONRESULTSFIGURE\ Create\ figure\ showing\ validation\ results.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00474}00474\ \%}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00475}00475\ \%\ \ \ createValidationResultsFigure(\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}})\ creates\ a\ figure\ showing\ Jacobian}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00476}00476\ \%\ \ \ determinants,\ normal\ vectors,\ and\ neighbor\ connectivity.}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00477}00477\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00478}00478\ figure('Name',\ 'Validation\ Results:\ Jacobians\ and\ Connectivity',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00479}00479\ \ \ \ \ 'Position',\ [150,\ 150,\ 1400,\ 500]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00480}00480\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00481}00481\ \%\%\ Subplot\ 1:\ Jacobian\ determinants\ with\ colormap}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00482}00482\ subplot(1,\ 3,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00483}00483\ vertices\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.vertices;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00484}00484\ elements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.elements;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00485}00485\ detJ\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00487}00487\ \%\ Create\ smooth\ colormap}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00488}00488\ colormap(parula);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00490}00490\ \%\ Plot\ elements\ colored\ by\ Jacobian\ determinant}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00491}00491\ for\ iElement\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00492}00492\ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00493}00493\ \ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ detJ(iElement),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00494}00494\ \ \ \ \ \ \ \ \ 'EdgeColor',\ 'black',\ 'LineWidth',\ 0.8);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00495}00495\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00496}00496\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00497}00497\ \ \ \ \ \%\ Add\ Jacobian\ value\ text}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00498}00498\ \ \ \ \ centroid\ =\ mean(elementVertices,\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00499}00499\ \ \ \ \ text(centroid(1),\ centroid(2),\ sprintf('\%.3f',\ detJ(iElement)),\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00500}00500\ \ \ \ \ \ \ \ \ 'FontSize',\ 8,\ 'FontWeight',\ 'bold',\ 'HorizontalAlignment',\ 'center',\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00501}00501\ \ \ \ \ \ \ \ \ 'Color',\ 'white',\ 'BackgroundColor',\ 'black',\ 'Margin',\ 1);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00502}00502\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00503}00503\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00504}00504\ axis\ equal;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00505}00505\ grid\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00506}00506\ xlim([-\/0.05,\ 1.05]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00507}00507\ ylim([-\/0.05,\ 1.05]);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00508}00508\ xlabel(\textcolor{charliteral}{'x'},\ 'FontSize',\ 12,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00509}00509\ ylabel(\textcolor{charliteral}{'y'},\ 'FontSize',\ 12,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00510}00510\ title('Jacobian\ Determinants',\ 'FontSize',\ 14,\ 'FontWeight',\ 'bold');}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00511}00511\ colorbar('FontSize',\ 10);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00512}00512\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00513}00513\ \%\%\ Subplot\ 2:\ Normal\ vectors\ on\ boundary\ faces}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00514}00514\ subplot(1,\ 3,\ 2);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00515}00515\ faces\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.faces;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00516}00516\ boundary\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.boundary;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00517}00517\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00518}00518\ \%\ Plot\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ structure}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00519}00519\ for\ iElement\ =\ 1:\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nElements}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00520}00520\ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00521}00521\ \ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ [0.9,\ 0.9,\ 0.9],\ ...}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00522}00522\ \ \ \ \ \ \ \ \ 'EdgeColor',\ [0.5,\ 0.5,\ 0.5],\ 'LineWidth',\ 0.5);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00523}00523\ \ \ \ \ hold\ on;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00524}00524\ end}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00525}00525\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00526}00526\ \%\ Plot\ normal\ vectors\ for\ each\ face\ type}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00527}00527\ scaleFactor\ =\ 0.1;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00528}00528\ nFacesPerElement\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.nVerticesPerElement;}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00529}00529\ normalColors\ =\ \{\textcolor{stringliteral}{'red'},\ \textcolor{stringliteral}{'green'},\ \textcolor{stringliteral}{'blue'}\};}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00530}00530\ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00531}00531\ \textcolor{keywordflow}{for}\ iFace\ =\ 1:nFacesPerElement}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00532}00532\ \ \ \ \ normals\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.computeOutwardNormals([],\ iFace);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00533}00533\ \ \ \ \ boundaryElements\ =\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.findBoundaryElements(iFace);}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00534}00534\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00535}00535\ \ \ \ \ \textcolor{keywordflow}{for}\ iElement\ =\ boundaryElements\textcolor{stringliteral}{'}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00536}00536\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ if\ iElement\ <=\ mesh.nElements}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00537}00537\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00538}00538\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00539}00539\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Compute\ face\ center}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00540}00540\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ faceVertexIndices\ =\ setdiff(1:nFacesPerElement,\ iFace);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00541}00541\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ faceVertices\ =\ elementVertices(faceVertexIndices,\ :);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00542}00542\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ faceCenter\ =\ mean(faceVertices,\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00543}00543\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00544}00544\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Plot\ normal\ vector}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00545}00545\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ normal\ =\ normals(:,\ iElement);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00546}00546\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ quiver(faceCenter(1),\ faceCenter(2),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00547}00547\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normal(1)*scaleFactor,\ normal(2)*scaleFactor,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00548}00548\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Color\textcolor{stringliteral}{',\ normalColors\{iFace\},\ '}LineWidth\textcolor{stringliteral}{',\ 3,\ '}MaxHeadSize\textcolor{stringliteral}{',\ 0.4);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00549}00549\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00550}00550\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00551}00551\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00552}00552\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00553}00553\ \textcolor{stringliteral}{axis\ equal;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00554}00554\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00555}00555\ \textcolor{stringliteral}{xlim([-\/0.05,\ 1.05]);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00556}00556\ \textcolor{stringliteral}{ylim([-\/0.05,\ 1.05]);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00557}00557\ \textcolor{stringliteral}{xlabel('}x\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 12,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00558}00558\ \textcolor{stringliteral}{ylabel('}y\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 12,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00559}00559\ \textcolor{stringliteral}{title('}Outward\ Normal\ Vectors\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 14,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00560}00560\ \textcolor{stringliteral}{legend('}Elements\textcolor{stringliteral}{',\ '}Face\ 1\ Normals\textcolor{stringliteral}{',\ '}Face\ 2\ Normals\textcolor{stringliteral}{',\ '}Face\ 3\ Normals\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00561}00561\ \textcolor{stringliteral}{\ \ \ \ '}Location\textcolor{stringliteral}{',\ '}northeastoutside\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00562}00562\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00563}00563\ \textcolor{stringliteral}{\%\%\ Subplot\ 3:\ Neighbor\ connectivity\ demonstration}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00564}00564\ \textcolor{stringliteral}{subplot(1,\ 3,\ 3);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00565}00565\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00566}00566\ \textcolor{stringliteral}{\%\ Plot\ mesh\ structure\ lightly}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00567}00567\ \textcolor{stringliteral}{for\ iElement\ =\ 1:mesh.nElements}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00568}00568\ \textcolor{stringliteral}{\ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00569}00569\ \textcolor{stringliteral}{\ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ [0.95,\ 0.95,\ 0.95],\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00570}00570\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ '}EdgeColor\textcolor{stringliteral}{',\ [0.7,\ 0.7,\ 0.7],\ '}LineWidth\textcolor{stringliteral}{',\ 0.5);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00571}00571\ \textcolor{stringliteral}{\ \ \ \ hold\ on;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00572}00572\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00573}00573\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00574}00574\ \textcolor{stringliteral}{\%\ Select\ sample\ elements\ for\ neighbor\ demonstration}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00575}00575\ \textcolor{stringliteral}{sampleElements\ =\ [5,\ 16,\ 25];\ \%\ Strategic\ selection\ for\ good\ visualization}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00576}00576\ \textcolor{stringliteral}{highlightColors\ =\ \{[1,\ 0.3,\ 0.3],\ [0.3,\ 0.3,\ 1],\ [0.3,\ 1,\ 0.3]\};}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00577}00577\ \textcolor{stringliteral}{nFacesPerElement\ =\ mesh.nVerticesPerElement;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00578}00578\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00579}00579\ \textcolor{stringliteral}{for\ iSample\ =\ 1:length(sampleElements)}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00580}00580\ \textcolor{stringliteral}{\ \ \ \ iElement\ =\ sampleElements(iSample);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00581}00581\ \textcolor{stringliteral}{\ \ \ \ if\ iElement\ <=\ mesh.nElements}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00582}00582\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ color\ =\ highlightColors\{iSample\};}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00583}00583\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00584}00584\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Highlight\ the\ sample\ element}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00585}00585\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ elementVertices\ =\ vertices(elements(iElement,\ :),\ :);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00586}00586\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ fill(elementVertices(:,\ 1),\ elementVertices(:,\ 2),\ color,\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00587}00587\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}FaceAlpha\textcolor{stringliteral}{',\ 0.9,\ '}EdgeColor\textcolor{stringliteral}{',\ '}black\textcolor{stringliteral}{',\ '}LineWidth\textcolor{stringliteral}{',\ 2);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00588}00588\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00589}00589\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Add\ element\ number}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00590}00590\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ centroid\ =\ mean(elementVertices,\ 1);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00591}00591\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ text(centroid(1),\ centroid(2),\ sprintf('}\%d\textcolor{stringliteral}{',\ iElement),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00592}00592\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}FontSize\textcolor{stringliteral}{',\ 12,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{',\ '}HorizontalAlignment\textcolor{stringliteral}{',\ '}center\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00593}00593\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ '}Color\textcolor{stringliteral}{',\ '}white\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00594}00594\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00595}00595\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Find\ and\ highlight\ neighbors\ with\ periodic\ boundaries}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00596}00596\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ allNeighbors\ =\ [];}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00597}00597\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ for\ iFace\ =\ 1:nFacesPerElement}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00598}00598\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ neighbors\ =\ mesh.findNeighborElements(iElement,\ iFace,\ '}periodic\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00599}00599\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ allNeighbors\ =\ [allNeighbors,\ neighbors];}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00600}00600\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00601}00601\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00602}00602\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \%\ Remove\ duplicates\ and\ highlight\ neighbors}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00603}00603\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ uniqueNeighbors\ =\ unique(allNeighbors);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00604}00604\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ for\ neighbor\ =\ uniqueNeighbors}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00605}00605\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ neighbor\ >\ 0}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00606}00606\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ neighborVertices\ =\ vertices(elements(neighbor,\ :),\ :);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00607}00607\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ plot(neighborVertices([1:end,\ 1],\ 1),\ neighborVertices([1:end,\ 1],\ 2),\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00608}00608\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Color\textcolor{stringliteral}{',\ color,\ '}LineWidth\textcolor{stringliteral}{',\ 3);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00609}00609\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00610}00610\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00611}00611\ \textcolor{stringliteral}{\ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00612}00612\ \textcolor{stringliteral}{end}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00613}00613\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00614}00614\ \textcolor{stringliteral}{axis\ equal;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00615}00615\ \textcolor{stringliteral}{grid\ on;}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00616}00616\ \textcolor{stringliteral}{xlim([-\/0.05,\ 1.05]);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00617}00617\ \textcolor{stringliteral}{ylim([-\/0.05,\ 1.05]);}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00618}00618\ \textcolor{stringliteral}{xlabel('}x\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 12,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00619}00619\ \textcolor{stringliteral}{ylabel('}y\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 12,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00620}00620\ \textcolor{stringliteral}{title('}Neighbor\ Connectivity\ (Periodic)\textcolor{stringliteral}{',\ '}FontSize\textcolor{stringliteral}{',\ 14,\ '}FontWeight\textcolor{stringliteral}{',\ '}bold\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00621}00621\ \textcolor{stringliteral}{legend('}\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}\ Elements\textcolor{stringliteral}{',\ '}Element\ 5\ \&\ Neighbors\textcolor{stringliteral}{',\ '}Element\ 16\ \&\ Neighbors\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00622}00622\ \textcolor{stringliteral}{\ \ \ \ '}Element\ 25\ \&\ Neighbors\textcolor{stringliteral}{',\ '}Location\textcolor{stringliteral}{',\ '}northeastoutside\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00623}00623\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{ex01__uniform__trimesh_8m_source_l00624}00624\ \textcolor{stringliteral}{end}}
+
+\end{DoxyCode}

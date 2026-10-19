@@ -1,0 +1,182 @@
+\doxysection{core\+::chrono\+::Record Class Reference}
+\hypertarget{classcore_1_1chrono_1_1_record}{}\label{classcore_1_1chrono_1_1_record}\index{core::chrono::Record@{core::chrono::Record}}
+
+
+Single timing record with state tracking.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}{Record}} (Input\+Type \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a1922fe7bed5f739f84625d41f60e112a}{name}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1chrono_1_1_record}{Record} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a9a223af989796ae54d85e3b61fdaccf0}{is\+Active}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Return true if timing is currently active. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset record duration to zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a1922fe7bed5f739f84625d41f60e112a}{name}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classcore_1_1chrono_1_1_record}{Record} name. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1chrono_1_1_record_a1bec72c009ff266a156a19390ad1223e}{duration}}
+\begin{DoxyCompactList}\small\item\em Accumulated elapsed time in seconds. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1chrono_1_1_record_ade4b43b9d810699dd59f9fc4b522809b}{start\+Time}}
+\begin{DoxyCompactList}\small\item\em Timing token when active, empty when inactive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Single timing record with state tracking. 
+
+\doxylink{classcore_1_1chrono_1_1_record}{Record} represents a named timing measurement that maintains active or inactive state and accumulates elapsed time.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage}
+\DoxyCodeLine{rec\ =\ core.utilities.Record(\textcolor{stringliteral}{'Computation'});}
+\DoxyCodeLine{rec.startTime\ =\ tic;}
+\DoxyCodeLine{pause(0.1);\ \ \%\ Simulate\ computation}
+\DoxyCodeLine{rec.duration\ =\ rec.duration\ +\ toc(rec.startTime);}
+\DoxyCodeLine{rec.startTime\ =\ [];\ \ \%\ Mark\ as\ inactive}
+\DoxyCodeLine{\%\ Check\ \textcolor{keywordflow}{if}\ active}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ \string~rec.isActive()}
+\DoxyCodeLine{rec.startTime\ =\ tic;\ \ \%\ Start\ timing\ again}
+\DoxyCodeLine{end}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1chrono_1_1_timer}{core.\+chrono.\+Timer} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_record_8m_source_l00026}{26}} of file \mbox{\hyperlink{_record_8m_source}{Record.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1chrono_1_1_record_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4}\index{core::chrono::Record@{core::chrono::Record}!Record@{Record}}
+\index{Record@{Record}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{Record()}{Record()}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_a62c3d2ee227504b59aef1fd5104c3ef4} 
+function core\+::chrono\+::\+Record\+::\+Record (\begin{DoxyParamCaption}\item[{Input\+Type}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1chrono_1_1_record}{Record} class. 
+
+obj = Record(name) creates a new \doxylink{classcore_1_1chrono_1_1_record}{Record} object with the specified {\itshape name} and initializes duration to zero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & -\/ Name identifier \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1chrono_1_1_record_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1chrono_1_1_record_a9a223af989796ae54d85e3b61fdaccf0}\index{core::chrono::Record@{core::chrono::Record}!isActive@{isActive}}
+\index{isActive@{isActive}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{isActive()}{isActive()}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_a9a223af989796ae54d85e3b61fdaccf0} 
+function core\+::chrono\+::\+Record\+::is\+Active (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Return true if timing is currently active. 
+
+tf = is\+Active(obj) determines whether the \doxylink{classcore_1_1chrono_1_1_record}{Record} is currently in an active timing state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1chrono_1_1_record}{Record} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em tf} & -\/ True if the record is active, false otherwise \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc}\index{core::chrono::Record@{core::chrono::Record}!reset@{reset}}
+\index{reset@{reset}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_acc5a7dab7b3ccabcc627b17d7c0d88dc} 
+function core\+::chrono\+::\+Record\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset record duration to zero. 
+
+obj = reset(obj) resets the accumulated duration to zero, clearing the timing history for this \doxylink{classcore_1_1chrono_1_1_record}{Record}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1chrono_1_1_record}{Record} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1chrono_1_1_record}{Record} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1chrono_1_1_record_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1chrono_1_1_record_a1bec72c009ff266a156a19390ad1223e}\index{core::chrono::Record@{core::chrono::Record}!duration@{duration}}
+\index{duration@{duration}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{duration}{duration}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_a1bec72c009ff266a156a19390ad1223e} 
+Property core\+::chrono\+::\+Record\+::duration}
+
+
+
+Accumulated elapsed time in seconds. 
+
+
+
+Definition at line \mbox{\hyperlink{_record_8m_source_l00033}{33}} of file \mbox{\hyperlink{_record_8m_source}{Record.\+m}}.
+
+\Hypertarget{classcore_1_1chrono_1_1_record_a1922fe7bed5f739f84625d41f60e112a}\index{core::chrono::Record@{core::chrono::Record}!name@{name}}
+\index{name@{name}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_a1922fe7bed5f739f84625d41f60e112a} 
+Property core\+::chrono\+::\+Record\+::name}
+
+
+
+\doxylink{classcore_1_1chrono_1_1_record}{Record} name. 
+
+
+
+Definition at line \mbox{\hyperlink{_record_8m_source_l00030}{30}} of file \mbox{\hyperlink{_record_8m_source}{Record.\+m}}.
+
+\Hypertarget{classcore_1_1chrono_1_1_record_ade4b43b9d810699dd59f9fc4b522809b}\index{core::chrono::Record@{core::chrono::Record}!startTime@{startTime}}
+\index{startTime@{startTime}!core::chrono::Record@{core::chrono::Record}}
+\doxysubsubsection{\texorpdfstring{startTime}{startTime}}
+{\footnotesize\ttfamily \label{classcore_1_1chrono_1_1_record_ade4b43b9d810699dd59f9fc4b522809b} 
+Property core\+::chrono\+::\+Record\+::start\+Time}
+
+
+
+Timing token when active, empty when inactive. 
+
+
+
+Definition at line \mbox{\hyperlink{_record_8m_source_l00036}{36}} of file \mbox{\hyperlink{_record_8m_source}{Record.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+chrono/\mbox{\hyperlink{_record_8m}{Record.\+m}}\end{DoxyCompactItemize}

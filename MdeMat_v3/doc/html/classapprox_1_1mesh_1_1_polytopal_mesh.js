@@ -1,0 +1,25 @@
+var classapprox_1_1mesh_1_1_polytopal_mesh =
+[
+    [ "PolytopalMesh", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a7428428202b8ec916eba5b3d81f30af6", null ],
+    [ "findBoundaryElements", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a93dbee82c014cb9767332034ecba1e49", null ],
+    [ "findElementVertices", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a0e46bcf8de6919908e2c2b5de2650499", null ],
+    [ "findInteriorElements", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a6a7be621c0dd998c25bcf71581233df0", null ],
+    [ "findNeighborElements", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a3692fd8b4d60d18a4c6357dd9b6713a6", null ],
+    [ "forcePositiveOrientation", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a124b9f5ba979bcad39c9eb5559ce0725", null ],
+    [ "setFaces", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ae7c449012d63843699a9854695d6c5c2", null ],
+    [ "setPeriodic", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a85d69b2eabc8f1a280dafc97272acb3c", null ],
+    [ "boundary", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a597522b5ab003e402dd3a9e9c74c924f", null ],
+    [ "elements", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a763fbd702c758bb3229f4f0e4e9f773d", null ],
+    [ "faces", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ae1d1efe9537d39924da9fe9f1a4cea89", null ],
+    [ "faceToElementTable", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ad13af3da413c3be3446d1c0157be5a89", null ],
+    [ "faceToFaceTable", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a7bbdff066e18dbdc8a09d2a6d827ee1c", null ],
+    [ "nBoundaryFaces", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a2ef571424f9ee8f51b36aff8d8f1b10e", null ],
+    [ "nDims", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a477aa34e5ad0aadef5cb34cd40e59efc", null ],
+    [ "nElements", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a2aa261de397f459f4f10684fa11cc24d", null ],
+    [ "nFaces", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ad6ee63b4dd0a7c24e503e0ce2f68f601", null ],
+    [ "nVertices", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ac7aa04532c308f4bc4041a1176523b5c", null ],
+    [ "nVerticesPerElement", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a9a0b0e2f527279c8532f6ee018a94ad9", null ],
+    [ "nVerticesPerFace", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a11dacc76887e4f5159ad4b01e3728fc3", null ],
+    [ "vertexToVertexTable", "classapprox_1_1mesh_1_1_polytopal_mesh.html#ab29c06389b96ee2de400707446b5bdfd", null ],
+    [ "vertices", "classapprox_1_1mesh_1_1_polytopal_mesh.html#a7e849f77e2246168d68edd82932f1d3e", null ]
+];

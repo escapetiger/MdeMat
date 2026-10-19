@@ -1,0 +1,313 @@
+\doxysection{profilers\+::visual\+::Visualizer Class Reference}
+\hypertarget{classprofilers_1_1visual_1_1_visualizer}{}\label{classprofilers_1_1visual_1_1_visualizer}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+
+
+Base class for visualizers.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer}} (Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_a4500066744b4c6e5e61986f60d71c908}{reset}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset visualizer to initial state. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_abaee8ec339249fa50c3b218d22f4fc3d}{add\+Dataset}} (Input\+Type obj, Input\+Type name, Input\+Type style)
+\begin{DoxyCompactList}\small\item\em Add dataset and associated plotting style. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_a737a7c453b187f551ccdcb6519fb4aa9}{plot}} (Input\+Type obj, Input\+Type space, Input\+Type dofs, Input\+Type t\+Disc)
+\begin{DoxyCompactList}\small\item\em Generate visualization for current solution state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_a8cb07f35bbe85e438194f18cfa64d702}{is\+Enabled}}
+\begin{DoxyCompactList}\small\item\em Flag indicating whether visualization is enabled (logical) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_abb155cd05d5b5bc474fb8a89b26d31ab}{has\+Exact}}
+\begin{DoxyCompactList}\small\item\em Flag indicating whether has exact solution (logical) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_ae5925f0de4dde9d3c0755dd9d68c43ee}{n\+Components}}
+\begin{DoxyCompactList}\small\item\em Number of components per field (vector) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aa959d17bd2561fea6d7ad9275c63e9c4}{n\+Axes\+Per\+Component}}
+\begin{DoxyCompactList}\small\item\em Number of axes per component (scalar) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_accf74dc353a48e220232782268a1df19}{n\+Rows}}
+\begin{DoxyCompactList}\small\item\em Number of subplot rows (scalar) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_ae87361103598d3d357c3c97c783db63d}{n\+Cols}}
+\begin{DoxyCompactList}\small\item\em Number of subplot columns (scalar) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_a5b1db4eeedf4a1c683bcfb29f78c4e4c}{n\+Axes}}
+\begin{DoxyCompactList}\small\item\em Total number of axes (scalar) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for visualizers. 
+
+The \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer} class provides comprehensive plotting capabilities for advection equation solutions, including support for exact solution comparisons and temporal interpolation. It manages plot timelines, rendering strategies, and coordinate visualization workflows.
+
+Key features include\+:
+\begin{DoxyItemize}
+\item Multi-\/dimensional visualization support (1D, 2D, 3D)
+\item Exact solution overlay capabilities
+\item Temporal interpolation for smooth animations
+\item Flexible component-\/based plotting configuration
+\item Automatic subplot arrangement and styling
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ 1D\ visualization\ setup}
+\DoxyCodeLine{config\ =\ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'nDims'},\ 1,\ \textcolor{stringliteral}{'density'},\ [50],\ \textcolor{stringliteral}{'final'},\ 1.0);}
+\DoxyCodeLine{visualizer\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer}}(config);}
+\DoxyCodeLine{\%\ With\ exact\ solution\ comparison}
+\DoxyCodeLine{config.exacts\ =\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ @(x,t)\ sin(x-\/t));}
+\DoxyCodeLine{config.components\ =\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ [1]);}
+\DoxyCodeLine{visualizer\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer}}(config);}
+\DoxyCodeLine{visualizer.plot(space,\ dofs,\ tDisc);}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+The class uses a handle-\/based design to manage visualization state 
+
+efficiently across multiple time steps and solution updates.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classphysics_1_1advection_1_1_state}{physics.\+advection.\+State} 
+
+physics.\+advection.\+Simulator 
+
+\doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{profilers.\+visual.\+Geometry\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00039}{39}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!Visualizer@{Visualizer}}
+\index{Visualizer@{Visualizer}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{Visualizer()}{Visualizer()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c} 
+function profilers\+::visual\+::\+Visualizer\+::\+Visualizer (\begin{DoxyParamCaption}\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer}. 
+
+obj = \doxylink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer()} creates a default visualizer with empty configuration requiring manual setup.
+
+obj = \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer}(\textquotesingle{}Parameter\textquotesingle{}, Value, ...) creates a visualizer with specified parameters for dimension, timeline, and plotting configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em varargin} & -\/ Input arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Minimal\ 1D\ setup}
+\DoxyCodeLine{vis\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer}}(\textcolor{stringliteral}{'nDims'},\ 1,\ \textcolor{stringliteral}{'density'},\ [20]);}
+\DoxyCodeLine{\%\ Complete\ configuration\ with\ exact\ solution}
+\DoxyCodeLine{vis\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_visualizer_aae9d0d2d5cc18a3f988a5297eed9714c}{Visualizer}}(\textcolor{stringliteral}{'nDims'},\ 2,\ \textcolor{stringliteral}{'density'},\ [10,\ 10],\ \textcolor{stringliteral}{'final'},\ 2.0,\ ...}
+\DoxyCodeLine{\textcolor{stringliteral}{'components'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ [1]),\ ...}
+\DoxyCodeLine{\textcolor{stringliteral}{'exacts'},\ \textcolor{keyword}{struct}(\textcolor{charliteral}{'u'},\ @(x,y,t)\ exp(-\/(x-\/t).\string^2-\/(y-\/t).\string^2)));}
+
+\end{DoxyCode}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_abaee8ec339249fa50c3b218d22f4fc3d}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!addDataset@{addDataset}}
+\index{addDataset@{addDataset}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{addDataset()}{addDataset()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_abaee8ec339249fa50c3b218d22f4fc3d} 
+function profilers\+::visual\+::\+Visualizer\+::add\+Dataset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{name}{, }\item[{Input\+Type}]{style}{}\end{DoxyParamCaption})}
+
+
+
+Add dataset and associated plotting style. 
+
+add\+Dataset(obj, name, style) registers a new dataset with the specified name and plotting style for visualization.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer} object \\
+\hline
+{\em name} & -\/ Dataset name (string or char array) \\
+\hline
+{\em style} & -\/ Plotting style configuration (struct)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_a737a7c453b187f551ccdcb6519fb4aa9}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!plot@{plot}}
+\index{plot@{plot}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{plot()}{plot()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_a737a7c453b187f551ccdcb6519fb4aa9} 
+function profilers\+::visual\+::\+Visualizer\+::plot (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{space}{, }\item[{Input\+Type}]{dofs}{, }\item[{Input\+Type}]{t\+Disc}{}\end{DoxyParamCaption})}
+
+
+
+Generate visualization for current solution state. 
+
+plot(obj, space, dofs, t\+Disc) creates plots for the current solution state, including exact solution comparisons if configured. Handles temporal interpolation and multi-\/component visualization automatically.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer} object \\
+\hline
+{\em space} & -\/ Spatial discretization object \\
+\hline
+{\em dofs} & -\/ Degrees of freedom structure containing solution data \\
+\hline
+{\em t\+Disc} & -\/ Temporal discretization object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The method automatically handles coordinate preparation on 
+
+first call and manages timeline advancement for animations. 
+\end{DoxyNote}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_a4500066744b4c6e5e61986f60d71c908}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!reset@{reset}}
+\index{reset@{reset}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_a4500066744b4c6e5e61986f60d71c908} 
+function profilers\+::visual\+::\+Visualizer\+::reset (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Reset visualizer to initial state. 
+
+reset(obj) reinitializes the visualizer by clearing datasets, resetting the timeline, and reconstructing the plotting strategy based on current component configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_visualizer}{Visualizer} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_abb155cd05d5b5bc474fb8a89b26d31ab}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!hasExact@{hasExact}}
+\index{hasExact@{hasExact}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{hasExact}{hasExact}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_abb155cd05d5b5bc474fb8a89b26d31ab} 
+Property profilers\+::visual\+::\+Visualizer\+::has\+Exact}
+
+
+
+Flag indicating whether has exact solution (logical) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00076}{76}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_a8cb07f35bbe85e438194f18cfa64d702}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!isEnabled@{isEnabled}}
+\index{isEnabled@{isEnabled}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{isEnabled}{isEnabled}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_a8cb07f35bbe85e438194f18cfa64d702} 
+Property profilers\+::visual\+::\+Visualizer\+::is\+Enabled}
+
+
+
+Flag indicating whether visualization is enabled (logical) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00073}{73}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_a5b1db4eeedf4a1c683bcfb29f78c4e4c}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!nAxes@{nAxes}}
+\index{nAxes@{nAxes}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{nAxes}{nAxes}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_a5b1db4eeedf4a1c683bcfb29f78c4e4c} 
+Property profilers\+::visual\+::\+Visualizer\+::n\+Axes}
+
+
+
+Total number of axes (scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00091}{91}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_aa959d17bd2561fea6d7ad9275c63e9c4}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!nAxesPerComponent@{nAxesPerComponent}}
+\index{nAxesPerComponent@{nAxesPerComponent}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{nAxesPerComponent}{nAxesPerComponent}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_aa959d17bd2561fea6d7ad9275c63e9c4} 
+Property profilers\+::visual\+::\+Visualizer\+::n\+Axes\+Per\+Component}
+
+
+
+Number of axes per component (scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00082}{82}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_ae87361103598d3d357c3c97c783db63d}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!nCols@{nCols}}
+\index{nCols@{nCols}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{nCols}{nCols}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_ae87361103598d3d357c3c97c783db63d} 
+Property profilers\+::visual\+::\+Visualizer\+::n\+Cols}
+
+
+
+Number of subplot columns (scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00088}{88}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_ae5925f0de4dde9d3c0755dd9d68c43ee}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!nComponents@{nComponents}}
+\index{nComponents@{nComponents}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{nComponents}{nComponents}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_ae5925f0de4dde9d3c0755dd9d68c43ee} 
+Property profilers\+::visual\+::\+Visualizer\+::n\+Components}
+
+
+
+Number of components per field (vector) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00079}{79}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_visualizer_accf74dc353a48e220232782268a1df19}\index{profilers::visual::Visualizer@{profilers::visual::Visualizer}!nRows@{nRows}}
+\index{nRows@{nRows}!profilers::visual::Visualizer@{profilers::visual::Visualizer}}
+\doxysubsubsection{\texorpdfstring{nRows}{nRows}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_visualizer_accf74dc353a48e220232782268a1df19} 
+Property profilers\+::visual\+::\+Visualizer\+::n\+Rows}
+
+
+
+Number of subplot rows (scalar) 
+
+
+
+Definition at line \mbox{\hyperlink{_visualizer_8m_source_l00085}{85}} of file \mbox{\hyperlink{_visualizer_8m_source}{Visualizer.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++profilers/+visual/\mbox{\hyperlink{_visualizer_8m}{Visualizer.\+m}}\end{DoxyCompactItemize}

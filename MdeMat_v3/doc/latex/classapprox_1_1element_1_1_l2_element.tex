@@ -1,0 +1,157 @@
+\doxysection{approx\+::element\+::L2\+Element Class Reference}
+\hypertarget{classapprox_1_1element_1_1_l2_element}{}\label{classapprox_1_1element_1_1_l2_element}\index{approx::element::L2Element@{approx::element::L2Element}}
+
+
+L2 Galerkin element.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a978a16dd96c553010b3a894758a37f30}{L2\+Element}} (Input\+Type G, Input\+Type P, Input\+Type VI, Input\+Type FI)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_afae4d7173f5e658eee37e7ca51d564f2}{Element}} (Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}, Input\+Type \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1element_1_1_element}{Element}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1element_1_1_element_a1da7e04ed31549bf3777e3e900d73d53}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate a function over the element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_aa247f1b109877863e49f4fa28efc9477}{TYPE}} = \textquotesingle{}l2\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em \doxylink{classapprox_1_1element_1_1_element}{Element} type identifier. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a15de9bead255fb97ec6ee021254d33f7}{volume}}
+\begin{DoxyCompactList}\small\item\em Volume integration data (Integration\+Data) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a3b09a970b3c9ba685a413bd586b21ea6}{flux}}
+\begin{DoxyCompactList}\small\item\em Flux integration data (Integration\+Data array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}{n\+Fluxes}}
+\begin{DoxyCompactList}\small\item\em Number of fluxes (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1element_1_1_element}{approx\+::element\+::\+Element}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_aed76d581754d23d5298ec3a780d8df3c}{geometry}}
+\begin{DoxyCompactList}\small\item\em Geometry object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a66bbb6272cd0db33e7379abf3939eaca}{projector}}
+\begin{DoxyCompactList}\small\item\em Galerkin\+Projector object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_a42256ce38c82e8455273d78515c5a6ca}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1element_1_1_element_af40dbbf11b69df9e3fbd6e12553b8c9c}{n\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of degrees of freedom (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+L2 Galerkin element. 
+
+\doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element} implements a L2 function. This class extends the base \doxylink{classapprox_1_1element_1_1_element}{Element} class by adding volume and flux integration capabilities through precomputed basis values and derivatives at integration points.
+
+\doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element} assumes discontinuity occurs only at element boundaries.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1integrate_1_1_integration_data}{approx.\+integrate.\+Integration\+Data} 
+
+\doxylink{classapprox_1_1element_1_1_element}{approx.\+element.\+Element} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_l2_element_8m_source_l00018}{18}} of file \mbox{\hyperlink{_l2_element_8m_source}{L2\+Element.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_a978a16dd96c553010b3a894758a37f30}\index{approx::element::L2Element@{approx::element::L2Element}!L2Element@{L2Element}}
+\index{L2Element@{L2Element}!approx::element::L2Element@{approx::element::L2Element}}
+\doxysubsubsection{\texorpdfstring{L2Element()}{L2Element()}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_a978a16dd96c553010b3a894758a37f30} 
+function approx\+::element\+::\+L2\+Element\+::\+L2\+Element (\begin{DoxyParamCaption}\item[{Input\+Type}]{G}{, }\item[{Input\+Type}]{P}{, }\item[{Input\+Type}]{VI}{, }\item[{Input\+Type}]{FI}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1element_1_1_l2_element}{L2\+Element}. 
+
+obj = L2\+Element(\+G, P, VI, FI) creates a L2 element with both volume and flux integration capabilities using the specified components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em G} & -\/ Geometry object \\
+\hline
+{\em P} & -\/ Galerkin\+Projector object \\
+\hline
+{\em VI} & -\/ Integrator object \\
+\hline
+{\em FI} & -\/ Array of Integrator objects \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1element_1_1_l2_element_a3b09a970b3c9ba685a413bd586b21ea6}\index{approx::element::L2Element@{approx::element::L2Element}!flux@{flux}}
+\index{flux@{flux}!approx::element::L2Element@{approx::element::L2Element}}
+\doxysubsubsection{\texorpdfstring{flux}{flux}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_a3b09a970b3c9ba685a413bd586b21ea6} 
+Property approx\+::element\+::\+L2\+Element\+::flux}
+
+
+
+Flux integration data (Integration\+Data array) 
+
+
+
+Definition at line \mbox{\hyperlink{_l2_element_8m_source_l00031}{31}} of file \mbox{\hyperlink{_l2_element_8m_source}{L2\+Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308}\index{approx::element::L2Element@{approx::element::L2Element}!nFluxes@{nFluxes}}
+\index{nFluxes@{nFluxes}!approx::element::L2Element@{approx::element::L2Element}}
+\doxysubsubsection{\texorpdfstring{nFluxes}{nFluxes}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_a774c21263c37d039e7a8fce983635308} 
+Property approx\+::element\+::\+L2\+Element\+::n\+Fluxes}
+
+
+
+Number of fluxes (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_l2_element_8m_source_l00037}{37}} of file \mbox{\hyperlink{_l2_element_8m_source}{L2\+Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_l2_element_aa247f1b109877863e49f4fa28efc9477}\index{approx::element::L2Element@{approx::element::L2Element}!TYPE@{TYPE}}
+\index{TYPE@{TYPE}!approx::element::L2Element@{approx::element::L2Element}}
+\doxysubsubsection{\texorpdfstring{TYPE}{TYPE}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_aa247f1b109877863e49f4fa28efc9477} 
+Constant Property approx\+::element\+::\+L2\+Element\+::\+TYPE = \textquotesingle{}l2\textquotesingle{}}
+
+
+
+\doxylink{classapprox_1_1element_1_1_element}{Element} type identifier. 
+
+
+
+Definition at line \mbox{\hyperlink{_l2_element_8m_source_l00022}{22}} of file \mbox{\hyperlink{_l2_element_8m_source}{L2\+Element.\+m}}.
+
+\Hypertarget{classapprox_1_1element_1_1_l2_element_a15de9bead255fb97ec6ee021254d33f7}\index{approx::element::L2Element@{approx::element::L2Element}!volume@{volume}}
+\index{volume@{volume}!approx::element::L2Element@{approx::element::L2Element}}
+\doxysubsubsection{\texorpdfstring{volume}{volume}}
+{\footnotesize\ttfamily \label{classapprox_1_1element_1_1_l2_element_a15de9bead255fb97ec6ee021254d33f7} 
+Property approx\+::element\+::\+L2\+Element\+::volume}
+
+
+
+Volume integration data (Integration\+Data) 
+
+
+
+Definition at line \mbox{\hyperlink{_l2_element_8m_source_l00028}{28}} of file \mbox{\hyperlink{_l2_element_8m_source}{L2\+Element.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+element/\mbox{\hyperlink{_l2_element_8m}{L2\+Element.\+m}}\end{DoxyCompactItemize}

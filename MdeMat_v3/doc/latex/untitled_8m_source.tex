@@ -1,0 +1,31 @@
+\doxysection{untitled.\+m}
+\hypertarget{untitled_8m_source}{}\label{untitled_8m_source}\mbox{\hyperlink{untitled_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00001}00001\ \%\ Test\ script\ \textcolor{keywordflow}{for}\ MultiIndexer.multiToLinear\ with\ various\ padding\ modes}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00003}00003\ \%\ Create\ MultiIndexer\ instance\ with\ shape\ [3,\ 4]}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00004}00004\ indexer\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.\mbox{\hyperlink{classcore_1_1linalg_1_1_multi_indexer}{MultiIndexer}}([3,\ 4]);}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00006}00006\ \%\ Define\ test\ multi-\/indices\ (rows\ =\ indices,\ cols\ =\ dimensions)}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00007}00007\ M\ =\ [}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00008}00008\ \ \ \ \ 1,\ 1;\ \ \ \ \%\ inside}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00009}00009\ \ \ \ \ 3,\ 4;\ \ \ \ \%\ edge}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00010}00010\ \ \ \ \ 0,\ 2;\ \ \ \ \%\ below\ bound\ in\ dim1}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00011}00011\ \ \ \ \ 4,\ 3;\ \ \ \ \%\ above\ bound\ in\ dim1}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00012}00012\ \ \ \ \ 2,\ 0;\ \ \ \ \%\ below\ bound\ in\ dim2}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00013}00013\ \ \ \ \ 2,\ 5;\ \ \ \ \%\ above\ bound\ in\ dim2}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00014}00014\ \ \ \ -\/1,\ 7;\ \ \ \ \%\ way\ out\ of\ bounds}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00015}00015\ ];}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00017}00017\ pads\ =\ \{\textcolor{stringliteral}{'empty'},\ \textcolor{stringliteral}{'wrap'},\ \textcolor{stringliteral}{'edge'},\ \textcolor{stringliteral}{'reflect'},\ \textcolor{stringliteral}{'symmetric'}\};}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00019}00019\ fprintf(\textcolor{stringliteral}{'MultiToLinear\ test\ results:\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00020}00020\ fprintf(\textcolor{stringliteral}{'\%10s\ |\ \%15s\(\backslash\)n'},\ \textcolor{stringliteral}{'Pad\ Mode'},\ \textcolor{stringliteral}{'Linear\ Indices'});}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00022}00022\ \textcolor{keywordflow}{for}\ i\ =\ 1:numel(pads)}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00023}00023\ \ \ \ \ pad\ =\ pads\{i\};}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00024}00024\ \ \ \ \ L\ =\ indexer.multiToLinear(M,\ pad);}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00025}00025\ \ \ \ \ fprintf(\textcolor{stringliteral}{'\%10s\ |\ \%s\(\backslash\)n'},\ pad,\ mat2str(L));}
+\DoxyCodeLine{\Hypertarget{untitled_8m_source_l00026}00026\ end}
+
+\end{DoxyCode}

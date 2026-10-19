@@ -1,0 +1,151 @@
+\doxysection{Assembly.\+m}
+\hypertarget{_assembly_8m_source}{}\label{_assembly_8m_source}\index{+approx/+assembly/Assembly.m@{+approx/+assembly/Assembly.m}}
+\mbox{\hyperlink{_assembly_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00001}00001\ classdef\ Assembly\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1assembly}{00002}}\ \ \ \ \ \%\ ASSEMBLY\ Base\ \textcolor{keyword}{class\ }for\ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ operations.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{Assembly}}\ provides\ the\ foundation\ \textcolor{keywordflow}{for}\ assembling\ discrete\ operators}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ from\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/level\ contributions\ in\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ methods.\ The}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}\ process\ involves\ iterating\ over\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ elements,\ computing}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ local\ data,\ and\ accumulating\ contributions\ into\ global\ sparse\ data}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \textcolor{keyword}{using\ }appropriate\ connectivity\ information\ from\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00010}00010\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1space}{space}}.\mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space}{MeshSpace}}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00013}00013\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00014}00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ \%\ MeshSpace\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00015}00015\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00016}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly}{00016}}\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00017}00017\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00018}00018\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{MeshOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}})}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ OPERATOR\ Constructor\ \textcolor{keywordflow}{for}\ Operator.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00020}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{00020}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{MeshOperator}}(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}})\ creates\ an\ \textcolor{keyword}{operator}\ with\ the}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ -\/\ MeshSpace\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ Operator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isa(\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ \textcolor{stringliteral}{'approx.space.MeshSpace'}),\ ...}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'BilinearForm\ requires\ a\ mesh\ space.'});}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ obj.space\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}};}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{assembleMatrix}}(obj,\ IE,\ IL,\ JE,\ JL,\ L)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEMATRIX\ Assemble\ matrix\ contribution.\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00037}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{00037}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{assembleMatrix}}(obj,\ IE,\ IL,\ JE,\ JL,\ L)\ assembles\ local}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrices\ @a\ L\ to\ a\ global\ block\ diagonal\ matrix\ @a\ G\ with}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ specified\ elements\ (@a\ IE,\ @a\ JE)\ and\ local\ Dofs\ (@a\ IL,\ @a}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JL)\ \textcolor{keywordflow}{for}\ test\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ and\ trial\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}},\ respectively.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{MeshOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ \textcolor{keywordflow}{for}\ test\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ (ne\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IL\ -\/\ Local\ DoF\ indices\ \textcolor{keywordflow}{for}\ test\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ (ni\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JE\ -\/\ Element\ linear\ indices\ \textcolor{keywordflow}{for}\ trial\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ (ne\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JL\ -\/\ Local\ DoF\ indices\ \textcolor{keywordflow}{for}\ trial\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a2896919f7ff428514f5af32260e4215b}{space}}\ (nj\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Local\ matrices\ (nl\ x\ nl\ matrix\ or\ nl\ ×\ nl\ ×\ ne\ array)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ -\/\ Global\ matrix\ (ng\ x\ ng\ sparse)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(IE)\ \&\&\ \string~isempty(JE)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ JE;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ \string~isempty(IE)\ \&\&\ isempty(JE)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ IE;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ isempty(IE)\ \&\&\ isempty(JE)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ 1:obj.space.nMeshElements;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JE\ =\ IE;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00062}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_af8f42f601f37cda3418e79c0cf38a811}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(length(IE)\ ==\ length(JE),\ ...}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Incomptiable\ row\ and\ columen\ element\ indices.'});}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ length(IE);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.space.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(IL),\ IL\ =\ 1:nl;\ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(JL),\ JL\ =\ 1:nl;\ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ismatrix(L)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [I,\ J,\ V]\ =\ find(L(IL,\ JL));}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nnz\ =\ numel(V);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ zeros(nnz\ *\ ne,\ 3);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 1)\ =\ obj.space.localToGlobal(IE,\ I);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 2)\ =\ obj.space.localToGlobal(JE,\ J);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 3)\ =\ V(:);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ nl,\ nl,\ []);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(L,\ 3)\ ==\ ne,\ ...}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Invalid\ local\ matrices.'});}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ni\ =\ length(IL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nj\ =\ length(JL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ zeros(ni*nj*ne,\ 3);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [IL,\ JL]\ =\ ndgrid(IL,\ JL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IL\ =\ IL(:);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JL\ =\ JL(:);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 1)\ =\ obj.space.localToGlobal(IE,\ IL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 2)\ =\ obj.space.localToGlobal(JE,\ JL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ L(IL,\ JL,\ :);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 3)\ =\ L(:);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ ng\ =\ obj.space.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.sparseFromTriplets(T,\ ng,\ ng);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ function\ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{assembleVector}}(obj,\ IE,\ IL,\ L)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSEMBLEVECTOR\ Assemble\ vector\ contribution.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ =\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{assembleVector}}(obj,\ IE,\ IL,\ L)\ assembles\ local\ vectors}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ @a\ L\ to\ a\ global\ block\ diagonal\ matrix\ @a\ G\ with\ specified}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ elements\ @a\ IE\ and\ local\ Dofs\ @a\ IL.}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_aeab108ce1b76509a0cd4f649fafd99ea}{MeshOperator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (ne\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IL\ -\/\ Local\ DoF\ indices\ (ni\ x\ 1\ vector)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Local\ vectors\ (nl\ x\ nc\ matrix\ or\ nl\ x\ ne\ x\ nc\ array)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ G\ -\/\ Global\ matrix\ (ng\ x\ nc\ sparse)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(IE),\ IE\ =\ 1:obj.space.nMeshElements;\ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ ne\ =\ length(IE);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ nl\ =\ obj.space.nLocalDofs;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(IL),\ IL\ =\ 1:nl;\ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ismatrix(L)}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ nl,\ []);\ \%\ nl\ ×\ nc}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ repmat(reshape(L,\ nl,\ 1,\ []),\ 1,\ ne,\ 1);\ \%\ nl\ ×\ ne\ ×\ nc}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00127}\mbox{\hyperlink{classapprox_1_1assembly_1_1_assembly_a43c719634b5423693bd1741c145a3423}{00127}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ reshape(L,\ nl,\ ne,\ []);\ \%\ nl\ ×\ ne\ ×\ nc}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(L,\ 2)\ ==\ ne,\ ...}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'Invalid\ local\ vectors.'});}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ L(IL,\ :,\ :);\ \%\ ni\ ×\ ne\ ×\ nc}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ ni\ =\ length(IL);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ nc\ =\ size(L,\ 3);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ zeros(ni*ne*nc,\ 3);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 1)\ =\ repmat(obj.space.localToGlobal(IE,\ []),\ nc,\ 1);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 2)\ =\ reshape(repmat(1:nc,\ ni*ne,\ 1),\ [],\ 1);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ T(:,\ 3)\ =\ L(:);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ ng\ =\ obj.space.nGlobalDofs;}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.sparseFromTriplets(T,\ ng,\ nc);}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00144}00144\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_assembly_8m_source_l00145}00145\ end}
+
+\end{DoxyCode}

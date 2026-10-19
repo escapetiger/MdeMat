@@ -1,0 +1,198 @@
+\doxysection{Galerkin\+Projector.\+m}
+\hypertarget{_galerkin_projector_8m_source}{}\label{_galerkin_projector_8m_source}\index{+approx/+project/GalerkinProjector.m@{+approx/+project/GalerkinProjector.m}}
+\mbox{\hyperlink{_galerkin_projector_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00001}00001\ classdef\ GalerkinProjector\ <\ handle}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00002}\mbox{\hyperlink{namespaceapprox_1_1project}{00002}}\ \ \ \ \ \%\ GALERKINPROJECTOR\ Base\ \textcolor{keyword}{class\ }for\ all\ Galerkin-\/type\ projectors.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector}{GalerkinProjector}}\ provides\ the\ foundation\ \textcolor{keywordflow}{for}\ Galerkin}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ approximation\ methods\ where\ functions\ are\ projected\ onto}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ finite-\/dimensional\ spaces\ \textcolor{keyword}{using\ }mass\ operators\ to\ solve\ linear}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ systems.\ The\ \textcolor{keyword}{class\ }implements\ the\ \mbox{\hyperlink{namespacecore}{core}}\ Galerkin\ methodology\ for}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ function\ approximation.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ Galerkin\ method\ seeks\ an\ approximation\ \(\backslash\)f\$u\_h\ \(\backslash\)in\ V\_h\(\backslash\)f\$\ of\ a}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ function\ \(\backslash\)f\$u\(\backslash\)f\$\ such\ that}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)langle\ u\_h,\ v\_h\(\backslash\)rangle\ =\ \(\backslash\)langle\ f,\ v\_h\(\backslash\)rangle,\ \(\backslash\)forall\ v\_h\ ∈\ V\_h,}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$V\_h\(\backslash\)f\$\ is\ the\ finite-\/dimensional\ function\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ spanned}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ by\ the\ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ This\ \textcolor{keyword}{class\ }defines\ the\ interface\ for\ concrete\ implementations\ such}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ as\ modal\ and\ nodal\ projectors,\ which\ differ\ in\ how\ they\ construct}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ the\ mass\ \textcolor{keyword}{operator}\ and\ embed\ data\ into\ the\ latent\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00022}00022\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_modal_projector}{ModalProjector}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1project}{project}}.\mbox{\hyperlink{classapprox_1_1project_1_1_nodal_projector}{NodalProjector}}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00025}00025\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ \%\ Basis\ functions\ that\ span\ the\ approximation\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00027}00027\ \ \ \ \ \ \ \ \ mass\ \ \%\ Mass\ \textcolor{keyword}{operator}\ matrix\ \textcolor{keywordflow}{for}\ the\ Galerkin\ system}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00028}00028\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00029}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector}{00029}}\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00030}00030\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff}{nDofs}}\ \%\ Number\ of\ degrees\ of\ freedom}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}{isWellPosed}}\ \%\ Whether\ the\ Galerkin\ system\ is\ well-\/posed}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00033}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{00033}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}{isOverdetermined}}\ \%\ Whether\ the\ Galerkin\ system\ is\ overdetermined}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}{isUnderdetermined}}\ \%\ Whether\ the\ Galerkin\ system\ is\ underdetermined}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00035}00035\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00036}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{00036}}\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00037}00037\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}(\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}})}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GALERKINPROJECTOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}(\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}})\ creates\ a\ \textcolor{keyword}{new}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00042}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a15a4f7369ce502c095bd208a4dd9e7ff}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}\ \textcolor{keywordtype}{object}\ with\ the\ specified\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ functions.\ The\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ \textcolor{keyword}{operator}\ is\ initialized\ as\ empty\ and}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ must\ be\ set\ by\ calling\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}{setMass}}().}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00045}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}\ -\/\ Basis\ functions\ that\ span\ the\ approximation\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00048}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}{00048}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ constructed\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00051}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(\string~isempty(\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}}),\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Basis\ functions\ cannot\ be\ empty.'});}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ obj.basis\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_aca055cc243a77e27391d76793f59d41e}{basis}};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ obj.mass\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ end\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ function\ n\ =\ get.nDofs(obj)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDOFS\ Returns\ the\ number\ of\ degrees\ of\ freedom.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.basis.nCodims;}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ function\ Y\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{evaluate}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EVALUATE\ Evaluate\ functions\ in\ the\ approximation\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ at}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ given\ points.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00068}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{evaluate}}(obj,\ Z)\ evaluates\ functions\ represented\ by}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficients\ embedded\ in\ the\ augmented\ vector\ Z\ =\ [X;\ C]}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ evaluation\ points\ X.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{evaluate}}(obj,\ X,\ C)\ evaluates\ functions\ with}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coefficient\ matrix\ C\ at\ evaluation\ points\ X.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab2dd6236f4668a44533c46b989180dc1}{GalerkinProjector}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Input\ arguments}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ Z\ -\/\ (n+m,\ p)\ matrix\ representing\ [X;\ C]}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ X\ -\/\ (n,\ p)\ matrix\ representing\ evaluation\ points}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ \ \ C\ -\/\ (m,\ q)\ matrix\ representing\ coefficients}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Function\ values\ ((1\ x\ p)\ or\ (q\ x\ p))}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ length(varargin)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ obj.basis.nDims;}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z\ =\ reshape(Z,\ size(Z,\ 1),\ []);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(size(Z,\ 1)\ >\ n,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Input\ Z\ must\ have\ more\ rows\ than\ basis\ dimensions.'});}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ Z((n+1):end,\ :);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ Z(1:n,\ :);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ obj.basis.evaluate(X);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ dot(B,\ C,\ 1);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00100}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52ccacc3b67418c6cee014c3edf5acb5}{00100}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [X,\ C]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X\ =\ reshape(X,\ size(X,\ 1),\ []);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C\ =\ reshape(C,\ size(C,\ 1),\ []);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ obj.basis.evaluate(X);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ C.\textcolor{stringliteral}{'\ *\ B;}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00108}00108\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(0,\ '}InvalidInput\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Invalid\ number\ of\ input\ arguments.\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00112}00112\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ U\ =\ project(obj,\ F)}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ PROJECT\ Project\ data\ onto\ the\ function\ space.}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ project(obj,\ F)\ projects\ data\ from\ the\ latent\ space}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ onto\ the\ function\ space\ by\ solving\ the\ Galerkin\ system\ M*U}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ =\ F,\ where\ M\ is\ the\ mass\ operator.\ Handles\ well-\/posed\ and}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ overdetermined\ systems\ automatically.}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ GalerkinProjector\ object}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Data\ in\ the\ latent\ space\ (m\ x\ ...)}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Coefficients\ of\ the\ basis\ functions\ (m\ x\ ...)}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.mass;}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(\string~isempty(M),\ '}EmptyMass\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}The\ mass\ \textcolor{keyword}{operator}\ has\ not\ been\ set.\ Call\ setMass()\ first.');}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ size(M,\ 1);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(size(F,\ 1)\ ==\ m,\ 'InvalidInput',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Data\ dimension\ (\%d)\ must\ match\ mass\ operator\ rows\ (\%d).',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ size(F,\ 1),\ m);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ size(F);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ reshape(F,\ m,\ []);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ if\ obj.isWellPosed}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ M\ \(\backslash\)\ F;}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ obj.isOverdetermined}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00143}\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a8ea850a603a417da7fe712fc6978b065}{00143}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ (M.'\ *\ M)\ \(\backslash\)\ (M.'\ *\ F);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(0,\ 'UnderdeterminedSystem',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'Mass\ operator\ cannot\ be\ underdetermined.');}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ reshape(U,\ [size(U,\ 1),\ s(2:end)]);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a54b39c3e050f87c5c785663eb84aa145}{isWellPosed}}(obj)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISWELLPOSED\ Check\ if\ the\ Galerkin\ system\ is\ well-\/posed.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\string~isempty(M),\ 'EmptyMass',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'The\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ operator\ has\ not\ been\ set.');}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ size(M,\ 1)\ ==\ size(M,\ 2);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a52cbae3e08e46bd93b2dc9e385c91881}{isOverdetermined}}(obj)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.ISOVERDETERMINED\ Check\ if\ the\ Galerkin\ system\ is}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ overdetermined.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\string~isempty(M),\ 'EmptyMass',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'The\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ operator\ has\ not\ been\ set.');}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ size(M,\ 1)\ >\ size(M,\ 2);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ function\ TF\ =\ get.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a431ac5042a1ee0656738a6c1a89d5959}{isUnderdetermined}}(obj)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ISUNDERDETERMINED\ Check\ if\ the\ Galerkin\ system\ is}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ underdetermined.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ obj.\mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}};}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.except.assert(\string~isempty(M),\ 'EmptyMass',\ ...}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 'The\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ operator\ has\ not\ been\ set.');}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ TF\ =\ size(M,\ 1)\ <\ size(M,\ 2);}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00183}00183\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00184}00184\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00185}00185\ \ \ \ \ methods\ (Abstract)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \%\ SETMASS\ Set\ up\ the\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a505439c033143b31319c800ebb66a991}{mass}}\ operator\ for\ the\ Galerkin\ method.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_a5c79ef70c68332703b233743d4d24038}{setMass}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \%\ EMBED\ Embed\ data\ into\ the\ latent\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}.}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{classapprox_1_1project_1_1_galerkin_projector_ab45e01409af3e30ebd6dab36c5fbfd19}{embed}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00191}00191\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_galerkin_projector_8m_source_l00192}00192\ end}
+
+\end{DoxyCode}

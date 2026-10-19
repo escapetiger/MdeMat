@@ -1,0 +1,108 @@
+\doxysection{core\+::except Namespace Reference}
+\hypertarget{namespacecore_1_1except}{}\label{namespacecore_1_1except}\index{core::except@{core::except}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519}{assert}} (Input\+Type flag, Input\+Type id, Input\+Type msg, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advanced assertion. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa}{verify}} (Input\+Type flag, Input\+Type id, Input\+Type msg, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Advanced verification. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacecore_1_1except_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519}\index{core::except@{core::except}!assert@{assert}}
+\index{assert@{assert}!core::except@{core::except}}
+\doxysubsubsection{\texorpdfstring{assert()}{assert()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519} 
+function core\+::except\+::assert (\begin{DoxyParamCaption}\item[{Input\+Type}]{flag}{, }\item[{Input\+Type}]{id}{, }\item[{Input\+Type}]{msg}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Advanced assertion. 
+
+assert(flag) throws an error if {\itshape flag} is false.
+
+assert(flag, id, msg, ...) throws an error with the specified {\itshape id} and {\itshape msg} if {\itshape flag} is false.
+
+
+\begin{DoxyParams}{Parameters}
+{\em flag} & -\/ Logical condition to check \\
+\hline
+{\em id} & -\/ Error identifier (e.\+g., \textquotesingle{}Invalid\+Input\textquotesingle{} or \textquotesingle{}Out\+Of\+Range\textquotesingle{}) \\
+\hline
+{\em msg} & -\/ Error message format string \\
+\hline
+{\em varargin} & -\/ Optional variables for the format string\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage\ with\ simple\ condition}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(x\ >\ 0,\ \textcolor{stringliteral}{'NonPositive'},\ \textcolor{stringliteral}{'Value\ must\ be\ positive.'});}
+\DoxyCodeLine{\%\ With\ formatted\ message}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(n\ <\ 100,\ \textcolor{stringliteral}{'TooLarge'},\ \textcolor{stringliteral}{'Value\ \%d\ exceeds\ limit.'},\ n);}
+\DoxyCodeLine{\%\ Default\ behavior\ (minimal\ arguments)}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isreal(x));}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa}{core.\+except.\+verify} 
+
+core.\+except.\+backtrack 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa}\index{core::except@{core::except}!verify@{verify}}
+\index{verify@{verify}!core::except@{core::except}}
+\doxysubsubsection{\texorpdfstring{verify()}{verify()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1except_a659290750309c58a90d9b3104464cefa} 
+function core\+::except\+::verify (\begin{DoxyParamCaption}\item[{Input\+Type}]{flag}{, }\item[{Input\+Type}]{id}{, }\item[{Input\+Type}]{msg}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Advanced verification. 
+
+verify(flag) throws a warning if {\itshape flag} is false.
+
+verify(flag, id, msg, ...) throws a warning with the specified {\itshape id} and {\itshape msg} if {\itshape flag} is false.
+
+
+\begin{DoxyParams}{Parameters}
+{\em flag} & -\/ Logical condition to check \\
+\hline
+{\em id} & -\/ Warning identifier (e.\+g., \textquotesingle{}Invalid\+Input\textquotesingle{} or \textquotesingle{}Out\+Of\+Range\textquotesingle{}) \\
+\hline
+{\em msg} & -\/ Warning message format string \\
+\hline
+{\em varargin} & -\/ Optional variables for the format string\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Basic\ usage\ with\ simple\ condition}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(x\ >\ 0,\ \textcolor{stringliteral}{'NonPositive'},\ \textcolor{stringliteral}{'Value\ should\ be\ positive.'});}
+\DoxyCodeLine{\%\ With\ formatted\ message}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(n\ <\ 100,\ \textcolor{stringliteral}{'TooLarge'},\ \textcolor{stringliteral}{'Value\ \%d\ exceeds\ limit.'},\ n);}
+\DoxyCodeLine{\%\ Default\ behavior\ (minimal\ arguments)}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.verify(isreal(x));}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1except_ab7719f4a7e38c6661335cfc536dda519}{core.\+except.\+assert} 
+
+core.\+except.\+backtrack 
+\end{DoxySeeAlso}

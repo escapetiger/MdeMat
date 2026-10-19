@@ -1,0 +1,427 @@
+\doxysection{Polytopal\+Mesh.\+m}
+\hypertarget{_polytopal_mesh_8m_source}{}\label{_polytopal_mesh_8m_source}\index{+approx/+mesh/PolytopalMesh.m@{+approx/+mesh/PolytopalMesh.m}}
+\mbox{\hyperlink{_polytopal_mesh_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00001}00001\ classdef\ PolytopalMesh\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00002}00002\ \ \ \ \ \%\ POLYTOPALMESH\ Base\ \textcolor{keyword}{class\ }for\ polytopal\ meshes.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ PolytopalMesh\ provides\ a\ foundational\ representation\ \textcolor{keywordflow}{for}\ polytopal}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ meshes\ consisting\ of\ vertices,\ faces,\ and\ elements\ with\ \textcolor{keyword}{explicit}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ connectivity\ information.\ It\ serves\ as\ the\ base\ \textcolor{keyword}{class\ }for}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ unstructured\ mesh\ types\ and\ integrates\ seamlessly\ with\ the}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ Graph-\/based\ mesh\ infrastructure\ \textcolor{keywordflow}{for}\ visualization\ and\ analysis.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ mesh\ topology\ follows\ standard\ finite\ element\ conventions:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ In\ 1D:\ elements\ are\ line\ segments,\ faces\ are\ points\ (vertices)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ In\ 2D:\ elements\ are\ polygons,\ faces\ are\ edges}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ In\ 3D:\ elements\ are\ polyhedra,\ faces\ are\ polygons}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ -\/\ In\ nD:\ elements\ are\ n-\/polytopes,\ faces\ are\ (n-\/1)-\/polytopes}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ Connectivity\ is\ stored\ \textcolor{keyword}{using\ }explicit\ arrays\ and\ sparse\ tables:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ -\/\ vertices:\ Coordinate\ matrix\ (nVertices\ ×\ nDims)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ elements:\ Connectivity\ matrix\ (nElements\ ×\ nVerticesPerElement)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ -\/\ faces:\ Connectivity\ matrix\ (nFaces\ ×\ nVerticesPerFace)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ -\/\ faceToElementTable:\ Sparse\ connectivity\ (nFaces\ ×\ nElements)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }supports\ periodic\ boundary\ conditions\ through}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ vertex-\/to-\/vertex\ and\ face-\/to-\/face\ mapping\ tables\ that\ identify}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ geometrically\ equivalent\ entities\ across\ periodic\ boundaries.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00025}00025\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00026}00026\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{Mesh}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_graph}{Graph}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{PolytopalMeshPlotter}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00029}00029\ \ \ \ \ properties\ (Access\ =\ \textcolor{keyword}{public})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00030}00030\ \ \ \ \ \ \ \ \ vertices\ \%\ Vertex\ coordinates\ (nVertices\ ×\ nDims)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ elements\ \%\ Element\ connectivity\ (nElements\ ×\ nVerticesPerElement)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ faces\ \%\ Face\ connectivity\ (nFaces\ ×\ nVerticesPerFace)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ boundary\ \%\ Boundary\ face\ indices\ (nBoundaryFaces\ ×\ 1)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00034}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{00034}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{faceToElementTable}}\ \%\ Face-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity\ (sparse\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertexToVertexTable}}\ \%\ Periodic\ vertex\ mapping\ (sparse\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{faceToFaceTable}}\ \%\ Periodic\ face\ mapping\ (sparse\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00037}00037\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00038}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{00038}}\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00039}00039\ \ \ \ \ properties\ (Dependent)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}\ \%\ Number\ of\ spatial\ dimensions\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00041}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{00041}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ per\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00044}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{00044}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ per\ face\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}{nBoundaryFaces}}\ \%\ Number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ (integer)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00047}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{00047}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00049}00049\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{00050}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ POLYTOPALMESH\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00053}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ a\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ from\ vertex\ coordinates\ and\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ connectivity,\ automatically\ generating\ face\ topology\ and}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00056}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ensuring\ proper\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ orientation.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ -\/\ Physical\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ -\/\ Reference\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ -\/\ Vertex\ coordinate\ matrix\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00062}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ -\/\ Element\ connectivity\ matrix\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00065}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00068}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ constructor\ automatically:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 1.\ Ensures\ positive\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ orientation}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 2.\ Generates\ face\ connectivity\ from\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00071}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 3.\ Identifies\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ 4.\ Builds\ face-\/to-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity\ tables}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00074}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}});}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00077}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{00077}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{forcePositiveOrientation}}();}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{setFaces}}();}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertexToVertexTable}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00080}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{faceToFaceTable}}\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NDIMS\ Get\ the\ number\ of\ spatial\ dimensions.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NVERTICES\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NELEMENTS\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NVERTICESPERELEMENT\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ per\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00106}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{00106}}\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NFACES\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NVERTICESPERFACE\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ per\ face.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ function\ n\ =\ get.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}{nBoundaryFaces}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GET.NBOUNDARYFACES\ Get\ the\ number\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ length(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}});}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ function\ V\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{findElementVertices}}(obj,\ IE)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDELEMENTVERTICES\ Extract\ vertex\ coordinates\ for\ specified}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{findElementVertices}}(obj)\ returns\ vertex\ coordinates\ for}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ in\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{findElementVertices}}(obj,\ IE)\ returns\ vertex\ coordinates}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ only\ for\ the\ specified\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Element\ linear\ indices\ (optional,\ vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\ -\/\ Element\ vertex\ coordinates\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ output\ format\ is\ suitable\ for\ coordinate}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ transformations\ and\ geometric\ computations.\ Each\ page}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V(:,:,k)\ contains\ the\ vertex\ coordinates\ for\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ k.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Use\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ if\ none\ specified}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 2\ ||\ isempty(IE)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ vertex\ indices\ for\ specified\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(IE,\ :).';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ vertex\ coordinates\ and\ reshape\ for\ output}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}(E(:),\ :);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ reshape(V,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}},\ [],\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}});}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ permute(V,\ [3,\ 1,\ 2]);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{setPeriodic}}(obj,\ shift,\ tol)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETPERIODIC\ Establish\ periodic\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ mappings.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{setPeriodic}}(obj,\ shift)\ builds\ vertex-\/to-\/vertex\ and}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00165}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{00165}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ face-\/to-\/face\ connectivity\ tables\ to\ represent\ periodic}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ mappings\ between\ geometrically\ equivalent\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ entities.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{setPeriodic}}(obj,\ shift,\ tol)\ uses\ the\ specified}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tolerance\ for\ identifying\ equivalent\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ shift\ -\/\ Periodic\ shift\ vectors\ (nShifts\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tol\ -\/\ Geometric\ tolerance\ for\ vertex\ matching\ (optional,\ default:\ 1e-\/12)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}\ with\ periodic\ tables}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ shift\ vectors\ define\ how\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ map\ across\ periodic}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ boundaries.\ For\ example,\ shift\ =\ [1,\ 0]\ maps\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ at}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x=0\ to\ corresponding\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ at\ x=1\ in\ a\ unit\ square.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ method\ is\ essential\ for\ implementing\ periodic\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ conditions\ in\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ and\ finite\ difference\ methods.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Set\ default\ tolerance\ if\ not\ provided}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3\ ||\ isempty(tol)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ 1e-\/12;}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Build\ vertex-\/to-\/vertex\ mapping\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setVertexToVertexTable(shift,\ tol);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Build\ face-\/to-\/face\ mapping\ table\ using\ vertex\ mappings}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setFaceToFaceTable();}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ function\ IE\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}{findInteriorElements}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDINTERIORELEMENTS\ Find\ linear\ indices\ of\ interior\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}{findInteriorElements}}(obj)\ computes\ the\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ that\ do\ not\ touch\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00204}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{00204}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ interior\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Interior\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ are\ those\ whose\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ are\ all\ shared\ with}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ other\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (not\ on\ the\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}).\ These\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ often}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ require\ different\ treatment\ in\ numerical\ methods.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Mark\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ false(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ mask(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}})\ =\ true;}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ with\ no\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ find(\string~any(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{faceToElementTable}}(mask,\ :),\ 1));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00224}00224\ \ \ \ \ \ \ \ \ function\ IE\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{findBoundaryElements}}(obj,\ IFE)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDBOUNDARYELEMENTS\ Find\ linear\ indices\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{findBoundaryElements}}(obj)\ computes\ the\ linear\ indices}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ of\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ that\ have\ at\ least\ one\ face\ on\ the}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{findBoundaryElements}}(obj,\ IFE)\ finds\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ that}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00233}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}{00233}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ have\ their\ IFE-\/th\ local\ face\ on\ the\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Local\ face\ index\ (optional,\ scalar)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Boundary\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ require\ special\ treatment\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ conditions\ in\ numerical\ methods.\ The\ local\ face\ index\ IFE}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ refers\ to\ the\ face\ numbering\ within\ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Handle\ case\ for\ specific\ local\ face}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ >\ 1\ \&\&\ \string~isempty(IFE)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ face\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ specified\ local\ face\ from\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ nchoosek(1:obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}},\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}}).';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ reshape(E(T(:,\ IFE),\ :),\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}},\ []);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ sort(F,\ 1).';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ which\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ are\ on\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ I]\ =\ ismember(F,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ 'rows');}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ find(ismember(I,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ with\ any\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ face}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IE\ =\ find(any(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{faceToElementTable}}(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}},\ :),\ 1));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00262}00262\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00263}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{00263}}\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00264}00264\ \ \ \ \ \ \ \ \ function\ [JE,\ JFE]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}{findNeighborElements}}(obj,\ IE,\ IFE,\ BC)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINDNEIGHBORELEMENTS\ Find\ neighboring\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ across\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [JE,\ JFE]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}{findNeighborElements}}(obj,\ IE,\ IFE,\ BC)\ computes}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ linear\ indices\ of\ neighbor\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ sharing\ the\ IFE-\/th}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ face\ of\ prime\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ IE,\ with\ the\ specified\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ condition\ treatment.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IE\ -\/\ Linear\ indices\ of\ prime\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ IFE\ -\/\ Local\ face\ index\ of\ prime\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (scalar)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ BC\ -\/\ Boundary\ condition\ type\ ('periodic'\ or\ 'dirichlet')}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JE\ -\/\ Linear\ indices\ of\ neighbor\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ JFE\ -\/\ Local\ face\ indices\ of\ neighbor\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (vector)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ periodic\ boundaries,\ neighbors\ are\ found\ across}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ periodic\ mappings.\ For\ Dirichlet\ boundaries,\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ have\ no\ neighbors\ (JE\ =\ 0).\ The\ local\ face\ indices\ indicate}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ which\ face\ of\ the\ neighbor\ connects\ to\ the\ prime\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ face\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ specified\ local\ face}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ nchoosek(1:obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}},\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}}).';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ E(T(:,\ IFE),\ IE);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ sort(F,\ 1).';}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ corresponding\ global\ face\ indices}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ I]\ =\ ismember(F,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ 'rows');}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ condition\ treatment}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ switch\ lower(BC)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 'periodic'}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Map\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ through\ periodic\ table\ if\ needed}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ any(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{faceToFaceTable}}(I,\ :),\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I(P)\ =\ find(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{faceToFaceTable}}(I(P),\ :),\ 1,\ 'first');}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00304}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}{00304}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 'dirichlet'}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Remove\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ (no\ neighbors)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I\ =\ setdiff(I,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}});}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ neighbor\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ using\ face-\/to-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{faceToElementTable}}(I,\ :);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ R(:,\ IE)\ =\ 0;\ \%\ Remove\ self-\/connections}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ [JFE,\ JE]\ =\ max(R,\ [],\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ JE(JFE\ ==\ 0)\ =\ 0;\ \%\ Mark\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ with\ no\ neighbors}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00314}00314\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00315}00315\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00316}00316\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00317}00317\ \ \ \ \ methods\ (Abstract,\ Access\ =\ protected)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00318}00318\ \ \ \ \ \ \ \ \ \%\ SETFACES\ Generate\ face\ connectivity\ from\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ topology.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00319}00319\ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{setFaces}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00321}00321\ \ \ \ \ \ \ \ \ \%\ FORCEPOSITIVEORIENTATION\ Ensure\ positive\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ orientations.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00322}00322\ \ \ \ \ \ \ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{forcePositiveOrientation}}(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00323}00323\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00325}00325\ \ \ \ \ methods\ (Access\ =\ private)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00326}00326\ \ \ \ \ \ \ \ \ function\ obj\ =\ setVertexToVertexTable(obj,\ shift,\ tol)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETVERTEXTOVERTEXTABLE\ Build\ vertex-\/to-\/vertex\ mapping\ table.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setVertexToVertexTable(obj,\ shift,\ tol)\ constructs\ a}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sparse\ matrix\ identifying\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ that\ are\ geometrically}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ equivalent\ under\ the\ specified\ periodic\ shifts.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ shift\ -\/\ Periodic\ shift\ vectors\ (nShifts\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ tol\ -\/\ Geometric\ tolerance\ for\ vertex\ matching}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00337}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{00337}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}\ with\ vertex\ mapping\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ resulting\ sparse\ matrix\ has\ entry\ (i,j)\ =\ 1\ if\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00343}\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{00343}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ i\ and\ j\ are\ equivalent\ under\ some\ periodic\ shift.\ This}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ creates\ an\ undirected\ graph\ of\ vertex\ equivalences.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ nV\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ sparse(nV,\ nV);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Check\ each\ periodic\ shift}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 1:size(shift,\ 1)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ pairwise\ distances\ under\ this\ shift}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D\ =\ pdist2(V,\ V-\/shift(k,\ :));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00354}00354\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ vertex\ pairs\ within\ tolerance}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [I,\ J]\ =\ find(D\ <\ tol);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ symmetric\ connections\ to\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ T\ +\ sparse(I,\ J,\ 1,\ nV,\ nV);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ T\ +\ sparse(J,\ I,\ 1,\ nV,\ nV);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Store\ as\ binary\ sparse\ matrix}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertexToVertexTable}}\ =\ spones(T);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00365}00365\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00367}00367\ \ \ \ \ \ \ \ \ function\ obj\ =\ setFaceToFaceTable(obj)}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFACETOFACETABLE\ Build\ face-\/to-\/face\ mapping\ table.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setFaceToFaceTable(obj)\ constructs\ a\ sparse\ matrix}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ identifying\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ that\ are\ geometrically\ equivalent\ under}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ periodic\ mappings,\ using\ the\ existing\ vertex-\/to-\/vertex}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ table.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{PolytopalMesh}}\ \textcolor{keywordtype}{object}\ with\ face\ mapping\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Two\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ are\ equivalent\ if\ all\ their\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ map\ to\ the}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ of\ another\ face\ under\ the\ periodic\ mapping.\ This}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ method\ uses\ the\ vertex-\/to-\/vertex\ table\ to\ identify\ such}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ face\ pairs\ efficiently.}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00386}00386\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ V2V\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertexToVertexTable}};}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Map\ face\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ through\ vertex-\/to-\/vertex\ table}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ mappedFaces\ =\ zeros(size(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 1:obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{nVerticesPerFace}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rowIdx\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}(:,\ k);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00393}00393\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ mapped\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ each\ face\ vertex}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [r,\ c]\ =\ find(V2V(rowIdx,\ :));}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idxs\ =\ accumarray(r,\ c,\ [length(rowIdx),\ 1],\ @(x)\ x(1),\ 0);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mappedFaces(:,\ k)\ =\ idxs;}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Remove\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ with\ incomplete\ mappings}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ validMask\ =\ all(mappedFaces\ >\ 0,\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ mappedFaces\ =\ mappedFaces(validMask,\ :);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ origFaceIdx\ =\ find(validMask);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Sort\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ canonical\ representation}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ sortedMappedFaces\ =\ sort(mappedFaces,\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ sortedFaces\ =\ sort(obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00408}00408\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ matching\ mapped\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ in\ original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ [\string~,\ loc]\ =\ ismember(sortedMappedFaces,\ sortedFaces,\ 'rows');}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00411}00411\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Build\ symmetric\ sparse\ connection\ matrix}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ validPairs\ =\ loc\ >\ 0;}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ iFaces\ =\ origFaceIdx(validPairs);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ jFaces\ =\ loc(validPairs);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ faceToFace\ =\ sparse([iFaces;\ jFaces],\ [jFaces;\ iFaces],\ 1,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}},\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}});}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{faceToFaceTable}}\ =\ spones(faceToFace);}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00419}00419\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00420}00420\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_polytopal_mesh_8m_source_l00421}00421\ end}
+
+\end{DoxyCode}

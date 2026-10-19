@@ -1,0 +1,204 @@
+\doxysection{profilers\+::visual\+::Geometry\+Plotter Class Reference}
+\hypertarget{classprofilers_1_1visual_1_1_geometry_plotter}{}\label{classprofilers_1_1visual_1_1_geometry_plotter}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+
+
+Specialized plotter for reference geometry visualization.  
+
+
+
+
+Inherits \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers\+::visual\+::\+Tiled\+Plotter}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_aa3d9174e22ca9a7abb51bb382d240d01}{Geometry\+Plotter}} (Input\+Type \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad}{geometry}}, Input\+Type n\+Rows, Input\+Type n\+Cols)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{Geometry\+Plotter}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_a4e34813fc5b83fea08756e6c51a2f97a}{set\+Nodes}} (Input\+Type obj, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Configure evaluation nodes for rendering. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers\+::visual\+::\+Tiled\+Plotter}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_aa056410437a57f26935660674a572997}{Tiled\+Plotter}} (Input\+Type n\+Rows, Input\+Type n\+Cols)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_ab917e7da5e748132dc50f2803d567d8c}{set\+Strategy}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}})
+\begin{DoxyCompactList}\small\item\em Configure the rendering strategy. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a08810db4600d739d6caaaad718e226f1}{add\+Axis\+Spec}} (Input\+Type obj, Input\+Type n\+Rows, Input\+Type n\+Cols)
+\begin{DoxyCompactList}\small\item\em Add axis specification for a panel. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a38926ea95985ed7e437ee1201f18f18c}{draft}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Create the tiledlayout and axes. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a8300bb890fe188e5c4b298ad39dc4162}{render}} (Input\+Type obj, Input\+Type title\+Text, Input\+Type dataset, Input\+Type styleset, Input\+Type render\+Fn)
+\begin{DoxyCompactList}\small\item\em Render data using the configured strategy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad}{geometry}}
+\begin{DoxyCompactList}\small\item\em Reference geometry element defining the domain. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_ad83c94e939b36612b86e7172382517a1}{nodes}}
+\begin{DoxyCompactList}\small\item\em Reference evaluation nodes for rendering (n\+Dims×n\+Points) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_adba6d1b04dd0711e0870f36fc9956b17}{coords}}
+\begin{DoxyCompactList}\small\item\em Cell array of coordinate vectors for each dimension. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers\+::visual\+::\+Tiled\+Plotter}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_afa2a12cecc6293f24d26e38ca2f9b7e3}{size}}
+\begin{DoxyCompactList}\small\item\em \mbox{[}n\+Rows, n\+Cols\mbox{]} overall grid dimensions \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_aa6763930f0167e6251458d9bde1189ca}{axes}}
+\begin{DoxyCompactList}\small\item\em Array of axes handles for rendering. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a3a0c6a98222205ba1127d6afd578c19c}{specs}}
+\begin{DoxyCompactList}\small\item\em Array of axis specifications with rows/cols fields. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a658eff76632f4fb582f29a6638ee8b7a}{tiled\+Obj}}
+\begin{DoxyCompactList}\small\item\em Handle to the tiledlayout container. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a66eb0662a19e67e9534808aabec54807}{tile\+Indices}}
+\begin{DoxyCompactList}\small\item\em Computed tile indices for axis placement. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}}
+\begin{DoxyCompactList}\small\item\em Rendering strategy object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers\+::visual\+::\+Tiled\+Plotter}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a82a1d5f5b25dbdd9806b8f601e62e1cf}{compute\+Tile\+Indices}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute tile placement for axis specifications. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Specialized plotter for reference geometry visualization. 
+
+\doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{Geometry\+Plotter} extends \doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{Tiled\+Plotter} to provide specialized functionality for visualizing data on reference geometry elements. This class automatically configures rendering nodes and coordinates based on geometry bounds, simplifying visualization workflows that don\textquotesingle{}t require full finite element space setup.
+
+The plotter is particularly useful for visualizing data on canonical domains (unit squares, cubes, etc.) and for prototyping visualization strategies before applying them to complex finite element meshes.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ plotter\ \textcolor{keywordflow}{for}\ unit\ square\ with\ 2×3\ layout}
+\DoxyCodeLine{\mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad}{geometry}}\ =\ core.geometry.Orthotope.unit(2);}
+\DoxyCodeLine{plotter\ =\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_aa3d9174e22ca9a7abb51bb382d240d01}{GeometryPlotter}}(\mbox{\hyperlink{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad}{geometry}},\ 2,\ 3);}
+\DoxyCodeLine{\%\ Configure\ rendering\ and\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a5fbe148cc243d1f39b7492e57be41f49}{strategy}}}
+\DoxyCodeLine{plotter.setNodes(15);\ \%\ 15×15\ evaluation\ grid}
+\DoxyCodeLine{plotter.setStrategy(profilers.visual.Strategy2d(\textcolor{stringliteral}{'contour'}));}
+\DoxyCodeLine{\%\ Set\ up\ layout\ and\ \mbox{\hyperlink{classprofilers_1_1visual_1_1_tiled_plotter_a8300bb890fe188e5c4b298ad39dc4162}{render}}}
+\DoxyCodeLine{plotter.addAxisSpec(1,\ 1);\ \%\ Add\ axis\ specifications}
+\DoxyCodeLine{plotter.draft(\textcolor{stringliteral}{'TileSpacing'},\ \textcolor{stringliteral}{'compact'});}
+\DoxyCodeLine{plotter.render(\textcolor{stringliteral}{'Function\ Visualization'},\ datasets,\ styles);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classprofilers_1_1visual_1_1_tiled_plotter}{profilers.\+visual.\+Tiled\+Plotter} 
+
+\doxylink{classcore_1_1geometry_1_1_orthotope}{core.\+geometry.\+Orthotope} 
+
+\doxylink{classprofilers_1_1visual_1_1_strategy}{profilers.\+visual.\+Strategy} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_geometry_plotter_8m_source_l00036}{36}} of file \mbox{\hyperlink{_geometry_plotter_8m_source}{Geometry\+Plotter.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_aa3d9174e22ca9a7abb51bb382d240d01}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}!GeometryPlotter@{GeometryPlotter}}
+\index{GeometryPlotter@{GeometryPlotter}!profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+\doxysubsubsection{\texorpdfstring{GeometryPlotter()}{GeometryPlotter()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_geometry_plotter_aa3d9174e22ca9a7abb51bb382d240d01} 
+function profilers\+::visual\+::\+Geometry\+Plotter\+::\+Geometry\+Plotter (\begin{DoxyParamCaption}\item[{Input\+Type}]{geometry}{, }\item[{Input\+Type}]{n\+Rows}{, }\item[{Input\+Type}]{n\+Cols}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{Geometry\+Plotter}. 
+
+obj = Geometry\+Plotter(geometry, n\+Rows, n\+Cols) creates a geometry plotter for the specified reference geometry with a tiled layout of the given dimensions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em geometry} & -\/ Reference geometry object (e.\+g., Orthotope) \\
+\hline
+{\em n\+Rows} & -\/ Number of rows in the tiled layout (positive integer) \\
+\hline
+{\em n\+Cols} & -\/ Number of columns in the tiled layout (positive integer) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_a4e34813fc5b83fea08756e6c51a2f97a}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}!setNodes@{setNodes}}
+\index{setNodes@{setNodes}!profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+\doxysubsubsection{\texorpdfstring{setNodes()}{setNodes()}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_geometry_plotter_a4e34813fc5b83fea08756e6c51a2f97a} 
+function profilers\+::visual\+::\+Geometry\+Plotter\+::set\+Nodes (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{n}{}\end{DoxyParamCaption})}
+
+
+
+Configure evaluation nodes for rendering. 
+
+obj = set\+Nodes(obj, n) sets up a uniform grid of evaluation nodes within the reference geometry bounds. These nodes are used for function evaluation and data visualization.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{Geometry\+Plotter} object \\
+\hline
+{\em n} & -\/ Number of nodes per dimension (scalar or vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classprofilers_1_1visual_1_1_geometry_plotter}{Geometry\+Plotter} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_adba6d1b04dd0711e0870f36fc9956b17}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}!coords@{coords}}
+\index{coords@{coords}!profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+\doxysubsubsection{\texorpdfstring{coords}{coords}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_geometry_plotter_adba6d1b04dd0711e0870f36fc9956b17} 
+Property profilers\+::visual\+::\+Geometry\+Plotter\+::coords}
+
+
+
+Cell array of coordinate vectors for each dimension. 
+
+
+
+Definition at line \mbox{\hyperlink{_geometry_plotter_8m_source_l00046}{46}} of file \mbox{\hyperlink{_geometry_plotter_8m_source}{Geometry\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}!geometry@{geometry}}
+\index{geometry@{geometry}!profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+\doxysubsubsection{\texorpdfstring{geometry}{geometry}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_geometry_plotter_a0e3e55e3a8dd7063f7a236da2200bdad} 
+Property profilers\+::visual\+::\+Geometry\+Plotter\+::geometry}
+
+
+
+Reference geometry element defining the domain. 
+
+
+
+Definition at line \mbox{\hyperlink{_geometry_plotter_8m_source_l00040}{40}} of file \mbox{\hyperlink{_geometry_plotter_8m_source}{Geometry\+Plotter.\+m}}.
+
+\Hypertarget{classprofilers_1_1visual_1_1_geometry_plotter_ad83c94e939b36612b86e7172382517a1}\index{profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}!nodes@{nodes}}
+\index{nodes@{nodes}!profilers::visual::GeometryPlotter@{profilers::visual::GeometryPlotter}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily \label{classprofilers_1_1visual_1_1_geometry_plotter_ad83c94e939b36612b86e7172382517a1} 
+Property profilers\+::visual\+::\+Geometry\+Plotter\+::nodes}
+
+
+
+Reference evaluation nodes for rendering (n\+Dims×n\+Points) 
+
+
+
+Definition at line \mbox{\hyperlink{_geometry_plotter_8m_source_l00043}{43}} of file \mbox{\hyperlink{_geometry_plotter_8m_source}{Geometry\+Plotter.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++profilers/+visual/\mbox{\hyperlink{_geometry_plotter_8m}{Geometry\+Plotter.\+m}}\end{DoxyCompactItemize}

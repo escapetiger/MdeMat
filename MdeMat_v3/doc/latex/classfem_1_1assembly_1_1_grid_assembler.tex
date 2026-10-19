@@ -1,0 +1,273 @@
+\doxysection{fem\+::assembly\+::Grid\+Assembler Class Reference}
+\hypertarget{classfem_1_1assembly_1_1_grid_assembler}{}\label{classfem_1_1assembly_1_1_grid_assembler}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+
+
+Grid-\/based assembler for structured meshes.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{fem\+::assembly\+::\+Assembler}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1assembly_1_1_diffusion_grid_assembler}{fem\+::assembly\+::\+Diffusion\+Grid\+Assembler}}, \mbox{\hyperlink{classfem_1_1assembly_1_1_eulerian_grid_assembler}{fem\+::assembly\+::\+Eulerian\+Grid\+Assembler}}, and \mbox{\hyperlink{classfem_1_1assembly_1_1_semi_lagrangian_uniform_grid_assembler}{fem\+::assembly\+::\+Semi\+Lagrangian\+Uniform\+Grid\+Assembler}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_aae88f556d847579d8c2ef561c8d7a7c9}{Grid\+Assembler}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a5ebd77dd03f986c1cfdcb29af9098265}{bc\+Type}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{fem\+::assembly\+::\+Assembler}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_ae71c91072b6806d1e0a1b033d7fe64bd}{Assembler}} (Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}}, Input\+Type \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1assembly_1_1_assembler}{Assembler}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a5ebd77dd03f986c1cfdcb29af9098265}{bc\+Type}}
+\begin{DoxyCompactList}\small\item\em Boundary condition type (0=periodic, 1=Dirichlet) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{fem\+::assembly\+::\+Assembler}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a5ede4f8df2ebf9856169a1219e86c886}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}}
+\begin{DoxyCompactList}\small\item\em Finite element operator object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a980176995314ad6d0ca771e2b0088824}{n\+Total\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of elements in the discretization. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a33f4483b73b6d52c7ec446983da2e7e3}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of local degrees of freedom per element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a80209df81f775b300313a62e8b0b6998}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Total number of global degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a87e3e1922f5940fc1402770e58755caa}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a6bd97592ee74309ca2459b60d024eec4}{assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a759410e927927a2d000d43d403892758}{assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary Dirichlet condition terms. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a46e99dfb41724e5bb52b2af7334bf2f6}{assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble left boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_a78574e308ccb6b7e3865d51a66e4d972}{assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms}} (Input\+Type obj, Input\+Type d, Input\+Type c, Input\+Type f, Input\+Type g, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Assemble right boundary jump terms for Dirichlet conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler}{fem\+::assembly\+::\+Assembler}}}
+\begin{DoxyCompactItemize}
+\item 
+static function \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a02874ab81616081e08c036245c2e8f04}{sparse\+From\+Triplets}} (Input\+Type T, Input\+Type m, Input\+Type n)
+\begin{DoxyCompactList}\small\item\em Create sparse matrix from triplet format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grid-\/based assembler for structured meshes. 
+
+\doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler} provides assembly methods for finite element operators on structured grid meshes. This class extends the base \doxylink{classfem_1_1assembly_1_1_assembler}{Assembler} to handle grid-\/specific operations and boundary condition treatments.
+
+The assembler supports different boundary condition types and provides specialized methods for handling Dirichlet boundary conditions on structured grids.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ grid\ assembler\ with\ periodic\ boundaries}
+\DoxyCodeLine{assembler\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_aae88f556d847579d8c2ef561c8d7a7c9}{GridAssembler}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}},\ gridMesh,\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}},\ 0);}
+\DoxyCodeLine{\%\ Create\ grid\ assembler\ with\ Dirichlet\ boundaries}
+\DoxyCodeLine{assembler\ =\ \mbox{\hyperlink{classfem_1_1assembly_1_1_grid_assembler_aae88f556d847579d8c2ef561c8d7a7c9}{GridAssembler}}(\mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a82cebe6003653bb94923316771a0bd77}{fe}},\ gridMesh,\ \mbox{\hyperlink{classfem_1_1assembly_1_1_assembler_a464acd533cae3fd563a11394fe83618e}{op}},\ 1);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1assembly_1_1_assembler}{fem.\+assembly.\+Assembler} 
+
+\doxylink{classfem_1_1assembly_1_1_eulerian_grid_assembler}{fem.\+assembly.\+Eulerian\+Grid\+Assembler} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_grid_assembler_8m_source_l00027}{27}} of file \mbox{\hyperlink{_grid_assembler_8m_source}{Grid\+Assembler.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_aae88f556d847579d8c2ef561c8d7a7c9}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!GridAssembler@{GridAssembler}}
+\index{GridAssembler@{GridAssembler}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{GridAssembler()}{GridAssembler()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_aae88f556d847579d8c2ef561c8d7a7c9} 
+function fem\+::assembly\+::\+Grid\+Assembler\+::\+Grid\+Assembler (\begin{DoxyParamCaption}\item[{Input\+Type}]{fe}{, }\item[{Input\+Type}]{mesh}{, }\item[{Input\+Type}]{op}{, }\item[{Input\+Type}]{bc\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler}. 
+
+obj = Grid\+Assembler(fe, mesh, op, bc\+Type) creates an assembler for structured grid meshes with specified boundary condition treatment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fe} & -\/ Finite element object \\
+\hline
+{\em mesh} & -\/ Grid mesh object (must be \doxylink{classapprox_1_1mesh_1_1_grid}{approx.\+mesh.\+Grid}) \\
+\hline
+{\em op} & -\/ Finite element operator object \\
+\hline
+{\em bc\+Type} & -\/ Boundary condition type (0=periodic, 1=Dirichlet) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_a6bd97592ee74309ca2459b60d024eec4}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!assembleLeftDirichletBoundaryConditionTerms@{assembleLeftDirichletBoundaryConditionTerms}}
+\index{assembleLeftDirichletBoundaryConditionTerms@{assembleLeftDirichletBoundaryConditionTerms}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{assembleLeftDirichletBoundaryConditionTerms()}{assembleLeftDirichletBoundaryConditionTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_a6bd97592ee74309ca2459b60d024eec4} 
+function fem\+::assembly\+::\+Grid\+Assembler\+::assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble left boundary Dirichlet condition terms. 
+
+T = assemble\+Left\+Dirichlet\+Boundary\+Condition\+Terms(obj, d, c, f) assembles the contribution from Dirichlet boundary conditions on the left boundary of the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em varargin} & -\/ Additional arguments for boundary function\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary condition terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_a46e99dfb41724e5bb52b2af7334bf2f6}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!assembleLeftDirichletBoundaryJumpTerms@{assembleLeftDirichletBoundaryJumpTerms}}
+\index{assembleLeftDirichletBoundaryJumpTerms@{assembleLeftDirichletBoundaryJumpTerms}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{assembleLeftDirichletBoundaryJumpTerms()}{assembleLeftDirichletBoundaryJumpTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_a46e99dfb41724e5bb52b2af7334bf2f6} 
+function fem\+::assembly\+::\+Grid\+Assembler\+::assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{g}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble left boundary jump terms for Dirichlet conditions. 
+
+T = assemble\+Left\+Dirichlet\+Boundary\+Jump\+Terms(obj, d, c, f, g) assembles the contribution from jump terms in Dirichlet boundary conditions on the left boundary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em g} & -\/ Jump function handle \\
+\hline
+{\em varargin} & -\/ Additional arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary jump terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_a759410e927927a2d000d43d403892758}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!assembleRightDirichletBoundaryConditionTerms@{assembleRightDirichletBoundaryConditionTerms}}
+\index{assembleRightDirichletBoundaryConditionTerms@{assembleRightDirichletBoundaryConditionTerms}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{assembleRightDirichletBoundaryConditionTerms()}{assembleRightDirichletBoundaryConditionTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_a759410e927927a2d000d43d403892758} 
+function fem\+::assembly\+::\+Grid\+Assembler\+::assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble right boundary Dirichlet condition terms. 
+
+T = assemble\+Right\+Dirichlet\+Boundary\+Condition\+Terms(obj, d, c, f) assembles the contribution from Dirichlet boundary conditions on the right boundary of the specified dimension.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em varargin} & -\/ Additional arguments for boundary function\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary condition terms \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_a78574e308ccb6b7e3865d51a66e4d972}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!assembleRightDirichletBoundaryJumpTerms@{assembleRightDirichletBoundaryJumpTerms}}
+\index{assembleRightDirichletBoundaryJumpTerms@{assembleRightDirichletBoundaryJumpTerms}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{assembleRightDirichletBoundaryJumpTerms()}{assembleRightDirichletBoundaryJumpTerms()}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_a78574e308ccb6b7e3865d51a66e4d972} 
+function fem\+::assembly\+::\+Grid\+Assembler\+::assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{d}{, }\item[{Input\+Type}]{c}{, }\item[{Input\+Type}]{f}{, }\item[{Input\+Type}]{g}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Assemble right boundary jump terms for Dirichlet conditions. 
+
+T = assemble\+Right\+Dirichlet\+Boundary\+Jump\+Terms(obj, d, c, f, g) assembles the contribution from jump terms in Dirichlet boundary conditions on the right boundary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1assembly_1_1_grid_assembler}{Grid\+Assembler} object \\
+\hline
+{\em d} & -\/ Spatial dimension index (1, 2, or 3) \\
+\hline
+{\em c} & -\/ Coefficient vector \\
+\hline
+{\em f} & -\/ Boundary condition function handle \\
+\hline
+{\em g} & -\/ Jump function handle \\
+\hline
+{\em varargin} & -\/ Additional arguments\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em T} & -\/ Triplet matrix for boundary jump terms \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1assembly_1_1_grid_assembler_a5ebd77dd03f986c1cfdcb29af9098265}\index{fem::assembly::GridAssembler@{fem::assembly::GridAssembler}!bcType@{bcType}}
+\index{bcType@{bcType}!fem::assembly::GridAssembler@{fem::assembly::GridAssembler}}
+\doxysubsubsection{\texorpdfstring{bcType}{bcType}}
+{\footnotesize\ttfamily \label{classfem_1_1assembly_1_1_grid_assembler_a5ebd77dd03f986c1cfdcb29af9098265} 
+Property fem\+::assembly\+::\+Grid\+Assembler\+::bc\+Type}
+
+
+
+Boundary condition type (0=periodic, 1=Dirichlet) 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_assembler_8m_source_l00031}{31}} of file \mbox{\hyperlink{_grid_assembler_8m_source}{Grid\+Assembler.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+assembly/\mbox{\hyperlink{_grid_assembler_8m}{Grid\+Assembler.\+m}}\end{DoxyCompactItemize}

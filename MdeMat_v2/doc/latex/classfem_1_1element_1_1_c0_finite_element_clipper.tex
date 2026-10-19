@@ -1,0 +1,196 @@
+\doxysection{fem\+::element\+::C0\+Finite\+Element\+Clipper Class Reference}
+\hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper}{}\label{classfem_1_1element_1_1_c0_finite_element_clipper}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+
+
+Geometric clipper for continuous finite elements.  
+
+
+
+
+Inherits \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper}{fem\+::element\+::\+Finite\+Element\+Clipper}}.
+
+
+
+Inherited by \mbox{\hyperlink{classfem_1_1element_1_1_l2_finite_element_clipper}{fem\+::element\+::\+L2\+Finite\+Element\+Clipper}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_a5eca0917a20ac1fdf8e3d276f69d3aa9}{set\+Volume\+Piece\+Data}} (Input\+Type obj, Input\+Type ht, Input\+Type hx)
+\begin{DoxyCompactList}\small\item\em Set up volume piece data for semi-\/\+Lagrangian transport. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper}{fem\+::element\+::\+Finite\+Element\+Clipper}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_ad5ab450efecbfc3c16ee00df27c359f7}{Finite\+Element\+Clipper}} (Input\+Type \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9}{fe}}, Input\+Type \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classfem_1_1element_1_1_finite_element_clipper}{Finite\+Element\+Clipper}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_a329b36b99a12324f3a284df95806fe45}{n\+Volume\+Pieces}}
+\begin{DoxyCompactList}\small\item\em Number of volume pieces from intersection computation. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_a5018938024f1ced6cfb7daaef1d5e457}{volume\+Shifts}}
+\begin{DoxyCompactList}\small\item\em Index shifts for upstream element mapping. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_acbae3d671005746ddfd8e21612cdc995}{volume\+Pieces}}
+\begin{DoxyCompactList}\small\item\em Geometric data for volume pieces (structure) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_a290e974acc8cb6d7f0413c1dcd44756a}{volume\+Eulerian\+Data}}
+\begin{DoxyCompactList}\small\item\em Function data for Eulerian volume pieces (Function\+Data array) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_c0_finite_element_clipper_a501a68c1c1c9d0848dfc3f6823f39a32}{volume\+Upstream\+Data}}
+\begin{DoxyCompactList}\small\item\em Function data for upstream volume pieces (Function\+Data array) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper}{fem\+::element\+::\+Finite\+Element\+Clipper}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a2790cbbf7588389130d5cf18ab0c8cf9}{fe}}
+\begin{DoxyCompactList}\small\item\em Finite element object for which clipping is performed. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}}
+\begin{DoxyCompactList}\small\item\em Velocity vector for characteristic tracking. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Geometric clipper for continuous finite elements. 
+
+\doxylink{classfem_1_1element_1_1_c0_finite_element_clipper}{C0\+Finite\+Element\+Clipper} implements geometric clipping operations for continuous finite elements in semi-\/\+Lagrangian methods. It computes the intersection between the current Eulerian element and the upstream footprint traced along characteristic curves, creating volume pieces for accurate transport calculations.
+
+The clipper handles the complex geometry resulting from backward characteristic tracing by decomposing the intersection region into simpler geometric pieces. Each piece is equipped with appropriate quadrature rules and function data for both Eulerian and upstream (Lagrangian) representations.
+
+This approach enables stable and accurate semi-\/\+Lagrangian schemes for convection-\/dominated problems without the CFL restriction that limits explicit Eulerian methods.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ clipper\ \textcolor{keywordflow}{for}\ C0\ element\ with\ specified\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}}}
+\DoxyCodeLine{\mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}}\ =\ [0.5;\ 0.3];}
+\DoxyCodeLine{element\ =\ fem.element.C0FiniteElement(geometry,\ projector,\ integrator);}
+\DoxyCodeLine{clipper\ =\ C0FiniteElementClipper(element,\ \mbox{\hyperlink{classfem_1_1element_1_1_finite_element_clipper_a98cbb47aa7e981c1986a56ac62d1f7a3}{velocity}});}
+\DoxyCodeLine{\%\ Set\ up\ volume\ piece\ data\ \textcolor{keywordflow}{for}\ time\ step\ and\ mesh\ spacing}
+\DoxyCodeLine{timeStep\ =\ 0.1;}
+\DoxyCodeLine{meshSpacing\ =\ [0.05;\ 0.05];}
+\DoxyCodeLine{clipper.setVolumePieceData(timeStep,\ meshSpacing);}
+\DoxyCodeLine{\%\ Access\ computed\ pieces\ and\ data}
+\DoxyCodeLine{nPieces\ =\ clipper.nVolumePieces;}
+\DoxyCodeLine{eulerianData\ =\ clipper.volumeEulerianData;}
+\DoxyCodeLine{upstreamData\ =\ clipper.volumeUpstreamData;}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classfem_1_1element_1_1_finite_element_clipper}{fem.\+element.\+Finite\+Element\+Clipper} 
+
+\doxylink{classfem_1_1element_1_1_l2_finite_element_clipper}{fem.\+element.\+L2\+Finite\+Element\+Clipper} 
+
+\doxylink{classfem_1_1element_1_1_c0_finite_element}{fem.\+element.\+C0\+Finite\+Element} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00043}{43}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_a5eca0917a20ac1fdf8e3d276f69d3aa9}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!setVolumePieceData@{setVolumePieceData}}
+\index{setVolumePieceData@{setVolumePieceData}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{setVolumePieceData()}{setVolumePieceData()}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_a5eca0917a20ac1fdf8e3d276f69d3aa9} 
+function fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::set\+Volume\+Piece\+Data (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{ht}{, }\item[{Input\+Type}]{hx}{}\end{DoxyParamCaption})}
+
+
+
+Set up volume piece data for semi-\/\+Lagrangian transport. 
+
+set\+Volume\+Piece\+Data(obj, ht, hx) computes the geometric intersection between the current element and the upstream footprint, creating volume pieces with associated function data for accurate semi-\/\+Lagrangian integration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classfem_1_1element_1_1_c0_finite_element_clipper}{C0\+Finite\+Element\+Clipper} object \\
+\hline
+{\em ht} & -\/ Time step for characteristic tracking (positive scalar) \\
+\hline
+{\em hx} & -\/ Mesh spacing vector (column vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_a329b36b99a12324f3a284df95806fe45}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!nVolumePieces@{nVolumePieces}}
+\index{nVolumePieces@{nVolumePieces}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{nVolumePieces}{nVolumePieces}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_a329b36b99a12324f3a284df95806fe45} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::n\+Volume\+Pieces}
+
+
+
+Number of volume pieces from intersection computation. 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00047}{47}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_a290e974acc8cb6d7f0413c1dcd44756a}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!volumeEulerianData@{volumeEulerianData}}
+\index{volumeEulerianData@{volumeEulerianData}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{volumeEulerianData}{volumeEulerianData}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_a290e974acc8cb6d7f0413c1dcd44756a} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::volume\+Eulerian\+Data}
+
+
+
+Function data for Eulerian volume pieces (Function\+Data array) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00060}{60}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_acbae3d671005746ddfd8e21612cdc995}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!volumePieces@{volumePieces}}
+\index{volumePieces@{volumePieces}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{volumePieces}{volumePieces}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_acbae3d671005746ddfd8e21612cdc995} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::volume\+Pieces}
+
+
+
+Geometric data for volume pieces (structure) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00053}{53}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_a5018938024f1ced6cfb7daaef1d5e457}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!volumeShifts@{volumeShifts}}
+\index{volumeShifts@{volumeShifts}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{volumeShifts}{volumeShifts}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_a5018938024f1ced6cfb7daaef1d5e457} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::volume\+Shifts}
+
+
+
+Index shifts for upstream element mapping. 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00050}{50}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+\Hypertarget{classfem_1_1element_1_1_c0_finite_element_clipper_a501a68c1c1c9d0848dfc3f6823f39a32}\index{fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}!volumeUpstreamData@{volumeUpstreamData}}
+\index{volumeUpstreamData@{volumeUpstreamData}!fem::element::C0FiniteElementClipper@{fem::element::C0FiniteElementClipper}}
+\doxysubsubsection{\texorpdfstring{volumeUpstreamData}{volumeUpstreamData}}
+{\footnotesize\ttfamily \label{classfem_1_1element_1_1_c0_finite_element_clipper_a501a68c1c1c9d0848dfc3f6823f39a32} 
+Property fem\+::element\+::\+C0\+Finite\+Element\+Clipper\+::volume\+Upstream\+Data}
+
+
+
+Function data for upstream volume pieces (Function\+Data array) 
+
+
+
+Definition at line \mbox{\hyperlink{_c0_finite_element_clipper_8m_source_l00063}{63}} of file \mbox{\hyperlink{_c0_finite_element_clipper_8m_source}{C0\+Finite\+Element\+Clipper.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++fem/+element/\mbox{\hyperlink{_c0_finite_element_clipper_8m}{C0\+Finite\+Element\+Clipper.\+m}}\end{DoxyCompactItemize}

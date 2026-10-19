@@ -1,0 +1,91 @@
+\doxysection{Gauss\+Lobatto\+Rule.\+m}
+\hypertarget{_gauss_lobatto_rule_8m_source}{}\label{_gauss_lobatto_rule_8m_source}\index{+approx/+integrate/GaussLobattoRule.m@{+approx/+integrate/GaussLobattoRule.m}}
+\mbox{\hyperlink{_gauss_lobatto_rule_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00001}00001\ classdef\ GaussLobattoRule\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_univariate_rule}{UnivariateRule}}}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00002}00002\ \ \ \ \ \%\ GAUSSLOBATTORULE\ Gauss-\/Lobatto\ numerical\ integration\ rule.}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ GaussLobattoRule\ implements\ numerical\ integration\ \textcolor{keyword}{using\ }the}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ Gauss-\/Lobatto\ method,\ which\ includes\ both\ interval\ endpoints.}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ This\ method\ provides\ high\ accuracy\ \textcolor{keywordflow}{while}\ constraining\ the\ nodes}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ to\ include\ the\ boundary\ points.}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00009}00009\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \%\ Create\ a\ Gauss-\/Lobatto\ rule}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ rule\ =\ GaussLobattoRule();}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \%\ Generate\ 5\ nodes\ and\ weights\ \textcolor{keywordflow}{for}\ interval\ [0,\ 1]}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ [x,\ w]\ =\ rule.generate(5);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \%\ Generate\ nodes\ and\ weights\ \textcolor{keywordflow}{for}\ custom\ interval}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ [x,\ w]\ =\ rule.generate(4,\ \textcolor{keyword}{false},\ -\/1,\ 1);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00018}00018\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00019}00019\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ The\ Gauss-\/Lobatto\ quadrature\ formula\ includes\ both\ endpoints\ of}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ the\ integration\ interval.\ For\ n\ nodes,\ the\ method\ has\ polynomial}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ exactness\ of\ degree\ 2n-\/3.\ Requires\ n\ >=\ 2\ \textcolor{keywordflow}{for}\ meaningful\ results.}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00023}00023\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00024}00024\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_univariate_rule}{UnivariateRule}},\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_legendre_rule}{GaussLegendreRule}},}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1integrate}{integrate}}.\mbox{\hyperlink{classapprox_1_1integrate_1_1_closed_newton_cotes_rule}{ClosedNewtonCotesRule}}}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00029}00029\ \ \ \ \ methods\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00030}\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule}{00030}}\ \ \ \ \ \ \ \ \ function\ [x,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule_a52ae0a8f1d3f1c9427b21ff139e01a53}{generate}}(\string~,\ n,\ a,\ b)}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Generate\ 1D\ Gauss-\/Lobatto\ nodes\ and\ weights.}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule_a52ae0a8f1d3f1c9427b21ff139e01a53}{generate}}(obj,\ n)\ generates\ n\ Gauss-\/Lobatto\ nodes}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ corresponding\ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [0,\ 1].}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [x,\ w]\ =\ \mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule_a52ae0a8f1d3f1c9427b21ff139e01a53}{generate}}(obj,\ n,\ a,\ b)\ generates\ nodes\ and}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ weights\ \textcolor{keywordflow}{for}\ the\ interval\ [a,\ b].}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ n\ -\/\ Number\ of\ quadrature\ nodes\ (n\ >=\ 2)}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ -\/\ Lower\ integration\ bound\ (optional,\ \textcolor{keywordflow}{default}:\ 0)}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ b\ -\/\ Upper\ integration\ bound\ (optional,\ \textcolor{keywordflow}{default}:\ 1)}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ x\ -\/\ Row\ vector\ of\ quadrature\ nodes\ within\ [a,\ b]}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ w\ -\/\ Row\ vector\ of\ quadrature\ weights}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 3,\ [a,\ b]\ =\ deal(0,\ 1);\ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(isscalar(a)\ \&\&\ isscalar(b),\ ...}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00051}\mbox{\hyperlink{classapprox_1_1integrate_1_1_gauss_lobatto_rule_a52ae0a8f1d3f1c9427b21ff139e01a53}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'InvalidInput'},\ \textcolor{stringliteral}{'a\ and\ b\ must\ be\ scalars.'});}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1except}{except}}.assert(a\ <=\ b,\ \textcolor{stringliteral}{'InvalidInput'},\ ...}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'a\ <=\ b\ is\ required.'});}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ n\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ (a\ +\ b)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ a\ ==\ b}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [x,\ w]\ =\ deal(a,\ 1);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ cos(pi\ *\ ((n\ -\/\ 1):-\/1:0)\ /\ (n\ -\/\ 1));}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ P\ =\ zeros(n,\ n);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ x0\ =\ 2\ *\ ones(size(x));}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ max(abs(x-\/x0))\ >\ eps(1)}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x0\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P(1,\ :)\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P(2,\ :)\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 3:n}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P(k,\ :)\ =\ ((2\ *\ k\ -\/\ 3)\ *\ x\ .*\ P(k-\/1,\ :)\ -\/\ (k\ -\/\ 2)\ *\ P(k-\/2,\ :))\ /\ (k\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ x0\ -\/\ (x\ .*\ P(n,\ :)\ -\/\ P(n-\/1,\ :))\ ./\ (n\ *\ P(n,\ :));}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ (x\ +\ 1)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ 1\ ./\ ((n\ -\/\ 1)\ *\ n\ *\ P(n,\ :).\string^2);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ a\ +\ (b\ -\/\ a)\ *\ x;}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ w\ *\ (b\ -\/\ a);}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00084}00084\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_gauss_lobatto_rule_8m_source_l00085}00085\ end}
+
+\end{DoxyCode}

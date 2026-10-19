@@ -1,0 +1,397 @@
+\doxysection{core\+::symbolic\+::Compiler Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_compiler}{}\label{classcore_1_1symbolic_1_1_compiler}\index{core::symbolic::Compiler@{core::symbolic::Compiler}}
+
+
+Base class for all symbolic compilers.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1symbolic_1_1_fourier_basis_compiler}{core\+::symbolic\+::\+Fourier\+Basis\+Compiler}}, \mbox{\hyperlink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler}{core\+::symbolic\+::\+Interpolation\+Polynomial\+Basis\+Compiler}}, \mbox{\hyperlink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{core\+::symbolic\+::\+Orthogonal\+Polynomial\+Basis\+Compiler}}, and \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_compiler}{core\+::symbolic\+::\+Spherical\+Harmonic\+Basis\+Compiler}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_ab692113350deaff43f9b65e816d94d60}{Compiler}} (Input\+Type \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253}{variables}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a629d6aaf1f23d6738780090ca7fabd02}{compile}} (Input\+Type obj, Input\+Type file\+Name, Input\+Type basis\+Name, Input\+Type max\+Order)
+\begin{DoxyCompactList}\small\item\em Compiles polynomial basis matrix with derivatives. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a311dca03b6dd599d026f3f4f657689c5}{load}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Loads a previously compiled basis matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_aaf951d0cb3e5d54f5a70b60bba6a777b}{list}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Lists all compiled basis matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a636ce2c1a906ca8a33ed569f6ceb1ef0}{delete}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Deletes a compiled basis matrix. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a56ba1d51ab88f8c977344c147688939a}{clear}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Deletes all compiled basis matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a257de1e4bfcb161506333b8ae4e574e1}{set\+Functions}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Abstract method for setting basis functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a5edf3bb34846f75e640f97df438047a4}{METADATA\+\_\+\+DIR}} = \textquotesingle{}config/functions\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Directory for storing compiled matrices. \end{DoxyCompactList}\item 
+Constant Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a8a019a078711e687994db00e754185cc}{FILE\+\_\+\+EXTENSION}} = \textquotesingle{}.mat\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em File extension for compiled matrices. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253}{variables}}
+\begin{DoxyCompactList}\small\item\em Cell array of symbolic variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a1e4eca1151599fc4ccd9d3a345c87d70}{funcs}}
+\begin{DoxyCompactList}\small\item\em Object array of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} instances. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_ae1a76d371f4b4a64fd055cc9caae3727}{save}} (Input\+Type obj, Input\+Type filename, Input\+Type metadata)
+\begin{DoxyCompactList}\small\item\em Saves metadata to file. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a12effaa62b16342f630c2ab3f94cd3a4}{get\+Full\+Path}} (Input\+Type obj, Input\+Type filename)
+\begin{DoxyCompactList}\small\item\em Constructs full file path from filename. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_afeac604bae87550875c973c35dc87e5f}{create\+Handles}} (Input\+Type obj, Input\+Type max\+Order)
+\begin{DoxyCompactList}\small\item\em Creates basis matrix from stored functions. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_compiler_a0b83b1ae32d21bd32c7c9fdbe6bb7919}{create\+Metadata}} (Input\+Type obj, Input\+Type basis\+Type)
+\begin{DoxyCompactList}\small\item\em Creates base metadata structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all symbolic compilers. 
+
+\doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} provides a unified interface for generating, compiling, and storing basis matrices from various symbolic function types. It manages a centralized repository of pre-\/computed basis matrices for efficient reuse across the core package.
+
+The compiler creates function handle matrices for basis functions and their derivatives, stores them with metadata for later retrieval, and provides utilities for managing the compiled function repository.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcore_1_1symbolic_1_1_interpolation_polynomial_basis_compiler}{core.\+symbolic.\+Interpolation\+Polynomial\+Basis\+Compiler} 
+
+\doxylink{classcore_1_1symbolic_1_1_orthogonal_polynomial_basis_compiler}{core.\+symbolic.\+Orthogonal\+Polynomial\+Basis\+Compiler} 
+
+\doxylink{classcore_1_1symbolic_1_1_fourier_basis_compiler}{core.\+symbolic.\+Fourier\+Basis\+Compiler} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_compiler_8m_source_l00021}{21}} of file \mbox{\hyperlink{_compiler_8m_source}{Compiler.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_ab692113350deaff43f9b65e816d94d60}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!Compiler@{Compiler}}
+\index{Compiler@{Compiler}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{Compiler()}{Compiler()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_ab692113350deaff43f9b65e816d94d60} 
+function core\+::symbolic\+::\+Compiler\+::\+Compiler (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler}. 
+
+obj = \doxylink{classcore_1_1symbolic_1_1_compiler_ab692113350deaff43f9b65e816d94d60}{Compiler()} creates a new \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object with the default variable \{sym(\textquotesingle{}x\textquotesingle{})\}.
+
+obj = Compiler(variables) creates a new \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object with the specified symbolic variables and ensures the metadata directory exists for storing compiled basis matrices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em variables} & -\/ (Optional) Cell array of symbolic variables, default\+: \{sym(\textquotesingle{}x\textquotesingle{})\} \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a56ba1d51ab88f8c977344c147688939a}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!clear@{clear}}
+\index{clear@{clear}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a56ba1d51ab88f8c977344c147688939a} 
+function core\+::symbolic\+::\+Compiler\+::clear (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Deletes all compiled basis matrices. 
+
+obj = clear(obj) removes all compiled basis matrix files from the metadata directory. Useful for cleanup or when starting fresh with a new compilation session.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a629d6aaf1f23d6738780090ca7fabd02}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!compile@{compile}}
+\index{compile@{compile}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{compile()}{compile()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a629d6aaf1f23d6738780090ca7fabd02} 
+function core\+::symbolic\+::\+Compiler\+::compile (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{file\+Name}{, }\item[{Input\+Type}]{basis\+Name}{, }\item[{Input\+Type}]{max\+Order}{}\end{DoxyParamCaption})}
+
+
+
+Compiles polynomial basis matrix with derivatives. 
+
+filename = compile(obj, file\+Name, basis\+Name, max\+Order) creates function handle matrices for basis functions and their derivatives up to the specified order. Saves the result with metadata for later retrieval.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em file\+Name} & -\/ Filename for the compiled matrix (without extension) \\
+\hline
+{\em basis\+Name} & -\/ Name/type of the basis functions for documentation \\
+\hline
+{\em max\+Order} & -\/ Maximum derivative order to compute (non-\/negative integer)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em filename} & -\/ Generated filename for the stored matrix \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_afeac604bae87550875c973c35dc87e5f}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!createHandles@{createHandles}}
+\index{createHandles@{createHandles}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{createHandles()}{createHandles()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_afeac604bae87550875c973c35dc87e5f} 
+function core\+::symbolic\+::\+Compiler\+::create\+Handles (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{max\+Order}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Creates basis matrix from stored functions. 
+
+B = create\+Handles(obj, max\+Order) converts symbolic basis functions to function handles and computes derivatives up to the specified order. Returns a cell matrix of function handles for efficient numerical evaluation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em max\+Order} & -\/ Maximum derivative order\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em B} & -\/ Cell matrix of function handles \mbox{[}n\+Functions x (max\+Order+1)\mbox{]} \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a0b83b1ae32d21bd32c7c9fdbe6bb7919}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!createMetadata@{createMetadata}}
+\index{createMetadata@{createMetadata}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{createMetadata()}{createMetadata()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a0b83b1ae32d21bd32c7c9fdbe6bb7919} 
+function core\+::symbolic\+::\+Compiler\+::create\+Metadata (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{basis\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Creates base metadata structure. 
+
+metadata = create\+Metadata(obj, basis\+Type) generates the base metadata structure with common fields for all compiled basis matrices including timestamp, version information, and compilation details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em basis\+Type} & -\/ Type of basis function\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em metadata} & -\/ Base metadata structure \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a636ce2c1a906ca8a33ed569f6ceb1ef0}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!delete@{delete}}
+\index{delete@{delete}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a636ce2c1a906ca8a33ed569f6ceb1ef0} 
+function core\+::symbolic\+::\+Compiler\+::delete (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Deletes a compiled basis matrix. 
+
+obj = delete(obj, filename) removes the specified compiled basis matrix file from the metadata directory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em filename} & -\/ File name without extension\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a12effaa62b16342f630c2ab3f94cd3a4}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!getFullPath@{getFullPath}}
+\index{getFullPath@{getFullPath}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{getFullPath()}{getFullPath()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a12effaa62b16342f630c2ab3f94cd3a4} 
+function core\+::symbolic\+::\+Compiler\+::get\+Full\+Path (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Constructs full file path from filename. 
+
+full\+Path = get\+Full\+Path(obj, filename) creates the complete file path by combining the metadata directory with the filename and appropriate extension if not already present.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em filename} & -\/ Base filename\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em full\+Path} & -\/ Full file path with extension \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_aaf951d0cb3e5d54f5a70b60bba6a777b}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!list@{list}}
+\index{list@{list}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{list()}{list()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_aaf951d0cb3e5d54f5a70b60bba6a777b} 
+function core\+::symbolic\+::\+Compiler\+::list (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Lists all compiled basis matrices. 
+
+file\+List = list(obj) returns a list of all available compiled basis matrices in the metadata directory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em file\+List} & -\/ Cell array of compiled matrix filenames (without extension) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a311dca03b6dd599d026f3f4f657689c5}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!load@{load}}
+\index{load@{load}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a311dca03b6dd599d026f3f4f657689c5} 
+function core\+::symbolic\+::\+Compiler\+::load (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Loads a previously compiled basis matrix. 
+
+metadata = load(obj, filename) retrieves a compiled basis matrix from the metadata directory and returns the metadata structure containing function handles and compilation information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em filename} & -\/ Filename of the stored matrix (without extension)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em metadata} & -\/ Metadata structure containing handles and compilation info \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_ae1a76d371f4b4a64fd055cc9caae3727}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!save@{save}}
+\index{save@{save}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_ae1a76d371f4b4a64fd055cc9caae3727} 
+function core\+::symbolic\+::\+Compiler\+::save (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{filename}{, }\item[{Input\+Type}]{metadata}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Saves metadata to file. 
+
+obj = save(obj, filename, metadata) stores the compiled basis matrix metadata to a MAT file in the metadata directory using MATLAB v7.\+3 format for large data compatibility.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+{\em filename} & -\/ Filename for the saved matrix \\
+\hline
+{\em metadata} & -\/ Metadata structure to save\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_compiler}{Compiler} object \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a257de1e4bfcb161506333b8ae4e574e1}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!setFunctions@{setFunctions}}
+\index{setFunctions@{setFunctions}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{setFunctions()}{setFunctions()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a257de1e4bfcb161506333b8ae4e574e1} 
+virtual function core\+::symbolic\+::\+Compiler\+::set\+Functions (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Abstract method for setting basis functions. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a8a019a078711e687994db00e754185cc}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!FILE\_EXTENSION@{FILE\_EXTENSION}}
+\index{FILE\_EXTENSION@{FILE\_EXTENSION}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{FILE\_EXTENSION}{FILE\_EXTENSION}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a8a019a078711e687994db00e754185cc} 
+Constant Property core\+::symbolic\+::\+Compiler\+::\+FILE\+\_\+\+EXTENSION = \textquotesingle{}.mat\textquotesingle{}}
+
+
+
+File extension for compiled matrices. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiler_8m_source_l00028}{28}} of file \mbox{\hyperlink{_compiler_8m_source}{Compiler.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a1e4eca1151599fc4ccd9d3a345c87d70}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!funcs@{funcs}}
+\index{funcs@{funcs}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{funcs}{funcs}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a1e4eca1151599fc4ccd9d3a345c87d70} 
+Property core\+::symbolic\+::\+Compiler\+::funcs}
+
+
+
+Object array of \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} instances. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiler_8m_source_l00037}{37}} of file \mbox{\hyperlink{_compiler_8m_source}{Compiler.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a5edf3bb34846f75e640f97df438047a4}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!METADATA\_DIR@{METADATA\_DIR}}
+\index{METADATA\_DIR@{METADATA\_DIR}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{METADATA\_DIR}{METADATA\_DIR}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a5edf3bb34846f75e640f97df438047a4} 
+Constant Property core\+::symbolic\+::\+Compiler\+::\+METADATA\+\_\+\+DIR = \textquotesingle{}config/functions\textquotesingle{}}
+
+
+
+Directory for storing compiled matrices. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiler_8m_source_l00025}{25}} of file \mbox{\hyperlink{_compiler_8m_source}{Compiler.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253}\index{core::symbolic::Compiler@{core::symbolic::Compiler}!variables@{variables}}
+\index{variables@{variables}!core::symbolic::Compiler@{core::symbolic::Compiler}}
+\doxysubsubsection{\texorpdfstring{variables}{variables}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_compiler_a2fe761a7b9d9ef93ac5e806b660aa253} 
+Property core\+::symbolic\+::\+Compiler\+::variables}
+
+
+
+Cell array of symbolic variables. 
+
+
+
+Definition at line \mbox{\hyperlink{_compiler_8m_source_l00034}{34}} of file \mbox{\hyperlink{_compiler_8m_source}{Compiler.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_compiler_8m}{Compiler.\+m}}\end{DoxyCompactItemize}

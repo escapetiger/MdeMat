@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['record_0',['Record',['../classcore_1_1chrono_1_1_record.html#a62c3d2ee227504b59aef1fd5104c3ef4',1,'core::chrono::Record']]],
+  ['refine_1',['refine',['../classapprox_1_1mesh_1_1_mesh.html#af3cc0760879b947a4d156661d27e46df',1,'approx::mesh::Mesh::refine()'],['../classapprox_1_1mesh_1_1_nonuniform_grid.html#a0eac8ee4457c8758f385db7bd6c187a4',1,'approx::mesh::NonuniformGrid::refine()'],['../classapprox_1_1mesh_1_1_simplex_mesh.html#a703a082886ed6876390c8de0124131a0',1,'approx::mesh::SimplexMesh::refine()'],['../classapprox_1_1mesh_1_1_uniform_grid.html#a593f06bad3f21b0f730a4974df1ada5e',1,'approx::mesh::UniformGrid::refine()']]],
+  ['refinelines_2',['refineLines',['../classapprox_1_1mesh_1_1_simplex_mesh.html#aad3e87ea42d765978896b1b5b67275c0',1,'approx::mesh::SimplexMesh']]],
+  ['refinetetrahedra_3',['refineTetrahedra',['../classapprox_1_1mesh_1_1_simplex_mesh.html#a8df0aedaad0cb03caa1b2a08ed0ad8b5',1,'approx::mesh::SimplexMesh']]],
+  ['refinetriangles_4',['refineTriangles',['../classapprox_1_1mesh_1_1_simplex_mesh.html#a5ab32e53f2ca9de211a4e82fd6145ea9',1,'approx::mesh::SimplexMesh']]],
+  ['relative_5',['relative',['../classprofilers_1_1analysis_1_1_analyzer.html#a29f602972727524cc65853c07fb7b589',1,'profilers::analysis::Analyzer']]],
+  ['remove_6',['remove',['../classcore_1_1data_1_1_ordered_map.html#af432539798d5373a0544d2a871fa7e0e',1,'core::data::OrderedMap']]],
+  ['render_7',['render',['../classprofilers_1_1visual_1_1_strategy.html#ad52062adcc38a02419479194bfdcfcf9',1,'profilers::visual::Strategy::render()'],['../classprofilers_1_1visual_1_1_tiled_plotter.html#a8300bb890fe188e5c4b298ad39dc4162',1,'profilers::visual::TiledPlotter::render()']]],
+  ['render1d_8',['render1d',['../namespaceprofilers_1_1visual.html#a1e91541c46f37c844e8002279d9a6205',1,'profilers::visual']]],
+  ['render2d_9',['render2d',['../namespaceprofilers_1_1visual.html#a858fc58e3f071642c2b6e235e0392e28',1,'profilers::visual']]],
+  ['render3d_10',['render3d',['../namespaceprofilers_1_1visual.html#a2c446a7a50b8709d0dfdfb5420b30216',1,'profilers::visual']]],
+  ['renderslices_11',['renderSlices',['../namespaceprofilers_1_1visual.html#ad5f92758ec01000c45a91e5974a2d0a5',1,'profilers::visual']]],
+  ['rendervariable1d_12',['renderVariable1d',['../namespaceprofilers_1_1visual.html#a1931fed272459281b05384783538aad6',1,'profilers::visual']]],
+  ['rendervariable2d_13',['renderVariable2d',['../namespaceprofilers_1_1visual.html#af67f88ff184d46d699bc97030a824f7d',1,'profilers::visual']]],
+  ['rendervariable3d_14',['renderVariable3d',['../namespaceprofilers_1_1visual.html#a678dd9f7c944f7193882ba5be85a25c4',1,'profilers::visual']]],
+  ['report_15',['report',['../classcore_1_1chrono_1_1_timer.html#a6e05fdc8a240b0e4c0c57089c8e015b4',1,'core::chrono::Timer']]],
+  ['reset_16',['reset',['../classapprox_1_1mesh_1_1_dynamic_timeline.html#a95962746272f861b16712cb2c3953b01',1,'approx::mesh::DynamicTimeline::reset()'],['../classapprox_1_1mesh_1_1_timeline.html#a3afea04bcfdc3cfdac617e27e6a45dea',1,'approx::mesh::Timeline::reset()'],['../classapprox_1_1odeint_1_1_dirk_integrator.html#a54c76d0cfcaf515063a783992c37a13e',1,'approx::odeint::DirkIntegrator::reset()'],['../classapprox_1_1odeint_1_1_exrk_integrator.html#a3f6b582d7f8196cc33853fdf64a5a69c',1,'approx::odeint::ExrkIntegrator::reset()'],['../classapprox_1_1odeint_1_1_imexrk_integrator.html#a88c70454f1d670dc6d39f3fe9ef20662',1,'approx::odeint::ImexrkIntegrator::reset()'],['../classapprox_1_1odeint_1_1_ode_integrator.html#a9288228bd19616a463989a89c2e98094',1,'approx::odeint::OdeIntegrator::reset()'],['../classcore_1_1chrono_1_1_record.html#acc5a7dab7b3ccabcc627b17d7c0d88dc',1,'core::chrono::Record::reset()'],['../classcore_1_1chrono_1_1_timer.html#a5bd26c6b6aa3cf4f516d3e24b7b2bedf',1,'core::chrono::Timer::reset()'],['../classcore_1_1io_1_1_option_parser.html#a61a40f6d5b8f7d32cff8bd83b82665e6',1,'core::io::OptionParser::reset()'],['../classprofilers_1_1visual_1_1_visualizer.html#a4500066744b4c6e5e61986f60d71c908',1,'profilers::visual::Visualizer::reset()']]],
+  ['resettransform_17',['resetTransform',['../classapprox_1_1mesh_1_1_mesh.html#a452946fc2adf9bd92066c6f98ecf49e6',1,'approx::mesh::Mesh']]],
+  ['richardsonintegrator_18',['RichardsonIntegrator',['../classapprox_1_1integrate_1_1_richardson_integrator.html#a8509e940550420b6af3f0e3fa7d3f7a0',1,'approx::integrate::RichardsonIntegrator']]]
+];

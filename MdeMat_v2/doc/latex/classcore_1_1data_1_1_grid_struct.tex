@@ -1,0 +1,172 @@
+\doxysection{core\+::data\+::Grid\+Struct Class Reference}
+\hypertarget{classcore_1_1data_1_1_grid_struct}{}\label{classcore_1_1data_1_1_grid_struct}\index{core::data::GridStruct@{core::data::GridStruct}}
+
+
+Structure for multidimensional grid data.  
+
+
+
+
+Inherits handle.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303}{Grid\+Struct}} (Input\+Type \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_ac209e3b3e5c5575604ed2c3ec841b976}{coords}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_a5ba3e17fae79de1acc7f5355a28370fe}{set\+Coordinates}} (Input\+Type obj, Input\+Type \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_ac209e3b3e5c5575604ed2c3ec841b976}{coords}})
+\begin{DoxyCompactList}\small\item\em Set the grid coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_a576dafe2baea42cfc8a32490bcd4f3c5}{data}}
+\begin{DoxyCompactList}\small\item\em Structure containing grid data variables. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_ac209e3b3e5c5575604ed2c3ec841b976}{coords}}
+\begin{DoxyCompactList}\small\item\em Grid coordinates. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_ada3da078559d9e9b5cd9ece358e1d8e7}{n\+Points}}
+\begin{DoxyCompactList}\small\item\em Total number of grid points. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_aa6f00ed128747cf28452fe04bc8c79f7}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of grid dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure for multidimensional grid data. 
+
+\doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} stores grid coordinates and associated data variables defined over the grid. Ensures all variables are consistent with grid dimensions.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ 1D\ grid}
+\DoxyCodeLine{x\ =\ linspace(0,\ 1,\ 10);}
+\DoxyCodeLine{grid\ =\ \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303}{GridStruct}}(x);}
+\DoxyCodeLine{grid.data.temperature\ =\ rand(10,\ 1);}
+\DoxyCodeLine{\%\ Create\ 2D\ grid}
+\DoxyCodeLine{x\ =\ linspace(0,\ 1,\ 5);}
+\DoxyCodeLine{y\ =\ linspace(0,\ 2,\ 4);}
+\DoxyCodeLine{grid\ =\ \mbox{\hyperlink{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303}{GridStruct}}(\{x,\ y\});}
+\DoxyCodeLine{grid.data.pressure\ =\ rand(20,\ 1);\ \ \%\ 5*4\ =\ 20\ points}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{_grid_struct_8m_source_l00024}{24}} of file \mbox{\hyperlink{_grid_struct_8m_source}{Grid\+Struct.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303}\index{core::data::GridStruct@{core::data::GridStruct}!GridStruct@{GridStruct}}
+\index{GridStruct@{GridStruct}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{GridStruct()}{GridStruct()}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303} 
+function core\+::data\+::\+Grid\+Struct\+::\+Grid\+Struct (\begin{DoxyParamCaption}\item[{Input\+Type}]{coords}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} class. 
+
+obj = \doxylink{classcore_1_1data_1_1_grid_struct_a2a243463984139cd659dc3b2f7d67303}{Grid\+Struct()} creates empty \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct}.
+
+obj = Grid\+Struct(coords) creates \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} with specified {\itshape coords} and initializes empty data structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em coords} & -\/ Grid coordinates \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_a5ba3e17fae79de1acc7f5355a28370fe}\index{core::data::GridStruct@{core::data::GridStruct}!setCoordinates@{setCoordinates}}
+\index{setCoordinates@{setCoordinates}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{setCoordinates()}{setCoordinates()}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_a5ba3e17fae79de1acc7f5355a28370fe} 
+function core\+::data\+::\+Grid\+Struct\+::set\+Coordinates (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{coords}{}\end{DoxyParamCaption})}
+
+
+
+Set the grid coordinates. 
+
+obj = set\+Coordinates(obj, coords) sets or updates the grid coordinates {\itshape coords}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} object \\
+\hline
+{\em coords} & -\/ Grid coordinates\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classcore_1_1data_1_1_grid_struct}{Grid\+Struct} object \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1data_1_1_grid_struct_ac209e3b3e5c5575604ed2c3ec841b976}\index{core::data::GridStruct@{core::data::GridStruct}!coords@{coords}}
+\index{coords@{coords}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{coords}{coords}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_ac209e3b3e5c5575604ed2c3ec841b976} 
+Property core\+::data\+::\+Grid\+Struct\+::coords}
+
+
+
+Grid coordinates. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_struct_8m_source_l00031}{31}} of file \mbox{\hyperlink{_grid_struct_8m_source}{Grid\+Struct.\+m}}.
+
+\Hypertarget{classcore_1_1data_1_1_grid_struct_a576dafe2baea42cfc8a32490bcd4f3c5}\index{core::data::GridStruct@{core::data::GridStruct}!data@{data}}
+\index{data@{data}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_a576dafe2baea42cfc8a32490bcd4f3c5} 
+Property core\+::data\+::\+Grid\+Struct\+::data}
+
+
+
+Structure containing grid data variables. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_struct_8m_source_l00028}{28}} of file \mbox{\hyperlink{_grid_struct_8m_source}{Grid\+Struct.\+m}}.
+
+\Hypertarget{classcore_1_1data_1_1_grid_struct_aa6f00ed128747cf28452fe04bc8c79f7}\index{core::data::GridStruct@{core::data::GridStruct}!nDims@{nDims}}
+\index{nDims@{nDims}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_aa6f00ed128747cf28452fe04bc8c79f7} 
+Property core\+::data\+::\+Grid\+Struct\+::n\+Dims}
+
+
+
+Number of grid dimensions. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_struct_8m_source_l00040}{40}} of file \mbox{\hyperlink{_grid_struct_8m_source}{Grid\+Struct.\+m}}.
+
+\Hypertarget{classcore_1_1data_1_1_grid_struct_ada3da078559d9e9b5cd9ece358e1d8e7}\index{core::data::GridStruct@{core::data::GridStruct}!nPoints@{nPoints}}
+\index{nPoints@{nPoints}!core::data::GridStruct@{core::data::GridStruct}}
+\doxysubsubsection{\texorpdfstring{nPoints}{nPoints}}
+{\footnotesize\ttfamily \label{classcore_1_1data_1_1_grid_struct_ada3da078559d9e9b5cd9ece358e1d8e7} 
+Property core\+::data\+::\+Grid\+Struct\+::n\+Points}
+
+
+
+Total number of grid points. 
+
+
+
+Definition at line \mbox{\hyperlink{_grid_struct_8m_source_l00037}{37}} of file \mbox{\hyperlink{_grid_struct_8m_source}{Grid\+Struct.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+data/\mbox{\hyperlink{_grid_struct_8m}{Grid\+Struct.\+m}}\end{DoxyCompactItemize}

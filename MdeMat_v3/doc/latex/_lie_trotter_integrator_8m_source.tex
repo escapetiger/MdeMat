@@ -1,0 +1,99 @@
+\doxysection{Lie\+Trotter\+Integrator.\+m}
+\hypertarget{_lie_trotter_integrator_8m_source}{}\label{_lie_trotter_integrator_8m_source}\index{+approx/+odeint/LieTrotterIntegrator.m@{+approx/+odeint/LieTrotterIntegrator.m}}
+\mbox{\hyperlink{_lie_trotter_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00001}00001\ classdef\ LieTrotterIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.SeparableOdeIntegrator}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ LIETROTTERINTEGRATOR\ First-\/order\ Lie-\/Trotter\ \textcolor{keyword}{operator}\ splitting.}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ LieTrotterIntegrator\ implements\ the\ first-\/order\ Lie-\/Trotter}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ \textcolor{keyword}{operator}\ splitting\ method\ \textcolor{keywordflow}{for}\ solving\ ordinary\ differential}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ equations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00007}00007\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ \(\backslash\)sum\_\{i=1\}\string^\{n\}\ (L\_i\ u\ +\ F\_i(u)\ +\ S\_i)}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00011}00011\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ by\ decomposing\ it\ into\ n\ separate\ sub-\/problems:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ L\_i\ u\ +\ F\_i(u)\ +\ S\_i,\ \(\backslash\)quad\ i\ =\ 1,\ 2,\ \(\backslash\)ldots,\ n}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ The\ Lie-\/Trotter\ method\ uses\ the\ splitting\ formula:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \ \ e\string^\{(A\_1+A\_2+\(\backslash\)cdots+A\_n)\(\backslash\)Delta\ t\}\ \(\backslash\)\mbox{\hyperlink{namespaceapprox}{approx}}\ e\string^\{A\_1\(\backslash\)Delta\ t\}\ e\string^\{A\_2\(\backslash\)Delta\ t\}\ \(\backslash\)cdots\ e\string^\{A\_n\(\backslash\)Delta\ t\}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ This\ achieves\ first-\/order\ accuracy\ with\ global\ error\ O(Δt).}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ Each\ factor\ integrator\ solves\ its\ respective\ sub-\/problem\ \textcolor{keyword}{using\ }the}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ most\ appropriate\ method\ (\textcolor{keyword}{explicit},\ implicit,\ or\ IMEX).}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00025}00025\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ \%\ Reaction-\/diffusion:\ implicit\ diffusion\ +\ \textcolor{keyword}{explicit}\ reaction}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ integrators\ =\ \{\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0)\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ splitter\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{LieTrotterIntegrator}}(integrators);}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \%\ Step\ with\ operators\ [diffusion,\ reaction]}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ L\ =\ \{diffusionMatrix,\ []\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ F\ =\ \{[],\ @(u,t)\ reactionTerm(u)\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ S\ =\ \{[],\ []\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ U\_new\ =\ splitter.\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{step}}(L,\ F,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \%\ Three-\/way\ split:\ diffusion\ +\ advection\ +\ reaction}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ integrators\ =\ \{\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0),\ ...}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}(1.0)\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ L\ =\ \{diffusionMatrix,\ advectionMatrix,\ []\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ F\ =\ \{[],\ [],\ @(u,t)\ reactionTerm(u)\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ S\ =\ \{sourceVector,\ [],\ []\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00045}00045\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00046}00046\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00047}00047\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.SeparableOdeIntegrator,\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00048}00048\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_strang_integrator}{StrangIntegrator}},}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00049}00049\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_be_integrator}{BeIntegrator}},\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00050}00050\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00052}00052\ \ \ \ \ properties\ (Constant)}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ ORDER\ =\ 1\ \%\ Accuracy\ order\ of\ the\ Lie-\/Trotter\ method}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00054}\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{00054}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00056}00056\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ function\ U\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{step}}(obj,\ L,\ F,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00058}\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a35b0c7810b51f84877aae56354dfa6c4}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Advance\ one\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{step}}\ \textcolor{keyword}{using\ }Lie-\/Trotter\ splitting.}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{step}}(obj,\ L,\ F,\ S,\ M)\ performs\ one\ time\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{step}}\ by}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ sequentially\ applying\ each\ factor\ integrator\ to\ its}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ corresponding\ sub-\/problem.}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator}{LieTrotterIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Cell\ array\ of\ linear\ operators\ \{L1,\ L2,\ ...,\ Ln\}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Li\ can\ be\ matrix,\ function,\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Cell\ array\ of\ nonlinear\ operators\ \{F1,\ F2,\ ...,\ Fn\}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Fi\ can\ be\ function\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Cell\ array\ of\ source\ terms\ \{S1,\ S2,\ ...,\ Sn\}}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Each\ Si\ can\ be\ vector,\ function,\ or\ empty}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \ \ \ \ Same\ mass\ \textcolor{keyword}{operator}\ used\ \textcolor{keywordflow}{for}\ all\ sub-\/problems}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ at\ the\ next\ time\ step}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.getFactor(1).U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:obj.nFactors}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.applyFactorStep(i,\ dt,\ L\{i\},\ F\{i\},\ S\{i\},\ M);}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ <\ obj.nFactors}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00084}\mbox{\hyperlink{classapprox_1_1odeint_1_1_lie_trotter_integrator_a6f478665c7ae34532bfb73a06e04256a}{00084}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(i+1).U0\{1\}\ =\ U;}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:obj.nFactors}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.getFactor(i).U0\{1\}\ =\ U0;}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00092}00092\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_lie_trotter_integrator_8m_source_l00093}00093\ end}
+
+\end{DoxyCode}

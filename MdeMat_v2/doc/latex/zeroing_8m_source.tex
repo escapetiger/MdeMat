@@ -1,0 +1,34 @@
+\doxysection{zeroing.\+m}
+\hypertarget{zeroing_8m_source}{}\label{zeroing_8m_source}\index{+core/+linalg/zeroing.m@{+core/+linalg/zeroing.m}}
+\mbox{\hyperlink{zeroing_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00001}00001\ function\ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X,\ tol)}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00002}00002\ \%\ ZEROING\ Set\ array\ entries\ below\ threshold\ to\ zero.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00004}00004\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X)\ replaces\ values\ in\ array\ @a\ X\ smaller\ than\ the\ \textcolor{keywordflow}{default}}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00005}00005\ \%\ \ \ tolerance\ with\ zeros.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00007}00007\ \%\ \ \ X\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(X,\ tol)\ replaces\ values\ in\ array\ @a\ X\ smaller\ than\ the}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00008}00008\ \%\ \ \ specified\ tolerance\ @a\ tol\ with\ zeros.}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00009}00009\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00010}00010\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00011}00011\ \%\ \ \ X\ \ \ -\/\ Input\ array}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00012}00012\ \%\ \ \ tol\ -\/\ Tolerance\ threshold\ (optional,\ \textcolor{keywordflow}{default}:\ eps*1e3)}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00013}00013\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00014}00014\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00015}00015\ \%\ \ \ X\ -\/\ Output\ array\ with\ small\ values\ replaced\ by\ zeros}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00016}00016\ \%}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00017}00017\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00018}00018\ \%\ \ \ \%\ Basic\ usage\ with\ \textcolor{keywordflow}{default}\ tolerance}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00019}00019\ \%\ \ \ A\ =\ [1,\ 1e-\/16,\ -\/1e-\/15,\ 2];}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00020}00020\ \%\ \ \ cleanA\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(A);\ \%\ Returns\ [1,\ 0,\ 0,\ 2]}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00021}00021\ \%\ \ \ }
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00022}00022\ \%\ \ \ \%\ With\ custom\ tolerance}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00023}00023\ \%\ \ \ B\ =\ [10,\ 0.01,\ 0.001,\ 0.0001,\ 5];}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00024}00024\ \%\ \ \ cleanB\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{zeroing}}(B,\ 0.001);\ \%\ Returns\ [10,\ 0.01,\ 0.001,\ 0,\ 5]}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00026}00026\ \textcolor{keywordflow}{if}\ nargin\ <\ 2\ ||\ isempty(tol),\ tol\ =\ eps\ *\ 1e3;\ end}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00027}00027\ X(abs(X)\ <\ tol)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{zeroing_8m_source_l00028}\mbox{\hyperlink{namespacecore_1_1linalg_a9bdedccda45b353642242aa52fc565d1}{00028}}\ end}
+
+\end{DoxyCode}

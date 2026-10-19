@@ -1,0 +1,33 @@
+\doxysection{parse\+Var\+Names.\+m}
+\hypertarget{parse_var_names_8m_source}{}\label{parse_var_names_8m_source}\index{+profilers/+visual/private/parseVarNames.m@{+profilers/+visual/private/parseVarNames.m}}
+\mbox{\hyperlink{parse_var_names_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00001}00001\ function\ varNames\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_ac2c8dce60575b6e3800c142eac492024}{parseVarNames}}(dataset)}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00002}00002\ \%\ PARSEVARNAMES\ Collects\ all\ variable\ names\ from\ datasets.}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00004}00004\ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00005}00005\ \%\ \ \ varNames\ =\ \mbox{\hyperlink{namespaceprofilers_1_1visual_ac2c8dce60575b6e3800c142eac492024}{parseVarNames}}(dataset)}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00007}00007\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00008}00008\ \%\ \ \ dataset\ -\/\ Map\ of\ dataset\ names\ to\ dataset\ objects}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00009}00009\ \%}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00010}00010\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00011}00011\ \%\ \ \ varNames\ -\/\ Cell\ array\ of\ all\ unique\ variable\ names}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00013}00013\ dataNames\ =\ fieldnames(dataset);}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00014}00014\ varNames\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00015}\mbox{\hyperlink{namespaceprofilers_1_1visual_ac2c8dce60575b6e3800c142eac492024}{00015}}\ }
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00016}00016\ \textcolor{keywordflow}{for}\ i\ =\ 1:length(dataNames)}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00017}00017\ \ \ \ \ dataName\ =\ dataNames\{i\};}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00018}00018\ \ \ \ \ data\ =\ dataset.(dataName);}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00019}00019\ \ \ \ \ subVarNames\ =\ fieldnames(data);}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:length(subVarNames)}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~ismember(subVarNames\{j\},\ varNames)}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ varNames\{end+1\}\ =\ subVarNames\{j\};}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00024}00024\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00025}00025\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00026}00026\ end}
+\DoxyCodeLine{\Hypertarget{parse_var_names_8m_source_l00027}00027\ end}
+
+\end{DoxyCode}

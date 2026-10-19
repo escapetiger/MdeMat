@@ -1,0 +1,174 @@
+\doxysection{Spherical\+Harmonic\+Basis\+Function.\+m}
+\hypertarget{_spherical_harmonic_basis_function_8m_source}{}\label{_spherical_harmonic_basis_function_8m_source}\index{+core/+symbolic/SphericalHarmonicBasisFunction.m@{+core/+symbolic/SphericalHarmonicBasisFunction.m}}
+\mbox{\hyperlink{_spherical_harmonic_basis_function_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00001}00001\ classdef\ SphericalHarmonicBasisFunction\ <\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function}{BasisFunction}}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00002}00002\ \ \ \ \ \%\ SPHERICALHARMONICBASISFUNCTION\ Real-\/valued\ spherical\ harmonic\ basis\ functions.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SphericalHarmonicBasisFunction\ represents\ real-\/valued\ spherical}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ harmonic\ basis\ functions\ on\ the\ canonical\ domain\ \(\backslash\)f\$\(\backslash\)mu\(\backslash\)in[-\/1,1]\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ and\ \(\backslash\)f\$\(\backslash\)theta\(\backslash\)in[0,2\(\backslash\)pi]\(\backslash\)f\$.\ The\ functions\ are\ constructed\ \textcolor{keyword}{using}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00007}00007\ \textcolor{keyword}{\ \ \ \ }\%\ \ \ associated\ Legendre\ polynomials\ and\ trigonometric\ functions.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00008}00008\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ The\ spherical\ harmonic\ function\ with\ degree\ \(\backslash\)f\$l\(\backslash\)f\$\ and\ order}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ \(\backslash\)f\$m\(\backslash\)f\$\ are:\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ -\/\ \(\backslash\)f\$(l\string^2+1)\(\backslash\)f\$-\/th\ function\ (zonal\ harmonics,\ \(\backslash\)f\$m=0\(\backslash\)f\$):\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)f\$P\_l\string^0(\(\backslash\)mu)\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ \(\backslash\)f\$(l\string^2+2m-\/1)\(\backslash\)f\$-\/th\ function\ (tesseral\ harmonics,\ \(\backslash\)f\$m>0\(\backslash\)f\$):\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)f\$\(\backslash\)cos(m\(\backslash\)theta)P\_l\string^m(\(\backslash\)mu)\(\backslash\)f\$\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ \(\backslash\)f\$(l\string^2\ +\ 2m)\(\backslash\)f\$-\/th\ function\ (tesseral\ harmonics,\ \(\backslash\)f\$m>0\(\backslash\)f\$):\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)f\$\(\backslash\)sin(m\(\backslash\)theta)P\_l\string^m(\(\backslash\)mu)\(\backslash\)f\$}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00018}00018\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \%\ Zonal\ harmonic\ (constant)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ basis1\ =\ \mbox{\hyperlink{namespacecore}{core}}.symbolic.SphericalHarmonicBasisFunction(1);\ \ \%\ P\_0\string^0(mu)\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ First\ degree\ harmonics}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ basis2\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{SphericalHarmonicBasisFunction}}(2);\ \ \%\ P\_1\string^0(mu)\ =\ mu}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ basis3\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{SphericalHarmonicBasisFunction}}(3);\ \ \%\ cos(theta)*P\_1\string^1(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ basis4\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{SphericalHarmonicBasisFunction}}(4);\ \ \%\ sin(theta)*P\_1\string^1(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00026}00026\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00027}00027\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.symbolic.BasisFunction}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00029}00029\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00030}00030\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00031}00031\ \ \ \ \ \ \ \ \ function\ obj\ =\ SphericalHarmonicBasisFunction(index)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SPHERICALHARMONICBASISFUNCTION\ Constructor\ for}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00033}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{SphericalHarmonicBasisFunction}}.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{SphericalHarmonicBasisFunction}}(\mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}})\ creates\ a\ new}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ spherical\ harmonic\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ with\ fixed\ domain}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}\ \(\backslash\)f\$\(\backslash\)mu\(\backslash\)in[-\/1,1]\(\backslash\)f\$\ and\ \(\backslash\)f\$\(\backslash\)theta\(\backslash\)in[0,2\(\backslash\)pi]\(\backslash\)f\$.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}}\ -\/\ Index\ of\ the\ spherical\ harmonic\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{SphericalHarmonicBasisFunction}}\ object}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a91a9e4dd23e3e2cb2254faa2c88769ce}{bbox}}\ =\ [-\/1,\ 1,\ 0,\ 2*pi];}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}\ =\ \{sym(\textcolor{stringliteral}{'mu'}),\ sym(\textcolor{stringliteral}{'theta'})\};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00047}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}.\mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function}{BasisFunction}}(\mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}},\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a91a9e4dd23e3e2cb2254faa2c88769ce}{bbox}},\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}});}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ =\ obj.generate();}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00050}00050\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00051}00051\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00052}00052\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ expr\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a07690ce2f9f186eae83e8fa2b510c85b}{generate}}(obj)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GENERATE\ Generates\ the\ spherical\ harmonic\ basis\ \mbox{\hyperlink{namespacecore_1_1function}{function}}.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ expr\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a07690ce2f9f186eae83e8fa2b510c85b}{generate}}(obj)\ creates\ the\ \mbox{\hyperlink{namespacecore_1_1symbolic}{symbolic}}\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ for}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ real-\/valued\ spherical\ harmonic\ based\ on\ the\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}}.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Determines\ the\ appropriate\ degree\ l\ and\ order\ m,\ then}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ constructs\ the\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ using\ associated\ Legendre}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ polynomials\ and\ trigonometric\ functions.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{SphericalHarmonicBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ expr\ -\/\ Symbolic\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}\ for\ the\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ mu\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}\{1\};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ theta\ =\ obj.variables\{2\};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00071}\mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a07690ce2f9f186eae83e8fa2b510c85b}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ degree\ l\ and\ order\ m\ from\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ [l,\ m]\ =\ obj.getDegreesAndOrder();}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ associated\ Legendre\ polynomial\ P\_l\string^m(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ P\_lm\ =\ obj.associatedLegendre(l,\ m,\ mu);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ the\ appropriate\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ m\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Zonal\ harmonic:\ P\_l\string^0(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ P\_lm;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ cosine\ vs\ sine\ \textcolor{keywordflow}{for}\ tesseral\ harmonics}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remainder\ =\ obj.index\ -\/\ l\string^2\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isCos\ =\ mod(remainder,\ 2)\ ==\ 1;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isCos}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Tesseral\ harmonic\ (cosine):\ cos(m*theta)*P\_l\string^m(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ cos(m\ *\ theta)\ *\ P\_lm;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Tesseral\ harmonic\ (sine):\ sin(m*theta)*P\_l\string^m(mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ sin(m\ *\ theta)\ *\ P\_lm;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Apply\ Condon-\/Shortley\ phase\ factor}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ (-\/sym(1))\string^m\ *\ expr;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Simplify\ the\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ expr\ =\ simplify(expr);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00101}00101\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00102}00102\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00103}00103\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{private})}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ [l,\ m]\ =\ getDegreesAndOrder(obj)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GETDEGREESANDORDER\ Determines\ degree\ l\ and\ order\ m\ from\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}}.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Calculates\ the\ spherical\ harmonic\ degree\ and\ order\ based\ on}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ standard\ indexing\ convention\ for\ real-\/valued\ spherical}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ harmonics.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_spherical_harmonic_basis_function_a6671d73e274ecd6e19cd31fd74b6f41a}{SphericalHarmonicBasisFunction}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ l\ -\/\ Degree\ of\ the\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ -\/\ Order\ of\ the\ spherical\ harmonic}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ obj.\mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function_a9c690f108d2855908e7141b30a335037}{index}};}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ degree\ l:\ largest\ integer\ such\ that\ l\string^2\ <\ idx}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ l\ =\ floor(sqrt(idx\ -\/\ 1));}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Calculate\ order\ m}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ if\ idx\ ==\ l\string^2\ +\ 1}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Zonal\ harmonic\ (m\ =\ 0)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Tesseral\ harmonic\ (m\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remainder\ =\ idx\ -\/\ l\string^2\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ =\ ceil(remainder\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecore_1_1function}{function}}\ P\_lm\ =\ associatedLegendre(\string~,\ l,\ m,\ mu)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ ASSOCIATEDLEGENDRE\ Computes\ associated\ Legendre\ polynomial}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ P\_l\string^m(mu).}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Calculates\ the\ associated\ Legendre\ polynomial\ using\ the}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ standard\ formula\ involving\ derivatives\ of\ Legendre}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ polynomials.\ For\ m\ =\ 0,\ returns\ the\ standard\ Legendre}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ polynomial.}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ l\ -\/\ Degree\ (non-\/negative\ integer)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ m\ -\/\ Order\ (non-\/negative\ integer,\ m\ <=\ l)}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ mu\ -\/\ Symbolic\ variable}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ P\_lm\ -\/\ Associated\ Legendre\ polynomial}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ if\ m\ ==\ 0}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Standard\ Legendre\ polynomial}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_lm\ =\ legendreP(l,\ mu);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Associated\ Legendre\ polynomial}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Use\ the\ relation:\ P\_l\string^m(x)\ =\ (-\/1)\string^m\ *\ (1-\/x\string^2)\string^(m/2)\ *\ d\string^m/dx\string^m[P\_l(x)]}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_l\ =\ legendreP(l,\ mu);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_l\_deriv\ =\ P\_l;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ k\ =\ 1:m}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_l\_deriv\ =\ diff(P\_l\_deriv,\ mu);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_lm\ =\ (-\/1)\string^m\ *\ (1\ -\/\ mu\string^2)\string^(m/2)\ *\ P\_l\_deriv;}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ P\_lm\ =\ simplify(P\_lm);}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00167}00167\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_spherical_harmonic_basis_function_8m_source_l00168}00168\ end}
+
+\end{DoxyCode}

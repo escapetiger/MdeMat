@@ -1,0 +1,785 @@
+\doxysection{Simplex\+Mesh.\+m}
+\hypertarget{_simplex_mesh_8m_source}{}\label{_simplex_mesh_8m_source}\index{+approx/+mesh/SimplexMesh.m@{+approx/+mesh/SimplexMesh.m}}
+\mbox{\hyperlink{_simplex_mesh_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00001}00001\ classdef\ SimplexMesh\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{PolytopalMesh}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00002}00002\ \ \ \ \ \%\ SIMPLEXMESH\ Computational\ mesh\ \textcolor{keyword}{using\ }simplicial\ elements.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ SimplexMesh\ provides\ a\ concrete\ implementation\ of\ PolytopalMesh\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ simplicial\ elements\ (line\ segments\ in\ 1D,\ triangles\ in\ 2D,\ tetrahedra}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ in\ 3D).\ It\ leverages\ the\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex}{Simplex}}\ \textcolor{keyword}{class\ }for\ geometric}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ operations\ and\ implements\ efficient\ algorithms\ \textcolor{keywordflow}{for}\ mesh\ refinement,}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ coordinate\ transformations,\ and\ Jacobian\ computations.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ Simplicial\ meshes\ are\ fundamental\ in\ finite\ element\ methods\ due\ to}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ their\ mathematical\ properties:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ -\/\ Linear\ coordinate\ transformations\ with\ constant\ Jacobians\ per\ element}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ -\/\ Natural\ barycentric\ coordinate\ systems\ \textcolor{keywordflow}{for}\ interpolation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ -\/\ Efficient\ mesh\ generation\ and\ refinement\ algorithms}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ -\/\ Well-\/established\ quadrature\ rules\ and\ basis\ functions}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00016}00016\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ Element\ types\ by\ dimension:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ -\/\ 1D:\ Line\ segments\ (2\ vertices,\ 2\ faces\ as\ endpoints)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ -\/\ 2D:\ Triangles\ (3\ vertices,\ 3\ edges\ as\ faces)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ -\/\ 3D:\ Tetrahedra\ (4\ vertices,\ 4\ triangular\ faces)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00021}00021\ \ \ \ \ \%\ \ \ -\/\ nD:\ n-\/simplices\ (n+1\ vertices,\ n+1\ (n-\/1)-\/simplex\ faces)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00022}00022\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ The\ \textcolor{keyword}{class\ }uses\ affine\ coordinate\ transformations\ between\ reference}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ and\ physical\ coordinates,\ where\ the\ reference\ simplex\ has\ vertices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ at\ the\ origin\ and\ unit\ coordinate\ vectors:\ \{0,\ e₁,\ e₂,\ ...,\ eₙ\}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00026}00026\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00027}00027\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ \%\ Create\ 2D\ triangular\ mesh}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ vertices2D\ =\ [0,\ 0;\ 1,\ 0;\ 0.5,\ 1;\ 1,\ 1];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ elements2D\ =\ [1,\ 2,\ 3;\ 2,\ 4,\ 3];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00031}00031\ \ \ \ \ \%\ \ \ domain2D\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.Rectangle([0,\ 1,\ 0,\ 1]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ triMesh\ =\ SimplexMesh(domain2D,\ vertices2D,\ elements2D);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00033}00033\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \%\ Create\ 3D\ tetrahedral\ mesh}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ vertices3D\ =\ [0,\ 0,\ 0;\ 1,\ 0,\ 0;\ 0,\ 1,\ 0;\ 0,\ 0,\ 1];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ elements3D\ =\ [1,\ 2,\ 3,\ 4];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00037}00037\ \ \ \ \ \%\ \ \ domain3D\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.Tetrahedron();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ tetMesh\ =\ SimplexMesh(domain3D,\ vertices3D,\ elements3D);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00039}00039\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00040}00040\ \ \ \ \ \%\ \ \ \%\ Map\ reference\ coordinates\ to\ physical\ coordinates}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00041}00041\ \ \ \ \ \%\ \ \ xRef\ =\ [0.2;\ 0.3];\ \ \%\ Reference\ coordinates\ in\ triangle}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ xPhys\ =\ triMesh.collocate(xRef,\ 1);\ \ \%\ Map\ to\ element\ 1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00043}00043\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00044}00044\ \ \ \ \ \%\ \ \ \%\ Perform\ uniform\ mesh\ refinement}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00045}00045\ \ \ \ \ \%\ \ \ refinedMesh\ =\ triMesh.refine(2);\ \ \%\ 2\ levels:\ 4\string^2\ =\ 16×\ more\ triangles}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00046}00046\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00047}00047\ \ \ \ \ \%\ \ \ \%\ Compute\ geometric\ quantities}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00048}00048\ \ \ \ \ \%\ \ \ h\ =\ triMesh.computeMeasure();\ \ \ \ \ \ \ \ \ \ \ \%\ Minimum\ edge\ length}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00049}00049\ \ \ \ \ \%\ \ \ detJ\ =\ triMesh.computeElementJacobianDeterminants([1,\ 2]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00050}00050\ \ \ \ \ \%\ \ \ graph\ =\ triMesh.graphify();\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Extract\ connectivity\ graph}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00051}00051\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00052}00052\ \ \ \ \ \%\ \ \ \%\ Access\ mesh\ topology}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00053}00053\ \ \ \ \ \%\ \ \ nVerts\ =\ triMesh.nVertices;\ \ \ \ \ \ \ \%\ Number\ of\ mesh\ vertices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00054}00054\ \ \ \ \ \%\ \ \ nElems\ =\ triMesh.nElements;\ \ \ \ \ \ \ \%\ Number\ of\ elements}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00055}00055\ \ \ \ \ \%\ \ \ V\ =\ triMesh.findElementVertices([1,\ 3]);\ \ \%\ Vertices\ \textcolor{keywordflow}{for}\ elements\ 1,3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00056}00056\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00057}00057\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00058}00058\ \ \ \ \ \%\ \ \ Reference\ coordinates\ use\ the\ standard\ simplex\ with\ vertices\ at}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00059}00059\ \ \ \ \ \%\ \ \ \{0,\ e₁,\ e₂,\ ...,\ eₙ\}\ where\ eᵢ\ are\ unit\ coordinate\ vectors.\ This}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00060}00060\ \ \ \ \ \%\ \ \ differs\ from\ some\ references\ that\ use\ centered\ or\ symmetric\ simplices.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00061}00061\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00062}00062\ \ \ \ \ \%\ \ \ Mesh\ refinement\ follows\ standard\ subdivision\ rules:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00063}00063\ \ \ \ \ \%\ \ \ -\/\ 1D:\ Each\ edge\ splits\ into\ 2\ segments}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00064}00064\ \ \ \ \ \%\ \ \ -\/\ 2D:\ Each\ triangle\ splits\ into\ 4\ triangles}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00065}00065\ \ \ \ \ \%\ \ \ -\/\ 3D:\ Each\ tetrahedron\ splits\ into\ 8\ tetrahedra}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00066}00066\ \ \ \ \ \%\ \ \ -\/\ General:\ Each\ k-\/level\ refinement\ produces\ 2\string^(k×d)\ sub-\/elements}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00067}00067\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00068}00068\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00069}00069\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.PolytopalMesh,\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.Mesh,\ \mbox{\hyperlink{namespacecore}{core}}.geometry.Simplex,}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00070}00070\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.Graph,\ \mbox{\hyperlink{namespaceapprox}{approx}}.mesh.PolytopalMeshPlotter}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00072}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{00072}}\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SIMPLEXMESH\ Constructor\ for\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})\ creates\ a}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simplex\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ from\ vertex\ coordinates\ and\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity,}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ automatically\ setting\ up\ the\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ simplex\ geometry.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ -\/\ Physical\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ geometry\ (\mbox{\hyperlink{namespacecore}{core}}.geometry.Geometry)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ -\/\ Vertex\ coordinate\ matrix\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ -\/\ Element\ connectivity\ matrix\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}\ object}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ simplex\ is\ automatically\ constructed\ with\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ at\ \{0,\ e₁,\ e₂,\ ...,\ eₙ\}\ where\ eᵢ\ are\ unit\ coordinate\ vectors.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ This\ provides\ the\ standard\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}\ for\ finite\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox_1_1basis}{basis}}\ functions\ and\ quadrature\ rules.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00094}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Determine\ spatial\ dimension\ from\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ size(\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ simplex:\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ at\ origin\ and\ unit\ vectors}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ referenceVertices\ =\ [zeros(d,\ 1),\ eye(d)];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}\ =\ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1geometry}{geometry}}.\mbox{\hyperlink{classcore_1_1geometry_1_1_simplex}{Simplex}}(referenceVertices);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Call\ parent\ constructor\ with\ automatic\ face\ generation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh}{PolytopalMesh}}(\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}},\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}});}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ function\ graphObj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e}{graphify}}(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ GRAPHIFY\ Generate\ graph\ representation\ from\ simplex\ connectivity.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ graphObj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e}{graphify}}(obj)\ creates\ a\ graph\ representation\ by}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ extracting\ all\ edges\ (vertex\ pairs)\ from\ the\ simplex\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ eliminating\ duplicates.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ graphObj\ -\/\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_graph}{Graph}}\ \textcolor{keywordtype}{object}\ with\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ and\ edges}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ simplicial\ meshes,\ edges\ are\ naturally\ defined\ as\ all}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ possible\ vertex\ pairs\ within\ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.\ The\ resulting}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ graph\ captures\ the\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ connectivity\ \textcolor{keywordflow}{for}\ visualization}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ topological\ analysis.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00124}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a50692598f1403c7323afa610d31aa54e}{00124}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity\ matrix\ (transposed\ \textcolor{keywordflow}{for}\ efficiency)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.elements.\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00126}00126\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ all\ possible\ vertex\ pairs\ (edges)\ within\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ T\ =\ nchoosek(1:obj.nVerticesPerElement,\ 2).'};}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reshape\ to\ get\ all\ edges\ from\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ edges\ =\ reshape(E(T(:),\ :),\ 2,\ []);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Sort\ edges\ and\ remove\ duplicates\ \textcolor{keywordflow}{for}\ undirected\ graph}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ edges\ =\ unique(sort(edges,\ 1).\textcolor{stringliteral}{',\ '}rows\textcolor{stringliteral}{',\ '}stable\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00135}00135\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ graph\ object\ with\ vertices\ and\ unique\ edges}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ graphObj\ =\ approx.mesh.Graph(obj.vertices,\ edges);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00139}00139\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ Y\ =\ collocate(obj,\ X,\ L)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COLLOCATE\ Map\ reference\ coordinates\ to\ physical\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ =\ collocate(obj,\ X,\ L)\ transforms\ reference\ Cartesian}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinates\ to\ physical\ Cartesian\ coordinates\ using\ affine}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ transformations\ defined\ by\ simplex\ element\ vertices.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ X\ -\/\ Reference\ coordinates\ (nDims\ ×\ nPoints)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00150}00150\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Element\ linear\ indices\ (nElements\ ×\ 1)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00151}00151\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00152}00152\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00153}00153\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Y\ -\/\ Physical\ coordinates\ (nDims\ ×\ nPoints\ ×\ nElements)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ transformation\ uses\ the\ affine\ mapping\ F(ξ)\ =\ V₀\ +\ J×ξ}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ where\ V₀\ is\ the\ first\ vertex,\ J\ is\ the\ Jacobian\ matrix}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ formed\ by\ edge\ vectors,\ and\ ξ\ are\ reference\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00160}00160\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ a\ triangle\ with\ vertices\ [V₀,\ V₁,\ V₂],\ the\ Jacobian\ is}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ J\ =\ [V₁-\/V₀,\ V₂-\/V₀]\ and\ the\ mapping\ is\ F(ξ)\ =\ V₀\ +\ J×ξ.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00162}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a33c779c4d05b75f33e91729202152905}{00162}}\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Use\ all\ elements\ if\ none\ specified}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00164}00164\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ nargin\ <\ 3\ ||\ isempty(L)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00165}00165\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ 1:obj.nElements;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00167}00167\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ vertex\ coordinates\ for\ specified\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.findElementVertices(L);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00170}00170\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ affine\ transformation\ using\ reference\ simplex\ geometry}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Y\ =\ obj.reference.transform(X,\ V);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00174}00174\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00175}00175\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ newObj\ =\ refine(obj,\ nLevels)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00176}00176\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ REFINE\ Perform\ uniform\ subdivision\ of\ simplicial\ mesh.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00177}00177\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ =\ refine(obj,\ nLevels)\ creates\ a\ refined\ mesh\ by}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00179}00179\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ uniformly\ subdividing\ each\ simplex\ element.\ The\ number\ of}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00180}00180\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ refinement\ levels\ determines\ the\ subdivision\ density.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00181}00181\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00183}00183\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ nLevels\ -\/\ Number\ of\ refinement\ levels\ (non-\/negative\ integer)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ newObj\ -\/\ Refined\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00188}00188\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00189}00189\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00190}00190\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Refinement\ follows\ standard\ simplex\ subdivision:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00191}00191\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Level\ 0:\ Original\ mesh\ (no\ refinement)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00192}00192\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Level\ 1:\ Each\ element\ splits\ into\ 2\string^d\ sub-\/elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00193}00193\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ -\/\ Level\ k:\ Each\ element\ splits\ into\ 2\string^(k×d)\ sub-\/elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00194}00194\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ triangles:\ 1\ →\ 4\ →\ 16\ →\ 64\ triangles\ per\ original}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00196}00196\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ tetrahedra:\ 1\ →\ 8\ →\ 64\ →\ 512\ tetrahedra\ per\ original}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00198}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a703a082886ed6876390c8de0124131a0}{00198}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ refined\ mesh\ maintains\ the\ same\ boundary\ geometry}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ element\ orientation\ as\ the\ original\ mesh.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00200}00200\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00201}00201\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ original\ mesh\ if\ no\ refinement\ requested}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ if\ nLevels\ ==\ 0}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ obj;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00205}00205\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00206}00206\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initialize\ with\ current\ mesh\ vertices\ and\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.vertices;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.elements;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00210}00210\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ refinement\ iteratively}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00212}00212\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:nLevels}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.nDims}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 1}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00215}00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [V,\ E]\ =\ refineLines(V,\ E);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 2}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [V,\ E]\ =\ refineTriangles(V,\ E);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00218}00218\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 3}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [V,\ E]\ =\ refineTetrahedra(V,\ E);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ core.except.assert(false,\ '}UnsupportedDimension\textcolor{stringliteral}{',\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '}Refinement\ not\ implemented\ \textcolor{keywordflow}{for}\ \%dD\ simplices.\textcolor{stringliteral}{',\ obj.nDims);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00225}00225\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Create\ new\ mesh\ with\ refined\ topology}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ newObj\ =\ approx.mesh.SimplexMesh(obj.domain,\ V,\ E);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00228}00228\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00229}00229\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00230}00230\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ h\ =\ computeMeasure(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00231}00231\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEMEASURE\ Compute\ characteristic\ mesh\ size.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00232}00232\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00233}00233\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ =\ computeMeasure(obj)\ returns\ the\ minimum\ edge\ length}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00234}00234\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ among\ all\ edges\ in\ the\ simplicial\ mesh,\ which\ serves\ as}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00235}00235\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ a\ characteristic\ measure\ of\ mesh\ resolution.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00236}00236\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00237}00237\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00238}00238\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00239}00239\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00240}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_afd152432dc5c9b4afca7861442c54340}{00240}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00241}00241\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ h\ -\/\ Minimum\ edge\ length\ (positive\ scalar)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00242}00242\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00243}00243\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00244}00244\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00245}00245\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ edge\ connectivity:\ all\ vertex\ pairs\ in\ each\ element}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00246}00246\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ T\ =\ nchoosek(1:(d\ +\ 1),\ 2).'};}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.elements(:,\ T(:)).\textcolor{stringliteral}{';}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00248}00248\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00249}00249\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ vertex\ coordinates\ for\ all\ edges}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00250}00250\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ reshape(obj.vertices(E(:),\ :),\ 2,\ [],\ d);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00251}00251\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00252}00252\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ edge\ lengths:\ ||V₂\ -\/\ V₁||\ for\ each\ edge}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00253}00253\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ edgeLengths\ =\ sqrt(sum(squeeze(diff(V,\ 1,\ 1)).\string^2,\ 2));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00254}00254\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00255}00255\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Return\ minimum\ edge\ length\ over\ entire\ mesh}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00256}00256\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ h\ =\ min(edgeLengths,\ [],\ '}all\textcolor{stringliteral}{');}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00257}00257\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00258}00258\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00259}00259\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ EJ\ =\ computeAllElementJacobians(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00260}00260\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANS\ Compute\ Jacobian\ matrices\ for\ all}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00261}00261\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ elements.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00262}00262\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00263}00263\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ EJ\ =\ computeAllElementJacobians(obj)\ computes\ the\ Jacobian}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00264}00264\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ matrix\ for\ coordinate\ transformation\ from\ reference\ to}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00265}00265\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ physical\ coordinates\ for\ every\ element\ in\ the\ mesh.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00266}00266\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00267}00267\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00268}00268\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00269}00269\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00270}00270\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00271}00271\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ EJ\ -\/\ Jacobian\ matrices\ (nDims\ ×\ nDims\ ×\ nElements)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00272}00272\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00273}00273\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00274}00274\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ simplex\ element\ with\ vertices\ \(\backslash\)f\$[V\_0,\ V\_1,\ ...,}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00275}00275\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ V\_n]\(\backslash\)f\$,\ the\ Jacobian\ matrix\ is\ \(\backslash\)f\$J\ =\ [V\_1-\/V\_0,\ V\_2-\/V\_0,}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00276}00276\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ ...,\ V\_n-\/V\_0]\(\backslash\)f\$.\ This\ matrix\ transforms\ reference}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00277}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a369efa0f320ea1583929e6ed8c38923a}{00277}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ coordinates\ to\ physical\ coordinates\ via\ the\ affine\ mapping}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00278}00278\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \(\backslash\)f\$F(\(\backslash\)xi)\ =\ V\_0\ +\ J\(\backslash\)xi\(\backslash\)f\$.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00279}00279\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00280}00280\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ vertex\ coordinates\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00281}00281\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.findElementVertices();}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00282}00282\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00283}00283\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ Jacobian:\ J\ =\ [V₁-\/V₀,\ V₂-\/V₀,\ ...,\ Vₙ-\/V₀]}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00284}00284\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ V(:,1,:)\ is\ first\ vertex,\ V(:,2:end,:)\ are\ remaining\ vertices}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00285}00285\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ permute(V(:,\ 2:end,\ :)-\/V(:,\ 1,\ :),\ [2,\ 1,\ 3]);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00286}00286\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00287}00287\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00288}00288\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ detEJ\ =\ computeAllElementJacobianDeterminants(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00289}00289\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTJACOBIANDETERMINANTS\ Compute\ Jacobian}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00290}00290\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ determinants\ for\ all\ elements.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00291}00291\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00292}00292\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detEJ\ =\ computeAllElementJacobianDeterminants(obj)\ computes}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00293}00293\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ determinant\ of\ the\ Jacobian\ matrix\ for\ each\ simplex}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00294}00294\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ element,\ used\ in\ integration\ and\ volume\ calculations.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00295}00295\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00296}00296\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00297}00297\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00298}00298\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00299}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8097f08f664078f0c8e4e2ada6c645ed}{00299}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00300}00300\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detEJ\ -\/\ Jacobian\ determinants\ (nElements\ ×\ 1)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00301}00301\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00302}00302\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ Jacobian\ matrices\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00303}00303\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.computeElementJacobians();}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00304}00304\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00305}00305\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ determinants\ efficiently\ by\ dimension}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00306}00306\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.nDims}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00307}00307\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 1}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 1D:\ Jacobian\ is\ scalar\ (edge\ length\ with\ sign)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00309}00309\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ EJ;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00310}00310\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00311}00311\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 2}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 2D:\ det(J)\ =\ J₁₁×J₂₂\ -\/\ J₁₂×J₂₁}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ11\ =\ squeeze(EJ(1,\ 1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00314}00314\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ12\ =\ squeeze(EJ(1,\ 2,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00315}00315\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ21\ =\ squeeze(EJ(2,\ 1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00316}00316\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ22\ =\ squeeze(EJ(2,\ 2,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00317}00317\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ EJ11\ .*\ EJ22\ -\/\ EJ12\ .*\ EJ21;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00318}00318\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00319}00319\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 3}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00320}00320\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 3D:\ Use\ explicit\ 3×3\ determinant\ formula}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00321}00321\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ11\ =\ squeeze(EJ(1,\ 1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00322}00322\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ12\ =\ squeeze(EJ(1,\ 2,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00323}00323\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ13\ =\ squeeze(EJ(1,\ 3,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00324}00324\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ21\ =\ squeeze(EJ(2,\ 1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00325}00325\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ22\ =\ squeeze(EJ(2,\ 2,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00326}00326\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ23\ =\ squeeze(EJ(2,\ 3,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00327}00327\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ31\ =\ squeeze(EJ(3,\ 1,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00328}00328\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ32\ =\ squeeze(EJ(3,\ 2,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00329}00329\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ33\ =\ squeeze(EJ(3,\ 3,\ :));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00330}00330\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00331}00331\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ EJ11\ .*\ (EJ22\ .*\ EJ33\ -\/\ EJ23\ .*\ EJ32)\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00332}00332\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/EJ12\ .*\ (EJ21\ .*\ EJ33\ -\/\ EJ23\ .*\ EJ31)\ ...}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00333}00333\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +EJ13\ .*\ (EJ21\ .*\ EJ32\ -\/\ EJ22\ .*\ EJ31);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00334}00334\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00335}00335\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00336}00336\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ General\ case:\ Use\ MATLAB'}s\ det\ function\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}-\/wise}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ arrayfun(@(i)\ det(EJ(:,\ :,\ i)),\ 1:size(EJ,\ 3));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00339}00339\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00340}00340\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00341}00341\ \ \ \ \ \ \ \ \ function\ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475}{computeAllElementInverseJacobians}}(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLELEMENTINVERSEJACOBIANS\ Compute\ inverse\ Jacobian}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ matrices\ \textcolor{keywordflow}{for}\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invEJ\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475}{computeAllElementInverseJacobians}}(obj)\ computes\ the}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ inverse\ of\ the\ Jacobian\ matrix\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}},\ used\ in}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ gradient\ computations\ and\ coordinate\ transformations.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00351}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a822a2295151dd002c29353a4a8cd5475}{00351}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ invEJ\ -\/\ Inverse\ Jacobian\ matrices\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00354}00354\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ obj.nDims}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 1D:\ Inverse\ is\ reciprocal}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ 1\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 2D:\ Use\ \textcolor{keyword}{explicit}\ 2×2\ matrix\ inversion\ formula}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.computeElementJacobians();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00365}00365\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ11\ =\ squeeze(EJ(1,\ 1,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ12\ =\ squeeze(EJ(1,\ 2,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ21\ =\ squeeze(EJ(2,\ 1,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ22\ =\ squeeze(EJ(2,\ 2,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ zeros(size(EJ));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(1,\ 1,\ :)\ =\ EJ22\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(1,\ 2,\ :)\ =\ -\/EJ12\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(2,\ 1,\ :)\ =\ -\/EJ21\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(2,\ 2,\ :)\ =\ EJ11\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00376}00376\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 3D:\ Use\ \textcolor{keyword}{explicit}\ 3×3\ matrix\ inversion\ with\ cofactor\ method}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.computeElementJacobians();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.computeElementJacobianDeterminants();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ11\ =\ squeeze(EJ(1,\ 1,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ12\ =\ squeeze(EJ(1,\ 2,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ13\ =\ squeeze(EJ(1,\ 3,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ21\ =\ squeeze(EJ(2,\ 1,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ22\ =\ squeeze(EJ(2,\ 2,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ23\ =\ squeeze(EJ(2,\ 3,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ31\ =\ squeeze(EJ(3,\ 1,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ32\ =\ squeeze(EJ(3,\ 2,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ33\ =\ squeeze(EJ(3,\ 3,\ :));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ zeros(size(EJ));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ First\ row\ of\ inverse}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(1,\ 1,\ :)\ =\ (EJ22\ .*\ EJ33\ -\/\ EJ23\ .*\ EJ32)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(1,\ 2,\ :)\ =\ (EJ13\ .*\ EJ32\ -\/\ EJ12\ .*\ EJ33)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(1,\ 3,\ :)\ =\ (EJ12\ .*\ EJ23\ -\/\ EJ13\ .*\ EJ22)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Second\ row\ of\ inverse}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(2,\ 1,\ :)\ =\ (EJ23\ .*\ EJ31\ -\/\ EJ21\ .*\ EJ33)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(2,\ 2,\ :)\ =\ (EJ11\ .*\ EJ33\ -\/\ EJ13\ .*\ EJ31)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(2,\ 3,\ :)\ =\ (EJ13\ .*\ EJ21\ -\/\ EJ11\ .*\ EJ23)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Third\ row\ of\ inverse}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(3,\ 1,\ :)\ =\ (EJ21\ .*\ EJ32\ -\/\ EJ22\ .*\ EJ31)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(3,\ 2,\ :)\ =\ (EJ12\ .*\ EJ31\ -\/\ EJ11\ .*\ EJ32)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(3,\ 3,\ :)\ =\ (EJ11\ .*\ EJ22\ -\/\ EJ12\ .*\ EJ21)\ ./\ detEJ;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ General\ \textcolor{keywordflow}{case}:\ Use\ MATLAB\textcolor{stringliteral}{'s\ inv\ function\ element-\/wise}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00410}00410\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EJ\ =\ obj.computeElementJacobians();}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00411}00411\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ\ =\ zeros(size(EJ));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00412}00412\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:size(EJ,\ 3)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00413}00413\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ invEJ(:,\ :,\ i)\ =\ inv(EJ(:,\ :,\ i));}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00414}00414\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00415}00415\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00416}00416\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00417}00417\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00418}00418\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ detFJ\ =\ computeAllFaceJacobianDeterminants(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00419}00419\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLFACEJACOBIANDETERMINANTS\ Compute\ face\ Jacobian}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00420}00420\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ determinants\ for\ all\ faces.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00421}00421\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00422}00422\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ =\ computeAllFaceJacobianDeterminants(obj)\ computes}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00423}00423\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Jacobian\ determinants\ for\ coordinate\ transformation\ on\ all}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00424}00424\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ element\ faces,\ used\ in\ boundary\ and\ interface\ integration.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00425}00425\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00426}00426\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00427}00427\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00428}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a58dc0dde4b98570a64b421373dc85c0c}{00428}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00429}00429\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00430}00430\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ detFJ\ -\/\ Face\ Jacobian\ determinants\ (cell\ array\ by\ local\ face\ index)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00431}00431\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00432}00432\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00433}00433\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ detFJ\ =\ cell(1,\ d+1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00434}00434\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00435}00435\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ determinants\ for\ each\ local\ face}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00436}00436\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:d\ +\ 1}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00437}00437\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ vertex\ coordinates\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00438}00438\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.findElementVertices();}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00439}00439\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00440}00440\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ vertices\ for\ face\ i\ (all\ vertices\ except\ vertex\ i)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00441}00441\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ V(:,\ setdiff(1:d+1,\ i),\ :);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00442}00442\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00443}00443\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ face\ Jacobian:\ edge\ vectors\ from\ first\ vertex}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00444}00444\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ U(:,\ 2:end,\ :)\ -\/\ U(:,\ 1,\ :);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00445}00445\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00446}00446\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ Gram\ matrix:\ G\string^T\ ×\ G\ for\ each\ element}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00447}00447\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\ =\ pagemtimes(permute(G,\ [2,\ 1,\ 3]),\ G);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00448}00448\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00449}00449\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Face\ Jacobian\ determinant\ is\ sqrt(det(Gram\ matrix))}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00450}00450\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gramDets\ =\ arrayfun(@(k)\ det(G(:,\ :,\ k)),\ 1:obj.nElements);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00451}00451\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detFJ\{i\}\ =\ reshape(sqrt(gramDets),\ [],\ 1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00452}00452\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00453}00453\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ end}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00454}00454\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00455}00455\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ function\ outN\ =\ computeAllOutwardNormals(obj)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00456}00456\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ COMPUTEALLOUTWARDNORMALS\ Compute\ outward\ normal\ vectors\ for}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00457}00457\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ all\ faces.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00458}00458\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00459}00459\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ =\ computeAllOutwardNormals(obj)\ computes\ unit\ outward}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00460}00460\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ normal\ vectors\ for\ all\ element\ faces,\ essential\ for}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00461}00461\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ boundary\ conditions\ and\ flux\ computations.}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00462}00462\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00463}00463\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00464}00464\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ SimplexMesh\ object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00465}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_afd6acbbd6a55ea889b64d0282d17dea8}{00465}}\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00466}00466\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00467}00467\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ outN\ -\/\ Outward\ normal\ vectors\ (cell\ array\ by\ local\ face\ index)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00468}00468\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00469}00469\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.nDims;}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00470}00470\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ outN\ =\ cell(1,\ d+1);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00471}00471\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00472}00472\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ normals\ for\ each\ local\ face}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00473}00473\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ for\ i\ =\ 1:d\ +\ 1}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00474}00474\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Get\ vertex\ coordinates\ for\ all\ elements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00475}00475\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ V\ =\ obj.findElementVertices();}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00476}00476\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00477}00477\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ vertices\ for\ face\ i\ (all\ vertices\ except\ vertex\ i)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00478}00478\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ V(:,\ setdiff(1:d+1,\ i),\ :);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00479}00479\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00480}00480\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ edge\ vectors\ from\ first\ face\ vertex}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00481}00481\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ U(:,\ 2:end,\ :)\ -\/\ U(:,\ 1,\ :);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00482}00482\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00483}00483\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\{i\}\ =\ zeros(d,\ obj.nElements);}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00484}00484\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00485}00485\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ normal\ for\ each\ element}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00486}00486\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ j\ =\ 1:obj.nElements}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00487}00487\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ null\ space\ of\ edge\ matrix\ (normal\ direction)}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00488}00488\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nullVec\ =\ null(squeeze(E(:,\ :,\ j)).'});}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Handle\ \textcolor{keywordflow}{case}\ where\ null\ \mbox{\hyperlink{namespaceapprox_1_1space}{space}}\ has\ multiple\ vectors}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ size(nullVec,\ 2)\ >\ 1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nullVec\ =\ nullVec(:,\ 1);\ \%\ Take\ first\ vector}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00494}00494\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Ensure\ normal\ points\ outward\ (away\ from\ vertex\ i)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ toVertex\ =\ V(:,\ i,\ j)\ -\/\ U(:,\ 1,\ j);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ dot(toVertex,\ nullVec)\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nullVec\ =\ -\/nullVec;\ \%\ Flip\ to\ point\ outward}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Store\ unit\ normal\ vector}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outN\{i\}(:,\ j)\ =\ nullVec\ /\ norm(nullVec);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00505}00505\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00506}00506\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00507}00507\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00508}00508\ \ \ \ \ methods\ (Access\ =\ \textcolor{keyword}{protected})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00509}00509\ \ \ \ \ \ \ \ \ function\ obj\ =\ setFaces(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETFACES\ Generate\ face\ connectivity\ from\ simplex\ elements.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setFaces(obj)\ extracts\ face\ definitions\ from\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ connectivity\ and\ builds\ the\ face-\/to-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ mapping\ table}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ simplicial\ meshes.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{SimplexMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{SimplexMesh}}\ \textcolor{keywordtype}{object}\ with\ face\ connectivity}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ For\ d-\/dimensional\ simplices,\ faces\ are\ (d-\/1)-\/dimensional}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00524}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3cac6b1720b306a9725fe711334843}{00524}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ simplices\ formed\ by\ choosing\ d\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ from\ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ The\ face-\/to-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ table\ stores\ which\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ share\ each}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ face\ and\ the\ local\ face\ index\ within\ each\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00527}00527\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}};}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity\ (transposed\ for\ efficiency)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ E\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}.';}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00532}00532\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Generate\ all\ possible\ (d-\/1)-\/\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}:\ choose\ d\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ from\ d+1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ T\ =\ nchoosek(1:d+1,\ d).';}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00535}00535\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Extract\ face\ vertex\ indices\ from\ all\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ reshape(E(T(:),\ :),\ d,\ []);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00538}00538\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Sort\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ within\ each\ face\ for\ canonical\ representation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ sort(F,\ 1).';}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00541}00541\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ unique\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ and\ track\ which\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ they\ belong\ to}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ [obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}},\ \string~,\ rows]\ =\ unique(F,\ 'rows',\ 'stable');}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00544}00544\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Build\ face-\/to-\/\mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ connectivity\ table}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ cols\ =\ kron((1:obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}).',\ ones(d+1,\ 1));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ vals\ =\ mod(0:(length(rows)\ -\/\ 1),\ d+1)\ +\ 1;\ \%\ Local\ face\ indices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{faceToElementTable}}\ =\ sparse(rows,\ cols,\ vals,\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{nFaces}},\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}});}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00549}00549\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Identify\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}\ (appear\ in\ only\ one\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}\ =\ find(accumarray(rows,\ 1)\ ==\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00552}00552\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00553}00553\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00554}00554\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}{forcePositiveOrientation}}(obj)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FORCEPOSITIVEORIENTATION\ Ensure\ positive\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ orientations.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}{forcePositiveOrientation}}(obj)\ reorders\ \mbox{\hyperlink{namespaceapprox_1_1element}{element}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ ensure\ positive\ Jacobian\ determinants,\ which\ is\ essential}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ for\ proper\ integration\ and\ geometric\ computations.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8593b9d0ee48eb975ecbcf7781d3a824}{SimplexMesh}}\ \textcolor{keywordtype}{object}\ with\ corrected\ orientations}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Element\ orientation\ is\ determined\ by\ the\ sign\ of\ the}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Jacobian\ determinant.\ Negative\ determinants\ indicate}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00570}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}{00570}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{stringliteral}{"{}inside-\/out"{}}\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ that\ must\ be\ corrected\ by\ vertex}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ reordering.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00572}00572\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ current\ Jacobian\ determinants}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ detEJ\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{computeElementJacobianDeterminants}}();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00575}00575\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Find\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ with\ negative\ orientation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ negativeElements\ =\ find(detEJ\ <\ 0);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ nCorrected\ =\ length(negativeElements);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00579}00579\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Apply\ orientation\ correction\ if\ needed}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ if\ nCorrected\ >\ 0}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ switch\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 1D:\ Swap\ endpoints\ to\ reverse\ direction}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ :)\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ [2,\ 1]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00586}00586\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 2D:\ Swap\ last\ two\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ to\ reverse\ triangle\ orientation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ :)\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ [1,\ 3,\ 2]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00590}00590\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ 3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ 3D:\ Standard\ tetrahedron\ reordering\ to\ reverse\ orientation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ :)\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ [1,\ 3,\ 2,\ 4]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otherwise}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ General\ case:\ Swap\ last\ two\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nVerts\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{nVerticesPerElement}};}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ :)\ =\ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}(negativeElements,\ [1:nVerts\ -\/\ 2,\ nVerts,\ nVerts\ -\/\ 1]);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00600}00600\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Clear\ cached\ data\ since\ \mbox{\hyperlink{namespaceapprox_1_1mesh}{mesh}}\ topology\ changed}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{resetTransform}}();}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00604}00604\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00605}00605\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00606}00606\ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00607}00607\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00608}00608\ \%\ ========================================================================}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00609}00609\ \%\ REFINEMENT\ HELPER\ FUNCTIONS}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00610}00610\ \%\ ========================================================================}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00611}00611\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00612}00612\ function\ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0}{refineLines}}(V0,\ E0)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00613}00613\ \%\ REFINELINES\ Refine\ 1D\ line\ segments\ by\ midpoint\ subdivision.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00614}00614\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00615}00615\ \%\ \ \ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0}{refineLines}}(V0,\ E0)\ subdivides\ each\ line\ segment\ into}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00616}00616\ \%\ \ \ two\ segments\ by\ adding\ midpoint\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00617}00617\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00618}00618\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00619}00619\ \%\ \ \ V0\ -\/\ Original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00620}00620\ \%\ \ \ E0\ -\/\ Original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ 2)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00621}00621\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00622}00622\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00623}00623\ \%\ \ \ V\ -\/\ Refined\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ including\ midpoints\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ +\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}})}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00624}00624\ \%\ \ \ E\ -\/\ Refined\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (2×nElements\ ×\ 2)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00626}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3e87ea42d765978896b1b5b67275c0}{00626}}\ \%<\ Start\ with\ original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00627}00627\ V\ =\ V0;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00628}00628\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00629}00629\ \%<\ Get\ vertex\ coordinates\ for\ line\ endpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00630}00630\ V1\ =\ V(E0(:,\ 1),\ :);\ \%\ Start\ points\ [\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00631}00631\ V2\ =\ V(E0(:,\ 2),\ :);\ \%\ End\ points\ [\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00632}00632\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00633}00633\ \%<\ Compute\ midpoints\ for\ each\ line\ segment}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00634}00634\ midpoints\ =\ (V1\ +\ V2)\ /\ 2;\ \%\ [\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{nDims}}]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00635}00635\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00636}00636\ \%<\ Append\ midpoints\ to\ vertex\ list}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00637}00637\ V\ =\ [V;\ midpoints];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00638}00638\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00639}00639\ \%<\ Indices\ of\ new\ midpoint\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00640}00640\ midpointIndices\ =\ size(V0,\ 1)\ +\ (1:size(E0,\ 1))';}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00641}00641\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00642}00642\ \%<\ Create\ refined\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}:\ each\ original\ line\ becomes\ two\ lines}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00643}00643\ E\ =\ zeros(2*size(E0,\ 1),\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00644}00644\ E(1:2:end,\ :)\ =\ [E0(:,\ 1),\ midpointIndices];\ \%\ First\ half:\ start\ to\ midpoint}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00645}00645\ E(2:2:end,\ :)\ =\ [midpointIndices,\ E0(:,\ 2)];\ \%\ Second\ half:\ midpoint\ to\ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00646}00646\ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00647}00647\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00648}00648\ function\ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9}{refineTriangles}}(V0,\ E0)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00649}00649\ \%\ REFINETRIANGLES\ Refine\ triangular\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ by\ edge\ subdivision.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00650}00650\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00651}00651\ \%\ \ \ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9}{refineTriangles}}(V0,\ E0)\ subdivides\ each\ triangle\ into}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00652}00652\ \%\ \ \ four\ triangles\ by\ adding\ midpoint\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ on\ all\ edges.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00653}00653\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00654}00654\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00655}00655\ \%\ \ \ V0\ -\/\ Original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ 2)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00656}00656\ \%\ \ \ E0\ -\/\ Original\ triangular\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ 3)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00657}00657\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00658}00658\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00659}00659\ \%\ \ \ V\ -\/\ Refined\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ including\ edge\ midpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00660}00660\ \%\ \ \ E\ -\/\ Refined\ triangular\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (4×nElements\ ×\ 3)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00661}00661\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00662}00662\ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00663}00663\ \%\ \ \ Each\ triangle\ is\ subdivided\ into\ 4\ sub-\/triangles:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00664}00664\ \%\ \ \ -\/\ 3\ corner\ triangles\ (one\ at\ each\ original\ vertex)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00665}00665\ \%\ \ \ -\/\ 1\ central\ triangle\ (connecting\ the\ 3\ edge\ midpoints)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00666}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a5ab32e53f2ca9de211a4e82fd6145ea9}{00666}}\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00667}00667\ nV\ =\ size(V0,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00668}00668\ nE\ =\ size(E0,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00669}00669\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00670}00670\ \%<\ Extract\ all\ triangle\ edges\ (each\ triangle\ contributes\ 3\ edges)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00671}00671\ allEdges\ =\ [E0(:,\ [1,\ 2]);\ E0(:,\ [2,\ 3]);\ E0(:,\ [3,\ 1])];\ \%\ [3×nE\ ×\ 2]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00672}00672\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00673}00673\ \%<\ Sort\ edge\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ canonical\ representation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00674}00674\ sortedEdges\ =\ sort(allEdges,\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00675}00675\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00676}00676\ \%<\ Find\ unique\ edges\ and\ their\ midpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00677}00677\ [uniqueEdges,\ \string~,\ edgeID]\ =\ unique(sortedEdges,\ 'rows');}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00678}00678\ nUniqueEdges\ =\ size(uniqueEdges,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00679}00679\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00680}00680\ \%<\ Compute\ edge\ midpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00681}00681\ midpoints\ =\ (V0(uniqueEdges(:,\ 1),\ :)\ +\ V0(uniqueEdges(:,\ 2),\ :))\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00682}00682\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00683}00683\ \%<\ Append\ midpoints\ to\ vertex\ list}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00684}00684\ V\ =\ [V0;\ midpoints];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00685}00685\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00686}00686\ \%<\ Map\ edge\ IDs\ to\ midpoint\ vertex\ indices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00687}00687\ midpointIndices\ =\ nV\ +\ (1:nUniqueEdges).';}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00688}00688\ edgeMidpoints\ =\ midpointIndices(edgeID);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00689}00689\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00690}00690\ \%<\ Extract\ midpoint\ indices\ for\ each\ triangle's\ three\ edges}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00691}00691\ I12\ =\ edgeMidpoints(1:nE);\ \%\ Midpoint\ of\ edge\ v1-\/v2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00692}00692\ I23\ =\ edgeMidpoints(nE+1:2*nE);\ \%\ Midpoint\ of\ edge\ v2-\/v3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00693}00693\ I31\ =\ edgeMidpoints(2*nE+1:end);\ \%\ Midpoint\ of\ edge\ v3-\/v1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00694}00694\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00695}00695\ \%<\ Original\ triangle\ vertex\ indices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00696}00696\ v1\ =\ E0(:,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00697}00697\ v2\ =\ E0(:,\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00698}00698\ v3\ =\ E0(:,\ 3);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00699}00699\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00700}00700\ \%<\ Create\ 4\ sub-\/triangles\ per\ original\ triangle}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00701}00701\ E\ =\ zeros(4*nE,\ 3);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00702}00702\ E(4*(0:nE\ -\/\ 1)+1,\ :)\ =\ [v1,\ I12,\ I31];\ \%\ Corner\ triangle\ at\ v1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00703}00703\ E(4*(0:nE\ -\/\ 1)+2,\ :)\ =\ [v2,\ I23,\ I12];\ \%\ Corner\ triangle\ at\ v2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00704}00704\ E(4*(0:nE\ -\/\ 1)+3,\ :)\ =\ [v3,\ I31,\ I23];\ \%\ Corner\ triangle\ at\ v3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00705}00705\ E(4*(0:nE\ -\/\ 1)+4,\ :)\ =\ [I12,\ I23,\ I31];\ \%\ Central\ triangle}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00706}00706\ end}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00707}00707\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00708}00708\ function\ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5}{refineTetrahedra}}(V0,\ E0)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00709}00709\ \%\ REFINETETRAHEDRA\ Refine\ tetrahedral\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ by\ edge\ subdivision.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00710}00710\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00711}00711\ \%\ \ \ [V,\ E]\ =\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5}{refineTetrahedra}}(V0,\ E0)\ subdivides\ each\ tetrahedron\ into}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00712}00712\ \%\ \ \ eight\ tetrahedra\ by\ adding\ midpoint\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ on\ all\ edges.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00713}00713\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00714}00714\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00715}00715\ \%\ \ \ V0\ -\/\ Original\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{nVertices}}\ ×\ 3)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00716}00716\ \%\ \ \ E0\ -\/\ Original\ tetrahedral\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (\mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{nElements}}\ ×\ 4)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00717}00717\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00718}00718\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00719}00719\ \%\ \ \ V\ -\/\ Refined\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ including\ edge\ midpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00720}00720\ \%\ \ \ E\ -\/\ Refined\ tetrahedral\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}\ (8×nElements\ ×\ 4)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00721}00721\ \%}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00722}00722\ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00723}00723\ \%\ \ \ Each\ tetrahedron\ has\ 6\ edges,\ creating\ 6\ new\ midpoint\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}.}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00724}00724\ \%\ \ \ The\ 8\ sub-\/tetrahedra\ consist\ of:}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00725}00725\ \%\ \ \ -\/\ 4\ corner\ tetrahedra\ (one\ at\ each\ original\ vertex)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00726}00726\ \%\ \ \ -\/\ 4\ interior\ tetrahedra\ (connecting\ midpoints)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00727}\mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a8df0aedaad0cb03caa1b2a08ed0ad8b5}{00727}}\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00728}00728\ nV\ =\ size(V0,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00729}00729\ nE\ =\ size(E0,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00730}00730\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00731}00731\ \%<\ Define\ the\ 6\ edges\ of\ a\ tetrahedron\ (vertex\ index\ pairs)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00732}00732\ edgePairs\ =\ [1,\ 2;\ 1,\ 3;\ 1,\ 4;\ 2,\ 3;\ 2,\ 4;\ 3,\ 4];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00733}00733\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00734}00734\ \%<\ Extract\ all\ edges\ from\ all\ tetrahedra}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00735}00735\ allEdges\ =\ reshape(E0(:,\ edgePairs),\ [],\ 2);\ \%\ [6×nE\ ×\ 2]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00736}00736\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00737}00737\ \%<\ Sort\ edge\ \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}\ for\ canonical\ representation}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00738}00738\ sortedEdges\ =\ sort(allEdges,\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00739}00739\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00740}00740\ \%<\ Find\ unique\ edges\ and\ compute\ their\ midpoints}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00741}00741\ [uniqueEdges,\ \string~,\ edgeID]\ =\ unique(sortedEdges,\ 'rows');}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00742}00742\ midpoints\ =\ (V0(uniqueEdges(:,\ 1),\ :)\ +\ V0(uniqueEdges(:,\ 2),\ :))\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00743}00743\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00744}00744\ \%<\ Append\ midpoints\ to\ vertex\ list}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00745}00745\ V\ =\ [V0;\ midpoints];}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00746}00746\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00747}00747\ \%<\ Map\ edges\ to\ midpoint\ indices\ for\ each\ tetrahedron}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00748}00748\ midpointIndices\ =\ nV\ +\ (1:size(uniqueEdges,\ 1));}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00749}00749\ edgeMidpoints\ =\ reshape(midpointIndices(edgeID),\ nE,\ 6);\ \%\ [nE\ ×\ 6]}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00750}00750\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00751}00751\ \%<\ Extract\ midpoint\ indices\ for\ each\ tetrahedron's\ 6\ edges}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00752}00752\ m12\ =\ edgeMidpoints(:,\ 1);\ \%\ Midpoint\ of\ edge\ v1-\/v2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00753}00753\ m13\ =\ edgeMidpoints(:,\ 2);\ \%\ Midpoint\ of\ edge\ v1-\/v3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00754}00754\ m14\ =\ edgeMidpoints(:,\ 3);\ \%\ Midpoint\ of\ edge\ v1-\/v4}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00755}00755\ m23\ =\ edgeMidpoints(:,\ 4);\ \%\ Midpoint\ of\ edge\ v2-\/v3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00756}00756\ m24\ =\ edgeMidpoints(:,\ 5);\ \%\ Midpoint\ of\ edge\ v2-\/v4}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00757}00757\ m34\ =\ edgeMidpoints(:,\ 6);\ \%\ Midpoint\ of\ edge\ v3-\/v4}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00758}00758\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00759}00759\ \%<\ Original\ tetrahedron\ vertex\ indices}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00760}00760\ v1\ =\ E0(:,\ 1);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00761}00761\ v2\ =\ E0(:,\ 2);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00762}00762\ v3\ =\ E0(:,\ 3);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00763}00763\ v4\ =\ E0(:,\ 4);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00764}00764\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00765}00765\ \%<\ Create\ 8\ sub-\/tetrahedra\ per\ original\ tetrahedron}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00766}00766\ E\ =\ zeros(8*nE,\ 4);}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00767}00767\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00768}00768\ \%<\ Corner\ tetrahedra\ (one\ at\ each\ original\ vertex)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00769}00769\ E(8*(0:nE\ -\/\ 1)+1,\ :)\ =\ [v1,\ m12,\ m13,\ m14];\ \%\ Corner\ at\ v1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00770}00770\ E(8*(0:nE\ -\/\ 1)+2,\ :)\ =\ [v2,\ m12,\ m23,\ m24];\ \%\ Corner\ at\ v2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00771}00771\ E(8*(0:nE\ -\/\ 1)+3,\ :)\ =\ [v3,\ m13,\ m23,\ m34];\ \%\ Corner\ at\ v3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00772}00772\ E(8*(0:nE\ -\/\ 1)+4,\ :)\ =\ [v4,\ m14,\ m24,\ m34];\ \%\ Corner\ at\ v4}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00773}00773\ }
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00774}00774\ \%<\ Interior\ tetrahedra\ (connecting\ midpoints)}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00775}00775\ E(8*(0:nE\ -\/\ 1)+5,\ :)\ =\ [m12,\ m13,\ m23,\ m14];\ \%\ Interior\ tetrahedron\ 1}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00776}00776\ E(8*(0:nE\ -\/\ 1)+6,\ :)\ =\ [m12,\ m23,\ m24,\ m14];\ \%\ Interior\ tetrahedron\ 2}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00777}00777\ E(8*(0:nE\ -\/\ 1)+7,\ :)\ =\ [m13,\ m23,\ m34,\ m14];\ \%\ Interior\ tetrahedron\ 3}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00778}00778\ E(8*(0:nE\ -\/\ 1)+8,\ :)\ =\ [m23,\ m24,\ m34,\ m14];\ \%\ Interior\ tetrahedron\ 4}
+\DoxyCodeLine{\Hypertarget{_simplex_mesh_8m_source_l00779}00779\ end}
+
+\end{DoxyCode}

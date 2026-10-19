@@ -1,0 +1,211 @@
+\doxysection{core\+::validate Namespace Reference}
+\hypertarget{namespacecore_1_1validate}{}\label{namespacecore_1_1validate}\index{core::validate@{core::validate}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9}{has\+Fields}} (Input\+Type s, Input\+Type f)
+\begin{DoxyCompactList}\small\item\em Check if a struct {\itshape s} has all specified fields {\itshape f}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}{is\+All\+Class}} (Input\+Type x, Input\+Type cls)
+\begin{DoxyCompactList}\small\item\em Check if all elements of {\itshape x} belong to {\itshape cls}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{is\+All\+Same\+Class}} (Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Check if all inputs belong to the same class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}{must\+Be\+Cell\+Or\+Numeric}} (Input\+Type x)
+\begin{DoxyCompactList}\small\item\em Validate that {\itshape x} is a cell or a number. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}{must\+Be\+Cell\+Or\+Object}} (Input\+Type x)
+\begin{DoxyCompactList}\small\item\em Validate that {\itshape x} is a cell or an object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacecore_1_1validate_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9}\index{core::validate@{core::validate}!hasFields@{hasFields}}
+\index{hasFields@{hasFields}!core::validate@{core::validate}}
+\doxysubsubsection{\texorpdfstring{hasFields()}{hasFields()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9} 
+function core\+::validate\+::has\+Fields (\begin{DoxyParamCaption}\item[{Input\+Type}]{s}{, }\item[{Input\+Type}]{f}{}\end{DoxyParamCaption})}
+
+
+
+Check if a struct {\itshape s} has all specified fields {\itshape f}. 
+
+tf = has\+Fields(s, f) returns true if struct {\itshape s} contains all fields specified in {\itshape f}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & -\/ Structure to check \\
+\hline
+{\em f} & -\/ Field name (string/char) or cell array of field names\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em tf} & -\/ True if all fields exist, false otherwise\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Single\ field\ check}
+\DoxyCodeLine{s\ =\ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'John'},\ \textcolor{stringliteral}{'age'},\ 30);}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9}{hasFields}}(s,\ \textcolor{stringliteral}{'name'});\ \%\ Returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{\%\ Multiple\ fields\ check}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9}{hasFields}}(s,\ \{\textcolor{stringliteral}{'name'},\ \textcolor{stringliteral}{'age'}\});\ \%\ Returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{\%\ Empty\ field\ list}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a8f94b89a0e7273f3202c317951181cd9}{hasFields}}(s,\ \{\});\ \%\ Returns\ \textcolor{keyword}{true}}
+
+\end{DoxyCode}
+ \Hypertarget{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}\index{core::validate@{core::validate}!isAllClass@{isAllClass}}
+\index{isAllClass@{isAllClass}!core::validate@{core::validate}}
+\doxysubsubsection{\texorpdfstring{isAllClass()}{isAllClass()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39} 
+function core\+::validate\+::is\+All\+Class (\begin{DoxyParamCaption}\item[{Input\+Type}]{x}{, }\item[{Input\+Type}]{cls}{}\end{DoxyParamCaption})}
+
+
+
+Check if all elements of {\itshape x} belong to {\itshape cls}. 
+
+tf = is\+All\+Class(x, cls) returns true if all elements in {\itshape x} belong to one of the classes specified in {\itshape cls}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & -\/ Element(s) (object array or cell array) \\
+\hline
+{\em cls} & -\/ Class name(s) (string or cell array of strings)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em tf} & -\/ True only if all elements belong to the specified class(es)\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Check\ \textcolor{keywordflow}{if}\ all\ elements\ are\ numeric}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}{isAllClass}}([1,\ 2,\ 3],\ \textcolor{stringliteral}{'double'});}
+\DoxyCodeLine{\%\ Check\ multiple\ allowed\ classes}
+\DoxyCodeLine{mixedData\ =\ \{1,\ 2.5,\ int32(3)\};}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}{isAllClass}}(mixedData,\ \{\textcolor{stringliteral}{'double'},\ \textcolor{stringliteral}{'int32'}\});}
+\DoxyCodeLine{\%\ Empty\ array\ returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{tf\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}{isAllClass}}([],\ \textcolor{stringliteral}{'any\_class'});}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{core.\+validate.\+is\+All\+Same\+Class} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}\index{core::validate@{core::validate}!isAllSameClass@{isAllSameClass}}
+\index{isAllSameClass@{isAllSameClass}!core::validate@{core::validate}}
+\doxysubsubsection{\texorpdfstring{isAllSameClass()}{isAllSameClass()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7} 
+function core\+::validate\+::is\+All\+Same\+Class (\begin{DoxyParamCaption}\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Check if all inputs belong to the same class. 
+
+tf = is\+All\+Same\+Class(\+X1, X2, ...) returns true if all inputs belong to the same class. For a single input argument, always returns true.
+
+
+\begin{DoxyParams}{Parameters}
+{\em varargin} & -\/ Input arguments lists\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em tf} & -\/ True if all input arguments have the same class\\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Check\ \textcolor{keywordflow}{if}\ all\ inputs\ are\ the\ same\ numeric\ type}
+\DoxyCodeLine{result\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{isAllSameClass}}(1.0,\ 2.0,\ 3.0);\ \ \%\ returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{\%\ Check\ mixed\ types}
+\DoxyCodeLine{result\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{isAllSameClass}}(1.0,\ int32(2),\ 3.0);\ \ \%\ returns\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\%\ Check\ objects\ of\ the\ same\ \textcolor{keyword}{class}}
+\DoxyCodeLine{obj1\ =\ containers.Map();}
+\DoxyCodeLine{obj2\ =\ containers.Map();}
+\DoxyCodeLine{result\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{isAllSameClass}}(obj1,\ obj2);\ \ \%\ returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{\%\ Single\ input\ always\ returns\ \textcolor{keyword}{true}}
+\DoxyCodeLine{result\ =\ \mbox{\hyperlink{namespacecore_1_1validate_a417d4e3bf378017f94b8a4bff3e12cc7}{isAllSameClass}}(42);\ \ \%\ returns\ \textcolor{keyword}{true}}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1validate_a69e6f3020b2ca2807b1c9d480c234a39}{core.\+validate.\+is\+All\+Class} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}\index{core::validate@{core::validate}!mustBeCellOrNumeric@{mustBeCellOrNumeric}}
+\index{mustBeCellOrNumeric@{mustBeCellOrNumeric}!core::validate@{core::validate}}
+\doxysubsubsection{\texorpdfstring{mustBeCellOrNumeric()}{mustBeCellOrNumeric()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec} 
+function core\+::validate\+::must\+Be\+Cell\+Or\+Numeric (\begin{DoxyParamCaption}\item[{Input\+Type}]{x}{}\end{DoxyParamCaption})}
+
+
+
+Validate that {\itshape x} is a cell or a number. 
+
+must\+Be\+Cell\+Or\+Numeric(x) throws an error if {\itshape x} is neither a cell nor a number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & -\/ Value to validate\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Valid\ numeric\ input}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}{mustBeCellOrNumeric}}([1,\ 2,\ 3]);\ \%\ Valid}
+\DoxyCodeLine{\%\ Valid\ cell\ input}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}{mustBeCellOrNumeric}}(\{1,\ \textcolor{stringliteral}{'test'},\ []\});\ \%\ Valid}
+\DoxyCodeLine{\%\ Invalid\ input\ \textcolor{keywordflow}{throws}\ error}
+\DoxyCodeLine{\%\ \mbox{\hyperlink{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}{mustBeCellOrNumeric}}(\textcolor{stringliteral}{'abc'});\ \%\ Error}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}{core.\+validate.\+must\+Be\+Cell\+Or\+Object} 
+\end{DoxySeeAlso}
+\Hypertarget{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}\index{core::validate@{core::validate}!mustBeCellOrObject@{mustBeCellOrObject}}
+\index{mustBeCellOrObject@{mustBeCellOrObject}!core::validate@{core::validate}}
+\doxysubsubsection{\texorpdfstring{mustBeCellOrObject()}{mustBeCellOrObject()}}
+{\footnotesize\ttfamily \label{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c} 
+function core\+::validate\+::must\+Be\+Cell\+Or\+Object (\begin{DoxyParamCaption}\item[{Input\+Type}]{x}{}\end{DoxyParamCaption})}
+
+
+
+Validate that {\itshape x} is a cell or an object. 
+
+must\+Be\+Cell\+Or\+Object(x) throws an error if {\itshape x} is neither a cell nor an object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & -\/ Value to validate\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em NULL} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Valid\ \textcolor{keywordtype}{object}\ input}
+\DoxyCodeLine{obj\ =\ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'field'},\ 1);}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}{mustBeCellOrObject}}(obj);\ \%\ Valid}
+\DoxyCodeLine{\%\ Valid\ cell\ input}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}{mustBeCellOrObject}}(\{1,\ 2,\ 3\});\ \%\ Valid}
+\DoxyCodeLine{\%\ Invalid\ input\ \textcolor{keywordflow}{throws}\ error}
+\DoxyCodeLine{\%\ \mbox{\hyperlink{namespacecore_1_1validate_adb098a65947d2430b0e3fe6b1f57309c}{mustBeCellOrObject}}(123);\ \%\ Error}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecore_1_1validate_ab3618cd6137a2f793f7fe1928886e1ec}{core.\+validate.\+must\+Be\+Cell\+Or\+Numeric} 
+\end{DoxySeeAlso}

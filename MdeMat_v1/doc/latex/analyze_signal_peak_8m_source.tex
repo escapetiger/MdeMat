@@ -1,0 +1,62 @@
+\doxysection{analyze\+Signal\+Peak.\+m}
+\hypertarget{analyze_signal_peak_8m_source}{}\label{analyze_signal_peak_8m_source}\index{+core/analyzeSignalPeak.m@{+core/analyzeSignalPeak.m}}
+\mbox{\hyperlink{analyze_signal_peak_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00001}00001\ function\ [peakWidth,\ peakLocation,\ peakHeight]\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(inputArray,\ threshold,\ method)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00002}00002\ \%\ ANALYZESIGNALPEAK\ Analyzes\ signal\ peak\ characteristics\ comprehensively.}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00004}00004\ \%\ This\ function\ performs\ a\ comprehensive\ analysis\ of\ the\ dominant\ peak\ in}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00005}00005\ \%\ a\ signal\ array,\ returning\ multiple\ characteristics\ including\ width,}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00006}00006\ \%\ location,\ and\ amplitude.\ The\ analysis\ can\ be\ customized\ \textcolor{keyword}{using\ }different}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00007}00007\ \%\ detection\ methods\ and\ threshold\ values.}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00008}00008\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00009}00009\ \%\ Syntax:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00010}00010\ \%\ \ \ peakWidth\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(inputArray)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00011}00011\ \%\ \ \ [peakWidth,\ peakLocation]\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(inputArray,\ threshold)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00012}00012\ \%\ \ \ [peakWidth,\ peakLocation,\ peakHeight]\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(inputArray,\ threshold,\ method)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00013}00013\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00014}00014\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00015}00015\ \%\ \ \ inputArray\ -\/\ Numeric\ vector\ containing\ the\ signal\ \mbox{\hyperlink{namespacedata}{data}}}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00016}00016\ \%\ \ \ threshold\ -\/\ Minimum\ peak\ height\ \textcolor{keywordflow}{for}\ detection\ (\textcolor{keywordflow}{default}:\ max/2)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00017}00017\ \%\ \ \ method\ -\/\ Detection\ method:\ \textcolor{stringliteral}{'linear'},\ \textcolor{stringliteral}{'quadratic'},\ or\ \textcolor{stringliteral}{'spline'}\ (\textcolor{keywordflow}{default}:\ \textcolor{stringliteral}{'linear'})}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00018}00018\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00019}00019\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00020}00020\ \%\ \ \ peakWidth\ -\/\ Half-\/width\ of\ the\ detected\ peak\ in\ array\ indices}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00021}00021\ \%\ \ \ peakLocation\ -\/\ Index\ of\ the\ peak\ maximum\ location}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00022}00022\ \%\ \ \ peakHeight\ -\/\ Amplitude\ of\ the\ peak\ above\ baseline}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00023}00023\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00024}00024\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00025}00025\ \%\ \ \ \%\ Basic\ usage\ with\ single\ output}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00026}00026\ \%\ \ \ \mbox{\hyperlink{namespacedata}{data}}\ =\ [1,\ 3,\ 7,\ 5,\ 2,\ 1];}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00027}00027\ \%\ \ \ width\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(\mbox{\hyperlink{namespacedata}{data}});}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00028}00028\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00029}00029\ \%\ \ \ \%\ Advanced\ usage\ with\ multiple\ outputs}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00030}00030\ \%\ \ \ [width,\ location,\ height]\ =\ \mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{analyzeSignalPeak}}(\mbox{\hyperlink{namespacedata}{data}},\ 3.5,\ \textcolor{stringliteral}{'quadratic'});}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00031}00031\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00032}00032\ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00033}00033\ \%\ \ \ This\ function\ assumes\ the\ input\ contains\ a\ single\ dominant\ peak.}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00034}00034\ \%\ \ \ The\ quadratic\ method\ provides\ sub-\/sample\ accuracy\ \textcolor{keywordflow}{for}\ peak\ location.}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00035}00035\ \%\ \ \ For\ noisy\ signals,\ consider\ preprocessing\ with\ a\ smoothing\ filter.}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00036}00036\ \%}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00037}00037\ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00038}\mbox{\hyperlink{namespacecore_a1f6b17ebcdc3daaf1a264d2fdbb783ba}{00038}}\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.signal.findPeaks,\ \mbox{\hyperlink{namespacecore}{core}}.signal.detectThreshold,\ \mbox{\hyperlink{namespacecore}{core}}.signal.smoothSignal}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00040}00040\ \ \ \ \ \%\ Implementation\ would\ go\ here}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 2}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ threshold\ =\ max(inputArray)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00043}00043\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{if}\ nargin\ <\ 3}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ method\ =\ \textcolor{stringliteral}{'linear'};}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00046}00046\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00047}00047\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00048}00048\ \ \ \ \ \%\ Find\ peak\ characteristics}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00049}00049\ \ \ \ \ [peakHeight,\ peakLocation]\ =\ max(inputArray);}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00050}00050\ \ \ \ \ peakWidth\ =\ calculateWidth(inputArray,\ peakLocation,\ threshold,\ method);}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00051}00051\ end}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00053}00053\ function\ width\ =\ calculateWidth(signal,\ location,\ threshold,\ method)}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00054}00054\ \ \ \ \ \%\ Helper\ function\ to\ calculate\ peak\ width}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00055}00055\ \ \ \ \ width\ =\ findHalfMaxPoints(signal,\ location,\ threshold,\ method);}
+\DoxyCodeLine{\Hypertarget{analyze_signal_peak_8m_source_l00056}00056\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,269 @@
+\doxysection{Exrk\+Integrator.\+m}
+\hypertarget{_exrk_integrator_8m_source}{}\label{_exrk_integrator_8m_source}\index{+approx/+odeint/ExrkIntegrator.m@{+approx/+odeint/ExrkIntegrator.m}}
+\mbox{\hyperlink{_exrk_integrator_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00001}00001\ classdef\ ExrkIntegrator\ <\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00002}00002\ \ \ \ \ \%\ EXRKINTEGRATOR\ Explicit\ Runge-\/Kutta\ integrator.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ ExrkIntegrator\ implements\ \textcolor{keyword}{explicit}\ Runge-\/Kutta\ methods\ \textcolor{keywordflow}{for}\ solving}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ ordinary\ differential\ equations\ of\ the\ form:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00006}00006\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ \(\backslash\)f[}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ \ \ \(\backslash\)frac\{\(\backslash\)mathrm\{d\}(Mu)\}\{\(\backslash\)mathrm\{d\}t\}\ =\ Lu\ +\ F(u)\ +\ S,}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00009}00009\ \ \ \ \ \%\ \ \ \(\backslash\)f]}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00010}00010\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ where\ \(\backslash\)f\$M\(\backslash\)f\$\ is\ a\ mass\ \textcolor{keyword}{operator},\ \(\backslash\)f\$L\(\backslash\)f\$\ is\ a\ linear\ \textcolor{keyword}{operator},}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ \(\backslash\)f\$F(u)\(\backslash\)f\$\ is\ a\ nonlinear\ \textcolor{keyword}{operator},\ and\ \(\backslash\)f\$S\(\backslash\)f\$\ is\ a\ source\ term.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ Any\ of\ these\ terms\ can\ be\ empty\ (indicating\ they\ vanish\ from\ the}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ equation).\ When\ M\ is\ empty,\ it\ defaults\ to\ identity.\ All\ non-\/empty}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00015}00015\ \ \ \ \ \%\ \ \ terms\ are\ treated\ explicitly,\ making\ \textcolor{keyword}{this}\ suitable\ \textcolor{keywordflow}{for}\ non-\/stiff}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00016}00016\ \ \ \ \ \%\ \ \ problems\ where\ stability\ constraints\ are\ manageable.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00017}00017\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ Explicit\ RK\ methods\ have\ excellent\ stability\ properties\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ non-\/stiff\ problems\ but\ may\ require\ small\ time\ steps\ \textcolor{keywordflow}{for}\ stability}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ when\ applied\ to\ stiff\ systems.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00022}00022\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ \%\ Basic\ usage\ with\ all\ terms}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ integrator\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk4_integrator}{Exrk4Integrator}}(1.0);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_ad74e961f9ccf0ca9a97eb4ccf43e2209}{step}}(L,\ F,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00026}00026\ \ \ \ \ \%\ \ \ integrator.update(U\_new);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00027}00027\ \ \ \ \ \%\ \ \ integrator.advance();}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00028}00028\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ \%\ Pure\ diffusion\ (only\ linear\ term)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ [],\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00031}00031\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00032}00032\ \ \ \ \ \%\ \ \ \%\ Pure\ nonlinear\ dynamics}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step([],\ F,\ [],\ []);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00034}00034\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00035}00035\ \ \ \ \ \%\ \ \ \%\ Linear\ system\ with\ forcing}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00036}00036\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ [],\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00037}00037\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00038}00038\ \ \ \ \ \%\ \ \ \%\ With\ mass\ matrix}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00039}00039\ \ \ \ \ \%\ \ \ U\_new\ =\ integrator.step(L,\ F,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00040}00040\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00041}00041\ \ \ \ \ \%\ See\ also:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00042}00042\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator}{OdeIntegrator}},\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_dirk_integrator}{DirkIntegrator}},}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00043}00043\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_fe_integrator}{FeIntegrator}}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00045}00045\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00046}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{00046}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1a175c53d53751632643384d9049aa6e}{A}}\ \%\ Butcher\ tableau\ coefficient\ matrix\ (strictly\ lower\ triangular)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a194c44cf69ceba1034071c9c1a0a6155}{b}}\ \%\ Stage\ weights\ vector\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab7d35d6ff7ab4dcb8cb6bb6d3850dbe6}{update}}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1}{c}}\ \%\ Stage\ time\ coefficients\ vector}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}{K}}\ \%\ Cell\ array\ of\ derivative\ approximations\ \textcolor{keywordflow}{for\ each}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00050}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1a175c53d53751632643384d9049aa6e}{00050}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00052}00052\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00053}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a194c44cf69ceba1034071c9c1a0a6155}{00053}}\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}(\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{nStages}},\ \textcolor{keyword}{final})}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ EXRKINTEGRATOR\ Constructor\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00056}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1f8ad91cf58f1ba4b2b24fa9ecdb50f1}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}(\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{nStages}},\ \textcolor{keyword}{final})\ creates\ an\ explicit}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ Runge-\/Kutta\ integrator\ with\ the\ specified\ number\ of\ stages}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ final\ time.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00059}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{nStages}}\ -\/\ Number\ of\ stages\ for\ the\ explicit\ RK\ method\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ final\ -\/\ Final\ time\ for\ integration\ (positive\ scalar)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ Constructed\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ obj@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{OdeIntegrator}}(1,\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{nStages}},\ final);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a3f6b582d7f8196cc33853fdf64a5a69c}{reset}}(obj)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ RESET\ Reset\ the\ explicit\ RK\ integrator\ to\ initial\ state.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a3f6b582d7f8196cc33853fdf64a5a69c}{reset}}(obj)\ clears\ the\ derivative\ approximation}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ storage\ and\ calls\ the\ parent\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a3f6b582d7f8196cc33853fdf64a5a69c}{reset}}\ method.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00076}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a3f6b582d7f8196cc33853fdf64a5a69c}{reset}}@\mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1odeint}{odeint}}.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_aecae37339f051ece24ee5f1d0c1851f7}{OdeIntegrator}}(obj);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}{K}}\ =\ cell(obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_afdc6c36388b6e902e661460458cb7fa6}{nStages}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00084}00084\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ function\ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862}{setLhs}}(obj,\ i,\ M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETLHS\ Set\ the\ mass\ matrix\ for\ explicit\ solve\ at\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}\ i.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862}{setLhs}}(obj,\ i,\ M)\ sets\ the\ left-\/hand\ side\ matrix\ to}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ the\ mass\ operator\ for\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}\ i.\ For\ explicit\ methods,\ this}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ is\ used\ to\ solve\ M*\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a5f10c55b6fbc2e7e47cafbe100a5e2d4}{K}}\ =\ RHS\ for\ the\ derivative}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00092}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a3f6b582d7f8196cc33853fdf64a5a69c}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ approximation.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ i\ -\/\ Stage\ index\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_a2b3bb7e32477d5834c92f13f6a54e9e6}{lhs}}\{i\}\ =\ M;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ function\ obj\ =\ setRhs(obj,\ i,\ M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ SETRHS\ Set\ the\ right-\/hand\ side\ vector\ \textcolor{keywordflow}{for}\ stage\ i.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ =\ setRhs(obj,\ i,\ M)\ constructs\ the\ right-\/hand\ side}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ vector\ \textcolor{keyword}{using\ }mass\ \textcolor{keyword}{operator}\ and\ accumulated\ previous\ stages.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00113}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_aee56d3af0c114141cfcc323995b33862}{00113}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ i\ -\/\ Stage\ index\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a6ff7f9245c93e39e07df046604f267f8}{ExrkIntegrator}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classapprox_1_1odeint_1_1_ode_integrator_ab01d7bcb6e26361a33859cab40e6ac09}{U0}}\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ mass\ term\ contribution\ from\ previous\ solution}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{i\}\ =\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ iscell(M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{i\}\ =\ M\{2\}\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(M\{1\})}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{i\}\ =\ obj.rhs\{i\}\ +\ M\{1\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00131}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a1be341c1fe9e6e7c69706d9a5820eef0}{00131}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{i\}\ =\ M\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ accumulated\ term\ from\ previous\ stages}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ =\ 1:(i\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{i\}\ =\ obj.rhs\{i\}\ +\ dt\ *\ obj.A(i,\ j)\ *\ obj.K\{j\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00140}00140\ \ \ \ \ \ \ \ \ function\ U\ =\ stage(obj,\ i,\ L,\ F,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STAGE\ Compute\ stage\ i\ of\ the\ \textcolor{keyword}{explicit}\ RK\ method.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ stage(obj,\ i,\ L,\ F,\ S,\ M)\ computes\ the\ solution\ at\ stage\ i}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ by\ evaluating\ all\ terms\ explicitly\ and\ computing\ the\ derivative}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ approximation\ \textcolor{keywordflow}{for}\ use\ in\ subsequent\ stages.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ ExrkIntegrator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ i\ -\/\ Stage\ index\ (positive\ integer)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Nonlinear\ operator\ (function\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Source\ term\ (vector,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ approximation\ at\ stage\ i}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.timeline.now;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ linear\ term\ at\ initial\ time}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ Le\ =\ obj.evaluateOperator(L,\ U0,\ t0);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ source\ term\ at\ stage\ time}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ Se\ =\ obj.evaluateOperator(S,\ U0,\ t0+obj.c(i)*dt);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ LHS\ matrix\ \textcolor{keywordflow}{if}\ step\ size\ changed}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.timeline.hasStepSizeChanged}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ LHS\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00171}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{00171}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateLhsMass(M,\ t0+obj.c(i)*dt);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ LHS\ matrix}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setLhs(i,\ Me);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ RHS\ mass\ term\ at\ previous\ time\ level}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateRhsMass(i,\ M,\ [t0+obj.c(i)*dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ RHS\ vector}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ obj.setRhs(i,\ Me);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Solve\ \textcolor{keywordflow}{for}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}\ approximation}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.solver.solve(obj.lhs\{i\},\ obj.rhs\{i\});}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ nonlinear\ term\ at\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}\ approximation}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ Fe\ =\ obj.evaluateOperator(F,\ U,\ t0+obj.c(i)*dt);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ derivative\ approximation\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{this}\ \mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_a7edc22e3a4785aad9b872ef6ca8f6f8a}{stage}}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ obj.K\{i\}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(Le)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.K\{i\}\ =\ obj.K\{i\}\ +\ Le\ *\ U;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(Fe)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.K\{i\}\ =\ obj.K\{i\}\ +\ Fe;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(Se)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.K\{i\}\ =\ obj.K\{i\}\ +\ Se;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00200}00200\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00202}00202\ \ \ \ \ \ \ \ \ function\ U\ =\ step(obj,\ L,\ F,\ S,\ M)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Advance\ one\ time\ step\ \textcolor{keyword}{using\ }the\ \textcolor{keyword}{explicit}\ RK\ method.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ =\ step(obj,\ L,\ F,\ S,\ M)\ performs\ a\ complete\ time\ step\ by}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ evaluating\ all\ stages\ explicitly\ and\ combining\ them\ according}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ the\ Butcher\ tableau\ weights.\ Empty\ terms\ contribute\ zero}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ to\ all\ stages.}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ ExrkIntegrator\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ L\ -\/\ Linear\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ F\ -\/\ Nonlinear\ operator\ (function\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ S\ -\/\ Source\ term\ (vector,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ M\ -\/\ Mass\ operator\ (matrix,\ function,\ or\ empty)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ U\ -\/\ Solution\ at\ the\ next\ time\ step}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ t0\ =\ obj.timeline.now;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ dt\ =\ obj.timeline.dt;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ U0\ =\ obj.U0\{1\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ obj.nStages;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Compute\ all\ stage\ approximations}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:s}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\string~]\ =\ obj.stage(i,\ L,\ F,\ S,\ M);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Update\ LHS\ matrix\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ solve\ \textcolor{keywordflow}{if}\ step\ size\ changed}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.timeline.hasStepSizeChanged}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ LHS\ mass\ term}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateLhsMass(M,\ t0+dt);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00234}\mbox{\hyperlink{classapprox_1_1odeint_1_1_exrk_integrator_ad74e961f9ccf0ca9a97eb4ccf43e2209}{00234}}\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Construct\ LHS\ matrix}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.setLhs(s+1,\ Me);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Evaluate\ mass\ term\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ solve}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ Me\ =\ obj.evaluateRhsMass(s+1,\ M,\ [t0+dt,\ t0]);}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ mass\ term\ contribution\ from\ previous\ solution}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(Me)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{s\ +\ 1\}\ =\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ elseif\ iscell(Me)}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{s\ +\ 1\}\ =\ Me\{2\}\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(Me\{1\})}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{s\ +\ 1\}\ =\ obj.rhs\{s\ +\ 1\}\ +\ Me\{1\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{s\ +\ 1\}\ =\ Me\ *\ U0;}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Add\ weighted\ stage\ derivatives}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ =\ 1:s}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.rhs\{s\ +\ 1\}\ =\ obj.rhs\{s\ +\ 1\}\ +\ dt\ *\ obj.b(i)\ *\ obj.K\{i\};}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Solve\ \textcolor{keywordflow}{for}\ \textcolor{keyword}{final}\ step\ approximation}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ obj.solver.solve(obj.lhs\{s\ +\ 1\},\ obj.rhs\{s\ +\ 1\});}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00261}00261\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00262}00262\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_exrk_integrator_8m_source_l00263}00263\ end}
+
+\end{DoxyCode}

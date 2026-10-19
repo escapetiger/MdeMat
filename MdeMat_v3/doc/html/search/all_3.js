@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['data_0',['data',['../classcore_1_1data_1_1_grid_struct.html#a576dafe2baea42cfc8a32490bcd4f3c5',1,'core::data::GridStruct']]],
+  ['dataset_1',['dataset',['../classprofilers_1_1visual_1_1_visualizer.html#ad67856241fbbe7daec025dcf1c347fe9',1,'profilers::visual::Visualizer']]],
+  ['degree_2',['degree',['../classcore_1_1symbolic_1_1_polynomial_basis_function.html#ad31d56e3175bafc7b20c4080ca22fde3',1,'core::symbolic::PolynomialBasisFunction']]],
+  ['delete_3',['delete',['../classcore_1_1symbolic_1_1_compiler.html#a636ce2c1a906ca8a33ed569f6ceb1ef0',1,'core::symbolic::Compiler']]],
+  ['density_4',['density',['../classprofilers_1_1analysis_1_1_analyzer.html#a416478179ac43f77b2987d8245a7edfb',1,'profilers::analysis::Analyzer::density'],['../classprofilers_1_1visual_1_1_visualizer.html#afb58c1e98838677ca7c40806f34751c7',1,'profilers::visual::Visualizer::density']]],
+  ['derivative_5',['derivative',['../classcore_1_1function_1_1_function.html#a32423701ae2a8d238b9617bdb16acd87',1,'core::function::Function::derivative()'],['../classcore_1_1function_1_1_separable_function.html#a1aacb8f0a0cbc8c0e1728e0001840124',1,'core::function::SeparableFunction::derivative(InputType obj, InputType X, InputType r)']]],
+  ['derivativedense_6',['derivativeDense',['../classcore_1_1function_1_1_separable_function.html#ab69bedc09bf96dbb3436131e7b117652',1,'core::function::SeparableFunction']]],
+  ['derivativeimpl_7',['derivativeImpl',['../classcore_1_1function_1_1_compiled_function.html#a25afcb8c833a3dcfdbb6eea252376177',1,'core::function::CompiledFunction::derivativeImpl()'],['../classcore_1_1function_1_1_constant_function.html#ae91b8e5d86a12e15c36d6f960e9ea0d8',1,'core::function::ConstantFunction::derivativeImpl()'],['../classcore_1_1function_1_1_function.html#ab60ffdff5fafbe558f28b63ba68cff36',1,'core::function::Function::derivativeImpl()'],['../classcore_1_1function_1_1_linear_function.html#a46da6652242c00a3ea73f07c69ddc9f5',1,'core::function::LinearFunction::derivativeImpl()'],['../classcore_1_1function_1_1_maxwellian.html#af39720f804e825c8c871b4a71abf5223',1,'core::function::Maxwellian::derivativeImpl()'],['../classcore_1_1function_1_1_product_function.html#a1565c9562011e32631fd2d499533f0a7',1,'core::function::ProductFunction::derivativeImpl()'],['../classcore_1_1function_1_1_separable_function.html#a180231acf969c078fe4a16e917f10fe6',1,'core::function::SeparableFunction::derivativeImpl()']]],
+  ['derivativeorder_8',['derivativeOrder',['../classapprox_1_1integrate_1_1_integration_data.html#a271bf650e2f5458e5a9aec1d83647f2f',1,'approx::integrate::IntegrationData']]],
+  ['derivatives_9',['derivatives',['../classapprox_1_1integrate_1_1_integration_data.html#a68bbf2130d796e8df90963e68d14a99e',1,'approx::integrate::IntegrationData']]],
+  ['derivativesparse_10',['derivativeSparse',['../classcore_1_1function_1_1_separable_function.html#a2a9a2d1eb66a662b42c1e844b02eac47',1,'core::function::SeparableFunction']]],
+  ['descriptions_11',['descriptions',['../classprofilers_1_1analysis_1_1_convergence_profiler.html#a1a9d73df00f2e906bd911dffe4925b07',1,'profilers::analysis::ConvergenceProfiler']]],
+  ['direction_12',['direction',['../classapprox_1_1space_1_1_affine_space.html#ac47e53b2589e7d4ea0b9448d5b064e50',1,'approx::space::AffineSpace::direction()'],['../classapprox_1_1space_1_1_scaled_affine_space.html#a156e3618c090ad612e3282017abfbd68',1,'approx::space::ScaledAffineSpace::direction()']]],
+  ['dirkintegrator_13',['DirkIntegrator',['../classapprox_1_1odeint_1_1_dirk_integrator.html',1,'approx::odeint::DirkIntegrator'],['../classapprox_1_1odeint_1_1_dirk_integrator.html#a51632f453404bee1a11d5b63cfd47aad',1,'approx::odeint::DirkIntegrator::DirkIntegrator()']]],
+  ['dirkintegrator_2em_14',['DirkIntegrator.m',['../_dirk_integrator_8m.html',1,'']]],
+  ['disp_15',['disp',['../classcore_1_1data_1_1_ordered_map.html#a4f40fcfcd6f95820ff03e71da4a93185',1,'core::data::OrderedMap']]],
+  ['domain_16',['domain',['../classapprox_1_1mesh_1_1_mesh.html#ac77996b15b5c02603bb3b1f2811bf0d3',1,'approx::mesh::Mesh']]],
+  ['double_17',['double',['../classcore_1_1geometry_1_1_polytope.html#ab8e8ea4ad58055c32c9617b71db61707',1,'core::geometry::Polytope']]],
+  ['draft_18',['draft',['../classprofilers_1_1visual_1_1_tiled_plotter.html#a38926ea95985ed7e437ee1201f18f18c',1,'profilers::visual::TiledPlotter']]],
+  ['draw_19',['draw',['../classprofilers_1_1analysis_1_1_convergence_profiler.html#aa42b05987828caad269fcd3805c0b846',1,'profilers::analysis::ConvergenceProfiler']]],
+  ['dt_20',['dt',['../classapprox_1_1mesh_1_1_dynamic_timeline.html#a89235eaaecd183ed1c9295615c5dc38f',1,'approx::mesh::DynamicTimeline::dt'],['../classapprox_1_1mesh_1_1_static_timeline.html#a9979c5a81a334387babfd12868745a30',1,'approx::mesh::StaticTimeline::dt']]],
+  ['duration_21',['duration',['../classcore_1_1chrono_1_1_record.html#a1bec72c009ff266a156a19390ad1223e',1,'core::chrono::Record']]],
+  ['dynamictimeline_22',['DynamicTimeline',['../classapprox_1_1mesh_1_1_dynamic_timeline.html',1,'approx::mesh::DynamicTimeline'],['../classapprox_1_1mesh_1_1_dynamic_timeline.html#ae2cd33e97bb9faa51c0a2861a5e8935a',1,'approx::mesh::DynamicTimeline::DynamicTimeline()']]],
+  ['dynamictimeline_2em_23',['DynamicTimeline.m',['../_dynamic_timeline_8m.html',1,'']]]
+];

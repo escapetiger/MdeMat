@@ -1,0 +1,135 @@
+\doxysection{spsolve.\+m}
+\hypertarget{spsolve_8m_source}{}\label{spsolve_8m_source}\index{+core/+linalg/spsolve.m@{+core/+linalg/spsolve.m}}
+\mbox{\hyperlink{spsolve_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00001}00001\ function\ x\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a8d041d8f39b51d07de58627dfc18dd95}{spsolve}}(A,\ b,\ varargin)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00002}00002\ \%SPSOLVE\ Selects\ the\ best\ solver\ \textcolor{keywordflow}{for}\ a\ given\ matrix\ and\ right-\/hand\ side.}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00004}00004\ \%\ \ \ x\ =\ SPSOLVE(A,\ b)\ solves\ the\ system\ Ax\ =\ b\ by\ selecting\ the\ most}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00005}00005\ \%\ \ \ suitable\ solver\ based\ on\ the\ properties\ of\ the\ matrix\ A.}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00006}00006\ \%}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00007}00007\ \%\ \ \ x\ =\ SPSOLVE(A,\ b,\ options)\ allows\ additional\ options\ to\ be\ passed}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00008}00008\ \%\ \ \ as\ a\ \textcolor{keyword}{struct\ }with\ fields:}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00009}00009\ \%\ \ \ \ \ \ \ -\/\ tol:\ Tolerance\ for\ iterative\ solvers\ (default:\ 1e-\/6)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00010}00010\ \%\ \ \ \ \ \ \ -\/\ maxit:\ Maximum\ iterations\ for\ iterative\ solvers\ (default:\ 500)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00011}00011\ \%\ \ \ \ \ \ \ -\/\ sizeThreshold:\ Matrix\ size\ threshold\ for\ iterative\ solvers}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00012}00012\ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (default:\ 100,000\ non-\/zeros)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00013}00013\ \%\ \ \ \ \ \ \ -\/\ spd:\ Logical\ flag\ for\ symmetric\ positive\ definite\ property}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00014}00014\ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (default:\ [])}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00015}00015\ \%}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00016}00016\ \%\ \ \ Inputs:}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00017}00017\ \%\ \ \ \ \ \ \ -\/\ A:\ Coefficient\ matrix\ (sparse\ or\ dense)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00018}00018\ \%\ \ \ \ \ \ \ -\/\ b:\ Right-\/hand\ side\ vector}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00019}00019\ \%\ \ \ \ \ \ \ -\/\ options:\ Struct\ for\ solver\ options\ (optional)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00020}00020\ \%}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00021}00021\ \%\ \ \ Output:}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00022}00022\ \%\ \ \ \ \ \ \ -\/\ x:\ Solution\ to\ the\ system\ Ax\ =\ b}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00023}00023\ \%}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00024}00024\ \%\ \ \ Author:\ Yi\ Cai}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00025}00025\ \%\ \ \ Date:\ 2024-\/11-\/21}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00027}00027\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00028}00028\ \%\ Parse\ inputs}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00029}00029\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00030}00030\ if\ nargin\ <\ 3}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00031}\mbox{\hyperlink{namespacecore_1_1linalg_a8d041d8f39b51d07de58627dfc18dd95}{00031}}\ \ \ \ \ options\ =\ struct();}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00032}00032\ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00033}00033\ \ \ \ \ options\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00034}00034\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00036}00036\ \%\ Set\ default\ options}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00037}00037\ \%\ Tolerance\ for\ iterative\ solvers\ (default:\ 1e-\/6)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00038}00038\ tol\ =\ 1e-\/6;}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00039}00039\ if\ isfield(options,\ 'tol'),\ tol\ =\ options.tol;\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00041}00041\ \%\ Maximum\ iterations\ for\ iterative\ solvers\ (default:\ 500)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00042}00042\ maxit\ =\ 500;}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00043}00043\ if\ isfield(options,\ 'maxit'),\ maxit\ =\ options.maxit;\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00045}00045\ \%\ Size\ threshold\ for\ selecting\ iterative\ solvers\ (default:\ 100,000\ non-\/zeros)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00046}00046\ sizeThreshold\ =\ 1e5;}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00047}00047\ if\ isfield(options,\ 'sizeThreshold'),\ sizeThreshold\ =\ options.sizeThreshold;\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00049}00049\ \%\ User-\/provided\ flag\ for\ symmetric\ positive\ definiteness\ (default:\ empty)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00050}00050\ spd\ =\ [];}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00051}00051\ if\ isfield(options,\ 'spd'),\ spd\ =\ options.spd;\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00053}00053\ \%\ Check\ if\ A\ is\ sparse}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00054}00054\ isSparse\ =\ issparse(A);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00056}00056\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00057}00057\ \%\ Analyze\ matrix\ properties}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00058}00058\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00059}00059\ \%\ Ensure\ the\ matrix\ is\ square}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00060}00060\ isSquare\ =\ size(A,\ 1)\ ==\ size(A,\ 2);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00061}00061\ if\ \string~isSquare}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00062}00062\ \ \ \ \ error('Matrix\ A\ must\ be\ square.');}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00063}00063\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00065}00065\ \%\ Check\ symmetry\ and\ positive\ definiteness\ only\ if\ not\ provided\ by\ the\ user}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00066}00066\ if\ isempty(spd)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00067}00067\ \ \ \ \ if\ \string~issymmetric(A)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ spd\ =\ false;}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00069}00069\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ [\string~,\ p]\ =\ chol(A);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ spd\ =\ (p\ ==\ 0);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00072}00072\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00073}00073\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00075}00075\ \%\ Determine\ the\ size\ of\ the\ matrix}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00076}00076\ if\ isSparse}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00077}00077\ \ \ \ \ N\ =\ nnz(A);\ \%\ Number\ of\ non-\/zero\ entries}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00078}00078\ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00079}00079\ \ \ \ \ N\ =\ numel(A);\ \%\ Total\ number\ of\ entries\ for\ dense\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00080}00080\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00082}00082\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00083}00083\ \%\ Select\ solver\ based\ on\ matrix\ properties}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00084}00084\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00085}00085\ if\ N\ >\ sizeThreshold\ ||\ issparse(A)}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00086}00086\ \ \ \ \ \%\ Large\ matrix:\ Use\ iterative\ solvers}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00087}00087\ \ \ \ \ if\ spd}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ solver\ =\ 'pcg';\ \%\ Preconditioned\ Conjugate\ Gradient\ for\ SPD\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00089}00089\ \ \ \ \ elseif\ isSparse}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ solver\ =\ 'gmres';\ \%\ Generalized\ Minimum\ Residual\ Method\ for\ sparse\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00091}00091\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00092}00092\ \ \ \ \ \ \ \ \ solver\ =\ 'bicgstab';\ \%\ Bi-\/Conjugate\ Gradient\ Stabilized\ Method\ for\ dense\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00093}00093\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00094}00094\ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00095}00095\ \ \ \ \ \%\ Small\ matrix:\ Use\ direct\ solvers}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00096}00096\ \ \ \ \ if\ spd}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ solver\ =\ 'chol';\ \%\ Cholesky\ factorization\ for\ SPD\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00098}00098\ \ \ \ \ elseif\ isSparse}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ solver\ =\ 'backslash';\ \%\ Sparse\ LU/QR\ solver}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00100}00100\ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ solver\ =\ 'backslash';\ \%\ Dense\ LU\ solver}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00102}00102\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00103}00103\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00105}00105\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00106}00106\ \%\ Solve\ the\ system\ using\ the\ selected\ solver}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00107}00107\ \%=========================================================================}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00108}00108\ switch\ solver}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00109}00109\ \ \ \ \ case\ 'chol'}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \%\ Use\ Cholesky\ factorization\ for\ SPD\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ R\ =\ chol(A);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ x\ =\ R\ \(\backslash\)\ (R'\ \(\backslash\)\ b);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00113}00113\ \ \ \ \ case\ 'pcg'}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ \%\ Use\ Preconditioned\ Conjugate\ Gradient\ for\ large\ SPD\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ x\ =\ pcg(A,\ b,\ tol,\ maxit);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00116}00116\ \ \ \ \ case\ 'gmres'}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00117}00117\ \ \ \ \ \ \ \ \ \%\ Use\ Generalized\ Minimum\ Residual\ Method\ for\ general\ sparse\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ x\ =\ gmres(A,\ b,\ [],\ tol,\ maxit);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00119}00119\ \ \ \ \ case\ 'bicgstab'}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \%\ Use\ Bi-\/Conjugate\ Gradient\ Stabilized\ Method\ for\ general\ dense\ matrices}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ x\ =\ bicgstab(A,\ b,\ tol,\ maxit);}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00122}00122\ \ \ \ \ case\ 'backslash'}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \%\ Use\ MATLAB's\ backslash\ operator\ for\ direct\ solvers}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ x\ =\ A\ \(\backslash\)\ b;}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00125}00125\ \ \ \ \ otherwise}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ error('No\ suitable\ solver\ found.');}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00127}00127\ end}
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{spsolve_8m_source_l00129}00129\ end}
+
+\end{DoxyCode}

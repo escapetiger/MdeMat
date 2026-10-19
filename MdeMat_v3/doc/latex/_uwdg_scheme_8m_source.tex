@@ -1,0 +1,206 @@
+\doxysection{Uwdg\+Scheme.\+m}
+\hypertarget{_uwdg_scheme_8m_source}{}\label{_uwdg_scheme_8m_source}\index{+physics/+advection/UwdgScheme.m@{+physics/+advection/UwdgScheme.m}}
+\mbox{\hyperlink{_uwdg_scheme_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00001}00001\ classdef\ UwdgScheme\ <\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00002}00002\ \ \ \ \ \%\ UWDGSCHEME\ Upwind\ Discontinuous\ Galerkin\ scheme.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00003}00003\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00004}00004\ \ \ \ \ \%\ \ \ UwdgScheme\ implements\ an\ Upwind\ Discontinuous\ Galerkin\ (UWDG)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00005}00005\ \ \ \ \ \%\ \ \ method\ \textcolor{keywordflow}{for}\ solving\ advection\ equations.\ The\ method\ uses\ upwind}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00006}00006\ \ \ \ \ \%\ \ \ numerical\ fluxes\ to\ handle\ the\ hyperbolic\ nature\ of\ advection}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00007}00007\ \ \ \ \ \%\ \ \ problems,\ providing\ stability\ and\ sharp\ resolution\ of\ solution}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00008}00008\ \ \ \ \ \%\ \ \ features.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00009}00009\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00010}00010\ \ \ \ \ \%\ \ \ The\ UWDG\ method\ discretizes\ the\ spatial\ domain\ \textcolor{keyword}{using\ }discontinuous}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00011}00011\ \ \ \ \ \%\ \ \ Galerkin\ finite\ elements\ and\ handles\ inter-\/element\ communication}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00012}00012\ \ \ \ \ \%\ \ \ through\ upwind\ fluxes,\ making\ it\ particularly\ suitable\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00013}00013\ \ \ \ \ \%\ \ \ transport-\/dominated\ problems\ with\ sharp\ gradients\ or}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00014}00014\ \ \ \ \ \%\ \ \ discontinuities.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00015}00015\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00016}00016\ \ \ \ \ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00017}00017\ \ \ \ \ \%\ \ \ \%\ Create\ UWDG\ scheme\ with\ configuration}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00018}00018\ \ \ \ \ \%\ \ \ config\ =\ \textcolor{keyword}{struct}(\textcolor{stringliteral}{'ic'},\ @(x)\ sin(x),\ \textcolor{stringliteral}{'advection'},\ [1],\ \textcolor{stringliteral}{'cfl'},\ 0.5,\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00019}00019\ \ \ \ \ \%\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'bc'},\ [],\ \textcolor{stringliteral}{'verbose'},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00020}00020\ \ \ \ \ \%\ \ \ scheme\ =\ UwdgScheme(config,\ timeIntegrator,\ visualizer,\ analyzer);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00021}00021\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00022}00022\ \ \ \ \ \%\ \ \ \%\ Full\ simulation\ workflow}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00023}00023\ \ \ \ \ \%\ \ \ state\ =\ scheme.initialize(initialState);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00024}00024\ \ \ \ \ \%\ \ \ finalState\ =\ scheme.run(state);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00025}00025\ \ \ \ \ \%\ \ \ scheme.finalize(finalState);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00026}00026\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00027}00027\ \ \ \ \ \%\ Notes:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00028}00028\ \ \ \ \ \%\ \ \ The\ upwind\ flux\ selection\ provides\ natural\ stabilization\ \textcolor{keywordflow}{for}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00029}00029\ \ \ \ \ \%\ \ \ hyperbolic\ problems\ but\ may\ require\ smaller\ time\ steps\ compared}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00030}00030\ \ \ \ \ \%\ \ \ to\ semi-\/Lagrangian\ methods\ \textcolor{keywordflow}{for}\ stability.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00031}00031\ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00032}00032\ \ \ \ \ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00033}00033\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{classphysics_1_1_scheme}{Scheme}},\ \mbox{\hyperlink{namespacephysics}{physics}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}}.\mbox{\hyperlink{classphysics_1_1advection_1_1_sldg_scheme}{SldgScheme}},}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00034}00034\ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{namespaceapprox_1_1assembly}{assembly}}.UpwindGridAssembly}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00036}00036\ \ \ \ \ properties}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00037}00037\ \ \ \ \ \ \ \ \ assembly\ \%\ Transport\ assembly\ \textcolor{keywordflow}{for}\ upwind\ operations}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ \%\ Transport\ \textcolor{keyword}{operator}\ matrix}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00039}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{00039}}\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00041}00041\ \ \ \ \ methods}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00042}00042\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}{initialize}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00043}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ INITIALIZE\ Initialize\ the\ UWDG\ scheme.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}{initialize}}(obj,\ state)\ sets\ up\ the\ upwind}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00046}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ discontinuous\ Galerkin\ scheme\ by\ configuring\ finite\ element}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ data,\ assembling\ the\ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}\ \textcolor{keyword}{operator},\ projecting\ initial}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ conditions,\ and\ preparing\ visualization\ components.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{UwdgScheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Initial\ solution\ state\ structure}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Initialized\ state\ ready\ \textcolor{keywordflow}{for}\ time\ integration}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_a4ee52fb3f81f45fc07a149ba058e494d}{timer}}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.reset();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Initial\ condition}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ state.xDisc.space.project(obj.config.ic);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Advection\ \textcolor{keyword}{operator}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isempty(obj.config.bc)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcType\ =\ 'periodic';}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ else}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00067}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ae4f0b72886827b3b5cc43f2e8ff45b4d}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcType\ =\ 'dirichlet';}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}{assembly}}\ =\ \mbox{\hyperlink{namespaceapprox}{approx}}.\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}{assembly}}.ConvectionOperator(\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.xDisc.space,\ state.xDisc.\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e}{operator}},\ bcType);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a9071243d12365a00b7460bce5828056e}{operator}}\ =\ obj.\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_ad86854e01ef1cae13192222d9f96a11a}{assembly}}.linear(obj.\mbox{\hyperlink{classphysics_1_1_scheme_aaf3dbb81e2eebf5d52c6641ab95b4555}{config}}.\mbox{\hyperlink{namespacephysics_1_1advection}{advection}});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ time\ discretization}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_a37c92ee17841cd89b2efd3c12750af95}{tDisc}}.reset();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Reset\ \mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.reset();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.addDataset('DG',\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'b'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{charliteral}{'o'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{stringliteral}{'none'}\});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.hasExact}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.addDataset(\textcolor{stringliteral}{'REF'},\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{'Color'},\ \textcolor{charliteral}{'r'},\ \textcolor{stringliteral}{'Marker'},\ \textcolor{stringliteral}{'none'},\ \textcolor{stringliteral}{'LineStyle'},\ \textcolor{charliteral}{'-\/'}\});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \%<\ Visualize}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.visualizer.isEnabled}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(2,\ \textcolor{stringliteral}{'[M]\ Visualization.'});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.plot(state.xDisc.space,\ state.dofs,\ obj.tDisc);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(2);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00091}00091\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00093}00093\ \ \ \ \ \ \ \ \ function\ state\ =\ preStep(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ PRESTEP\ Preprocess\ operations\ before\ time\ step.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ preStep(obj,\ state)\ performs\ preprocessing}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ including\ time\ step\ size\ computation\ based\ on\ CFL\ condition}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ and\ coefficient\ updates\ \textcolor{keywordflow}{for}\ multi-\/step\ methods.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ UwdgScheme\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Current\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Preprocessed\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ h\ =\ state.xDisc.mesh.measure;}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.setTimeStep(h,\ obj.config.cfl);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isa(obj.tDisc,\ \textcolor{stringliteral}{'approx.odeint.BdfIntegrator'})}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.setCoefficients();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00112}00112\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00114}00114\ \ \ \ \ \ \ \ \ function\ state\ =\ step(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ STEP\ Perform\ one\ upwind\ DG\ time\ step.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00117}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a3a25e5ccda4a37c93483a553e089ee5b}{00117}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}}(obj,\ state)\ advances\ the\ solution\ by\ one\ time}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}}\ \textcolor{keyword}{using}\ the\ upwind\ discontinuous\ Galerkin\ method.\ The}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ method\ updates\ the\ solution\ history\ and\ applies\ the\ linear}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \mbox{\hyperlink{namespacephysics_1_1advection}{advection}}\ \textcolor{keyword}{operator}\ with\ appropriate\ boundary\ conditions.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{UwdgScheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Current\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Updated\ solution\ state\ after\ one\ time\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \string~isempty(obj.config.bc)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ obj.config.advection;}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ @(t)\ -\/obj.assembly.linearBc(c,\ c,\ obj.config.bc,\ t);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S\ =\ [];}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.update(state.dofs.U);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ -\/obj.operator;}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ state.dofs.U\ =\ obj.tDisc.step(L,\ S,\ []);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00139}00139\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00140}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{00140}}\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00141}00141\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}{postStep}}(obj,\ state)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ POSTSTEP\ Postprocess\ operations\ after\ time\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}}.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}{postStep}}(obj,\ state)\ performs\ postprocessing}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ including\ visualization\ updates\ and\ timeline\ advancement}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ the\ next\ integration\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a82d4d96670229243cf49614fd694ff79}{step}}.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{UwdgScheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Current\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Postprocessed\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ac2781a11ddb6e42c4477b2c2b2099533}{visualizer}}.isEnabled}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(2,\ \textcolor{stringliteral}{'[M]\ Visualization.'});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.visualizer.plot(state.xDisc.space,\ state.dofs,\ obj.tDisc);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(2);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.advance();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00162}00162\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00164}00164\ \ \ \ \ \ \ \ \ function\ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{finalize}}(obj,\ varargin)}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ FINALIZE\ Finalize\ simulation\ with\ error\ analysis.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00167}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a2e58f39ad0b768fcff4f32596d29bb53}{00167}}\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{finalize}}(obj,\ state)\ performs\ \textcolor{keyword}{final}\ error\ analysis}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ \textcolor{keywordflow}{for}\ absolute\ error\ computation\ against\ exact\ solutions.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ [fine,\ coarse]\ =\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{finalize}}(obj,\ fine,\ coarse)\ performs}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ relative\ error\ analysis\ comparing\ fine\ and\ coarse\ grid}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ solutions\ \textcolor{keywordflow}{for}\ convergence\ studies.}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ obj\ -\/\ The\ \mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme}{UwdgScheme}}\ \textcolor{keywordtype}{object}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ varargin\ -\/\ Variable\ arguments\ containing\ state(s)\ \textcolor{keywordflow}{for}\ analysis}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \%}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \%\ \ \ state\ -\/\ Final\ processed\ solution\ state}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obj.\mbox{\hyperlink{classphysics_1_1_scheme_ae472a9934fb015e7d5d73ba16fa2f2eb}{analyzer}}.isEnabled}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.start(3,\ \textcolor{stringliteral}{'[M]\ Error\ Evaluation.'});}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length(varargin)\ ==\ 1}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.xDisc.mesh);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.absolute(state.xDisc.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.tDisc.timeline.now);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [state,\ coarse]\ =\ varargin\{:\};}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.setLevel(state.xDisc.mesh);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.analyzer.relative(state.xDisc.space,\ state.dofs,\ ...}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coarse.xDisc.space,\ coarse.dofs);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00194}\mbox{\hyperlink{classphysics_1_1advection_1_1_uwdg_scheme_a5b40d471fca03c397a671946afa69206}{00194}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.stop(3);}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ obj.timer.report();}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00198}00198\ \ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00199}00199\ \ \ \ \ end}
+\DoxyCodeLine{\Hypertarget{_uwdg_scheme_8m_source_l00200}00200\ end}
+
+\end{DoxyCode}

@@ -1,0 +1,599 @@
+\doxysection{approx\+::mesh\+::Polytopal\+Mesh Class Reference}
+\hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh}{}\label{classapprox_1_1mesh_1_1_polytopal_mesh}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+
+
+Base class for polytopal meshes.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}.
+
+
+
+Inherited by \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh}{approx\+::mesh\+::\+Simplex\+Mesh}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}{Polytopal\+Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}{find\+Element\+Vertices}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Extract vertex coordinates for specified elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}{set\+Periodic}} (Input\+Type obj, Input\+Type shift, Input\+Type tol)
+\begin{DoxyCompactList}\small\item\em Establish periodic boundary mappings. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}{find\+Interior\+Elements}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Find linear indices of interior elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}{find\+Boundary\+Elements}} (Input\+Type obj, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Find linear indices of boundary elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}{find\+Neighbor\+Elements}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE, Input\+Type BC)
+\begin{DoxyCompactList}\small\item\em Find neighboring elements across faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a1553370b37da6c41d6989e383c45a6f3}{Mesh}} (Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}, Input\+Type \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1mesh_1_1_mesh}{Mesh} base class. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a452946fc2adf9bd92066c6f98ecf49e6}{reset\+Transform}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Reset transformation data cache. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a4268da273e8f37df8aa6dbe124e16887}{compute\+Element\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aba8f8cccfefb4e4fd1649a328d20deea}{compute\+Element\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a61c9267dfa0a0bec5166bf1917d560c5}{compute\+Element\+Inverse\+Jacobians}} (Input\+Type obj, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Compute element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a572d092098d7911044acd22c45b88f50}{compute\+Face\+Jacobian\+Determinants}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute face Jacobian determinants. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a142fb2e0bd3bee828cf136414c8ccf8c}{compute\+Outward\+Normals}} (Input\+Type obj, Input\+Type IE, Input\+Type IFE)
+\begin{DoxyCompactList}\small\item\em Compute outward normal vectors. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ae26a70df6bbfb705d2ef07c50eaed235}{graphify}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Convert mesh to graph representation. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a144648013076ba21a3dab384fde72d56}{collocate}} (Input\+Type obj, Input\+Type X, Input\+Type IE)
+\begin{DoxyCompactList}\small\item\em Map reference coordinates to physical coordinates. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_af3cc0760879b947a4d156661d27e46df}{refine}} (Input\+Type obj, Input\+Type n\+Levels)
+\begin{DoxyCompactList}\small\item\em Create refined mesh with smaller elements. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a9e163dd78a6689827c47a477e34fdb46}{compute\+Measure}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute characteristic mesh size. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_aea07d8223ba0479c2d64ed1a6bc44464}{compute\+All\+Element\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_afe45297ab2b1855b4e6c8d9feaf0dc31}{compute\+All\+Element\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ad92c00054bd8d4045cd5bbefc2d63ab3}{compute\+All\+Element\+Inverse\+Jacobians}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all element inverse Jacobian matrices. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a17db9c2ead8e70a9f2d6620d67381f13}{compute\+All\+Face\+Jacobian\+Determinants}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all face Jacobian determinants. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a6dafcf1b01e492e25473e5a6724c4a32}{compute\+All\+Outward\+Normals}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Compute all outward normal vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}{vertices}}
+\begin{DoxyCompactList}\small\item\em Vertex coordinates (n\+Vertices × n\+Dims) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}{elements}}
+\begin{DoxyCompactList}\small\item\em Element connectivity (n\+Elements × n\+Vertices\+Per\+Element) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}{faces}}
+\begin{DoxyCompactList}\small\item\em Face connectivity (n\+Faces × n\+Vertices\+Per\+Face) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}{boundary}}
+\begin{DoxyCompactList}\small\item\em Boundary face indices (n\+Boundary\+Faces × 1) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}{face\+To\+Element\+Table}}
+\begin{DoxyCompactList}\small\item\em Face-\/element connectivity (sparse n\+Faces × n\+Elements) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}{vertex\+To\+Vertex\+Table}}
+\begin{DoxyCompactList}\small\item\em Periodic vertex mapping (sparse n\+Vertices × n\+Vertices) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}{face\+To\+Face\+Table}}
+\begin{DoxyCompactList}\small\item\em Periodic face mapping (sparse n\+Faces × n\+Faces) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of spatial dimensions (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}{n\+Vertices}}
+\begin{DoxyCompactList}\small\item\em Number of vertices in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}{n\+Elements}}
+\begin{DoxyCompactList}\small\item\em Number of elements in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}{n\+Vertices\+Per\+Element}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per element (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}{n\+Faces}}
+\begin{DoxyCompactList}\small\item\em Number of faces in the mesh (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}{n\+Vertices\+Per\+Face}}
+\begin{DoxyCompactList}\small\item\em Number of vertices per face (integer) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}{n\+Boundary\+Faces}}
+\begin{DoxyCompactList}\small\item\em Number of boundary faces (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh}{approx\+::mesh\+::\+Mesh}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_ac77996b15b5c02603bb3b1f2811bf0d3}{domain}}
+\begin{DoxyCompactList}\small\item\em Domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a490c53c93da674ae39b37d73e957b1cf}{reference}}
+\begin{DoxyCompactList}\small\item\em Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry} object) \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1mesh_1_1_mesh_a253b2a7ce6f4fb19ad574ed3d204becd}{transform}}
+\begin{DoxyCompactList}\small\item\em Transformation data cache (struct) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}{set\+Faces}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Generate face connectivity from element topology. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}{force\+Positive\+Orientation}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Ensure positive element orientations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for polytopal meshes. 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} provides a foundational representation for polytopal meshes consisting of vertices, faces, and elements with explicit connectivity information. It serves as the base class for unstructured mesh types and integrates seamlessly with the Graph-\/based mesh infrastructure for visualization and analysis.
+
+The mesh topology follows standard finite element conventions\+:
+\begin{DoxyItemize}
+\item In 1D\+: elements are line segments, faces are points (vertices)
+\item In 2D\+: elements are polygons, faces are edges
+\item In 3D\+: elements are polyhedra, faces are polygons
+\item In nD\+: elements are n-\/polytopes, faces are (n-\/1)-\/polytopes
+\end{DoxyItemize}
+
+Connectivity is stored using explicit arrays and sparse tables\+:
+\begin{DoxyItemize}
+\item vertices\+: Coordinate matrix (n\+Vertices × n\+Dims)
+\item elements\+: Connectivity matrix (n\+Elements × n\+Vertices\+Per\+Element)
+\item faces\+: Connectivity matrix (n\+Faces × n\+Vertices\+Per\+Face)
+\item face\+To\+Element\+Table\+: Sparse connectivity (n\+Faces × n\+Elements)
+\end{DoxyItemize}
+
+The class supports periodic boundary conditions through vertex-\/to-\/vertex and face-\/to-\/face mapping tables that identify geometrically equivalent entities across periodic boundaries.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1mesh_1_1_mesh}{approx.\+mesh.\+Mesh} 
+
+\doxylink{classapprox_1_1mesh_1_1_graph}{approx.\+mesh.\+Graph} 
+
+\doxylink{classapprox_1_1mesh_1_1_polytopal_mesh_plotter}{approx.\+mesh.\+Polytopal\+Mesh\+Plotter} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00034}{34}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!PolytopalMesh@{PolytopalMesh}}
+\index{PolytopalMesh@{PolytopalMesh}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{PolytopalMesh()}{PolytopalMesh()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a7428428202b8ec916eba5b3d81f30af6} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::\+Polytopal\+Mesh (\begin{DoxyParamCaption}\item[{Input\+Type}]{domain}{, }\item[{Input\+Type}]{reference}{, }\item[{Input\+Type}]{vertices}{, }\item[{Input\+Type}]{elements}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh}. 
+
+obj = Polytopal\+Mesh(domain, reference, vertices, elements) creates a mesh from vertex coordinates and element connectivity, automatically generating face topology and ensuring proper element orientation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & -\/ Physical domain geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry}) \\
+\hline
+{\em reference} & -\/ Reference element geometry (\doxylink{classcore_1_1geometry_1_1_geometry}{core.\+geometry.\+Geometry}) \\
+\hline
+{\em vertices} & -\/ Vertex coordinate matrix (n\+Vertices × n\+Dims) \\
+\hline
+{\em elements} & -\/ Element connectivity matrix (n\+Elements × n\+Vertices\+Per\+Element)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The constructor automatically\+: 
+
+1. Ensures positive element orientation 
+
+2. Generates face connectivity from elements 
+
+3. Identifies boundary faces 
+
+4. Builds face-\/to-\/element connectivity tables 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!findBoundaryElements@{findBoundaryElements}}
+\index{findBoundaryElements@{findBoundaryElements}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{findBoundaryElements()}{findBoundaryElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a93dbee82c014cb9767332034ecba1e49} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::find\+Boundary\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IFE}{}\end{DoxyParamCaption})}
+
+
+
+Find linear indices of boundary elements. 
+
+IE = find\+Boundary\+Elements(obj) computes the linear indices of all elements that have at least one face on the boundary.
+
+IE = find\+Boundary\+Elements(obj, IFE) finds elements that have their IFE-\/th local face on the boundary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object \\
+\hline
+{\em IFE} & -\/ Local face index (optional, scalar)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em IE} & -\/ Linear indices of boundary elements (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Boundary elements require special treatment for boundary 
+
+conditions in numerical methods. The local face index IFE 
+
+refers to the face numbering within each element. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!findElementVertices@{findElementVertices}}
+\index{findElementVertices@{findElementVertices}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{findElementVertices()}{findElementVertices()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a0e46bcf8de6919908e2c2b5de2650499} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::find\+Element\+Vertices (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IE}{}\end{DoxyParamCaption})}
+
+
+
+Extract vertex coordinates for specified elements. 
+
+V = find\+Element\+Vertices(obj) returns vertex coordinates for all elements in the mesh.
+
+V = find\+Element\+Vertices(obj, IE) returns vertex coordinates only for the specified elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object \\
+\hline
+{\em IE} & -\/ Element linear indices (optional, vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em V} & -\/ Element vertex coordinates (n\+Dims × n\+Vertices\+Per\+Element × n\+Elements)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The output format is suitable for coordinate 
+
+transformations and geometric computations. Each page 
+
+V(\+:,\+:,k) contains the vertex coordinates for element k. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!findInteriorElements@{findInteriorElements}}
+\index{findInteriorElements@{findInteriorElements}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{findInteriorElements()}{findInteriorElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a6a7be621c0dd998c25bcf71581233df0} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::find\+Interior\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Find linear indices of interior elements. 
+
+IE = find\+Interior\+Elements(obj) computes the linear indices of elements that do not touch the mesh boundary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em IE} & -\/ Linear indices of interior elements (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+Interior elements are those whose faces are all shared with 
+
+other elements (not on the boundary). These elements often 
+
+require different treatment in numerical methods. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!findNeighborElements@{findNeighborElements}}
+\index{findNeighborElements@{findNeighborElements}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{findNeighborElements()}{findNeighborElements()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a3692fd8b4d60d18a4c6357dd9b6713a6} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::find\+Neighbor\+Elements (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{IE}{, }\item[{Input\+Type}]{IFE}{, }\item[{Input\+Type}]{BC}{}\end{DoxyParamCaption})}
+
+
+
+Find neighboring elements across faces. 
+
+\mbox{[}JE, JFE\mbox{]} = find\+Neighbor\+Elements(obj, IE, IFE, BC) computes the linear indices of neighbor elements sharing the IFE-\/th face of prime elements IE, with the specified boundary condition treatment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object \\
+\hline
+{\em IE} & -\/ Linear indices of prime elements (vector) \\
+\hline
+{\em IFE} & -\/ Local face index of prime elements (scalar) \\
+\hline
+{\em BC} & -\/ Boundary condition type (\textquotesingle{}periodic\textquotesingle{} or \textquotesingle{}dirichlet\textquotesingle{})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em JE} & -\/ Linear indices of neighbor elements (vector) \\
+\hline
+{\em JFE} & -\/ Local face indices of neighbor elements (vector)\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+For periodic boundaries, neighbors are found across 
+
+periodic mappings. For Dirichlet boundaries, boundary faces 
+
+have no neighbors (JE = 0). The local face indices indicate 
+
+which face of the neighbor connects to the prime element. 
+\end{DoxyNote}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!forcePositiveOrientation@{forcePositiveOrientation}}
+\index{forcePositiveOrientation@{forcePositiveOrientation}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{forcePositiveOrientation()}{forcePositiveOrientation()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a124b9f5ba979bcad39c9eb5559ce0725} 
+virtual function approx\+::mesh\+::\+Polytopal\+Mesh\+::force\+Positive\+Orientation (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Ensure positive element orientations. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_a6146790bbc7898762e01759322e851bb}{approx\+::mesh\+::\+Simplex\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!setFaces@{setFaces}}
+\index{setFaces@{setFaces}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{setFaces()}{setFaces()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ae7c449012d63843699a9854695d6c5c2} 
+virtual function approx\+::mesh\+::\+Polytopal\+Mesh\+::set\+Faces (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Generate face connectivity from element topology. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classapprox_1_1mesh_1_1_simplex_mesh_aad3cac6b1720b306a9725fe711334843}{approx\+::mesh\+::\+Simplex\+Mesh}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!setPeriodic@{setPeriodic}}
+\index{setPeriodic@{setPeriodic}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{setPeriodic()}{setPeriodic()}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a85d69b2eabc8f1a280dafc97272acb3c} 
+function approx\+::mesh\+::\+Polytopal\+Mesh\+::set\+Periodic (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{shift}{, }\item[{Input\+Type}]{tol}{}\end{DoxyParamCaption})}
+
+
+
+Establish periodic boundary mappings. 
+
+obj = set\+Periodic(obj, shift) builds vertex-\/to-\/vertex and face-\/to-\/face connectivity tables to represent periodic mappings between geometrically equivalent mesh entities.
+
+obj = set\+Periodic(obj, shift, tol) uses the specified tolerance for identifying equivalent vertices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object \\
+\hline
+{\em shift} & -\/ Periodic shift vectors (n\+Shifts × n\+Dims) \\
+\hline
+{\em tol} & -\/ Geometric tolerance for vertex matching (optional, default\+: 1e-\/12)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em obj} & -\/ The \doxylink{classapprox_1_1mesh_1_1_polytopal_mesh}{Polytopal\+Mesh} object with periodic tables\\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyNote}{Note}
+The shift vectors define how vertices map across periodic 
+
+boundaries. For example, shift = \mbox{[}1, 0\mbox{]} maps vertices at 
+
+x=0 to corresponding vertices at x=1 in a unit square. 
+
+This method is essential for implementing periodic boundary 
+
+conditions in finite element and finite difference methods. 
+\end{DoxyNote}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!boundary@{boundary}}
+\index{boundary@{boundary}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{boundary}{boundary}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a597522b5ab003e402dd3a9e9c74c924f} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::boundary}
+
+
+
+Boundary face indices (n\+Boundary\+Faces × 1) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00047}{47}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!elements@{elements}}
+\index{elements@{elements}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{elements}{elements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a763fbd702c758bb3229f4f0e4e9f773d} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::elements}
+
+
+
+Element connectivity (n\+Elements × n\+Vertices\+Per\+Element) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00041}{41}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!faces@{faces}}
+\index{faces@{faces}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{faces}{faces}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ae1d1efe9537d39924da9fe9f1a4cea89} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::faces}
+
+
+
+Face connectivity (n\+Faces × n\+Vertices\+Per\+Face) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00044}{44}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!faceToElementTable@{faceToElementTable}}
+\index{faceToElementTable@{faceToElementTable}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{faceToElementTable}{faceToElementTable}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ad13af3da413c3be3446d1c0157be5a89} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::face\+To\+Element\+Table}
+
+
+
+Face-\/element connectivity (sparse n\+Faces × n\+Elements) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00050}{50}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!faceToFaceTable@{faceToFaceTable}}
+\index{faceToFaceTable@{faceToFaceTable}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{faceToFaceTable}{faceToFaceTable}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a7bbdff066e18dbdc8a09d2a6d827ee1c} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::face\+To\+Face\+Table}
+
+
+
+Periodic face mapping (sparse n\+Faces × n\+Faces) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00056}{56}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nBoundaryFaces@{nBoundaryFaces}}
+\index{nBoundaryFaces@{nBoundaryFaces}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nBoundaryFaces}{nBoundaryFaces}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a2ef571424f9ee8f51b36aff8d8f1b10e} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Boundary\+Faces}
+
+
+
+Number of boundary faces (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00080}{80}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nDims@{nDims}}
+\index{nDims@{nDims}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nDims}{nDims}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a477aa34e5ad0aadef5cb34cd40e59efc} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Dims}
+
+
+
+Number of spatial dimensions (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00062}{62}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nElements@{nElements}}
+\index{nElements@{nElements}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nElements}{nElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a2aa261de397f459f4f10684fa11cc24d} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Elements}
+
+
+
+Number of elements in the mesh (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00068}{68}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nFaces@{nFaces}}
+\index{nFaces@{nFaces}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nFaces}{nFaces}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ad6ee63b4dd0a7c24e503e0ce2f68f601} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Faces}
+
+
+
+Number of faces in the mesh (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00074}{74}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nVertices@{nVertices}}
+\index{nVertices@{nVertices}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nVertices}{nVertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ac7aa04532c308f4bc4041a1176523b5c} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Vertices}
+
+
+
+Number of vertices in the mesh (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00065}{65}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nVerticesPerElement@{nVerticesPerElement}}
+\index{nVerticesPerElement@{nVerticesPerElement}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nVerticesPerElement}{nVerticesPerElement}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a9a0b0e2f527279c8532f6ee018a94ad9} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Vertices\+Per\+Element}
+
+
+
+Number of vertices per element (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00071}{71}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!nVerticesPerFace@{nVerticesPerFace}}
+\index{nVerticesPerFace@{nVerticesPerFace}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{nVerticesPerFace}{nVerticesPerFace}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a11dacc76887e4f5159ad4b01e3728fc3} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::n\+Vertices\+Per\+Face}
+
+
+
+Number of vertices per face (integer) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00077}{77}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!vertexToVertexTable@{vertexToVertexTable}}
+\index{vertexToVertexTable@{vertexToVertexTable}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{vertexToVertexTable}{vertexToVertexTable}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_ab29c06389b96ee2de400707446b5bdfd} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::vertex\+To\+Vertex\+Table}
+
+
+
+Periodic vertex mapping (sparse n\+Vertices × n\+Vertices) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00053}{53}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+\Hypertarget{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e}\index{approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}!vertices@{vertices}}
+\index{vertices@{vertices}!approx::mesh::PolytopalMesh@{approx::mesh::PolytopalMesh}}
+\doxysubsubsection{\texorpdfstring{vertices}{vertices}}
+{\footnotesize\ttfamily \label{classapprox_1_1mesh_1_1_polytopal_mesh_a7e849f77e2246168d68edd82932f1d3e} 
+Property approx\+::mesh\+::\+Polytopal\+Mesh\+::vertices}
+
+
+
+Vertex coordinates (n\+Vertices × n\+Dims) 
+
+
+
+Definition at line \mbox{\hyperlink{_polytopal_mesh_8m_source_l00038}{38}} of file \mbox{\hyperlink{_polytopal_mesh_8m_source}{Polytopal\+Mesh.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+mesh/\mbox{\hyperlink{_polytopal_mesh_8m}{Polytopal\+Mesh.\+m}}\end{DoxyCompactItemize}

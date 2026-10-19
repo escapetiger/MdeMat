@@ -1,0 +1,221 @@
+\doxysection{core\+::symbolic\+::Symbolic\+Function Class Reference}
+\hypertarget{classcore_1_1symbolic_1_1_symbolic_function}{}\label{classcore_1_1symbolic_1_1_symbolic_function}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+
+
+Base class for all symbolic functions.  
+
+
+
+
+Inherits handle.
+
+
+
+Inherited by \mbox{\hyperlink{classcore_1_1symbolic_1_1_basis_function}{core\+::symbolic\+::\+Basis\+Function}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function}} (Input\+Type \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a4a85de42329941b0d8b507dc95c7a9ba}{evaluate}} (Input\+Type obj, Input\+Type values)
+\begin{DoxyCompactList}\small\item\em Evaluates the symbolic expression at specified values. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_afb7d1676197941343948d3aaba00d5da}{to\+String}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Converts the symbolic expression to a string. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_aae7b72b5774ea164b937aacf3435d278}{to\+Function\+Handle}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Converts the symbolic expression to a function handle. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_ac6b54e94ba00a41b651063e184c41b27}{to\+Latex}} (Input\+Type obj)
+\begin{DoxyCompactList}\small\item\em Converts the symbolic expression to a La\+TeX string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}{expression}}
+\begin{DoxyCompactList}\small\item\em The symbolic expression. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}
+\begin{DoxyCompactList}\small\item\em Cell array of symbolic variables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all symbolic functions. 
+
+\doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} provides a foundation for creating and manipulating symbolic mathematical expressions with a consistent interface. This class serves as a base for implementing specialized symbolic function types while maintaining uniform evaluation and conversion capabilities.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\%\ Create\ a\ symbolic\ function\ with\ \textcolor{keywordflow}{default}\ variable}
+\DoxyCodeLine{obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{SymbolicFunction}}();}
+\DoxyCodeLine{\%\ Create\ with\ custom\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}{variables}}}
+\DoxyCodeLine{vars\ =\ \{sym(\textcolor{charliteral}{'x'}),\ sym(\textcolor{charliteral}{'y'})\};}
+\DoxyCodeLine{obj\ =\ \mbox{\hyperlink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{SymbolicFunction}}(vars);}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+core\+::symbolic.\+sym 
+
+core\+::symbolic.\+syms 
+
+core\+::symbolic.\+matlab\+Function 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00026}{26}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!SymbolicFunction@{SymbolicFunction}}
+\index{SymbolicFunction@{SymbolicFunction}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{SymbolicFunction()}{SymbolicFunction()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::\+Symbolic\+Function (\begin{DoxyParamCaption}\item[{Input\+Type}]{variables}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function}. 
+
+\doxylink{classcore_1_1symbolic_1_1_symbolic_function_a299af621d964857de7469532364494fb}{Symbolic\+Function()} creates a new \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object with the default variable sym(\textquotesingle{}x\textquotesingle{}).
+
+Symbolic\+Function(variables) creates a new \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object with the specified symbolic variables.
+
+
+\begin{DoxyParams}{Parameters}
+{\em variables} & -\/ Symbol(s) (optional, default\+: \{sym(\textquotesingle{}x\textquotesingle{})\}) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a4a85de42329941b0d8b507dc95c7a9ba}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a4a85de42329941b0d8b507dc95c7a9ba} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{values}{}\end{DoxyParamCaption})}
+
+
+
+Evaluates the symbolic expression at specified values. 
+
+result = evaluate(obj, values) converts the symbolic expression to a function handle and evaluates it at the given numeric values. The number of values must match the number of variables in the function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object \\
+\hline
+{\em values} & -\/ Numeric value(s) (scalar, vector or cell)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em result} & -\/ Numeric result of the evaluation \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_aae7b72b5774ea164b937aacf3435d278}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!toFunctionHandle@{toFunctionHandle}}
+\index{toFunctionHandle@{toFunctionHandle}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{toFunctionHandle()}{toFunctionHandle()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_aae7b72b5774ea164b937aacf3435d278} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::to\+Function\+Handle (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Converts the symbolic expression to a function handle. 
+
+result = to\+Function\+Handle(obj) creates a MATLAB function handle from the symbolic expression that can be used for efficient numerical evaluation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em result} & -\/ MATLAB function handle \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_ac6b54e94ba00a41b651063e184c41b27}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!toLatex@{toLatex}}
+\index{toLatex@{toLatex}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{toLatex()}{toLatex()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_ac6b54e94ba00a41b651063e184c41b27} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::to\+Latex (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Converts the symbolic expression to a La\+TeX string. 
+
+result = to\+Latex(obj) generates a La\+TeX representation of the symbolic expression suitable for mathematical typesetting and documentation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em result} & -\/ La\+TeX string representation of the expression \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_afb7d1676197941343948d3aaba00d5da}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!toString@{toString}}
+\index{toString@{toString}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_afb7d1676197941343948d3aaba00d5da} 
+function core\+::symbolic\+::\+Symbolic\+Function\+::to\+String (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+Converts the symbolic expression to a string. 
+
+result = to\+String(obj) returns a character string representation of the symbolic expression using MATLAB\textquotesingle{}s char function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classcore_1_1symbolic_1_1_symbolic_function}{Symbolic\+Function} object\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em result} & -\/ Character string representation of the expression \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!expression@{expression}}
+\index{expression@{expression}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{expression}{expression}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a90d8a716bdcf26af949fc84380697625} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::expression}
+
+
+
+The symbolic expression. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00030}{30}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+\Hypertarget{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb}\index{core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}!variables@{variables}}
+\index{variables@{variables}!core::symbolic::SymbolicFunction@{core::symbolic::SymbolicFunction}}
+\doxysubsubsection{\texorpdfstring{variables}{variables}}
+{\footnotesize\ttfamily \label{classcore_1_1symbolic_1_1_symbolic_function_a7ed16f07a2389c7fe102cc8356de0ebb} 
+Property core\+::symbolic\+::\+Symbolic\+Function\+::variables}
+
+
+
+Cell array of symbolic variables. 
+
+
+
+Definition at line \mbox{\hyperlink{_symbolic_function_8m_source_l00033}{33}} of file \mbox{\hyperlink{_symbolic_function_8m_source}{Symbolic\+Function.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++core/+symbolic/\mbox{\hyperlink{_symbolic_function_8m}{Symbolic\+Function.\+m}}\end{DoxyCompactItemize}

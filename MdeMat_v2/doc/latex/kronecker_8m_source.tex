@@ -1,0 +1,41 @@
+\doxysection{kronecker.\+m}
+\hypertarget{kronecker_8m_source}{}\label{kronecker_8m_source}\index{+core/+linalg/kronecker.m@{+core/+linalg/kronecker.m}}
+\mbox{\hyperlink{kronecker_8m}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00001}00001\ function\ K\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{kronecker}}(varargin)}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00002}00002\ \%\ KRONECKER\ Kronecker\ product\ of\ multiple\ matrices.}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00003}00003\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00004}00004\ \%\ \ \ K\ =\ \mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{kronecker}}(A1,\ A2,\ ...)\ computes\ Kronecker\ product\ of\ all\ input}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00005}00005\ \%\ \ \ matrices,\ with\ operation\ carried\ out\ from\ right\ to\ left.\ Extends}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00006}00006\ \%\ \ \ MATLAB's\ built-\/in\ kron\ to\ handle\ multiple\ As.}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00007}00007\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00008}00008\ \%\ Inputs:}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00009}00009\ \%\ \ \ varargin\ -\/\ Input\ matrices}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00010}00010\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00011}00011\ \%\ Outputs:}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00012}00012\ \%\ \ \ K\ -\/\ Kronecker\ product}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00013}00013\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00014}00014\ \%\ Examples:}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00015}00015\ \%\ \ \ \%\ Basic\ usage}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00016}00016\ \%\ \ \ A\ =\ [1\ 2;\ 3\ 4];}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00017}00017\ \%\ \ \ B\ =\ [5\ 6;\ 7\ 8];}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00018}00018\ \%\ \ \ K\ =\ kronecker(A,\ B);\ \%\ K\ will\ be\ a\ 4x4\ matrix}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00019}00019\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00020}00020\ \%\ \ \ \%\ Using\ cell\ array}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00021}00021\ \%\ \ \ K\ =\ kronecker(\{A,\ B,\ eye(2)\});\ \%\ K\ will\ be\ an\ 8x8\ matrix}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00022}00022\ \%}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00023}00023\ \%\ See\ Also:}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00024}00024\ \%\ \ \ \mbox{\hyperlink{namespacecore}{core}}.\mbox{\hyperlink{namespacecore_1_1linalg}{linalg}}.khatrirao}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00026}00026\ \textcolor{keywordflow}{if}\ iscell(varargin\{1\})}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00027}\mbox{\hyperlink{namespacecore_1_1linalg_a54e9ec8b7456b8b0677a17495746ea5b}{00027}}\ \ \ \ \ As\ =\ varargin\{1\};}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00028}00028\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00029}00029\ \ \ \ \ As\ =\ varargin;}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00030}00030\ end}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00031}00031\ K\ =\ As\{end\};}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00032}00032\ \textcolor{keywordflow}{for}\ i\ =\ length(As)\ -\/\ 1:-\/1:1}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00033}00033\ \ \ \ \ K\ =\ kron(As\{i\},\ K);}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00034}00034\ end}
+\DoxyCodeLine{\Hypertarget{kronecker_8m_source_l00035}00035\ end}
+
+\end{DoxyCode}

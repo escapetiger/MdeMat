@@ -1,0 +1,344 @@
+\doxysection{approx\+::space\+::Mesh\+Space Class Reference}
+\hypertarget{classapprox_1_1space_1_1_mesh_space}{}\label{classapprox_1_1space_1_1_mesh_space}\index{approx::space::MeshSpace@{approx::space::MeshSpace}}
+
+
+Function space defined on a geometric mesh.  
+
+
+
+
+Inherits \mbox{\hyperlink{classapprox_1_1space_1_1_function_space}{approx\+::space\+::\+Function\+Space}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_aaa4154633f26f5f616eb9abe20326d96}{Mesh\+Space}} (Input\+Type \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}}, Input\+Type \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a8f047d51d865593d19cdf1cde9ce1d5d}{mesh}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space}. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a9206508b0063e4d70d44a42d824c7b37}{evaluate}} (Input\+Type obj, Input\+Type L, Input\+Type x\+Ref, Input\+Type C)
+\begin{DoxyCompactList}\small\item\em Evaluate finite element functions in the mesh space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a365c91e9eafdebff1631ed457d021739}{function\+Evaluate}} (Input\+Type obj, Input\+Type L, Input\+Type x\+Ref, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Evaluate analytical function on mesh elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a92d971b2835b38a439c45d95e40f991a}{mean}} (Input\+Type obj, Input\+Type L, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Compute weighted mean of a function over specified elements. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_afc5dff5682fbf0ae557421673d13948b}{project}} (Input\+Type obj, Input\+Type L, Input\+Type f, Variable\+Input\+Type varargin)
+\begin{DoxyCompactList}\small\item\em Project a function onto the finite element space. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_afc91eaa56c81dcb3c86ab3505a00d051}{local\+To\+Global}} (Input\+Type obj, Input\+Type E, Input\+Type L)
+\begin{DoxyCompactList}\small\item\em Map local DoF indices to global DoF indices. \end{DoxyCompactList}\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_ace16c52f08dcb1f4d9f12613cfc7e7c1}{global\+To\+Local}} (Input\+Type obj, Input\+Type G)
+\begin{DoxyCompactList}\small\item\em Map global DoF indices to local DoF indices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classapprox_1_1space_1_1_function_space}{approx\+::space\+::\+Function\+Space}}}
+\begin{DoxyCompactItemize}
+\item 
+function \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_af147972883bc82be465ed8b20ad3d236}{Function\+Space}} (Input\+Type \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}})
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classapprox_1_1space_1_1_function_space}{Function\+Space}. \end{DoxyCompactList}\item 
+virtual function \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a979874e9a2a2fbb3670499ba6b1e8af7}{evaluate}} (Input\+Type obj, Variable\+Input\+Type varargin)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a8f047d51d865593d19cdf1cde9ce1d5d}{mesh}}
+\begin{DoxyCompactList}\small\item\em Mesh object. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_a3076168dc76c3dfcb74b23bff9f1ce3e}{n\+Mesh\+Elements}}
+\begin{DoxyCompactList}\small\item\em Total number of mesh elements. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_aad729fa674e55b31bf4891fda44809f4}{n\+Local\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of local degrees of freedom. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_mesh_space_af5c943518d5e7586d64ce6eea9882262}{n\+Global\+Dofs}}
+\begin{DoxyCompactList}\small\item\em Number of global degrees of freedom. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classapprox_1_1space_1_1_function_space}{approx\+::space\+::\+Function\+Space}}}
+\begin{DoxyCompactItemize}
+\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a629d52d018daeb65124164225d6701f2}{element}}
+\begin{DoxyCompactList}\small\item\em Finite element. \end{DoxyCompactList}\item 
+Property \mbox{\hyperlink{classapprox_1_1space_1_1_function_space_a6f92c04812761859f44edc64e20298cd}{n\+Dims}}
+\begin{DoxyCompactList}\small\item\em Number of dimensions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Function space defined on a geometric mesh. 
+
+\doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space} handles the mapping between reference elements and physical elements in the mesh, allowing for efficient computation of global operations such as L2 projections and weighted averages. It serves as the foundation for finite element computations on complex geometries.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classapprox_1_1space_1_1_function_space}{approx.\+space.\+Function\+Space} 
+
+\doxylink{classapprox_1_1space_1_1_affine_space}{approx.\+space.\+Affine\+Space} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{_mesh_space_8m_source_l00017}{17}} of file \mbox{\hyperlink{_mesh_space_8m_source}{Mesh\+Space.\+m}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_aaa4154633f26f5f616eb9abe20326d96}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!MeshSpace@{MeshSpace}}
+\index{MeshSpace@{MeshSpace}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{MeshSpace()}{MeshSpace()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_aaa4154633f26f5f616eb9abe20326d96} 
+function approx\+::space\+::\+Mesh\+Space\+::\+Mesh\+Space (\begin{DoxyParamCaption}\item[{Input\+Type}]{element}{, }\item[{Input\+Type}]{mesh}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space}. 
+
+obj = Mesh\+Space(element, mesh) creates a function space defined on the specified geometric mesh.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & -\/ Element object defining local basis functions \\
+\hline
+{\em mesh} & -\/ Geometric discretization object defining the domain \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_a9206508b0063e4d70d44a42d824c7b37}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_a9206508b0063e4d70d44a42d824c7b37} 
+function approx\+::space\+::\+Mesh\+Space\+::evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{x\+Ref}{, }\item[{Input\+Type}]{C}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate finite element functions in the mesh space. 
+
+Y = evaluate(obj, L, x\+Ref, C) evaluates the piecewise function defined by coefficients @A C at reference points {\itshape x\+Ref} on the specified elements {\itshape L}.
+
+Y = evaluate(obj, \mbox{[}$\,$\mbox{]}, x\+Ref, C) use all the elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space} object \\
+\hline
+{\em L} & -\/ Element linear indices (ne × 1 vector or \mbox{[}\mbox{]}) \\
+\hline
+{\em x\+Ref} & -\/ Reference coordinates (nd × np matrix) \\
+\hline
+{\em C} & -\/ Coefficient matrix (nl × ne\texorpdfstring{$\ast$}{*}nc matrix)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values at evaluation points (np\texorpdfstring{$\ast$}{*}ne × nc matrix) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_a365c91e9eafdebff1631ed457d021739}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!functionEvaluate@{functionEvaluate}}
+\index{functionEvaluate@{functionEvaluate}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{functionEvaluate()}{functionEvaluate()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_a365c91e9eafdebff1631ed457d021739} 
+function approx\+::space\+::\+Mesh\+Space\+::function\+Evaluate (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{x\+Ref}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Evaluate analytical function on mesh elements. 
+
+Y = function\+Evaluate(obj, L, x\+Ref, f) evaluates the analytical function {\itshape f} at reference points {\itshape x\+Ref} mapped to physical coordinates on the specified elements {\itshape L}.
+
+Y = function\+Evaluate(obj, \mbox{[}$\,$\mbox{]}, x\+Ref, f, ...) use all elements.
+
+Y = function\+Evaluate(obj, L, x\+Ref, f, ...) passes additional arguments to the function {\itshape f}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space} object \\
+\hline
+{\em L} & -\/ Element linear indices (ne x nd matrix or \mbox{[}\mbox{]}) \\
+\hline
+{\em x\+Ref} & -\/ Reference coordinates (nd × np matrix) \\
+\hline
+{\em f} & -\/ Function handle to evaluate \\
+\hline
+{\em varargin} & -\/ Additional arguments for function handle\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Y} & -\/ Function values at mapped points (n\+Elements\texorpdfstring{$\ast$}{*}n\+Ref\+Points × n\+Components matrix) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_ace16c52f08dcb1f4d9f12613cfc7e7c1}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!globalToLocal@{globalToLocal}}
+\index{globalToLocal@{globalToLocal}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{globalToLocal()}{globalToLocal()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_ace16c52f08dcb1f4d9f12613cfc7e7c1} 
+function approx\+::space\+::\+Mesh\+Space\+::global\+To\+Local (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{G}{}\end{DoxyParamCaption})}
+
+
+
+Map global DoF indices to local DoF indices. 
+
+\mbox{[}E, L\mbox{]} = global\+To\+Local(obj, G) maps global DoF indices {\itshape G} to local DoF indices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The Dof\+Map object \\
+\hline
+{\em G} & -\/ Global DoF indices (ng x 1 vector)\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em E} & -\/ Element linear indices (ng x 1 vector) \\
+\hline
+{\em L} & -\/ Local DoF indices (ng x 1 vector) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_afc91eaa56c81dcb3c86ab3505a00d051}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!localToGlobal@{localToGlobal}}
+\index{localToGlobal@{localToGlobal}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{localToGlobal()}{localToGlobal()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_afc91eaa56c81dcb3c86ab3505a00d051} 
+function approx\+::space\+::\+Mesh\+Space\+::local\+To\+Global (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{E}{, }\item[{Input\+Type}]{L}{}\end{DoxyParamCaption})}
+
+
+
+Map local DoF indices to global DoF indices. 
+
+G = local\+To\+Global(obj, E, L) maps local DoF indices L to global DoF indices for the specified elements E.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The Dof\+Map object \\
+\hline
+{\em E} & -\/ Element linear indices (ne x 1 vector) \\
+\hline
+{\em L} & -\/ Local DoF indices (nl x 1 vector or \mbox{[}\mbox{]})\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em G} & -\/ Global DoF indices \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_a92d971b2835b38a439c45d95e40f991a}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!mean@{mean}}
+\index{mean@{mean}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{mean()}{mean()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_a92d971b2835b38a439c45d95e40f991a} 
+function approx\+::space\+::\+Mesh\+Space\+::mean (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Compute weighted mean of a function over specified elements. 
+
+A = mean(obj, L, f) computes the weighted mean of function {\itshape f} using integration weights over the elements specified by {\itshape L}.
+
+A = mean(obj, \mbox{[}$\,$\mbox{]}, f) uses all elements.
+
+A = mean(obj, L, f, ...) passes additional arguments to function {\itshape f}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space} object \\
+\hline
+{\em L} & -\/ Element linear indices (ne × nd matrix) or \mbox{[}\mbox{]} \\
+\hline
+{\em f} & -\/ Function handle to compute mean \\
+\hline
+{\em varargin} & -\/ Additional arguments for function handle\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em A} & -\/ Weighted mean values (ne × nc matrix) \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_afc5dff5682fbf0ae557421673d13948b}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!project@{project}}
+\index{project@{project}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{project()}{project()}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_afc5dff5682fbf0ae557421673d13948b} 
+function approx\+::space\+::\+Mesh\+Space\+::project (\begin{DoxyParamCaption}\item[{Input\+Type}]{obj}{, }\item[{Input\+Type}]{L}{, }\item[{Input\+Type}]{f}{, }\item[{Variable\+Input\+Type}]{varargin}{}\end{DoxyParamCaption})}
+
+
+
+Project a function onto the finite element space. 
+
+U = \doxylink{namespaceapprox_1_1project}{project(obj, L, f)} projects the function {\itshape f} onto the finite element space over the elements specified by {\itshape L} using the appropriate Galerkin projection method.
+
+U = \doxylink{namespaceapprox_1_1project}{project(obj, \mbox{[}$\,$\mbox{]}, f)} uses all elements.
+
+U = \doxylink{namespaceapprox_1_1project}{project(obj, L, f, ...)} passes additional arguments to function {\itshape f}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & -\/ The \doxylink{classapprox_1_1space_1_1_mesh_space}{Mesh\+Space} object \\
+\hline
+{\em L} & -\/ Element linear indices (ne x nd matrix) or \mbox{[}\mbox{]} \\
+\hline
+{\em f} & -\/ Function handle to project onto the space \\
+\hline
+{\em varargin} & -\/ Additional arguments for function handle\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em U} & -\/ Projected coefficients (nl\texorpdfstring{$\ast$}{*}ne × nc matrix) \\
+\hline
+\end{DoxyRetVals}
+
+
+\label{doc-variable-members}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_a8f047d51d865593d19cdf1cde9ce1d5d}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!mesh@{mesh}}
+\index{mesh@{mesh}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_a8f047d51d865593d19cdf1cde9ce1d5d} 
+Property approx\+::space\+::\+Mesh\+Space\+::mesh}
+
+
+
+Mesh object. 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_space_8m_source_l00021}{21}} of file \mbox{\hyperlink{_mesh_space_8m_source}{Mesh\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_af5c943518d5e7586d64ce6eea9882262}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!nGlobalDofs@{nGlobalDofs}}
+\index{nGlobalDofs@{nGlobalDofs}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{nGlobalDofs}{nGlobalDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_af5c943518d5e7586d64ce6eea9882262} 
+Property approx\+::space\+::\+Mesh\+Space\+::n\+Global\+Dofs}
+
+
+
+Number of global degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_space_8m_source_l00033}{33}} of file \mbox{\hyperlink{_mesh_space_8m_source}{Mesh\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_aad729fa674e55b31bf4891fda44809f4}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!nLocalDofs@{nLocalDofs}}
+\index{nLocalDofs@{nLocalDofs}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{nLocalDofs}{nLocalDofs}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_aad729fa674e55b31bf4891fda44809f4} 
+Property approx\+::space\+::\+Mesh\+Space\+::n\+Local\+Dofs}
+
+
+
+Number of local degrees of freedom. 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_space_8m_source_l00030}{30}} of file \mbox{\hyperlink{_mesh_space_8m_source}{Mesh\+Space.\+m}}.
+
+\Hypertarget{classapprox_1_1space_1_1_mesh_space_a3076168dc76c3dfcb74b23bff9f1ce3e}\index{approx::space::MeshSpace@{approx::space::MeshSpace}!nMeshElements@{nMeshElements}}
+\index{nMeshElements@{nMeshElements}!approx::space::MeshSpace@{approx::space::MeshSpace}}
+\doxysubsubsection{\texorpdfstring{nMeshElements}{nMeshElements}}
+{\footnotesize\ttfamily \label{classapprox_1_1space_1_1_mesh_space_a3076168dc76c3dfcb74b23bff9f1ce3e} 
+Property approx\+::space\+::\+Mesh\+Space\+::n\+Mesh\+Elements}
+
+
+
+Total number of mesh elements. 
+
+
+
+Definition at line \mbox{\hyperlink{_mesh_space_8m_source_l00027}{27}} of file \mbox{\hyperlink{_mesh_space_8m_source}{Mesh\+Space.\+m}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
++approx/+space/\mbox{\hyperlink{_mesh_space_8m}{Mesh\+Space.\+m}}\end{DoxyCompactItemize}

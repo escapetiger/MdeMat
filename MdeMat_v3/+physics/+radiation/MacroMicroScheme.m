@@ -1,0 +1,510 @@
+classdef MacroMicroScheme < physics.Scheme
+    properties
+        pattern
+        constant
+        convection
+        auxiliary
+        primal
+        M
+        L
+        S
+    end
+
+    methods
+        function obj = setPattern(obj, varargin)
+            obj.pattern = physics.radiation.MacroMicroPattern(varargin{:});
+        end
+
+        function state = initialize(obj, state)
+            % INITIALIZE Initialize the macro-micro DG scheme.
+
+            %< Reset timer
+            obj.timer.reset();
+
+            %< Set decomposition pattern
+            obj.pattern.setDecomposition(state);
+            state.vDisc.space.setScales(obj.pattern.scales);
+
+            %< Set free streaming pattern
+            obj.pattern.setFreeStreaming(state);
+
+            %< Set scaling pattern
+            obj.pattern.setScaling(state);
+
+            %< Set initial condition
+            state.dofs.U = state.macroProject(obj.config.ic, [], []);
+            state.dofs.G = state.microProject(obj.config.ic, [], []);
+
+            %< Set scattering coefficients
+            if ~isempty(obj.config.scattering)
+                state.coefs.CS = state.mean(obj.config.scattering);
+            end
+
+            %< Set absorption coefficients
+            if ~isempty(obj.config.absorption)
+                state.coefs.CA = state.mean(obj.config.absorption);
+            end
+
+            %< Set source coefficients
+            if ~isempty(obj.config.source) && nargin(obj.config.source) < 3
+                state.coefs.QU = state.macroProject(obj.config.source);
+                state.coefs.QG = state.microProject(obj.config.source);
+            end
+
+            %< Set convection operator
+            if isempty(obj.config.bc)
+                bcType = 'periodic';
+            else
+                bcType = 'dirichlet';
+            end
+            obj.convection = approx.assembly.ConvectionOperator( ...
+                state.xDisc.space, state.xDisc.operator, bcType);
+
+            %< Set auxiliary operator
+            obj.auxiliary = approx.assembly.AuxiliaryDivergenceOperator( ...
+                state.xDisc.space, state.xDisc.operator, bcType, ...
+                obj.config.xAuxFluxType, obj.config.xAuxBoundaryJumpType);
+
+            %< Set primal operator
+            obj.primal = approx.assembly.PrimalDivergenceOperator( ...
+                state.xDisc.space, state.xDisc.operator, bcType, ...
+                obj.config.xPrmFluxType);
+
+            %< Set constant assembly
+            obj.constant = approx.assembly.ConstantOperator( ...
+                state.xDisc.space, state.xDisc.operator);
+
+            %< Set mass term
+            obj.setMassTerm(state);
+
+            %< Set linear term
+            obj.setLinearTerm(state);
+
+            %< Set source term
+            obj.setSourceTerm(state);
+
+            %< Reset time discretization
+            obj.tDisc.reset();
+
+            %< Reset visualizer
+            if ~isempty(obj.visualizer) && obj.visualizer.isEnabled
+                if ~isempty(obj.config.exact)
+                    obj.visualizer.addExact('U', ...
+                        @(x, t) state.macroFunctionEvaluate(obj.config.exact, x, [], t));
+                    obj.visualizer.addExact('G', ...
+                        @(x, t) state.microFunctionEvaluate(obj.config.exact, x, [], t));
+                end
+                obj.visualizer.reset();
+
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.xDisc.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
+            end
+        end
+
+        function state = preStep(obj, state)
+            % PRESTEP Preprocess operations before time step.
+
+            %< Set time step
+            h = state.xDisc.mesh.measure;
+            obj.tDisc.timeline.setTimeStep(h, obj.config.cfl);
+            if isa(obj.tDisc, 'approx.odeint.BdfIntegrator')
+                obj.tDisc.setCoefficients();
+            end
+        end
+
+        function state = step(obj, state)
+            % STEP Perform one upwind DG time step.
+
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+
+            %< Update history
+            if m > 0 && n == 0
+                W = state.dofs.U(:);
+            elseif m == 0 && n > 0
+                W = state.dofs.G(:);
+            else
+                W = [state.dofs.U(:); state.dofs.G(:)];
+            end
+            obj.tDisc.update(W);
+
+            %< Integration step
+            if isa(obj.tDisc, 'approx.odeint.BeIntegrator') ...
+                || isa(obj.tDisc, 'approx.odeint.BdfIntegrator') ...
+                || isa(obj.tDisc, 'approx.odeint.DirkIntegrator')
+                W = obj.tDisc.step(obj.L, obj.S, obj.M);
+            else
+                W = obj.tDisc.step(obj.L, [], obj.S, obj.M);
+            end
+            W = reshape(W, [], m+n);
+            state.dofs.U = W(:, 1:m);
+            state.dofs.G = W(:, m+1:m+n);
+        end
+
+        function state = postStep(obj, state)
+            % POSTSTEP Postprocess operations after time step.
+
+            if ~isempty(obj.visualizer) && obj.visualizer.isEnabled
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.xDisc.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
+            end
+
+            obj.tDisc.timeline.advance();
+        end
+
+        function state = finalize(obj, varargin)
+            % FINALIZE Finalize simulation with error analysis.
+            if length(varargin) == 1
+                state = varargin{1};
+                coarse = [];
+            else
+                [state, coarse] = varargin{:};
+            end
+
+            if ~isempty(obj.analyzer) && obj.analyzer.isEnabled
+                obj.timer.start(3, '[M] Error Evaluation.');
+                state.clean();
+                if isempty(coarse)
+                    obj.analyzer.addExact('U', ...
+                        @(x, t) state.macroFunctionEvaluate(obj.config.exact, x, [], t));
+                    obj.analyzer.addExact('G', ...
+                        @(x, t) state.microFunctionEvaluate(obj.config.exact, x, [], t));
+                    obj.analyzer.setLevel(state.xDisc.mesh);
+                    obj.analyzer.absolute(state.xDisc.space, state.dofs, ...
+                        obj.tDisc.timeline.now);
+                else
+                    obj.analyzer.setLevel(state.xDisc.mesh);
+                    obj.analyzer.relative(state.xDisc.space, state.dofs, ...
+                        coarse.xDisc.space, coarse.dofs);
+                end
+                obj.timer.stop(3);
+            end
+
+            obj.timer.report();
+        end
+    end
+
+    methods (Access = private)
+        function obj = setMassTerm(obj, state)
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+            p = state.xDisc.space.nGlobalDofs;
+            obj.M = cell(m + n, m + n);
+            for i = 1:(m + n)
+                obj.M{i, i} = speye(p, p) * obj.pattern.scaling(i, 1);
+            end
+            obj.M = core.linalg.block(obj.M);
+        end
+
+        function obj = setLinearTerm(obj, state)
+            % Assemble linear operator sparse matrix
+
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+
+            obj.L = cell(m+n, m+n);
+
+            obj.addFreeStreaming(state);
+
+            obj.addCollision(state);
+
+            obj.L = core.linalg.block(obj.L);
+        end
+
+        function obj = addFreeStreaming(obj, state)
+            % Assemble streaming part of linear operator
+
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+            p = state.xDisc.space.nGlobalDofs;
+
+            V = state.microNodes;
+
+            % Macro-macro streaming
+            for i = 1:m
+                for j = 1:m
+                    a = squeeze(obj.pattern.streaming(i, j, :));
+                    if all(a == 0)
+                        obj.L{i, j} = sparse(p, p);
+                        continue;
+                    end
+                    if i < j
+                        D = obj.auxiliary.linear(a);
+                        if obj.auxiliary.isImplicitDirichletBoundaryJump
+                            Dj = obj.auxiliary.linearJumpExtraction(a);
+                            obj.L{i, i} = obj.L{i, i} - Dj * obj.pattern.scaling(i, 1+j);
+                        end
+                    else
+                        D = obj.primal.linear(a);
+                    end
+                    obj.L{i, j} = -D * obj.pattern.scaling(i, 1+j);
+                end
+            end
+
+            % Macro-micro streaming
+            for i = 1:m
+                for j = 1:n
+                    a = squeeze(obj.pattern.streaming(i, m+j, :));
+                    if all(a == 0)
+                        obj.L{i, m+j} = sparse(p, p);
+                        continue;
+                    end
+                    D = obj.auxiliary.linear(a);
+                    obj.L{i, m+j} = -D * obj.pattern.scaling(i, 1+m+j);
+                    if obj.auxiliary.isImplicitDirichletBoundaryJump
+                        DJ = obj.auxiliary.linearJumpExtraction(a);
+                        obj.L{i, i} = obj.L{i, i} - DJ * obj.pattern.scaling(i, 1+m+j);
+                    end
+                end
+            end
+
+            % Micro-macro streaming
+            for i = 1:n
+                for j = 1:m
+                    a = squeeze(obj.pattern.streaming(m + i, j, :));
+                    if all(a == 0)
+                        obj.L{m + i, j} = sparse(p, p);
+                        continue;
+                    end
+                    D = obj.primal.linear(a);
+                    obj.L{m + i, j} = -D * obj.pattern.scaling(m+i, 1+j);
+                end
+            end
+
+            % Micro-micro streaming
+            for i = 1:n
+                for j = 1:n
+                    a = squeeze(obj.pattern.streaming(m + i, m + j, :));
+                    if all(a == 0)
+                        obj.L{m + i, m + j} = sparse(p, p);
+                        continue;
+                    end
+                    D = obj.convection.linear(a, V(:, j));
+                    obj.L{m + i, m + j} = -D * obj.pattern.scaling(m+i, 1+m+j);
+                end
+            end
+        end
+
+        function obj = addCollision(obj, state)
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+
+            % Scattering
+            if ~isempty(state.coefs.CS)
+                C = obj.constant.assemble(state.coefs.CS);
+                for i = 1:(m + n)
+                    obj.L{i, i} = obj.L{i, i} - C * obj.pattern.scaling(i, m+n+2);
+                end
+            end
+
+            % Absorption
+            if ~isempty(state.coefs.CA)
+                C = obj.constant.assemble(state.coefs.CA);
+                for i = 1:(m + n)
+                    obj.L{i, i} = obj.L{i, i} - C * obj.pattern.scaling(i, m+n+3);
+                end
+            end
+        end
+
+        function obj = setSourceTerm(obj, state)
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+            ng = state.xDisc.space.nGlobalDofs;
+            if ~isempty(obj.config.source) || ~isempty(obj.config.bc)
+                obj.S = @(W, t) computeS(W, t);
+            else
+                obj.S = [];
+            end
+
+            function S = computeS(~, t)
+                S = arrayfun(@(i) sparse(ng, 1), 1:m+n, 'Un', 0);
+
+                if ~isempty(obj.config.source)
+                    S = obj.addSource(state, t, S);
+                end
+
+                if ~isempty(obj.config.bc)
+                    S = obj.addBc(state, t, S);
+                end
+
+                S = vertcat(S{:});
+            end
+        end
+
+        function S = addSource(obj, state, t, S)
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+            nl = state.xDisc.space.nLocalDofs;
+            state.coefs.QU = state.macroProject(obj.config.source, [], [], t);
+            state.coefs.QG = state.microProject(obj.config.source, [], [], t);
+            C = reshape(repmat(state.coefs.CA(:).', nl, 1), [], 1);
+            QU = C .* state.coefs.QU .* obj.pattern.scaling(1:m, m+n+3).';
+            QG = C .* state.coefs.QG .* obj.pattern.scaling(m+1:m+n, m+n+3).';
+            for i = 1:m
+                S{i} = QU(:, i);
+            end
+            for i = 1:n
+                S{m+i} = QG(:, i);
+            end
+        end
+
+        function S = addBc(obj, state, t, S)
+            m = state.nMacroModes;
+            n = state.nMicroModes;
+            ng = state.xDisc.space.nGlobalDofs;
+            nd = state.xDisc.space.nDims;
+            fU = @(i, X, V) state.macroTraceEvaluate(i, obj.config.bc, X, V, t);
+            fG = @(i, X, V) state.microTraceEvaluate(i, obj.config.bc, X, V, t);
+
+            volume = obj.auxiliary.volume;
+            bdrFlux = obj.auxiliary.flux.boundary;
+            BU = cell(1, 2*nd);
+            BG = cell(1, 2*nd);
+            for d = 1:nd
+                C = volume.scaleConstant(d, 1);
+                if m > 0
+                    T = bdrFlux.assembleTrace(2*d-1, C, fU, []);
+                    BU{2*d-1} = core.linalg.sparseFromTriplets(T, ng, m);
+                end
+                if n > 0
+                    T = bdrFlux.assembleTrace(2*d-1, C, fG, []);
+                    BG{2*d-1} = core.linalg.sparseFromTriplets(T, ng, n);
+                end
+                if m > 0
+                    T = bdrFlux.assembleTrace(2*d, C, fU, []);
+                    BU{2*d} = core.linalg.sparseFromTriplets(T, ng, m);
+                end
+                if n > 0
+                    T = bdrFlux.assembleTrace(2*d, C, fG, []);
+                    BG{2*d} = core.linalg.sparseFromTriplets(T, ng, n);
+                end
+            end
+
+            if obj.auxiliary.isImplicitDirichletBoundaryJump
+                BUJ = cell(1, 2*nd);
+                for d = 1:nd
+                    C = obj.auxiliary.volume.scaleConstant(d, 1);
+                    T = obj.auxiliary.flux.boundary.assembleTrace(2*d-1, -C, fU, []);
+                    BUJ{2*d-1} = core.linalg.sparseFromTriplets(T, ng, m);
+                    state.clean();
+                    T = obj.auxiliary.flux.boundary.assembleTrace(2*d, -C, fU, []);
+                    BUJ{2*d} = core.linalg.sparseFromTriplets(T, ng, m);
+                    state.clean();
+                end
+            elseif obj.auxiliary.isExplicitDirichletBoundaryJump
+                gU = @(X) state.xDisc.space.evaluate([], X, state.dofs.U);
+                BUJ = cell(1, 2*nd);
+                for d = 1:nd
+                    C = obj.auxiliary.volume.scaleConstant(d, 1);
+                    T = obj.auxiliary.flux.boundary.assembleJump(2*d-1, C, fU, gU, []);
+                    BUJ{2*d-1} = core.linalg.sparseFromTriplets(T, ng, m);
+                    state.clean();
+                    T = obj.auxiliary.flux.boundary.assembleJump(2*d, -C, fU, gU, []);
+                    BUJ{2*d} = core.linalg.sparseFromTriplets(T, ng, m);
+                    state.clean();
+                end
+            end
+
+            % Macro-macro streaming BCs
+            for i = 1:m
+                for j = 1:m
+                    a = squeeze(obj.pattern.streaming(i, j, :));
+                    if all(a == 0)
+                        continue;
+                    end
+                    if i < j % add boundary jump for auxiliary variables
+                        if obj.auxiliary.hasDirichletBoundaryJump
+                            DJ = sparse(ng, 1);
+                            for d = 1:nd
+                                if a(d) == 0, continue; end
+                                switch obj.auxiliary.flux.fluxType
+                                    case 'left'
+                                        J = BUJ{2*d-1}(:, i);
+                                    case 'right'
+                                        J = BUJ{2*d}(:, i);
+                                    case 'central'
+                                        J = (BUJ{2*d-1}(:, i) + BUJ{2*d}(:, i)) / 2;
+                                end
+                                DJ = DJ + a(d) * J;
+                            end
+                            S{i} = S{i} - DJ * obj.pattern.scaling(i, 1+j);
+                        end
+                    else % add boundary condition for primal variables
+                        D = 0;
+                        for d = 1:nd
+                            if a(d) == 0, continue; end
+                            D = D + a(d) * (BU{2*d}(:, j) - BU{2*d-1}(:, j));
+                        end
+                        S{i} = S{i} - D * obj.pattern.scaling(i, 1+j);
+                    end
+                end
+            end
+
+            % Macro-micro streaming BCs
+            for i = 1:m
+                for j = 1:n
+                    a = squeeze(obj.pattern.streaming(i, m+j, :));
+                    if all(a == 0)
+                        continue;
+                    end
+                    % add boundary jump for auxiliary variables
+                    if obj.auxiliary.hasDirichletBoundaryJump
+                        DJ = 0;
+                        for d = 1:nd
+                            if a(d) == 0, continue; end
+                            switch obj.auxiliary.flux.fluxType
+                                case 'left'
+                                    J = BUJ{2*d-1}(:, i);
+                                case 'right'
+                                    J = BUJ{2*d}(:, i);
+                                case 'central'
+                                    J = (BUJ{2*d-1}(:, i) + BUJ{2*d}(:, i)) / 2;
+                            end
+                            DJ = DJ + a(d) * J;
+                        end
+                        S{i} = S{i} - DJ * obj.pattern.scaling(i, 1+m+j);
+                    end
+                end
+            end
+
+            % Micro-macro streaming BCs
+            for i = 1:n
+                for j = 1:m
+                    a = squeeze(obj.pattern.streaming(m + i, j, :));
+                    if all(a == 0)
+                        continue;
+                    end
+                    D = 0;
+                    for d = 1:nd
+                        D = D + a(d) * (BU{2*d}(:, j) - BU{2*d-1}(:, j));
+                    end
+                    S{m+i} = S{m+i} - D * obj.pattern.scaling(m+i, 1+j);
+                end
+            end
+
+            % Micro-micro streaming BCs
+            V = state.microNodes;
+            for i = 1:n
+                R = 0;
+                for j = 1:n
+                    a = squeeze(obj.pattern.streaming(m + i, m + j, :));
+                    if all(a == 0)
+                        continue;
+                    end
+                    D = 0;
+                    for d = 1:nd
+                        if V(d, j) > 0
+                            D = D - a(d) * BG{2*d-1}(:, j);
+                        else
+                            D = D + a(d) * BG{2*d}(:, j);
+                        end
+                    end
+                    R = R - D * obj.pattern.scaling(m+i, 1+m+j);
+                end
+                S{m+i} = S{m+i} + R;
+            end
+        end
+    end
+end
