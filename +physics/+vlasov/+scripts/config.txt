@@ -19,8 +19,8 @@ OPTION=tSplitName='strang'
 # tOdeIntName='sdirk2': SDIRK2 scheme
 # tOdeIntName='sdirk3': SDIRK3 scheme
 # tOdeIntName='imp': Implicit midpoint scheme
-OPTION=tOdeIntName={'be', 'be'}
-# OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
+# OPTION=tOdeIntName={'be', 'be'}
+OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
 # OPTION=tOdeIntName='sdirk2'
 # OPTION=tOdeIntName='ars222'
 
@@ -28,17 +28,17 @@ OPTION=tOdeIntName={'be', 'be'}
 # OPTION=cfl=0.5
 
 # Time step size
-OPTION=dt=0.1
+OPTION=dt=0.001
 
 # Whether use semi-implicit
-OPTION=useSemiImplicit=true
+OPTION=useSemiImplicit=false
 
 # -----------------------------------------------------------------------
 # Space discretization
 # -----------------------------------------------------------------------
 
 # spatial order
-OPTION=xBasisOrder=1
+OPTION=xBasisOrder=2
 
 # xBasisType='modal': Modal basis 
 # xBasisType='nodal': Nodal basis
@@ -58,7 +58,7 @@ OPTION=xBasisPattern='Q'
 # xOpType{2,1}='central': central flux
 # xOpType{2,1}='right': right flux
 # xOpType{2,1}='left': left flux
-OPTION=xOpAType={'', 'central'; 'central', ''}
+OPTION=xOpAType={'', 'right'; 'left', ''}
 OPTION=xOpBType={'', 'right'; 'left', ''} 
 
 # -----------------------------------------------------------------------
@@ -70,7 +70,7 @@ OPTION=vBasisType='hermite'
 # Filter options
 # -----------------------------------------------------------------------
 # Enable filtering to reduce aliasing errors in nonlinear coupling
-OPTION=useFilter=true
+OPTION=useFilter=false
 
 # Dealiasing method: 'hou-li', 'tc', or 'quasi-tc'
 OPTION=dealiasingType='hou-li'

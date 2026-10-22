@@ -15,7 +15,11 @@ classdef Analyzer < handle
     %       Reductions.U.x = {'L1', 'L2', 'max'}  % spatial norm types
     %       Reductions.U.v = ''                    % no velocity reduction
     %       Reductions.F.x = {'L2'}
-    %       Reductions.F.v = 'sequence'            % L2 over velocity components
+    %       Reductions.F.v = 'sequence'            % L2 aggregate over components
+    %
+    %   Components may be numeric indices or 'all'. Use 'all' with
+    %   the 'sequence' reduction when the number of components varies
+    %   between refinement levels.
     %
     %   Valid values for .v (vRed) are '' (per-component) and 'sequence'
     %   (L2 aggregate). KineticAnalyzer additionally supports 'integral'.
@@ -132,9 +136,10 @@ classdef Analyzer < handle
         function obj = setComponents(obj, components)
             % SETCOMPONENTS Set the solution components to analyze.
             %
-            %   obj = setComponents(obj, components) sets the indices of
-            %   solution components to analyze for each field using the
-            %   @a components structure mapping field names to indices.
+            %   Numeric indices select specified components. The value
+            %   'all' selects every component in the current state; for
+            %   fields whose component count changes between refinement
+            %   levels, use 'all' together with the 'sequence' reduction.
 
             arguments
                 obj physics.analysis.Analyzer
@@ -256,6 +261,15 @@ classdef Analyzer < handle
 
                 xRed = obj.Reductions.(fieldName).x;
                 vRed = obj.Reductions.(fieldName).v;
+                isAll = (ischar(component) || isstring(component)) ...
+                    && strcmpi(component, 'all');
+                if isAll
+                    core.except.assert(strcmp(vRed, 'sequence'), ...
+                        'InvalidComponentReduction', ...
+                        ['Component selection ''all'' requires the ', ...
+                        '''sequence'' reduction when used in error analysis.']);
+                    component = 1:size(C, 2);
+                end
 
                 metric = physics.analysis.FiniteElementAbsoluteMetric( ...
                     space, Reductions=xRed);
@@ -310,6 +324,14 @@ classdef Analyzer < handle
 
                 xRed = obj.Reductions.(fieldName).x;
                 vRed = obj.Reductions.(fieldName).v;
+                isAll = (ischar(component) || isstring(component)) ...
+                    && strcmpi(component, 'all');
+                if isAll
+                    core.except.assert(strcmp(vRed, 'sequence'), ...
+                        'InvalidComponentReduction', ...
+                        ['Component selection ''all'' requires the ', ...
+                        '''sequence'' reduction when used in error analysis.']);
+                end
 
                 metric = physics.analysis.FiniteElementRichardsonMetric( ...
                     fine.XDisc, coarse.XDisc, Reductions=xRed);
@@ -320,8 +342,19 @@ classdef Analyzer < handle
 
                 C = C(metric.NestLI, :);
                 U = fine.XDisc.eval(fXRef, C);
-                U = U(:, component);
                 U0 = coarse.XDisc.eval(cXRef, C0);
+
+                n = size(U, 2);
+                n0 = size(U0, 2);
+                core.except.assert(n0 <= n, ...
+                    'SizeMismatch', ...
+                    'Fine component dimension must not be smaller than coarse dimension.');
+                U0(:, n0+1:n) = 0;
+
+                if isAll
+                    component = 1:n;
+                end
+                U = U(:, component);
                 U0 = U0(:, component);
                 R = metric.eval(U, U0);
 
@@ -359,12 +392,18 @@ classdef Analyzer < handle
                 component = obj.Components.(fieldName);
                 if isempty(component), continue; end
                 if ~isfield(obj.Reductions, fieldName), continue; end
+                isAll = (ischar(component) || isstring(component)) ...
+                    && strcmpi(component, 'all');
                 xRed = obj.Reductions.(fieldName).x;
                 nRed = length(xRed);
                 E = cell2mat(obj.Errors.(fieldName));
                 for iComponent = 1:size(E, 2)
                     Ej = reshape(E(:, iComponent), nRed, obj.NLevels).';
-                    name = sprintf('%s%d', fieldName, component(iComponent));
+                    if isAll
+                        name = sprintf('%s_all', fieldName);
+                    else
+                        name = sprintf('%s%d', fieldName, component(iComponent));
+                    end
                     tables.(name) = obj.analyzeImpl(Ej, xRed);
                     if verbose > 0
                         disp(tables.(name));
@@ -414,15 +453,22 @@ classdef Analyzer < handle
                 fieldName = fieldNames{iField};
                 component = obj.Components.(fieldName);
                 if ~isfield(obj.Reductions, fieldName), continue; end
+                isAll = (ischar(component) || isstring(component)) ...
+                    && strcmpi(component, 'all');
+                if isAll
+                    nPlotComponents = 1;
+                else
+                    nPlotComponents = length(component);
+                end
                 xRed = obj.Reductions.(fieldName).x;
                 nRed = length(xRed);
                 E = reshape(cell2mat(obj.Errors.(fieldName)), [], obj.NLevels);
 
-                for iComponent = 1:length(component)
+                for iComponent = 1:nPlotComponents
                     %< Extract errors for this component across all reduction types
                     componentErrors = zeros(obj.NLevels, nRed);
                     for iReduction = 1:nRed
-                        errorIndex = (iReduction - 1) * length(component) + iComponent;
+                        errorIndex = (iReduction - 1) * nPlotComponents + iComponent;
                         componentErrors(:, iReduction) = E(errorIndex, :);
                     end
 
@@ -435,7 +481,11 @@ classdef Analyzer < handle
                     end
 
                     %< Create subplot for this component
-                    componentTitle = sprintf('%s%d', fieldName, component(iComponent));
+                    if isAll
+                        componentTitle = sprintf('%s (all components)', fieldName);
+                    else
+                        componentTitle = sprintf('%s%d', fieldName, component(iComponent));
+                    end
                     obj.drawImpl(componentErrors, xRed, componentRates, componentTitle);
 
                     componentIndex = componentIndex + 1;
@@ -458,9 +508,24 @@ classdef Analyzer < handle
         end
 
         function n = get.NComponents(obj)
-            % GET.NCOMPONENTS Get number of components for each field.
+            % GET.NCOMPONENTS Get number of reported components for each field.
+            %
+            %   A field configured as 'all' with 'sequence' reduction
+            %   contributes one aggregate error curve/table.
 
-            n = cellfun(@(f) length(obj.Components.(f)), fieldnames(obj.Components));
+            fields = fieldnames(obj.Components);
+            n = zeros(size(fields));
+            for i = 1:numel(fields)
+                fieldName = fields{i};
+                component = obj.Components.(fieldName);
+                isAll = (ischar(component) || isstring(component)) ...
+                    && strcmpi(component, 'all');
+                if isAll
+                    n(i) = 1;
+                else
+                    n(i) = numel(component);
+                end
+            end
         end
     end
 

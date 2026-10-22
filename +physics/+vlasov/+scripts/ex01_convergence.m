@@ -14,7 +14,7 @@ common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
 config = physics.scheme.ConfigParser.parseFile(common);
 
 % Checkpoint information
-config.id = 'ex01ldi';
+config.id = 'ex01ldh';
 config.ckptDir = fullfile(fileparts(mfilename('fullpath')), config.id);
 config.ckptPrefix = [upper(config.schemeName), num2str(config.xBasisOrder)];
 if config.useFilter
@@ -26,18 +26,18 @@ switch config.id
     case 'ex01ldi'
         config.ckptPrefix = strjoin({'LDI', config.ckptPrefix}, '_');
 end
-config.tFinal = 0.1;
+config.tFinal = 1;
 config.vBBox = [-3.2, 3.2];
 config.ckptTimeStamps = [];
 
 % Test the convergence rate from short to long time scale
-epsilon = 10.^[0, -1, -2, -3, -4, -5, -6];
-tau0 = 10.^[1, 3, 5];
+epsilon = 10.^[0];
+tau0 = 10.^[1,3,5];
 for k1 = 1:length(epsilon)
     for k2 = 1:length(tau0)
         config.epsilon = epsilon(k1);
         config.tau0 = tau0(k2);
-        config.tFinal = epsilon(k1);
+        % config.tFinal = epsilon(k1);
         config.ckptPostfix = sprintf('epsilon%.0e_tau0%.0e', epsilon(k1), tau0(k2));
         fileName = sprintf('%s_state_%s.mat', config.ckptPrefix, config.ckptPostfix);
         fileName = fullfile(config.ckptDir, fileName);
@@ -101,7 +101,8 @@ visualizer.addPlotter('profile', '1d');
 analyzer = scheme.getConfig('analyzer');
 analyzer.setNLevels(5);
 analyzer.setDensity(4^config.nDims);
-analyzer.setComponents(struct('D', 1:config.nh, 'Psi', 1, 'Q', 1));
+analyzer.setComponents(struct('D', 'all', 'Psi', 1, 'Q', 1));
+analyzer.addReduction('D', 'v', 'sequence');
 
 vElement = approx.element.L2OrthotopeElement.hermite(1, config.nh, T = config.T0);
 vDisc = approx.space.SpectralSpace(vElement);
