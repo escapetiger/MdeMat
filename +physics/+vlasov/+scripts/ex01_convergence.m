@@ -99,7 +99,7 @@ visualizer.addPlotter('profile', '1d');
 
 % Configure analyzer
 analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(5);
+analyzer.setNLevels(6);
 analyzer.setDensity(4^config.nDims);
 analyzer.setComponents(struct('D', 'all', 'Psi', 1, 'Q', 1));
 analyzer.addReduction('D', 'v', 'sequence');
