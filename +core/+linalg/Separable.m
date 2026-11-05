@@ -4,36 +4,50 @@ classdef Separable < handle
     %   Separable represents mathematical entity that can be
     %   decomposed as result of operation on multiple factors. Provides
     %   common functionality for all separable object types.
+    %
+    % Examples:
+    %   % Create with uniform vector factors
+    %   factors = {Vector([1,2,3]), Vector([4,5,6]), Vector([7,8,9])};
+    %   obj = Separable(factors);
+    %   factor2 = obj(2);  % Access using parentheses
+    %
+    %   % Create with mixed factor types
+    %   factors = {Vector([1,2,3]), Matrix([4,5;6,7]), Scalar(8)};
+    %   obj = Separable(factors);
+    %   factor2 = obj{2}; % Access using curly braces
 
     properties
-        Factors % Array of factor objects
+        factors % Array of factor objects
     end
 
     properties (Dependent)
-        NFactors % Number of factors
+        nFactors % Number of factors
     end
 
     methods
-        function obj = Separable(options)
-            % SEPARABLE Construct an instance of Separable.
+        function obj = Separable(factors)
+            % SEPARABLE Constructor for separable object.
             %
             %   obj = Separable() creates empty Separable.
             %
-            %   obj = Separable(Name=Value) creates Separable with
-            %   specified options.
+            %   obj = Separable(factors) creates Separable with
+            %   specified factors @a factors.
+            %
+            % Inputs:
+            %   factors - Factor instances (cell array or object array)
+            %
+            % Outputs:
+            %   obj - Separable instance
 
-            arguments
-                options.factors {core.except.mustBeCellOrObject} = {}
-            end
+            if nargin < 1, factors = {}; end
 
-            obj.setFactors(options.factors);
+            obj.setFactors(factors);
         end
 
-        function n = get.NFactors(obj)
-            % GET.NFACTORS Returns the value of the dependent property 
-            % 'NFactors'.
+        function n = get.nFactors(obj)
+            % GET.NFACTORS Number of factors.
 
-            n = length(obj.Factors);
+            n = length(obj.factors);
         end
     
         function obj = setFactors(obj, factors)
@@ -42,43 +56,48 @@ classdef Separable < handle
             %   obj = setFactors(obj, factors) sets factors @a factors for
             %   the separable object.
             %
-            %   Factors must be provided as a cell array or object array.
-            %   Empty factors are ignored.
-
-            arguments
-                obj core.linalg.Separable
-                factors {core.except.mustBeCellOrObject}
-            end
+            % Inputs:
+            %   obj - The Separable object
+            %   factors - Factor instances (cell array or object array) 
+            %
+            % Outputs:
+            %   obj = The Separable object
 
             if isempty(factors), return; end
 
+            core.except.assert(iscell(factors) || isobject(factors), ...
+                'InvalidInput', ...
+                'Factors must be a cell array or object array.');
+
             if iscell(factors)
-                if core.except.isAllSameClass(factors{:})
-                    obj.Factors = arrayfun(@(i) factors{i}, 1:length(factors));
+                if core.validate.isAllSameClass(factors{:})
+                    obj.factors = arrayfun(@(i) factors{i}, 1:length(factors));
                 else
-                    obj.Factors = factors;
+                    obj.factors = factors;
                 end
             else
-                obj.Factors = factors;
+                obj.factors = factors;
             end
         end
    
         function obj = setFactor(obj, index, factor)
             % SETFACTOR Set a specific factor.
             %
-            %   obj = setFactor(obj, index, factor) sets the factor at the
+            %   obj = setFactor(obj, index, fatcor) sets the factor at the
             %   specified index.
-
-            arguments
-                obj core.linalg.Separable
-                index {mustBeInteger, mustBePositive}
-                factor {mustBeA(factor, 'object')}
-            end
+            %
+            % Inputs:
+            %   obj - The Separable object
+            %   index - Index of the factor (positive integer)
+            %   factor - Factor instance
+            %
+            % Outputs:
+            %   obj - The Separable object
             
-            if iscell(obj.Factors)
-                obj.Factors{index} = factor;
+            if iscell(obj.factors)
+                obj.factors{index} = factor;
             else
-                obj.Factors(index) = factor;
+                obj.factors(index) = factor;
             end
         end
 
@@ -87,18 +106,21 @@ classdef Separable < handle
             %
             %   F = getFactor(obj, index) returns the factor at the
             %   specified index.
-
-            arguments
-                obj core.linalg.Separable
-                index {mustBeInteger, mustBePositive}
-            end
+            %
+            % Inputs:
+            %   obj - The Separable object
+            %   index - Index of the factor (positive integer)
+            %
+            % Outputs:
+            %   F - The factor at the specified index
             
-            if iscell(obj.Factors)
-                F = obj.Factors{index};
+            if iscell(obj.factors)
+                F = obj.factors{index};
             else
-                F = obj.Factors(index);
+                F = obj.factors(index);
             end
         end
+
     end
 
     methods (Static)
@@ -109,6 +131,13 @@ classdef Separable < handle
             %   F = Separable.createFactors(factory, arg1, arg2, ...)
             %   creates multiple factor objects using factory function @a
             %   factory.
+            %
+            % Inputs:
+            %   factory - Function handle for creating factor objects
+            %   varargin - Arguments passed to factory function
+            %
+            % Outputs:
+            %   F - Cell array of created factor objects
 
             core.except.verify(isa(factory, 'function_handle'), ...
                 'InvalidFunctionHandle', ...

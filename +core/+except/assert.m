@@ -1,14 +1,31 @@
 function assert(flag, id, msg, varargin)
-% ASSERT Advanced assertion with contextual error reporting.
+% ASSERT Advanced assertion.
 %
-%   assert(flag) throws an error if @a flag is false.
+%   assert(flag) throws an error if @a flag is false. 
 %
 %   assert(flag, id, msg, ...) throws an error with the specified @a id and
-%   @a msg if @a flag is false. The @a id is automatically prefixed with
-%   module context information. Additional arguments are used for string
-%   formatting of @a msg using sprintf.
+%   @a msg if @a flag is false.
 %
-% See also:
+% Inputs:
+%   flag     - Logical condition to check
+%   id       - Error identifier (e.g., 'InvalidInput' or 'OutOfRange')
+%   msg      - Error message format string
+%   varargin - Optional variables for the format string
+%
+% Outputs:
+%   NULL
+%
+% Examples:
+%   % Basic usage with simple condition
+%   core.except.assert(x > 0, 'NonPositive', 'Value must be positive.');
+%
+%   % With formatted message
+%   core.except.assert(n < 100, 'TooLarge', 'Value %d exceeds limit.', n);
+%
+%   % Default behavior (minimal arguments)
+%   core.except.assert(isreal(x));
+%
+% See Also:
 %   core.except.verify, core.except.backtrack
 
 if nargin == 1

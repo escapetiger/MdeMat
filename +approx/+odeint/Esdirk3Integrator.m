@@ -11,20 +11,34 @@ classdef Esdirk3Integrator < approx.odeint.DirkIntegrator
     %   where \f$M\f$ is a mass operator, \f$L\f$ is a linear operator, and
     %   \f$S\f$ is a source term. This method features an explicit first
     %   stage (\f$c_1 = 0\f$) followed by two implicit stages, providing
-    %   computational efficiency while maintaining good stability
-    %   properties.
+    %   computational efficiency while maintaining good stability properties.
     %
     %   The parameter \f$\gamma = (3 + \sqrt{3})/6 \approx 0.7886751346\f$
     %   ensures third-order accuracy and A-stability. The explicit first
-    %   stage reduces computational cost compared to fully implicit
-    %   methods.
+    %   stage reduces computational cost compared to fully implicit methods.
+    %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Esdirk3Integrator(1.0);
+    %   U_new = integrator.step(L, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], []);
+    %
+    %   % Pure forcing (only source term)
+    %   U_new = integrator.step([], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, S, M);
     %
     % See also:
     %   approx.odeint.DirkIntegrator, approx.odeint.Sdirk2Integrator,
     %   approx.odeint.Sdirk3Integrator
     
     properties (Constant)
-        Order = 3 % Accuracy order of the ESDIRK3 method
+        ORDER = 3 % Accuracy order of the ESDIRK3 method
     end
 
     methods
@@ -33,10 +47,12 @@ classdef Esdirk3Integrator < approx.odeint.DirkIntegrator
             %
             %   obj = Esdirk3Integrator(final) creates a third-order ESDIRK
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Esdirk3Integrator object
             
             obj@approx.odeint.DirkIntegrator(3, final);
             

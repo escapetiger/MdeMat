@@ -1,19 +1,19 @@
 classdef TestStaticTimeline < matlab.unittest.TestCase
     
     properties (TestParameter)
-        TimeNodes = {[0, 0.1, 0.2, 0.5, 1.0], ...
+        timeNodes = {[0, 0.1, 0.2, 0.5, 1.0], ...
                      [0, 0.25, 0.5, 0.75, 1.0], ...
                      [0, 1.0, 3.0, 6.0, 10.0]}
     end
     
     methods (Test)
-        function testConstructor(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testConstructor(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            testCase.verifyEqual(timeline.Final, TimeNodes(end));
-            testCase.verifyEqual(timeline.Now, TimeNodes(1));
-            testCase.verifyEqual(timeline.Count, 1);
-            testCase.verifyEqual(timeline.Nodes, [TimeNodes, inf]);
+            testCase.verifyEqual(timeline.final, timeNodes(end));
+            testCase.verifyEqual(timeline.now, timeNodes(1));
+            testCase.verifyEqual(timeline.count, 1);
+            testCase.verifyEqual(timeline.nodes, [timeNodes, inf]);
         end
         
         function testConstructorValidation(testCase)
@@ -21,73 +21,73 @@ classdef TestStaticTimeline < matlab.unittest.TestCase
                 'approx:mesh:StaticTimeline:InvalidInput');
         end
         
-        function testAdvance(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testAdvance(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            for i = 2:length(TimeNodes)
+            for i = 2:length(timeNodes)
                 timeline.advance();
-                testCase.verifyEqual(timeline.Now, TimeNodes(i));
-                testCase.verifyEqual(timeline.Count, i);
+                testCase.verifyEqual(timeline.now, timeNodes(i));
+                testCase.verifyEqual(timeline.count, i);
             end
         end
         
-        function testIsFinished(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testIsFinished(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            testCase.verifyFalse(timeline.IsExhausted());
+            testCase.verifyFalse(timeline.isFinished());
             
-            for i = 2:length(TimeNodes)
+            for i = 2:length(timeNodes)
                 timeline.advance();
-                testCase.verifyFalse(timeline.IsExhausted());
+                testCase.verifyFalse(timeline.isFinished());
             end
             
             timeline.advance();
-            testCase.verifyTrue(timeline.IsExhausted());
+            testCase.verifyTrue(timeline.isFinished());
         end
         
-        function testGetTimeStep(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testGetTimeStep(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            for i = 1:length(TimeNodes)-1
-                expectedStepSize = TimeNodes(i+1) - TimeNodes(i);
-                testCase.verifyEqual(timeline.StepSize, expectedStepSize, 'AbsTol', 1e-10);
+            for i = 1:length(timeNodes)-1
+                expectedDt = timeNodes(i+1) - timeNodes(i);
+                testCase.verifyEqual(timeline.dt, expectedDt, 'AbsTol', 1e-10);
                 
-                if i < length(TimeNodes)-1
+                if i < length(timeNodes)-1
                     timeline.advance();
                 end
             end
             
             timeline.advance();
             
-            testCase.verifyTrue(isinf(timeline.StepSize));
+            testCase.verifyTrue(isinf(timeline.dt));
         end
         
-        function testCountTotalTimeSteps(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testCountTotalTimeSteps(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            expectedCount = length(TimeNodes);
-            testCase.verifyEqual(timeline.NTotalTimeSteps, expectedCount);
+            expectedCount = length(timeNodes);
+            testCase.verifyEqual(timeline.nTotalTimeSteps, expectedCount);
         end
         
-        function testReset(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testReset(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
             for i = 1:2
-                if i <= length(TimeNodes)-1
+                if i <= length(timeNodes)-1
                     timeline.advance();
                 end
             end
             
             timeline.reset();
             
-            testCase.verifyEqual(timeline.Now, 0);
-            testCase.verifyEqual(timeline.Count, 1);
+            testCase.verifyEqual(timeline.now, 0);
+            testCase.verifyEqual(timeline.count, 1);
         end
         
-        function testAdvanceValidation(testCase, TimeNodes)
-            timeline = approx.mesh.StaticTimeline(TimeNodes);
+        function testAdvanceValidation(testCase, timeNodes)
+            timeline = approx.mesh.StaticTimeline(timeNodes);
             
-            for i = 1:length(TimeNodes)
+            for i = 1:length(timeNodes)
                 timeline.advance();
             end
             

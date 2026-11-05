@@ -3,10 +3,18 @@ function S = cut(T, d)
 %
 %   S = cut(T, d) returns slices of @a T along the dimension @a d.
 %
-%   This function cuts tensor @a T along dimension @a d, returning a cell
-%   array where each entry contains a slice of the original tensor. The
-%   operation preserves all dimensions except @a d, which is sliced.
-%   Returns empty cell array if @a T is empty.
+% Inputs:
+%   T - Input tensor
+%   d - Dimension index
+%
+% Outputs:
+%   S - Cell array of slices of @a T along the dimension @a d
+%
+% Examples:
+%   % Create a 3D T and cut along the second dimension
+%   T = rand(3, 4, 5);
+%   S = cut(T, 2);
+%   % returns a cell array of length 4 of which entry is a 3×5 matrix
 
 if isempty(T)
     S = {};

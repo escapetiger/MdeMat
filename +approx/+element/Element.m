@@ -12,110 +12,85 @@ classdef Element < handle
     %   over a mesh of elements. Element serves as a building block for
     %   both SPM and FEM to define the ansatz space.
     %
+    %   This abstract base class provides the fundamental interface for
+    %   element-based computations, including function evaluation and
+    %   access to geometric properties.
+    %
     % See also:
-    %   core.geometry.Geometry, approx.linear.LinearApproximator
+    %   core.geometry.Geometry, approx.project.Projector,
+    %   approx.element.C0Element, approx.element.L2Element
 
     properties
-        Geometry % Geometry object
-        Approximator % LinearApproximator object
+        geometry % Geometry object defining the element domain
+        projector % Function space projector for basis functions
     end
 
     properties (Dependent)
-        NDims % Number of spatial dimensions (integer)
-        NDofs % Number of degrees of freedom (integer)
+        nDims % Number of spatial dimensions (integer)
+        nDofs % Number of degrees of freedom (integer)
+        outerNormals % Outer normal vectors at geometry boundaries
     end
 
     methods
-        function obj = Element(geometry, approximator)
+        function obj = Element(geometry, projector)
             % ELEMENT Constructor for Element.
             %
-            %   obj = Element(geometry, approximator) creates an element
-            %   with the specified @a geometry and @a approximator.
+            %   obj = Element(geometry, projector) creates an element with
+            %   the specified geometry and function space projector.
+            %
+            % Inputs:
+            %   geometry - Geometry object defining the element domain
+            %   projector - GalerkinProjector object for basis functions
+            %
+            % Outputs:
+            %   obj - Constructed Element object
 
-            arguments
-                geometry core.geometry.Geometry
-                approximator approx.linear.LinearApproximator
-            end
-
-            obj.Geometry = geometry;
-            obj.Approximator = approximator;
+            obj.geometry = geometry;
+            obj.projector = projector;
         end
 
-        function n = get.NDims(obj)
+        function n = get.nDims(obj)
             % GET.NDIMS Get the number of spatial dimensions.
 
-            n = obj.Approximator.Basis.NDims;
+            n = obj.projector.basis.nDims;
         end
 
-        function n = get.NDofs(obj)
+        function n = get.nDofs(obj)
             % GET.NDOFS Get the number of degrees of freedom.
 
-            n = obj.Approximator.NDofs;
+            n = obj.projector.nDofs;
         end
 
-        function Y = eval(obj, X, C)
-            % EVAL Evaluate a function over the element.
-            %
-            %   Y = eval(obj, X, C) evaluates the finite element
-            %   function defined by coefficients @a C at the evaluation
-            %   points @a X.
+        function N = get.outerNormals(obj)
+            % GET.OUTERNORMALS Get outer normal vectors at boundaries.
 
-            arguments
-                obj approx.element.Element
-                X {mustBeNumeric, mustBeNonempty}
-                C {mustBeNumeric, mustBeNonempty}
-            end
-
-            Y = obj.Approximator.eval(X, C);
-        end
-        
-        function Y = diff(obj, X, C, order)
-            % DIFF Differentiate a function over the element.
-            %
-            %   Y = diff(obj, X, C, order) differentiates the
-            %   finite element function defined by coefficients @a C at the
-            %   evaluation points @a X with derivative @a order.
-            
-            arguments
-                obj approx.element.Element
-                X {mustBeNumeric, mustBeNonempty}
-                C {mustBeNumeric, mustBeNonempty}
-                order (1, :) {mustBeNumeric, mustBeNonempty}
-            end
-            
-            Y = obj.Approximator.diff(X, C, order);
+            N = obj.geometry.outerNormals();
         end
 
-        function Y = fit(obj, F)
-            % FIT Fit data over the element.
+        function Y = evaluate(obj, varargin)
+            % EVALUATE Evaluate a function over the element.
             %
-            %   U = fit(obj, F) fits data over the element by
-            %   solving the fitting system \f$D*U = F\f$, where \f$D\f$ is
-            %   the design matrix. Handles well-posed and overdetermined
-            %   systems using least squares when necessary.
-            
-            arguments
-                obj approx.element.Element
-                F {mustBeNumeric, mustBeNonempty}
-            end
-
-            Y = obj.Approximator.fit(F);
-        end
-
-        function Y = project(obj, F)
-            % PROJECT Project data over the element.
+            %   Y = evaluate(obj, Z) evaluates the basis functions at
+            %   points specified in Z = [X; C], where X contains evaluation
+            %   points and C contains coefficients.
             %
-            %   U = project(obj, F) projects data over the element by
-            %   solving the fitting system \f$D*U = F\f$, where \f$D\f$ is
-            %   the design matrix. Handles well-posed and overdetermined
-            %   systems using least squares when necessary.
-            
-            arguments
-                obj approx.element.Element
-                F {mustBeNumeric, mustBeNonempty}
-            end
+            %   Y = evaluate(obj, X, C) evaluates the finite element
+            %   function defined by coefficients C at the evaluation
+            %   points X.
+            %
+            % Inputs:
+            %   obj - The Element object
+            %   varargin - Variable input arguments:
+            %<    Z - Combined matrix [X; C] (for single argument case)
+            %<    X - Evaluation points (nDims x nPts matrix)
+            %<    C - Coefficient vectors (nDofs x nVars matrix)
+            %
+            % Outputs:
+            %   Y - Function values at evaluation points:
+            %<     * If nargin = 2: (1 x nPts) vector
+            %<     * If nargin = 3: (nVars x nPts) matrix
 
-            Y = obj.Approximator.project(F);
+            Y = obj.projector.evaluate(varargin{:});
         end
     end
 end

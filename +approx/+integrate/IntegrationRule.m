@@ -6,56 +6,33 @@ classdef IntegrationRule < handle
     %   structure and required methods that must be implemented by concrete
     %   integration rule subclasses.
     %
-    %   The class defines two fundamental operations: interior domain
-    %   integration and boundary integration. Concrete subclasses must
-    %   implement the generate method for domain integration, while
-    %   generateOnBoundary is optional depending on the specific rule.
-    %
     % See also:
-    %   approx.integrate.OrthotopeRule, approx.integrate.SphereRule
+    %   approx.integrate.UnivariateRule, approx.integrate.GaussLegendreRule,
+    %   approx.integrate.ClosedNewtonCotesRule
 
-    properties
-        NDims % Number of dimensions supported by this rule
+    properties (Access = public)
+        nDims % Number of dimensions for the integration domain
     end
 
     methods
         function obj = IntegrationRule(nDims)
-            % INTEGRATIONRULE Construct an instance of IntegrationRule.
+            % INTEGRATIONRULE Constructor for IntegrationRule.
             %
-            %   obj = IntegrationRule(nDims) creates an integration rule
-            %   instance that supports up to @a nDims dimensions.
-
-            arguments
-                nDims {mustBePositive, mustBeInteger}
-            end
-
-            obj.NDims = nDims;
-        end
-
-        function [X, w] = generate(obj, geometry, np)
-            % GENERATE Generate integration points and weights.
+            %   obj = IntegrationRule(nDims) creates a new IntegrationRule
+            %   object with the specified number of dimensions.
             %
-            %   [X, w] = generate(obj, geometry, np) generates integration
-            %   points @a X and weights @a w within the geometric domain @a
-            %   geometry using @a np points.
+            % Inputs:
+            %   nDims - Number of dimensions (positive integer)
+            %
+            % Outputs:
+            %   obj - Constructed IntegrationRule object
 
-            arguments
-                obj approx.integrate.IntegrationRule
-                geometry core.geometry.Geometry
-                np {mustBePositive, mustBeInteger}
-            end
-
-            core.except.assert(obj.NDims == geometry.NDims, ...
-                'InvalidInput', ['Integration rule supports %d', ...
-                ' dimensions, but geometry has %d dimensions.'], ...
-                obj.NDims, geometry.NDims);
-
-            [X, w] = obj.generateImpl(geometry, np);
+            obj.nDims = nDims;
         end
     end
 
-    methods (Abstract, Access = protected)
-        % GENERATEIMPL Implementation of integration point generation.
-        [X, w] = generateImpl(obj, geometry, np)
+    methods (Abstract)
+        % GENERATE Generate integration nodes and weights.
+        [X, w] = generate(obj, varargin)
     end
 end

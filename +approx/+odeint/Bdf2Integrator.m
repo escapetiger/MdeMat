@@ -13,13 +13,18 @@ classdef Bdf2Integrator < approx.odeint.BdfIntegrator
     %   \f$S\f$ is a source term.
     %
     %   Bdf2Integrator uses the Backward Euler method for the first step.
-    %   It achieves second-order accuracy and A-stability.
+    %   It acheives second-order accuracy and A-stability.
+    %
+    % Examples:
+    %   integrator = approx.odeint.Bdf2Integrator(1.0);
+    %   U_new = integrator.step(L, N);
+    %   integrator.update(U_new);
     %
     % See also:
     %   approx.odeint.BdfIntegrator, approx.odeint.Bdf3Integrator
     
     properties (Constant)
-        Order = 2 % Accuracy order
+        ORDER = 2 % Accuracy order
     end
 
     methods
@@ -28,10 +33,12 @@ classdef Bdf2Integrator < approx.odeint.BdfIntegrator
             %
             %   obj = Bdf2Integrator(final) creates a BDF2 integrator with
             %   the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Bdf2Integrator object
             
             obj@approx.odeint.BdfIntegrator(2, final);
             obj.alpha = [-4/3, 1/3];
@@ -44,19 +51,21 @@ classdef Bdf2Integrator < approx.odeint.BdfIntegrator
             %
             %   obj = setCoefficients(obj) computes the alpha and beta
             %   coefficients based on the current and previous step sizes.
+            %
+            % Inputs:
+            %   obj - The Bdf2Integrator object
+            %
+            % Outputs:
+            %   obj - The Bdf2Integrator object
 
-            arguments
-                obj approx.odeint.Bdf2Integrator
-            end
-
-            if obj.Timeline.Count == 1
+            if obj.timeline.count == 1
                 obj.alpha = -1;
                 obj.beta = 1;
                 return;
             end
             
-            h1 = obj.Timeline.StepSizeQueue(1);
-            h2 = obj.Timeline.StepSizeQueue(2);
+            h1 = obj.timeline.h(1);
+            h2 = obj.timeline.h(2);
             obj.alpha = [-(h1 + h2)^2 / (h2 * (2 * h1 + h2)), h1^2 / (h2 * (2 * h1 + h2))];
             obj.beta = (h1 + h2) / (2 * h1 + h2);            
         end

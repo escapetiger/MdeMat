@@ -1,21 +1,19 @@
 %==========================================================================
 % FileName: ex01_periodic
-% Author: Yi CAI
-% Date: 13/09/2025
+% Author: Yi Cai
+% Date: 2025-07-13
 % Description:
 %   Solving diffusion equation with periodic boundary conditions.
 %==========================================================================
 
-clc, clear, close all;
+clc;
+clear;
+close all;
 
 %% CONFIGURATION
-
-% Common configuration file
-common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
-config = physics.scheme.ConfigParser.parseFile(common);
-
-% Experiment-specific configuration struct
-config.nDims = 1; % Dimension
+configPath = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
+config = core.io.OptionParser().parse(configPath);
+config.nDims = 3; % Dimension
 config.L = 1; % Length
 config.xBBox = repmat([-config.L, config.L], 1, config.nDims); % Spatial bounding box
 config.tFinal = 0.5; % Final time
@@ -32,87 +30,95 @@ config.ampl = [0, 1]; % Wave amplitude [sine, cosine]
 config.ic = u0(config.omega, config.ampl); % Initial condition
 config.bc = []; % Boundary condition
 config.exact = uExact(config.lambda, config.omega, config.ampl); % Exact solution
+% config.exact = [];
 config.nx = repmat(4, 1, config.nDims); % Grid resolution
 config.verbose = 1; % Verbose flag
-config.eId = sprintf('PA%d', config.nDims); % Experiment ID
+config.experimentId = sprintf('PA%d', config.nDims); % Experiment ID
+config.tDiscId = upper(config.tDiscId);
+config.xDiscId = sprintf('%s%d', upper(config.xDiscName), config.xBasisOrder);
+config.schemeId = strjoin({config.tDiscId, config.xDiscId}, '-');
 
-% Construct and configure scheme
-switch config.schemeName
-    case 'ldg'
-        scheme = physics.diffusion.LdgScheme(config = config);
-end
+%% SIMULATION SETUP
 
-% Configure visualizer
-visualizer = scheme.getConfig('visualizer');
-visualizer.setDensity(1);
-visualizer.setTimeline(scheme.getConfig('tFinal'), 10);
-visualizer.addDataset('REF', 'exact');
-visualizer.addDataset(scheme.getConfig('xId'), 'numeric');
-
-switch config.nDims
-    case 1
-        visualizer.addPlotter('profile', '1d');
-    case 2
-        %         visualizer.addPlotter('profile', '2d');
-        visualizer.addPlotter('slice', 'slice1d');
-    case 3
-        %         visualizer.addPlotter('profile', '3d');
-        visualizer.addPlotter('slice', 'slice1d');
-end
-
-% Configure analyzer
-analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(5);
-analyzer.setDensity(4^config.nDims);
+scheme = physics.diffusion.LdgScheme(config) ...
+    .setTimeDiscretization(config.tDiscId, config.tFinal) ...
+    .setTimer(config.verbose) ...
+    .setVisualizer( ...
+    'experimentId', config.experimentId, ...
+    'schemeId', config.schemeId, ...
+    'nDims', config.nDims, ...
+    'nTimeNodes', 10, ...
+    'final', config.tFinal, ...
+    'density', ones(1, config.nDims), ...
+    'components', struct('U', 1)) ...
+    .setAnalyzer( ...
+    'nLevels', 5, ...
+    'reductions', {'L1', 'L2', 'Lx'}, ...
+    'density', repmat(4, 1, config.nDims), ...
+    'components', struct('U', 1)) ...
+    .addDataset('DG', 2) ...
+    .addStyle('DG', {'Color', 'b', 'Marker', 'o', 'LineStyle', 'none'}) ...
+    .addDataset('REF', ~isempty(config.exact)) ...
+    .addStyle('REF', {'Color', 'r', 'Marker', 'none', 'LineStyle', '-'});
 
 %% SIMULATION EXECUTION
 
-switch scheme.getConfig('xBasisType')
-    case 'modal'
-        xElement = approx.element.BH1OrthotopeElement.modal(config.nDims, ...
-            scheme.getConfig('xBasisOrder'), ...
-            pattern=scheme.getConfig('xBasisPattern'));
-    case 'nodal'
-        xElement = approx.element.BH1OrthotopeElement.nodal(config.nDims, ...
-            scheme.getConfig('xBasisOrder'));
+xDisc = approx.discretization.FiniteElementDiscretization() ...
+    .setDgOrthotopeElement( ...
+    'nDims', config.nDims, ...
+    'order', config.xBasisOrder, ...
+    'basisType', config.xBasisType, ...
+    'basisPattern', config.xBasisPattern ...
+    ) ...
+    .setElementOperator() ...
+    .setDerivativeOrder(1);
+
+if isempty(config.exact)
+    xDisc = xDisc.setUniformGrid(config.nx/2, config.xBBox).setMeshSpace();
+    coarse = physics.State(xDisc);
+    coarse = scheme.initialize(coarse);
+    coarse = scheme.run(coarse);
+    xDisc = xDisc.refineMesh(2);
+else
+    xDisc = xDisc.setUniformGrid(config.nx, config.xBBox).setMeshSpace();
+    coarse = [];
 end
 
-if ~analyzer.HasExact
-    %< Mesh initialization
-    xMesh = approx.mesh.UniformGrid(config.xBBox, config.nx/2);
-    xDisc = approx.space.FiniteElementSpace(xMesh, xElement);
-    state = physics.state.SpatialState(xDisc);
-    state = scheme.converge(state);
-else
-    %< Mesh initialization
-    xMesh = approx.mesh.UniformGrid(config.xBBox, config.nx);
-    xDisc = approx.space.FiniteElementSpace(xMesh, xElement);
-    state = physics.state.SpatialState(xDisc);
-    state = scheme.converge(state);
+for i = 1:scheme.analyzer.profiler.nLevels
+    fine = physics.State(xDisc);
+    fine = scheme.initialize(fine);
+    fine = scheme.run(fine);
+    if isempty(coarse)
+        fine = scheme.finalize(fine);
+    else
+        fine = scheme.finalize(fine, coarse);
+    end
+    if ~isempty(coarse), coarse = fine; end
+    xDisc = xDisc.refineMesh(2);
+end
+
+%% ANALYSIS
+results = scheme.analyzer.analyze();
+varNames = fieldnames(results);
+for iVar = 1:length(varNames)
+    varName = varNames{iVar};
+    disp(results.(varName));
 end
 
 %% HELPER FUNCTIONS
 function h = u0(omega, ampl)
 h = @(x) u0Impl(x, omega, ampl);
-end
 
-function f = u0Impl(x, omega, ampl)
-z = omega(:).' * x;
-f = ampl(1) * cos(z) + ampl(2) * sin(z);
+    function f = u0Impl(x, omega, ampl)
+    z = omega(:).' * x;
+    f = (ampl(1) * cos(z) + ampl(2) * sin(z));
+    end
 end
 
 function h = uExact(lambda, omega, ampl)
-h = @(x, varargin) uExactImpl(lambda, omega, ampl, x, varargin{:});
-end
-
-function f = uExactImpl(lambda, omega, ampl, x, options)
-arguments
-    lambda
-    omega
-    ampl
-    x
-    options.t
-end
-z = omega(:).' * x;
-f = exp(-lambda * options.t) * (ampl(1) * cos(z) + ampl(2) * sin(z));
+h = @(x, t) uExactImpl(x, t, lambda, omega, ampl);
+    function f = uExactImpl(x, t, lambda, omega, ampl)
+        z = omega(:).' * x;
+        f = exp(-lambda * t) * (ampl(1) * cos(z) + ampl(2) * sin(z));
+    end
 end

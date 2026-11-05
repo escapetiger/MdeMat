@@ -1,64 +1,79 @@
 classdef Record < handle
-    % RECORD Individual timing measurement with state management.
+    % RECORD Single timing record with state tracking.
     %
-    %   Record represents a single named timing operation that tracks
-    %   active/inactive state and accumulates elapsed time across multiple
-    %   measurement sessions. Each record maintains a name identifier,
-    %   cumulative duration, and timing token for active measurements.
+    %   Record represents a named timing measurement that maintains active
+    %   or inactive state and accumulates elapsed time.
     %
-    %   The Record class provides the fundamental timing primitive used by
-    %   the Timer class. It maintains state information to distinguish
-    %   between active timing (when a measurement is in progress) and
-    %   inactive timing (when no measurement is running). Duration values
-    %   accumulate across multiple start/stop cycles.
+    % Examples:
+    %   % Basic usage
+    %   rec = core.utilities.Record('Computation');
+    %   rec.startTime = tic;
+    %   pause(0.1);  % Simulate computation
+    %   rec.duration = rec.duration + toc(rec.startTime);
+    %   rec.startTime = [];  % Mark as inactive
     %
-    % See also:
+    %   % Check if active
+    %   if ~rec.isActive()
+    %     rec.startTime = tic;  % Start timing again
+    %   end
+    %
+    % See Also:
     %   core.chrono.Timer
 
     properties
-        Name % Record name
-        Duration % Accumulated elapsed time in seconds
-        StartTime % Timing token when active, empty when inactive
-    end
-
-    properties (Dependent)
-        IsActive % Logical flag indicating if timing is active
+        name % Record name
+        duration % Accumulated elapsed time in seconds
+        startTime % Timing token when active, empty when inactive
     end
 
     methods
         function obj = Record(name)
-            % RECORD Construct Record instance with name identifier.
+            % RECORD Constructor for Record class.
             %
             %   obj = Record(name) creates a new Record object with the
-            %   specified @a name and initializes timing state to zero
-            %   duration and inactive status.
+            %   specified @a name and initializes duration to zero.
+            %
+            % Inputs:
+            %   name - Name identifier
+            %
+            % Outputs:
+            %   obj - The constructed Record object
 
-            arguments
-                name string
-            end
-
-            obj.Name = name;
+            core.except.assert(nargin >= 1, 'InvalidInput', ...
+                'Record name must be provided.');
+            obj.name = name;
             obj.reset();
         end
 
-        function obj = reset(obj)
-            % RESET Clear accumulated timing data and state.
+        function tf = isActive(obj)
+            % ISACTIVE Return true if timing is currently active.
             %
-            %   obj = reset(obj) resets the accumulated duration to zero
-            %   and clears any active timing operation.
+            %   tf = isActive(obj) determines whether the Record is
+            %   currently in an active timing state.
+            %
+            % Inputs:
+            %   obj - The Record object
+            %
+            % Outputs:
+            %   tf - True if the record is active, false otherwise
 
-            arguments
-                obj core.chrono.Record
-            end
-
-            obj.Duration = 0;
-            obj.StartTime = [];
+            tf = ~isempty(obj.startTime);
         end
 
-        function tf = get.IsActive(obj)
-            % GET.ISACTIVE Determine if timing measurement is in progress.
+        function obj = reset(obj)
+            % RESET Reset record duration to zero.
+            %
+            %   obj = reset(obj) resets the accumulated duration to zero,
+            %   clearing the timing history for this Record.
+            %
+            % Inputs:
+            %   obj - The Record object
+            %
+            % Outputs:
+            %   obj - The Record object
 
-            tf = ~isempty(obj.StartTime);
+            obj.duration = 0;
+            obj.startTime = [];
         end
     end
 end

@@ -1,23 +1,19 @@
 %==========================================================================
-% FileName: ex03_discontinuous
-% Author: Yi CAI
-% Date: 13/09/2025
+% FileName: ex01_periodic
+% Author: Yi Cai
+% Date: 2025-07-13
 % Description:
-%   Solving advection equation with discontinuous initial condition.
+%   Solving advection equation with periodic boundary conditions.
 %==========================================================================
 
-clc, clear, close all;
+clc;
+clear;
+close all;
 
 %% CONFIGURATION
-
-% Data directory
 dataDir = fullfile(fileparts(mfilename('fullpath')), 'ex03');
-
-% Common configuration file
-common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
-config = physics.scheme.ConfigParser.parseFile(common);
-
-% Experiment-specific configuration struct
+configPath = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
+config = core.io.OptionParser().parse(configPath);
 config.nDims = 1; % Dimension
 config.xBBox = repmat([0, 1], 1, config.nDims); % Spatial bounding box
 config.tFinal = 1.1; % Final time
@@ -26,88 +22,96 @@ config.omega = repmat(2*pi, 1, config.nDims); % Wave length
 config.ic = u0(config.omega); % Initial condition
 config.bc = []; % Boundary condition
 config.exact = uExact(config.advection, config.omega); % Exact solution
-config.nx = repmat(128, 1, config.nDims); % Grid resolution
-config.verbose = 1; % Verbose flag
-config.eId = sprintf('DA%d', config.nDims); % Experiment ID
+config.nx = repmat(256, 1, config.nDims); % Grid resolution
+config.experimentId = sprintf('D%d', config.nDims); % Experiment ID
+config.tDiscId = upper(config.tDiscId);
+config.xDiscId = sprintf('%s%d', upper(config.xDiscName), config.xBasisOrder);
+config.schemeId = strjoin({config.tDiscId, config.xDiscId}, '-');
+config.schemeName = strrep(config.schemeId, '-', '_');
 config.saveAsRef = 0;
-
-% Construct and configure scheme
-switch config.schemeName
-    case 'sldg'
-        scheme = physics.advection.SldgScheme(config = config);
-    case 'uwdg'
-        scheme = physics.advection.UwdgScheme(config = config);
-end
+config.verbose = 1; % Verbose flag: 0 - none; 1 - runtime render
 
 %% SIMULATION SETUP
 
-refFile = sprintf('%s-REF.mat', scheme.getConfig('eId'));
+DEFAULT_MARKERS = {'o', 's', '^', 'v', 'd', 'x', '+'};
+DEFAULT_COLORS = {'#000000', '#004488', '#BB5566', '#DDAA33'};
+
+refFile = sprintf('%s-REF.mat', config.experimentId);
 refPath = fullfile(dataDir, refFile);
 if exist(refPath, 'file')
-    refData = load(refPath).dataset.Data;
+    refDataset = load(refPath).REF;
 else
-    refData = [];
+    refDataset = [];
 end
 
-% Configure visualizer
-visualizer = scheme.getConfig('visualizer');
-visualizer.setDensity(1);
-visualizer.setTimeline(scheme.getConfig('tFinal'), 10);
-visualizer.addDataset('REF', 'fixed', refData);
-visualizer.addDataset(scheme.getConfig('xId'), 'numeric');
-
-switch config.nDims
-    case 1
-        visualizer.addPlotter('profile', '1d');
-    case 2
-        %         visualizer.addPlotter('profile', '2d');
-        visualizer.addPlotter('slice', 'slice1d');
-    case 3
-        %         visualizer.addPlotter('profile', '3d');
-        visualizer.addPlotter('slice', 'slice1d');
+if contains(config.xDiscId, 'sl')
+    cls = 'SldgScheme';
+else
+    cls = 'UwdgScheme';
 end
+scheme = physics.advection.(cls)(config) ...
+    .setTimeDiscretization(config.tDiscId, config.tFinal) ...
+    .setTimer(config.verbose) ...
+    .setVisualizer( ...
+    'experimentId', config.experimentId, ...
+    'schemeId', config.schemeId, ...
+    'nDims', config.nDims, ...
+    'nTimeNodes', 10, ...
+    'final', config.tFinal, ...
+    'density', ones(1, config.nDims), ...
+    'components', struct('U', 1)) ...
+    .addDataset('REF', 1) ...
+    .addStyle('REF', ...
+    {'Color', DEFAULT_COLORS{1}, 'Marker', 'none', 'LineStyle', '-', 'LineWidth', 1}) ...
+    .addDataset(config.schemeName, 2) ...
+    .addStyle(config.schemeName, ...
+    {'Color', DEFAULT_COLORS{2}, 'Marker', DEFAULT_MARKERS{1}, 'LineStyle', 'none', 'LineWidth', 1});
 
 %% SIMULATION EXECUTION
-
-switch config.schemeName
-    case 'sldg'
-        switch scheme.getConfig('xBasisType')
-            case 'modal'
-                xElement = approx.element.BH1SLOrthotopeElement.modal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'), ...
-                    pattern=scheme.getConfig('xBasisPattern'));
-            case 'nodal'
-                xElement = approx.element.BH1SLOrthotopeElement.nodal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'));
-        end
-    case 'uwdg'
-        switch scheme.getConfig('xBasisType')
-            case 'modal'
-                xElement = approx.element.BH1OrthotopeElement.modal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'), ...
-                    pattern=scheme.getConfig('xBasisPattern'));
-            case 'nodal'
-                xElement = approx.element.BH1OrthotopeElement.nodal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'));
-        end
+if contains(config.xDiscId, 'sl')
+    xDisc = approx.discretization.SemiLagrangianFiniteElementDiscretization() ...
+        .setDgOrthotopeElement( ...
+        'nDims', config.nDims, ...
+        'order', config.xBasisOrder, ...
+        'basisType', config.xBasisType, ...
+        'basisPattern', config.xBasisPattern ...
+        ) ...
+        .setElementOperator() ...
+        .setDerivativeOrder(1) ...
+        .setElementClipper(config.advection) ...
+        .setSemiLagrangianElementOperator() ...
+        .setUniformGrid(config.nx, config.xBBox) ...
+        .setMeshSpace();
+else
+    xDisc = approx.discretization.FiniteElementDiscretization() ...
+        .setDgOrthotopeElement( ...
+        'nDims', config.nDims, ...
+        'order', config.xBasisOrder, ...
+        'basisType', config.xBasisType, ...
+        'basisPattern', config.xBasisPattern ...
+        ) ...
+        .setElementOperator() ...
+        .setDerivativeOrder(1) ...
+        .setUniformGrid(config.nx, config.xBBox) ...
+        .setMeshSpace();
 end
 
-xMesh = approx.mesh.UniformGrid(config.xBBox, config.nx);
-xDisc = approx.space.FiniteElementSpace(xMesh, xElement);
-state = physics.state.SpatialState(xDisc);
-state = scheme.run(state);
+fine = physics.State(xDisc);
+fine = scheme.initialize(fine);
+fine = scheme.run(fine);
+fine = scheme.finalize(fine);
 
 %% SAVE
 if config.saveAsRef
-    dataset = visualizer.Database.getDataset(scheme.getConfig('xId'));
-    dataFile = sprintf('%s-REF.mat', scheme.getConfig('eId'));
+    REF = scheme.visualizer.dataset.(config.schemeName);
+    dataFile = sprintf('%s-REF.mat', config.experimentId);
     dataPath = fullfile(dataDir, dataFile);
-    save(dataPath, 'dataset');
+    save(dataPath, 'REF');
 else
-    dataset = visualizer.Database.getDataset(scheme.getConfig('xId'));
-    dataFile = sprintf('%s-%s', scheme.getConfig('eId'), scheme.getConfig('xId'));
+    DG = scheme.visualizer.dataset.(config.schemeName);
+    dataFile = sprintf('%s-%s', config.experimentId, config.schemeId);
     dataPath = fullfile(dataDir, dataFile);
-    save(dataPath, 'dataset');
+    save(dataPath, 'DG');
 end
 
 %% HELPER FUNCTIONS
@@ -118,22 +122,16 @@ end
 function f = u0Impl(x, omega)
 z = omega(:).' * x;
 s = all((x <= 0.8) & (x >= 0.3), 1);
-f = s .* sin(z) + (1 - s) .* (cos(z) - 1/2);
+f = s .* sin(z) + (1 - s) .* (cos(z) - 1 / 2);
 end
 
 function h = uExact(c, omega)
-h = @(x, varargin) uExactImpl(c, omega, x, varargin{:});
+h = @(x, t) uExactImpl(x, t, c, omega);
 end
 
-function f = uExactImpl(c, omega, x, options)
-arguments
-    c
-    omega
-    x
-    options.t
-end
-z = mod(x - c(:) * options.t, 1);
+function f = uExactImpl(x, t, c, omega)
+z = mod(x - c(:) * t, 1);
 s = all((z <= 0.8) & (z >= 0.3), 1);
 z = omega(:).' * z;
-f = s .* sin(z) + (1 - s) .* (cos(z) - 1/2);
+f = s .* sin(z) + (1 - s) .* (cos(z) - 1 / 2);
 end

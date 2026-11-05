@@ -1,182 +1,184 @@
 classdef TestDynamicTimeline < matlab.unittest.TestCase
     
     properties (TestParameter)
-        FinalTime = {1.0, 5.0, 10.0}
-        NSteps = {1, 2, 5}
+        finalTime = {1.0, 5.0, 10.0}
+        nSteps = {1, 2, 5}
     end
     
     methods (Test)
-        function testConstructor(testCase, FinalTime, NSteps)
-            timeline = approx.mesh.DynamicTimeline(FinalTime, nSteps=NSteps);
+        function testConstructor(testCase, finalTime, nSteps)
+            timeline = approx.mesh.DynamicTimeline(finalTime, nSteps);
             
-            testCase.verifyEqual(timeline.Final, FinalTime);
-            testCase.verifyEqual(timeline.Now, 0);
-            testCase.verifyEqual(timeline.Count, 1);
-            testCase.verifyEqual(timeline.Next, 0);
-            testCase.verifyEqual(size(timeline.StepSizeQueue), [1, NSteps+1]);
-            testCase.verifyEqual(size(timeline.OldStepSizeQueue), [1, NSteps+1]);
+            testCase.verifyEqual(timeline.final, finalTime);
+            testCase.verifyEqual(timeline.now, 0);
+            testCase.verifyEqual(timeline.count, 1);
+            testCase.verifyEqual(timeline.next, 0);
+            testCase.verifyEqual(size(timeline.h), [1, nSteps+1]);
+            testCase.verifyEqual(size(timeline.h0), [1, nSteps+1]);
         end
         
         function testConstructorDefaults(testCase)
             timeline = approx.mesh.DynamicTimeline(5.0);
             
-            testCase.verifyEqual(size(timeline.StepSizeQueue), [1, 2]);
+            testCase.verifyEqual(size(timeline.h), [1, 2]);
         end
         
         function testConstructorValidation(testCase)                        
-            testCase.verifyError(@() approx.mesh.DynamicTimeline(-1, nSteps=1), ...
-                'MATLAB:validators:mustBeNonnegative');
+            testCase.verifyError(@() approx.mesh.DynamicTimeline(-1, 1), ...
+                'approx:mesh:Timeline:InvalidInput');
         end
         
-        function testSetTimeStep(testCase, FinalTime)
-            timeline = approx.mesh.DynamicTimeline(FinalTime);
+        function testSetTimeStep(testCase, finalTime)
+            timeline = approx.mesh.DynamicTimeline(finalTime);
             
             h = 0.1;
             C = 0.5;
             p = 2;
             
-            timeline.setTimeStep(h=h, C=C, p=p);
+            timeline.setTimeStep(h, C, p);
             
-            expectedStepSize = C * h^p;
-            testCase.verifyEqual(timeline.StepSizeQueue(1), expectedStepSize, 'AbsTol', 1e-10);
-            testCase.verifyEqual(timeline.Next, expectedStepSize, 'AbsTol', 1e-10);
+            expectedDt = C * h^p;
+            testCase.verifyEqual(timeline.h(1), expectedDt, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.next, expectedDt, 'AbsTol', 1e-10);
             
-            timeline.Now = FinalTime - 0.001;
-            timeline.setTimeStep(h=h, C=C, p=p);
+            timeline.now = finalTime - 0.001;
+            timeline.setTimeStep(h, C, p);
             
-            testCase.verifyEqual(timeline.StepSizeQueue(1), FinalTime - timeline.Now, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.h(1), finalTime - timeline.now, 'AbsTol', 1e-10);
         end
         
         function testSetTimeStepValidation(testCase)
             timeline = approx.mesh.DynamicTimeline(10.0);
             
-            testCase.verifyError(@() timeline.setTimeStep(h=0.1, C=-0.5), ...
-                'MATLAB:validators:mustBePositive');
+            testCase.verifyError(@() timeline.setTimeStep(0.1, -0.5), ...
+                'approx:mesh:DynamicTimeline:InvalidInput');
         end
         
-        function testAdvance(testCase, FinalTime)
-            timeline = approx.mesh.DynamicTimeline(FinalTime);
+        function testAdvance(testCase, finalTime)
+            timeline = approx.mesh.DynamicTimeline(finalTime);
             
             h = 0.1;
             C = 0.5;
             dt = C * h;
-            timeline.setTimeStep(h=h, C=C);
+            timeline.setTimeStep(h, C);
             
             timeline.advance();
             
-            testCase.verifyEqual(timeline.Now, dt, 'AbsTol', 1e-10);
-            testCase.verifyEqual(timeline.Count, 2);
+            testCase.verifyEqual(timeline.now, dt, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.count, 2);
         end
         
-        function testAdvanceMultiStep(testCase, FinalTime, NSteps)
-            timeline = approx.mesh.DynamicTimeline(FinalTime, nSteps=NSteps);
+        function testAdvanceMultiStep(testCase, finalTime, nSteps)
+            timeline = approx.mesh.DynamicTimeline(finalTime, nSteps);
             
-            if NSteps >= 3
-                timeline.StepSizeQueue = [0.1, 0.05, 0.025, 0.0125];
+            if nSteps >= 3
+                timeline.h = [0.1, 0.05, 0.025, 0.0125];
             else
-                timeline.StepSizeQueue = 0.1 * ones(1, NSteps + 1);
+                timeline.h = 0.1 * ones(1, nSteps + 1);
             end
             
-            initialH = timeline.StepSizeQueue;
+            initialH = timeline.h;
             
             timeline.advance();
             
-            testCase.verifyEqual(timeline.StepSizeQueue, circshift(initialH, 1), 'AbsTol', 1e-10);
-            testCase.verifyEqual(timeline.OldStepSizeQueue, initialH, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.h, circshift(initialH, 1), 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.h0, initialH, 'AbsTol', 1e-10);
         end
         
-        function testAdvanceToFinal(testCase, FinalTime)
-            timeline = approx.mesh.DynamicTimeline(FinalTime);
+        function testAdvanceToFinal(testCase, finalTime)
+            timeline = approx.mesh.DynamicTimeline(finalTime);
             
-            timeline.setTimeStep(h=FinalTime, C=1.0);
+            timeline.setTimeStep(finalTime, 1.0);
             
             timeline.advance();
             
-            testCase.verifyEqual(timeline.Now, FinalTime, 'AbsTol', 1e-10);
-            testCase.verifyTrue(timeline.IsExhausted);
+            testCase.verifyEqual(timeline.now, finalTime, 'AbsTol', 1e-10);
+            testCase.verifyTrue(timeline.isFinished());
             
             testCase.verifyError(@() timeline.advance(), ...
                 'approx:mesh:DynamicTimeline:TimeExceeded');
         end
         
-        function testIsFinished(testCase, FinalTime)
-            timeline = approx.mesh.DynamicTimeline(FinalTime);
+        function testIsFinished(testCase, finalTime)
+            timeline = approx.mesh.DynamicTimeline(finalTime);
             
-            testCase.verifyFalse(timeline.IsExhausted);
+            testCase.verifyFalse(timeline.isFinished());
             
-            timeline.setTimeStep(h=FinalTime, C=1.0);
+            timeline.setTimeStep(finalTime, 1.0);
             
-            testCase.verifyFalse(timeline.IsExhausted);
+            testCase.verifyFalse(timeline.isFinished());
             
             timeline.advance();
             
-            testCase.verifyTrue(timeline.IsExhausted);
+            testCase.verifyTrue(timeline.isFinished());
         end
         
         function testHasStepSizeChanged(testCase)
             timeline = approx.mesh.DynamicTimeline(10.0);
             
-            testCase.verifyTrue(timeline.HasStepSizeChanged);
+            testCase.verifyTrue(timeline.hasStepSizeChanged());
             
-            timeline.setTimeStep(h=0.1, C=1.0);
+            timeline.setTimeStep(0.1, 1.0);
             
             timeline.advance();
             
-            timeline.setTimeStep(h=0.05, C=1.0);
+            originalStep = timeline.h(1);
+            timeline.setTimeStep(0.05, 1.0);
             
-            testCase.verifyTrue(timeline.HasStepSizeChanged);
+            testCase.verifyTrue(timeline.hasStepSizeChanged());
         end
         
         function testGetTimeStep(testCase)
             timeline = approx.mesh.DynamicTimeline(10.0);
             
             dt = 0.25;
-            timeline.setTimeStep(h=dt, C=1.0);
+            timeline.setTimeStep(dt, 1.0);
             
-            testCase.verifyEqual(timeline.StepSize, dt, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.dt, dt, 'AbsTol', 1e-10);
             
             dt2 = 0.5;
-            timeline.setTimeStep(h=dt2, C=1.0);
-            testCase.verifyEqual(timeline.StepSize, dt2, 'AbsTol', 1e-10);
+            timeline.setTimeStep(dt2, 1.0);
+            testCase.verifyEqual(timeline.dt, dt2, 'AbsTol', 1e-10);
         end
         
-        function testMultiStepSequence(testCase, FinalTime)
-            timeline = approx.mesh.DynamicTimeline(FinalTime, nSteps=2);
+        function testMultiStepSequence(testCase, finalTime)
+            timeline = approx.mesh.DynamicTimeline(finalTime, 2);
             
-            testCase.verifyEqual(timeline.Now, 0);
-            testCase.verifyEqual(timeline.Count, 1);
+            testCase.verifyEqual(timeline.now, 0);
+            testCase.verifyEqual(timeline.count, 1);
             
-            timeline.setTimeStep(h=0.4, C=1.0, p=1);
-            testCase.verifyEqual(timeline.StepSize, 0.16, 'AbsTol', 1e-10);
-            
-            timeline.advance();
-            testCase.verifyEqual(timeline.Now, 0.16, 'AbsTol', 1e-10);
-            testCase.verifyEqual(timeline.Count, 2);
-            
-            timeline.setTimeStep(h=0.3, C=1.0, p=1);
-            testCase.verifyTrue(timeline.HasStepSizeChanged);
+            timeline.setTimeStep(0.4, 1.0, 1);
+            testCase.verifyEqual(timeline.dt, 0.4, 'AbsTol', 1e-10);
             
             timeline.advance();
-            testCase.verifyEqual(timeline.Now, 0.46, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.now, 0.4, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.count, 2);
             
-            h = FinalTime-timeline.Now;
-            timeline.setTimeStep(h=h, C=1.0);
-            testCase.verifyEqual(timeline.StepSize, h, 'AbsTol', 1e-10);
+            timeline.setTimeStep(0.3, 1.0, 1);
+            testCase.verifyTrue(timeline.hasStepSizeChanged);
             
             timeline.advance();
-            testCase.verifyEqual(timeline.Now, FinalTime, 'AbsTol', 1e-10);
+            testCase.verifyEqual(timeline.now, 0.7, 'AbsTol', 1e-10);
+            
+            timeline.setTimeStep(0.3, 1.0);
+            expectedDt = min(0.3, finalTime - timeline.now);
+            testCase.verifyEqual(timeline.dt, expectedDt, 'AbsTol', 1e-10);
+            
+            timeline.advance();
+            expectedFinal = min(1.0, finalTime);
+            testCase.verifyEqual(timeline.now, expectedFinal, 'AbsTol', 1e-10);
         end
         
         function testReset(testCase)
             timeline = approx.mesh.DynamicTimeline(10.0);
             
-            timeline.setTimeStep(h=0.5, C=1.0);
+            timeline.setTimeStep(0.5, 1.0);
             timeline.advance();
             
             timeline.reset();
             
-            testCase.verifyEqual(timeline.Now, 0);
-            testCase.verifyEqual(timeline.Count, 1);
+            testCase.verifyEqual(timeline.now, 0);
+            testCase.verifyEqual(timeline.count, 1);
         end
     end
 end

@@ -1,4 +1,4 @@
-classdef GaussLobattoRule < approx.integrate.OrthotopeRule
+classdef GaussLobattoRule < approx.integrate.UnivariateRule
     % GAUSSLOBATTORULE Gauss-Lobatto numerical integration rule.
     %
     %   GaussLobattoRule implements numerical integration using the
@@ -6,40 +6,53 @@ classdef GaussLobattoRule < approx.integrate.OrthotopeRule
     %   This method provides high accuracy while constraining the nodes
     %   to include the boundary points.
     %
-    %   The Gauss-Lobatto quadrature formula includes both endpoints of the
-    %   integration interval. For \f$n\f$ nodes, the method has polynomial
-    %   exactness of degree \f$2n-3\f$.
+    % Examples:
+    %   % Create a Gauss-Lobatto rule
+    %   rule = GaussLobattoRule();
+    %   
+    %   % Generate 5 nodes and weights for interval [0, 1]
+    %   [x, w] = rule.generate(5);
+    %   
+    %   % Generate nodes and weights for custom interval
+    %   [x, w] = rule.generate(4, false, -1, 1);
+    %
+    % Notes:
+    %   The Gauss-Lobatto quadrature formula includes both endpoints of
+    %   the integration interval. For n nodes, the method has polynomial
+    %   exactness of degree 2n-3. Requires n >= 2 for meaningful results.
     %
     % See also:
+    %   approx.integrate.UnivariateRule, 
     %   approx.integrate.GaussLegendreRule,
-    %   approx.integrate.ClosedNewtonCotesRule,
-    %   approx.integrate.MonteCarloOrthotopeRule
+    %   approx.integrate.ClosedNewtonCotesRule
 
-    methods (Access = protected)
-        function [x, w] = generate1d(~, np, options)
-            % GENERATE1D Generate 1D Gauss-Lobatto nodes and weights.
+    methods        
+        function [x, w] = generate(~, n, a, b)
+            % GENERATE Generate 1D Gauss-Lobatto nodes and weights.
             %
-            %   [x, w] = generate1d(obj, np) generates @a np Gauss-Lobatto
-            %   nodes @a x and corresponding weights @a w for the interval
-            %   \f$[0, 1]\f$.
+            %   [x, w] = generate(obj, n) generates n Gauss-Lobatto nodes
+            %   and corresponding weights for the interval [0, 1].
             %
-            %   [x, w] = generate1d(obj, np, lower=a, upper=b) generates
-            %   nodes and weights for the interval \f$[a, b]\f$.
+            %   [x, w] = generate(obj, n, a, b) generates nodes and
+            %   weights for the interval [a, b].
+            %
+            % Inputs:
+            %   n - Number of quadrature nodes (n >= 2)
+            %   a - Lower integration bound (optional, default: 0)
+            %   b - Upper integration bound (optional, default: 1)
+            %
+            % Outputs:
+            %   x - Row vector of quadrature nodes within [a, b]
+            %   w - Row vector of quadrature weights
 
-            arguments
-                ~
-                np(1, 1) {mustBePositive, mustBeInteger}
-                options.lower(1, 1) {mustBeReal} = 0
-                options.upper(1, 1) {mustBeReal} = 1
-            end
+            if nargin < 3, [a, b] = deal(0, 1); end
 
-            a = options.lower;
-            b = options.upper;
-
+            core.except.assert(isscalar(a) && isscalar(b), ...
+                'InvalidInput', 'a and b must be scalars.');
             core.except.assert(a <= b, 'InvalidInput', ...
                 'a <= b is required.');
 
-            if np == 1
+            if n == 1
                 x = (a + b) / 2;
                 w = 1;
                 return;
@@ -50,21 +63,21 @@ classdef GaussLobattoRule < approx.integrate.OrthotopeRule
                 return;
             end
 
-            x = cos(pi * ((np - 1):-1:0) / (np - 1));
-            P = zeros(np, np);
+            x = cos(pi * ((n - 1):-1:0) / (n - 1));
+            P = zeros(n, n);
             x0 = 2 * ones(size(x));
 
             while max(abs(x-x0)) > eps(1)
                 x0 = x;
                 P(1, :) = 1;
                 P(2, :) = x;
-                for k = 3:np
+                for k = 3:n
                     P(k, :) = ((2 * k - 3) * x .* P(k-1, :) - (k - 2) * P(k-2, :)) / (k - 1);
                 end
-                x = x0 - (x .* P(np, :) - P(np-1, :)) ./ (np * P(np, :));
+                x = x0 - (x .* P(n, :) - P(n-1, :)) ./ (n * P(n, :));
             end
             x = (x + 1) / 2;
-            w = 1 ./ ((np - 1) * np * P(np, :).^2);
+            w = 1 ./ ((n - 1) * n * P(n, :).^2);
             x = a + (b - a) * x;
             w = w * (b - a);
         end

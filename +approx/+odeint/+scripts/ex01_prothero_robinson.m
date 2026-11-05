@@ -32,7 +32,6 @@ F_explicit = @(u, t) lambda * (u - phi(t)) + phi_prime(t);
 L_split = {lambda, []};
 F_split = {[], []};
 S_split = {@(u, t) -lambda * phi(t), @(u, t) phi_prime(t)};
-M_split = {[], []};
 
 % Alternative splitting for demonstration:
 % Split 1: du/dt = λ(u - φ(t))
@@ -40,7 +39,6 @@ M_split = {[], []};
 L_split_alt = {[], []};
 F_split_alt = {@(u, t) lambda * (u - phi(t)), []};
 S_split_alt = {[], @(u, t) phi_prime(t)};
-M_split_alt = {[], []};
 
 % Exact solution for comparison
 exact_solution = @(t) exp(-t);
@@ -53,10 +51,9 @@ dt_splitting = 0.01;    % Moderate step for splitting methods
 
 % Create integrators with different time steps
 implicit_integrators = {
-%     approx.odeint.BeIntegrator(final_time)
+    approx.odeint.BeIntegrator(final_time)
     approx.odeint.Bdf2Integrator(final_time)
     approx.odeint.Bdf3Integrator(final_time)
-    approx.odeint.ImpIntegrator(final_time)
     approx.odeint.Sdirk2Integrator(final_time)
     approx.odeint.Sdirk3Integrator(final_time)
     approx.odeint.Sdirk4Integrator(final_time)
@@ -65,7 +62,6 @@ implicit_integrators = {
 
 explicit_integrators = {
     approx.odeint.FeIntegrator(final_time)
-    approx.odeint.EmpIntegrator(final_time)
     approx.odeint.HeunIntegrator(final_time)
     approx.odeint.Ssprk2Integrator(final_time)
     approx.odeint.Ssprk3Integrator(final_time)
@@ -84,28 +80,28 @@ factor_integrators_lt1 = {
     approx.odeint.BeIntegrator(final_time)
     approx.odeint.FeIntegrator(final_time)
 };
-lie_trotter_1 = approx.odeint.LieTrotterIntegrator(factors=factor_integrators_lt1);
+lie_trotter_1 = approx.odeint.LieTrotterIntegrator(factor_integrators_lt1);
 
 % Strang splitting: implicit stiff part + explicit source
 factor_integrators_st1 = {
     approx.odeint.BeIntegrator(final_time)
     approx.odeint.FeIntegrator(final_time)
 };
-strang_1 = approx.odeint.StrangIntegrator(factors=factor_integrators_st1);
+strang_1 = approx.odeint.StrangIntegrator(factor_integrators_st1);
 
 % Alternative Lie-Trotter: explicit nonlinear + explicit source
 factor_integrators_lt2 = {
     approx.odeint.FeIntegrator(final_time)
     approx.odeint.FeIntegrator(final_time)
 };
-lie_trotter_2 = approx.odeint.LieTrotterIntegrator(factors=factor_integrators_lt2);
+lie_trotter_2 = approx.odeint.LieTrotterIntegrator(factor_integrators_lt2);
 
 % Alternative Strang: explicit nonlinear + explicit source
 factor_integrators_st2 = {
     approx.odeint.FeIntegrator(final_time)
     approx.odeint.FeIntegrator(final_time)
 };
-strang_2 = approx.odeint.StrangIntegrator(factors=factor_integrators_st2);
+strang_2 = approx.odeint.StrangIntegrator(factor_integrators_st2);
 
 splitting_integrators = {
     lie_trotter_1
@@ -202,25 +198,25 @@ for i = 1:n_methods
     % Time stepping
     for k = 1:n_steps
         % Set timeline for integrator
-        integrator.setTimeStep(dt=dt);
+        integrator.setTimeStep(dt, 1, 1);
         
         % Call appropriate step method based on integrator type
         if strcmp(integrator_types{i}, 'Implicit')
-            U_new = integrator.step(L=L, S=S, M=[]);
+            U_new = integrator.step(L, S, []);
         elseif strcmp(integrator_types{i}, 'Explicit')
             % For explicit methods, treat everything as nonlinear term
             t_current = (k-1) * dt;
             F_eval = F_explicit(integrator.U0{1}, t_current);
-            U_new = integrator.step(L=[], F=F_eval, S=[], M=[]);
+            U_new = integrator.step([], F_eval, [], []);
         elseif strcmp(integrator_types{i}, 'IMEX')
-            U_new = integrator.step(L=L, F=[], S=S, M=[]);
+            U_new = integrator.step(L, [], S, []);
         else % Splitting
             splitting_idx = i - length(implicit_integrators) - length(explicit_integrators) - length(imex_integrators);
             switch splitting_idx
                 case {1, 2} % ImplicitExplicit splitting
-                    U_new = integrator.step(L=L_split, F=F_split, S=S_split, M=M_split);
+                    U_new = integrator.step(L_split, F_split, S_split, []);
                 case {3, 4} % ExplicitExplicit splitting
-                    U_new = integrator.step(L=L_split_alt, F=F_split_alt, S=S_split_alt, M=M_split_alt);
+                    U_new = integrator.step(L_split_alt, F_split_alt, S_split_alt, []);
             end
         end
         
@@ -334,26 +330,26 @@ for i = 1:n_methods
     n_steps_used = length(t_solutions{i}) - 1;
     if strcmp(integrator_types{i}, 'Implicit')
         % Implicit methods: assume one linear solve per step/stage
-        computational_costs(i) = n_steps_used * all_integrators{i}.NStages;
+        computational_costs(i) = n_steps_used * all_integrators{i}.nStages;
     elseif strcmp(integrator_types{i}, 'Explicit')
         % Explicit methods: one function evaluation per stage
-        computational_costs(i) = n_steps_used * all_integrators{i}.NStages;
+        computational_costs(i) = n_steps_used * all_integrators{i}.nStages;
     elseif strcmp(integrator_types{i}, 'IMEX')
         % IMEX methods: mix of explicit and implicit evaluations
-        computational_costs(i) = n_steps_used * all_integrators{i}.NStages * 1.5;
+        computational_costs(i) = n_steps_used * all_integrators{i}.nStages * 1.5;
     else % Splitting
         % Splitting methods: cost depends on factor integrators
         splitting_idx = i - length(implicit_integrators) - length(explicit_integrators) - length(imex_integrators);
         integrator = all_integrators{i};
         total_cost = 0;
-        for j = 1:integrator.NFactors
+        for j = 1:integrator.nFactors
             factor = integrator.getFactor(j);
             if isa(factor, 'approx.odeint.BeIntegrator')
                 % Implicit factor
-                factor_cost = factor.NStages * 2;
+                factor_cost = factor.nStages * 2;
             else
                 % Explicit factor
-                factor_cost = factor.NStages;
+                factor_cost = factor.nStages;
             end
             total_cost = total_cost + factor_cost;
         end

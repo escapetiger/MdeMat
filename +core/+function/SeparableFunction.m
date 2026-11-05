@@ -15,49 +15,68 @@ classdef SeparableFunction < core.linalg.Separable & core.function.Function
     %   empty ([]), the function uses dense evaluation. When pattern is a
     %   struct with indexer information, it uses sparse evaluation.
     %
+    % Examples:
+    %   % Dense separable function
+    %   factors = {LegendreBasis(3), LegendreBasis(4)};
+    %   func = SeparableFunction(factors);
+    %
+    %   % Sparse separable function with L1 constraint
+    %   func = SeparableFunction(factors, 'l1');
+    %
+    %   % Evaluate function
+    %   X = rand(7, 100);  % 7D input (3+4 from factors)
+    %   Y = func.evaluate(X);
+    %
     % See Also:
     %   core.function.Function, core.linalg.Separable
-    
+
     properties
-        Pattern % Sparse pattern specification
+        pattern % Sparse pattern specification
     end
-    
+
     properties (Dependent)
-        NFactorCodims % Output dimensions for each factor function
-        IsSparse % True if function has sparse pattern
+        nFactorCodims % Output dimensions for each factor function
+        isSparse % True if function has sparse pattern
     end
-    
+
     methods
-        function obj = SeparableFunction(options)
+        function obj = SeparableFunction(F, pattern)
             % SEPARABLEFUNCTION Constructor for separable functions.
             %
-            %   obj = SeparableFunction() creates an empty separable
-            %   function.
+            %   obj = SeparableFunction() creates an empty separable function.
             %
-            %   obj = SeparableFunction('factors', factors) creates a
-            %   separable function from factor functions using dense
-            %   evaluation.
+            %   obj = SeparableFunction(F) creates a separable function from
+            %   factor functions using dense evaluation (full tensor product).
             %
-            %   obj = SeparableFunction('factors', factors, 'pattern', pattern)
-            %   creates a separable function with specified pattern type for
-            %   sparse evaluation.
-            
-            arguments
-                options.factors{core.except.mustBeCellOrObject} = {}
-                options.pattern{mustBeMember(options.pattern, {'', 'P', 'Q'})} = ''
-            end
-            
+            %   obj = SeparableFunction(F, pattern) creates a separable
+            %   function with specified pattern type for sparse evaluation.
+            %
+            % Inputs:
+            %   F - Cell array or object array of Function objects (optional)
+            %   pattern - Pattern string: {'full' (default), 'l1', 'lx'}
+            %
+            % Outputs:
+            %   obj - SeparableFunction instance
+
+            if nargin < 1, F = []; end
+            if nargin < 2, pattern = 'full'; end
+
+            core.except.assert(ischar(pattern) || isstring(pattern), ...
+                'InvalidInput', ...
+                'Pattern type must be a string or char array.');
+
             cls = {'core.function.Function'};
-            isValidFactors = core.except.isAllClass(options.factors, cls);
-            core.except.assert(isValidFactors, 'InvalidFactor', ...
+            core.except.assert( ...
+                core.validate.isAllClass(F, cls), ...
+                'InvalidFactor', ...
                 'Factors must be one of {%s}.', strjoin(cls, ', '));
-            
-            obj.setFactors(options.factors);
-            obj.setPattern(options.pattern);
+
+            obj.setFactors(F);
+            obj.setPattern(pattern);
             obj.setNDims();
             obj.setNCodims();
         end
-        
+
         function obj = setPattern(obj, pattern)
             % SETPATTERN Set the sparse pattern from pattern type.
             %
@@ -65,188 +84,208 @@ classdef SeparableFunction < core.linalg.Separable & core.function.Function
             %   pattern based on the pattern type string. This determines
             %   whether dense or sparse evaluation is used and sets up
             %   appropriate indexing structures.
-            
-            arguments
-                obj core.function.SeparableFunction
-                pattern{mustBeMember(pattern, {'', 'P', 'Q'})} = ''
-            end
-            
-            if isempty(obj.Factors)
-                obj.Pattern = [];
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %   pattern - String: 'full', 'l1', or 'lx'
+            %
+            % Outputs:
+            %   obj - The SeparableFunction object
+
+            if isempty(obj.factors)
+                obj.pattern = [];
                 return;
             end
-            
+
+            pattern = lower(char(pattern));
+
+            supportedTypes = {'full', 'l1', 'lx'};
+            core.except.assert( ...
+                ismember(pattern, supportedTypes), ...
+                'InvalidInput', ...
+                'Pattern type must be one of: %s', strjoin(supportedTypes, ', '));
+
             switch pattern
-                case 'P'
-                    threshold = min(obj.NFactorCodims);
-                    
+                case 'full'
+                    obj.pattern = [];
+
+                case 'l1'
+                    threshold = min(obj.nFactorCodims);
+
                     indexer = core.linalg.L1MultiIndexer();
-                    indexer.setCache(obj.NFactors, obj.NFactors+threshold-1);
-                    
-                    obj.Pattern = struct('indexer', indexer, ...
-                        'threshold', threshold);
-                    
-                case 'Q'
-                    threshold = min(obj.NFactorCodims);
-                    
+                    indexer.setCache(obj.nFactors, obj.nFactors+threshold-1);
+
+                    obj.pattern = struct('indexer', indexer, 'threshold', threshold);
+
+                case 'lx'
+                    threshold = min(obj.nFactorCodims);
+
                     indexer = core.linalg.LxMultiIndexer();
-                    indexer.setCache(obj.NFactors, threshold);
-                    
-                    obj.Pattern = struct('indexer', indexer, ...
-                        'threshold', threshold);
-                    
-                otherwise
-                    obj.Pattern = [];
+                    indexer.setCache(obj.nFactors, threshold);
+
+                    obj.pattern = struct('indexer', indexer, 'threshold', threshold);
             end
         end
-        
-        function Y = eval(obj, X)
-            % EVAL Evaluate the function at specified points.
+
+        function Y = evaluate(obj, X)
+            % EVALUATE Evaluate the function at specified points.
             %
-            %   Y = eval(obj, X) evaluates the separable function using
+            %   Y = evaluate(obj, X) evaluates the separable function using
             %   either dense or sparse evaluation based on the pattern
             %   property. Supports both concatenated input format and cell
             %   array input format for factor-wise evaluation.
-            
-            arguments
-                obj core.function.SeparableFunction
-                X{mustBeA(X, {'numeric', 'cell'})}
-            end
-            
-            core.except.assert(obj.IsWellDefined, 'NotWellDefined', ...
-                'Function is not well-defined.');
-            
-            if iscell(X)
-                isValidCellInput = length(X) == obj.NFactors;
-                core.except.assert(isValidCellInput, 'InvalidInput', ...
-                    'Cell inputs mismatch factor count.');
-                
-                for i = 1:numel(X)
-                    F = obj.getFactor(i);
-                    isValidInput = size(X{i}, 1) == F.NDims;
-                    core.except.assert(isValidInput, 'InvalidInput', ...
-                        'Input dimensions mismatch for factor %d.', i);
-                end
-            else
-                nd = obj.NDims;
-                isValidNumericInput = size(X, 1) == nd;
-                core.except.assert(isValidNumericInput, 'InvalidInput', ...
-                    'Input dimension mismatch.');
-                nx = size(X);
-                X = reshape(X, nd, []);
-            end
-            
-            Y = obj.evalImpl(X);
-            
-            nc = obj.NCodims;
-            isValidOutput = size(Y, 1) == nc;
-            core.except.assert(isValidOutput, 'InvalidOutput', ...
-                'Output dimension mismatch.');
-            
-            if ~iscell(X) && length(nx) > 2
-                Y = reshape(Y, [nc, nx(2:end)]);
-            end
-        end
-        
-        function dY = diff(obj, X, order)
-            % DIFF Compute the derivative of specified order at
-            % given points.
             %
-            %   dY = diff(obj, X, order) computes derivatives of
-            %   the separable function using either dense or sparse
-            %   evaluation based on the pattern property. Supports both
-            %   concatenated input format and cell array format for
-            %   factor-wise evaluation.
-            
-            arguments
-                obj core.function.SeparableFunction
-                X{mustBeA(X, {'numeric', 'cell'})}
-                order{mustBeVector, mustBeNonnegative}
-            end
-            
-            core.except.assert(obj.IsWellDefined, ...
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %   X - Coordinates (nDims x ... or cell array)
+            %
+            % Outputs:
+            %   Y - Function values (nCodims x ...)
+
+            core.except.assert(obj.isWellDefined, ...
                 'NotWellDefined', 'Function is not well-defined.');
-            
-            nd = obj.NDims;
-            isValidOrder = length(order) == nd && sum(order) > 0;
-            core.except.assert(isValidOrder, 'InvalidInput', ...
-                'Bad derivative order.');
-            
+
             if iscell(X)
-                isValidCellInput = length(X) == obj.NFactors;
-                core.except.assert(isValidCellInput, 'InvalidInput', ...
-                    'Cell inputs mismatch factor count.');
-                
+                F = obj.factors;
+                core.except.assert(length(X) == length(F), ...
+                    'InvalidInput', 'Cell inputs mismatch factor count.');
+
                 for i = 1:numel(X)
-                    F = obj.getFactor(i);
-                    isValidInput = size(X{i}, 1) == F.NDims;
-                    core.except.assert(isValidInput, 'InvalidInput', ...
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+
+                    core.except.assert(size(X{i}, 1) == Fi.nDims, ...
+                        'InvalidInput', 'Input dimensions mismatch for factor %d.', i);
+                end
+            else
+                n = obj.nDims;
+                core.except.assert(size(X, 1) == n, ...
+                    'InvalidInput', 'Input dimension mismatch.');
+                s = size(X);
+                X = reshape(X, n, []);
+            end
+
+            Y = obj.evaluateImpl(X);
+
+            m = obj.nCodims;
+            core.except.assert(size(Y, 1) == m, ...
+                'InvalidOutput', 'Output dimension mismatch.');
+
+            if ~iscell(X) && length(s) > 2
+                Y = reshape(Y, [m, s(2:end)]);
+            end
+        end
+
+        function dY = derivative(obj, X, r)
+            % DERIVATIVE Compute the derivative of specified order at given points.
+            %
+            %   dY = derivative(obj, X, r) computes derivatives of the
+            %   separable function using either dense or sparse evaluation
+            %   based on the pattern property. Supports both concatenated
+            %   input format and cell array format for factor-wise evaluation.
+            %
+            % Inputs:
+            %   obj - The SeparableDifferentiableFunction object
+            %   X - Coordinates (nDims x ... or cell array)
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (nCodims x ...)
+
+            core.except.assert(obj.isWellDefined, ...
+                'NotWellDefined', 'Function is not well-defined.');
+
+            n = obj.nDims;
+            core.except.assert(isvector(r) && isnumeric(r) ...
+                && length(r) == n && all(r >= 0) && sum(r) > 0, ...
+                'InvalidInput', 'Bad derivative order.');
+
+            if iscell(X)
+                F = obj.factors;
+                core.except.assert(length(X) == length(F), ...
+                    'InvalidInput', 'Cell inputs mismatch factor count.');
+
+                for i = 1:numel(X)
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+
+                    core.except.assert(size(X{i}, 1) == Fi.nDims, ...
+                        'InvalidInput', ...
                         'Input dimensions mismatch for factor %d.', i);
                 end
             else
-                nd = obj.NDims;
-                isValidNumericInput = size(X, 1) == nd;
-                core.except.assert(isValidNumericInput, 'InvalidInput', ...
-                    'Input dimension mismatch.');
-                nx = size(X);
-                X = reshape(X, nd, []);
+                core.except.assert(size(X, 1) == n, ...
+                    'InvalidInput', 'Input dimension mismatch.');
+                s = size(X);
+                X = reshape(X, n, []);
             end
-            
-            dY = obj.diffImpl(X, order);
-            
-            nc = obj.NCodims;
-            isValidOutput = size(dY, 1) == nc;
-            core.except.assert(isValidOutput, 'InvalidOutput', ...
-                'Output dimension mismatch.');
-            
-            if ~iscell(X) && length(nx) > 2
-                dY = reshape(dY, [nc, nx(2:end)]);
+
+            dY = obj.derivativeImpl(X, r);
+
+            m = obj.nCodims;
+            core.except.assert(size(dY, 1) == m, ...
+                'InvalidOutput', 'Output dimension mismatch.');
+
+            if ~iscell(X) && length(s) > 2
+                dY = reshape(dY, [m, s(2:end)]);
             end
         end
-        
-        function n = get.NFactorCodims(obj)
+
+        function n = get.nFactorCodims(obj)
             % GET.NFACTORCODIMS Number of codimensions of each factor.
-            
-            F = obj.Factors;
+
+            F = obj.factors;
             if isempty(F)
                 n = [];
                 return;
             end
-            
+
             if iscell(F)
-                n = cellfun(@(f) f.NCodims, F);
+                n = cellfun(@(f) f.nCodims, F);
             else
-                n = arrayfun(@(f) f.NCodims, F);
+                n = arrayfun(@(f) f.nCodims, F);
             end
         end
-        
-        function TF = get.IsSparse(obj)
+
+        function TF = get.isSparse(obj)
             % GET.ISSPARSE True if the pattern is non-empty.
-            
-            TF = ~isempty(obj.Pattern);
+
+            TF = ~isempty(obj.pattern);
         end
     end
-    
+
     methods (Access = protected)
         function obj = setNDims(obj)
             % SETNDIMS Update input dimensions.
             %
             %   obj = setNDims(obj) computes the total input dimensions as
             %   the sum of input dimensions from all factor functions.
-            
-            F = obj.Factors;
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %
+            % Outputs:
+            %   obj - The SeparableFunction object
+
+            F = obj.factors;
             if isempty(F)
-                obj.NDims = 0;
+                obj.nDims = 0;
                 return;
             end
-            
+
             if iscell(F)
-                obj.NDims = sum(cellfun(@(f) f.NDims, F));
+                obj.nDims = sum(cellfun(@(f) f.nDims, F));
             else
-                obj.NDims = sum(arrayfun(@(f) f.NDims, F));
+                obj.nDims = sum(arrayfun(@(f) f.nDims, F));
             end
         end
-        
+
         function obj = setNCodims(obj)
             % SETNCODIMS Update output dimensions.
             %
@@ -255,232 +294,326 @@ classdef SeparableFunction < core.linalg.Separable & core.function.Function
             %   patterns, nCodims equals the number of active terms in the
             %   indexer cache. For dense patterns, it's the product of all
             %   factor output dimensions.
-            
-            F = obj.Factors;
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %
+            % Outputs:
+            %   obj - The SeparableFunction object
+
+            F = obj.factors;
             if isempty(F)
-                obj.NCodims = 0;
+                obj.nCodims = 0;
                 return;
             end
-            
-            if obj.IsSparse
-                obj.NCodims = size(obj.Pattern.indexer.Cache, 1);
+
+            if obj.isSparse
+                obj.nCodims = size(obj.pattern.indexer.cache, 1);
             else
-                obj.NCodims = prod(obj.NFactorCodims);
+                codims = obj.nFactorCodims;
+                obj.nCodims = prod(codims);
             end
         end
-        
-        function Y = evalImpl(obj, X)
-            % EVALIMPL Implementation of function evaluation.
+
+        function Y = evaluateImpl(obj, X)
+            % EVALUATEIMPL Implementation of function evaluation.
             %
-            %   Y = evalImpl(obj, X) evaluates the separable function
+            %   Y = evaluateImpl(obj, X) evaluates the separable function
             %   using either dense or sparse computation based on the
             %   pattern property. This method dispatches to the appropriate
             %   evaluation strategy.
-            
-            if obj.IsSparse
-                Y = obj.evalSparse(X);
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %   X - Coordinates (nDims x nPoints or cell array)
+            %
+            % Outputs:
+            %   Y - Function values (nCodims x nPoints)
+
+            if obj.isSparse
+                Y = obj.evaluateSparse(X);
             else
-                Y = obj.evalDense(X);
+                Y = obj.evaluateDense(X);
             end
         end
-        
-        function Y = evalDense(obj, X)
-            % EVALDENSE Dense evaluation using full tensor product.
+
+        function Y = evaluateDense(obj, X)
+            % EVALUATEDENSE Dense evaluation using full tensor product.
             %
-            %   Y = evalDense(obj, X) evaluates the function using the
+            %   Y = evaluateDense(obj, X) evaluates the function using the
             %   full tensor product structure. Each factor function is
             %   evaluated and results are combined using Kronecker or
             %   Khatri-Rao products depending on input format.
-            
-            nf = obj.NFactors;
-            Z = cell(1, nf);
-            
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %   X - Coordinates (nDims x nPoints or cell array)
+            %
+            % Outputs:
+            %   Y - Function values (nCodims x nPoints)
+
+            F = obj.factors;
+            k = length(F);
+            Z = cell(1, k);
+
             if iscell(X)
-                %< evaluate each factor with cell array input
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    nc = F.NCodims;
-                    Z{i} = F.eval(X{i});
-                    Z{i} = reshape(Z{i}, nc, []);
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+                    mi = Fi.nCodims;
+                    Z{i} = Fi.evaluate(X{i});
+                    Z{i} = reshape(Z{i}, mi, []);
                 end
                 Y = core.linalg.kronecker(Z);
             else
-                %< evaluate each factor with partitioned input
                 j = 1;
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    nd = F.NDims;
-                    nc = F.NCodims;
-                    J = j:(j + nd - 1);
-                    Z{i} = F.eval(X(J, :));
-                    Z{i} = reshape(Z{i}, nc, []);
-                    j = j + nd;
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+                    ni = Fi.nDims;
+                    mi = Fi.nCodims;
+                    J = j:(j + ni - 1);
+                    Z{i} = Fi.evaluate(X(J, :));
+                    Z{i} = reshape(Z{i}, mi, []);
+                    j = j + ni;
                 end
                 Y = core.linalg.khatrirao(Z);
             end
         end
-        
-        function Y = evalSparse(obj, X)
-            % EVALSPARSE Sparse evaluation using cached multi-indices.
+
+        function Y = evaluateSparse(obj, X)
+            % EVALUATESPARSE Sparse evaluation using cached multi-indices.
             %
-            %   Y = evalSparse(obj, X) evaluates the function using a
+            %   Y = evaluateSparse(obj, X) evaluates the function using a
             %   sparse representation based on cached multi-indices from
             %   the pattern indexer. This reduces computational complexity
             %   for high-dimensional functions.
-            
-            indexer = obj.Pattern.indexer;
-            M = indexer.Cache;
-            nf = obj.NFactors;
-            
-            Z = cell(1, nf);
-            
+            %
+            % Inputs:
+            %   obj - The SeparableFunction object
+            %   X - Coordinates (nDims x nPoints or cell array)
+            %
+            % Outputs:
+            %   Y - Function values (nCodims x nPoints)
+
+            indexer = obj.pattern.indexer;
+            M = indexer.cache;
+
+            F = obj.factors;
+            k = length(F);
+
             if iscell(X)
-                %< sparse evaluation with cell array input
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    Z{i} = F.eval(X{i});
+                Z = cell(1, k);
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+                    Z{i} = Fi.evaluate(X{i});
                     Z{i} = Z{i}(M(:, i), :);
                 end
                 Y = prod(cat(3, Z{:}), 3);
             else
-                %< sparse evaluation with partitioned input
+                Z = cell(1, k);
                 j = 1;
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    nd = F.NDims;
-                    J = j:(j + nd - 1);
-                    Z{i} = F.eval(X(J, :));
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
+                    else
+                        Fi = F(i);
+                    end
+                    ni = Fi.nDims;
+                    J = j:(j + ni - 1);
+                    Z{i} = Fi.evaluate(X(J, :));
                     Z{i} = Z{i}(M(:, i), :);
-                    j = j + nd;
+                    j = j + ni;
                 end
                 Y = prod(cat(3, Z{:}), 3);
             end
         end
-        
-        function dY = diffImpl(obj, X, order)
-            % DIFFIMPL Implementation of function derivative.
+
+        function dY = derivativeImpl(obj, X, r)
+            % DERIVATIVEIMPL Implementation of function derivative.
             %
-            %   dY = diffImpl(obj, X, order) computes derivatives
-            %   using either dense or sparse evaluation based on the
-            %   pattern property. This method dispatches to the appropriate
+            %   dY = derivativeImpl(obj, X, r) computes derivatives using
+            %   either dense or sparse evaluation based on the pattern
+            %   property. This method dispatches to the appropriate
             %   evaluation strategy.
-            
-            if obj.IsSparse
-                dY = obj.diffSparse(X, order);
+            %
+            % Inputs:
+            %   obj - The SeparableDifferentiableFunction object
+            %   X - Evaluation points (nDims x nPoints or cell array)
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (nCodims x nPoints)
+
+            if obj.isSparse
+                dY = obj.derivativeSparse(X, r);
             else
-                dY = obj.diffDense(X, order);
+                dY = obj.derivativeDense(X, r);
             end
         end
-        
-        function dY = diffDense(obj, X, order)
-            % DIFFDENSE Dense derivative evaluation using full
-            % tensor product.
+
+        function dY = derivativeDense(obj, X, r)
+            % DERIVATIVEDENSE Dense derivative evaluation using full tensor
+            % product.
             %
-            %   dY = diffDense(obj, X, order) computes derivatives using
+            %   dY = derivativeDense(obj, X, r) computes derivatives using
             %   the full tensor product structure. Each factor function
             %   is evaluated or differentiated as needed, and results are
             %   combined using Kronecker or Khatri-Rao products.
-            
-            m = obj.splitOrderVector(order);
-            nf = obj.NFactors;
-            dZ = cell(1, nf);
-            
+            %
+            % Inputs:
+            %   obj - The SeparableDifferentiableFunction object
+            %   X - Evaluation points (nDims x nPoints or cell array)
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (nCodims x nPoints)
+
+            s = obj.splitOrderVector(r);
+            F = obj.factors;
+            k = length(F);
+            dZ = cell(1, k);
+
             if iscell(X)
-                %< dense derivative evaluation with cell array input
                 for i = 1:k
-                    F = obj.getFactor(i);
-                    nc = F.NCodims;
-                    if all(m{i} == 0)
-                        dZ{i} = F.eval(X{i});
+                    if iscell(F)
+                        Fi = F{i};
                     else
-                        dZ{i} = F.diff(X{i}, m{i});
+                        Fi = F(i);
                     end
-                    dZ{i} = reshape(dZ{i}, nc, []);
+                    mi = Fi.nCodims;
+                    if all(s{i} == 0)
+                        dZ{i} = Fi.evaluate(X{i});
+                    else
+                        dZ{i} = Fi.derivative(X{i}, s{i});
+                    end
+                    dZ{i} = reshape(dZ{i}, mi, []);
                 end
                 dY = core.linalg.kronecker(dZ);
             else
-                %< dense derivative evaluation with partitioned input
                 j = 1;
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    nd = F.NDims;
-                    nc = F.NCodims;
-                    J = j:(j + nd - 1);
-                    if all(m{i} == 0)
-                        dZ{i} = F.eval(X(J, :));
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
                     else
-                        dZ{i} = F.diff(X(J, :), m{i});
+                        Fi = F(i);
                     end
-                    dZ{i} = reshape(dZ{i}, nc, []);
-                    j = j + nd;
+                    ni = Fi.nDims;
+                    mi = Fi.nCodims;
+                    J = j:(j + ni - 1);
+                    if all(s{i} == 0)
+                        dZ{i} = Fi.evaluate(X(J, :));
+                    else
+                        dZ{i} = Fi.derivative(X(J, :), s{i});
+                    end
+                    dZ{i} = reshape(dZ{i}, mi, []);
+                    j = j + ni;
                 end
                 dY = core.linalg.khatrirao(dZ);
             end
         end
-        
-        function dY = diffSparse(obj, X, order)
-            % DIFFSPARSE Sparse derivative evaluation using cached
+
+        function dY = derivativeSparse(obj, X, r)
+            % DERIVATIVESPARSE Sparse derivative evaluation using cached
             % multi-indices.
             %
-            %   dY = diffSparse(obj, X, order) computes derivatives using a
-            %   sparse representation based on cached multi-indices from
+            %   dY = derivativeSparse(obj, X, r) computes derivatives using
+            %   a sparse representation based on cached multi-indices from
             %   the pattern indexer. This reduces computational complexity
             %   for high-dimensional functions.
-            
-            m = obj.splitOrderVector(order);
-            nf = obj.NFactors;
-            dZ = cell(1, nf);
-            indexer = obj.Pattern.indexer;
-            M = indexer.Cache;
-            
+            %
+            % Inputs:
+            %   obj - The SeparableDifferentiableFunction object
+            %   X - Evaluation points (nDims x nPoints or cell array)
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (nCodims x nPoints)
+
+            s = obj.splitOrderVector(r);
+            indexer = obj.pattern.indexer;
+            M = indexer.cache;
+
+            F = obj.factors;
+            k = length(F);
+
             if iscell(X)
-                %< sparse derivative evaluation with cell array input
+                dZ = cell(1, k);
                 for i = 1:k
-                    F = obj.getFactor(i);
-                    if all(m{i} == 0)
-                        dZ{i} = F.eval(X{i});
+                    if iscell(F)
+                        Fi = F{i};
                     else
-                        dZ{i} = F.diff(X{i}, m{i});
+                        Fi = F(i);
+                    end
+                    if all(s{i} == 0)
+                        dZ{i} = Fi.evaluate(X{i});
+                    else
+                        dZ{i} = Fi.derivative(X{i}, s{i});
                     end
                     dZ{i} = dZ{i}(M(:, i), :);
                 end
                 dY = prod(cat(3, dZ{:}), 3);
             else
-                %< sparse derivative evaluation with partitioned input
+                dZ = cell(1, k);
                 j = 1;
-                for i = 1:nf
-                    F = obj.getFactor(i);
-                    nd = F.NDims;
-                    J = j:(j + nd - 1);
-                    if all(m{i} == 0)
-                        dZ{i} = F.eval(X(J, :));
+                for i = 1:k
+                    if iscell(F)
+                        Fi = F{i};
                     else
-                        dZ{i} = F.diff(X(J, :), m{i});
+                        Fi = F(i);
+                    end
+                    ni = Fi.nDims;
+                    J = j:(j + ni - 1);
+                    if all(s{i} == 0)
+                        dZ{i} = Fi.evaluate(X(J, :));
+                    else
+                        dZ{i} = Fi.derivative(X(J, :), s{i});
                     end
                     dZ{i} = dZ{i}(M(:, i), :);
-                    j = j + nd;
+                    j = j + ni;
                 end
                 dY = prod(cat(3, dZ{:}), 3);
             end
         end
-        
-        function m = splitOrderVector(obj, order)
+
+        function s = splitOrderVector(obj, r)
             % SPLITORDERVECTOR Split derivative order vector for each
             % factor.
             %
-            %   m = splitOrderVector(obj, order) decomposes a global
-            %   derivative order vector into separate order vectors for
-            %   each factor function, enabling factor-wise derivative
-            %   computation.
-            
-            nf = obj.NFactors;
-            m = cell(1, nf);
+            %   s = splitOrderVector(obj, r) decomposes a global derivative
+            %   order vector into separate order vectors for each factor
+            %   function, enabling factor-wise derivative computation.
+            %
+            % Inputs:
+            %   obj - The SeparableDifferentiableFunction object
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   s - Cell array of order vectors for each factor
+
+            F = obj.factors;
+            k = length(F);
+            s = cell(1, k);
             j = 1;
-            for i = 1:nf
-                F = obj.getFactor(i);
-                nd = F.NDims;
-                m{i} = order(j:(j + nd - 1));
-                j = j + nd;
+            for i = 1:k
+                if iscell(F)
+                    Fi = F{i};
+                else
+                    Fi = F(i);
+                end
+                ni = Fi.nDims;
+                s{i} = r(j:(j + ni - 1));
+                j = j + ni;
             end
         end
     end

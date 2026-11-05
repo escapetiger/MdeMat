@@ -4,12 +4,22 @@ function T = fold(A, n, d)
 %   T = fold(A, n, d) returns a tensor @a T of shape @a n obtained by
 %   folding a matrix @a A along the dimension @a d.
 %
-%   This function reverses the unfold operation by reshaping matrix @a A
-%   back into tensor form with shape @a n. The folding occurs along
-%   dimension @a d, which determines the reshaping pattern. Matrix @a A
-%   should have dimensions [n(d), prod(n)/n(d)].
+% Inputs:
+%   A - Matrix of shape [n(d), prod(n)/n(d)]
+%   n - Tensor shape
+%   d - Mode along which to fold
 %
-% See also:
+% Outputs:
+%   T - Folded tensor of shape @a n
+%
+% Examples:
+%   % Unfold T along dimension 2, then fold it back
+%   T = rand(3, 4, 5);
+%   n = size(T);
+%   A = core.linalg.unfold(T, n, 2);
+%   TT = core.linalg.fold(A, n, 2); % TT equals to T
+%
+% See Also:
 %   core.linalg.unfold
 
 p = [d, setdiff(1:numel(n), d)];

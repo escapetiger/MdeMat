@@ -1,55 +1,64 @@
 # Environment configuration
 
 # =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
 # Algorithm
 # =======================================================================
 
-OPTION=schemeName='ldg'
+# -----------------------------------------------------------------------
+# Input/Output
+# -----------------------------------------------------------------------
+OPTION=verbose=true
 
 # -----------------------------------------------------------------------
 # Time discretization
 # -----------------------------------------------------------------------
-
-# tSplitName='lie_trotter': Lie-Trotter splitting (first-order)
-# tSplitName='strang': Strang splitting (second-order)
-OPTION=tSplitName=''
-
-# tOdeIntName='be': backward Euler scheme
-# tOdeIntName='bdf2': BDF2 scheme
-# tOdeIntName='bdf3': BDF3 scheme
-# tOdeIntName='sdirk2': SDIRK2 scheme
-# tOdeIntName='sdirk3': SDIRK3 scheme
-OPTION=tOdeIntName='sdirk3'
-
-# Fixed time step
-OPTION=dt=0.1
+# tDiscId='be': backward Euler scheme
+# tDiscId='bdf2': BDF2 scheme
+# tDiscId='bdf3': BDF3 scheme
+# tDiscId='sdirk2': SDIRK2 scheme
+# tDiscId='sdirk3': SDIRK3 scheme
+OPTION=tDiscId='sdirk3'
 
 # CFL number
-# OPTION=cfl=0.5
+OPTION=cfl=0.5
 
 # -----------------------------------------------------------------------
 # Space discretization
 # -----------------------------------------------------------------------
 
+# xDiscName='ldg': local DG
+OPTION=xDiscName='ldg'
+
 # spatial order
 OPTION=xBasisOrder=3
 
-# xBasisType='modal': Modal basis 
-# xBasisType='nodal': Nodal basis
-OPTION=xBasisType='modal'
+# xBasisType='modal_legendre': Monic Legendre basis, 
+# xBasisType='nodal_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='nodal_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='modal_legendre'
 
 # xBasisPattern='Q': Qk polynomial space
 # xBasisPattern='P': Pk polynomial space
 OPTION=xBasisPattern='P'
 
-# xPenaltyType{1,1}='boundary': add jump only to boundary elements
-# xPenaltyType{1,1}='boundaryw': add weighted jump only to boundary elements
-# xPenaltyType{1,1}='all': add jump to all elements
-# xPenaltyType{1,1}='allw': add weighted jump to all elements
-# xPenaltyType{1,2}='central': central flux
-# xPenaltyType{1,2}='right': right flux
-# xPenaltyType{1,2}='left': left flux
-# xPenaltyType{2,1}='central': central flux
-# xPenaltyType{2,1}='right': right flux
-# xPenaltyType{2,1}='left': left flux
-OPTION=xPenaltyType={'', 'right'; 'left', ''}
+# xAuxFluxType='left': alternating-left flux
+# xAuxFluxType='right': alternating-right flux
+# xAuxFluxType='central': central flux
+OPTION=xAuxFluxType='right'
+
+# xPrmFluxType='left': alternating-left flux
+# xPrmFluxType='right': alternating-right flux
+# xPrmFluxType='central': central flux
+OPTION=xPrmFluxType='left'
+
+# xAuxBoundaryJumpType='none': no jump at boundary
+# xAuxBoundaryJumpType='implicit': implicit jump at boundary
+# xAuxBoundaryJumpType='explicit': explicit jump at boundary (parabolic CFL)
+OPTION=xAuxBoundaryJumpType='implicit'

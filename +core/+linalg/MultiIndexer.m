@@ -3,86 +3,105 @@ classdef MultiIndexer < core.linalg.Indexer
     %
     %   MultiIndexer generates multi-indices for tensor operations and
     %   provides methods to convert between multi-indices and linear
-    %   indices. Supports both column-major ('F') and row-major ('C')
-    %   storage orders with various boundary conditions for index
-    %   conversion.
+    %   indices.
     %
-    % See also:
+    % Examples:
+    %   % Create 3D multi-indexer and generate indices
+    %   indexer = core.linalg.MultiIndexer([2,3,4]);
+    %   M = indexer.generate();
+    %   L = indexer.multiToLinear(M);
+    %
+    % See Also:
     %   core.linalg.Indexer, core.linalg.CachedMultiIndexer
 
     properties
-        ValidPads = {'empty', 'wrap', 'edge', 'reflect', 'symmetric'}
-    end
-
-    properties
-        Shape % Tensor dimensions as row vector of positive integers
+        shape % Tensor dimensions as row vector of positive integers
     end
 
     properties (Dependent)
-        NDims % Number of dimensions, derived from Shape
+        nDims % Number of dimensions, derived from shape
     end
 
     properties (Access = protected)
-        Strides % Tensor strides for linear index computation
+        strides % Tensor strides for linear index computation
     end
 
     methods
-        function obj = MultiIndexer(options)
-            % MULTIINDEXER Construct an instance of MultiIndexer.
+        function obj = MultiIndexer(shape, style)
+            % MULTIINDEXER Constructor for multi-dimensional indexer.
             %
             %   obj = MultiIndexer() creates empty MultiIndexer.
             %
-            %   obj = MultiIndexer(Name=Value) creates with specified
-            %   options.
+            %   obj = MultiIndexer(shape) creates with specified @a shape.
+            %
+            %   obj = MultiIndexer(shape, style) creates with @a shape and
+            %   @a style.
+            %
+            % Inputs:
+            %   shape - Tensor shape (optional)
+            %   style - Storage ordering style (optional, default: 'F')
+            %
+            % Outputs:
+            %   obj - Constructed MultiIndexer object
 
-            arguments
-                options.shape(1, :) {mustBeInteger, mustBePositive} = []
-                options.style{mustBeTextScalar} = 'F'
-            end
+            if nargin < 2, style = 'F'; end
+            if nargin < 1, shape = []; end
 
-            obj@core.linalg.Indexer(style = options.style);
-            obj.setShape(options.shape);
+            obj@core.linalg.Indexer(style);
+
+            if ~isempty(shape), obj.setShape(shape); end
         end
 
-        function n = get.NDims(obj)
-            % GET.NDIMS Returns the value of the dependent property
-            % 'NDims'.
+        function n = get.nDims(obj)
+            % GET.NDIMS Get number of dimensions based on shape.
 
-            n = length(obj.Shape);
+            n = length(obj.shape);
         end
 
         function obj = setShape(obj, shape)
             % SETSHAPE Set tensor shape and stride for indexer.
+            %
+            %   obj = setShape(obj, shape) validates and sets @a shape
+            %   property, then updates strides based on storage style.
+            %
+            % Inputs:
+            %   obj - The MultiIndexer object
+            %   shape - Tensor shape
+            %
+            % Outputs:
+            %   obj - The MultiIndexer object
 
-            arguments
-                obj core.linalg.MultiIndexer
-                shape(1, :) {mustBeInteger, mustBePositive}
-            end
+            core.except.assert(all(shape > 0), ...
+                'InvalidShape', ...
+                'Shape must be a vector of positive integers.');
 
-            obj.Shape = shape;
-            obj.updateStrides();
+            obj.shape = shape(:).';
+            obj.setStrides();
         end
 
         function M = generate(obj)
             % GENERATE Return all one-based multi-indices.
             %
             %   M = generate(obj) returns matrix where each row is
-            %   multi-index satisfying 1 <= M(i,j) <= obj.Shape(j).
+            %   multi-index satisfying 1 <= M(i,j) <= obj.shape(j).
+            %
+            % Inputs:
+            %   obj - The MultiIndexer object
+            %
+            % Outputs:
+            %   M - Matrix where each row represents a multi-index
 
-            arguments
-                obj core.linalg.MultiIndexer
-            end
-
-            core.except.assert(~isempty(obj.Shape), 'MissingShape', ...
+            core.except.assert(~isempty(obj.shape), ...
+                'MissingShape', ...
                 'Shape must be set before using this method.');
 
-            if obj.NDims == 1
-                M = (1:obj.Shape).';
+            if obj.nDims == 1
+                M = (1:obj.shape).';
                 return;
             end
 
-            N = arrayfun(@(x) 1:x, obj.Shape, 'Un', 0);
-            if strcmp(obj.Style, 'F')
+            N = arrayfun(@(x) 1:x, obj.shape, 'Un', 0);
+            if strcmp(obj.style, 'F')
                 [N{:}] = ndgrid(N{:});
             else
                 [N{end:-1:1}] = ndgrid(N{end:-1:1});
@@ -91,62 +110,49 @@ classdef MultiIndexer < core.linalg.Indexer
             M = cat(2, N{:});
         end
 
-        function L = multiToLinear(obj, M, options)
+        function L = multiToLinear(obj, M, bc)
             % MULTITOLINEAR Convert multi-indices to linear indices.
             %
             %   L = multiToLinear(obj, M) converts multi-indices @a M to
             %   linear indices based on tensor dimensions.
             %
-            %   L = multiToLinear(obj, M, Name=Value) uses boundary
-            %   condition specified by options.
+            %   L = multiToLinear(obj, M, bc) uses boundary condition @a
+            %   bc.
             %
-            % Notes:
-            %   Padding modes include 'empty' (out-of-range set to 0),
-            %   'wrap' (wraps around), 'edge' (clamps to edges),
-            %   'reflect' (reflects excluding edges), and 'symmetric'
-            %   (reflects including edges).
+            % Inputs:
+            %   obj - The MultiIndexer object
+            %   M - Multi-indices (matrix or cell array)
+            %   bc - Boundary condition (optional, default: 1)
+            %        * 0: periodic boundary (wrap-around)
+            %        * 1: strict boundary (default, out-of-range set to 0)
+            %
+            % Outputs:
+            %   L - Linear indices (vector)
 
-            arguments
-                obj core.linalg.MultiIndexer
-                M {mustBeInteger}
-                options.pad{mustBeTextScalar} = 'empty'
-            end
+            if nargin < 3, bc = 1; end
 
-            core.except.assert(ismember(options.pad, obj.ValidPads), ...
-                'InvalidInput', 'Padding mode is invalid.');
-
-            core.except.assert(~isempty(obj.Shape), 'MissingShape', ...
+            core.except.assert(~isempty(obj.shape), ...
+                'MissingShape', ...
                 'Shape must be set before using this method.');
 
-            nd = obj.NDims;
-            core.except.assert(ismatrix(M) && size(M, 2) == nd, ...
-                'InvalidInput', 'Multi-indices must have %d columns.', nd);
-
-            ns = obj.Shape;
-            switch lower(options.pad)
-                case 'wrap'
-                    M = mod(M - 1, ns) + 1;
-                case 'edge'
-                    M = min(M, ns);
-                    M = max(M, ones(1, nd));
-                case 'reflect'
-                    period = 2 * ns - 2;
-                    P = mod(M - 1, period);
-                    mask = P >= ns;
-                    Q = repmat(period, size(P, 1), 1);
-                    P(mask) = Q(mask) - P(mask);
-                    M = P + 1;
-                case 'symmetric'
-                    period = 2 * ns;
-                    P = mod(M - 1, period);
-                    mask = P >= ns;
-                    Q = repmat(period-1, size(P, 1), 1);
-                    P(mask) = Q(mask) - P(mask);
-                    M = P + 1;
-                otherwise
+            if iscell(M)
+                M = obj.factorToMulti(M);
+            else
+                core.except.assert( ...
+                    ismatrix(M) && size(M, 2) == obj.nDims, ...
+                    'InvalidInput', ...
+                    'Multi-indices must has %d columns.', obj.nDims);
             end
-            L = (M - 1) * obj.Strides(:) + 1;
-            L(any(M < 1, 2) | any(M > obj.Shape, 2)) = 0;
+
+            if bc == 0
+                M = mod(M - 1, obj.shape) + 1;
+            end
+
+            L = (M - 1) * obj.strides(:) + 1;
+
+            if bc == 1
+                L(any(M < 1, 2) | any(M > obj.shape, 2)) = 0;
+            end
         end
 
         function M = linearToMulti(obj, L)
@@ -155,23 +161,23 @@ classdef MultiIndexer < core.linalg.Indexer
             %   M = linearToMulti(obj, L) converts linear indices @a L to
             %   multi-indices for tensor with specified shape.
             %
-            % Notes:
-            %   Linear indices must be in range [1, prod(Shape)]. Returns
-            %   matrix where each row represents a multi-index.
+            % Inputs:
+            %   obj - The MultiIndexer object
+            %   L - Linear indices (vector)
+            %
+            % Outputs:
+            %   M - Multi-indices (matrix)
 
-            arguments
-                obj core.linalg.MultiIndexer
-                L {mustBePositive, mustBeInteger}
-            end
-
-            core.except.assert(~isempty(obj.Shape), 'MissingShape', ...
+            core.except.assert(~isempty(obj.shape), ...
+                'MissingShape', ...
                 'Shape must be set before using this method.');
 
-            upper = prod(obj.Shape);
-            core.except.assert(all(L <= upper), 'IndexOutOfBounds', ...
+            upper = prod(obj.shape);
+            core.except.assert(all(L <= upper) && all(L >= 1), ...
+                'IndexOutOfBounds', ...
                 'Linear index out of range (min: 1, max: %d).', upper);
 
-            M = mod(floor((L(:) - 1)./obj.Strides), obj.Shape) + 1;
+            M = mod(floor((L(:) - 1)./obj.strides), obj.shape) + 1;
         end
 
         function M = factorToMulti(obj, F)
@@ -180,21 +186,18 @@ classdef MultiIndexer < core.linalg.Indexer
             %   M = factorToMulti(obj, F) converts factor indices @a F to
             %   multi-indices for tensor with specified shape.
             %
-            % Notes:
-            %   Factor indices @a F must be a cell array with length equal
-            %   to NDims. Each cell contains indices for the corresponding
-            %   dimension.
+            % Inputs:
+            %   obj - The MultiIndexer object
+            %   F - Cell array where each entry is factor indices
+            %
+            % Outputs:
+            %   M - Multi-indices (matrix)
 
-            arguments
-                obj core.linalg.MultiIndexer
-                F {mustBeA(F, 'cell')}
-            end
+            core.except.assert(length(F) == obj.nDims, ...
+                'DimensionMismatch', ...
+                'Factor number must be (%d)', obj.nDims);
 
-            nd = obj.NDims;
-            core.except.assert(length(F) == nd, 'DimensionMismatch', ...
-                'Factor number must be (%d)', nd);
-
-            if strcmp(obj.Style, 'F')
+            if strcmp(obj.style, 'F')
                 [F{:}] = ndgrid(F{:});
             else
                 [F{end:-1:1}] = ndgrid(F{end:-1:1});
@@ -204,21 +207,20 @@ classdef MultiIndexer < core.linalg.Indexer
     end
 
     methods (Access = protected)
-        function obj = updateStrides(obj)
-            % UPDATESTRIDES Update tensor strides for indexer.
+        function obj = setStrides(obj)
+            % SETSTRIDES Set tensor strides for indexer.
 
-            if isempty(obj.Shape)
-                obj.Strides = [];
+            if isempty(obj.shape)
+                obj.strides = [];
                 return;
             end
 
-            obj.Strides = ones(1, obj.NDims);
+            obj.strides = ones(1, obj.nDims);
 
-            if strcmp(obj.Style, 'F')
-                obj.Strides(2:end) = cumprod(obj.Shape(1:end-1), 2);
+            if strcmp(obj.style, 'F')
+                obj.strides(2:end) = cumprod(obj.shape(1:end-1), 2);
             else
-                obj.Strides(1:end-1) = flip(cumprod(flip(obj.Shape(2:end), ...
-                    2), 2), 2);
+                obj.strides(1:end-1) = flip(cumprod(flip(obj.shape(2:end), 2), 2), 2);
             end
         end
     end

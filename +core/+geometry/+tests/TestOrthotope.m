@@ -23,33 +23,33 @@ classdef TestOrthotope < matlab.unittest.TestCase
             
             % Test 1D orthotope (interval)
             rect1D = core.geometry.Orthotope([0, 1]);
-            testCase.verifyEqual(rect1D.NDims, 1);
-            testCase.verifyEqual(rect1D.Lower, [0]);
-            testCase.verifyEqual(rect1D.Upper, [1]);
-            testCase.verifySize(rect1D.Vertices, [1, 2]);
-            testCase.verifySize(rect1D.Faces, [1, 2]);
+            testCase.verifyEqual(rect1D.nDims, 1);
+            testCase.verifyEqual(rect1D.lower, [0]);
+            testCase.verifyEqual(rect1D.upper, [1]);
+            testCase.verifySize(rect1D.vertices, [1, 2]);
+            testCase.verifySize(rect1D.faces, [1, 2]);
             
             % Test 2D orthotope (rectangle)
             rect2D = core.geometry.Orthotope([1, 4, 2, 5]);
-            testCase.verifyEqual(rect2D.NDims, 2);
-            testCase.verifyEqual(rect2D.Lower, [1, 2]);
-            testCase.verifyEqual(rect2D.Upper, [4, 5]);
-            testCase.verifySize(rect2D.Vertices, [2, 4]);
-            testCase.verifySize(rect2D.Faces, [1, 4]);
+            testCase.verifyEqual(rect2D.nDims, 2);
+            testCase.verifyEqual(rect2D.lower, [1, 2]);
+            testCase.verifyEqual(rect2D.upper, [4, 5]);
+            testCase.verifySize(rect2D.vertices, [2, 4]);
+            testCase.verifySize(rect2D.faces, [1, 4]);
             
             % Test 3D orthotope (box)
             rect3D = core.geometry.Orthotope([1, 4, 2, 5, 3, 6]);
-            testCase.verifyEqual(rect3D.NDims, 3);
-            testCase.verifyEqual(rect3D.Lower, [1, 2, 3]);
-            testCase.verifyEqual(rect3D.Upper, [4, 5, 6]);
-            testCase.verifySize(rect3D.Vertices, [3, 8]);
-            testCase.verifySize(rect3D.Faces, [1, 6]);
+            testCase.verifyEqual(rect3D.nDims, 3);
+            testCase.verifyEqual(rect3D.lower, [1, 2, 3]);
+            testCase.verifyEqual(rect3D.upper, [4, 5, 6]);
+            testCase.verifySize(rect3D.vertices, [3, 8]);
+            testCase.verifySize(rect3D.faces, [1, 6]);
             
             % Test unit cube
             unitCube = core.geometry.Orthotope([0, 1, 0, 1, 0, 1]);
-            testCase.verifyEqual(unitCube.NDims, 3);
-            testCase.verifyEqual(unitCube.Lower, [0, 0, 0]);
-            testCase.verifyEqual(unitCube.Upper, [1, 1, 1]);
+            testCase.verifyEqual(unitCube.nDims, 3);
+            testCase.verifyEqual(unitCube.lower, [0, 0, 0]);
+            testCase.verifyEqual(unitCube.upper, [1, 1, 1]);
         end
         
         function testConstructorValidation(testCase)
@@ -77,13 +77,13 @@ classdef TestOrthotope < matlab.unittest.TestCase
             % Test valid edge cases
             % Equal bounds (degenerate orthotope)
             degenerateRect = core.geometry.Orthotope([1, 1, 2, 2]);
-            testCase.verifyEqual(degenerateRect.Lower, [1, 2]);
-            testCase.verifyEqual(degenerateRect.Upper, [1, 2]);
+            testCase.verifyEqual(degenerateRect.lower, [1, 2]);
+            testCase.verifyEqual(degenerateRect.upper, [1, 2]);
             
             % Negative bounds
             negativeRect = core.geometry.Orthotope([-2, -1, -1, 0]);
-            testCase.verifyEqual(negativeRect.Lower, [-2, -1]);
-            testCase.verifyEqual(negativeRect.Upper, [-1, 0]);
+            testCase.verifyEqual(negativeRect.lower, [-2, -1]);
+            testCase.verifyEqual(negativeRect.upper, [-1, 0]);
         end
         
         function testInheritance(testCase)
@@ -112,7 +112,7 @@ classdef TestOrthotope < matlab.unittest.TestCase
                 vertex = expectedVertices2D(:, i);
                 found = false;
                 for j = 1:4
-                    if norm(rect2D.Vertices(:, j) - vertex) < testCase.Tolerance
+                    if norm(rect2D.vertices(:, j) - vertex) < testCase.Tolerance
                         found = true;
                         break;
                     end
@@ -123,11 +123,11 @@ classdef TestOrthotope < matlab.unittest.TestCase
             
             % Test 3D box vertices
             rect3D = core.geometry.Orthotope([1, 4, 2, 5, 3, 6]);
-            testCase.verifySize(rect3D.Vertices, [3, 8]);
+            testCase.verifySize(rect3D.vertices, [3, 8]);
             
             % Verify all vertices are within bounds
             for i = 1:8
-                vertex = rect3D.Vertices(:, i);
+                vertex = rect3D.vertices(:, i);
                 testCase.verifyTrue(all(vertex >= [1, 2, 3]') && ...
                                   all(vertex <= [4, 5, 6]'), ...
                     'Vertex outside expected bounds');
@@ -238,17 +238,17 @@ classdef TestOrthotope < matlab.unittest.TestCase
             
             % Test 2D rectangle
             rect2D = core.geometry.Orthotope([0, 1, 0, 1]);
-            testCase.verifyEqual(rect2D.NFaces, 4);
-            testCase.verifySize(rect2D.OutNormals, [2, 4]);
+            testCase.verifyEqual(rect2D.nBoundaries, 4);
+            testCase.verifySize(rect2D.outerNormals, [2, 4]);
             
             % Test 3D box
             rect3D = core.geometry.Orthotope([0, 1, 0, 1, 0, 1]);
-            testCase.verifyEqual(rect3D.NFaces, 6);
-            testCase.verifySize(rect3D.OutNormals, [3, 6]);
+            testCase.verifyEqual(rect3D.nBoundaries, 6);
+            testCase.verifySize(rect3D.outerNormals, [3, 6]);
             
             % Verify outer normals structure
             expectedNormals2D = [-1, 1, 0, 0; 0, 0, -1, 1];
-            testCase.verifyEqual(rect2D.OutNormals, expectedNormals2D, ...
+            testCase.verifyEqual(rect2D.outerNormals, expectedNormals2D, ...
                 'AbsTol', testCase.Tolerance);
         end
         
@@ -282,18 +282,18 @@ classdef TestOrthotope < matlab.unittest.TestCase
             
             % Test row vector
             rectRow = core.geometry.Orthotope([1, 2, 3, 4]);
-            testCase.verifyEqual(rectRow.Lower, [1, 3]);
-            testCase.verifyEqual(rectRow.Upper, [2, 4]);
+            testCase.verifyEqual(rectRow.lower, [1, 3]);
+            testCase.verifyEqual(rectRow.upper, [2, 4]);
             
             % Test column vector
             rectCol = core.geometry.Orthotope([1; 2; 3; 4]);
-            testCase.verifyEqual(rectCol.Lower, [1, 3]);
-            testCase.verifyEqual(rectCol.Upper, [2, 4]);
+            testCase.verifyEqual(rectCol.lower, [1, 3]);
+            testCase.verifyEqual(rectCol.upper, [2, 4]);
             
             % Verify both produce identical results
-            testCase.verifyEqual(rectRow.Lower, rectCol.Lower);
-            testCase.verifyEqual(rectRow.Upper, rectCol.Upper);
-            testCase.verifyEqual(rectRow.NDims, rectCol.NDims);
+            testCase.verifyEqual(rectRow.lower, rectCol.lower);
+            testCase.verifyEqual(rectRow.upper, rectCol.upper);
+            testCase.verifyEqual(rectRow.nDims, rectCol.nDims);
         end
     end
 end

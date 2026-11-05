@@ -1,8 +1,7 @@
-%% 
 %==========================================================================
 % FileName: ex02_dirichlet
-% Author: Yi CAI
-% Date: 13/09/2025
+% Author: Yi Cai
+% Date: 2025-07-14
 % Description:
 %   Solving advection equation with Dirichlet boundary conditions.
 %==========================================================================
@@ -12,13 +11,9 @@ clear;
 close all;
 
 %% CONFIGURATION
-
-% Common configuration file
-common = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
-config = physics.scheme.ConfigParser.parseFile(common);
-
-% Experiment-specific configuration struct
-config.nDims = 1; % Dimension
+configPath = fullfile(fileparts(mfilename('fullpath')), 'config.txt');
+config = core.io.OptionParser().parse(configPath);
+config.nDims = 2; % Dimension
 config.L = 1; % Length
 config.xBBox = repmat([0, config.L], 1, config.nDims); % Spatial bounding box
 config.tFinal = 0.5; % Final time
@@ -27,78 +22,98 @@ config.omega = repmat(pi / config.L, 1, config.nDims); % Wave length
 config.ic = u0(config.omega); % Initial condition
 config.bc = uBc(config.advection, config.omega); % Boundary condition
 config.exact = uExact(config.advection, config.omega); % Exact solution
+% config.exact = [];
 config.nx = repmat(4, 1, config.nDims); % Grid resolution
 config.verbose = 1; % Verbose flag
-config.eId = sprintf('DA%d', config.nDims); % Experiment ID
+config.experimentId = sprintf('DA%d', config.nDims); % Experiment ID
+config.tDiscId = upper(config.tDiscId);
+config.xDiscId = sprintf('%s%d', upper(config.xDiscName), config.xBasisOrder);
+config.schemeId = strjoin({config.tDiscId, config.xDiscId}, '-');
 
-% Construct and configure scheme
-switch config.schemeName
-    case 'sldg'
-        scheme = physics.advection.SldgScheme(config = config);
-    case 'uwdg'
-        scheme = physics.advection.UwdgScheme(config = config);
+%% SIMULATION SETUP
+
+if contains(config.xDiscId, 'sl')
+    cls = 'SldgScheme';
+else
+    cls = 'UwdgScheme';
 end
-
-% Configure visualizer
-visualizer = scheme.getConfig('visualizer');
-visualizer.setDensity(1);
-visualizer.setTimeline(scheme.getConfig('tFinal'), 10);
-visualizer.addDataset('REF', 'exact');
-visualizer.addDataset(scheme.getConfig('xId'), 'numeric');
-
-switch config.nDims
-    case 1
-        visualizer.addPlotter('profile', '1d');
-    case 2
-        %         visualizer.addPlotter('profile', '2d');
-        visualizer.addPlotter('slice', 'slice1d');
-    case 3
-        %         visualizer.addPlotter('profile', '3d');
-        visualizer.addPlotter('slice', 'slice1d');
-end
-
-% Configure analyzer
-analyzer = scheme.getConfig('analyzer');
-analyzer.setNLevels(5);
-analyzer.setDensity(4^config.nDims);
+scheme = physics.advection.(cls)(config) ...
+    .setTimeDiscretization(config.tDiscId, config.tFinal) ...
+    .setTimer(config.verbose) ...
+    .setVisualizer( ...
+    'experimentId', config.experimentId, ...
+    'schemeId', config.schemeId, ...
+    'nDims', config.nDims, ...
+    'nTimeNodes', 10, ...
+    'final', config.tFinal, ...
+    'density', ones(1, config.nDims), ...
+    'components', struct('U', 1)) ...
+    .setAnalyzer( ...
+    'nLevels', 5, ...
+    'reductions', {'L1', 'L2', 'Lx'}, ...
+    'density', repmat(4, 1, config.nDims), ...
+    'components', struct('U', 1)) ...
+    .addDataset('DG', 2) ...
+    .addStyle('DG', {'Color', 'b', 'Marker', 'o', 'LineStyle', 'none'}) ...
+    .addDataset('REF', ~isempty(config.exact)) ...
+    .addStyle('REF', {'Color', 'r', 'Marker', 'none', 'LineStyle', '-'});
 
 %% SIMULATION EXECUTION
 
-switch config.schemeName
-    case 'sldg'
-        switch scheme.getConfig('xBasisType')
-            case 'modal'
-                xElement = approx.element.BH1SLOrthotopeElement.modal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'), ...
-                    pattern=scheme.getConfig('xBasisPattern'));
-            case 'nodal'
-                xElement = approx.element.BH1SLOrthotopeElement.nodal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'));
-        end
-    case 'uwdg'
-        switch scheme.getConfig('xBasisType')
-            case 'modal'
-                xElement = approx.element.BH1OrthotopeElement.modal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'), ...
-                    pattern=scheme.getConfig('xBasisPattern'));
-            case 'nodal'
-                xElement = approx.element.BH1OrthotopeElement.nodal(config.nDims, ...
-                    scheme.getConfig('xBasisOrder'));
-        end
+if contains(config.xDiscId, 'sl')
+    xDisc = approx.discretization.SemiLagrangianFiniteElementDiscretization() ...
+        .setDgOrthotopeElement( ...
+        'nDims', config.nDims, ...
+        'order', config.xBasisOrder, ...
+        'basisType', config.xBasisType, ...
+        'basisPattern', config.xBasisPattern ...
+        ) ...
+        .setElementOperator() ...
+        .setDerivativeOrder(1) ...
+        .setElementClipper(config.advection) ...
+        .setSemiLagrangianElementOperator();
+else
+    xDisc = approx.discretization.FiniteElementDiscretization() ...
+        .setDgOrthotopeElement( ...
+        'nDims', config.nDims, ...
+        'order', config.xBasisOrder, ...
+        'basisType', config.xBasisType, ...
+        'basisPattern', config.xBasisPattern ...
+        ) ...
+        .setElementOperator() ...
+        .setDerivativeOrder(1);
 end
 
-if ~analyzer.HasExact
-    %< Mesh initialization
-    xMesh = approx.mesh.UniformGrid(config.xBBox, config.nx/2);
-    xDisc = approx.space.FiniteElementSpace(xMesh, xElement);
-    state = physics.state.SpatialState(xDisc);
-    state = scheme.converge(state);
+if isempty(config.exact)
+    xDisc = xDisc.setUniformGrid(config.nx/2, config.xBBox).setMeshSpace();
+    coarse = physics.State(xDisc);
+    coarse = scheme.initialize(coarse);
+    coarse = scheme.run(coarse);
+    xDisc = xDisc.refineMesh(2);
 else
-    %< Mesh initialization
-    xMesh = approx.mesh.UniformGrid(config.xBBox, config.nx);
-    xDisc = approx.space.FiniteElementSpace(xMesh, xElement);
-    state = physics.state.SpatialState(xDisc);
-    state = scheme.converge(state);
+    xDisc = xDisc.setUniformGrid(config.nx, config.xBBox).setMeshSpace();
+    coarse = [];
+end
+
+for i = 1:scheme.analyzer.profiler.nLevels
+    fine = physics.State(xDisc);
+    fine = scheme.initialize(fine);
+    fine = scheme.run(fine);
+    if isempty(coarse)
+        fine = scheme.finalize(fine);
+    else
+        fine = scheme.finalize(fine, coarse);
+    end
+    if ~isempty(coarse), coarse = fine; end
+    xDisc = xDisc.refineMesh(2);
+end
+
+%% ANALYSIS
+results = scheme.analyzer.analyze();
+varNames = fieldnames(results);
+for iVar = 1:length(varNames)
+    varName = varNames{iVar};
+    disp(results.(varName));
 end
 
 %% HELPER FUNCTIONS
@@ -112,20 +127,14 @@ f = sin(z);
 end
 
 function h = uExact(c, omega)
-h = @(x, varargin) uExactImpl(c, omega, x, varargin{:});
+h = @(x, t) uExactImpl(x, t, c, omega);
 end
 
-function f = uExactImpl(c, omega, x, options)
-arguments
-    c
-    omega
-    x
-    options.t
-end
-z = omega(:).' * (x - c(:) * options.t);
-f = sin(z);
+function f = uExactImpl(x, t, c, omega)
+    z = omega(:).' * (x - c(:) * t);
+    f = sin(z);
 end
 
 function h = uBc(c, omega)
-h = @(x, varargin) uExactImpl(c, omega, x, varargin{:});
+h = @(i, x, t) uExactImpl(x, t, c, omega);
 end

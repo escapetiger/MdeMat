@@ -21,6 +21,26 @@ classdef FeIntegrator < approx.odeint.OdeIntegrator
     %   \f$\lambda\f$, the stability condition is \f$|1 + \lambda \Delta t|
     %   \leq 1\f$.
     %
+    % Examples:
+    %   % Basic usage with all terms
+    %   integrator = approx.odeint.FeIntegrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Pure advection (only nonlinear term)
+    %   U_new = integrator.step([], F, [], []);
+    %
+    %   % Forced system (linear + source)
+    %   U_new = integrator.step(L, [], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, F, S, M);
+    %
+    % Notes:
     %   Forward Euler is conditionally stable and may require very small
     %   time steps for stiff problems. Use implicit methods for better
     %   stability properties with stiff systems.
@@ -30,7 +50,7 @@ classdef FeIntegrator < approx.odeint.OdeIntegrator
     %   approx.odeint.ExrkIntegrator
 
     properties (Constant)
-        Order = 1 % Accuracy order of the Forward Euler method
+        ORDER = 1 % Accuracy order of the Forward Euler method
     end
 
     methods
@@ -39,134 +59,149 @@ classdef FeIntegrator < approx.odeint.OdeIntegrator
             %
             %   obj = FeIntegrator(final) creates a Forward Euler integrator
             %   with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
-
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed FeIntegrator object
+            
             obj@approx.odeint.OdeIntegrator(1, 1, final);
         end
 
-        function obj = reset(obj, options)
-            % RESET Reset the FE integrator to initial state.
+        function obj = setLhs(obj, M)
+            % SETLHS Set the left-hand side matrix for the Forward Euler
+            % system.
             %
-            %   obj = reset(obj) calls the parent reset method and resets
-            %   the underlying linear solver.
-
-            arguments
-                obj approx.odeint.FeIntegrator
-                options.linOpts struct = struct() % Linear solver options
-            end
-
-            reset@approx.odeint.OdeIntegrator(obj);
-
-            args = namedargs2cell(options.linOpts);
-            obj.Solver = core.linalg.LinearSolver(args{:});
-        end
-
-        function U = step(obj, options)
-            % STEP Advance one time step using Forward Euler method.
+            %   obj = setLhs(obj, M) sets the left-hand side matrix to the
+            %   mass operator.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M) performs a complete time step
-            %   using the explicit Forward Euler method. For Forward Euler,
-            %   this is equivalent to computing a single stage.
+            % Inputs:
+            %   obj - The FeIntegrator object
+            %   M - Mass operator (matrix or empty)
+            %
+            % Outputs:
+            %   obj - The FeIntegrator object
 
-            arguments
-                obj approx.odeint.FeIntegrator
-                options.L = [] % Linear operator
-                options.F = [] % Nonlinear operator
-                options.S = [] % Source term
-                options.M = [] % Mass operator
-                options.dt = [] % Time step override
-                options.fn = [] % Custom step function
-            end
-
-            if ~isempty(options.fn)
-                U = options.fn(obj, options);
-                return;
-            end
-
-            if ~isempty(options.dt)
-                dt = options.dt;
-            else
-                dt = obj.Timeline.StepSize;
-            end
-
-            U = obj.stage(options.L, options.F, options.S, options.M, dt);
+            obj.lhs = M;
         end
-    end
+        
+        function obj = setRhs(obj, L, F, S, M)
+            % SETRHS Set the right-hand side vector for the Forward Euler
+            % system.
+            %
+            %   obj = setRhs(obj, L, F, S, M) constructs the right-hand
+            %   side vector using the explicit Forward Euler formula: M*U0
+            %   + dt*(L*U0 + F + S).
+            %
+            % Inputs:
+            %   obj - The FeIntegrator object
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear term (function, vector, or empty)
+            %   S - Source term (vector, function, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   obj - The FeIntegrator object
 
-    methods (Access = protected)
-        function obj = setLhs(obj, M, dt, t)
-            % SETLhs Set the left-hand side matrix for the Forward Euler system.
-
-            %< Evaluate mass operator for LHS
-            Me = obj.evalMLhs(M, t);
-
-            obj.Solver.setLhs(Me);
-            obj.Solver.precompute();
-        end
-
-        function obj = setRhs(obj, Le, F, S, M, dt, t)
-            % SETRhs Set the right-hand side vector for the Forward Euler system.
-
+            dt = obj.timeline.dt;
             U0 = obj.U0{1};
-            t0 = t(end);
-
-            %< Evaluate RHS mass operator
-            Me = obj.evalMRhs([], M, t);
 
             %< Add mass term contribution from previous solution
-            if isempty(Me)
-                Rhs = U0;
-            elseif iscell(Me)
-                Rhs = Me{2} * U0;
-                if ~isempty(Me{1})
-                    Rhs = Rhs + Me{1};
+            if isempty(M)
+                obj.rhs = U0;
+            elseif iscell(M)
+                obj.rhs = M{2} * U0;
+                if ~isempty(M{1})
+                    obj.rhs = obj.rhs + M{1};
                 end
             else
-                Rhs = Me * U0;
+                obj.rhs = M * U0;
             end
 
-            %< Add linear operator contribution: dt*L*U0
-            if ~isempty(Le)
-                Rhs = Rhs + dt * Le * U0;
+            %< Add linear term contribution: dt*L*U0
+            if ~isempty(L)
+                obj.rhs = obj.rhs + dt * L * U0;
             end
-
+            
             %< Add nonlinear term contribution: dt*F(U0)
             if ~isempty(F)
-                Fe = obj.evalOp(F, U0, t0);
-                Rhs = Rhs + dt * Fe;
+                obj.rhs = obj.rhs + dt * F;
             end
-
+            
             %< Add source term contribution: dt*S(t0)
             if ~isempty(S)
-                Se = obj.evalOp(S, U0, t0);
-                Rhs = Rhs + dt * Se;
+                obj.rhs = obj.rhs + dt * S;
             end
-
-            obj.Solver.setRhs(Rhs);
         end
 
-        function U = stage(obj, L, F, S, M, dt)
+        function U = stage(obj, L, F, S, M)
             % STAGE Compute the single stage of Forward Euler method.
-
-            t0 = obj.Timeline.Now;
+            %
+            %   U = stage(obj, L, F, S, M) computes the solution at the next
+            %   time step using the explicit Forward Euler formula. For
+            %   Forward Euler, there is only one stage per time step.
+            %
+            % Inputs:
+            %   obj - The FeIntegrator object
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (vector, function, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution approximation at current stage
+            
+            t0 = obj.timeline.now;
+            dt = obj.timeline.dt;
             U0 = obj.U0{1};
 
-            %< Evaluate linear operator at current time and state
-            Le = obj.evalOp(L, U0, [t0, t0]);
+            %< Evaluate linear term at initial time
+            Le = obj.evaluateOperator(L, U0, t0);
 
-            %< Update Lhs matrix if step size changed
-            if obj.Timeline.HasStepSizeChanged
-                obj.setLhs(M, dt, t0+dt);
+            %< Evaluate nonlinear term at current solution
+            Fe = obj.evaluateOperator(F, U0, t0);
+
+            %< Evaluate source term at current time
+            Se = obj.evaluateOperator(S, U0, t0);
+
+            %< Update LHS matrix if step size changed
+            if obj.timeline.hasStepSizeChanged
+                %< Evaluate LHS mass term
+                Me = obj.evaluateLhsMass(M, t0 + dt);
+
+                %< Construct LHS matrix
+                obj.setLhs(Me);
             end
 
-            %< Construct Rhs vector with explicit formula
-            obj.setRhs(Le, F, S, M, dt, [t0+dt, t0]);
+            %< Evaluate RHS mass term at current time level
+            Me = obj.evaluateRhsMass([], M, [t0+dt, t0]);
 
+            %< Construct RHS vector
+            obj.setRhs(Le, Fe, Se, Me);
+            
             %< Solve the linear system
-            U = obj.Solver.solve();
+            U = obj.solver.solve(obj.lhs, obj.rhs);
+        end
+
+        function U = step(obj, L, F, S, M)
+            % STEP Advance one time step using Forward Euler method.
+            %
+            %   U = step(obj, L, F, S, M) performs a complete time step
+            %   using the explicit Forward Euler method. For Forward Euler,
+            %   this is equivalent to computing a single stage.
+            %
+            % Inputs:
+            %   obj - The FeIntegrator object
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (vector, function, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution at the next time step
+
+            U = obj.stage(L, F, S, M);
         end
     end
 end
