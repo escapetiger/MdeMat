@@ -9,21 +9,21 @@ classdef TestSimplex < matlab.unittest.TestCase
         function testConstructor(testCase)
             vertices1D = [0, 1];
             simplex1D = core.geometry.Simplex(vertices1D);
-            testCase.verifyEqual(simplex1D.NDims, 1);
-            testCase.verifyEqual(simplex1D.Vertices, vertices1D);
-            testCase.verifySize(simplex1D.Faces, [1, 2]);
+            testCase.verifyEqual(simplex1D.nDims, 1);
+            testCase.verifyEqual(simplex1D.vertices, vertices1D);
+            testCase.verifySize(simplex1D.faces, [1, 2]);
             
             vertices2D = [0, 1, 0; 0, 0, 1];
             simplex2D = core.geometry.Simplex(vertices2D);
-            testCase.verifyEqual(simplex2D.NDims, 2);
-            testCase.verifyEqual(simplex2D.Vertices, vertices2D);
-            testCase.verifySize(simplex2D.Faces, [1, 3]);
+            testCase.verifyEqual(simplex2D.nDims, 2);
+            testCase.verifyEqual(simplex2D.vertices, vertices2D);
+            testCase.verifySize(simplex2D.faces, [1, 3]);
             
             vertices3D = [0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1];
             simplex3D = core.geometry.Simplex(vertices3D);
-            testCase.verifyEqual(simplex3D.NDims, 3);
-            testCase.verifyEqual(simplex3D.Vertices, vertices3D);
-            testCase.verifySize(simplex3D.Faces, [1, 4]);
+            testCase.verifyEqual(simplex3D.nDims, 3);
+            testCase.verifyEqual(simplex3D.vertices, vertices3D);
+            testCase.verifySize(simplex3D.faces, [1, 4]);
         end
         
         function testConstructorErrors(testCase)
@@ -156,7 +156,7 @@ classdef TestSimplex < matlab.unittest.TestCase
                     point = points(:, i, j);
                     baryCoord = baryCoords(:, i, j);
                     testCase.verifyEqual(sum(baryCoord), 1, 'AbsTol', testCase.Tolerance);
-                    testCase.verifyEqual(simplex.Vertices * baryCoord, point, 'AbsTol', testCase.Tolerance);
+                    testCase.verifyEqual(simplex.vertices * baryCoord, point, 'AbsTol', testCase.Tolerance);
                 end
             end
         end

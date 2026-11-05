@@ -1,289 +1,293 @@
 classdef Timer < handle
-    % TIMER High-precision timing framework for performance measurement.
+    % TIMER Measure elapsed time for multiple operations.
     %
-    %   Timer manages a collection of named timing records with mutually
-    %   exclusive operation (only one record can be active at any time).
-    %   It provides comprehensive timing functionality including start/stop
-    %   operations, duration accumulation, and formatted reporting.
+    %   Timer provides a framework for measuring and reporting execution
+    %   time across multiple operations. Manages a collection of Record
+    %   objects with mutually exclusive timing (only one record active
+    %   at a time).
     %
-    %   The Timer class maintains an array of Record objects, each tracking
-    %   a specific operation or phase. When a record is started, all other
-    %   records must be stopped to ensure accurate measurements. Timing
-    %   data accumulates across multiple start/stop cycles for the same
-    %   record, allowing measurement of iterative or multi-phase
-    %   operations.
+    % Examples:
+    %   % Basic usage cycle
+    %   timer = core.chrono.Timer({'Setup', 'Computation', 'IO'});
     %
-    % See also:
+    %   timer.startByName('Setup');
+    %   pause(0.1);  % Simulate setup operations
+    %   timer.stopByName('Setup');
+    %
+    %   timer.startByName('Computation', 'Starting main calculation...');
+    %   pause(0.2);  % Simulate computation
+    %   timer.stopByName('Computation');
+    %
+    %   % Generate report
+    %   timer.report();  % Display timing summary with percentages
+    %
+    % See Also:
     %   core.chrono.Record
 
     properties
-        Records % Array of Record objects for timing measurement
-        Verbose % Controls display of status messages
+        records % Array of Record objects for timing measurement
+        verbose % Controls display of status messages
     end
 
     methods
-        function obj = Timer(options)
-            % TIMER Construct Timer instance with optional timing records.
+        function obj = Timer(names, verbose)
+            % TIMER Constructor for Timer class.
             %
-            %   obj = Timer() creates an empty Timer object with no records
-            %   and enables verbose output.
+            %   obj = Timer(names) creates a Timer object with the
+            %   specified record names and sets @a verbose = 1.
             %
-            %   obj = Timer(names={"rec1", "rec2"}) creates a Timer object
-            %   with the specified record names and enables verbose output.
+            %   obj = Timer(names, verbose) creates a Timer object with the
+            %   specified record names and verbose flag.
             %
-            %   obj = Timer(verbose=false) creates a Timer object with no
-            %   records and disables message output.
+            % Inputs:
+            %   names - Record names
+            %   verbose - Verbose flag (optional, default: 1) 
             %
-            %   obj = Timer(names={"rec1"}, verbose=false) creates a Timer
-            %   with specified records and controls message output.
+            % Outputs:
+            %   obj - The constructed Timer object
 
-            arguments
-                options.names {mustBeA(options.names, 'cell')} = {}
-                options.verbose {mustBeNumericOrLogical} = true
-            end
+            if nargin < 2, verbose = true; end
 
-            if ~isempty(options.names)
-                n = length(options.names);
-                obj.Records = arrayfun(@(k) core.chrono.Record(options.names{k}), 1:n);
-            else
-                obj.Records = core.chrono.Record.empty(0, 1);
-            end
+            core.except.assert(nargin >= 1, 'InvalidInput', ...
+                'A cell array of record names is required.');
 
-            obj.Verbose = options.verbose;
+            core.except.assert(iscell(names), 'InvalidInput', ...
+                'Record names must be provided as a cell array.');
+
+            n = length(names);
+            obj.records = arrayfun(@(k) core.chrono.Record(names{k}), 1:n);
+            obj.verbose = verbose;
         end
 
-        function record = find(obj, name)
-            % FIND Find the record with the specified name.
+        function start(obj, idx, msg)
+            % START Start timing a record by index.
             %
-            %   record = find(obj, name) returns record by name.
+            %   start(obj, idx) starts timing the record at the specified
+            %   @a idx.
+            %
+            %   start(obj, idx, msg) starts timing the record at the
+            %   specified @a idx and displays @a msg if @a verbose > 0.
+            %
+            % Inputs:
+            %   obj - The Timer object
+            %   idx - Record index
+            %   msg - Message (optional, default: '') 
+            %
+            % Outputs:
+            %   NULL
 
-            record = [];
-            for i = 1:length(obj.Records)
-                if strcmp(obj.Records(i).Name, name)
-                    record = obj.Records(i);
-                    break;
-                end
-            end
-        end
+            core.except.assert(nargin >= 2, 'MissingIndex', ...
+                'Record index must be provided.');
 
-        function obj = start(obj, options)
-            % START Begin timing measurement by creating or reusing a
-            % record.
-            %
-            %   obj = start(obj) creates a new anonymous record and starts
-            %   timing.
-            %
-            %   obj = start(obj, msg="message") creates a new anonymous
-            %   record, starts timing, and displays the message if verbose
-            %   output is enabled.
-            %
-            %   obj = start(obj, record="recordName") starts timing for the
-            %   specified named record. Creates the record if it doesn't
-            %   exist.
-            %
-            %   obj = start(obj, msg="message", record="recordName") starts
-            %   timing for the specified record with message display.
+            if nargin < 3, msg = ''; end
 
-            arguments
-                obj core.chrono.Timer
-                options.msg {mustBeTextScalar} = ""
-                options.record {mustBeTextScalar} = ""
-            end
+            n = numel(obj.records);
+            core.except.assert(idx >= 1 && idx <= n, ...
+                'InvalidIndex', 'Invalid record index: %d', idx);
 
             [isRunning, activeRecord] = obj.isAnyRecordActive();
             if isRunning
                 core.except.assert(0, 'recordAlreadyActive', ...
                     ['Record %s is already running.', ...
                     ' Please stop it before starting a new record.'], ...
-                    activeRecord.Name);
+                    activeRecord.name);
             end
 
-            if strlength(options.record) > 0
-                idx = obj.findOrCreateRecord(options.record);
-            else
-                idx = obj.createAnonymousRecord();
-            end
+            if ~isempty(msg) && obj.verbose, disp(msg); end
 
-            if strlength(options.msg) > 0 && obj.Verbose
-                disp(options.msg);
-            end
-
-            obj.Records(idx).StartTime = tic;
+            obj.records(idx).startTime = tic;
         end
 
+        function startByName(obj, name, msg)
+            % STARTBYNAME Start timing a record by name.
+            %
+            %   startByName(obj, name) starts a record identified by @a
+            %   name.
+            %
+            %   startByName(obj, name, msg) starts a record identified by
+            %   @a name and displays @a msg if @a verbose > 0.
+            %
+            % Inputs:
+            %   obj - The Timer object
+            %   name - Record name
+            %   msg - Message (optional, default: '')
+            %
+            % Outputs:
+            %   NULL
 
-        function obj = stop(obj, options)
-            % STOP Complete timing measurement and accumulate duration.
-            %
-            %   obj = stop(obj) stops timing for the currently active record.
-            %
-            %   obj = stop(obj, msg="message") stops timing for the currently
-            %   active record and displays the message if verbose output is
-            %   enabled.
-            %
-            %   obj = stop(obj, record="recordName") stops timing for the
-            %   specified named record.
-            %
-            %   obj = stop(obj, msg="message", record="recordName") stops
-            %   timing for the specified record with message display.
+            core.except.assert(nargin >= 2, 'MissingName', ...
+                'Record name must be provided.');
 
-            arguments
-                obj core.chrono.Timer
-                options.msg {mustBeTextScalar} = ""
-                options.record {mustBeTextScalar} = ""
-            end
+            idx = obj.getRecordIndex(name);
 
-            if strlength(options.record) > 0
-                idx = obj.findRecordIndex(options.record);
-                core.except.assert(idx > 0, 'RecordNotFound', ...
-                    'Record "%s" not found.', options.record);
+            if nargin < 3
+                obj.start(idx);
             else
-                idx = obj.getActiveRecordIndex();
+                obj.start(idx, msg);
             end
+        end
 
-            if strlength(options.msg) > 0 && obj.Verbose
-                disp(options.msg);
-            end
+        function stop(obj, idx, msg)
+            % STOP Stop timing a record by index and accumulate elapsed time.
+            %
+            %   stop(obj, idx) stops the record at @a idx and adds
+            %   elapsed time to the record's duration.
+            %
+            %   stop(obj, idx, msg) stops the record at @a idx, adds
+            %   elapsed time to the record's duration and displays @a msg
+            %   if @a verbose > 0.
+            %
+            % Inputs:
+            %   obj - The Timer object
+            %   idx - Record index
+            %   msg - Message (optional, default: '')
+            %
+            % Outputs:
+            %   NULL
 
-            core.except.assert(obj.Records(idx).IsActive, ...
+            core.except.assert(nargin >= 2, 'MissingIndex', ...
+                'Record index must be provided.');
+
+            if nargin < 3, msg = ''; end
+
+            n = numel(obj.records);
+            core.except.assert(idx >= 1 && idx <= n, ...
+                'InvalidIndex', 'Invalid record index: %d', idx);
+
+            if ~isempty(msg) && obj.verbose, disp(msg); end
+
+            core.except.assert(obj.records(idx).isActive(), ...
                 'RecordNotActive', ...
-                'Record "%s" was not started.', obj.Records(idx).Name)
+                'Record "%s" was not started.', obj.records(idx).name)
 
-            elapsed = toc(obj.Records(idx).StartTime);
-            obj.Records(idx).Duration = obj.Records(idx).Duration + elapsed;
-            obj.Records(idx).StartTime = [];
+            elapsed = toc(obj.records(idx).startTime);
+            obj.records(idx).duration = obj.records(idx).duration + elapsed;
+            obj.records(idx).startTime = [];
         end
 
-
-        function obj = reset(obj)
-            % RESET Clear all accumulated timing data.
+        function stopByName(obj, name, msg)
+            % STOPBYNAME Stop timing a record by name.
             %
-            %   obj = reset(obj) resets the accumulated duration of all
-            %   records to zero and clears any active timing operations.
+            %   stopByName(obj, name) stops a record identified by @a name.
+            %
+            %   stopByName(obj, name, msg) stops a record identified by @a
+            %   name and displays @a msg.
+            %
+            % Inputs:
+            %   obj - The Timer object
+            %   name - Record name
+            %   msg - Message (optional, default: '')
+            %
+            % Outputs:
+            %   NULL
 
-            arguments
-                obj core.chrono.Timer
+            core.except.assert(nargin >= 2, ...
+                'MissingName', 'Record name must be provided.');
+
+            idx = obj.getRecordIndex(name);
+
+            if nargin < 3
+                obj.stop(idx);
+            else
+                obj.stop(idx, msg);
             end
+        end
+
+        function reset(obj)
+            % RESET Reset all record durations to zero.
+            %
+            %   reset(obj) resets the accumulated duration of all records
+            %   to zero. Issues warning if any record is currently active.
+            %
+            % Inputs:
+            %   obj - The Timer object
+            %
+            % Outputs:
+            %   NULL
 
             [isRunning, activeRecord] = obj.isAnyRecordActive();
-
-            if isRunning && obj.Verbose
+            if isRunning && obj.verbose
                 core.except.verify(0, 'ResetWhileActive', ...
                     'Resetting timer while record "%s" is active.', ...
-                    activeRecord.Name);
+                    activeRecord.name);
             end
 
-            for i = 1:length(obj.Records), obj.Records(i).reset(); end
+            for i = 1:length(obj.records), obj.records(i).reset(); end
         end
 
-        function obj = report(obj, options)
-            % REPORT Generate formatted timing performance summary.
+        function report(obj, perc, file)
+            % REPORT Print summary of all records and their durations.
             %
-            %   obj = report(obj) generates a formatted report of all
-            %   timing records with durations and percentages.
+            %   report(obj) generates formatted report of all timing records.
             %
-            %   obj = report(obj, perc=false) controls percentage display
-            %   with the perc option.
+            %   report(obj, perc, file) controls percentage
+            %   display and output destination.
             %
-            %   obj = report(obj, file=fid) specifies output destination
-            %   with file identifier.
+            % Inputs:
+            %   obj - The Timer object
+            %   perc - True for show percentages (optional, default: true)
+            %   file - File identifier (optional, default: 1) 
+            %
+            % Outputs:
+            %   NULL
 
-            arguments
-                obj core.chrono.Timer
-                options.perc {mustBeNumericOrLogical} = true
-                options.file {mustBeInteger} = 1
-            end
+            if nargin < 2, perc = true; end
 
-            totalTime = sum([obj.Records.Duration]);
+            if nargin < 3, file = 1; end
 
-            fprintf(options.file, '[R] CPU-times Report.\n');
+            totalTime = sum([obj.records.duration]);
 
-            if options.perc
-                formatStr = '[R] %-18s : %12.2fs %5.0f%%\n';
-                for i = 1:length(obj.Records)
-                    rec = obj.Records(i);
+            fprintf(file, 'CPU-times Summary\n');
+            fprintf(file, '===============\n');
+
+            if perc
+                formatStr = ' %-18s : %12.2fs %5.0f%%\n';
+                for i = 1:length(obj.records)
+                    rec = obj.records(i);
                     if totalTime > 0
-                        pct = (rec.Duration / totalTime) * 100;
+                        pct = (rec.duration / totalTime) * 100;
                     else
                         pct = 0;
                     end
-                    fprintf(options.file, formatStr, rec.Name, rec.Duration, pct);
+                    fprintf(file, formatStr, rec.name, rec.duration, pct);
                 end
-                fprintf(options.file, '[R] %-18s : %12.2fs %5.0f%%\n', ...
-                    'Total', totalTime, 100);
+                fprintf(file, '---------------\n');
+                fprintf(file, ' %-18s : %12.2fs %5.0f%%\n', 'Total', totalTime, 100);
             else
                 formatStr = ' %-18s : %12.2fs\n';
-                for i = 1:length(obj.Records)
-                    rec = obj.Records(i);
-                    fprintf(options.file, formatStr, rec.Name, rec.Duration);
+                for i = 1:length(obj.records)
+                    rec = obj.records(i);
+                    fprintf(file, formatStr, rec.name, rec.duration);
                 end
-                fprintf(options.file, '[R] %-18s : %12.2fs\n', ...
-                    'Total', totalTime);
+                fprintf(file, '---------------\n');
+                fprintf(file, ' %-18s : %12.2fs\n', 'Total', totalTime);
             end
         end
     end
 
     methods (Access = private)
+        function idx = getRecordIndex(obj, name)
+            % GETRECORDINDEX Get the index of a record by its name.
+
+            names = {obj.records.name};
+            idx = find(strcmp(names, name), 1);
+
+            core.except.assert(~isempty(idx), 'RecordNotFound', ...
+                'Record "%s" not found.', name);
+        end
+
         function [isRunning, activeRecord] = isAnyRecordActive(obj)
-            % ISANYRECORDACTIVE Determine if any timing operation is in
-            % progress.
+            % ISANYRECORDACTIVE Check if any record is currently active.
 
             isRunning = false;
             activeRecord = [];
 
-            for i = 1:length(obj.Records)
-                if obj.Records(i).IsActive
+            for i = 1:length(obj.records)
+                if obj.records(i).isActive()
                     isRunning = true;
-                    activeRecord = obj.Records(i);
+                    activeRecord = obj.records(i);
                     return;
                 end
-            end
-        end
-
-        function idx = createAnonymousRecord(obj)
-            % CREATEANONYMOUSRECORD Create new anonymous record and return
-            % its index.
-
-            recordName = sprintf('Record_%d', length(obj.Records)+1);
-            newRecord = core.chrono.Record(recordName);
-            obj.Records(end+1) = newRecord;
-            idx = length(obj.Records);
-        end
-
-        function idx = getActiveRecordIndex(obj)
-            % GETACTIVERECORDINDEX Find index of currently active record.
-
-            [isRunning, activeRecord] = obj.isAnyRecordActive();
-            core.except.assert(isRunning, 'NoActiveRecord', ...
-                'No record is currently active.');
-
-            names = [obj.Records.Name];
-            idx = find(strcmp(names, activeRecord.Name), 1);
-        end
-
-        function idx = findRecordIndex(obj, recordName)
-            % FINDRECORDINDEX Find index of record by name.
-
-            if isempty(obj.Records)
-                idx = 0;
-                return;
-            end
-
-            names = [obj.Records.Name];
-            idx = find(strcmp(names, recordName), 1);
-            if isempty(idx)
-                idx = 0;
-            end
-        end
-
-        function idx = findOrCreateRecord(obj, recordName)
-            % FINDORCREATERECORD Find existing record or create new one.
-
-            idx = obj.findRecordIndex(recordName);
-            if idx == 0
-                newRecord = core.chrono.Record(recordName);
-                obj.Records(end+1) = newRecord;
-                idx = length(obj.Records);
             end
         end
     end

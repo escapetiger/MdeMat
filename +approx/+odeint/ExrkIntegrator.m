@@ -19,26 +19,24 @@ classdef ExrkIntegrator < approx.odeint.OdeIntegrator
     %   non-stiff problems but may require small time steps for stability
     %   when applied to stiff systems.
     %
-    %   Augmented systems with constraints:
+    % Examples:
+    %   % Basic usage with all terms
+    %   integrator = approx.odeint.Exrk4Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
     %
-    %   \f[
-    %     \begin{bmatrix}
-    %       M \\
-    %       A
-    %     \end{bmatrix}
-    %     \frac{\mathrm{d}}{\mathrm{d}t}
-    %     \begin{bmatrix}
-    %       u \\
-    %       \lambda
-    %     \end{bmatrix}
-    %     =
-    %     \begin{bmatrix}
-    %       Lu + P\lambda + F(u) + S \\
-    %       C
-    %     \end{bmatrix}
-    %   \f]
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], [], []);
     %
-    %   where P, A, B, C represent constraint coupling terms.
+    %   % Pure nonlinear dynamics
+    %   U_new = integrator.step([], F, [], []);
+    %
+    %   % Linear system with forcing
+    %   U_new = integrator.step(L, [], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, F, S, M);
     %
     % See also:
     %   approx.odeint.OdeIntegrator, approx.odeint.DirkIntegrator,
@@ -49,7 +47,6 @@ classdef ExrkIntegrator < approx.odeint.OdeIntegrator
         b % Stage weights vector for final update
         c % Stage time coefficients vector
         K % Cell array of derivative approximations for each stage
-        AugmentSolver % Linear solver for augmented constraint solve
     end
 
     methods
@@ -59,222 +56,190 @@ classdef ExrkIntegrator < approx.odeint.OdeIntegrator
             %   obj = ExrkIntegrator(nStages, final) creates an explicit
             %   Runge-Kutta integrator with the specified number of stages
             %   and final time.
-
-            arguments
-                nStages {mustBePositive, mustBeInteger}
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   nStages - Number of stages for the explicit RK method (positive integer)
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed ExrkIntegrator object
 
             obj@approx.odeint.OdeIntegrator(1, nStages, final);
         end
 
-        function obj = reset(obj, options)
-            % RESET Reset the EXRK integrator to initial state.
+        function reset(obj)
+            % RESET Reset the explicit RK integrator to initial state.
             %
-            %   obj = reset(obj) clears the derivative approximation
-            %   storage and calls the parent reset method.
-
-            arguments
-                obj approx.odeint.ExrkIntegrator
-                options.linOpts struct = struct() % Linear solver options
-            end
+            %   reset(obj) clears the derivative approximation storage
+            %   and calls the parent reset method.
+            %
+            % Inputs:
+            %   obj - The ExrkIntegrator object
+            %
+            % Outputs:
+            %   NULL
 
             reset@approx.odeint.OdeIntegrator(obj);
-            obj.K = cell(obj.NStages, 1);
-
-            args = namedargs2cell(options.linOpts);
-            obj.Solver = cell(1, obj.NStages+1);
-            for i = 1 : obj.NStages+1
-                obj.Solver{i} = core.linalg.LinearSolver(args{:});
-            end
-            obj.AugmentSolver = core.linalg.LinearSolver(args{:});
+            obj.K = cell(obj.nStages, 1);
         end
 
-        function U = step(obj, options)
-            % STEP Advance one time step using the explicit RK method.
+        function setLhs(obj, i, M)
+            % SETLHS Set the mass matrix for explicit solve at stage i.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M) performs a complete time step by
-            %   evaluating all stages explicitly and combining them according
-            %   to the Butcher tableau weights. Empty terms contribute zero
-            %   to all stages.
+            %   setLhs(obj, i, M) sets the left-hand side matrix to the
+            %   mass operator for stage i. For explicit methods, this is
+            %   used to solve M*K = RHS for the derivative approximation.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M, P=P, A=A, B=B, C=C) performs
-            %   a complete time step for augmented systems with constraints.
+            % Inputs:
+            %   obj - The ExrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   M - Mass operator (matrix or empty)
+            %
+            % Outputs:
+            %   NULL
 
-            arguments
-                obj approx.odeint.ExrkIntegrator
-                options.L = [] % Linear operator
-                options.F = [] % Nonlinear operator
-                options.S = [] % Source term
-                options.M = [] % Mass operator
-                options.P = [] % Coupling operator (triggers augmented mode)
-                options.A = [] % Constraint matrix (triggers augmented mode)
-                options.B = [] % Constraint coupling matrix
-                options.C = [] % Constraint source term
-                options.dt = [] % Time step override
-                options.fn = [] % Custom step function
-            end
-
-            if ~isempty(options.fn)
-                U = options.fn(obj, options);
-                return;
-            end
-
-            if ~isempty(options.dt)
-                dt = options.dt;
-            else
-                dt = obj.Timeline.StepSize;
-            end
-
-            t0 = obj.Timeline.Now;
-            U0 = obj.U0{1};
-            s = obj.NStages;
-
-            %< Compute all stage approximations
-            for i = 1:s
-                obj.stage(i, options.L, options.F, options.S, options.M, ...
-                    options.P, options.A, options.B, options.C, dt, []);
-            end
-
-            isAugmented = ~isempty(options.P) || ~isempty(options.A) || ~isempty(options.B) || ~isempty(options.C);
-
-            %< Update Lhs matrix for final solve if step size changed or custom dt provided
-            if obj.Timeline.HasStepSizeChanged || ~isempty(options.dt)
-                %< Evaluate Lhs mass term
-                Me = obj.evalMLhs(options.M, t0+dt);
-
-                %< Construct Lhs matrix
-                obj.setLhs(s+1, Me, dt, t0+dt);
-            end
-
-            %< Evaluate mass term for final solve
-            Me = obj.evalMRhs(s+1, options.M, [t0+dt, t0]);
-
-            %< Add mass term contribution from previous solution
-            if isAugmented
-                if isempty(Me)
-                    Rhs = U0(1:size(Me, 2));
-                elseif iscell(Me)
-                    Rhs = Me{2} * U0(1:size(Me{2}, 2));
-                    if ~isempty(Me{1})
-                        Rhs = Rhs + Me{1};
-                    end
-                else
-                    Rhs = Me * U0(1:size(Me, 2));
-                end
-            else
-                if isempty(Me)
-                    Rhs = U0;
-                elseif iscell(Me)
-                    Rhs = Me{2} * U0;
-                    if ~isempty(Me{1})
-                        Rhs = Rhs + Me{1};
-                    end
-                else
-                    Rhs = Me * U0;
-                end
-            end
-
-            %< Add weighted stage derivatives
-            for i = 1:s
-                Rhs = Rhs + dt * obj.b(i) * obj.K{i};
-            end
-
-            obj.Solver{s+1}.setRhs(Rhs);
-
-            %< Solve for final step approximation using stateful API
-            if isAugmented
-                U = obj.Solver{s+1}.solve();
-                obj.AugmentSolver.setLhs(options.B);
-                obj.AugmentSolver.setRhs(-options.A * U + options.C);
-                Ua = obj.AugmentSolver.solve();
-                U = [U; Ua];
-            else
-                U = obj.Solver{s + 1}.solve();
-            end
-        end
-    end
-
-    methods (Access = protected)
-        function obj = setLhs(obj, i, M, dt, t)
-            % SETLhs Set the mass matrix for explicit solve at stage i.
-
-            %< Evaluate mass operator for LHS
-            Me = obj.evalMLhs(M, t);
-
-            obj.Solver{i}.setLhs(Me);
-            obj.Solver{i}.precompute();
+            obj.lhs{i} = M;
         end
 
-        function obj = setRhs(obj, i, M, C, dt, t)
-            % SETRhs Set the right-hand side vector for stage i.
+        function setRhs(obj, i, M)
+            % SETRHS Set the right-hand side vector for stage i.
+            %
+            %   setRhs(obj, i, M) constructs the right-hand side vector
+            %   using mass operator and accumulated previous stages.
+            %
+            % Inputs:
+            %   obj - The ExrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   NULL
 
+            dt = obj.timeline.h(1);
             U0 = obj.U0{1};
 
-            %< Evaluate RHS mass operator
-            Me = obj.evalMRhs(i, M, t);
-
             %< Add mass term contribution from previous solution
-            if isempty(Me)
-                Rhs = U0;
-            elseif iscell(Me)
-                Rhs = Me{2} * U0;
-                if ~isempty(Me{1})
-                    Rhs = Rhs + Me{1};
+            if isempty(M)
+                obj.rhs{i} = U0;
+            elseif iscell(M)
+                obj.rhs{i} = M{2} * U0;
+                if ~isempty(M{1})
+                    obj.rhs{i} = obj.rhs{i} + M{1};
                 end
             else
-                Rhs = Me * U0;
+                obj.rhs{i} = M * U0;
             end
 
             %< Add accumulated term from previous stages
             for j = 1:(i - 1)
-                Rhs = Rhs + dt * obj.A(i, j) * obj.K{j};
+                obj.rhs{i} = obj.rhs{i} + dt * obj.A(i, j) * obj.K{j};
             end
-
-            obj.Solver{i}.setRhs(Rhs);
         end
 
-        function U = stage(obj, i, L, F, S, M, P, A, B, C, dt, U)
+        function U = stage(obj, i, L, F, S, M)
             % STAGE Compute stage i of the explicit RK method.
+            %
+            %   U = stage(obj, i, L, F, S, M) computes the solution at stage i
+            %   by evaluating all terms explicitly and computing the derivative
+            %   approximation for use in subsequent stages.
+            %
+            % Inputs:
+            %   obj - The ExrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (vector, function, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution approximation at stage i
 
-            if ~isempty(U)
-                U0 = U;
+            t0 = obj.timeline.now;
+            dt = obj.timeline.h(1);
+            U0 = obj.U0{1};
+
+            %< Evaluate linear term at initial time
+            if isempty(L)
+                Le = [];
+            elseif isa(L, 'function_handle')
+                Le = L(t0);
             else
-                U0 = obj.U0{1};
+                Le = L;
             end
 
-            t0 = obj.Timeline.Now;
-
-            %< Evaluate operators at U0 (previous time step solution)
-            Le = obj.evalOp(L, U0, [t0, t0]);
-            Se = obj.evalOp(S, U0, [t0+obj.c(i)*dt, t0]);
-            Pe = obj.evalOp(P, U0, [t0, t0]);
-
-            %< Update Lhs matrix if step size changed
-            if obj.Timeline.HasStepSizeChanged
-                obj.setLhs(i, M, dt, t0+obj.c(i)*dt);
+            %< Evaluate source term at stage time
+            if isempty(S)
+                Se = [];
+            elseif isa(S, 'function_handle')
+                Se = S(t0 + obj.c(i) * dt);
+            else
+                Se = S;
             end
 
-            %< Construct Rhs vector
-            obj.setRhs(i, M, C, dt, [t0+obj.c(i)*dt, t0]);
+            %< Update LHS matrix if step size changed
+            if obj.timeline.hasStepSizeChanged
+                %< Evaluate LHS mass term
+                if isempty(M)
+                    Me = speye(length(U0));
+                elseif isa(M, 'function_handle')
+                    if isempty(obj.MLhs)
+                        if nargin(M) == 1
+                            obj.MLhs = M(t0 + obj.c(i) * dt);
+                        elseif nargin(M) == 2
+                            [~, obj.MLhs] = M(t0 + obj.c(i) * dt, t0 + obj.c(i) * dt);
+                        end
+                    end
+                    Me = obj.MLhs;
+                else
+                    Me = M;
+                end
 
-            %< Solve for stage approximation using stateful API
-            U = obj.Solver{i}.solve();
+                %< Construct LHS matrix
+                obj.setLhs(i, Me);
+            end
+
+            %< Evaluate RHS mass term at previous time level
+            if isempty(M)
+                Me = [];
+            elseif isa(M, 'function_handle')
+                if nargin(M) == 1
+                    if isempty(obj.MRhs{i})
+                        obj.MRhs{i} = M(t0);
+                    end
+                    Me = obj.MRhs{i};
+                elseif nargin(M) == 2
+                    Me = cell(1, 2);
+                    if isempty(obj.MRhs{i}) || obj.timeline.hasStepSizeChanged
+                        [Me{1:2}] = M(t0 + obj.c(i) * dt, t0);
+                        obj.MRhs{i} = Me{2};
+                    else
+                        Me{2} = obj.MRhs{i};
+                        Me{1} = M(t0 + obj.c(i) * dt, t0);
+                    end
+                end
+            else
+                Me = M;
+            end
+
+            %< Construct RHS vector
+            obj.setRhs(i, Me);
+
+            %< Solve for stage approximation
+            U = obj.solver.solve(obj.lhs{i}, obj.rhs{i});
 
             %< Evaluate nonlinear term at stage approximation
-            Fe = obj.evalOp(F, U, [t0+obj.c(i)*dt, t0]);
+            if isempty(F)
+                Fe = [];
+            elseif isa(F, 'function_handle')
+                Fe = F(U);
+            else
+                Fe = F;
+            end
 
             %< Compute derivative approximation for this stage
             obj.K{i} = 0;
             if ~isempty(Le)
-                if ~isempty(P) || ~isempty(A) || ~isempty(B) || ~isempty(C)
-                    obj.K{i} = obj.K{i} + Le * U(1:size(Le, 2));
-                else
-                    obj.K{i} = obj.K{i} + Le * U;
-                end
-            end
-            if ~isempty(Pe)
-                obj.K{i} = obj.K{i} + Pe * U(end-size(Pe,2)+1:end);
+                obj.K{i} = obj.K{i} + Le * U;
             end
             if ~isempty(Fe)
                 obj.K{i} = obj.K{i} + Fe;
@@ -282,6 +247,98 @@ classdef ExrkIntegrator < approx.odeint.OdeIntegrator
             if ~isempty(Se)
                 obj.K{i} = obj.K{i} + Se;
             end
+        end
+
+        function U = step(obj, L, F, S, M)
+            % STEP Advance one time step using the explicit RK method.
+            %
+            %   U = step(obj, L, F, S, M) performs a complete time step by
+            %   evaluating all stages explicitly and combining them according
+            %   to the Butcher tableau weights. Empty terms contribute zero
+            %   to all stages.
+            %
+            % Inputs:
+            %   obj - The ExrkIntegrator object
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (vector, function, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution at the next time step
+
+            t0 = obj.timeline.now;
+            dt = obj.timeline.h(1);
+            U0 = obj.U0{1};
+            s = obj.nStages;
+
+            %< Compute all stage approximations
+            for i = 1:s
+                [~] = obj.stage(i, L, F, S, M);
+            end
+
+            %< Update LHS matrix for final solve if step size changed
+            if obj.timeline.hasStepSizeChanged
+                %< Evaluate LHS mass term
+                if isempty(M)
+                    Me = speye(length(U0));
+                elseif isa(M, 'function_handle')
+                    if isempty(obj.MLhs)
+                        if nargin(M) == 1
+                            obj.MLhs = M(t0 + dt);
+                        elseif nargin(M) == 2
+                            [~, obj.MLhs] = M(t0 + dt, t0 + dt);
+                        end
+                    end
+                    Me = obj.MLhs;
+                else
+                    Me = M;
+                end
+                obj.lhs{s + 1} = Me;
+            end
+
+            %< Evaluate mass term for final solve
+            if isempty(M)
+                Me = [];
+            elseif isa(M, 'function_handle')
+                if nargin(M) == 1
+                    if isempty(obj.MRhs{s + 1})
+                        obj.MRhs{s + 1} = M(t0);
+                    end
+                    Me = obj.MRhs{s + 1};
+                elseif nargin(M) == 2
+                    Me = cell(1, 2);
+                    if isempty(obj.MRhs{s + 1}) || obj.timeline.hasStepSizeChanged
+                        [Me{1:2}] = M(t0 + dt, t0);
+                        obj.MRhs{s + 1} = Me{2};
+                    else
+                        Me{2} = obj.MRhs{s + 1};
+                        Me{1} = M(t0 + dt, t0);
+                    end
+                end
+            else
+                Me = M;
+            end
+
+            %< Add mass term contribution from previous solution
+            if isempty(Me)
+                obj.rhs{s + 1} = U0;
+            elseif iscell(Me)
+                obj.rhs{s + 1} = Me{2} * U0;
+                if ~isempty(Me{1})
+                    obj.rhs{s + 1} = obj.rhs{s + 1} + Me{1};
+                end
+            else
+                obj.rhs{s + 1} = Me * U0;
+            end
+
+            %< Add weighted stage derivatives
+            for i = 1:s
+                obj.rhs{s + 1} = obj.rhs{s + 1} + dt * obj.b(i) * obj.K{i};
+            end
+
+            %< Solve for final step approximation
+            U = obj.solver.solve(obj.lhs{s + 1}, obj.rhs{s + 1});
         end
     end
 end

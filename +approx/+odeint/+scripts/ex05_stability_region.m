@@ -291,7 +291,7 @@ for i = 1:length(test_integrators)
     % Time stepping
     stable = true;
     for k = 1:n_steps
-        integrator.setTimeStep(dt=dt_test);
+        integrator.timeline.setTimeStep(dt_test, 1, 1);
         
         % Set coefficients for BDF methods
         if isa(integrator, 'approx.odeint.BdfIntegrator')
@@ -300,13 +300,13 @@ for i = 1:length(test_integrators)
         
         % Call appropriate step method based on integrator type
         if strcmp(test_types{i}, 'Implicit')
-            U_new = integrator.step(L=lambda_test, S=[], M=[]);
+            U_new = integrator.step(lambda_test, [], []);
         elseif strcmp(test_types{i}, 'Explicit')
             % For explicit methods, treat λu as nonlinear term
             F_eval = lambda_test * integrator.U0{1};
-            U_new = integrator.step(L=[], F=F_eval, S=[], M=[]);
+            U_new = integrator.step([], F_eval, [], []);
         else % IMEX
-            U_new = integrator.step(L=lambda_test, F=[], S=[], M=[]);
+            U_new = integrator.step(lambda_test, [], [], []);
         end
         
         integrator.update(U_new);

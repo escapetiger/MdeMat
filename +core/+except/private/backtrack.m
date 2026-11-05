@@ -1,12 +1,25 @@
 function outId = backtrack(id)
-% BACKTRACK Construct hierarchical identifier with module context.
+% BACKTRACK Construct a identifier with module context.
 %
 %   outId = backtrack(id) extracts context information from the call stack
-%   to build hierarchical identifiers of the form 'module:caller:identifier'.
-%   The function analyzes the call stack to determine the module path and
-%   calling function, then constructs a contextual identifier.
+%   to build hierarchical identifiers of form 'module:identifier'.
 %
-% See also:
+% Inputs:
+%   id - Base identifier string (e.g., 'InvalidInput')
+%
+% Outputs:
+%   outId - Full identifier with context (e.g., 'core:except:InvalidInput')
+%
+% Examples:
+%   % Basic usage - construct contextual identifier
+%   id = backtrack('InvalidInput');
+%   % Returns something like 'core:except:InvalidInput'
+%
+%   % Usage in error handling
+%   fullId = backtrack('OutOfRange');
+%   error(fullId, 'Parameter value is out of acceptable range.');
+%
+% See Also:
 %   core.except.assert, core.except.verify
 
 LIBRARY = 'MdeMat';

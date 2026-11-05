@@ -21,12 +21,28 @@ classdef Ars222Integrator < approx.odeint.ImexrkIntegrator
     %   A-stability for the implicit part while maintaining second-order
     %   accuracy.
     %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Ars222Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure implicit diffusion
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Mixed implicit-explicit problem
+    %   U_new = integrator.step(L, F, [], []);
+    %
+    %   % Explicit terms only
+    %   U_new = integrator.step([], F, S, []);
+    %
     % See also:
     %   approx.odeint.ImexrkIntegrator, approx.odeint.Ars111Integrator,
     %   approx.odeint.Ars443Integrator
     
     properties (Constant)
-        Order = 2 % Accuracy order of the ARS(2,2,2) method
+        ORDER = 2 % Accuracy order of the ARS(2,2,2) method
     end
 
     methods
@@ -35,10 +51,12 @@ classdef Ars222Integrator < approx.odeint.ImexrkIntegrator
             %
             %   obj = Ars222Integrator(final) creates an ARS(2,2,2) IMEX
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Ars222Integrator object
             
             obj@approx.odeint.ImexrkIntegrator(3, final);
             

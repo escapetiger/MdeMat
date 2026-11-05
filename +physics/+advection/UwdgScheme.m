@@ -1,73 +1,99 @@
-classdef UwdgScheme < physics.advection.AdvectionScheme
-    % UWDGSCHEME Upwind discontinuous Galerkin scheme.
+classdef UwdgScheme < physics.Scheme
+    % UWDGSCHEME Upwind Discontinuous Galerkin scheme.
     %
-    %   UwdgScheme implements an upwind discontinuous Galerkin scheme for
-    %   solving advection equations. The method uses upwind numerical fluxes
-    %   to handle the hyperbolic nature of advection problems, providing
-    %   stability and sharp resolution of solution features.
+    %   UwdgScheme implements an Upwind Discontinuous Galerkin (UWDG)
+    %   method for solving advection equations. The method uses upwind
+    %   numerical fluxes to handle the hyperbolic nature of advection
+    %   problems, providing stability and sharp resolution of solution
+    %   features.
     %
+    %   The UWDG method discretizes the spatial domain using discontinuous
+    %   Galerkin finite elements and handles inter-element communication
+    %   through upwind fluxes, making it particularly suitable for
+    %   transport-dominated problems with sharp gradients or
+    %   discontinuities.
+    %
+    % Examples:
+    %   % Create UWDG scheme with configuration
+    %   config = struct('ic', @(x) sin(x), 'advection', [1], 'cfl', 0.5, ...
+    %                   'bc', [], 'verbose', true);
+    %   scheme = UwdgScheme(config, timeIntegrator, visualizer, analyzer);
+    %   
+    %   % Full simulation workflow
+    %   state = scheme.initialize(initialState);
+    %   finalState = scheme.run(state);
+    %   scheme.finalize(finalState);
+    %
+    % Notes:
     %   The upwind flux selection provides natural stabilization for
     %   hyperbolic problems but may require smaller time steps compared
     %   to semi-Lagrangian methods for stability.
     %
-    % See also:
-    %   physics.scheme.MolScheme, physics.advection.SldgScheme
-
-    properties (Constant)
-        Name = 'UWDG' % Scheme name
-    end
+    % See Also:
+    %   physics.Scheme, physics.advection.SldgScheme,
+    %   fem.assembly.UpwindGridAssembly
 
     properties
-        Assembly % Upwind assembly
+        assembly % Transport assembly for upwind operations
+        operator % Transport operator matrix
     end
 
     methods
-        function obj = UwdgScheme(options)
-            % UWDGSCHEME Construct an instance of UwdgScheme.
-            %
-            %   obj = UwdgScheme() creates an upwind DG scheme with default
-            %   configuration.
-            %
-            %   obj = UwdgScheme(file=file) creates an upwind DG scheme and
-            %   loads configuration from the specified @a filename.
-            %
-            %   obj = UwdgScheme(config=config) creates an upwind DG scheme
-            %   with the specified @a config configuration.
-            %
-            %   obj = UwdgScheme(file=file, config=config) loads
-            %   configuration from file and then overrides with struct
-            %   values.
-            
-            arguments
-                options.file {mustBeTextScalar} = ''
-                options.config struct = struct()
-            end
-            
-            obj@physics.advection.AdvectionScheme(file=options.file, config=options.config);
-            obj.Assembly = [];
-        end
-
         function state = initialize(obj, state)
-            % INITIALIZE Initialize the upwind scheme.
+            % INITIALIZE Initialize the UWDG scheme.
             %
-            %   state = initialize(obj, state) sets up the upwind scheme by
-            %   assembling the advection operator, fitting initial
+            %   state = initialize(obj, state) sets up the upwind
+            %   discontinuous Galerkin scheme by configuring finite element
+            %   data, assembling the advection operator, projecting initial
             %   conditions, and preparing visualization components.
-            
-            arguments
-                obj physics.advection.UwdgScheme
-                state physics.state.SpatialState
+            %
+            % Inputs:
+            %   obj - The UwdgScheme object
+            %   state - Initial solution state structure
+            %
+            % Outputs:
+            %   state - Initialized state ready for time integration
+
+            %< Reset timer
+            obj.timer.reset();
+
+            %< Local data
+            state.disc.x.fe.setVolumeData(1);
+            state.disc.x.fe.setFluxData(0);
+            state.disc.x.op.setVolumeData();
+            state.disc.x.op.setFluxData();
+
+            %< Initial condition
+            state.dofs.U = state.disc.x.space.project(obj.config.ic);
+
+            %< Advection operator
+            obj.assembly = fem.assembly.UpwindGridAssembly( ...
+                state.disc.x.fe, state.disc.x.mesh, state.disc.x.op, ...
+                ~isempty(obj.config.bc));
+            obj.operator = obj.assembly.divergence(obj.config.advection);
+
+            %< Reset time discretization
+            obj.tDisc.reset();
+
+            %< Reset visualizer
+            obj.visualizer.reset();
+            obj.visualizer.addDataset('DG', { ...
+                'Color', 'b', ...
+                'Marker', 'o', ...
+                'LineStyle', 'none'});
+            if obj.visualizer.hasExact
+                obj.visualizer.addDataset('REF', ...
+                    {'Color', 'r', ...
+                    'Marker', 'none', ...
+                    'LineStyle', '-'});
             end
 
-            %< Fit initial condition
-            state.setDof('U', state.XDisc.fit(obj.Config.ic));
-
-            %< Create upwind operator
-            obj.Assembly = approx.assembly.UpwindAssembly(state.XDisc, obj.Config.bcType);
-
-            %< Set linear and source terms
-            obj.setLinearTerm(state);
-            obj.setSourceTerm(state);
+            %< Visualize
+            if obj.visualizer.isEnabled
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.disc.x.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
+            end
         end
 
         function state = preStep(obj, state)
@@ -76,40 +102,46 @@ classdef UwdgScheme < physics.advection.AdvectionScheme
             %   state = preStep(obj, state) performs preprocessing
             %   including time step size computation based on CFL condition
             %   and coefficient updates for multi-step methods.
-            
-            arguments
-                obj physics.advection.UwdgScheme
-                state physics.state.SpatialState
-            end
+            %
+            % Inputs:
+            %   obj - The UwdgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Preprocessed solution state
 
-            if obj.hasConfig('cfl') && ~isempty(obj.Config.cfl)
-                h = state.XDisc.Mesh.computeMeasure();
-                obj.TDisc.setTimeStep(h = h, C = obj.Config.cfl, p = 1);
-            end
-
-            if obj.hasConfig('dt') && ~isempty(obj.Config.dt)
-                obj.TDisc.setTimeStep(dt = obj.Config.dt);
+            h = state.disc.x.mesh.measure;
+            obj.tDisc.timeline.setTimeStep(h, obj.config.cfl);
+            if isa(obj.tDisc, 'approx.odeint.BdfIntegrator')
+                obj.tDisc.setCoefficients();
             end
         end
 
         function state = step(obj, state)
-            % STEP Perform one time step.
+            % STEP Perform one upwind DG time step.
             %
             %   state = step(obj, state) advances the solution by one time
-            %   step using the upwind scheme. The method updates the
-            %   solution history and applies the advection operator with
-            %   appropriate boundary conditions.
-            
-            arguments
-                obj physics.advection.UwdgScheme
-                state physics.state.SpatialState
+            %   step using the upwind discontinuous Galerkin method. The
+            %   method updates the solution history and applies the linear
+            %   advection operator with appropriate boundary conditions.
+            %
+            % Inputs:
+            %   obj - The UwdgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Updated solution state after one time step
+
+            if ~isempty(obj.config.bc)
+                c = obj.config.advection;
+                S = @(t) -obj.assembly.divergenceBc(c, c, obj.config.bc, t);
+            else
+                S = [];
             end
 
-            %< Update ODE integrator with current solution
-            obj.TDisc.update(state.Dofs.U);
-
-            %< Perform ODE integration step
-            state.Dofs.U = obj.TDisc.step(L=obj.L, S=obj.S);
+            obj.tDisc.update(state.dofs.U);
+            L = -obj.operator;
+            state.dofs.U = obj.tDisc.step(L, S, []);
         end
 
         function state = postStep(obj, state)
@@ -118,107 +150,57 @@ classdef UwdgScheme < physics.advection.AdvectionScheme
             %   state = postStep(obj, state) performs postprocessing
             %   including visualization updates and timeline advancement
             %   for the next integration step.
-            
-            arguments
-                obj physics.advection.UwdgScheme
-                state physics.state.SpatialState
-            end
-
-            %< Advance timeline for next step
-            obj.TDisc.advance();
-        end
-
-        function state = finalize(obj, state)
-            % FINALIZE Finalize simulation with scheme and state reporting.
             %
-            %   state = finalize(obj, state) performs final reporting
-            %   including scheme configuration details and state
-            %   information summary.
-            
-            arguments
-                obj physics.advection.UwdgScheme
-                state physics.state.SpatialState
+            % Inputs:
+            %   obj - The UwdgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Postprocessed solution state
+
+            if obj.visualizer.isEnabled
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.disc.x.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
             end
 
-            %< Report state information
-            state.report();
+            obj.tDisc.timeline.advance();
+        end
 
-            fprintf('[R] ODE Integrator: %s\n', class(obj.TDisc));
-            fprintf('[R] Final Time: %.6g\n', obj.Config.tFinal);
-            if obj.hasConfig('cfl') && ~isempty(obj.Config.cfl)
-                fprintf('[R] CFL number: %.3f\n', obj.Config.cfl);
+        function state = finalize(obj, varargin)
+            % FINALIZE Finalize simulation with error analysis.
+            %
+            %   state = finalize(obj, state) performs final error analysis
+            %   for absolute error computation against exact solutions.
+            %
+            %   [fine, coarse] = finalize(obj, fine, coarse) performs
+            %   relative error analysis comparing fine and coarse grid
+            %   solutions for convergence studies.
+            %
+            % Inputs:
+            %   obj - The UwdgScheme object
+            %   varargin - Variable arguments containing state(s) for analysis
+            %
+            % Outputs:
+            %   state - Final processed solution state
+
+            if obj.analyzer.isEnabled
+                obj.timer.start(3, '[M] Error Evaluation.');
+                if length(varargin) == 1
+                    state = varargin{1};
+                    obj.analyzer.setLevel(state.disc.x.mesh);
+                    obj.analyzer.absolute(state.disc.x.space, state.dofs, ...
+                        obj.tDisc.timeline.now);
+                else
+                    [state, coarse] = varargin{:};
+                    obj.analyzer.setLevel(state.disc.x.mesh);
+                    obj.analyzer.relative(state.disc.x.space, state.dofs, ...
+                        coarse.disc.x.space, coarse.dofs);
+                end
+                obj.timer.stop(3);
             end
-            if obj.hasConfig('dt') && ~isempty(obj.Config.dt)
-                fprintf('[R] Time step size: %.3f\n', obj.Config.dt);
-            end
 
-            %< Report boundary condition type
-            fprintf('[R] Boundary Conditions: %s\n', obj.Config.bcType);
-        end
-    end
-
-    methods (Access = protected)
-        function obj = setup(obj)
-            % SETUP Setup default configuration options for UWDG schemes.
-            
-            %< Call parent setup
-            obj = setup@physics.advection.AdvectionScheme(obj);
-            
-            %< Add UWDG-specific required configuration options
-            obj.addConfig('xBasisOrder', default=1, ...
-                validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
-            obj.addConfig('xBasisType', default='nodal', ...
-                validator=@(x) (ischar(x) || isstring(x)) && ismember(lower(x), {'modal', 'nodal'}));
-            obj.addConfig('xBasisPattern', default='Q', ...
-                validator=@(x) (ischar(x) || isstring(x)) && ismember(upper(x), {'P', 'Q'}));
-        end
-
-        function obj = configure(obj)
-            % CONFIGURE Generate UWDG-specific configuration
-            % dependencies.
-            
-            %< Call parent configure
-            obj = configure@physics.advection.AdvectionScheme(obj);
-
-            %< Determine spatial discretization identifier
-            xId = sprintf('%s%d', upper(obj.Name), obj.Config.xBasisOrder);
-            obj.setConfig('xId', xId);
-
-            %< Set plot title
-            eId = obj.Config.eId;
-            obj.setConfig('titlePrefix', sprintf('%s with %s', eId, xId));
-
-            %< Set visualization options
-            visualizer = obj.Config.visualizer;
-            visualizer.setTitlePrefix(obj.Config.titlePrefix);
-        end
-
-        function obj = setLinearTerm(obj, ~)
-            % SETLINEARTERM Assemble linear operator sparse matrix.
-
-            field = obj.Config.advection;
-            obj.L = -obj.Assembly.assembleMatrix(field);
-        end
-
-        function obj = setSourceTerm(obj, ~)
-            % SETSOURCETERM Set up source term for boundary conditions.
-
-            switch obj.Config.bcType
-                case 'periodic'
-                    obj.S = [];
-                case 'dirichlet'
-                    obj.S = @(U, t) obj.computeSourceTerm(U, t);
-            end
-        end
-
-        function S = computeSourceTerm(obj, ~, t)
-            % COMPUTESOURCETERM Compute source term for boundary
-            % conditions.
-
-            func = obj.Config.bc;
-            field = obj.Config.advection;
-            direction = obj.Config.advection;
-            S = -obj.Assembly.assembleVector(field, direction, func, args={'t', t});
+            obj.timer.report();
         end
     end
 end

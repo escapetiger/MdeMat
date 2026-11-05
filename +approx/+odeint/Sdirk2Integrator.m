@@ -17,12 +17,28 @@ classdef Sdirk2Integrator < approx.odeint.DirkIntegrator
     %   0.2928932188\f$, which ensures L-stability and optimal damping
     %   properties for stiff systems.
     %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Sdirk2Integrator(1.0);
+    %   U_new = integrator.step(L, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], []);
+    %
+    %   % Pure forcing (only source term)
+    %   U_new = integrator.step([], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, S, M);
+    %
     % See also:
     %   approx.odeint.DirkIntegrator, approx.odeint.Sdirk3Integrator,
     %   approx.odeint.Esdirk3Integrator
         
     properties (Constant)
-        Order = 2 % Accuracy order of the SDIRK2 method
+        ORDER = 2 % Accuracy order of the SDIRK2 method
     end
    
     methods
@@ -31,10 +47,12 @@ classdef Sdirk2Integrator < approx.odeint.DirkIntegrator
             %
             %   obj = Sdirk2Integrator(final) creates a second-order SDIRK
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Sdirk2Integrator object
             
             obj@approx.odeint.DirkIntegrator(2, final);
             

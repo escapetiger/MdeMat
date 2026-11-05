@@ -22,12 +22,28 @@ classdef Ars443Integrator < approx.odeint.ImexrkIntegrator
     %   designed to minimize storage requirements and computational
     %   overhead.
     %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Ars443Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure implicit diffusion
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Mixed implicit-explicit problem
+    %   U_new = integrator.step(L, F, [], []);
+    %
+    %   % Explicit nonlinear dynamics with forcing
+    %   U_new = integrator.step([], F, S, []);
+    %
     % See also:
     %   approx.odeint.ImexrkIntegrator, approx.odeint.Ars111Integrator,
     %   approx.odeint.Ars222Integrator
     
     properties (Constant)
-        Order = 3 % Accuracy order of the ARS(4,4,3) method
+        ORDER = 3 % Accuracy order of the ARS(4,4,3) method
     end
 
     methods
@@ -36,10 +52,12 @@ classdef Ars443Integrator < approx.odeint.ImexrkIntegrator
             %
             %   obj = Ars443Integrator(final) creates an ARS(4,4,3) IMEX
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Ars443Integrator object
             
             obj@approx.odeint.ImexrkIntegrator(5, final);
             

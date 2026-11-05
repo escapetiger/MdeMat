@@ -4,12 +4,20 @@ function A = unfold(T, n, d)
 %   A = unfold(T, n, d) returns a matrix @a A obtained by unfolding a
 %   tensor @a T of shape @a n along the dimension @a d.
 %
-%   This function performs tensor matricization by reshaping tensor @a T
-%   into matrix form. Dimension @a d becomes the rows, while all other
-%   dimensions are flattened into columns. The resulting matrix has
-%   dimensions [n(d), prod(n)/n(d)].
+% Inputs:
+%   T - Tensor of shape @a n
+%   n - Tensor shape
+%   d - Mode along which to unfold
 %
-% See also:
+% Outputs:
+%   A - Unfolded matrix of shape [n(d), prod(n)/n(d)]
+%
+% Examples:
+%   % Unfold 3D tensor along dimension 2
+%   T = rand(3, 4, 5);
+%   A = unfold(T, size(T), 2); % A will be a 4x15 matrix
+%
+% See Also:
 %   core.linalg.fold
 
 p = [d, setdiff(1:numel(n), d)];

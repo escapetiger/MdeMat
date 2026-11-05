@@ -10,44 +10,44 @@ classdef CachedMultiIndexer < core.linalg.Indexer
     %   core.linalg.Indexer, core.linalg.MultiIndexer
 
     properties (Dependent)
-        NDims % Number of dimensions, derived from cache
-        NIndices % Number of cached indices, derived from cache
+        nDims % Number of dimensions, derived from cache
+        nIndices % Number of cached indices, derived from cache
     end
 
     properties
-        Cache = [] % Cache matrix where each row represents a multi-index
+        cache = [] % Cache matrix where each row represents a multi-index
     end
 
     methods
-        function obj = CachedMultiIndexer(options)
-            % CACHEDMULTIINDEXER Construct an instance of
-            % CachedMultiIndexer.
+        function obj = CachedMultiIndexer(style)
+            % CACHEDMULTIINDEXER Constructor for cached multi-indexer.
             %
             %   obj = CachedMultiIndexer() creates CachedMultiIndexer with
-            %   default storage ordering style.
+            %   default storage ordering style. 
+            % 
+            %   obj = CachedMultiIndexer(style) creates CachedMultiIndexer
+            %   with specified @a style.
             %
-            %   obj = CachedMultiIndexer(Name=Value) creates
-            %   CachedMultiIndexer with specified options.
+            % Inputs:
+            %   style - Storage ordering style (optional, default: 'F')
+            %
+            % Outputs:
+            %   obj - Constructed CachedMultiIndexer object
 
-            arguments
-                options.style {mustBeTextScalar} = 'F'
-            end
-
-            obj@core.linalg.Indexer(Style = options.style);
+            if nargin < 1, style = 'F'; end
+            obj@core.linalg.Indexer(style);
         end
 
-        function n = get.NDims(obj)
-            % GET.NDIMS Returns the value of the dependent property
-            % 'NDims'.
+        function n = get.nDims(obj)
+            % GET.NDIMS Get number of dimensions based on cache.
 
-            n = size(obj.Cache, 2);
+            n = size(obj.cache, 2);
         end
 
-        function n = get.NIndices(obj)
-            % GET.NINDICES Returns the value of the dependent property
-            % 'NIndices'.
+        function n = get.nIndices(obj)
+            % GET.NINDICES Get number of indices based on cache.
 
-            n = size(obj.Cache, 1);
+            n = size(obj.cache, 1);
         end
 
         function L = multiToLinear(obj, M)
@@ -55,17 +55,20 @@ classdef CachedMultiIndexer < core.linalg.Indexer
             %
             %   L = multiToLinear(obj, M) converts multi-indices @a M to
             %   linear indices within cached set of indices.
+            %
+            % Inputs:
+            %   obj - The CachedMultiIndexer object
+            %   M - Matrix where each row is a multi-index
+            %
+            % Outputs:
+            %   L - Column vector of linear indices
 
-            arguments
-                obj core.linalg.CachedMultiIndexer
-                M {mustBeInteger}
-            end
+            core.except.assert( ...
+                ismatrix(M) && size(M, 2) == obj.nDims, ...
+                'InvalidInput', ...
+                'Multi-indices must has %d columns.', obj.nDims);
 
-            nd = obj.NDims;
-            core.except.assert(size(M, 2) == nd, 'InvalidInput', ...
-                'Multi-indices must has %d columns.', nd);
-
-            C = obj.Cache;
+            C = obj.cache;
             core.except.assert(~isempty(C), ...
                 'MissingCache', 'Cache is empty.');
 
@@ -82,13 +85,15 @@ classdef CachedMultiIndexer < core.linalg.Indexer
             %
             %   M = linearToMulti(obj, L) converts linear indices @a L to
             %   multi-indices from cached set.
+            %
+            % Inputs:
+            %   obj - The CachedMultiIndexer object
+            %   L - Vector of linear indices
+            %
+            % Outputs:
+            %   M - Matrix where each row is the corresponding multi-index
 
-            arguments
-                obj core.linalg.CachedMultiIndexer
-                L {mustBePositive, mustBeInteger}
-            end
-
-            C = obj.Cache;
+            C = obj.cache;
             core.except.assert(~isempty(C), 'MissingCache', ...
                 'Cache is empty.');
 
@@ -100,5 +105,13 @@ classdef CachedMultiIndexer < core.linalg.Indexer
 
             M = C(L, :);
         end
+    end
+
+    methods (Abstract)
+        % SETCACHE Generate and cache indices.
+        %
+        %   setCache(obj, ...) must be implemented by subclasses to
+        %   generate indices according to specific patterns.
+        setCache(obj, varargin)
     end
 end

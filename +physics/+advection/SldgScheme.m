@@ -1,76 +1,95 @@
-classdef SldgScheme < physics.advection.AdvectionScheme
-    % SLDGSCHEME Semi-Lagrangian discontinuous Galerkin scheme.
+classdef SldgScheme < physics.Scheme
+    % SLDGSCHEME Semi-Lagrangian Discontinuous Galerkin scheme.
     %
-    %   SldgScheme implements a Semi-Lagrangian discontinuous Galerkin (SLDG)
-    %   method for solving advection equations. The method combines the stability
-    %   advantages of Lagrangian methods with the flexibility of discontinuous
-    %   Galerkin spatial discretizations.
+    %   SldgScheme implements a Semi-Lagrangian Discontinuous Galerkin
+    %   (SLDG) method for solving advection equations. The method combines
+    %   the stability advantages of Lagrangian methods with the flexibility
+    %   of discontinuous Galerkin spatial discretizations.
     %
     %   The SLDG method traces characteristics backward in time and uses
     %   high-order interpolation to evaluate solutions at departure points,
     %   making it particularly effective for transport-dominated problems
     %   with large time steps and minimal numerical diffusion.
     %
+    % Examples:
+    %   % Create SLDG scheme with configuration
+    %   config = struct('ic', @(x) sin(x), 'cfl', 0.8, 'bc', [], 'verbose', true);
+    %   scheme = SldgScheme(config, timeIntegrator, visualizer, analyzer);
+    %   
+    %   % Full simulation workflow
+    %   state = scheme.initialize(initialState);
+    %   finalState = scheme.run(state);
+    %   scheme.finalize(finalState);
+    %
+    % Notes:
     %   The semi-Lagrangian approach allows for larger time steps compared
-    %   to traditional Eulerian methods, making it computationally
-    %   efficient for advection-dominated flows.
+    %   to traditional Eulerian methods, making it computationally efficient
+    %   for advection-dominated flows.
     %
     % See Also:
-    %   physics.OdeScheme, physics.advection.UwdgScheme
-
-    properties (Constant)
-        Name = 'SLDG' % Scheme name
-    end
+    %   physics.Scheme, physics.advection.UwdgScheme,
+    %   fem.assembly.SemiLagrangianUniformGridAssembly
 
     properties
-        Assembly % Semi-Lagrangian assembly
+        assembly % Transport assembly for semi-Lagrangian operations
+        operator % Transport operator function handle
     end
 
     methods
-        function obj = SldgScheme(options)
-            % SEMILAGRANGIANSCHEME Construct an instance of SemiLagrangianScheme.
-            %
-            %   obj = SemiLagrangianScheme() creates a semi-Lagrangian scheme
-            %   with default configuration.
-            %
-            %   obj = SemiLagrangianScheme(file=file) creates a semi-Lagrangian
-            %   scheme and loads configuration from the specified @a filename.
-            %
-            %   obj = SemiLagrangianScheme(config=config) creates a
-            %   semi-Lagrangian scheme with the specified @a config
-            %   configuration.
-            
-            arguments
-                options.file {mustBeTextScalar} = ''
-                options.config struct = struct()
-            end
-            
-            obj@physics.advection.AdvectionScheme(file=options.file, config=options.config);
-            obj.Assembly = [];
-        end
-
         function state = initialize(obj, state)
-            % INITIALIZE Initialize the SL scheme.
+            % INITIALIZE Initialize the SLDG scheme.
             %
             %   state = initialize(obj, state) sets up the semi-Lagrangian
             %   discontinuous Galerkin scheme by configuring finite element
-            %   data, assembling the advection operator, fitting initial
+            %   data, assembling the transport operator, projecting initial
             %   conditions, and preparing visualization components.
-            
-            arguments
-                obj physics.advection.SldgScheme
-                state physics.state.SpatialState
+            %
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   state - Initial solution state structure
+            %
+            % Outputs:
+            %   state - Initialized state ready for time integration
+
+            % Reset timer
+            obj.timer.reset();
+
+            % Local data
+            state.disc.x.fe.setVolumeData(1);
+            state.disc.x.fe.setFluxData(0);
+            state.disc.x.op.setVolumeData();
+            state.disc.x.op.setFluxData();
+
+            % Semi-Lagrangian advection operator
+            obj.assembly = fem.assembly.SemiLagrangianUniformGridAssembly( ...
+                state.disc.x.fe, state.disc.x.mesh, state.disc.x.slop, ...
+                ~isempty(obj.config.bc));
+            obj.operator = @(tBegin, tEnd) obj.transportFn(state, tBegin, tEnd);
+
+            % Initial condition
+            state.dofs.U = state.disc.x.space.project(obj.config.ic);
+
+            % Reset time discretization
+            obj.tDisc.reset();
+
+            % Reset visualizer
+            obj.visualizer.reset();
+            obj.visualizer.addDataset('DG', { ...
+                'Color', 'b', ...
+                'Marker', 'o', ...
+                'LineStyle', 'none'});
+            if obj.visualizer.hasExact
+                obj.visualizer.addDataset('REF', ...
+                    {'Color', 'r', ...
+                    'Marker', 'none', ...
+                    'LineStyle', '-'});
             end
 
-            %< Fit initial condition
-            state.setDof('U', state.XDisc.fit(obj.Config.ic));
-
-            %< Create Semi-Lagrangian assembly
-            obj.Assembly = approx.assembly.SemiLagrangianAssembly( ...
-                state.XDisc, obj.Config.bcType);
-
-            %< Set mass terms
-            obj.setMassTerm(state);
+            if obj.visualizer.isEnabled
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.disc.x.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
+            end
         end
 
         function state = preStep(obj, state)
@@ -79,22 +98,20 @@ classdef SldgScheme < physics.advection.AdvectionScheme
             %   state = preStep(obj, state) performs preprocessing
             %   including time step size computation based on CFL condition
             %   and coefficient updates for multi-step methods.
-            
-            arguments
-                obj physics.advection.SldgScheme
-                state physics.state.SpatialState
-            end
+            %
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Preprocessed solution state
 
-            if obj.hasConfig('cfl') && ~isempty(obj.Config.cfl)
-                h = state.XDisc.Mesh.computeMeasure();
-                obj.TDisc.setTimeStep(h = h, C = obj.Config.cfl, p = 1);
-            end
-
-            if obj.hasConfig('dt') && ~isempty(obj.Config.dt)
-                obj.TDisc.setTimeStep(dt = obj.Config.dt);
+            h = state.disc.x.mesh.measure;
+            obj.tDisc.timeline.setTimeStep(h, obj.config.cfl);
+            if isa(obj.tDisc, 'approx.odeint.BdfIntegrator')
+                obj.tDisc.setCoefficients();
             end
         end
-
 
         function state = step(obj, state)
             % STEP Perform one semi-Lagrangian time step.
@@ -102,19 +119,18 @@ classdef SldgScheme < physics.advection.AdvectionScheme
             %   state = step(obj, state) advances the solution by one time
             %   step using the semi-Lagrangian transport operator. The
             %   method updates the solution history and applies the
-            %   characteristic-based transport with appropriate boundary
-            %   condition.
-            
-            arguments
-                obj physics.advection.SldgScheme
-                state physics.state.SpatialState
-            end
+            %   characteristic-based transport.
+            %
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Updated solution state after one time step
 
-            %< Update ODE integrator with current solution
-            obj.TDisc.update(state.Dofs.U);
-
-            %< Perform ODE integration step
-            state.Dofs.U = obj.TDisc.step(M=obj.M);
+            obj.tDisc.update(state.dofs.U);
+            M = obj.operator;
+            state.dofs.U = obj.tDisc.step([], [], M);
         end
 
         function state = postStep(obj, state)
@@ -123,104 +139,81 @@ classdef SldgScheme < physics.advection.AdvectionScheme
             %   state = postStep(obj, state) performs postprocessing
             %   including visualization updates and timeline advancement
             %   for the next integration step.
-            
-            arguments
-                obj physics.advection.SldgScheme
-                state physics.state.SpatialState
-            end
-
-            %< Advance timeline for next step
-            obj.TDisc.advance();
-        end
-
-        function state = finalize(obj, state)
-            % FINALIZE Finalize simulation with scheme and state reporting.
             %
-            %   state = finalize(obj, state) performs final reporting
-            %   including scheme configuration details and state
-            %   information summary.
-            
-            arguments
-                obj physics.advection.SldgScheme
-                state physics.state.SpatialState
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   state - Current solution state
+            %
+            % Outputs:
+            %   state - Postprocessed solution state
+
+            if obj.visualizer.isEnabled
+                obj.timer.start(2, '[M] Visualization.');
+                obj.visualizer.plot(state.disc.x.space, state.dofs, obj.tDisc);
+                obj.timer.stop(2);
             end
 
-            %< Report state information
-            state.report();
-
-            fprintf('[R] ODE Integrator: %s\n', class(obj.TDisc));
-            fprintf('[R] Final Time: %.6g\n', obj.Config.tFinal);
-            if obj.hasConfig('cfl') && ~isempty(obj.Config.cfl)
-                fprintf('[R] CFL number: %.3f\n', obj.Config.cfl);
-            end
-            if obj.hasConfig('dt') && ~isempty(obj.Config.dt)
-                fprintf('[R] Time step size: %.3f\n', obj.Config.dt);
-            end
-
-            %< Report boundary condition type
-            fprintf('[R] Boundary Conditions: %s\n', obj.Config.bcType);
-        end
-    end
-
-    methods (Access = protected) 
-        function obj = setup(obj)
-            % SETUP Setup default configuration options for SLDG schemes.
-
-            %< Call parent setup
-            obj = setup@physics.advection.AdvectionScheme(obj);
-
-            %< Add SLDG-specific required configuration options
-            obj.addConfig('xBasisOrder', default=1, ...
-                validator=@(x) isnumeric(x) && isscalar(x) && (x > 0));
-            obj.addConfig('xBasisType', default='nodal', ...
-                validator=@(x) (ischar(x) || isstring(x)) && ismember(lower(x), {'modal', 'nodal'}));
-            obj.addConfig('xBasisPattern', default='Q', ...
-                validator=@(x) (ischar(x) || isstring(x)) && ismember(upper(x), {'P', 'Q'}));
+            obj.tDisc.timeline.advance();
         end
 
-        function obj = configure(obj)
-            % CONFIGURE Generate SLDG-specific configuration dependencies.
+        function state = finalize(obj, varargin)
+            % FINALIZE Finalize simulation with error analysis.
+            %
+            %   state = finalize(obj, state) performs final error analysis
+            %   for absolute error computation against exact solutions.
+            %
+            %   [state, coarse] = finalize(obj, state, coarse) performs
+            %   relative error analysis comparing fine and coarse grid
+            %   solutions for convergence studies.
+            %
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   varargin - Variable arguments containing state(s) for analysis
+            %
+            % Outputs:
+            %   state - Final processed solution state
 
-            %< Call parent configure
-            obj = configure@physics.advection.AdvectionScheme(obj);
-
-            %< Determine spatial discretization identifier
-            xId = sprintf('%s%d', upper(obj.Name), obj.Config.xBasisOrder);
-            obj.setConfig('xId', xId);
-
-            %< Set plot title
-            eId = obj.Config.eId;
-            obj.setConfig('titlePrefix', sprintf('%s with %s', eId, xId));
-
-            %< Set visualization options
-            visualizer = obj.Config.visualizer;
-            visualizer.setTitlePrefix(obj.Config.titlePrefix);
-        end
-
-        function obj = setMassTerm(obj, ~)
-            % SETMASSTERM Set up mass term.
-
-            obj.M = @(tBegin, tEnd) obj.computeM(tBegin, tEnd);
-        end
-
-        function [V, M] = computeM(obj, tBegin, tEnd)
-            % COMPUTEM Compute mass term.
-
-            field = obj.Config.advection;
-            
-            obj.Assembly.reset();
-
-            if nargout >= 2
-                M = obj.Assembly.assembleMatrix(field, tBegin, tEnd);
-            end
-
-            if nargout >= 1
-                V = [];
-                if strcmpi(obj.Config.bcType, 'dirichlet')
-                    if abs(tBegin-tEnd) < 1e-8, return; end
-                    V = obj.Assembly.assembleVector(field, tBegin, tEnd, obj.Config.bc);
+            if obj.analyzer.isEnabled
+                obj.timer.start(3, '[M] Error Evaluation.');
+                if length(varargin) == 1
+                    state = varargin{1};
+                    obj.analyzer.setLevel(state.disc.x.mesh);
+                    obj.analyzer.absolute(state.disc.x.space, state.dofs, ...
+                        obj.tDisc.timeline.now);
+                else
+                    [state, coarse] = varargin{:};
+                    obj.analyzer.setLevel(state.disc.x.mesh);
+                    obj.analyzer.relative(state.disc.x.space, state.dofs, ...
+                        coarse.disc.x.space, coarse.dofs);
                 end
+                obj.timer.stop(3);
             end
+
+            obj.timer.report();
+        end
+
+        function varargout = transportFn(obj, state, tBegin, tEnd)
+            % TRANSPORTFN Compute semi-Lagrangian transport operator.
+            %
+            %   M = transportFn(obj, state, tBegin, tEnd) computes the
+            %   transport operator for the semi-Lagrangian method by
+            %   setting up characteristic line parameters and assembling
+            %   the transport matrix.
+            %
+            % Inputs:
+            %   obj - The SldgScheme object
+            %   state - Current solution state
+            %   tBegin - Beginning time for transport step
+            %   tEnd - End time for transport step
+            %
+            % Outputs:
+            %   varargout - Transport operator matrix and related data
+
+            ht = tBegin - tEnd;
+            hx = cell2mat(state.disc.x.mesh.spacings);
+            state.disc.x.clp.setVolumePieceData(ht, hx);
+            state.disc.x.slop.setVolumePieceData();
+            [varargout{1:nargout}] = obj.assembly.transport(tBegin, tEnd, obj.config.bc);
         end
     end
 end

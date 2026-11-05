@@ -20,12 +20,28 @@ classdef HeunIntegrator < approx.odeint.ExrkIntegrator
     %   3/4] give optimal second-order accuracy with this intermediate
     %   evaluation point.
     %
+    % Examples:
+    %   % Basic usage with all terms
+    %   integrator = approx.odeint.HeunIntegrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Pure nonlinear dynamics
+    %   U_new = integrator.step([], F, [], []);
+    %
+    %   % Linear system with forcing
+    %   U_new = integrator.step(L, [], S, []);
+    %
     % See also:
     %   approx.odeint.ExrkIntegrator, approx.odeint.Exrk4Integrator,
     %   approx.odeint.FeIntegrator
     
     properties (Constant)
-        Order = 2 % Accuracy order of Heun's method
+        ORDER = 2 % Accuracy order of Heun's method
     end
 
     methods
@@ -34,10 +50,12 @@ classdef HeunIntegrator < approx.odeint.ExrkIntegrator
             %
             %   obj = HeunIntegrator(final) creates a Heun's method
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed HeunIntegrator object
             
             obj@approx.odeint.ExrkIntegrator(2, final);
             

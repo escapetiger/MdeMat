@@ -9,11 +9,11 @@ classdef Timeline < handle
     %
     % See also:
     %   approx.mesh.StaticTimeline, approx.mesh.DynamicTimeline
-
+    
     properties (Access = public)
-        Final % Final time (positive scalar)
-        Now % Current time (scalar)
-        Count % Event counter (positive integer)
+        final % Final time (positive scalar)
+        now   % Current time (scalar)
+        count % Event counter (positive integer)
     end
 
     methods
@@ -21,46 +21,75 @@ classdef Timeline < handle
             % TIMELINE Constructor for Timeline.
             %
             %   obj = Timeline(final) creates a timeline object with
-            %   the specified @a final time. This constructor is called
+            %   the specified final time. This constructor is called
             %   by concrete subclasses during their initialization.
-
-            arguments
-                final{mustBeNonnegative}
-            end
-
-            obj.Final = final;
-            obj.Now = 0;
-            obj.Count = 1;
+            %
+            % Inputs:
+            %   final - Final time (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Timeline object
+            
+            core.except.assert(isscalar(final) && final >= 0, ...
+                'InvalidInput', 'Final time must be a nonnegative scalar.');
+            
+            obj.final = final;
+            obj.now = 0;
+            obj.count = 1;
         end
 
-        function obj = reset(obj)
+        function reset(obj)
             % RESET Reset the timeline to initial state.
             %
-            %   obj = reset(obj) resets the timeline to time zero and
+            %   reset(obj) resets the timeline to time zero and
             %   reinitializes the event counter.
-
-            obj.Now = 0;
-            obj.Count = 1;
-        end
-
-        function tf = isBefore(obj, t)
-            % ISBEFORE Check the current time is before the specified time.
             %
-            %   tf = isBefore(obj, t) returns true if the current time does
-            %   not exceed the specified time @a t.
-
-            arguments
-                obj approx.mesh.Timeline
-                t(1, 1) {mustBeReal}
-            end
-
-            tol = 1e-14;
-            tf = obj.Now - tol <= t;
+            % Inputs:
+            %   obj - The Timeline object
+            %
+            % Outputs:
+            %   NULL
+            
+            obj.now = 0;
+            obj.count = 1;
+        end
+        
+        function progress = getProgress(obj)
+            % GETPROGRESS Get the timeline completion progress.
+            %
+            %   progress = getProgress(obj) returns the fraction of
+            %   timeline completion as a value between 0 and 1.
+            %
+            % Inputs:
+            %   obj - The Timeline object
+            %
+            % Outputs:
+            %   progress - Completion fraction [0, 1]
+            
+            progress = min(obj.now / obj.final, 1.0);
+        end
+        
+        function remaining = getRemainingTime(obj)
+            % GETREMAININGTIME Get the remaining time.
+            %
+            %   remaining = getRemainingTime(obj) returns the amount
+            %   of time remaining until the final time is reached.
+            %
+            % Inputs:
+            %   obj - The Timeline object
+            %
+            % Outputs:
+            %   remaining - Time remaining (non-negative scalar)
+            
+            remaining = max(obj.final - obj.now, 0);
         end
     end
 
     methods (Abstract)
         % ADVANCE Advance the timeline by one time step.
-        obj = advance(obj)
+        advance(obj)
+        
+        % ISFINISHED Check if timeline has reached final time.
+        flag = isFinished(obj)
     end
 end

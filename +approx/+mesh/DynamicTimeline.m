@@ -7,135 +7,161 @@ classdef DynamicTimeline < approx.mesh.Timeline
     %   based on spatial discretization constraints (e.g., CFL conditions)
     %   or solution behavior.
     %
-    %   The time step is computed as \f$\Delta t = C * h^p\f$ where \f$h\f$
-    %   is the spatial mesh parameter, \f$C\f$ is a convergence constant
-    %   (e.g., CFL number), and \f$p\f$ is an exponent (default 1).
+    % Examples:
+    %   % Create dynamic timeline with final time 10
+    %   timeline = DynamicTimeline(10);
+    %   
+    %   % Set time step based on CFL condition
+    %   timeline.setTimeStep(0.1, 0.5);  % h=0.1, CFL=0.5
+    %   
+    %   % Advance through time
+    %   while ~timeline.isFinished()
+    %       timeline.advance();
+    %       % Update time step if needed
+    %       timeline.setTimeStep(newH, cflNumber);
+    %   end
+    %
+    % Notes:
+    %   The time step is computed as dt = C * h^p where h is the spatial
+    %   mesh parameter, C is a convergence constant (e.g., CFL number),
+    %   and p is an exponent (default 1).
     %
     % See also:
     %   approx.mesh.Timeline, approx.mesh.StaticTimeline
     
     properties (Access = public)
-        OldStepSizeQueue % Previous time step sizes (from new to old)
-        StepSizeQueue % Current time step sizes (from new to old)
-        Next % Next time point (scalar)
-        NSteps % Number of time steps to track (positive integer)
-    end
-    
-    properties (Dependent)
-        StepSize % Current time step
-        IsExhausted % Whether the final time has been reached
-        HasStepSizeChanged % Whether the step size changed
+        h0     % Previous time step sizes (from new to old)
+        h      % Current time step sizes (from new to old)
+        next   % Next time point (scalar)
+        nSteps % Number of time steps to track (positive integer)
     end
     
     methods
-        function obj = DynamicTimeline(final, options)
+        function obj = DynamicTimeline(final, nSteps)
             % DYNAMICTIMELINE Constructor for DynamicTimeline.
             %
             %   obj = DynamicTimeline(final) creates a dynamic timeline
             %   with the specified final time and default step tracking.
             %
-            %   obj = DynamicTimeline(final, nSteps=nSteps) creates a
-            %   timeline that tracks the specified number of previous time
-            %   steps.
+            %   obj = DynamicTimeline(final, nSteps) creates a timeline
+            %   that tracks the specified number of previous time steps.
+            %
+            % Inputs:
+            %   final - Final time (positive scalar)
+            %   nSteps - Number of previous steps to track (optional, default: 1)
+            %
+            % Outputs:
+            %   obj - Constructed DynamicTimeline object
             
-            arguments
-                final {mustBeNonnegative}
-                options.nSteps {mustBePositive, mustBeInteger} = 1
-            end
+            if nargin < 2, nSteps = 1; end
             
             obj@approx.mesh.Timeline(final);
-            obj.NSteps = options.nSteps;
+            obj.nSteps = nSteps;
             obj.reset();
         end
-        
-        function obj = reset(obj)
+
+        function reset(obj)
             % RESET Reset the dynamic timeline to initial state.
             %
-            %   obj = reset(obj) resets the timeline to time zero and
-            %   clears all time step history.
-            
-            arguments
-                obj approx.mesh.DynamicTimeline
-            end
+            %   reset(obj) resets the timeline to time zero and clears
+            %   all time step history.
+            %
+            % Inputs:
+            %   obj - The DynamicTimeline object
             
             reset@approx.mesh.Timeline(obj);
-            obj.Next = obj.Now;
-            obj.StepSizeQueue = zeros(1, obj.NSteps+1);
-            obj.OldStepSizeQueue = zeros(1, obj.NSteps+1);
+            obj.next = obj.now;            
+            obj.h = zeros(1, obj.nSteps+1);
+            obj.h0 = zeros(1, obj.nSteps+1);
         end
-        
-        function obj = setTimeStep(obj, options)
+
+        function setTimeStep(obj, h, C)
             % SETTIMESTEP Set the current time step size.
             %
-            %   obj = setTimeStep(obj, h=h, C=C) sets time step as dt = C*h
-            %   for dynamic timelines.
+            %   setTimeStep(obj, h, C) computes the time step as dt = C*h
+            %   and ensures it doesn't exceed the remaining time.
             %
-            %   obj = setTimeStep(obj, h=h, C=C, p=p) sets time step as dt
-            %   = C*h^p for dynamic timelines.
-            %
-            %   obj = setTimeStep(obj, dt=dt) directly sets the time step
-            %   for manual control (use with caution).
+            % Inputs:
+            %   obj - The DynamicTimeline object
+            %   h - Spatial mesh parameter (positive scalar)
+            %   C - Convergence constant, e.g., CFL number (positive scalar)
+     
+            core.except.assert(C > 0 && h > 0, ...
+                'InvalidInput', 'C and h must be positive.');
+
+            p = max(obj.nSteps / obj.count, 1);
+
+            dt = C * h^p;
             
-            arguments
-                obj approx.mesh.DynamicTimeline
-                options.dt {mustBePositive} = []
-                options.h {mustBeNumeric} = []
-                options.C {mustBePositive, mustBeNonempty} = 1
-                options.p {mustBePositive, mustBeNonempty} = 1
-            end
-            
-            if isempty(options.dt) && isempty(options.h)
-                core.except.assert(0, 'InvalidInput', ...
-                    'Either dt or h must be provided to set the time step.');
-            end
-            
-            if ~isempty(options.dt)
-                dt = options.dt;
-            else
-                h = options.h;
-                C = options.C;
-                p = max(obj.NSteps/obj.Count, options.p);
-                dt = C*h^p;
-            end
-            
-            obj.StepSizeQueue(1) = min(dt, obj.Final - obj.Now);
-            obj.Next = obj.Now + obj.StepSizeQueue(1);
+            obj.h(1) = min(dt, obj.final - obj.now);
+            obj.next = obj.now + obj.h(1);
         end
         
-        function obj = advance(obj)
+        function advance(obj)
             % ADVANCE Advance the timeline by one time step.
             %
-            %   obj = advance(obj) advances the current time by the current
+            %   advance(obj) advances the current time by the current
             %   time step and updates the time step history.
+            %
+            % Inputs:
+            %   obj - The DynamicTimeline object
             
-            core.except.assert(~obj.IsExhausted, ...
+            core.except.assert(~obj.isFinished(), ...
                 'TimeExceeded', 'Cannot advance beyond the final time.');
             
-            obj.Now = obj.Now + obj.StepSizeQueue(1);
-            obj.Count = obj.Count + 1;
-            obj.OldStepSizeQueue = obj.StepSizeQueue;
-            if numel(obj.StepSizeQueue) > 1
-                obj.StepSizeQueue = circshift(obj.StepSizeQueue, 1);
+            obj.now = obj.now + obj.h(1);
+            obj.count = obj.count + 1;
+            obj.h0 = obj.h;
+            if numel(obj.h) > 1
+                obj.h = circshift(obj.h, 1);
             end
-            obj.Next = obj.Now + obj.StepSizeQueue(1);
+            obj.next = obj.now + obj.h(1);
         end
         
-        function TF = get.IsExhausted(obj)
-            % GET.ISEXHAUSTED Check if the final time has been reached.
+        function TF = isFinished(obj)
+            % ISFINISHED Check if the final time has been reached.
+            %
+            %   TF = isFinished(obj) returns true if the current time
+            %   has reached or exceeded the final time.
+            %
+            % Inputs:
+            %   obj - The DynamicTimeline object
+            %
+            % Outputs:
+            %   TF - True if timeline is complete (logical scalar)
             
-            TF = obj.Now >= obj.Final;
+            TF = obj.now >= obj.final;
         end
         
-        function TF = get.HasStepSizeChanged(obj)
-            % GET.HASSTEPSIZECHANGED Check if time step size has changed.
+        function TF = hasStepSizeChanged(obj)
+            % HASSTEPSIZECHANGED Check if time step size has changed.
+            %
+            %   TF = hasStepSizeChanged(obj) returns true if the current
+            %   time step differs from the previous one, or if this is
+            %   the first step.
+            %
+            % Inputs:
+            %   obj - The DynamicTimeline object
+            %
+            % Outputs:
+            %   TF - True if step size changed (logical scalar)
             
-            TF = ~isequal(obj.StepSizeQueue, obj.OldStepSizeQueue) || (obj.Count == 1);
+            TF = ~isequal(obj.h, obj.h0) || (obj.count == 1);
         end
         
-        function dt = get.StepSize(obj)
-            % GET.DT Get the current time step size.
+        function dt = getTimeStep(obj)
+            % GETTIMESTEP Get the current time step size.
+            %
+            %   dt = getTimeStep(obj) returns the current time step
+            %   size that will be used for the next advance.
+            %
+            % Inputs:
+            %   obj - The DynamicTimeline object
+            %
+            % Outputs:
+            %   dt - Current time step size (positive scalar)
             
-            dt = obj.StepSizeQueue(1);
+            dt = obj.h(1);
         end
     end
 end

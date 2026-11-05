@@ -1,174 +1,181 @@
 classdef TestTimer < matlab.unittest.TestCase
-    % TESTTIMER Comprehensive test suite for Timer and Record classes.
+    % TESTTIMER Unit tests for Timer and Record classes.
     %
-    %   TestTimer provides complete test coverage for the Timer and Record
-    %   classes including timing operations, error handling, state
-    %   management, and report generation. Tests validate both individual
-    %   functionality and integration between classes.
+    %   TestTimer provides test coverage for the Timer and Record classes
+    %   including timing operations, error handling, and reporting.
     %
-    % See also:
+    % Examples:
+    %   % Run all tests
+    %   results = runtests(core.chrono.TestTimer);
+    %
+    % See Also:
     %   core.chrono.Timer, core.chrono.Record
 
     properties
-        Timer % Timer object for testing
-        PauseDuration = 0.01 % Duration for timing tests
+        testRecordNames = {'Setup', 'Calculation', 'Cleanup'} % Names for test records
+        timer % Timer object for testing
+        pauseDuration = 0.01 % Duration for timing tests
     end
 
     methods (TestMethodSetup)
         function createTimer(testCase)
-            % CREATETIMER Initialize fresh timer instance for each test.
+            % CREATETIMER Initialize timer for each test method.
 
-            testCase.Timer = core.chrono.Timer(verbose=false);
+            testCase.timer = core.chrono.Timer(testCase.testRecordNames);
+            testCase.timer.verbose = false;
         end
     end
 
     methods (Test)
         function testConstructor(testCase)
-            % TESTCONSTRUCTOR Validate Timer constructor behavior and error handling.
+            % TESTCONSTRUCTOR Test Timer constructor functionality.
 
-            % Test empty constructor
-            emptyTimer = core.chrono.Timer();
-            testCase.verifyNumElements(emptyTimer.Records, 0);
-            testCase.verifyTrue(emptyTimer.Verbose); % Default is true
-            
-            % Test constructor with names
-            namedTimer = core.chrono.Timer(names={'Setup', 'Calculation'});
-            testCase.verifyNumElements(namedTimer.Records, 2);
-            testCase.verifyEqual(namedTimer.Records(1).Name, "Setup");
-            testCase.verifyEqual(namedTimer.Records(2).Name, "Calculation");
-            
-            % Test constructor with verbose control
-            quietTimer = core.chrono.Timer(verbose=false);
-            testCase.verifyFalse(quietTimer.Verbose);
-            
-            % Test constructor with both options
-            fullTimer = core.chrono.Timer(names={'test'}, verbose=false);
-            testCase.verifyNumElements(fullTimer.Records, 1);
-            testCase.verifyFalse(fullTimer.Verbose);
+            testCase.verifyNumElements(testCase.timer.records, numel(testCase.testRecordNames));
+
+            for i = 1:numel(testCase.testRecordNames)
+                testCase.verifyEqual(testCase.timer.records(i).name, testCase.testRecordNames{i});
+            end
+
+            testCase.verifyError(@() core.chrono.Timer(), ...
+                'core:chrono:Timer:InvalidInput');
+            testCase.verifyError(@() core.chrono.Timer('not_a_cell'), ...
+                'core:chrono:Timer:InvalidInput');
         end
 
-        function testStartStop(testCase)
-            % TESTSTARTSTOP Validate basic start/stop operations.
+        function testStartStopByIndex(testCase)
+            % TESTSTARTstopbyindex Test start/stop operations using record indices.
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
-            testCase.verifyNumElements(testCase.Timer.Records, 1);
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, 0);
-            testCase.verifyEqual(testCase.Timer.Records(1).Name, "Record_1");
-            
-            % Test error when no active record to stop
-            testCase.verifyError(@() testCase.Timer.stop(), ...
-                'core:chrono:Timer:NoActiveRecord');
+            testCase.verifyGreaterThan(testCase.timer.records(1).duration, 0);
+
+            testCase.verifyError(@() testCase.timer.start(0), ...
+                'core:chrono:Timer:InvalidIndex');
+            testCase.verifyError(@() testCase.timer.start(numel(testCase.testRecordNames)+1), ...
+                'core:chrono:Timer:InvalidIndex');
+            testCase.verifyError(@() testCase.timer.stop(0), ...
+                'core:chrono:Timer:InvalidIndex');
+            testCase.verifyError(@() testCase.timer.stop(numel(testCase.testRecordNames)+1), ...
+                'core:chrono:Timer:InvalidIndex');
+            testCase.verifyError(@() testCase.timer.stop(2), ...
+                'core:chrono:Timer:RecordNotActive');
         end
 
-        function testStartStopWithMessage(testCase)
-            % TESTSTARTSTOPWITHMESSAGE Validate start/stop operations with messages.
+        function testStartStopByName(testCase)
+            % TESTSTARTOPBYNAME Test start/stop operations using record names.
 
-            verboseTimer = core.chrono.Timer(verbose=true);
-            output = evalc('verboseTimer.start(msg="Starting test"); pause(testCase.PauseDuration); verboseTimer.stop(msg="Stopping test");');
-            
-            testCase.verifySubstring(output, 'Starting test');
-            testCase.verifySubstring(output, 'Stopping test');
-            testCase.verifyGreaterThan(verboseTimer.Records(1).Duration, 0);
+            testCase.timer.startByName('Calculation');
+            pause(testCase.pauseDuration);
+            testCase.timer.stopByName('Calculation');
+
+            testCase.verifyGreaterThan(testCase.timer.records(2).duration, 0);
+
+            testCase.verifyError(@() testCase.timer.startByName('NonexistentRecord'), ...
+                'core:chrono:Timer:RecordNotFound');
+            testCase.verifyError(@() testCase.timer.stopByName('NonexistentRecord'), ...
+                'core:chrono:Timer:RecordNotFound');
+
+            testCase.verifyError(@() testCase.timer.stopByName('Cleanup'), ...
+                'core:chrono:Timer:RecordNotActive');
         end
 
-        function testMultipleRecords(testCase)
-            % TESTMULTIPLERECORDS Validate creation of multiple timing records.
+        function testMultipleTimings(testCase)
+            % TESTMULTIPLETIMINGS Test accumulation of multiple timing sessions.
 
-            % Create first record
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
-            % Create second record
-            testCase.Timer.start();
-            pause(testCase.PauseDuration * 2);
-            testCase.Timer.stop();
+            initialDuration = testCase.timer.records(1).duration;
 
-            testCase.verifyNumElements(testCase.Timer.Records, 2);
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, 0);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, testCase.Timer.Records(1).Duration);
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
+
+            finalDuration = testCase.timer.records(1).duration;
+
+            testCase.verifyGreaterThan(finalDuration, initialDuration);
         end
 
         function testMutualExclusion(testCase)
-            % TESTMUTUALEXCLUSION Validate exclusive record activation constraint.
+            % TESTMUTUALEXCLUSION Test that only one record can be active at a time.
 
-            testCase.Timer.start();
-            testCase.verifyError(@() testCase.Timer.start(), ...
+            testCase.timer.start(1);
+            testCase.verifyError(@() testCase.timer.start(2), ...
                 'core:chrono:Timer:recordAlreadyActive');
-            testCase.Timer.stop();
+            testCase.timer.stop(1);
 
-            % Should be able to start again after stopping
-            testCase.Timer.start();
-            testCase.Timer.stop();
+            testCase.timer.start(2);
+            testCase.timer.stop(2);
         end
 
         function testReset(testCase)
-            % TESTRESET Validate reset functionality for all timing records.
+            % TESTRESET Test reset functionality for all records.
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, 0);
+            testCase.verifyGreaterThan(testCase.timer.records(1).duration, 0);
 
-            testCase.Timer.reset();
+            testCase.timer.reset();
 
-            for i = 1:numel(testCase.Timer.Records)
-                testCase.verifyEqual(testCase.Timer.Records(i).Duration, 0);
+            for i = 1:numel(testCase.timer.records)
+                testCase.verifyEqual(testCase.timer.records(i).duration, 0);
             end
         end
 
         function testRecordStatus(testCase)
-            % TESTRECORDSTATUS Validate record active status detection.
+            % TESTRECORDSTATUS Test record active status detection.
 
-            % Test no active records initially (empty timer)
-            testCase.verifyNumElements(testCase.Timer.Records, 0);
+            % Test no active records initially
+            testCase.verifyFalse(testCase.timer.records(1).isActive());
+            testCase.verifyFalse(testCase.timer.records(2).isActive());
 
             % Test record becomes active when started
-            testCase.Timer.start();
-            testCase.verifyTrue(testCase.Timer.Records(1).IsActive);
+            testCase.timer.start(2);
+            testCase.verifyTrue(testCase.timer.records(2).isActive());
 
             % Test record becomes inactive when stopped
-            testCase.Timer.stop();
-            testCase.verifyFalse(testCase.Timer.Records(1).IsActive);
+            testCase.timer.stop(2);
+            testCase.verifyFalse(testCase.timer.records(2).isActive());
         end
 
         function testTimingData(testCase)
-            % TESTTIMINGDATA Validate timing data accuracy and relationships.
+            % TESTTIMINGDATA Test timing data structure generation.
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration * 2);
-            testCase.Timer.stop();
+            testCase.timer.start(2);
+            pause(testCase.pauseDuration*2);
+            testCase.timer.stop(2);
 
             % Test basic timing functionality
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, 0);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, 0);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, testCase.Timer.Records(1).Duration);
+            testCase.verifyGreaterThan(testCase.timer.records(1).duration, 0);
+            testCase.verifyGreaterThan(testCase.timer.records(2).duration, 0);
+            testCase.verifyGreaterThan(testCase.timer.records(2).duration, testCase.timer.records(1).duration);
         end
 
         function testReport(testCase)
-            % TESTREPORT Validate report generation and file output.
+            % TESTREPORT Test report generation functionality.
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
-            testCase.Timer.start();
-            pause(testCase.PauseDuration * 2);
-            testCase.Timer.stop();
+            testCase.timer.start(2);
+            pause(testCase.pauseDuration*2);
+            testCase.timer.stop(2);
 
             tempFile = [tempname, '.txt'];
             fileId = fopen(tempFile, 'w');
 
-            testCase.Timer.report(perc=true, file=fileId);
-            testCase.Timer.report(perc=false, file=fileId);
+            testCase.timer.report(true, fileId);
+            testCase.timer.report(false, fileId);
 
             fclose(fileId);
 
@@ -180,198 +187,100 @@ classdef TestTimer < matlab.unittest.TestCase
         end
 
         function testVerboseOutput(testCase)
-            % TESTVERBOSEOUTPUT Validate verbose message output control.
+            % TESTVERBOSEOUTPUT Test verbose message output control.
 
-            verboseTimer = core.chrono.Timer(verbose=true);
+            testCase.timer.verbose = true;
 
-            output = evalc('verboseTimer.start(msg="Test message")');
-            verboseTimer.stop();
+            output = evalc('testCase.timer.start(1, ''Test message'')');
+            testCase.timer.stop(1);
 
             testCase.verifySubstring(output, 'Test message');
+
+            testCase.timer.verbose = false;
+
+            output = evalc('testCase.timer.start(1, ''Test message'')');
+            testCase.timer.stop(1);
+
+            testCase.verifyEmpty(output);
         end
 
         function testComplexTimingSequence(testCase)
-            % TESTCOMPLEXTIMINGSEQUENCE Validate complex multi-record timing scenarios.
+            % TESTCOMPLEXTIMINGSEQUENCE Test complex timing operations.
 
             % First record timing
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
 
             % Second record timing (longer)
-            testCase.Timer.start();
-            pause(testCase.PauseDuration * 2);
-            testCase.Timer.stop();
+            testCase.timer.start(2);
+            pause(testCase.pauseDuration*2);
+            testCase.timer.stop(2);
 
             % Third record timing
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
+            testCase.timer.start(3);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(3);
 
-            % Verify we have 3 records
-            testCase.verifyNumElements(testCase.Timer.Records, 3);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, testCase.Timer.Records(1).Duration);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, testCase.Timer.Records(3).Duration);
+            % First record again (accumulates)
+            testCase.timer.start(1);
+            pause(testCase.pauseDuration);
+            testCase.timer.stop(1);
+
+            % Verify timing relationships
+            testCase.verifyGreaterThan(testCase.timer.records(1).duration, testCase.timer.records(3).duration);
+            testCase.verifyGreaterThan(testCase.timer.records(2).duration, testCase.timer.records(1).duration);
         end
 
         function testZeroDurations(testCase)
-            % TESTZERODURATIONS Validate initial state and zero duration handling.
+            % TESTZERODURATIONS Test behavior with zero durations.
 
-            % Verify timer starts empty
-            testCase.verifyNumElements(testCase.Timer.Records, 0);
-            
-            % Create a record and verify it starts with zero duration
-            testCase.Timer.start();
-            testCase.Timer.stop();
-            testCase.verifyEqual(testCase.Timer.Records(1).Duration, 0, 'AbsTol', testCase.PauseDuration);
+            % Verify all records start with zero duration
+            for i = 1:numel(testCase.timer.records)
+                testCase.verifyEqual(testCase.timer.records(i).duration, 0);
+            end
+        end
+
+        function testMissingIndex(testCase)
+            % TESTMISSINGINDEX Test error handling for missing index arguments.
+
+            testCase.verifyError(@() testCase.timer.start(), ...
+                'core:chrono:Timer:MissingIndex');
+            testCase.verifyError(@() testCase.timer.stop(), ...
+                'core:chrono:Timer:MissingIndex');
+        end
+
+        function testMissingName(testCase)
+            % TESTMISSINGNAME Test error handling for missing name arguments.
+
+            testCase.verifyError(@() testCase.timer.startByName(), ...
+                'core:chrono:Timer:MissingName');
+            testCase.verifyError(@() testCase.timer.stopByName(), ...
+                'core:chrono:Timer:MissingName');
         end
 
         function testIndividualRecord(testCase)
-            % TESTINDIVIDUALRECORD Validate individual Record class functionality.
+            % TESTINDIVIDUALRECORD Test individual Record class functionality.
 
             record = core.chrono.Record('TestRecord');
 
-            testCase.verifyEqual(record.Name, "TestRecord");
-            testCase.verifyEqual(record.Duration, 0);
-            testCase.verifyFalse(record.IsActive);
+            testCase.verifyEqual(record.name, 'TestRecord');
+            testCase.verifyEqual(record.duration, 0);
+            testCase.verifyFalse(record.isActive());
 
-            record.StartTime = tic;
-            testCase.verifyTrue(record.IsActive);
+            record.startTime = tic;
+            testCase.verifyTrue(record.isActive());
 
-            pause(testCase.PauseDuration);
+            pause(testCase.pauseDuration);
 
-            record.Duration = record.Duration + toc(record.StartTime);
-            record.StartTime = [];
+            record.duration = record.duration + toc(record.startTime);
+            record.startTime = [];
 
-            testCase.verifyGreaterThan(record.Duration, 0);
-            testCase.verifyFalse(record.IsActive);
+            testCase.verifyGreaterThan(record.duration, 0);
+            testCase.verifyFalse(record.isActive());
 
             record.reset();
-            testCase.verifyEqual(record.Duration, 0);
-        end
-        
-        function testEmptyTimerOperations(testCase)
-            % TESTEMPTYTIMEROPERATIONS Validate operations on empty timer.
-            
-            emptyTimer = core.chrono.Timer(verbose=false);
-            testCase.verifyNumElements(emptyTimer.Records, 0);
-            
-            % Should be able to start timing (creates first record)
-            emptyTimer.start();
-            testCase.verifyNumElements(emptyTimer.Records, 1);
-            testCase.verifyEqual(emptyTimer.Records(1).Name, "Record_1");
-            
-            emptyTimer.stop();
-            testCase.verifyFalse(emptyTimer.Records(1).IsActive);
-        end
-
-        function testNamedRecords(testCase)
-            % TESTNAMEDRECORDS Validate named record start/stop functionality.
-
-            % Start timing for specific named record
-            testCase.Timer.start(record="computation");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="computation");
-
-            testCase.verifyNumElements(testCase.Timer.Records, 1);
-            testCase.verifyEqual(testCase.Timer.Records(1).Name, "computation");
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, 0);
-            testCase.verifyFalse(testCase.Timer.Records(1).IsActive);
-        end
-
-        function testMultipleNamedRecords(testCase)
-            % TESTMULTIPLENAMEDRECORDS Validate multiple named records functionality.
-
-            % Create and time different named records
-            testCase.Timer.start(record="setup");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="setup");
-
-            testCase.Timer.start(record="computation");
-            pause(testCase.PauseDuration * 2);
-            testCase.Timer.stop(record="computation");
-
-            testCase.Timer.start(record="cleanup");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="cleanup");
-
-            testCase.verifyNumElements(testCase.Timer.Records, 3);
-            testCase.verifyEqual(testCase.Timer.Records(1).Name, "setup");
-            testCase.verifyEqual(testCase.Timer.Records(2).Name, "computation");
-            testCase.verifyEqual(testCase.Timer.Records(3).Name, "cleanup");
-
-            % Verify computation took longer than others
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, ...
-                testCase.Timer.Records(1).Duration);
-            testCase.verifyGreaterThan(testCase.Timer.Records(2).Duration, ...
-                testCase.Timer.Records(3).Duration);
-        end
-
-        function testRecordAccumulation(testCase)
-            % TESTRECORDACCUMULATION Validate timing accumulation for same record.
-
-            % Time the same named record multiple times
-            testCase.Timer.start(record="iterative");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="iterative");
-
-            firstDuration = testCase.Timer.Records(1).Duration;
-
-            testCase.Timer.start(record="iterative");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="iterative");
-
-            % Should still have only one record, but with accumulated duration
-            testCase.verifyNumElements(testCase.Timer.Records, 1);
-            testCase.verifyEqual(testCase.Timer.Records(1).Name, "iterative");
-            testCase.verifyGreaterThan(testCase.Timer.Records(1).Duration, firstDuration);
-        end
-
-        function testRecordNotFound(testCase)
-            % TESTRECORDNOTFOUND Validate error handling for non-existent records.
-
-            % Try to stop a record that doesn't exist
-            testCase.verifyError(@() testCase.Timer.stop(record="nonexistent"), ...
-                'core:chrono:Timer:RecordNotFound');
-        end
-
-        function testNamedRecordWithMessages(testCase)
-            % TESTNAMEDRECORDWITHMESSAGES Validate named records with verbose output.
-
-            verboseTimer = core.chrono.Timer(verbose=true);
-
-            output = evalc(['verboseTimer.start(msg="Starting computation", record="compute"); ', ...
-                'pause(testCase.PauseDuration); ', ...
-                'verboseTimer.stop(msg="Computation complete", record="compute");']);
-
-            testCase.verifySubstring(output, 'Starting computation');
-            testCase.verifySubstring(output, 'Computation complete');
-            testCase.verifyEqual(verboseTimer.Records(1).Name, "compute");
-            testCase.verifyGreaterThan(verboseTimer.Records(1).Duration, 0);
-        end
-
-        function testMixedRecordTypes(testCase)
-            % TESTMIXEDRECORDTYPES Validate mixing anonymous and named records.
-
-            % Start with anonymous record
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
-
-            % Add named record
-            testCase.Timer.start(record="named_task");
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop(record="named_task");
-
-            % Add another anonymous record
-            testCase.Timer.start();
-            pause(testCase.PauseDuration);
-            testCase.Timer.stop();
-
-            testCase.verifyNumElements(testCase.Timer.Records, 3);
-            testCase.verifyEqual(testCase.Timer.Records(1).Name, "Record_1");
-            testCase.verifyEqual(testCase.Timer.Records(2).Name, "named_task");
-            testCase.verifyEqual(testCase.Timer.Records(3).Name, "Record_3");
+            testCase.verifyEqual(record.duration, 0);
         end
     end
 end

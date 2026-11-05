@@ -20,12 +20,28 @@ classdef Exrk4Integrator < approx.odeint.ExrkIntegrator
     %   weights [1/6, 1/3, 1/3, 1/6] to achieve fourth-order accuracy.
     %   It's the gold standard for non-stiff problems.
     %
+    % Examples:
+    %   % Basic usage with all terms
+    %   integrator = approx.odeint.Exrk4Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Pure nonlinear dynamics
+    %   U_new = integrator.step([], F, [], []);
+    %
+    %   % Linear system with forcing
+    %   U_new = integrator.step(L, [], S, []);
+    %
     % See also:
     %   approx.odeint.ExrkIntegrator, approx.odeint.HeunIntegrator,
     %   approx.odeint.Ssprk3Integrator
     
     properties (Constant)
-        Order = 4 % Accuracy order of the classic RK4 method
+        ORDER = 4 % Accuracy order of the classic RK4 method
     end
 
     methods
@@ -34,10 +50,12 @@ classdef Exrk4Integrator < approx.odeint.ExrkIntegrator
             %
             %   obj = Exrk4Integrator(final) creates a classic fourth-order
             %   Runge-Kutta integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Exrk4Integrator object
             
             obj@approx.odeint.ExrkIntegrator(4, final);
             

@@ -20,6 +20,33 @@ function phi = expseq(Z, n)
     %   \f$\phi\f$-functions and appear in the exact solution of linear
     %   ODEs with polynomial forcing terms.
     %
+    % Inputs:
+    %   Z - Square matrix argument (can be sparse or dense)
+    %   n - Maximum index for the sequence (non-negative integer)
+    %
+    % Outputs:
+    %   phi - Cell array containing phi_k(Z) for k = 0, 1, ..., n
+    %
+    % Examples:
+    %   % Generate first 3 terms of the sequence
+    %   A = randn(3, 3);
+    %   phiSeq = expseq(A, 2);
+    %   phi0 = phiSeq{1}; % exp(A)
+    %   phi1 = phiSeq{2}; % (exp(A) - I) / A
+    %   phi2 = phiSeq{3}; % (phi1 - I/2) / A
+    %
+    %   % For exponential integrators
+    %   dt = 0.1;
+    %   L = -speye(100);  % Diffusion operator
+    %   phiFuncs = expseq(dt * L, 3);
+    %   expL = phiFuncs{1};
+    %   phi1L = phiFuncs{2};
+    %
+    %   % Small matrix example
+    %   Z = 0.01 * [1, 0.5; 0.5, 1];
+    %   phi = expseq(Z, 1);
+    %
+    % Notes:
     %   For small ||Z||, series expansions are used to avoid numerical
     %   issues with division by Z. The function automatically handles
     %   both sparse and dense matrices appropriately. The implementation
@@ -89,6 +116,14 @@ function phiTerms = computeSeriesExpansion(Z, I, n)
     %
     %   This series expansion is used for numerical stability when ||Z|| is
     %   small, avoiding the division by Z in the recurrence relation.
+    %
+    % Inputs:
+    %   Z - Matrix argument
+    %   I - Identity matrix of appropriate type (sparse or dense)
+    %   n - Maximum index for the sequence (positive integer)
+    %
+    % Outputs:
+    %   phiTerms - Cell array containing phi_k(Z) for k = 1, ..., n
 
     phiTerms = cell(n, 1);
     
@@ -128,6 +163,15 @@ function phiTerms = computeRecurrenceRelation(Z, I, phi0, n)
     %   phi_{k+1}(Z) = (phi_k(Z) - phi_k(0)) / Z for k = 0, ..., n-1
     %   using the recurrence relation for numerical stability when ||Z|| is
     %   not small.
+    %
+    % Inputs:
+    %   Z - Matrix argument
+    %   I - Identity matrix of appropriate type (sparse or dense)
+    %   phi0 - Initial term phi_0(Z) = exp(Z)
+    %   n - Maximum index for the sequence (positive integer)
+    %
+    % Outputs:
+    %   phiTerms - Cell array containing phi_k(Z) for k = 1, ..., n
 
     phiTerms = cell(n, 1);
     

@@ -11,115 +11,251 @@ classdef CompiledFunction < core.function.Function
     %   stored in MAT files.
     %
     % See Also:
-    %   core.function.Function
+    %   core.function.Function, core.function.DifferentiableFunction
 
     properties (Constant, Access = protected)
-        MetaPath = '+core/+symbolic/metadata' % Directory containing metadata files
-        MetaExt = '.mat' % File extension for metadata files
+        METADATA_DIR = 'config/functions' % Directory containing metadata files
+        FILE_EXTENSION = '.mat' % File extension for metadata files
     end
 
     properties
-        Metadata % Loaded metadata structure containing function handles
+        metadata % Loaded metadata structure containing function handles
+    end
+
+    properties (Dependent)
+        hasMetadata % True if metadata is loaded and available
+        metasource % Cell array of available metadata filenames
     end
 
     methods
-        function obj = CompiledFunction(nDims, nCodims, metaName)
+        function obj = CompiledFunction(nDims, nCodims)
             % COMPILEDFUNCTION Constructor for the CompiledFunction class.
             %
-            %   obj = CompiledFunction(nDims, nCodims, metaName) creates a
-            %   CompiledFunction with specified input dimension @a nDims,
-            %   output dimension @a nCodims, and metadata file @a metaName.
+            %   obj = CompiledFunction() creates a CompiledFunction with
+            %   default dimensions (both nDims and nCodims are 0).
+            %   
+            %   obj = CompiledFunction(nDims) creates a CompiledFunction
+            %   with specified input dimension and default output dimension
+            %   (0).
+            %   
+            %   obj = CompiledFunction(nDims, nCodims) creates a
+            %   CompiledFunction with specified input and output
+            %   dimensions.
+            %
+            % Inputs:
+            %   nDims - Number of input dimensions (optional, default:0)
+            %   nCodims - Number of output dimensions (optional, default: 0)
+            %
+            % Outputs:
+            %   obj - The created CompiledFunction object
 
-            arguments
-                nDims(1, 1) {mustBeInteger}
-                nCodims(1, 1) {mustBeInteger}
-                metaName{mustBeTextScalar}
-            end
-
-            obj@core.function.Function(nDims=nDims, nCodims=nCodims);
-            obj.load(metaName);
+            obj@core.function.Function(nDims, nCodims);
+            obj.metadata = struct();
         end
 
-        function obj = load(obj, fileName)
+        function TF = get.hasMetadata(obj)
+            % GET.HASMETADATA Getter for hasMetadata dependent property.
+            %
+            %   TF = get.hasMetadata(obj) returns true if the object has
+            %   loaded metadata with valid function handles.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %
+            % Outputs:
+            %   TF - True if metadata is loaded and contains handles
+
+            TF = ~isempty(fieldnames(obj.metadata)) && ...
+                isfield(obj.metadata, 'handles') && ...
+                ~isempty(obj.metadata.handles);
+        end
+
+        function fileList = get.metasource(obj)
+            % GET.METASOURCE Getter for metasource dependent property.
+            %
+            %   fileList = get.metasource(obj) returns a cell array of
+            %   available metadata filenames in the metadata directory.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %
+            % Outputs:
+            %   fileList - Cell array of available metadata filenames
+
+            if ~exist(obj.METADATA_DIR, 'dir')
+                fileList = {};
+                return;
+            end
+
+            files = dir(fullfile(obj.METADATA_DIR, ['*', obj.FILE_EXTENSION]));
+            fileList = cell(length(files), 1);
+
+            for i = 1:length(files)
+                [~, name, ~] = fileparts(files(i).name);
+                fileList{i} = name;
+            end
+        end
+
+        function obj = load(obj, filename)
             % LOAD Load compiled metadata from specified file.
             %
-            %   obj = load(obj, fileName) loads precompiled function
+            %   obj = load(obj, filename) loads precompiled function
             %   metadata from the specified file and updates the object's
             %   function dimensions based on the loaded metadata.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %   filename - Metadata filename
+            %
+            % Outputs:
+            %   obj - Modified CompiledFunction object with loaded metadata
 
-            arguments
-                obj core.function.CompiledFunction
-                fileName {mustBeTextScalar}
-            end
+            core.except.assert( ...
+                ischar(filename) || isstring(filename), ...
+                'InvalidInput', ...
+                'Filename must be a string or char array.');
 
-            fileName = char(fileName);
-            if ~endsWith(fileName, obj.MetaExt)
-                fileName = [fileName, obj.MetaExt];
-            end
-            fullPath = fullfile(obj.MetaPath, fileName);
-            
+            filename = char(filename);
+            fullPath = obj.getFullPath(filename);
+
             core.except.assert(exist(fullPath, 'file') == 2, ...
-                'FileNotFound', 'Metadata file not found: %s', fullPath);
+                'FileNotFound', ...
+                'Metadata file not found: %s', fullPath);
 
             data = load(fullPath, 'metadata');
 
             core.except.assert(isfield(data, 'metadata'), ...
-                'InvalidFile', 'Metadata file must contain a metadata field.');
+                'InvalidFile', ...
+                'Metadata file must contain a metadata field.');
 
-            nd = obj.NDims;
-            nc = obj.NCodims;
-            metadata = data.metadata;
-            metadata.nDims = nd;
-            metadata.NCodims = nc;
-            metadata.variables = metadata.variables(1:nd);
-            metadata.expressions = metadata.expressions(1:nc);
-            metadata.handles = metadata.handles(1:nc, 1:max(2, nc));
-            obj.Metadata = metadata;
+            obj.metadata = data.metadata;
+
+%             % Update function dimensions based on metadata
+%             obj.nDims = 1;
+%             if isfield(obj.metadata, 'size')
+%                 obj.nCodims = obj.metadata.size(1);
+%             end
+        end
+
+        function obj = autoLoad(obj)
+            % AUTOLOAD Automatically find and load appropriate metadata.
+            %
+            %   obj = autoLoad(obj) automatically determines the
+            %   appropriate metadata file for this function type and loads
+            %   it. The filename is determined by the abstract autoFilename
+            %   method.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %
+            % Outputs:
+            %   obj - Modified object with loaded metadata
+
+            filename = obj.autoFilename();
+
+            core.except.assert(~isempty(filename) && ...
+                (ischar(filename) || isstring(filename)), ...
+                'MetadataNotFound', ...
+                'No appropriate metadata file found for %s', class(obj));
+
+            obj = obj.load(filename);
         end
     end
 
     methods (Access = protected)
-        function Y = evalImpl(obj, X)
-            % EVALIMPL Implementation of function evaluation.
+        function Y = evaluateImpl(obj, X)
+            % EVALUATEIMPL Implementation of function evaluation.
             %
-            %   Y = evalImpl(obj, X) evaluates the compiled function
+            %   Y = evaluateImpl(obj, X) evaluates the compiled function
             %   at the specified points using the loaded metadata handles.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %   X - Coordinates (nDims x nPoints)
+            %
+            % Outputs:
+            %   Y - Function values (nCodims x nPoints)
 
-            handles = obj.Metadata.handles;
-            Y = zeros(obj.NCodims, size(X, 2));
+            core.except.assert(obj.hasMetadata, ...
+                'NoMetadata', 'No compiled metadata is loaded.');
+
+            handles = obj.metadata.handles;
+            Y = zeros(obj.nCodims, size(X, 2));
 
             Z = mat2cell(X, ones(1, size(X, 1)), size(X, 2));
 
             for j = 1:size(handles, 1)
-                f = handles{j, 1};
-                if ~isempty(f), Y(j, :) = f(Z{:}); end
+                if ~isempty(handles{j, 1})
+                    Y(j, :) = handles{j, 1}(Z{:});
+                end
             end
         end
-
-        function dY = diffImpl(obj, X, order)
-            % DIFFIMPL Implementation of function derivative
+        
+        function dY = derivativeImpl(obj, X, r)
+            % DERIVATIVEIMPL Implementation of function derivative
             % evaluation.
             %
-            %   dY = diffImpl(obj, X, order) computes derivatives
-            %   of the compiled function at the specified points using
-            %   precompiled derivative handles from the loaded metadata.
+            %   dY = derivativeImpl(obj, X, r) computes derivatives of the
+            %   compiled function at the specified points using precompiled
+            %   derivative handles from the loaded metadata.
+            %
+            % Inputs:
+            %   obj - The DifferentiableCompiledFunction object
+            %   X - Coordinates (nDims x nPoints)
+            %   r - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (nCodims x nPoints)
 
-            handles = obj.Metadata.handles;
+            core.except.assert(obj.hasMetadata, ...
+                'NoMetadata', 'No compiled metadata is loaded.');
 
+            handles = obj.metadata.handles;
+            
             maxOrder = size(handles, 2) - 1;
-
-            m = sum(order);
-
-            core.except.assert(m <= maxOrder, 'InvalidInput', ...
+            
+            derivativeOrder = sum(r);
+            
+            core.except.assert(derivativeOrder <= maxOrder, ...
+                'InvalidInput', ...
                 'Derivative order %d exceeds maximum available order %d.', ...
-                m, maxOrder);
+                derivativeOrder, maxOrder);
 
-            k = m + 1;
-            dY = zeros(obj.NCodims, size(X, 2));
+            columnIndex = derivativeOrder + 1;
+            dY = zeros(obj.nCodims, size(X, 2));
+            
             for j = 1:size(handles, 1)
-                f = handles{j, k};
-                if ~isempty(f), dY(j, :) = f(X); end
+                if ~isempty(handles{j, columnIndex})
+                    dY(j, :) = handles{j, columnIndex}(X);
+                end
             end
         end
+  
+        function fullPath = getFullPath(obj, filename)
+            % GETFULLPATH Construct full file path from filename.
+            %
+            %   fullPath = getFullPath(obj, filename) constructs the full
+            %   path to a metadata file, adding the file extension if
+            %   needed.
+            %
+            % Inputs:
+            %   obj - The CompiledFunction object
+            %   filename - Base filename string
+            %
+            % Outputs:
+            %   fullPath - Full path to the metadata file
+
+            if ~endsWith(filename, obj.FILE_EXTENSION)
+                filename = [filename, obj.FILE_EXTENSION];
+            end
+
+            fullPath = fullfile(obj.METADATA_DIR, filename);
+        end
+    end
+
+    methods (Abstract, Access = protected)
+        % AUTOFILENAME Abstract method to generate appropriate metadata
+        % filename.
+        filename = autoFilename(obj)
     end
 end
