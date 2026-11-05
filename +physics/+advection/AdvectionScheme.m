@@ -1,4 +1,4 @@
-classdef AdvectionScheme < physics.scheme.MolScheme
+classdef AdvectionScheme < physics.MolScheme
     % ADVECTIONSCHEME Base class for all schemes solving advection
     % equations.
     %
@@ -6,59 +6,50 @@ classdef AdvectionScheme < physics.scheme.MolScheme
     %   equations. This base class defines the basic validation and parse
     %   logic of configuration struct.
     %
-    % See also:
-    %   physics.scheme.MolScheme
+    % See Also:
+    %   physics.OdeScheme
 
     methods (Access = protected)
-        function obj = setup(obj)
-            % SETUP Setup default configuration options for advection
-            % schemes.
-            
-            %< Call parent setup
-            setup@physics.scheme.MolScheme(obj);
+        function obj = parse(obj)
+            % PARSE Check and parse the contained configuration struct.
+            %
+            %   obj = parse(obj) checks and parses the contained
+            %   configuration struct.
+            %
+            % Inputs:
+            %   obj - The AdvectionScheme object
+            %
+            % Outputs:
+            %   obj - The AdvectionScheme object
 
-            %< Add advection-specific required configuration options
-            obj.addConfig('advection', default=[], ...
-                validator=@(x) isvector(x) && isnumeric(x));
-            obj.addConfig('cfl', default=0.5, ...
-                validator=@(x) isscalar(x) && x > 0);
-            obj.addConfig('ic', default=[], ...
-                validator=@(x) isa(x, 'function_handle'));
-            obj.addConfig('bc', default=[], ...
-                validator=@(x) true);
-            obj.addConfig('eId', default='Advection', ...
-                validator=@(x) (ischar(x) || isstring(x)));
-            obj.addConfig('errorTypes', default={'L1', 'L2', 'max'}, ...
-                validator=@(x) iscell(x) && all(cellfun(@(y) ischar(y) || isstring(y), x)));
-            obj.addConfig('exact', default=[], ...
-                validator=@(x) isa(x, 'function_handle') || isempty(x));
-            obj.addConfig('components', default=struct('U', 1), ...
-                validator=@(x) isstruct(x) && all(structfun(@(y) isempty(y) || isnumeric(y) && isscalar(y) && (y > 0), x)));
-        end    
+            parse@physics.MolScheme(obj);
 
-        function obj = configure(obj)
-            % CONFIGURE Generate advection-specific configuration
-            % dependencies.
-            
-            %< Call parent configure
-            configure@physics.scheme.MolScheme(obj);
-            
+            %< Validate required fields
+            requiredFields = {'advection', 'cfl', 'ic', 'bc'};
+            [tf, mf] = core.validate.hasFields(obj.config, requiredFields);
+            core.except.assert(tf, 'InvalidInput', ...
+                'Required configuration %s is missing.', mf);
+
+            %< Validate initial condition
+            core.except.assert(isa(obj.config.ic, 'function_handle'), ...
+                'InvalidInput', 'ic must be a function handle.');
+
+            %< Validate advection
+            core.except.assert(isvector(obj.config.advection) && ...
+                isnumeric(obj.config.advection), 'InvalidInput', ...
+                'advection must be a numeric vector.');
+
+            %< Validate CFL number
+            core.except.assert(isscalar(obj.config.cfl) && ...
+                obj.config.cfl > 0, 'InvalidInput', ...
+                'cfl must be positive scalar.');
+
             %< Determine boundary condition type
-            if isempty(obj.Config.bc)
-                obj.setConfig('bcType', 'periodic');
+            if isempty(obj.config.bc)
+                obj.config.bcType = 'periodic';
             else
-                obj.setConfig('bcType', 'dirichlet');
+                obj.config.bcType = 'dirichlet';
             end
-
-            %< Set visualization options
-            visualizer = obj.Config.visualizer;
-            visualizer.setComponents(obj.Config.components);
-            visualizer.addExact('U', obj.Config.exact);
-
-            %< Set analysis options
-            analyzer = obj.Config.analyzer;
-            analyzer.setComponents(obj.Config.components);
-            analyzer.addExact('U', obj.Config.exact);
-        end
+        end    
     end
 end

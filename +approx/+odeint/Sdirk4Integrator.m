@@ -15,15 +15,31 @@ classdef Sdirk4Integrator < approx.odeint.DirkIntegrator
     %
     %   The method uses \f$\gamma = 1/4\f$, which provides A-stability and
     %   good damping properties. The method requires five implicit solves
-    %   per time step but achieves fourth-order accuracy, making it
-    %   suitable for problems requiring high precision.
+    %   per time step but achieves fourth-order accuracy, making it suitable
+    %   for problems requiring high precision.
+    %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Sdirk4Integrator(1.0);
+    %   U_new = integrator.step(L, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], []);
+    %
+    %   % Pure forcing (only source term)
+    %   U_new = integrator.step([], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, S, M);
     %
     % See also:
     %   approx.odeint.DirkIntegrator, approx.odeint.Sdirk2Integrator,
     %   approx.odeint.Sdirk3Integrator
     
     properties (Constant)
-        Order = 4 % Accuracy order of the SDIRK4 method
+        ORDER = 4 % Accuracy order of the SDIRK4 method
     end
 
     methods
@@ -32,10 +48,12 @@ classdef Sdirk4Integrator < approx.odeint.DirkIntegrator
             %
             %   obj = Sdirk4Integrator(final) creates a fourth-order SDIRK
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Sdirk4Integrator object
             
             obj@approx.odeint.DirkIntegrator(5, final);
             

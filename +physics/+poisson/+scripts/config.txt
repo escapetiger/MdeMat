@@ -1,25 +1,39 @@
 # Environment configuration
 
 # =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
 # Algorithm
 # =======================================================================
 
-OPTION=schemeName='ldg'
+# -----------------------------------------------------------------------
+# Input/Output
+# -----------------------------------------------------------------------
+OPTION=verbose=true
 
 # -----------------------------------------------------------------------
 # Space discretization
 # -----------------------------------------------------------------------
 
-# spatial order
-OPTION=xBasisOrder=3
+# xDiscName='ldg': local DG
+OPTION=xDiscName='ldg'
 
-# xBasisType='modal': Modal basis 
-# xBasisType='nodal': Nodal basis
-OPTION=xBasisType='nodal'
+# spatial order
+OPTION=xBasisOrder=1
+
+# xBasisType='legendre': Monic Legendre basis, 
+# xBasisType='lagrange_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='lagrange_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='legendre'
 
 # xBasisPattern='Q': Qk polynomial space
 # xBasisPattern='P': Pk polynomial space
-OPTION=xBasisPattern='Q'
+OPTION=xBasisPattern='P'
 
 # xPenaltyType{1,1}='boundary': add jump only to boundary elements
 # xPenaltyType{1,1}='boundaryw': add weighted jump only to boundary elements
@@ -32,6 +46,3 @@ OPTION=xBasisPattern='Q'
 # xPenaltyType{2,1}='right': right flux
 # xPenaltyType{2,1}='left': left flux
 OPTION=xPenaltyType={'all', 'right'; 'left', ''} 
-
-# hasAuxiliaryVariable=true: enable computation of auxiliary variable 
-OPTION=hasAuxiliaryVariable=true

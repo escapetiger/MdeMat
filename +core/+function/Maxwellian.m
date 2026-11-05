@@ -4,67 +4,109 @@ classdef Maxwellian < core.function.Function
     %   Maxwellian represents a shifted Maxwell-Boltzmann distribution:
     %
     %   \f[
-    %     f(x;y,T) = (1/(2*pi*T)^{d/2}) exp(-|x-y|^2/(2*T))
+    %     f(x;y,T) = (1/(2*pi*T)^{d/2}) * exp(-|x-y|^2/(2*T))
     %   \f]
     %
     %   where \f$T\f$ is the temperature, \f$y\f$ is the center point, and
     %   \f$d\f$ is the dimension. This represents a Gaussian distribution
     %   centered at point \f$y\f$ with covariance matrix \f$TI\f$.
     %
+    % Examples:
+    %   % 1D Maxwellian centered at y=2 with T T=1
+    %   f = MaxwellianFunction(1, 1, 2);  % R^1 -> R^1
+    %
+    %   % 3D velocity distribution centered at drift velocity
+    %   y = [1; 0; -0.5];  % Drift velocity
+    %   f = MaxwellianFunction(3, 0.5, y);  % R^3 -> R^1
+    %
+    %   % Evaluate at points
+    %   X = randn(3, 1000);
+    %   Y = f.evaluate(X);
+    %
     % See Also:
     %   core.function.Function
 
     properties
-        Temperature % Temperature
-        Center % Center point (nDims x 1 vector)
+        temperature % Temperature
+        center % Center point (nDims x 1 vector)
     end
 
     methods
-        function obj = Maxwellian(nDims, options)
-            % MAXWELLIAN Constructor for the Maxwellian class.
+        function obj = Maxwellian(nDims, temperature, center)
+            % MAXWELLIAN Constructor for the Maxwellian
+            % class.
             %
-            %   obj = Maxwellian(nDims, options) creates a
+            %   obj = Maxwellian(nDims, temperature, center) creates a
             %   Maxwellian in nDims dimensions with the specified
             %   temperature and center point.
+            %
+            % Inputs:
+            %   nDims - Number of input dimensions (positive integer)
+            %   temperature - Temperature parameter
+            %   center - Center point (nDims x 1 vector or scalar)
+            %
+            % Outputs:
+            %   obj - The created Maxwellian object
 
-            arguments
-                nDims(1, 1) {mustBePositive, mustBeInteger}
-                options.temperature(1, 1) {mustBeNumeric} = 1
-                options.center(:, 1) {mustBeNumeric} = zeros(nDims, 1)
+            if nargin < 3 || isempty(center)
+                center = zeros(nDims, 1);
             end
 
-            obj@core.function.Function(nDims=nDims, nCodims=1);
-            obj.Temperature = options.temperature;
-            obj.Center = options.center;
+            obj@core.function.Function(nDims, 1);
+            obj.temperature = temperature;
+            obj.center = center(:);
         end
     end
 
     methods (Access = protected)
-        function Y = evalImpl(obj, X)
-            % EVALIMPL Implementation of Maxwellian evaluation.
+        function Y = evaluateImpl(obj, X)
+            % EVALUATEIMPL Implementation of Maxwellian evaluation.
+            %
+            %   Y = evaluateImpl(obj, X) evaluates the Maxwellian
+            %   distribution at the specified points.
+            %
+            % Inputs:
+            %   obj - The MaxwellianFunction object
+            %   X - Coordinates (nDims x nPoints)
+            %
+            % Outputs:
+            %   Y - Function values (1 x nPoints)
 
-            nd = obj.NDims;
-            T = obj.Temperature;
-            C = obj.Center;
-            Y = exp(-sum(((X - C)).^2, 1)./(2*T)) ./ (sqrt(2 * pi * T).^(nd));
+            d = obj.nDims;
+            T = obj.temperature;
+            C = obj.center;
+            Y = exp(-sum((X - C).^2, 1) ./ (2 * T)) ./ (2 * pi * T).^(d/2);
         end
 
-        function dY = diffImpl(obj, X, order)
-            % DIFFIMPL Implementation of Maxwellian derivative.
+        function dY = differentiateImpl(obj, X, order)
+            % DIFFERENTIATEIMPL Implementation of Maxwellian derivative.
             %
-            %   For first derivatives:
+            %   dY = differentiateImpl(obj, X, order) computes derivatives
+            %   of the Maxwellian function.
+            %
+            %   For first derivatives: 
             %   \f[
-            %     \frac{\partial{f}}{\partial{x_i}} = -\frac{x_i-y_i}{T} \cdot f(x)
+            %     \frac{\partial{f}}{\partial{x_i}} = -(x_i-y_i)/T * f(x)
             %   \f]
-            %   Higher derivatives are not implemented.
+            %   For higher derivatives: not implemented
+            %
+            % Inputs:
+            %   obj - The Maxwellian object
+            %   X - Coordinates (nDims x nPoints)
+            %   order - Derivative order vector (1 x nDims)
+            %
+            % Outputs:
+            %   dY - Derivative values (1 x nPoints)
 
-            core.except.assert(sum(order) > 1, 'InvalidInput', ...
-                'High-order derivatives are not supported.');
-
-            T = obj.Temperature;
-            Y = obj.evalImpl(X);
-            dX = X - obj.Center;
-            dY = -dX(find(order > 0, 1), :) / T .* Y;
+            T = obj.temperature;
+            if sum(order) == 1
+                Y = obj.evaluateImpl(X);
+                dX = X - obj.center;
+                dY = -dX(find(order > 0, 1), :) / T .* Y;
+            else
+                core.except.assert(0, 'InvalidInput', ...
+                    'High-order derivatives are not supported.');
+            end
         end
     end
 end

@@ -10,20 +10,19 @@ classdef Grid < approx.mesh.Mesh
     %
     % See also:
     %   approx.mesh.Mesh, approx.mesh.SeparableGraph
-    
-    properties
-        Resolution % Element count per dimension (1 × NDims vector)
-        Centroids % Element center coordinates per dimension (1 × NDims cell)
-        Spacings % Element spacing per dimension (1 × NDims cell)
-        Boundary % Boundary element specifications (1 × 2*NDims cell)
-        Indexer % Multi-index converter (core.linalg.MultiIndexer)
+
+    properties (Access = public)
+        resolution % Element count per dimension (1 × nDims vector)
+        centroids % Element center coordinates per dimension (1 × nDims cell)
+        spacings % Element spacing per dimension (1 × nDims cell)
+        boundary % Boundary element specifications (1 × 2nDims cell)
+        indexer % Multi-index converter (core.linalg.MultiIndexer)
     end
-    
+
     properties (Dependent)
-        BBox % Bounding box
-        AllElementMultiIndices % Multi-indices of all elements
+        bbox % Bounding box
     end
-    
+
     methods
         function obj = Grid(vertices)
             % GRID Constructor for Grid base class.
@@ -31,254 +30,268 @@ classdef Grid < approx.mesh.Mesh
             %   obj = Grid(vertices) creates a non-uniform grid from vertex
             %   coordinate vectors that define element boundaries in each
             %   dimension, automatically computing element properties.
+            %
+            % Inputs:
+            %   vertices - Vertex coordinate cell array (1 × nDims cell)
+            %
+            % Outputs:
+            %   obj - Constructed Grid object
 
-            arguments
-                vertices {mustBeA(vertices, 'cell')}
-            end
-            
             elements = cellfun(@(x) 1:(length(x) - 1), vertices, 'Un', 0);
             obj@approx.mesh.Mesh(vertices, elements);
-            obj.Resolution = cellfun(@(x) length(x)-1, vertices);
-            obj.Centroids = cellfun(@(x) (x(1:end-1) + x(2:end))/2, vertices, 'Un', 0);
-            obj.Spacings = cellfun(@(x) diff(x), vertices, 'Un', 0);
-            obj.Indexer = core.linalg.MultiIndexer(shape=obj.Resolution);
-            obj.Boundary = cell(1, 2*obj.NDims);
-            for i = 1:obj.NDims
-                f = arrayfun(@(n) 1:n, obj.Resolution, 'Un', 0);
+            obj.resolution = cellfun(@(x) length(x)-1, vertices);
+            obj.centroids = cellfun(@(x) (x(1:end-1) + x(2:end))/2, vertices, 'Un', 0);
+            obj.spacings = cellfun(@(x) diff(x), vertices, 'Un', 0);
+            obj.indexer = core.linalg.MultiIndexer(obj.resolution);
+            obj.boundary = cell(1, 2*obj.nDims);
+            for i = 1:obj.nDims
+                f = arrayfun(@(n) 1:n, obj.resolution, 'Un', 0);
                 f{i} = 1;
-                obj.Boundary{2*i-1} = f;
-                f{i} = obj.Resolution(i);
-                obj.Boundary{2*i} = f;
+                obj.boundary{2*i-1} = f;
+                f{i} = obj.resolution(i);
+                obj.boundary{2*i} = f;
             end
         end
-        
-        function IEI = getInternalElements(obj)
+
+        function IE = getInternalElements(obj)
             % GETINTERIORELEMENTS Get linear indices of internal elements.
             %
-            %   IEI = getInternalElements(obj) computes linear indices of
+            %   IE = getInternalElements(obj) computes linear indices of
             %   internal elements that do not touch any boundary.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   IE - Linear indices of internal elements (vector)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            ME = cellfun(@(I) I(2:end-1), obj.Elements, 'Un', 0);
-            ME = obj.Indexer.factorToMulti(ME);
-            IEI = obj.Indexer.multiToLinear(ME);
+            ME = cellfun(@(I) I(2:end-1), obj.elements, 'Un', 0);
+            ME = obj.indexer.factorToMulti(ME);
+            IE = obj.indexer.multiToLinear(ME);
         end
-        
-        function BEI = getBoundaryElements(obj, LFI)
+
+        function IE = getBoundaryElements(obj, IFE)
             % GETBOUNDARYELEMENTS Get linear indices of boundary elements.
             %
-            %   BEI = getBoundaryElements(obj) computes the linear indices
+            %   IE = getBoundaryElements(obj) computes the linear indices
             %   of all elements that have at least one face on the
             %   boundary.
             %
-            %   BEI = getBoundaryElements(obj, LFI) finds elements whose
-            %   LFI-th face is on the boundary.
+            %   IE = getBoundaryElements(obj, IFE) finds elements whose
+            %   IFE-th face is on the boundary.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IFE - Boundary face index (1 to 2×nDims)
+            %
+            % Outputs:
+            %   IE - Linear indices of boundary elements (vector)
 
-            arguments
-                obj approx.mesh.Grid
-                LFI {mustBeInteger, mustBePositive} = []
-            end
-            
-            if isempty(LFI)
-                nb = length(obj.Boundary);
-                BEI = cell(1, nb);
-                for i = 1:nb
-                    M = obj.Indexer.factorToMulti(obj.Boundary{i});
-                    BEI{i} = obj.Indexer.multiToLinear(M);
-                end
-                BEI = vertcat(BEI{:});
-                BEI = unique(BEI, 'stable');
+            if nargin < 2 || isempty(IFE)
+                IE = cellfun(@(IF) obj.indexer.multiToLinear(IF), obj.boundary, 'Un', 0);
+                IE = vertcat(IE{:});
+                IE = unique(IE, 'stable');
                 return;
             end
-            
-            ME = obj.Indexer.factorToMulti(obj.Boundary{LFI});
-            BEI = obj.Indexer.multiToLinear(ME);
+
+            ME = obj.indexer.factorToMulti(obj.boundary{IFE});
+            IE = obj.indexer.multiToLinear(ME);
         end
-        
-        function IEI = findInternalElements(obj, EI, LFI)
+
+        function JE = findInternalElements(obj, IE, IFE)
             % FINDINTERIORELEMENTS Find internal elements across faces.
             %
-            %   IEI = findInternalElements(obj, EI, LFI) finds elements
-            %   whose LFI-th face is not on the boundary within the
-            %   specified elements @a EI.
+            %   JE = findInternalElements(obj, IE, IFE) finds elements
+            %   whose IFE-th face is not on the boundary within the
+            %   specified elements @a IE.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IE - Linear indices of primary elements (vector)
+            %   IFE - Local face index (1 to 2×nDims)
+            %
+            % Outputs:
+            %   JE - Linear indices of internal elements (vector)
 
-            arguments
-                obj approx.mesh.Grid
-                EI {mustBeInteger}
-                LFI {mustBeInteger, mustBePositive}
-            end
-            
-            ME = obj.Indexer.linearToMulti(EI);
-            dim = ceil(LFI/2);
-            if mod(LFI, 2) == 1
+            ME = obj.indexer.linearToMulti(IE);
+            dim = ceil(IFE/2);
+            if mod(IFE, 2) == 1
                 mask = ME(:, dim) > 1;
             else
-                mask = ME(:, dim) < obj.Resolution(dim);
+                mask = ME(:, dim) < obj.resolution(dim);
             end
-            IEI = obj.Indexer.multiToLinear(ME(mask, :));
+            JE = obj.indexer.multiToLinear(ME(mask, :));
         end
-        
-        function BEI = findBoundaryElements(obj, EI, LFI)
+
+        function JE = findBoundaryElements(obj, IE, IFE)
             % FINDBOUNDARYELEMENTS Find boundary elements across faces.
             %
-            %   BEI = findBoundaryElements(obj, EI, LFI) finds elements
-            %   whose LFI-th face is on the boundary within the specified
-            %   elements @a EI.
+            %   JE = findBoundaryElements(obj, IE, IFE) finds elements
+            %   whose IFE-th face is on the boundary within the specified
+            %   elements @a IE.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IE - Linear indices of primary elements (vector)
+            %   IFE - Local face index (1 to 2×nDims)
+            %
+            % Outputs:
+            %   JE - Linear indices of boundary elements (vector)
 
-            arguments
-                obj approx.mesh.Grid
-                EI {mustBeInteger}
-                LFI {mustBeInteger, mustBePositive}
-            end
-            
-            ME = obj.Indexer.linearToMulti(EI);
-            dim = ceil(LFI/2);
-            if mod(LFI, 2) == 1
+            ME = obj.indexer.linearToMulti(IE);
+            dim = ceil(IFE/2);
+            if mod(IFE, 2) == 1
                 mask = ME(:, dim) == 1;
             else
-                mask = ME(:, dim) == obj.Resolution(dim);
+                mask = ME(:, dim) == obj.resolution(dim);
             end
-            BEI = obj.Indexer.multiToLinear(ME(mask, :));
+            JE = obj.indexer.multiToLinear(ME(mask, :));
         end
-        
-        function [NEI, NLFI] = findNeighborElements(obj, EI, LFI, BC)
+
+        function [JE, JFE] = findNeighborElements(obj, IE, IFE, BC)
             % FINDNEIGHBORELEMENTS Find neighboring elements across faces.
             %
-            %   [NEI, NLFI] = findNeighborElements(obj, EI, LFI, BC) computes
+            %   [JE, JFE] = findNeighborElements(obj, IE, IFE, BC) computes
             %   neighbor elements sharing the specified local face of given
             %   elements, with appropriate boundary condition treatment.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IE - Linear indices of primary elements (vector)
+            %   IFE - Local face index (1 to 2×nDims)
+            %   BC - Boundary condition ('periodic' or 'dirichlet' or [])
+            %
+            % Outputs:
+            %   JE - Linear indices of neighbor elements (vector)
+            %   JFE - Local face indices of neighbors (vector)
 
-            arguments
-                obj approx.mesh.Grid
-                EI {mustBeInteger}
-                LFI {mustBeInteger, mustBePositive}
-                BC {mustBeMember(BC, {'', 'periodic', 'dirichlet'})} = ''
-            end
-            
-            ME = obj.Indexer.linearToMulti(EI);
-            
-            dim = ceil(LFI/2);
-            
-            if mod(LFI, 2) == 1
+            ME = obj.indexer.linearToMulti(IE);
+
+            dim = ceil(IFE/2);
+
+            if mod(IFE, 2) == 1
                 ME(:, dim) = ME(:, dim) - 1;
-                NLFI = 2 * dim;
+                JFE = 2 * dim;
             else
                 ME(:, dim) = ME(:, dim) + 1;
-                NLFI = 2 * dim - 1;
+                JFE = 2 * dim - 1;
             end
-            
+
             switch lower(BC)
                 case 'periodic'
-                    NEI = obj.Indexer.multiToLinear(ME, pad='wrap');
+                    JE = obj.indexer.multiToLinear(ME, 'wrap');
                 case 'dirichlet'
-                    NEI = obj.Indexer.multiToLinear(ME, pad='empty');
+                    JE = obj.indexer.multiToLinear(ME, 'empty');
                 otherwise
-                    NEI = obj.Indexer.multiToLinear(ME, pad='empty');
+                    JE = obj.indexer.multiToLinear(ME, 'empty');
             end
         end
-        
+
         function graphObj = graphify(obj)
             % GRAPHIFY Convert grid to separable graph representation.
             %
             %   graphObj = graphify(obj) creates a SeparableGraph that
             %   represents the grid's connectivity structure using 1D
             %   factors with variable vertex spacing.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   graphObj - SeparableGraph with tensor-product structure
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            d = obj.NDims;
-            n = obj.Resolution;
-            h = obj.Spacings;
-            c = obj.Centroids;
+            d = obj.nDims;
+            n = obj.resolution;
+            h = obj.spacings;
+            c = obj.centroids;
             V = arrayfun(@(i) [c{i} - h{i} / 2, c{i}(end) + h{i}(end) / 2].', 1:d, 'Un', 0);
             E = arrayfun(@(k) [(1:k).', (2:(k + 1)).'], n, 'Un', 0);
             graphObj = approx.mesh.SeparableGraph(V, E);
         end
-        
-        function Y = collocate(obj, X, EI)
+
+        function Y = collocate(obj, X, IE)
             % COLLOCATE Map reference coordinates to physical coordinates.
             %
             %   Y = collocate(obj, X) maps reference coordinates from the
-            %   standard hypercube $[-1/2,1/2]^nd$ to physical coordinates
+            %   standard hypercube $[-1/2,1/2]^d$ to physical coordinates
             %   across all grid elements using element-specific
             %   transformations.
             %
-            %   Y = collocate(obj, X, EI) maps coordinates to specific
-            %   elements identified by linear indices EI.
+            %   Y = collocate(obj, X, IE) maps coordinates to specific
+            %   elements identified by linear indices IE.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   X - Reference coordinates (d × nPoints or cell array)
+            %   IE - Element linear indices (optional, vector)
+            %
+            % Outputs:
+            %   Y - Physical coordinates (d × nPoints or cell array)
 
-            arguments
-                obj approx.mesh.Grid
-                X {mustBeNumericOrCell}
-                EI {mustBeInteger} = []
-            end
-            
-            nd = obj.NDims;
+            if nargin < 3, IE = []; end
+
+            d = obj.nDims;
             if ~iscell(X)
-                C = cell(1, nd);
-                [C{:}] = ndgrid(obj.Centroids{:});
-                C = reshape(cat(nd+1, C{:}), [], nd).';
-                if ~isempty(EI), C = C(:, EI); end
-                C = reshape(C, nd, 1, []);
+                C = cell(1, d);
+                [C{:}] = ndgrid(obj.centroids{:});
+                C = reshape(cat(d+1, C{:}), [], d).';
+                if ~isempty(IE), C = C(:, IE); end
+                C = reshape(C, d, 1, []);
+
+                h = cell(1, d);
+                [h{:}] = ndgrid(obj.spacings{:});
+                h = reshape(cat(d+1, h{:}), [], d).';
+                if ~isempty(IE), h = h(:, IE); end
+                h = reshape(h, d, 1, []);
                 
-                h = cell(1, nd);
-                [h{:}] = ndgrid(obj.Spacings{:});
-                h = reshape(cat(nd+1, h{:}), [], nd).';
-                if ~isempty(EI), h = h(:, EI); end
-                h = reshape(h, nd, 1, []);
-                
-                X = reshape(X, nd, [], 1);
+                X = reshape(X, d, [], 1);
                 Y = C + h .* X;
-                Y = reshape(Y, nd, []);
+                Y = reshape(Y, d, []);
             else
-                Y = cell(nd, 1);
-                if isempty(EI)
-                    for i = 1:nd
-                        C = obj.Centroids{i};
-                        h = obj.Spacings{i};
-                        Y{i} = C(:).' + h(:).' .* X{i}(:);
-                        Y{i} = Y{i}(:);
+                Y = cell(d, 1);
+                if isempty(IE)
+                    for i = 1:d
+                        C = obj.centroids{i};
+                        h = obj.spacings{i};
+                        Y{i} = C(:).' + h(:).' .* X{i}(:).';
                     end
                 else
-                    M = obj.Indexer.linearToMulti(EI);
-                    for i = 1:nd
-                        C = obj.Centroids{i}(M(:, i));
-                        h = obj.Spacings{i}(M(:, i));
-                        Y{i} = C(:).' + h(:).' .* X{i}(:);
-                        Y{i} = Y{i}(:);
+                    M = obj.indexer.linearToMulti(IE);
+                    for i = 1:d
+                        C = obj.centroids{i}(M(:, i));
+                        h = obj.spacings{i}(M(:, i));
+                        Y{i} = C(:).' + h(:).' .* X{i}(:).';
                     end
                 end
             end
         end
-        
+
         function newObj = refine(obj, nLevels)
             % REFINE Create refined grid preserving spacing patterns.
             %
             %   newObj = refine(obj, nLevels) creates a refined grid by
             %   uniformly subdividing each element while preserving the
             %   relative spacing characteristics of the original grid.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   nLevels - Number of refinement levels (non-negative integer)
+            %
+            % Outputs:
+            %   newObj - Refined Grid object
 
-            arguments
-                obj approx.mesh.Grid
-                nLevels {mustBeInteger, mustBeNonnegative} = 1
-            end
-            
             if nLevels == 0
                 newObj = obj;
                 return;
             end
-            
-            nd = obj.NDims;
+
+            d = obj.nDims;
             p = 2^nLevels;
-            x = cell(1, nd);
-            for i = 1:nd
-                y = obj.Centroids{i};
-                n = obj.Resolution(i);
-                s = obj.Spacings{i};
+            x = cell(1, d);
+            for i = 1:d
+                y = obj.centroids{i};
+                n = obj.resolution(i);
+                s = obj.spacings{i};
                 a = y - s / 2;
                 b = y + s / 2;
                 h = (b - a) ./ p;
@@ -290,21 +303,23 @@ classdef Grid < approx.mesh.Mesh
             end
             newObj = approx.mesh.Grid(x);
         end
-        
+
         function h = computeMeasure(obj)
             % COMPUTEMEASURE Compute minimum element spacing across the grid.
             %
             %   h = computeMeasure(obj) returns the minimum element spacing
             %   among all elements in all dimensions, providing a
             %   characteristic length scale for the grid.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   h - Minimum element spacing (positive scalar)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            h = min(cellfun(@min, obj.Spacings));
+            h = min(cellfun(@min, obj.spacings));
         end
-        
+
         function detJ = computeAllElementJacobianDeterminants(obj)
             % COMPUTEALLELEMENTJACOBIANDETERMINANTS Compute
             % element-specific Jacobian determinants.
@@ -313,18 +328,20 @@ classdef Grid < approx.mesh.Mesh
             %   the Jacobian determinant for coordinate transformation for
             %   each element. For structured grids, determinants vary by
             %   element based on local spacing.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   detJ - Jacobian determinants for all elements (nElements × 1)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            h = cell(1, obj.NDims);
-            [h{:}] = ndgrid(obj.Spacings{:});
+            h = cell(1, obj.nDims);
+            [h{:}] = ndgrid(obj.spacings{:});
             h = cellfun(@(x) x(:).', h, 'Un', 0);
             detJ = prod(cat(1, h{:}), 1);
             detJ = detJ(:);
         end
-        
+
         function J = computeAllElementJacobians(obj)
             % COMPUTEALLELEMENTJACOBIANS Compute element-specific Jacobian
             % matrices.
@@ -333,19 +350,21 @@ classdef Grid < approx.mesh.Mesh
             %   matrix for coordinate transformation for each element. For
             %   structured grids, Jacobians vary by element but remain
             %   diagonal.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   J - Jacobian matrices (d × d × nElements)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            nd = obj.NDims;
-            h = cell(1, nd);
-            [h{:}] = ndgrid(obj.Spacings{:});
+            d = obj.nDims;
+            h = cell(1, d);
+            [h{:}] = ndgrid(obj.spacings{:});
             h = cellfun(@(x) x(:).', h, 'Un', 0);
             h = cat(1, h{:});
-            J = reshape(h, nd, 1, []) .* eye(nd, nd);
+            J = reshape(h, d, 1, []) .* eye(d, d);
         end
-        
+
         function invJ = computeAllElementInverseJacobians(obj)
             % COMPUTEALLELEMENTINVERSEJACOBIANS Compute element-specific
             % inverse Jacobian matrices.
@@ -354,113 +373,109 @@ classdef Grid < approx.mesh.Mesh
             %   inverse Jacobian matrix for coordinate transformation for
             %   each element. For structured grids, inverse Jacobians vary
             %   by element.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   invJ - Inverse Jacobian matrices (d × d × nElements)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            nd = obj.NDims;
-            h = cell(1, nd);
-            [h{:}] = ndgrid(obj.Spacings{:});
+            d = obj.nDims;
+            h = cell(1, d);
+            [h{:}] = ndgrid(obj.spacings{:});
             h = cellfun(@(x) x(:).', h, 'Un', 0);
             h = 1 ./ cat(1, h{:});
-            invJ = reshape(h, nd, 1, []) .* eye(nd, nd);
+            invJ = reshape(h, d, 1, []) .* eye(d, d);
         end
-        
-        function detFJac = computeAllFaceJacobianDeterminants(obj)
+
+        function detFJ = computeAllFaceJacobianDeterminants(obj)
             % COMPUTEALLFACEJACOBIANDETERMINANTS Compute element-specific
             % face Jacobian determinants.
             %
-            %   detFJac = computeAllFaceJacobianDeterminants(obj) computes
+            %   detFJ = computeAllFaceJacobianDeterminants(obj) computes
             %   Jacobian determinants for coordinate transformation on
             %   element faces. For structured grids, face determinants vary
             %   by element.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   detFJ - Face Jacobian determinants (cell array by face type)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            nd = obj.NDims;
-            if nd == 1
-                detFJac = repmat({ones(obj.NElements, 1)}, 1, 2);
+            d = obj.nDims;
+            if d == 1
+                detFJ = repmat({ones(obj.nElements, 1)}, 1, 2);
                 return;
             end
-            
-            detFJac = cell(1, 2*nd);
-            for i = 1:2 * nd
+
+            detFJ = cell(1, 2*d);
+            for i = 1:2 * d
                 dim = ceil(i/2);
-                h = cell(1, nd);
-                [h{:}] = ndgrid(obj.Spacings{:});
-                h = cellfun(@(x) x(:).', h(setdiff(1:nd, dim)), 'Un', 0);
-                detFJac{i} = prod(cat(1, h{:}), 1).';
+                h = cell(1, d);
+                [h{:}] = ndgrid(obj.spacings{:});
+                h = cellfun(@(x) x(:).', h(setdiff(1:d, dim)), 'Un', 0);
+                detFJ{i} = prod(cat(1, h{:}), 1).';
             end
         end
-        
-        function normal = computeAllOutwardNormals(obj)
+
+        function outN = computeAllOutwardNormals(obj)
             % COMPUTEALLOUTWARDNORMALS Compute outward normal vectors for
             % all faces.
             %
-            %   normal = computeAllOutwardNormals(obj) computes unit outward
+            %   outN = computeAllOutwardNormals(obj) computes unit outward
             %   normal vectors for each face type. For structured grids,
             %   normals remain axis-aligned and constant for faces of the
             %   same type.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %
+            % Outputs:
+            %   outN - Outward normal vectors (cell array by face type)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            nd = obj.NDims;
-            normal = cell(1, 2*nd);
-            for i = 1:(2 * nd)
+            d = obj.nDims;
+            outN = cell(1, 2*d);
+            for i = 1:(2 * d)
                 dim = ceil(i/2);
-                normal{i} = zeros(nd, 1);
+                outN{i} = zeros(d, 1);
                 if mod(i, 2) == 0
-                    normal{i}(dim) = +1;
+                    outN{i}(dim) = +1;
                 else
-                    normal{i}(dim) = -1;
+                    outN{i}(dim) = -1;
                 end
             end
         end
-        
+    
         function v = computeUniqueDirection(obj)
             % COMPUTEUNIQUEDIRECTION Compute a unique direction vector.
             %
             %   v = computeUniqueDirection(obj) computes a unique unit
             %   direction vector to define the "plus" and "minus" side of a
             %   face.
+            %
+            % Inputs:
+            %   obj - The Mesh object
+            %
+            % Outputs:
+            %   v - Direction vector (nDims × 1)
 
-            arguments
-                obj approx.mesh.Grid
-            end
-            
-            nd = obj.NDims;
-            if nd == 1
+            d = obj.nDims;
+            if d == 1
                 v = 1;
             else
-                v = ones(nd, 1) / sqrt(nd);
+                v = ones(d, 1) / sqrt(d);
             end
         end
     end
-    
+
     methods
-        function BBox = get.BBox(obj)
+        function bbox = get.bbox(obj)
             % GET.BBOX Get the bounding box.
 
-            xmin = cellfun(@(x) min(x), obj.Vertices);
-            xmax = cellfun(@(x) max(x), obj.Vertices);
-            BBox = reshape([xmin; xmax], 1, []);
+            xmin = cellfun(@(x) min(x), obj.vertices);
+            xmax = cellfun(@(x) max(x), obj.vertices);
+            bbox = reshape([xmin; xmax], 1, []);
         end
-
-        function M = get.AllElementMultiIndices(obj)
-            % GET.ALLELEMENTMULTIINDICES Get multi-indices of all elements.
-
-            M = obj.Indexer.factorToMulti(obj.Elements);
-        end
-    end
-end
-
-function mustBeNumericOrCell(x)
-    if ~(isnumeric(x) || iscell(x))
-        error('Input must be numeric or cell.');
     end
 end

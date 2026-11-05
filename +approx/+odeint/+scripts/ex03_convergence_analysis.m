@@ -30,7 +30,6 @@ implicit_integrators = {
     approx.odeint.BeIntegrator(final_time)
     approx.odeint.Bdf2Integrator(final_time)
     approx.odeint.Bdf3Integrator(final_time)
-    approx.odeint.ImpIntegrator(final_time)
     approx.odeint.Sdirk2Integrator(final_time)
     approx.odeint.Sdirk3Integrator(final_time)
     approx.odeint.Sdirk4Integrator(final_time)
@@ -40,7 +39,6 @@ implicit_integrators = {
 % Explicit integrators
 explicit_integrators = {
     approx.odeint.FeIntegrator(final_time)
-    approx.odeint.EmpIntegrator(final_time)
     approx.odeint.HeunIntegrator(final_time)
     approx.odeint.Ssprk2Integrator(final_time)
     approx.odeint.Ssprk3Integrator(final_time)
@@ -56,10 +54,10 @@ imex_integrators = {
 
 % Splitting integrators (test with same problem structure)
 splitting_integrators = {
-    approx.odeint.LieTrotterIntegrator(factors={...
+    approx.odeint.LieTrotterIntegrator({...
         approx.odeint.BeIntegrator(final_time), ...
         approx.odeint.FeIntegrator(final_time)})
-    approx.odeint.StrangIntegrator(factors={...
+    approx.odeint.StrangIntegrator({...
         approx.odeint.Sdirk2Integrator(final_time), ...
         approx.odeint.HeunIntegrator(final_time)})
 };
@@ -118,7 +116,7 @@ dt_values_used = cell(n_methods, 1);
 
 for i = 1:n_methods
     fprintf('Testing %s (%s, theoretical order %d)...\n', ...
-        integrator_names{i}, integrator_types{i}, all_integrators{i}.Order);
+        integrator_names{i}, integrator_types{i}, all_integrators{i}.ORDER);
     
     integrator = all_integrators{i};
     
@@ -153,9 +151,9 @@ for i = 1:n_methods
             for k = 1:n_steps
                 % Set time step
                 if strcmp(integrator_types{i}, 'Splitting')
-                    integrator.setTimeStep(dt=dt);
+                    integrator.setTimeStep(dt, 1, 1);
                 else
-                    integrator.setTimeStep(dt=dt);
+                    integrator.timeline.setTimeStep(dt, 1, 1);
                 end
                 
                 % Set coefficients for BDF methods
@@ -165,19 +163,19 @@ for i = 1:n_methods
                 
                 % Call appropriate step method based on integrator type
                 if strcmp(integrator_types{i}, 'Implicit')
-                    U_new = integrator.step(L=L, S=S, M=[]);
+                    U_new = integrator.step(L, S, []);
                 elseif strcmp(integrator_types{i}, 'Explicit')
                     % For explicit methods, treat everything as nonlinear term
-                    U_new = integrator.step(L=[], F=F, S=[], M=[]);
+                    U_new = integrator.step([], F, [], []);
                 elseif strcmp(integrator_types{i}, 'IMEX')
-                    U_new = integrator.step(L=L, F=[], S=S, M=[]);
+                    U_new = integrator.step(L, [], S, []);
                 else % Splitting
                     % Split the problem: linear part + source part
                     L_split = {L, []};
                     F_split = {[], []};
                     S_split = {[], S};
                     M_split = {[], []};
-                    U_new = integrator.step(L=L_split, F=F_split, S=S_split, M=M_split);
+                    U_new = integrator.step(L_split, F_split, S_split, M_split);
                 end
                 
                 integrator.update(U_new);
@@ -219,7 +217,7 @@ for i = 1:n_methods
     
     if ~isnan(observed_order)
         fprintf('  Observed order: %.2f (theoretical: %d)\n', ...
-            observed_order, all_integrators{i}.Order);
+            observed_order, all_integrators{i}.ORDER);
     else
         fprintf('  Observed order: N/A (insufficient valid data)\n');
     end

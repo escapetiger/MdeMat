@@ -9,11 +9,11 @@ classdef Timeline < handle
     %
     % See also:
     %   approx.mesh.StaticTimeline, approx.mesh.DynamicTimeline
-
+    
     properties (Access = public)
-        Final % Final time (positive scalar)
-        Now % Current time (scalar)
-        Count % Event counter (positive integer)
+        final % Final time (positive scalar)
+        now   % Current time (scalar)
+        count % Event counter (positive integer)
     end
 
     methods
@@ -21,16 +21,21 @@ classdef Timeline < handle
             % TIMELINE Constructor for Timeline.
             %
             %   obj = Timeline(final) creates a timeline object with
-            %   the specified @a final time. This constructor is called
+            %   the specified final time. This constructor is called
             %   by concrete subclasses during their initialization.
-
-            arguments
-                final{mustBeNonnegative}
-            end
-
-            obj.Final = final;
-            obj.Now = 0;
-            obj.Count = 1;
+            %
+            % Inputs:
+            %   final - Final time (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Timeline object
+            
+            core.except.assert(isscalar(final) && final >= 0, ...
+                'InvalidInput', 'Final time must be a nonnegative scalar.');
+            
+            obj.final = final;
+            obj.now = 0;
+            obj.count = 1;
         end
 
         function obj = reset(obj)
@@ -38,24 +43,31 @@ classdef Timeline < handle
             %
             %   obj = reset(obj) resets the timeline to time zero and
             %   reinitializes the event counter.
-
-            obj.Now = 0;
-            obj.Count = 1;
+            %
+            % Inputs:
+            %   obj - The Timeline object
+            %
+            % Outputs:
+            %   obj - The Timeline object
+            
+            obj.now = 0;
+            obj.count = 1;
         end
-
+    
         function tf = isBefore(obj, t)
             % ISBEFORE Check the current time is before the specified time.
             %
             %   tf = isBefore(obj, t) returns true if the current time does
             %   not exceed the specified time @a t.
-
-            arguments
-                obj approx.mesh.Timeline
-                t(1, 1) {mustBeReal}
-            end
-
+            %
+            % Inputs:
+            %   obj - The Timeline object
+            %
+            % Outputs:
+            %   tf - True if the current time is before the target time
+            
             tol = 1e-14;
-            tf = obj.Now - tol <= t;
+            tf = obj.now - tol <= t;
         end
     end
 

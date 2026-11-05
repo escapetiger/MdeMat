@@ -13,16 +13,16 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
     %   core.linalg.MultiIndexer
 
     properties (TestParameter)
-        Style = {'F', 'C'}   % Storage ordering styles
-        Dimension = {1, 2, 3} % Test dimensions
-        Pad = {'empty', 'wrap', 'edge', 'reflect', 'symmetric'} % Padding modes
+        style = {'F', 'C'}   % Storage ordering styles
+        dimension = {1, 2, 3} % Test dimensions
+        paddingMode = {'empty', 'wrap', 'edge', 'reflect', 'symmetric'} % Padding modes
     end
 
     methods (Test)
-        function test1DGenerate(testCase, Style)
+        function test1DGenerate(testCase, style)
             % TEST1DGENERATE Test 1D index generation.
 
-            indexer = core.linalg.MultiIndexer(shape=3, style=Style);
+            indexer = core.linalg.MultiIndexer(3, style);
 
             M = indexer.generate();
 
@@ -33,7 +33,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function test2DGenerateF(testCase)
             % TEST2DGENERATEF Test 2D index generation with F-style.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 3], style='F');
+            indexer = core.linalg.MultiIndexer([2, 3], 'F');
 
             M = indexer.generate();
 
@@ -50,7 +50,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function test2DGenerateC(testCase)
             % TEST2DGENERATEC Test 2D index generation with C-style.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 3], style='C');
+            indexer = core.linalg.MultiIndexer([2, 3], 'C');
 
             M = indexer.generate();
 
@@ -67,7 +67,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinear2DF(testCase)
             % TESTMULTITOLINEAR2DF Test 2D multi-index to linear conversion.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='F');
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
 
             M = [1, 1; 2, 1; 1, 2; 2, 2];
             L = indexer.multiToLinear(M);
@@ -79,7 +79,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinear2DC(testCase)
             % TESTMULTITOLINEAR2DC Test 2D multi-index to linear conversion C-style.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='C');
+            indexer = core.linalg.MultiIndexer([2, 2], 'C');
 
             M = [1, 1; 1, 2; 2, 1; 2, 2];
             L = indexer.multiToLinear(M);
@@ -91,10 +91,9 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearCellInput(testCase)
             % TESTMULTITOLINEARCELLIMPUT Test cell array input for conversion.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='F');
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
 
-            F = {1:2, [1; 1; 2; 2]};
-            M = indexer.factorToMulti(F);
+            M = {1:2, [1; 1; 2; 2]};
             L = indexer.multiToLinear(M);
 
             expected = [1; 2; 1; 2; 3; 4; 3; 4];
@@ -104,11 +103,11 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearPaddingEmpty(testCase)
             % TESTMULTITOLINEARPPADDINGEMPTY Test empty padding mode.
 
-            indexer = core.linalg.MultiIndexer(shape=4, style='F');
+            indexer = core.linalg.MultiIndexer(4, 'F');
 
             % Test with out-of-bounds indices
             M = [-1; 0; 1; 2; 3; 4; 5; 6];
-            L = indexer.multiToLinear(M, Pad='empty');
+            L = indexer.multiToLinear(M, 'empty');
 
             expected = [0; 0; 1; 2; 3; 4; 0; 0];
             testCase.verifyEqual(L, expected);
@@ -117,11 +116,11 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearPaddingWrap(testCase)
             % TESTMULTITOLINEARPADDINGWRAP Test wrap padding mode.
 
-            indexer = core.linalg.MultiIndexer(shape=4, style='F');
+            indexer = core.linalg.MultiIndexer(4, 'F');
 
             % Test with out-of-bounds indices
             M = [-1; 0; 1; 2; 3; 4; 5; 6];
-            L = indexer.multiToLinear(M, Pad='wrap');
+            L = indexer.multiToLinear(M, 'wrap');
 
             expected = [3; 4; 1; 2; 3; 4; 1; 2];
             testCase.verifyEqual(L, expected);
@@ -130,11 +129,11 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearPaddingEdge(testCase)
             % TESTMULTITOLINEARPPADDINGEDGE Test edge padding mode.
 
-            indexer = core.linalg.MultiIndexer(shape=4, style='F');
+            indexer = core.linalg.MultiIndexer(4, 'F');
 
             % Test with out-of-bounds indices
             M = [-1; 0; 1; 2; 3; 4; 5; 6];
-            L = indexer.multiToLinear(M, Pad='edge');
+            L = indexer.multiToLinear(M, 'edge');
 
             expected = [1; 1; 1; 2; 3; 4; 4; 4];
             testCase.verifyEqual(L, expected);
@@ -143,11 +142,11 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearPaddingReflect(testCase)
             % TESTMULTITOLINEARPPADDINGREFLECT Test reflect padding mode.
 
-            indexer = core.linalg.MultiIndexer(shape=4, style='F');
+            indexer = core.linalg.MultiIndexer(4, 'F');
 
             % Test with out-of-bounds indices
             M = [-1; 0; 1; 2; 3; 4; 5; 6];
-            L = indexer.multiToLinear(M, Pad='reflect');
+            L = indexer.multiToLinear(M, 'reflect');
 
             expected = [3; 2; 1; 2; 3; 4; 3; 2];
             testCase.verifyEqual(L, expected);
@@ -156,24 +155,24 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearPaddingSymmetric(testCase)
             % TESTMULTITOLINEARPPADDDINGSYMMETRIC Test symmetric padding mode.
 
-            indexer = core.linalg.MultiIndexer(shape=4, style='F');
+            indexer = core.linalg.MultiIndexer(4, 'F');
 
             % Test with out-of-bounds indices
             M = [-1; 0; 1; 2; 3; 4; 5; 6];
-            L = indexer.multiToLinear(M, Pad='symmetric');
+            L = indexer.multiToLinear(M, 'symmetric');
 
             expected = [2; 1; 1; 2; 3; 4; 4; 3];
             testCase.verifyEqual(L, expected);
         end
 
-        function testMultiToLinear2DPads(testCase, Pad)
+        function testMultiToLinear2DPaddingModes(testCase, paddingMode)
             % TESTMULTITOLINEAR2DPADDINGMODES Test 2D padding modes.
 
-            indexer = core.linalg.MultiIndexer(shape=[3, 3], style='F');
+            indexer = core.linalg.MultiIndexer([3, 3], 'F');
 
             % Test with multi-dimensional out-of-bounds indices
             M = [0, 0; 0, 1; 1, 0; 4, 4; 4, 1; 1, 4];
-            L = indexer.multiToLinear(M, pad=Pad);
+            L = indexer.multiToLinear(M, paddingMode);
 
             % Verify no NaN or Inf values
             testCase.verifyTrue(all(isfinite(L)));
@@ -183,7 +182,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
             testCase.verifyEqual(size(L), [size(M, 1), 1]);
 
             % For empty padding, out-of-bounds should be 0
-            if strcmp(Pad, 'empty')
+            if strcmp(paddingMode, 'empty')
                 testCase.verifyTrue(all(L == 0 | (L >= 1 & L <= 9)));
             else
                 % For other padding modes, all values should be valid indices
@@ -194,13 +193,13 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testMultiToLinearDefaultPadding(testCase)
             % TESTMULTITOLINEARDEFAULTPADDING Test default padding behavior.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='F');
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
 
             M = [0, 1; 3, 1; 1, 0; 1, 3];
             
             % Test with no padding argument (should default to 'empty')
             L1 = indexer.multiToLinear(M);
-            L2 = indexer.multiToLinear(M, Pad='empty');
+            L2 = indexer.multiToLinear(M, 'empty');
 
             testCase.verifyEqual(L1, L2);
             testCase.verifyEqual(L1, [0; 0; 0; 0]);
@@ -209,7 +208,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testLinearToMulti2DF(testCase)
             % TESTLINEARTOMULTI2DF Test 2D linear to multi-index conversion.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='F');
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
 
             L = [1; 2; 3; 4];
             M = indexer.linearToMulti(L);
@@ -225,7 +224,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testLinearToMulti2DC(testCase)
             % TESTLINEARTOMULTI2DC Test 2D linear to multi-index conversion C-style.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='C');
+            indexer = core.linalg.MultiIndexer([2, 2], 'C');
 
             L = [1; 2; 3; 4];
             M = indexer.linearToMulti(L);
@@ -245,26 +244,41 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
             testCase.verifyError(@() indexer.generate(), ...
                 'core:linalg:MultiIndexer:MissingShape');
 
-            testCase.verifyError(@() core.linalg.MultiIndexer(shape=[2, -1]), ...
-                'MATLAB:validators:mustBePositive');
-            testCase.verifyError(@() core.linalg.MultiIndexer(shape=[2, 0]), ...
-                'MATLAB:validators:mustBePositive');
+            testCase.verifyError(@() core.linalg.MultiIndexer([2, -1]), ...
+                'core:linalg:MultiIndexer:InvalidShape');
+            testCase.verifyError(@() core.linalg.MultiIndexer([2, 0]), ...
+                'core:linalg:MultiIndexer:InvalidShape');
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2]);
+            indexer = core.linalg.MultiIndexer([2, 2]);
 
             testCase.verifyError(@() indexer.linearToMulti(5), ...
                 'core:linalg:MultiIndexer:IndexOutOfBounds');
             testCase.verifyError(@() indexer.linearToMulti(0), ...
-                'MATLAB:validators:mustBePositive');
+                'core:linalg:MultiIndexer:IndexOutOfBounds');
+
+            testCase.verifyError(@() indexer.multiToLinear({1, 2, 3}), ...
+                'core:linalg:MultiIndexer:DimensionMismatch');
         end
 
-        function testRoundTrip(testCase, Dimension, Style)
+        function testInvalidPaddingMode(testCase)
+            % TESTINVALIDPADDINGMODE Test error handling for invalid padding modes.
+
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
+            M = [1, 1];
+
+            % Invalid padding modes should not cause errors but use default behavior
+            L = indexer.multiToLinear(M, 'invalid_mode');
+            expectedL = indexer.multiToLinear(M, 'empty');
+            testCase.verifyEqual(L, expectedL);
+        end
+
+        function testRoundTrip(testCase, dimension, style)
             % TESTROUNDTRIP Test round-trip conversion consistency.
 
-            if Dimension < 4
-                shape = 2:(Dimension + 1);
+            if dimension < 4
+                shape = 2:(dimension + 1);
 
-                indexer = core.linalg.MultiIndexer(shape=shape, style=Style);
+                indexer = core.linalg.MultiIndexer(shape, style);
 
                 M = indexer.generate();
                 L = indexer.multiToLinear(M);
@@ -277,17 +291,17 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
             end
         end
 
-        function testRoundTripWithPadding(testCase, Pad)
+        function testRoundTripWithPadding(testCase, paddingMode)
             % TESTROUNDTRIPWITHPADDING Test round-trip with padding modes.
 
-            indexer = core.linalg.MultiIndexer(shape=[3, 3], style='F');
+            indexer = core.linalg.MultiIndexer([3, 3], 'F');
 
             % Generate valid indices
             M = indexer.generate();
-            L = indexer.multiToLinear(M, pad=Pad);
+            L = indexer.multiToLinear(M, paddingMode);
             
             % Only test round-trip for non-zero indices (valid for empty padding)
-            if strcmp(Pad, 'empty')
+            if strcmp(paddingMode, 'empty')
                 validMask = L > 0;
                 M_valid = M(validMask, :);
                 L_valid = L(validMask);
@@ -302,7 +316,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testLargeShape(testCase)
             % TESTLARGESHAPE Test indexer with larger tensor shapes.
 
-            indexer = core.linalg.MultiIndexer(shape=[10, 5], style='F');
+            indexer = core.linalg.MultiIndexer([10, 5], 'F');
 
             M = indexer.generate();
 
@@ -321,7 +335,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testNonSquareTensor(testCase)
             % TESTNONSQUARETENSOR Test non-square tensor indexing.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 3, 4], style='F');
+            indexer = core.linalg.MultiIndexer([2, 3, 4], 'F');
 
             M = indexer.generate();
 
@@ -341,7 +355,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
         function testPaddingEdgeCases(testCase)
             % TESTPADDINGEDGECASES Test edge cases for padding modes.
 
-            indexer = core.linalg.MultiIndexer(shape=[2, 2], style='F');
+            indexer = core.linalg.MultiIndexer([2, 2], 'F');
 
             % Test extremely out-of-bounds values
             M_extreme = [-100, 1; 100, 1; 1, -100; 1, 100];
@@ -350,7 +364,7 @@ classdef TestMultiIndexer < matlab.unittest.TestCase
             paddingModes = {'empty', 'wrap', 'edge', 'reflect', 'symmetric'};
             for iMode = 1:length(paddingModes)
                 mode = paddingModes{iMode};
-                L = indexer.multiToLinear(M_extreme, Pad=mode);
+                L = indexer.multiToLinear(M_extreme, mode);
                 
                 % Verify output is finite and has correct size
                 testCase.verifyTrue(all(isfinite(L)), ...

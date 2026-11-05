@@ -1,7 +1,7 @@
 classdef TestGrid < matlab.unittest.TestCase
     
     properties (TestParameter)
-        GridType = struct(...
+        gridType = struct(...
             'linear1D',     {{linspace(0, 1, 6)}}, ...
             'nonlinear1D',  {{[0, 0.1, 0.3, 0.6, 1.0]}}, ...
             'linear2D',     {{linspace(0, 1, 5), linspace(0, 1, 4)}}, ...
@@ -11,141 +11,141 @@ classdef TestGrid < matlab.unittest.TestCase
     end
     
     methods (Test)
-        function testConstructor(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testConstructor(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
-            nDims = length(GridType);
+            nDims = length(gridType);
             resolution = zeros(1, nDims);
             for i = 1:nDims
-                resolution(i) = length(GridType{i}) - 1;
+                resolution(i) = length(gridType{i}) - 1;
             end
             
-            testCase.verifyEqual(grid.NDims, nDims);
-            testCase.verifyEqual(grid.Resolution, resolution);
-            testCase.verifyEqual(length(grid.Centroids), nDims);
-            testCase.verifyEqual(length(grid.Spacings), nDims);
-            testCase.verifyEqual(length(grid.Elements), nDims);
-            testCase.verifyEqual(length(grid.Boundary), 2*nDims);
+            testCase.verifyEqual(grid.nDims, nDims);
+            testCase.verifyEqual(grid.resolution, resolution);
+            testCase.verifyEqual(length(grid.centroids), nDims);
+            testCase.verifyEqual(length(grid.spacings), nDims);
+            testCase.verifyEqual(length(grid.elements), nDims);
+            testCase.verifyEqual(length(grid.boundary), 2*nDims);
             
             % Verify centroids computation
             for i = 1:nDims
-                vertices = GridType{i};
+                vertices = gridType{i};
                 expectedCentroids = (vertices(1:end-1) + vertices(2:end)) / 2;
-                testCase.verifyEqual(grid.Centroids{i}, expectedCentroids, 'AbsTol', 1e-10);
+                testCase.verifyEqual(grid.centroids{i}, expectedCentroids, 'AbsTol', 1e-10);
             end
             
             % Verify spacings computation
             for i = 1:nDims
-                vertices = GridType{i};
+                vertices = gridType{i};
                 expectedSpacings = diff(vertices);
-                testCase.verifyEqual(grid.Spacings{i}, expectedSpacings, 'AbsTol', 1e-10);
+                testCase.verifyEqual(grid.spacings{i}, expectedSpacings, 'AbsTol', 1e-10);
             end
         end
         
-        function testMeasure(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testMeasure(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             % Compute expected minimum spacing across all dimensions
-            minSpacings = zeros(1, length(GridType));
-            for i = 1:length(GridType)
-                minSpacings(i) = min(diff(GridType{i}));
+            minSpacings = zeros(1, length(gridType));
+            for i = 1:length(gridType)
+                minSpacings(i) = min(diff(gridType{i}));
             end
             expectedMeasure = min(minSpacings);
             
             testCase.verifyEqual(grid.computeMeasure(), expectedMeasure, 'AbsTol', 1e-10);
         end
         
-        function testNElements(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testNElements(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
-            resolution = zeros(1, length(GridType));
-            for i = 1:length(GridType)
-                resolution(i) = length(GridType{i}) - 1;
+            resolution = zeros(1, length(gridType));
+            for i = 1:length(gridType)
+                resolution(i) = length(gridType{i}) - 1;
             end
             expectedTotal = prod(resolution);
             
-            testCase.verifyEqual(grid.NElements, expectedTotal);
+            testCase.verifyEqual(grid.nElements, expectedTotal);
         end
         
-        function testLinearToMultiIndices(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testLinearToMultiIndices(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             % Test conversion for a few linear indices
-            nElements = grid.NElements;
+            nElements = grid.nElements;
             testIndices = [1, min(5, nElements), nElements];
             
             for linearIdx = testIndices
-                multiIdx = grid.Indexer.linearToMulti(linearIdx);
-                backToLinear = grid.Indexer.multiToLinear(multiIdx);
+                multiIdx = grid.indexer.linearToMulti(linearIdx);
+                backToLinear = grid.indexer.multiToLinear(multiIdx);
                 
                 testCase.verifyEqual(backToLinear, linearIdx);
                 testCase.verifyEqual(size(multiIdx, 1), 1);
-                testCase.verifyEqual(size(multiIdx, 2), grid.NDims);
+                testCase.verifyEqual(size(multiIdx, 2), grid.nDims);
                 
                 % Verify indices are within bounds
-                for d = 1:grid.NDims
-                    testCase.verifyTrue(multiIdx(d) >= 1 && multiIdx(d) <= grid.Resolution(d));
+                for d = 1:grid.nDims
+                    testCase.verifyTrue(multiIdx(d) >= 1 && multiIdx(d) <= grid.resolution(d));
                 end
             end
         end
         
-        function testGetInternalElements(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testGetInternalElements(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             % Skip test for grids with resolution <= 2 in any dimension
-            if any(grid.Resolution <= 2)
+            if any(grid.resolution <= 2)
                 return;
             end
             
             internalElements = grid.getInternalElements();
-            internalMultiIndices = grid.Indexer.linearToMulti(internalElements);
+            internalMultiIndices = grid.indexer.linearToMulti(internalElements);
             
             % Verify internal elements don't touch boundaries
-            for d = 1:grid.NDims
+            for d = 1:grid.nDims
                 testCase.verifyTrue(all(internalMultiIndices(:, d) > 1));
-                testCase.verifyTrue(all(internalMultiIndices(:, d) < grid.Resolution(d)));
+                testCase.verifyTrue(all(internalMultiIndices(:, d) < grid.resolution(d)));
             end
             
             % Verify expected count
-            expectedCount = prod(max(0, grid.Resolution - 2));
+            expectedCount = prod(max(0, grid.resolution - 2));
             testCase.verifyEqual(length(internalElements), expectedCount);
         end
         
-        function testGetBoundaryElements(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testGetBoundaryElements(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
-            for iBoundary = 1:2*grid.NDims
+            for iBoundary = 1:2*grid.nDims
                 boundaryElements = grid.getBoundaryElements(iBoundary);
-                boundaryMultiIndices = grid.Indexer.linearToMulti(boundaryElements);
+                boundaryMultiIndices = grid.indexer.linearToMulti(boundaryElements);
                 
                 dim = ceil(iBoundary/2);
                 isLower = mod(iBoundary, 2) == 1;
                 
-                expectedCount = prod(grid.Resolution) / grid.Resolution(dim);
+                expectedCount = prod(grid.resolution) / grid.resolution(dim);
                 testCase.verifyEqual(length(boundaryElements), expectedCount);
                 
                 if isLower
                     testCase.verifyTrue(all(boundaryMultiIndices(:, dim) == 1));
                 else
-                    testCase.verifyTrue(all(boundaryMultiIndices(:, dim) == grid.Resolution(dim)));
+                    testCase.verifyTrue(all(boundaryMultiIndices(:, dim) == grid.resolution(dim)));
                 end
             end
         end
         
-        function testFindNeighborElements(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testFindNeighborElements(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             % Test neighbor finding for element in the middle (if exists)
-            if all(grid.Resolution >= 3)
-                centerMultiIdx = ceil(grid.Resolution / 2);
-                centerLinearIdx = grid.Indexer.multiToLinear(centerMultiIdx);
+            if all(grid.resolution >= 3)
+                centerMultiIdx = ceil(grid.resolution / 2);
+                centerLinearIdx = grid.indexer.multiToLinear(centerMultiIdx);
                 
-                for iBoundary = 1:2*grid.NDims
+                for iBoundary = 1:2*grid.nDims
                     % Use periodic boundary condition for internal elements
                     [neighborLinearIdx, ~] = grid.findNeighborElements(centerLinearIdx, iBoundary, 'periodic');
                     
                     if ~isempty(neighborLinearIdx) && neighborLinearIdx > 0
-                        neighborMultiIdx = grid.Indexer.linearToMulti(neighborLinearIdx);
+                        neighborMultiIdx = grid.indexer.linearToMulti(neighborLinearIdx);
                         
                         dim = ceil(iBoundary/2);
                         expectedDiff = -(mod(iBoundary, 2) * 2 - 1); % -1 for odd, +1 for even
@@ -159,53 +159,53 @@ classdef TestGrid < matlab.unittest.TestCase
             end
         end
         
-        function testGraphify(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testGraphify(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             graph = grid.graphify();
             
-            testCase.verifyEqual(graph.NDims, grid.NDims);
+            testCase.verifyEqual(graph.nDims, grid.nDims);
                 
-            nVertices = graph.NVertices;
-            for d = 1:grid.NDims
-                testCase.verifyEqual(nVertices(d), grid.Resolution(d) + 1);
+            nVertices = graph.nVertices;
+            for d = 1:grid.nDims
+                testCase.verifyEqual(nVertices(d), grid.resolution(d) + 1);
             end
             
-            nEdges = graph.NEdges;
-            for d = 1:grid.NDims
-                testCase.verifyEqual(nEdges(d), grid.Resolution(d));
+            nEdges = graph.nEdges;
+            for d = 1:grid.nDims
+                testCase.verifyEqual(nEdges(d), grid.resolution(d));
             end
         end
         
-        function testElementJacobianDeterminants(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testElementJacobianDeterminants(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             detJ = grid.computeElementJacobianDeterminants();
             
             % Should return vector of length nElements
             testCase.verifyTrue(isnumeric(detJ));
-            testCase.verifyEqual(length(detJ), grid.NElements);
+            testCase.verifyEqual(length(detJ), grid.nElements);
             testCase.verifyTrue(all(detJ > 0));
             
             % For uniform spacing in each dimension, verify calculation
-            if all(cellfun(@(x) length(unique(diff(x))) == 1, GridType))
-                expectedDeterminant = prod(cellfun(@(x) diff(x(1:2)), GridType));
+            if all(cellfun(@(x) length(unique(diff(x))) == 1, gridType))
+                expectedDeterminant = prod(cellfun(@(x) diff(x(1:2)), gridType));
                 testCase.verifyEqual(detJ, expectedDeterminant * ones(size(detJ)), ...
                     'AbsTol', 1e-10);
             end
         end
         
-        function testElementInverseJacobians(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testElementInverseJacobians(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
             invJ = grid.computeElementInverseJacobians();
             
             % Should return nDims x nDims x nElements array
-            expectedSize = [grid.NDims, grid.NDims, grid.NElements];
+            expectedSize = [grid.nDims, grid.nDims, grid.nElements];
             testCase.verifyEqual(size(invJ), expectedSize);
             
             % Each matrix should be diagonal
-            for iElement = 1:grid.NElements
+            for iElement = 1:grid.nElements
                 testCase.verifyTrue(isdiag(invJ(:, :, iElement)));
                 
                 % Diagonal entries should be positive
@@ -213,42 +213,42 @@ classdef TestGrid < matlab.unittest.TestCase
             end
             
             % Verify against expected values for specific elements
-            if grid.NElements >= 1
+            if grid.nElements >= 1
                 % Test first element
-                M = grid.Indexer.linearToMulti(1);
-                expectedInvJ = zeros(grid.NDims);
-                for d = 1:grid.NDims
-                    expectedInvJ(d, d) = 1 / grid.Spacings{d}(M(d));
+                M = grid.indexer.linearToMulti(1);
+                expectedInvJ = zeros(grid.nDims);
+                for d = 1:grid.nDims
+                    expectedInvJ(d, d) = 1 / grid.spacings{d}(M(d));
                 end
                 testCase.verifyEqual(invJ(:, :, 1), expectedInvJ, 'AbsTol', 1e-10);
             end
         end
         
-        function testFaceJacobianDeterminants(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testFaceJacobianDeterminants(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
-            for faceIndex = 1:2*grid.NDims
+            for faceIndex = 1:2*grid.nDims
                 detJFace = grid.computeFaceJacobianDeterminants([], faceIndex);
                 
                 % Should return vector of length nElements
-                testCase.verifyEqual(size(detJFace), [grid.NElements, 1]);
+                testCase.verifyEqual(size(detJFace), [grid.nElements, 1]);
                 testCase.verifyTrue(all(detJFace > 0));
                 
                 % Verify against expected calculation
                 dim = ceil(faceIndex / 2);
-                otherDims = 1:grid.NDims;
+                otherDims = 1:grid.nDims;
                 otherDims(dim) = [];
                 
                 if isempty(otherDims)
                     % 1D case: should all be 1
-                    testCase.verifyEqual(detJFace, ones(grid.NElements, 1), 'AbsTol', 1e-10);
+                    testCase.verifyEqual(detJFace, ones(grid.nElements, 1), 'AbsTol', 1e-10);
                 else
                     % Check a few elements manually
-                    for testElement = [1, min(3, grid.NElements)]
-                        M = grid.Indexer.linearToMulti(testElement);
+                    for testElement = [1, min(3, grid.nElements)]
+                        M = grid.indexer.linearToMulti(testElement);
                         expectedDetJ = 1;
                         for d = otherDims
-                            expectedDetJ = expectedDetJ * grid.Spacings{d}(M(d));
+                            expectedDetJ = expectedDetJ * grid.spacings{d}(M(d));
                         end
                         testCase.verifyEqual(detJFace(testElement), expectedDetJ, 'AbsTol', 1e-10);
                     end
@@ -256,14 +256,14 @@ classdef TestGrid < matlab.unittest.TestCase
             end
         end
         
-        function testOutwardNormals(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testOutwardNormals(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
             
-            for faceIndex = 1:2*grid.NDims
+            for faceIndex = 1:2*grid.nDims
                 normals = grid.computeOutwardNormals([], faceIndex);
                 
                 % Should return nDims x 1 vector
-                testCase.verifyEqual(size(normals), [grid.NDims, 1]);
+                testCase.verifyEqual(size(normals), [grid.nDims, 1]);
                 
                 % Should be unit vector
                 testCase.verifyEqual(norm(normals), 1, 'AbsTol', 1e-10);
@@ -272,7 +272,7 @@ classdef TestGrid < matlab.unittest.TestCase
                 dim = ceil(faceIndex / 2);
                 isPositive = (mod(faceIndex, 2) == 0);
                 
-                expectedNormal = zeros(grid.NDims, 1);
+                expectedNormal = zeros(grid.nDims, 1);
                 if isPositive
                     expectedNormal(dim) = 1;
                 else
@@ -283,31 +283,31 @@ classdef TestGrid < matlab.unittest.TestCase
             end
         end
 
-        function testCollocate(testCase, GridType)
-            grid = approx.mesh.Grid(GridType);
+        function testCollocate(testCase, gridType)
+            grid = approx.mesh.Grid(gridType);
 
             % Test collocation at element centers (reference coordinate = 0)
-            X = cell(1, grid.NDims);
-            for d = 1:grid.NDims
+            X = cell(1, grid.nDims);
+            for d = 1:grid.nDims
                 X{d} = 0;
             end
 
             Y = grid.collocate(X);
 
             testCase.verifyTrue(ismatrix(Y));
-            testCase.verifyEqual(size(Y, 1), grid.NDims);
+            testCase.verifyEqual(size(Y, 1), grid.nDims);
 
             % Test collocation for specific element
-            if all(grid.Resolution >= 2)
-                testElement = grid.Indexer.multiToLinear(repmat(2, 1, grid.NDims));
+            if all(grid.resolution >= 2)
+                testElement = grid.indexer.multiToLinear(repmat(2, 1, grid.nDims));
                 Y2 = grid.collocate(X, testElement);
 
                 testCase.verifyTrue(ismatrix(Y2));
                 testCase.verifyEqual(size(Y2, 2), 1);
-                testCase.verifyEqual(size(Y2, 1), grid.NDims);
+                testCase.verifyEqual(size(Y2, 1), grid.nDims);
 
-                for d = 1:grid.NDims
-                    expectedCoord = grid.Centroids{d}(2);
+                for d = 1:grid.nDims
+                    expectedCoord = grid.centroids{d}(2);
                     testCase.verifyEqual(Y2{d}, expectedCoord, 'AbsTol', 1e-10);
                 end
             end
@@ -323,8 +323,8 @@ classdef TestGrid < matlab.unittest.TestCase
 
             Y = grid.collocate(refNodes, elementIdx);
 
-            h = grid.Spacings{1}(elementIdx);
-            c = grid.Centroids{1}(elementIdx);
+            h = grid.spacings{1}(elementIdx);
+            c = grid.centroids{1}(elementIdx);
             expectedCoords = c + h * refNodes{1};
 
             testCase.verifyEqual(Y{1}, expectedCoords, 'AbsTol', 1e-10);
@@ -337,12 +337,12 @@ classdef TestGrid < matlab.unittest.TestCase
 
             % Test no refinement
             refinedGrid0 = grid.refine(0);
-            testCase.verifyEqual(refinedGrid0.Resolution, grid.Resolution);
+            testCase.verifyEqual(refinedGrid0.resolution, grid.resolution);
 
             % Test single level refinement
             refinedGrid1 = grid.refine(1);
-            testCase.verifyEqual(refinedGrid1.Resolution, 2 * grid.Resolution);
-            testCase.verifyEqual(refinedGrid1.NDims, grid.NDims);
+            testCase.verifyEqual(refinedGrid1.resolution, 2 * grid.resolution);
+            testCase.verifyEqual(refinedGrid1.nDims, grid.nDims);
         end
         
         function testSpecificNonuniformCase(testCase)

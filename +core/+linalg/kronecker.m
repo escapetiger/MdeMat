@@ -3,16 +3,24 @@ function K = kronecker(varargin)
 %
 %   K = kronecker(A1, A2, ...) computes Kronecker product of all input
 %   matrices, with operation carried out from right to left. Extends
-%   MATLAB's built-in kron to handle multiple matrices.
+%   MATLAB's built-in kron to handle multiple As.
 %
-%   K = kronecker(As) computes Kronecker product when input is a cell
-%   array @a As of matrices.
+% Inputs:
+%   varargin - Input matrices
 %
-%   This function extends MATLAB's built-in kron function to handle
-%   multiple matrices efficiently. The operation is computed from right
-%   to left, so kronecker(A, B, C) equals kron(A, kron(B, C)).
+% Outputs:
+%   K - Kronecker product
 %
-% See also:
+% Examples:
+%   % Basic usage
+%   A = [1 2; 3 4];
+%   B = [5 6; 7 8];
+%   K = kronecker(A, B); % K will be a 4x4 matrix
+%
+%   % Using cell array
+%   K = kronecker({A, B, eye(2)}); % K will be an 8x8 matrix
+%
+% See Also:
 %   core.linalg.khatrirao
 
 if iscell(varargin{1})

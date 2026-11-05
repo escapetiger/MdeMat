@@ -1,293 +1,199 @@
-classdef SumSpace < handle
-    % SUMSPACE Sum of two spectral function spaces.
+classdef SumSpace < core.linalg.Separable
+    % SUMSPACE Direct sum of spectral function spaces.
     %
-    %   SumSpace represents the sum of exactly two spectral spaces:
+    %   SumSpace represents the direct sum of spectral spaces of which each
+    %   entry has the form:
     %
     %   \f[
-    %       f(x) = \sum_{j=1}^{n_{lhs}} w_{lhs,j} c_{lhs,j} \phi_{lhs,j}(x)
-    %            + \sum_{j=1}^{n_{rhs}} w_{rhs,j} c_{rhs,j} \phi_{rhs,j}(x)
+    %       f(x) = \sum_{i=1}^k \sum_{j=1}^{n_i} w_{i,j} c_{i,j}
+    %       \phi_{i,j}(x)
     %   \f]
     %
-    %   where \f$\phi_{lhs,j}(x)\f$ and \f$\phi_{rhs,j}(x)\f$ are basis
-    %   functions from the left-hand side and right-hand side spaces,
-    %   \f$c_{lhs,j}\f$ and \f$c_{rhs,j}\f$ are coefficients, and
-    %   \f$w_{lhs,j}\f$ and \f$w_{rhs,j}\f$ are per-DOF weights.
+    %   where \f$\phi_{i,j}(x)\f$ are basis functions from space \f$i\f$,
+    %   \f$c_{i,j}\f$ are coefficients, and \f$w_{i,j}\f$ are per-DOF
+    %   weights.
+    %
+    %   The direct sum space \f$W = V_1 \oplus V_2 \oplus \cdots \oplus
+    %   V_k\f$ has dimension \f$\dim(W) = \sum_i \dim(V_i)\f$.
+    %
+    % Examples:
+    %   % Create direct sum from multiple spectral spaces
+    %   space1 = approx.space.SpectralSpace(element1);
+    %   space2 = approx.space.SpectralSpace(element2);
+    %   weights1 = ones(space1.nDofs, 1);      % Per-DOF weights
+    %   weights2 = 2 * ones(space2.nDofs, 1);  % Scaled weights
+    %   sumSpace = approx.space.SumSpace({space1, space2}, {weights1, weights2});
+    %
+    %   % Evaluate with separate coefficient matrices
+    %   points = [0, 0.5, 1.0; 0, 0, 0];  % 2D points
+    %   coeffs1 = [1; 0.5];               % Coefficients for space1
+    %   coeffs2 = [-0.2; 0.3; 0.1];       % Coefficients for space2
+    %   values = sumSpace.evaluate(points, coeffs1, coeffs2);
     %
     % See also:
     %   approx.space.SpectralSpace
 
     properties
-        Lhs % Left-hand side space
-        Rhs % Right-hand side space
-        LhsWeight % Weight vector for left-hand side space
-        RhsWeight % Weight vector for right-hand side space
+        weights % Cell array of weight vectors, one per space
     end
 
     properties (Dependent)
-        NDofs % Total number of degrees of freedom (integer)
-        NDims % Number of spatial dimensions (integer)
-        NLhsDofs % Number of DOFs in left-hand side space
-        NRhsDofs % Number of DOFs in right-hand side space
-        Weights % Combined weight vector for both spaces
+        nDofs % Number of degrees of freedom (integer)
+        nDims % Number of spatial dimensions (integer)
     end
 
     methods
-        function obj = SumSpace(lhs, rhs, options)
+        function obj = SumSpace(factors, weights)
             % SUMSPACE Constructor for SumSpace.
             %
-            %   obj = SumSpace(lhs, rhs) creates a sum of two spectral
-            %   spaces. Both spaces must have the same spatial dimension.
+            %   obj = SumSpace(factors, weights) creates a direct sum
+            %   of the specified spectral spaces with the given per-DOF
+            %   weights. All spaces must have the same spatial dimension.
             %
-            %   obj = SumSpace(lhs, rhs, options) creates a sum with
-            %   specified per-DOF weights. @a options is a struct with
-            %   fields lhsWeight and rhsWeight.
+            % Inputs:
+            %   factors - Cell array of SpectralSpace objects
+            %   weights - Cell array of weight vectors (optional)
+            %
+            % Outputs:
+            %   obj - Constructed SumSpace object
 
-            arguments
-                lhs {mustBeA(lhs, {'numeric', 'approx.space.SpectralSpace'})}
-                rhs {mustBeA(rhs, {'numeric', 'approx.space.SpectralSpace'})}
-                options.lhsWeight {mustBeNumeric} = []
-                options.rhsWeight {mustBeNumeric} = []
+            cls = {'approx.space.SpectralSpace'};
+            core.except.assert( ...
+                core.validate.isAllClass(factors, cls), ...
+                'InvalidFactor', ...
+                'Factors must be one of {%s}.', strjoin(cls, ', '));
+
+            obj.setFactors(factors);
+            obj.setWeights(weights);
+        end
+
+        function obj = setWeights(obj, weights)
+            % SETWEIGHTS Set the weights.
+            %
+            %   obj = setWeights(obj, weights) sets weights @a weights for
+            %   the direct sum object.
+            %
+            % Inputs:
+            %   obj - The SumSpace object
+            %   weights - Factor weights (cell array) 
+            %
+            % Outputs:
+            %   obj - The SumSpace object
+
+            if isempty(weights)
+                obj.weights = cell(1, obj.nFactors);
+                return; 
             end
+
+            core.except.assert(length(weights) == obj.nFactors, ...
+                'InvalidInput', ...
+                'Number of weight vectors must match number of spaces.');
+
+            tf = arrayfun(@(i) length(weights{i}) == obj.getFactor(i).nDofs, 1:obj.nFactors);
+            core.except.assert(all(tf), 'InvalidInput', ...
+                'Weight vector must match the number of Dofs.');
+
+            obj.weights = cellfun(@(w) w(:), weights, 'Un', 0);
+        end
+
+        function obj = setWeight(obj, index, weight)
+            % SETWEIGHT Set a specific weight.
+            %
+            %   obj = setWeight(obj, index, weight) sets the weight at the
+            %   specified index.
+            %
+            % Inputs:
+            %   obj - The SumSpace object
+            %   index - Index of the factor (positive integer)
+            %   weight - Weight vector (1 x nDofs vector)
+            %
+            % Outputs:
+            %   obj - The SumSpace object
             
-            obj.Lhs = lhs;
-            obj.Rhs = rhs;
-            obj.setLhsWeight(options.lhsWeight);
-            obj.setRhsWeight(options.rhsWeight);
+            tf = length(weight) == obj.getFactor(index).nDofs;
+            core.except.assert(tf, 'InvalidInput', ...
+                'Weight vector must match the number of Dofs.');
+
+            obj.weights{index} = weight(:);
         end
 
-        function obj = setLhsWeight(obj, w)
-            % SETLHSWEIGHT Set weight vector for left-hand side space.
-
-            arguments
-                obj approx.space.SumSpace
-                w {mustBeNumeric}
-            end
-
-            core.except.assert(isempty(w) || length(w) == obj.Lhs.NDofs, ...
-                'InvalidInput', ...
-                'Weight vector length must be empty or match left-hand side DOFs.');
-
-            obj.LhsWeight = w(:);
-        end
-
-        function obj = setRhsWeight(obj, w)
-            % SETRHSWEIGHT Set weight vector for right-hand side space.
-
-            arguments
-                obj approx.space.SumSpace
-                w {mustBeNumeric}
-            end
-
-            core.except.assert(isempty(w) || length(w) == obj.Rhs.NDofs, ...
-                'InvalidInput', ...
-                'Weight vector length must be empty or match right-hand side DOFs.');
-
-            obj.RhsWeight = w(:);
-        end
-
-        function n = get.NDofs(obj)
+        function n = get.nDofs(obj)
             % GET.NDOFS Get the total number of degrees of freedom.
 
-            n = obj.NLhsDofs + obj.NRhsDofs;
+            n = sum(cellfun(@(F) F.nDofs, obj.factors));
         end
 
-        function n = get.NDims(obj)
+        function n = get.nDims(obj)
             % GET.NDIMS Get the number of spatial dimensions.
 
-            if ~isempty(obj.Lhs)
-                n = obj.Lhs.NDims;
-                return;
-            end
-
-            if ~isempty(obj.Rhs)
-                n = obj.Rhs.NDims;
-                return;
-            end
-
-            n = 0;
-        end
-
-        function n = get.NLhsDofs(obj)
-            % GET.NLHSDOFS Get the number of DOFs in left-hand side space.
-
-            if isempty(obj.Lhs)
-                n = 0;
+            if obj.nFactors > 0
+                n = obj.factors{1}.nDims;
             else
-                n = obj.Lhs.NDofs;
-            end
-        end
-
-        function n = get.NRhsDofs(obj)
-            % GET.NRHSDOFS Get the number of DOFs in right-hand side space.
-
-            if isempty(obj.Rhs)
                 n = 0;
-            else
-                n = obj.Rhs.NDofs;
             end
         end
 
-        function w = get.Weights(obj)
-            % GET.WEIGHTS Get combined weight vector for both spaces.
-
-            w = [obj.LhsWeight; obj.RhsWeight];
-        end
-
-        function Y = eval(obj, X, CLhs, CRhs)
-            % EVAL Evaluate functions in the sum space.
+        function Y = evaluate(obj, X, varargin)
+            % EVALUATE Evaluate functions in the direct sum space.
             %
-            %   Y = eval(obj, X, CLhs, CRhs) evaluates the sum of functions
-            %   with coefficient matrix @a CLhs for the left-hand side space
-            %   and coefficient matrix @a CRhs for the right-hand side space
-            %   at evaluation points @a X.
-
-            arguments
-                obj approx.space.SumSpace
-                X{mustBeNumeric}
-                CLhs{mustBeNumeric}
-                CRhs{mustBeNumeric}
-            end
-
-            YLhs = obj.evalLhs(X, CLhs);
-            YRhs = obj.evalRhs(X, CRhs);
-            Y = YLhs + YRhs;
-        end
-
-        function YLhs = evalLhs(obj, X, CLhs)
-            % EVALLHS Evaluate functions in the left-hand side space only.
+            %   Y = evaluate(obj, X, C1, C2, ..., Ck) evaluates functions
+            %   with coefficient matrices @a C1, @a C2, ..., @a Ck for each
+            %   space at evaluation points @a X.
             %
-            %   YLhs = evalLhs(obj, X, CLhs) evaluates functions with
-            %   coefficient matrix @a CLhs for the left-hand side space
-            %   at evaluation points @a X.
-
-            arguments
-                obj approx.space.SumSpace
-                X{mustBeNumeric}
-                CLhs{mustBeNumeric}
-            end
-
-            core.except.assert(~isempty(obj.Lhs), ...
-                'InvalidOperation', ...
-                'Left-hand side space is not defined.');
-
-            DLhs = reshape(CLhs, size(CLhs, 1), []);
-            if ~isempty(obj.LhsWeight)
-                DLhs = obj.LhsWeight .* DLhs;
-            end
-            YLhs = obj.Lhs.eval(X, DLhs);
-        end
-
-        function YRhs = evalRhs(obj, X, CRhs)
-            % EVALRHS Evaluate functions in the right-hand side space only.
+            % Inputs:
+            %   obj - The SumSpace object
+            %   X - Evaluation points (nd x np matrix)
+            %   varargin - Coefficients for each space:
+            %<     Ci - Coefficients for space i (ni x nc matrix)
             %
-            %   YRhs = evalRhs(obj, X, CRhs) evaluates functions with
-            %   coefficient matrix @a CRhs for the right-hand side space
-            %   at evaluation points @a X.
+            % Outputs:
+            %   Y - Function values at evaluation points (nc x np matrix)
 
-            arguments
-                obj approx.space.SumSpace
-                X{mustBeNumeric}
-                CRhs{mustBeNumeric}
+            X = reshape(X, size(X, 1), []);
+            np = size(X, 2);
+            m = obj.nFactors;
+
+            C = varargin;
+            nc = [];
+            for i = 1:m
+                C{i} = reshape(C{i}, size(C{i}, 1), []);
+                if isempty(nc), nc = size(C{i}, 2); end
             end
 
-            core.except.assert(~isempty(obj.Rhs), ...
-                'InvalidOperation', ...
-                'Right-hand side space is not defined.');
-
-            DRhs = reshape(CRhs, size(CRhs, 1), []);
-            if ~isempty(obj.RhsWeight)
-                DRhs = obj.RhsWeight .* DRhs;
-            end
-            YRhs = obj.Rhs.eval(X, DRhs);
-        end
-
-        function R = invLhs(obj, Y, X, CRhs)
-            % INVLHS Extract left-hand side component by removing right-hand side.
-            %
-            %   R = invLhs(obj, Y, X, CRhs) extracts the left-hand side
-            %   component by removing the right-hand side contribution from @a Y
-            %   using coefficient matrix @a CRhs for the right-hand side space.
-
-            arguments
-                obj approx.space.SumSpace
-                Y{mustBeNumeric}
-                X{mustBeNumeric}
-                CRhs{mustBeNumeric}
-            end
-
-            core.except.assert(~isempty(obj.Rhs), ...
-                'InvalidOperation', ...
-                'Right-hand side space is not defined.');
-
-            YRhs = obj.Rhs.eval(X, CRhs);
-            R = (Y - YRhs);
-            if ~isempty(obj.LhsWeight)
-                R = R ./ obj.LhsWeight(:).';
+            Y = zeros(nc, np);
+            for i = 1:m
+                D =  obj.weights{i} .* C{i};
+                Z = obj.factors{i}.evaluate(X, D); % nc x np
+                Y = Y + Z;
             end
         end
 
-        function R = invRhs(obj, Y, X, CLhs)
-            % INVRHS Extract right-hand side component by removing left-hand side.
+        function R = component(obj, i, Y, X, varargin)
+            % COMPONENT Evaluate the i-th component.
             %
-            %   R = invRhs(obj, Y, X, CLhs) extracts the right-hand side
-            %   component by removing the left-hand side contribution from @a Y
-            %   using coefficient matrix @a CLhs for the left-hand side space.
-
-            arguments
-                obj approx.space.SumSpace
-                Y{mustBeNumeric}
-                X{mustBeNumeric}
-                CLhs{mustBeNumeric}
-            end
-
-            core.except.assert(~isempty(obj.Lhs), ...
-                'InvalidOperation', ...
-                'Left-hand side space is not defined.');
-
-            YLhs = obj.Lhs.eval(X, CLhs);
-            R = (Y - YLhs);
-            if ~isempty(obj.RhsWeight)
-                R = R ./ obj.RhsWeight(:).';
-            end
-        end
-
-        function [CLhs, CRhs] = split(obj, C)
-            % SPLIT Split coefficients into left and right components.
+            %   R = component(obj, i, Y, X, C1, C2, ..., Ck) evaluates the
+            %   @a i-th component with coefficient matrices @a C1, @a C2,
+            %   ..., @a Ck for each space at evaluation points @a X.
             %
-            %   [CLhs, CRhs] = split(obj, C) splits the coefficient matrix
-            %   @a C into left-hand side coefficients @a CLhs and
-            %   right-hand side coefficients @a CRhs based on the DOFs
-            %   of each space.
-
-            arguments
-                obj approx.space.SumSpace
-                C{mustBeNumeric}
-            end
-
-            C = reshape(C, [], size(C, ndims(C)));
-            nLhs = obj.NLhsDofs;
-
-            CLhs = C(1:nLhs, :);
-            CRhs = C(nLhs+1:end, :);
-        end
-
-        function C = combine(obj, CLhs, CRhs)
-            % COMBINE Combine left and right coefficients.
+            % Inputs:
+            %   obj - The SumSpace object
+            %   Y - Target function values (nc x np matrix)
+            %   X - Evaluation points (nd x np matrix)
+            %   varargin - Coefficients for each space:
+            %<     Ci - Coefficients for space i (ni x nc matrix)
             %
-            %   C = combine(obj, CLhs, CRhs) combines the coefficient
-            %   matrices @a CLhs and @a CRhs into a single coefficient
-            %   matrix @a C.
-
-            arguments
-                obj approx.space.SumSpace
-                CLhs{mustBeNumeric}
-                CRhs{mustBeNumeric}
+            % Outputs:
+            %   Y - Function values at evaluation points (nc x np matrix)
+            
+            m = obj.nFactors;
+            C = varargin;
+            R = Y;
+            for k = setdiff(1:m, i)
+                D = obj.weights{k} .* C{k};
+                Z = obj.factors{k}.evaluate(X, D); % nc x np
+                R = R - Z;
             end
-
-            CLhs = reshape(CLhs, [], size(CLhs, ndims(CLhs)));
-            CRhs = reshape(CRhs, [], size(CRhs, ndims(CRhs)));
-
-            C = [CLhs; CRhs];
+            R = R ./ obj.weights{i};
         end
     end
 end

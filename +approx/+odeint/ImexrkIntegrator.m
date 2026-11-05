@@ -20,29 +20,26 @@ classdef ImexrkIntegrator < approx.odeint.OdeIntegrator
     %   linear terms with the efficiency of explicit methods for nonlinear
     %   terms, making them ideal for many PDE applications.
     %
+    % Notes:
     %   When L is empty, the method reduces to an explicit RK method.
     %   When F and S are empty, the method reduces to a DIRK method.
     %   Empty terms contribute zero to the corresponding evaluations.
     %
-    %   Augmented systems with constraints:
+    % Examples:
+    %   % Basic IMEX problem
+    %   integrator = approx.odeint.Ars222Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
     %
-    %   \f[
-    %     \begin{bmatrix}
-    %       M - \Delta t a_{ii} L & -\Delta t a_{ii} P \\
-    %       A & B
-    %     \end{bmatrix}
-    %     \begin{bmatrix}
-    %       u^{(i)} \\
-    %       \lambda^{(i)}
-    %     \end{bmatrix}
-    %     =
-    %     \begin{bmatrix}
-    %       \text{RHS}_u \\
-    %       C
-    %     \end{bmatrix}
-    %   \f]
+    %   % Pure implicit diffusion
+    %   U_new = integrator.step(L, [], [], []);
     %
-    %   where P, A, B, C represent constraint coupling terms.
+    %   % Mixed implicit-explicit (L implicit, F explicit)
+    %   U_new = integrator.step(L, F, [], []);
+    %
+    %   % Implicit linear with explicit forcing
+    %   U_new = integrator.step(L, [], S, []);
     %
     % See also:
     %   approx.odeint.OdeIntegrator, approx.odeint.DirkIntegrator,
@@ -56,7 +53,6 @@ classdef ImexrkIntegrator < approx.odeint.OdeIntegrator
         c % Stage time coefficients (vector)
         KI % Cell array of implicit derivative approximations
         KE % Cell array of explicit derivative approximations
-        AugmentSolver
     end
 
     methods
@@ -66,88 +62,213 @@ classdef ImexrkIntegrator < approx.odeint.OdeIntegrator
             %   obj = ImexrkIntegrator(nStages, final) creates an IMEX
             %   Runge-Kutta integrator with the specified number of stages
             %   and final time.
-
-            arguments
-                nStages {mustBePositive, mustBeInteger}
-                final {mustBePositive}
-            end
+            %
+            % Inputs:
+            %   nStages - Number of stages for the IMEX method (positive integer)
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed ImexrkIntegrator object
 
             obj@approx.odeint.OdeIntegrator(1, nStages, final);
         end
 
-        function obj = reset(obj, options)
+        function obj = reset(obj)
             % RESET Reset the IMEX RK integrator to initial state.
             %
             %   obj = reset(obj) clears the derivative approximation
             %   storage for both implicit and explicit parts and calls the
             %   parent reset method.
-
-            arguments
-                obj approx.odeint.ImexrkIntegrator
-                options.linOpts struct = struct() % Linear solver options
-            end
+            %
+            % Inputs:
+            %   obj - The ImexrkIntegrator object
+            %
+            % Outputs:
+            %   obj - The ImexrkIntegrator object
 
             reset@approx.odeint.OdeIntegrator(obj);
-            obj.KI = cell(obj.NStages, 1);
-            obj.KE = cell(obj.NStages, 1);
-            args = namedargs2cell(options.linOpts);
-            obj.Solver = cell(1, obj.NStages+1);
-            for i = 1 : obj.NStages+1
-                obj.Solver{i} = core.linalg.LinearSolver(args{:});
-            end
-            obj.AugmentSolver = core.linalg.LinearSolver(args{:});
+            obj.KI = cell(obj.nStages, 1);
+            obj.KE = cell(obj.nStages, 1);
         end
 
-        function U = step(obj, options)
+        function obj = setLhs(obj, i, L, M)
+            % SETLHS Set the left-hand side matrix for stage i.
+            %
+            %   obj = setLhs(obj, i, L, M) constructs the left-hand side
+            %   matrix as M - dt*AI(i,i)*L where AI(i,i) is the diagonal
+            %   element of the implicit Butcher tableau for stage i. If L
+            %   is empty, LHS = M (identity operation).
+            %
+            % Inputs:
+            %   obj - The ImexrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   L - Linear operator (matrix or empty)
+            %   M - Mass operator (matrix or empty)
+            %
+            % Outputs:
+            %   obj - The ImexrkIntegrator object
+
+            dt = obj.timeline.dt;
+
+            obj.lhs{i} = M;
+
+            %< Add linear term contribution with implicit coefficient
+            if ~isempty(L)
+                obj.lhs{i} = obj.lhs{i} - dt * obj.AI(i, i) * L;
+            end
+        end
+
+        function obj = setRhs(obj, i, M)
+            % SETRHS Set the right-hand side vector for stage i.
+            %
+            %   obj = setRhs(obj, i, M) constructs the right-hand side
+            %   vector incorporating both implicit and explicit terms along
+            %   with the mass operator. Empty terms contribute zero to the
+            %   evaluation.
+            %
+            % Inputs:
+            %   obj - The ImexrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   obj - The ImexrkIntegrator object
+
+            dt = obj.timeline.dt;
+            U0 = obj.U0{1};
+
+            %< Add mass term contribution from previous solution
+            if isempty(M)
+                obj.rhs{i} = U0;
+            elseif iscell(M)
+                obj.rhs{i} = M{2} * U0;
+                if ~isempty(M{1})
+                    obj.rhs{i} = obj.rhs{i} + M{1};
+                end
+            else
+                obj.rhs{i} = M * U0;
+            end
+
+            %< Accumulate terms from previous implicit stages
+            for j = 1:(i - 1)
+                obj.rhs{i} = obj.rhs{i} + dt * obj.AI(i, j) * obj.KI{j};
+            end
+
+            %< Accumulate terms from explicit stages
+            for j = 1:i
+                obj.rhs{i} = obj.rhs{i} + dt * obj.AE(i + 1, j) * obj.KE{j};
+            end
+        end
+
+        function U = stage(obj, i, L, F, S, M)
+            % STAGE Compute stage i of the IMEX RK method.
+            %
+            %   U = stage(obj, i, L, F, S, M) solves the implicit system for
+            %   the derivative approximation at stage i and evaluates the
+            %   explicit terms. Empty terms are handled gracefully.
+            %
+            % Inputs:
+            %   obj - The ImexrkIntegrator object
+            %   i - Stage index (positive integer)
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (function, vector, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution approximation at stage i
+
+            t0 = obj.timeline.now;
+            dt = obj.timeline.dt;
+            U0 = obj.U0{1};
+
+            % -------------------------------------------------------------
+            % IMPLICIT PART
+            % -------------------------------------------------------------
+            %< Evaluate linear term at stage time
+            Le = obj.evaluateOperator(L, U0, t0+obj.c(i)*dt);
+
+            %< Update LHS matrix if step size changed
+            if obj.timeline.hasStepSizeChanged
+                %< Evaluate LHS mass term
+                Me = obj.evaluateLhsMass(M, t0+obj.c(i)*dt);
+
+                %< Construct LHS matrix
+                obj.setLhs(i, Le, Me);
+            end
+
+            %< Evaluate RHS mass term at previous time level
+            Me = obj.evaluateRhsMass(i, M, t0+obj.c(i)*dt);
+
+            %< Construct RHS vector
+            obj.setRhs(i, Me);
+
+            %< Solve for implicit stage approximation
+            U = obj.solver.solve(obj.lhs{i}, obj.rhs{i});
+
+            %< Compute implicit derivative approximation
+            obj.KI{i} = 0;
+            if ~isempty(Le)
+                obj.KI{i} = obj.KI{i} + Le * U;
+            end
+
+            % -------------------------------------------------------------
+            % EXPLICIT PART
+            % -------------------------------------------------------------
+
+            %< Evaluate source term at next stage time
+            Se = obj.evaluateOperator(S, U, t0+obj.c(i+1)*dt);
+
+            %< Evaluate nonlinear term at current stage approximation
+            Fe = obj.evaluateOperator(F, U, t0+obj.c(i)*dt);
+
+            %< Compute explicit derivative approximation
+            obj.KE{i + 1} = 0;
+
+            %< Add nonlinear term contribution
+            if ~isempty(Fe)
+                obj.KE{i + 1} = obj.KE{i + 1} + Fe;
+            end
+
+            %< Add source term contribution
+            if ~isempty(Se)
+                obj.KE{i + 1} = obj.KE{i + 1} + Se;
+            end
+        end
+
+        function U = step(obj, L, F, S, M)
             % STEP Advance one time step using the IMEX RK method.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M) performs a complete time step by
+            %   U = step(obj, L, F, S, M) performs a complete time step by
             %   solving implicit stages for the linear term and explicit
-            %   evaluations for the nonlinear term, then combining
-            %   according to the Butcher tableau weights. Empty terms are
-            %   handled gracefully by contributing zero.
+            %   evaluations for the nonlinear term, then combining according
+            %   to the Butcher tableau weights. Empty terms are handled
+            %   gracefully by contributing zero.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M, P=P, A=A, B=B, C=C) performs
-            %   a complete time step for augmented IMEX systems with constraints.
+            % Inputs:
+            %   obj - The ImexrkIntegrator object
+            %   L - Linear operator (matrix, function, or empty)
+            %   F - Nonlinear operator (function or empty)
+            %   S - Source term (function, vector, or empty)
+            %   M - Mass operator (matrix, function, or empty)
+            %
+            % Outputs:
+            %   U - Solution at the next time step
 
-            arguments
-                obj approx.odeint.ImexrkIntegrator
-                options.L = [] % Linear operator
-                options.F = [] % Nonlinear operator
-                options.S = [] % Source term
-                options.M = [] % Mass operator
-                options.P = [] % Coupling operator (triggers augmented mode)
-                options.A = [] % Constraint matrix (triggers augmented mode)
-                options.B = [] % Constraint coupling matrix
-                options.C = [] % Constraint source term
-                options.dt = [] % Time step override
-                options.fn = [] % Custom step function
-            end
-
-            if ~isempty(options.fn)
-                U = options.fn(obj, options);
-                return;
-            end
-
-            if ~isempty(options.dt)
-                dt = options.dt;
-            else
-                dt = obj.Timeline.StepSize;
-            end
-
-            t0 = obj.Timeline.Now;
+            t0 = obj.timeline.now;
+            dt = obj.timeline.dt;
             U0 = obj.U0{1};
-            r = obj.NStages;
+            r = obj.nStages;
             s = r - 1;
 
             %< Initialize first stage for explicit part
             obj.KE{1} = 0;
 
             %< Evaluate source term at initial time
-            Se = obj.evalOp(options.S, U0, [t0+obj.c(1)*dt, t0]);
+            Se = obj.evaluateOperator(S, U0, t0+obj.c(1)*dt);
 
             %< Evaluate nonlinear term at initial solution
-            Fe = obj.evalOp(options.F, U0, [t0, t0]);
+            Fe = obj.evaluateOperator(F, U0, t0);
 
             %< Initialize explicit stage derivative approximation
             obj.KE{1} = 0;
@@ -164,237 +285,45 @@ classdef ImexrkIntegrator < approx.odeint.OdeIntegrator
 
             %< Compute all subsequent stages
             for i = 1:s
-                obj.stage(i, options.L, options.F, options.S, options.M, ...
-                    options.P, options.A, options.B, options.C, dt);
+                [~] = obj.stage(i, L, F, S, M);
             end
 
-            isAugmented = ~isempty(options.P) || ~isempty(options.A) || ~isempty(options.B) || ~isempty(options.C);
-
             %< Update LHS matrix for final solve if step size changed
-            if obj.Timeline.HasStepSizeChanged
-                obj.setLhs(s+1, [], options.M, [], [], [], dt, t0+dt);
+            if obj.timeline.hasStepSizeChanged
+                %< Evaluate LHS mass term
+                Me = obj.evaluateLhsMass(M, t0+dt);
+
+                %< Construct LHS matrix
+                obj.setLhs(s+1, [], Me);
             end
 
             %< Evaluate mass term for final solve
-            Me = obj.evalMRhs(s+1, options.M, [t0 + dt, t0]);
+            Me = obj.evaluateRhsMass(s+1, M, [t0 + dt, t0]);
 
             %< Add mass term contribution from previous solution
-            if isAugmented
-                if isempty(Me)
-                    Rhs = U0(1:size(Me, 2));
-                elseif iscell(Me)
-                    Rhs = Me{2} * U0(1:size(Me, 2));
-                    if ~isempty(Me{1})
-                        Rhs = Rhs + Me{1};
-                    end
-                else
-                    Rhs = Me * U0(1:size(Me, 2));
+            if isempty(Me)
+                obj.rhs{s+1} = U0;
+            elseif iscell(Me)
+                obj.rhs{s+1} = Me{2} * U0;
+                if ~isempty(Me{1})
+                    obj.rhs{s+1} = obj.rhs{s+1} + Me{1};
                 end
             else
-                if isempty(Me)
-                    Rhs = U0;
-                elseif iscell(Me)
-                    Rhs = Me{2} * U0;
-                    if ~isempty(Me{1})
-                        Rhs = Rhs + Me{1};
-                    end
-                else
-                    Rhs = Me * U0;
-                end
+                obj.rhs{s+1} = Me * U0;
             end
 
             %< Add weighted explicit derivative terms
             for i = 1:r
-                Rhs = Rhs + dt * obj.bE(i) * obj.KE{i};
+                obj.rhs{s+1} = obj.rhs{s+1} + dt * obj.bE(i) * obj.KE{i};
             end
 
             %< Add weighted implicit derivative terms
             for i = 1:s
-                Rhs = Rhs + dt * obj.bI(i) * obj.KI{i};
+                obj.rhs{s+1} = obj.rhs{s+1} + dt * obj.bI(i) * obj.KI{i};
             end
-
-            obj.Solver{s+1}.setRhs(Rhs);
 
             %< Solve for final step approximation
-            if isAugmented
-                U = obj.Solver{s+1}.solve();
-                obj.AugmentSolver.setLhs(options.B);
-                obj.AugmentSolver.setRhs(-options.A * U + options.C);
-                Ua = obj.AugmentSolver.solve();
-                U = [U; Ua];
-            else
-                U = obj.Solver{s+1}.solve();
-            end
-        end
-    end
-
-    methods (Access = protected)
-        function obj = setLhs(obj, i, L, M, P, A, B, dt, t)
-            % SETLHS Set the left-hand side matrix for stage i.
-
-            isAugmented = ~isempty(P) || ~isempty(A) || ~isempty(B);
-
-            %< Evaluate mass operator for LHS
-            Me = obj.evalMLhs(M, t);
-
-            %< Evaluate linear operator if provided
-            if ~isempty(L)
-                Le = obj.evalOp(L, [], t);
-            else
-                Le = [];
-            end
-
-            if isAugmented
-                %< Construct augmented block matrix
-                Lhs = cell(2, 2);
-
-                %< Block (1,1): M - dt*AI(i,i)*L
-                Lhs{1, 1} = Me;
-                if ~isempty(Le)
-                    Lhs{1, 1} = Lhs{1, 1} - dt * obj.AI(i, i) * Le;
-                end
-
-                %< Block (1,2): -dt*AI(i,i)*P
-                if ~isempty(P)
-                    Pe = obj.evalOp(P, [], t);
-                    Lhs{1, 2} = -dt * obj.AI(i, i) * Pe;
-                else
-                    Lhs{1, 2} = [];
-                end
-
-                %< Block (2,1): A
-                Lhs{2, 1} = A;
-
-                %< Block (2,2): B
-                Lhs{2, 2} = B;
-
-                Lhs = core.linalg.block(Lhs);
-            else
-                %< Regular: M - dt*AI(i,i)*L
-                Lhs = Me;
-                if ~isempty(Le)
-                    Lhs = Lhs - dt * obj.AI(i, i) * Le;
-                end
-            end
-
-            obj.Solver{i}.setLhs(Lhs);
-            obj.Solver{i}.precompute();
-        end
-
-        function obj = setRhs(obj, i, M, C, dt, t)
-            % SETRhs Set the right-hand side vector for stage i.
-
-            U0 = obj.U0{1};
-            isAugmented = ~isempty(C);
-
-            %< Evaluate RHS mass operator
-            Me = obj.evalMRhs(i, M, t);
-
-            %< Add mass term contribution from previous solution
-            if isempty(Me)
-                Rhs1 = U0;
-            elseif iscell(Me)
-                if isAugmented
-                    Rhs1 = Me{2} * U0(1:size(Me{2}, 2));
-                    if ~isempty(Me{1})
-                        Rhs1 = Rhs1 + Me{1}(1:size(Me{2}, 2));
-                    end
-                else
-                    Rhs1 = Me{2} * U0;
-                    if ~isempty(Me{1})
-                        Rhs1 = Rhs1 + Me{1};
-                    end
-                end
-            else
-                if isAugmented
-                    Rhs1 = Me * U0(1:size(Me, 2));
-                else
-                    Rhs1 = Me * U0;
-                end
-            end
-
-            %< Accumulate terms from previous implicit stages
-            for j = 1:(i - 1)
-                Rhs1 = Rhs1 + dt * obj.AI(i, j) * obj.KI{j};
-            end
-
-            %< Accumulate terms from explicit stages
-            for j = 1:i
-                Rhs1 = Rhs1 + dt * obj.AE(i + 1, j) * obj.KE{j};
-            end
-
-            if isAugmented
-                %< Construct augmented RHS vector
-                Rhs = cell(2, 1);
-                Rhs{1} = Rhs1;
-                Rhs{2} = C;
-                Rhs = core.linalg.block(Rhs);
-            else
-                %< Regular RHS
-                Rhs = Rhs1;
-            end
-
-            obj.Solver{i}.setRhs(Rhs);
-        end
-
-        function U = stage(obj, i, L, F, S, M, P, A, B, C, dt)
-            % STAGE Compute stage i of the IMEX RK method.
-
-            t0 = obj.Timeline.Now;
-
-            % ---------------------------------------------------------
-            % IMPLICIT PART
-            % ---------------------------------------------------------
-            %< Update LHS matrix if step size changed
-            if obj.Timeline.HasStepSizeChanged
-                obj.setLhs(i, L, M, P, A, B, dt, t0+obj.c(i)*dt);
-            end
-
-            %< Construct Rhs vector
-            obj.setRhs(i, M, C, dt, [t0+obj.c(i)*dt, t0]);
-
-            %< Solve for implicit stage approximation
-            U = obj.Solver{i}.solve();
-
-            %< Evaluate operators at stage solution for derivative computation
-            Le = obj.evalOp(L, [], [t0+obj.c(i)*dt, t0]);
-            Pe = obj.evalOp(P, [], [t0+obj.c(i)*dt, t0]);
-
-            %< Compute implicit derivative approximation
-            obj.KI{i} = 0;
-            if ~isempty(Le)
-                if ~isempty(P) || ~isempty(A) || ~isempty(B) || ~isempty(C)
-                    obj.KI{i} = obj.KI{i} + Le * U(1:size(Le, 2));
-                else
-                    obj.KI{i} = obj.KI{i} + Le * U;
-                end
-            end
-            if ~isempty(Pe)
-                obj.KI{i} = obj.KI{i} + Pe * U(end-size(Pe,2)+1:end);
-            end
-
-            % ---------------------------------------------------------
-            % EXPLICIT PART
-            % ---------------------------------------------------------
-
-            %< Evaluate source term at next stage time
-            Se = obj.evalOp(S, U, [t0+obj.c(i+1)*dt, t0]);
-
-            %< Evaluate nonlinear term at current stage approximation
-            Fe = obj.evalOp(F, U, [t0+obj.c(i)*dt, t0]);
-
-            %< Compute explicit derivative approximation
-            obj.KE{i + 1} = 0;
-
-            %< Add nonlinear term contribution
-            if ~isempty(Fe)
-                obj.KE{i + 1} = obj.KE{i + 1} + Fe;
-            end
-
-            %< Add source term contribution
-            if ~isempty(Se)
-                obj.KE{i + 1} = obj.KE{i + 1} + Se;
-            end
+            U = obj.solver.solve(obj.lhs{s+1}, obj.rhs{s+1});
         end
     end
 end

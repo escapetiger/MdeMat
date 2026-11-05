@@ -1,243 +1,138 @@
 classdef Integrator < handle
-    % INTEGRATOR Unified numerical integrator with data storage.
+    % INTEGRATOR Base class for all integrators.
     %
-    %   Integrator combines integration point generation, function
-    %   evaluation storage, and integration computation in a single
-    %   cohesive interface. It manages nodes, weights, function values,
-    %   and partial derivatives for efficient numerical integration.
+    %   Integrator provides a common interface for numerical integration
+    %   across different domains and methods. It manages integration rules,
+    %   nodes, weights, and provides the fundamental integration
+    %   functionality that can be specialized by concrete subclasses.
     %
     % See also:
-    %   core.geometry.Geometry
-
-    properties
-        Rule % Integration rule (approx.integrate.IntegrationRule)
-        Nodes % Integration nodes (NDims x NPoints)
-        Weights % Integration weights (1 x NPoints)
-        Values % Function values (NCodims x NPoints)
-        Partials % Partial derivatives (cell of NCodims x NPoints x NPartialsPerOrder)
+    %   approx.integrate.OrthotopeIntegrator, 
+    %   approx.integrate.HypersphereIntegrator,
+    %   approx.integrate.IntegrationRule
+    
+    properties (Access = public)
+        rule    % Integration rule object
+        nodes   % Integration nodes
+        weights % Integration weights
     end
 
     properties (Dependent)
-        NDims % Number of spatial dimensions
-        NPoints % Number of integration points
-        NPartials % Number of partial derivatives
-        DerivOrder % Maximum derivative order
-        NCodims % Number of function components
+        nDims   % Number of dimensions
+        nPoints % Number of integration points
     end
 
     methods
         function obj = Integrator(rule)
-            % INTEGRATOR Construct an integrator.
+            % INTEGRATOR Constructor for Integrator.
             %
-            %   obj = Integrator(rule) creates an integrator with
-            %   pre-computed integration points.
+            %   obj = Integrator(rule) creates a numerical integrator
+            %   using the specified integration rule.
+            %
+            % Inputs:
+            %   rule - IntegrationRule object
+            %
+            % Outputs:
+            %   obj - Constructed Integrator object
 
-            arguments
-                rule approx.integrate.IntegrationRule
-            end
+            obj.rule = rule;
+            obj.nodes = [];
+            obj.weights = [];
+        end
 
-            obj.Rule = rule;
-            obj.Nodes = [];
-            obj.Weights = [];
-            obj.Values = [];
-            obj.Partials = [];
+        function n = get.nDims(obj)
+            % GET.NDIMS Get the number of dimensions.
+            %
+            %   n = get.nDims(obj) returns the number of dimensions
+            %   of the integration domain as defined by the rule.
+            %
+            % Inputs:
+            %   obj - The Integrator object
+            %
+            % Outputs:
+            %   n - Number of dimensions (positive integer)
+
+            n = obj.rule.nDims;
+        end
+
+        function n = get.nPoints(obj)
+            % GET.NPOINTS Get the number of integration points.
+            %
+            %   n = get.nPoints(obj) returns the total number of
+            %   integration points currently stored in the integrator.
+            %
+            % Inputs:
+            %   obj - The Integrator object
+            %
+            % Outputs:
+            %   n - Number of integration points (non-negative integer)
+
+            n = length(obj.weights);
         end
 
         function newObj = copy(obj)
             % COPY Create a deep copy of the integrator.
             %
-            %   newObj = copy(obj) creates a new Integrator object with
-            %   the same nodes, weights, values, and partial derivatives
-            %   as the original object.
+            %   newObj = copy(obj) creates a new Integrator object
+            %   with the same rule, nodes, and weights as the original.
+            %
+            % Inputs:
+            %   obj - The Integrator object to copy
+            %
+            % Outputs:
+            %   newObj - Deep copy of the original integrator
 
-            arguments
-                obj approx.integrate.Integrator
-            end
+            newObj = approx.integrate.Integrator(obj.rule);
+            newObj.nodes = obj.nodes;
+            newObj.weights = obj.weights;
+        end
+    
+        function obj = addWeightFunction(obj, f)
+            % ADDWEIGHTS Add weight function for integral.
+            %
+            %   obj = addWeights(obj, f) scales the integration weights
+            %   according to the specified weight function.
+            %
+            % Inputs:
+            %   obj - The Integrator object
+            %   f - Weight function handle
+            %
+            % Outputs:
+            %   obj - The Integrator object
 
-            newObj = approx.integrate.Integrator(obj.Rule);
-            newObj.Nodes = obj.Nodes;
-            newObj.Weights = obj.Weights;
-            newObj.Values = obj.Values;
-            newObj.Partials = obj.Partials;
+            omega = f(obj.nodes);
+            obj.weights = obj.weights .* omega;
         end
 
-        function obj = setPoints(obj, geometry, np)
-            % SETPOINTS Generate integration points using geometry.
+        function I = integrate(obj, f)
+            % INTEGRATE Evaluate the integral of function f.
             %
-            %   obj = setPoints(obj, geometry, np) sets @a np integration
-            %   nodes and weights on the specified geometry @geometry.
-
-            arguments
-                obj approx.integrate.Integrator
-                geometry core.geometry.Geometry
-                np{mustBePositive, mustBeInteger}
-            end
-
-            [obj.Nodes, obj.Weights] = obj.Rule.generate(geometry, np);
-        end
-
-        function obj = setValues(obj, func, options)
-            % SETVALUES Evaluate function at integration points.
+            %   I = integrate(obj, f) approximates the integral of
+            %   function f over the integration domain using the
+            %   precomputed nodes and weights.
             %
-            %   obj = setValues(obj, func) evaluates function at the stored
-            %   integration nodes and stores the results in the Values
-            %   property.
+            % Inputs:
+            %   obj - The Integrator object
+            %   f - Function handle or cell array of functions to integrate
             %
-            %   obj = setValues(obj, func, nodes=nodes) evaluates function
-            %   at the specified nodes instead of the stored nodes.
+            % Outputs:
+            %   I - Approximate value of the integral
+            
+            X = obj.nodes;
+            w = obj.weights;
+            core.except.assert(~isempty(X) && ~isempty(w), ...
+                'NotPrepared', 'Please set nodes and weights first.');
 
-            arguments
-                obj approx.integrate.Integrator
-                func{mustBeFunction}
-                options.nodes{mustBeNumeric} = obj.Nodes
-            end
-
-            core.except.assert(~isempty(options.nodes), 'InvalidState', ...
-                'Integration nodes must be set before evaluating function.');
-
-            if isa(func, 'core.function.Function')
-                obj.Values = func.eval(options.nodes);
+            if iscell(f)
+                I = arrayfun(@(i) f{i}(X{i}) * w{i}(:), 1:numel(X), 'Un', 0);
             else
-                obj.Values = func(options.nodes);
+                I = f(X) * w(:);
             end
-        end
-
-        function obj = setPartials(obj, func, order, options)
-            % SETPARTIALS Compute partial derivatives at integration
-            % points.
-            %
-            %   obj = setPartials(obj, func, order) computes partial
-            %   derivatives up to the specified order at the stored
-            %   integration nodes.
-            %
-            %   obj = setPartials(obj, func, order, nodes=nodes) computes
-            %   partial derivatives at the specified nodes instead of the
-            %   stored nodes.
-
-            arguments
-                obj approx.integrate.Integrator
-                func{mustBeFunction}
-                order(1, 1) {mustBePositive, mustBeInteger}
-                options.nodes{mustBeNumeric} = obj.Nodes
-            end
-
-            core.except.assert(~isempty(options.nodes), 'InvalidState', ...
-                'Integration nodes must be set before evaluating function.');
-
-            nd = obj.NDims;
-            indexer = core.linalg.L1MultiIndexer();
-            obj.Partials = cell(1, order);
-            for k = 1:order
-                indexer.setCache(nd, nd+k, minSum = nd+k);
-                M = indexer.Cache - 1;
-                dY = cell(1, size(M, 1));
-                for j = 1:size(M, 1)
-                    dY{j} = func.diff(options.nodes, M(j, :));
-                end
-                obj.Partials{k} = cat(3, dY{:});
-            end
-        end
-
-        function obj = addWeightFunction(obj, weightFunc)
-            % ADDWEIGHTFUNCTION Apply weight function to integration
-            % weights.
-            %
-            %   obj = addWeightFunction(obj, weightFunc) multiplies the
-            %   integration weights by the specified weight function
-            %   evaluated at the integration nodes.
-
-            arguments
-                obj approx.integrate.Integrator
-                weightFunc{mustBeFunction}
-            end
-
-            core.except.assert(~isempty(obj.Nodes), 'InvalidState', ...
-                'Integration nodes must be set before applying weight function.');
-
-            omega = weightFunc(obj.Nodes);
-            omega = reshape(omega, 1, size(obj.Weights, 2));
-            obj.Weights = obj.Weights .* omega;
-        end
-
-        function I = integrate(obj, func)
-            % INTEGRATE Evaluate integral using stored data or function.
-            %
-            %   I = integrate(obj) integrates using the stored function
-            %   values. The Values property must be set first.
-            %
-            %   I = integrate(obj, func) evaluates the specified function
-            %   at the integration nodes and computes the integral.
-
-            arguments
-                obj approx.integrate.Integrator
-                func{mustBeFunction} = []
-            end
-
-            core.except.assert(~isempty(obj.Nodes), 'InvalidState', ...
-                'Integration nodes must be set before integration.');
-
-            core.except.assert(~isempty(obj.Weights), 'InvalidState', ...
-                'Integration weights must be set before integration.');
-
-            if isempty(func)
-                values = obj.Values;
-            else
-                if isa(func, 'core.function.Function')
-                    values = func.eval(obj.Nodes);
-                else
-                    values = func(obj.Nodes);
-                end
-            end
-
-            I = values * obj.Weights(:);
         end
     end
 
-    methods
-        function n = get.NDims(obj)
-            % GET.NDIMS Returns the number of spatial dimensions.
-
-            n = obj.Rule.NDims;
-        end
-
-        function n = get.NPoints(obj)
-            % GET.NPOINTS Returns the number of integration points.
-
-            if isempty(obj.Weights)
-                n = 0;
-            else
-                n = length(obj.Weights);
-            end
-        end
-
-        function n = get.NPartials(obj)
-            % GET.NPARTIALS Returns the total number of partial derivatives.
-
-            if isempty(obj.Partials)
-                n = 0;
-            else
-                n = sum(cellfun(@(y) size(y, 3), obj.Partials));
-            end
-        end
-
-        function order = get.DerivOrder(obj)
-            % GET.DERIVORDER Returns the maximum derivative order.
-
-            if obj.NPartials == 0 || obj.NDims == 0
-                order = 0;
-            else
-                order = length(obj.Partials);
-            end
-        end
-
-        function n = get.NCodims(obj)
-            % GET.NCODIMS Returns the number of function components.
-
-            if isempty(obj.Values)
-                n = 0;
-            else
-                n = size(obj.Values, 1);
-            end
-        end
+    methods (Abstract)
+        % SETPOINTS Set integration points using the underlying rule.
+        obj = setPoints(obj, varargin)
     end
 end

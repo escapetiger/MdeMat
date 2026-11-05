@@ -7,16 +7,16 @@ classdef FiniteElementSpace < approx.space.MeshSpace
     %
     % See also:
     %   approx.space.MeshSpace
-    
+
     properties
-        Element % Element object
+        element % Element object
     end
-    
+
     properties (Dependent)
-        NLocalDofs % Number of local degrees of freedom
-        NGlobalDofs % Number of global degrees of freedom
+        nLocalDofs % Number of local degrees of freedom
+        nGlobalDofs % Number of global degrees of freedom
     end
-    
+
     methods
         function obj = FiniteElementSpace(mesh, element)
             % FINITEELEMENTSPACE Constructor for FiniteElementSpace.
@@ -24,266 +24,286 @@ classdef FiniteElementSpace < approx.space.MeshSpace
             %   obj = FiniteElementSpace(mesh, element) creates a finite
             %   element space defined by the specified mesh and finite
             %   element.
-            
-            arguments
-                mesh approx.mesh.Mesh
-                element approx.element.Element
-            end
-            
+            %
+            % Inputs:
+            %   mesh - Mesh object
+            %   element - Element object
+            %
+            % Outputs:
+            %   obj - Constructed MeshSpace object
+
             obj@approx.space.MeshSpace(mesh);
-            obj.Element = element;
+            obj.element = element;
         end
-        
-        function n = get.NLocalDofs(obj)
+
+        function n = get.nLocalDofs(obj)
             % GET.NLOCALDOFS Get the number of degrees of freedom per
             % element.
-            
-            n = obj.Element.NDofs;
+
+            n = obj.element.nDofs;
         end
-        
-        function n = get.NGlobalDofs(obj)
+
+        function n = get.nGlobalDofs(obj)
             % GET.NGLOBALDOFS Get the total number of degrees of freedom.
-            
-            n = obj.NLocalDofs * obj.NMeshElements;
+
+            n = obj.nLocalDofs * obj.nMeshElements;
         end
-        
-        function Y = eval(obj, xRef, C, options)
-            % EVAL Evaluate finite element functions in the mesh space.
+
+        function Y = evaluate(obj, IE, xRef, C)
+            % EVALUATE Evaluate finite element functions in the mesh space.
             %
-            %   Y = eval(obj, xRef, C) evaluates the piecewise
-            %   function defined by coefficients @a C at reference points
-            %   @a xRef on all elements.
+            %   Y = evaluate(obj, IE, xRef, C) evaluates the piecewise
+            %   function defined by coefficients @A C at reference points
+            %   @a xRef on the specified elements @a IE.
             %
-            %   Y = eval(obj, xRef, C, EI=EI) evaluates on specified elements @a EI.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                xRef {mustBeNumeric}
-                C {mustBeNumeric}
-                options.EI {mustBeInteger, mustBePositive} = []
+            %   Y = evaluate(obj, [], xRef, C) use all the elements.
+            %
+            % Inputs:
+            %   obj - The MeshSpace object
+            %   IE - Element linear indices (ne × 1 or [])
+            %   xRef - Reference coordinates (nd × np)
+            %   C - Coefficient matrix (nl × ne*nc)
+            %
+            % Outputs:
+            %   Y - Function values at evaluation points (np*ne × nc)
+
+            if isempty(IE)
+                IE = (1:obj.nMeshElements).';
             end
-            
-            if isempty(options.EI)
-                EI = (1:obj.NMeshElements).';
-            else
-                EI = options.EI;
-            end
-            
+
             if isempty(xRef)
-                xRef = obj.Element.Volume.Nodes;
+                xRef = obj.element.volume.nodes;
             end
-            
-            ne = size(EI, 1);
+
+            ne = size(IE, 1);
             np = size(xRef, 2);
-            nl = obj.NLocalDofs;
+            nl = obj.nLocalDofs;
             C = reshape(C, nl, []);
-            Y = obj.Element.eval(xRef, C); %< ne*nc x np
+            Y = obj.element.evaluate(xRef, C); %< ne*nc x np
             Y = reshape(Y.', np*ne, []);
         end
-        
-        function Y = diff(obj, xRef, C, order, options)
-            % DIFF Differentiate finite element functions in the
+
+        function Y = differentiate(obj, IE, xRef, C, order)
+            % DIFFERENTIATE Differentiate finite element functions in the
             % mesh space.
             %
-            %   Y = diff(obj, xRef, C, order) differentiates
-            %   piecewise function defined by coefficients @a C at
-            %   reference points @a xRef on all elements.
+            %   Y = differentiate(obj, IE, xRef, C, order) differetiates
+            %   piecewise function defined by coefficients @A C at
+            %   reference points @a xRef on the specified elements @a IE.
             %
-            %   Y = diff(obj, xRef, C, order, EI=EI) differentiates on
-            %   specified elements @a EI.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                xRef {mustBeNumeric}
-                C {mustBeNumeric}
-                order {mustBeInteger, mustBeNonnegative}
-                options.EI {mustBeInteger, mustBePositive} = []
+            %   Y = differentiate(obj, [], xRef, C, order) use all the
+            %   elements.
+            %
+            % Inputs:
+            %   obj - The MeshSpace object
+            %   IE - Element linear indices (ne × 1 or [])
+            %   xRef - Reference coordinates (nd × np)
+            %   C - Coefficient matrix (nl × ne*nc)
+            %   order - Derivative order (nd x 1)
+            %
+            % Outputs:
+            %   Y - Function values at evaluation points (np*ne × nc)
+
+            if isempty(IE)
+                IE = (1:obj.nMeshElements).';
             end
-            
-            if isempty(options.EI)
-                EI = (1:obj.NMeshElements).';
-            else
-                EI = options.EI;
-            end
-            
+
             if isempty(xRef)
-                xRef = obj.Element.Volume.Nodes;
+                xRef = obj.element.volume.nodes;
             end
-            
-            ne = size(EI, 1);
+
+            ne = size(IE, 1);
             np = size(xRef, 2);
-            nl = obj.NLocalDofs;
+            nl = obj.nLocalDofs;
             C = reshape(C, nl, []);
-            Y = obj.Element.diff(xRef, C, order); %< ne*nc x np
+            Y = obj.element.differentiate(xRef, C, order); %< ne*nc x np
             Y = reshape(Y.', np*ne, []);
         end
-        
-        function Y = feval(obj, f, xRef, options)
-            % FEVAL Evaluate analytical function on mesh elements.
+
+        function Y = functionEvaluate(obj, IE, xRef, f, varargin)
+            % FUNCTIONEVALUATE Evaluate analytical function on mesh
+            % elements.
             %
-            %   Y = feval(obj, f, xRef) evaluates the analytical function
-            %   @a f at reference points @a xRef mapped to physical
-            %   coordinates on all elements.
+            %   Y = functionEvaluate(obj, IE, xRef, f) evaluates the
+            %   analytical function @a f at reference points @a xRef mapped
+            %   to physical coordinates on the specified elements @a IE.
             %
-            %   Y = feval(obj, f, xRef, EI=EI) evaluates on specified
-            %   elements @a EI.
+            %   Y = functionEvaluate(obj, [], xRef, f, ...) use all
+            %   elements.
             %
-            %   Y = feval(obj, f, xRef, args=args) passes additional
-            %   arguments to the function @a f.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                f {mustBeA(f, 'function_handle')}
-                xRef {mustBeNumeric}
-                options.EI {mustBeInteger, mustBePositive} = []
-                options.args = {}
+            %   Y = functionEvaluate(obj, IE, xRef, f, ...) passes
+            %   additional arguments to the function @a f.
+            %
+            % Inputs:
+            %   obj - The MeshSpace object
+            %   IE - Element linear indices (ne x nd matrix or [])
+            %   xRef - Reference coordinates (nd × np matrix)
+            %   f - Function handle to evaluate
+            %   varargin - Additional arguments for function handle
+            %
+            % Outputs:
+            %   Y - Function values at mapped points (nElements*nRefPoints × nComponents matrix)
+
+            if isempty(IE)
+                IE = (1:obj.nMeshElements).';
             end
-            
-            if isempty(options.EI)
-                EI = (1:obj.NMeshElements).';
-            else
-                EI = options.EI;
-            end
-            
-            ne = size(EI, 1);
+
+            core.except.assert(isa(f, 'function_handle'), ...
+                'InvalidFunction', 'f must be a function handle.');
+
+            ne = size(IE, 1);
             np = size(xRef, 2);
-            X = obj.Mesh.collocate(xRef, EI);
-            Y = f(X, options.args{:});
+            X = obj.mesh.collocate(xRef, IE);
+            Y = f(X, varargin{:});
             Y = reshape(Y, ne*np, []);
         end
-        
-        function A = mean(obj, f, options)
+
+        function A = mean(obj, IE, f, varargin)
             % MEAN Compute weighted mean of a function over specified
             % elements.
             %
-            %   A = mean(obj, f) computes the weighted mean of function
-            %   @a f using integration weights over all elements.
+            %   A = mean(obj, IE, f) computes the weighted mean of function
+            %   @a f using integration weights over the elements specified
+            %   by @a IE.
             %
-            %   A = mean(obj, f, EI=EI) computes over specified elements @a EI.
+            %   A = mean(obj, [], f) uses all elements.
             %
-            %   A = mean(obj, f, args=args) passes additional arguments to
+            %   A = mean(obj, IE, f, ...) passes additional arguments to
             %   function @a f.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                f {mustBeA(f, 'function_handle')}
-                options.EI {mustBeInteger, mustBePositive} = []
-                options.args = {}
+            %
+            % Inputs:
+            %   obj - The MeshSpace object
+            %   IE - Element linear indices (ne × nd matrix) or []
+            %   f - Function handle to compute mean
+            %   varargin - Additional arguments for function handle
+            %
+            % Outputs:
+            %   A - Weighted mean values (ne × nc matrix)
+
+            if isempty(IE)
+                IE = (1:obj.nMeshElements).';
             end
-            
-            if isempty(options.EI)
-                EI = (1:obj.NMeshElements).';
-            else
-                EI = options.EI;
-            end
-            
-            ne = size(EI, 1);
-            np = obj.Element.Volume.NPoints;
-            wRef = obj.Element.Volume.Weights;
-            xRef = obj.Element.Volume.Nodes;
-            X = obj.Mesh.collocate(xRef, EI);
-            F = f(X, options.args{:});
+
+            core.except.assert(isa(f, 'function_handle'), ...
+                'InvalidFunction', 'f must be a function handle.');
+
+            ne = size(IE, 1);
+            np = obj.element.volume.nPoints;
+            wRef = obj.element.volume.weights;
+            xRef = obj.element.volume.nodes;
+            X = obj.mesh.collocate(xRef, IE);
+            F = f(X, varargin{:});
             F = reshape(F, np, []);
             A = wRef * F;
             A = reshape(A, ne, []);
         end
-        
-        function U = fit(obj, f, options)
+
+        function U = fit(obj, IE, f, varargin)
             % FIT Fit a function within the finite element space.
             %
-            %   U = fit(obj, f) fits the function @a f onto the finite
-            %   element space over all elements using the appropriate
-            %   fitting method.
+            %   U = fit(obj, IE, f) fits the function @a f onto the
+            %   finite element space over the elements specified by @a IE
+            %   using the appropriate fitting method.
             %
-            %   U = fit(obj, f, EI=EI) fits over specified elements @a EI.
+            %   U = fit(obj, [], f) uses all elements.
             %
-            %   U = fit(obj, f, args=args) passes additional arguments to
+            %   U = fit(obj, IE, f, ...) passes additional arguments to
             %   function @a f.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                f {mustBeA(f, 'function_handle')}
-                options.EI {mustBeInteger, mustBePositive} = []
-                options.X = []
-                options.args = {}
-            end
-            
-            if isempty(options.EI)
-                EI = (1:obj.NMeshElements).';
-            else
-                EI = options.EI;
-            end
-            
-            A = obj.Element.Approximator;
-            
-            ne = size(EI, 1);
-            nl = obj.NLocalDofs;
-            if isempty(options.X)
-                xRef = obj.Element.Volume.Nodes;
-                X = obj.Mesh.collocate(xRef, EI);
+            %
+            % Inputs:
+            %   obj - The FiniteElementSpace object
+            %   IE - Element linear indices (ne x nd matrix) or []
+            %   f - Function handle to fit
+            %   varargin - Additional arguments for function handle
+            %
+            % Outputs:
+            %   U - Fitted coefficients (nl*ne × nc matrix)
+
+            if isempty(IE)
+                IE = (1:obj.nMeshElements).';
             end
 
-            if isempty(options.args)
+            core.except.assert(isa(f, 'function_handle'), ...
+                'InvalidFunction', 'Function f must be a function handle.');
+
+            A = obj.element.approximator;
+            B = A.basis;
+
+            cls = 'core.function.SeparableFunction';
+            core.except.assert( ...
+                ~isa(B, cls) || ~iscell(B.factors), ...
+                'InvalidBasis', ...
+                'All basis functions must have the same type.');
+
+            ne = size(IE, 1);
+            nl = obj.nLocalDofs;
+            if isempty(varargin)
+                xRef = obj.element.volume.nodes;
+                X = obj.mesh.collocate(xRef, IE);
                 U = f(X);
             else
-                U = f(X, options.args{:});
+                U = f(varargin{:});
             end
-            
-            A = obj.Element.Approximator;
-            switch A.Type
+
+            switch A.TYPE
                 case 'modal'
-                    D = obj.Element.Volume;
-                    F = A.embed(U, D.Values, D.Weights);
+                    D = obj.element.volume;
+                    F = A.embed(U, D.values, D.weights);
                 case 'nodal'
                     F = A.embed(U);
                 otherwise
                     core.except.error('UnsupportedProjector', ...
-                        'Projector type %s not supported.', A.Type);
+                        'Projector type %s not supported.', class(P));
             end
 
             U = A.fit(F);
             U = reshape(U, nl*ne, []);
         end
-        
-        function GI = localToGlobal(obj, EI, LI)
+
+        function G = localToGlobal(obj, E, L)
             % LOCALTOGLOBAL Map local DoF indices to global DoF indices.
             %
-            %   GI = localToGlobal(obj, EI, LI) maps local DoF indices @a LI to
-            %   global DoF indices for the specified elements @a EI.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                EI {mustBeInteger, mustBeNonnegative}
-                LI {mustBeInteger, mustBePositive}
+            %   G = localToGlobal(obj, E, L) maps local DoF indices L to
+            %   global DoF indices for the specified elements E.
+            %
+            % Inputs:
+            %   obj - The DofMap object
+            %   E - Element linear indices (ne x 1 vector)
+            %   L - Local DoF indices (nl x 1 vector or [])
+            %
+            % Outputs:
+            %   G - Global DoF indices
+
+            nl = obj.nLocalDofs;
+
+            if isempty(E)
+                E = (1:obj.nMeshElements);
             end
-            
-            nl = obj.NLocalDofs;
-            
-            if isempty(EI)
-                EI = (1:obj.NMeshElements);
+
+            if isempty(L)
+                L = (1:nl);
             end
-            
-            if isempty(LI)
-                LI = (1:nl);
-            end
-            GI = LI(:) + (EI(:).' - 1) * nl;
-            GI = GI(:);
+            G = L(:) + (E(:).' - 1) * nl;
+            G = G(:);
         end
-        
-        function [EI, LI] = globalToLocal(obj, GI)
+
+        function [E, L] = globalToLocal(obj, G)
             % GLOBALTOLOCAL Map global DoF indices to local DoF indices.
             %
-            %   [EI, LI] = globalToLocal(obj, GI) maps global DoF indices @a GI
+            %   [E, L] = globalToLocal(obj, G) maps global DoF indices @a G
             %   to local DoF indices.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                GI {mustBeInteger, mustBePositive}
-            end
-            
-            nl = obj.NLocalDofs;
-            EI = ceil(GI/nl);
-            LI = GI - (EI - 1) * nl;
+            %
+            % Inputs:
+            %   obj - The DofMap object
+            %   G - Global DoF indices (ng x 1 vector)
+            %
+            % Outputs:
+            %   E - Element linear indices (ng x 1 vector)
+            %   L - Local DoF indices (ng x 1 vector)
+
+            nl = obj.nLocalDofs;
+            E = ceil(G/nl);
+            L = G - (E - 1) * nl;
         end
         
         function newObj = refine(obj, nLevels)
@@ -291,14 +311,16 @@ classdef FiniteElementSpace < approx.space.MeshSpace
             %
             %   newObj = refine(obj, nLevels) creates a refined finite
             %   element space.
-            
-            arguments
-                obj approx.space.FiniteElementSpace
-                nLevels (1,1) {mustBeInteger, mustBePositive}
-            end
-            
-            newMesh = obj.Mesh.refine(nLevels);
-            newObj = approx.space.FiniteElementSpace(newMesh, obj.Element);
+            %
+            % Inputs:
+            %   obj - The FiniteElementSpace object
+            %   nLevels - Number of refinement levels (non-negative integer)
+            %
+            % Outputs:
+            %   newObj - Refined FiniteElementSpace object
+
+            newMesh = obj.mesh.refine(nLevels);
+            newObj = approx.space.FiniteElementSpace(newMesh, obj.element);
         end
     end
 end

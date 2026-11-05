@@ -1,86 +1,63 @@
 # Environment configuration
 
 # =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
 # Algorithm
 # =======================================================================
-
-OPTION=schemeName='dghs'
 
 # -----------------------------------------------------------------------
 # Time discretization
 # -----------------------------------------------------------------------
 # tSplitName='lie_trotter': Lie-Trotter splitting (first-order)
 # tSplitName='strang': Strang splitting (second-order)
-OPTION=tSplitName='strang'
+OPTION=tSplitName='lie_trotter'
 
 # tOdeIntName='be': backward Euler scheme
 # tOdeIntName='bdf2': BDF2 scheme
 # tOdeIntName='bdf3': BDF3 scheme
 # tOdeIntName='sdirk2': SDIRK2 scheme
 # tOdeIntName='sdirk3': SDIRK3 scheme
-# tOdeIntName='imp': Implicit midpoint scheme
-# OPTION=tOdeIntName={'be', 'be'}
-OPTION=tOdeIntName={'sdirk2', 'sdirk2'}
-# OPTION=tOdeIntName='sdirk2'
-# OPTION=tOdeIntName='ars222'
+OPTION=tOdeIntName={'be', 'be'}
 
 # CFL number
-OPTION=cfl=0.5
+# OPTION=cfl=0.5
 
 # Time step size
-# OPTION=dt=0.001
-
-# Whether use semi-implicit
-OPTION=useSemiImplicit=false
+OPTION=dt=0.1
 
 # -----------------------------------------------------------------------
 # Space discretization
 # -----------------------------------------------------------------------
 
-# spatial order
-OPTION=xBasisOrder=2
+# xDiscName='dg': DG
+OPTION=xDiscName='dg'
 
-# xBasisType='modal': Modal basis 
-# xBasisType='nodal': Nodal basis
-OPTION=xBasisType='nodal'
+# spatial order
+OPTION=xBasisOrder=1
+
+# xBasisType='legendre': Monic Legendre basis, 
+# xBasisType='lagrange_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='lagrange_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='legendre'
 
 # xBasisPattern='Q': Qk polynomial space
 # xBasisPattern='P': Pk polynomial space
-OPTION=xBasisPattern='Q'
+OPTION=xBasisPattern='P'
 
-# xOpType{1,1}='boundary': add jump only to boundary elements
-# xOpType{1,1}='boundaryw': add weighted jump only to boundary elements
-# xOpType{1,1}='all': add jump to all elements
-# xOpType{1,1}='allw': add weighted jump to all elements
-# xOpType{1,2}='central': central flux
-# xOpType{1,2}='right': right flux
-# xOpType{1,2}='left': left flux
-# xOpType{2,1}='central': central flux
-# xOpType{2,1}='right': right flux
-# xOpType{2,1}='left': left flux
-OPTION=xOpAType={'', 'right'; 'left', ''}
-OPTION=xOpBType={'', 'right'; 'left', ''} 
-
-# -----------------------------------------------------------------------
-# Velocity discretization
-# -----------------------------------------------------------------------
-OPTION=vBasisType='hermite'
-
-# -----------------------------------------------------------------------
-# Filter options
-# -----------------------------------------------------------------------
-# Enable filtering to reduce aliasing errors in nonlinear coupling
-OPTION=useFilter=false
-
-# Dealiasing method: 'hou-li', 'tc', or 'quasi-tc'
-OPTION=dealiasingType='hou-li'
-
-# Dealiaing parameters
-OPTION=dealiasingBeta=36
-OPTION=dealiasingGamma=36
-OPTION=dealiasingCutoff=2/3
-
-# -----------------------------------------------------------------------
-# Splitting options
-# -----------------------------------------------------------------------
-OPTION=useSplitting=true
+# xPenaltyType{1,1}='boundary': add jump only to boundary elements
+# xPenaltyType{1,1}='boundaryw': add weighted jump only to boundary elements
+# xPenaltyType{1,1}='all': add jump to all elements
+# xPenaltyType{1,1}='allw': add weighted jump to all elements
+# xPenaltyType{1,2}='central': central flux
+# xPenaltyType{1,2}='right': right flux
+# xPenaltyType{1,2}='left': left flux
+# xPenaltyType{2,1}='central': central flux
+# xPenaltyType{2,1}='right': right flux
+# xPenaltyType{2,1}='left': left flux
+OPTION=xPenaltyType={'', 'right'; 'left', ''} 

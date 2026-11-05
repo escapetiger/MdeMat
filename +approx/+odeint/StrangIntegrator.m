@@ -34,6 +34,27 @@ classdef StrangIntegrator < approx.odeint.SeparableOdeIntegrator
     %   The splitting sequence applies operators in forward order with
     %   half time steps, then in reverse order with half time steps.
     %
+    % Examples:
+    %   % Reaction-diffusion: implicit diffusion + explicit reaction
+    %   integrators = {approx.odeint.BeIntegrator(1.0), ...
+    %                  approx.odeint.FeIntegrator(1.0)};
+    %   splitter = approx.odeint.StrangIntegrator(integrators);
+    %   
+    %   % Step with operators [diffusion, reaction]
+    %   L = {diffusionMatrix, []};
+    %   F = {[], @(u,t) reactionTerm(u)};
+    %   S = {[], []};
+    %   U_new = splitter.step(L, F, S, M);
+    %   
+    %   % Three-way Strang split: A_dt/2, B_dt/2, C_dt, B_dt/2, A_dt/2
+    %   integrators = {approx.odeint.BeIntegrator(1.0), ...
+    %                  approx.odeint.FeIntegrator(1.0), ...
+    %                  approx.odeint.FeIntegrator(1.0)};
+    %   L = {diffusionMatrix, advectionMatrix, []};
+    %   F = {[], [], @(u,t) reactionTerm(u)};
+    %   S = {sourceVector, [], []};
+    %
+    % Notes:
     %   For n operators, the method applies 2n-1 sub-steps per time step.
     %   The middle operator (when n is odd) gets applied once with full
     %   time step, while others get applied twice with half time steps.
@@ -45,84 +66,77 @@ classdef StrangIntegrator < approx.odeint.SeparableOdeIntegrator
     %   approx.odeint.FeIntegrator
 
     properties (Constant)
-        Order = 2 % Accuracy order of the Strang method
+        ORDER = 2 % Accuracy order of the Strang method
     end
 
     methods
-        function U = step(obj, options)
+        function U = step(obj, L, F, S, M)
             % STEP Advance one time step using Strang splitting.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M) performs one time step
-            %   using the symmetric Strang splitting: forward half-steps,
-            %   then backward half-steps.
+            %   U = step(obj, L, F, S, M) performs one time step using
+            %   the symmetric Strang splitting: forward half-steps, then
+            %   backward half-steps.
             %
-            %   U = step(obj, L=L, F=F, S=S, M=M, P=P, A=A, B=B, C=C)
-            %   performs one time step by sequentially applying each factor
-            %   integrator to its corresponding augmented sub-problem.
+            % Inputs:
+            %   obj - The StrangIntegrator object
+            %   L - Cell array of linear operators {L1, L2, ..., Ln}
+            %       Each Li can be matrix, function, or empty
+            %   F - Cell array of nonlinear operators {F1, F2, ..., Fn}
+            %       Each Fi can be function or empty
+            %   S - Cell array of source terms {S1, S2, ..., Sn}
+            %       Each Si can be vector, function, or empty
+            %   M - Cell array of mass terms {M1, M2, ..., Mn}
+            %       Each Mi can be matrix, function, or empty
+            %
+            % Outputs:
+            %   U - Solution at the next time step
 
-            arguments
-                obj approx.odeint.StrangIntegrator
-                options.L = {} % Linear operators (cell array)
-                options.F = {} % Nonlinear operators (cell array)
-                options.S = {} % Source terms (cell array)
-                options.M = {} % Mass operators (cell array)
-                options.P = {} % Coupling operators (cell array)
-                options.A = {} % Constraint matrices (cell array)
-                options.B = {} % Constraint coupling matrices (cell array)
-                options.C = {} % Constraint source terms (cell array)
-                options.fn = {} % Custom step functions for each factor (cell array)
-            end
-
-            n = obj.NFactors;
+            n = obj.nFactors;
             U0 = obj.getFactor(1).U0{1};
-            dt = obj.Timeline.StepSize;
+            dt = obj.timeline.dt;
 
             %< Apply forward half-steps: A1_dt/2, A2_dt/2, ..., A_{n-1}_dt/2
             for i = 1:(n-1)
-                L = obj.getEntry(i, options.L);
-                F = obj.getEntry(i, options.F);
-                S = obj.getEntry(i, options.S);
-                M = obj.getEntry(i, options.M);
-                P = obj.getEntry(i, options.P);
-                A = obj.getEntry(i, options.A);
-                B = obj.getEntry(i, options.B);
-                C = obj.getEntry(i, options.C);
-                fn = obj.getEntry(i, options.fn);
-                U = obj.factorStep(i, dt = dt / 2, L = L, F = F, ...
-                    S = S, M = M, P = P, ...
-                    A = A, B = B, C = C, fn = fn);
+                U = obj.applyFactorStep(i, dt/2, L{i}, F{i}, S{i}, M{i});
                 obj.getFactor(i+1).add(U);
             end
-
+            
             %< Apply middle full step: An_dt
-            L = obj.getEntry(n, options.L);
-            F = obj.getEntry(n, options.F);
-            S = obj.getEntry(n, options.S);
-            M = obj.getEntry(n, options.M);
-            P = obj.getEntry(n, options.P);
-            A = obj.getEntry(n, options.A);
-            B = obj.getEntry(n, options.B);
-            C = obj.getEntry(n, options.C);
-            fn = obj.getEntry(n, options.fn);
-            U = obj.factorStep(n, dt = dt, L = L, F = F, ...
-                S = S, M = M, P = P, ...
-                A = A, B = B, C = C, fn = fn);
+            U = obj.applyFactorStep(n, dt, L{n}, F{n}, S{n}, M{n});
             obj.getFactor(n-1).add(U);
-
+            
             %< Apply backward half-steps: A_{n-1}_dt/2, ..., A2_dt/2, A1_dt/2
             for i = (n-1):-1:1
-                L = obj.getEntry(i, options.L);
-                F = obj.getEntry(i, options.F);
-                S = obj.getEntry(i, options.S);
-                M = obj.getEntry(i, options.M);
-                P = obj.getEntry(i, options.P);
-                A = obj.getEntry(i, options.A);
-                B = obj.getEntry(i, options.B);
-                C = obj.getEntry(i, options.C);
-                fn = obj.getEntry(i, options.fn);
-                U = obj.factorStep(i, dt = dt / 2, L = L, F = F, ...
-                    S = S, M = M, P = P, ...
-                    A = A, B = B, C = C, fn = fn);
+                U = obj.applyFactorStep(i, dt/2, L{i}, F{i}, S{i}, M{i});
+                if i > 1
+                    obj.getFactor(i-1).add(U);
+                end
+            end
+
+            %< Recovery
+            for i = 1:n
+                obj.getFactor(i).add(U0);
+            end
+        end
+
+        function U = stepA(obj, L, F, S, M, P, A, B, C)
+            n = obj.nFactors;
+            U0 = obj.getFactor(1).U0{1};
+            dt = obj.timeline.dt;
+
+            %< Apply forward half-steps: A1_dt/2, A2_dt/2, ..., A_{n-1}_dt/2
+            for i = 1:(n-1)
+                U = obj.applyFactorStepA(i, dt/2, L{i}, F{i}, S{i}, M{i}, P{i}, A{i}, B{i}, C{i});
+                obj.getFactor(i+1).add(U);
+            end
+            
+            %< Apply middle full step: An_dt
+            U = obj.applyFactorStepA(n, dt, L{n}, F{n}, S{n}, M{n}, P{n}, A{n}, B{n}, C{n});
+            obj.getFactor(n-1).add(U);
+            
+            %< Apply backward half-steps: A_{n-1}_dt/2, ..., A2_dt/2, A1_dt/2
+            for i = (n-1):-1:1
+                U = obj.applyFactorStepA(i, dt/2, L{i}, F{i}, S{i}, M{i}, P{i}, A{i}, B{i}, C{i});
                 if i > 1
                     obj.getFactor(i-1).add(U);
                 end

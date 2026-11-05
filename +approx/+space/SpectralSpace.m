@@ -13,18 +13,28 @@ classdef SpectralSpace < handle
     %   where \f$\phi_i\f$ are basis functions from the element and
     %   \f$c_i\f$ are coefficients.
     %
+    % Examples:
+    %   % Create spectral space from element
+    %   element = approx.element.C0Element(geometry, approximator, integrator);
+    %   space = approx.space.SpectralSpace(element);
+    %   
+    %   % Evaluate function at points
+    %   points = [0, 0.5, 1.0; 0, 0, 0];  % 2D points
+    %   coeffs = [1; 0.5; -0.2];          % Coefficients
+    %   values = space.evaluate(points, coeffs);
+    %
     % See also:
-    %   approx.element.Element
-    
+    %   approx.space.DirectSum, approx.element.Element
+
     properties
-        Element % Element object defining the function space
+        element % Element object defining the function space
     end
-    
+
     properties (Dependent)
-        NDofs % Number of degrees of freedom (integer)
-        NDims % Number of spatial dimensions (integer)
+        nDofs % Number of degrees of freedom (integer)
+        nDims % Number of spatial dimensions (integer)
     end
-    
+
     methods
         function obj = SpectralSpace(element)
             % SPECTRALSPACE Constructor for SpectralSpace.
@@ -32,54 +42,43 @@ classdef SpectralSpace < handle
             %   obj = SpectralSpace(element) creates a spectral space
             %   using the specified element as the basis for the
             %   finite-dimensional function space.
-
-            arguments
-                element approx.element.Element
-            end
+            %
+            % Inputs:
+            %   element - Element object
+            %
+            % Outputs:
+            %   obj - Constructed SpectralSpace object
             
-            obj.Element = element;
+            obj.element = element;
         end
-        
-        function n = get.NDofs(obj)
+
+        function n = get.nDofs(obj)
             % GET.NDOFS Get the number of degrees of freedom.
-            
-            n = obj.Element.NDofs;
+
+            n = obj.element.nDofs;
         end
-        
-        function n = get.NDims(obj)
+
+        function n = get.nDims(obj)
             % GET.NDIMS Get the number of spatial dimensions.
-            
-            n = obj.Element.NDims;
+
+            n = obj.element.nDims;
         end
-        
-        function Y = eval(obj, X, C)
-            % EVAL Evaluate functions in the spectral space.
+
+        function Y = evaluate(obj, X, C)
+            % EVALUATE Evaluate functions in the spectral space.
             %
-            %   Y = eval(obj, X, C) evaluates functions with
+            %   Y = evaluate(obj, X, C) evaluates functions with
             %   coefficient matrix @a C at evaluation points @a X.
-
-            arguments
-                obj approx.space.SpectralSpace
-                X {mustBeNumeric}
-                C {mustBeNumeric}
-            end
-            
-            Y = obj.Element.eval(X, C);
-        end
-
-        function U = project(obj, C)
-            % PROJECT Project coefficients onto the spectral space.
             %
-            %   U = project(obj, C) projects the coefficient matrix @a C
-            %   onto the spectral space defined by the element.
-
-            arguments
-                obj approx.space.SpectralSpace
-                C {mustBeNumeric}
-            end
-
-            U = obj.Element.project(C);
+            % Inputs:
+            %   obj - The SpectralSpace object
+            %   X - Evaluation points (nDims x nPoints matrix)
+            %   C - Coefficient matrix (nDofs x nComponents matrix)
+            %
+            % Outputs:
+            %   Y - Function values at evaluation points (nComponents x nPoints matrix)
+            
+            Y = obj.element.evaluate(X, C);
         end
-    
     end
 end

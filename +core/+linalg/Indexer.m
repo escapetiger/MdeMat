@@ -9,23 +9,26 @@ classdef Indexer < handle
     %   core.linalg.MultiIndexer, core.linalg.CachedMultiIndexer
 
     properties
-        Style % Storage ordering style: 'F' (column-major) or 'C' (row-major)
+        style % Storage ordering style: 'F' (column-major) or 'C' (row-major)
     end
 
     methods
-        function obj = Indexer(options)
-            % INDEXER Construct an instance of Indexer.
+        function obj = Indexer(style)
+            % INDEXER Constructor for indexer.
             %
             %   obj = Indexer() creates a Indexer with @a style = 'F'.
             %
-            %   obj = Indexer(Name=Value) creates a Indexer with the
-            %   specified options.
+            %   obj = Indexer(style) creates a Indexer with the specified
+            %   @a style.
+            %
+            % Inputs:
+            %   style - Storage ordering style (optional, default: 'F')
+            %
+            % Outputs:
+            %   obj - Constructed Indexer object
 
-            arguments
-                options.style{mustBeTextScalar} = 'F'
-            end
-
-            obj.Style = options.style;
+            if nargin < 1, style = 'F'; end
+            obj.style = style;
         end
     end
 end

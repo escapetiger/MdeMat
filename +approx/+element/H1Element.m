@@ -1,30 +1,41 @@
-classdef H1Element < approx.element.L2Element
+classdef H1Element < approx.element.Element
     % H1ELEMENT \f$H^1\f$ Sobolev space element.
     %
     %   H1Element implements an \f$H^1\f$ element function suitable for
     %   problems requiring both function values and first derivatives.
-    %   This class extends the L2Element class by adding first-order
-    %   derivative computation capabilities at integration points.
+    %   This class extends the base Element class by adding volume 
+    %   integration capabilities through precomputed basis function values
+    %   and first-order derivatives at integration points.
     %
     % See also:
-    %   approx.integrate.Integrator, approx.element.L2Element
+    %   approx.integrate.IntegrationData, approx.element.Element
+
+    properties (Constant)
+        TYPE = 'h1' % Element type identifier
+    end
+
+    properties
+        volume % Volume integration data (IntegrationData)
+    end
 
     methods
         function obj = H1Element(geometry, approximator, integrator)
             % H1ELEMENT Constructor for H1Element.
             %
-            %   obj = H1Element(geometry, approximator, integrator) creates an
-            %   H1 element with the specified @a geometry, @a approximator, and
-            %   @a integrator for volume computations.
+            %   obj = H1Element(geometry, approximator, integrator) creates a
+            %   H1 element with the specified geometry, approximator, and
+            %   integrator for volume computations.
+            %
+            % Inputs:
+            %   geometry - Geometry object
+            %   approximator - approximator object
+            %   integrator - Integrator object
+            %
+            % Outputs:
+            %   obj - Constructed H1Element object
 
-            arguments
-                geometry core.geometry.Geometry
-                approximator approx.linear.LinearApproximator
-                integrator approx.integrate.Integrator
-            end
-
-            obj@approx.element.L2Element(geometry, approximator, integrator);
-            obj.Volume = obj.Volume.setPartials(approximator.Basis, 1);
+            obj@approx.element.Element(geometry, approximator);
+            obj.volume = approx.integrate.IntegrationData(integrator, 1, approximator.basis);
         end
     end
 end

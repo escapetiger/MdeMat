@@ -30,39 +30,54 @@ classdef LinearApproximator < handle
     %   \f]
     %
     %   where \f$\phi_j\f$ are linear functionals.
-    
+
     properties (Access = public)
-        Basis  % Basis functions that span the approximation space
-        Mass   % Mass matrix for projection operations (square matrix)
-        Design % Design matrix for fitting operations (matrix)
+        basis  % Basis functions that span the approximation space
+        mass   % Mass matrix for projection operations (square matrix)
+        design % Design matrix for fitting operations (matrix)
     end
-    
+
     properties (Dependent)
-        NDofs % Number of degrees of freedom (scalar)
+        nDofs % Number of degrees of freedom (scalar)
     end
-    
+
     methods
         function obj = LinearApproximator(basis)
             % LINEARAPPROXIMATOR Constructor for LinearApproximator.
             %
             %   obj = LinearApproximator(basis) creates a new
-            %   LinearApproximator object with the specified @a basis
+            %   LinearApproximator object with the specified basis
             %   functions. The mass and design operators are initialized as
             %   empty and must be set by calling setMass() and setDesign().
+            %
+            % Inputs:
+            %   basis - Basis functions (object)
+            %
+            % Outputs:
+            %   obj - The constructed LinearApproximator object
             
-            arguments
-                basis {mustBeNonempty}
-            end
+            core.except.assert(~isempty(basis), 'InvalidInput', ...
+                'Basis functions cannot be empty.');
             
-            obj.Basis = basis;
-            obj.Mass = [];
-            obj.Design = [];
-        end
-        
-        function n = get.NDofs(obj)
-            % GET.NDOFS Returns the number of degrees of freedom.
-            
-            n = obj.Basis.NCodims;
+            obj.basis = basis;
+            obj.mass = [];
+            obj.design = [];
+        end        
+
+        function n = get.nDofs(obj)
+            % GET.NDOFS Get the number of degrees of freedom.
+            %
+            %   n = get.nDofs(obj) returns the number of degrees of freedom
+            %   in the linear approximation space, which equals the number of
+            %   basis function codimensions.
+            %
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %
+            % Outputs:
+            %   n - Number of degrees of freedom (positive integer)
+
+            n = obj.basis.nCodims;
         end
         
         function obj = setMass(obj, X, w)
@@ -71,108 +86,139 @@ classdef LinearApproximator < handle
             %   obj = setMass(obj, X, w) constructs the mass matrix using
             %   integration points and weights. The (i,j) entry of the mass
             %   matrix is \f$\langle p_i, p_j\rangle\f$ where the inner
-            %   product is defined by the weighted integration:
+            %   product is defined by the weighted integration: 
+            %   \f$\langle f,g\rangle = \sum_k w_k f(x_k) g(x_k)\f$.
             %
-            %   \f[
-            %       \langle f,g\rangle = \sum_k w_k f(x_k) g(x_k).
-            %   \f]
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %   X - Integration points (n x q matrix)
+            %   w - Integration weights (1 x q vector or q x 1 vector)
+            %
+            % Outputs:
+            %   obj - The updated LinearApproximator object
             
-            arguments
-                obj approx.linear.LinearApproximator
-                X {mustBeNumeric, mustBeNonempty}
-                w (1, :) {mustBeNumeric, mustBeNonempty}
-            end
-            
-            nd = obj.Basis.NDims;
+            n = obj.basis.nDims;
             X = reshape(X, size(X, 1), []);
             
-            core.except.assert(size(X, 1) >= nd, 'InvalidInput', ...
-                'Integration points must have at least %d rows.', nd);
+            core.except.assert(size(X, 1) >= n, 'InvalidInput', ...
+                'Integration points must have at least %d rows.', n);
             
-            X = X(1:nd, :);
+            X = X(1:n, :);
             w = w(:);
             
-            nq = length(w);
-            core.except.assert(size(X, 2) == nq, 'InvalidInput', ...
+            q = length(w);
+            core.except.assert(size(X, 2) == q, 'InvalidInput', ...
                 'Number of integration points (%d) must match number of weights (%d).', ...
-                size(X, 2), nq);
+                size(X, 2), q);
             
-            B = obj.Basis.eval(X);
+            core.except.assert(all(w >= 0), 'InvalidInput', ...
+                'Integration weights must be non-negative.');
+            
+            B = obj.basis.evaluate(X);
             W = diag(w);
             M = B * W * B.';
             M = core.linalg.zeroing(M);
             
-            obj.Mass = M;
+            obj.mass = M;
         end
         
-        function obj = setDesign(obj, varargin)
-            % SETDESIGN Set up the design operator for fitting.
-            
-            arguments
-                obj approx.linear.LinearApproximator
-            end
-            
-            arguments (Repeating)
-                varargin
-            end
-            
-            core.except.assert(0, 'NotImplemented', ...
-                'Method setDesign is not implemented by class j%s.', class(obj));
-        end
-        
-        function F = embed(obj, varargin)
-            % EMBED Embed data into the latent space.
-            
-            arguments
-                obj approx.linear.LinearApproximator
-            end
-            
-            arguments (Repeating)
-                varargin
-            end
-            
-            F = []; % Explicitly assign output to avoid unset variable error
-            core.except.assert(false, 'NotImplemented', ...
-                'Method embed is not implemented by class %s.', class(obj));
-        end
-        
-        function Y = eval(obj, X, C)
-            % EVAL Evaluate linear approximations at given points.
+        function Y = evaluate(obj, varargin)
+            % EVALUATE Evaluate linear approximations at given points.
             %
-            %   Y = eval(obj, X, C) evaluates functions with coefficient
-            %   matrix @a C at evaluation points @a X.
-            
-            arguments
-                obj approx.linear.LinearApproximator
-                X {mustBeNumeric, mustBeNonempty}
-                C {mustBeNumeric} = []
-            end
-            
-            X = reshape(X, size(X, 1), []);
-            C = reshape(C, size(C, 1), []);
-            B = obj.Basis.eval(X);
-            Y = C.' * B;
-        end
-        
-        function Y = diff(obj, X, C, order)
-            % DIFF Differentiate linear approximations at given points.
+            %   Y = evaluate(obj, Z) evaluates functions represented by
+            %   coefficients embedded in the augmented vector Z = [X; C]
+            %   at evaluation points X.
             %
-            %   Y = diff(obj, X, C, order) differentiates functions with
-            %   coefficient matrix @a C at evaluation points @a X.
+            %   Y = evaluate(obj, X, C) evaluates functions with
+            %   coefficient matrix C at evaluation points X.
+            %
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %   varargin - Variable input arguments:
+            %<     Z - Augmented matrix [X; C]
+            %<     X - Evaluation points (n x p matrix)
+            %<     C - Coefficient matrix (m x q matrix)
+            %
+            % Outputs:
+            %   Y - Function values (1 x p vector or q x p matrix)
             
-            arguments
-                obj approx.linear.LinearApproximator
-                X {mustBeNumeric, mustBeNonempty}
-                C {mustBeNumeric, mustBeNonempty}
-                order (1, :) {mustBeNumeric, mustBeNonempty}
+            switch length(varargin)
+                case 1
+                    n = obj.basis.nDims;
+                    Z = varargin{1};
+                    Z = reshape(Z, size(Z, 1), []);
+                    
+                    core.except.assert(size(Z, 1) > n, 'InvalidInput', ...
+                        'Input Z must have more rows than basis dimensions.');
+                    
+                    C = Z((n+1):end, :);
+                    X = Z(1:n, :);
+                    B = obj.basis.evaluate(X);
+                    Y = dot(B, C, 1);
+                    
+                case 2
+                    [X, C] = varargin{:};
+                    X = reshape(X, size(X, 1), []);
+                    C = reshape(C, size(C, 1), []);
+                    B = obj.basis.evaluate(X);
+                    Y = C.' * B;
+                    
+                otherwise
+                    core.except.assert(0, 'InvalidInput', ...
+                        'Invalid number of input arguments.');
             end
-            
-            X = reshape(X, size(X, 1), []);
-            C = reshape(C, size(C, 1), []);
-            B = obj.Basis.diff(X, order);
-            Y = C.' * B;
         end
         
+        function Y = differentiate(obj, varargin)
+            % DIFFERENTIATE Differentiate linear approximations at given
+            % points.
+            %
+            %   Y = differentiate(obj, Z, order) differentiates functions
+            %   represented by coefficients embedded in the augmented
+            %   vector Z = [X; C] at evaluation points X.
+            %
+            %   Y = differentiate(obj, X, C, order)  differentiates
+            %   functions with coefficient matrix C at evaluation points X.
+            %
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %   varargin - Variable input arguments:
+            %<     Z - Augmented matrix [X; C]
+            %<     X - Evaluation points (n x p matrix)
+            %<     C - Coefficient matrix (m x q matrix)
+            %<     order - Derivative order (n x 1 vector)
+            %
+            % Outputs:
+            %   Y - Function values (1 x p vector or q x p matrix)
+            
+            switch length(varargin)
+                case 2
+                    n = obj.basis.nDims;
+                    [Z, order] = varargin{:};
+                    Z = reshape(Z, size(Z, 1), []);
+                    
+                    core.except.assert(size(Z, 1) > n, 'InvalidInput', ...
+                        'Input Z must have more rows than basis dimensions.');
+                    
+                    C = Z((n+1):end, :);
+                    X = Z(1:n, :);
+                    B = obj.basis.differentiate(X, order);
+                    Y = dot(B, C, 1);
+                    
+                case 3
+                    [X, C, order] = varargin{:};
+                    X = reshape(X, size(X, 1), []);
+                    C = reshape(C, size(C, 1), []);
+                    B = obj.basis.differentiate(X, order);
+                    Y = C.' * B;
+                    
+                otherwise
+                    core.except.assert(0, 'InvalidInput', ...
+                        'Invalid number of input arguments.');
+            end
+        end
+
+
         function U = fit(obj, F)
             % FIT Fit data within the linear approximation space.
             %
@@ -180,21 +226,23 @@ classdef LinearApproximator < handle
             %   solving the fitting system \f$D*U = F\f$, where \f$D\f$ is
             %   the design matrix. Handles well-posed and overdetermined
             %   systems using least squares when necessary.
+            %
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %   F - Data in the latent space (m x ... array)
+            %
+            % Outputs:
+            %   U - Coefficients of the basis functions (m x ... array)
             
-            arguments
-                obj approx.linear.LinearApproximator
-                F {mustBeNumeric, mustBeNonempty}
-            end
-            
-            D = obj.Design;
+            D = obj.design;
             core.except.assert(~isempty(D), 'EmptyDesign', ...
                 'The design operator has not been set. Call setDesign() first.');
-            
+
             m = size(D, 1);
             core.except.assert(size(F, 1) == m, 'InvalidInput', ...
                 'Data dimension (%d) must match design operator rows (%d).', ...
                 size(F, 1), m);
-            
+                        
             s = size(F);
             F = reshape(F, m, []);
             
@@ -216,21 +264,23 @@ classdef LinearApproximator < handle
             %   U = project(obj, F) projects data from the latent space
             %   onto the function space by solving the projection system
             %   \f$ M*U = F \f$, where \f$M\f$ is the mass operator.
+            %
+            % Inputs:
+            %   obj - The LinearApproximator object
+            %   F - Data in the latent space (m x ... array)
+            %
+            % Outputs:
+            %   U - Coefficients of the basis functions (m x ... array)
             
-            arguments
-                obj approx.linear.LinearApproximator
-                F {mustBeNumeric, mustBeNonempty}
-            end
-            
-            M = obj.Mass;
+            M = obj.mass;
             core.except.assert(~isempty(M), 'EmptyMass', ...
                 'The mass operator has not been set. Call setMass() first.');
-            
+
             m = size(M, 1);
             core.except.assert(size(F, 1) == m, 'InvalidInput', ...
                 'Data dimension (%d) must match mass operator rows (%d).', ...
                 size(F, 1), m);
-            
+                        
             s = size(F);
             F = reshape(F, m, []);
             
@@ -251,13 +301,18 @@ classdef LinearApproximator < handle
         function TF = isWellPosed(A)
             % ISWELLPOSED Check if a matrix represents a well-posed system.
             %
-            %   TF = isWellPosed(A) returns true if the matrix @a A is
-            %   square (number of rows equals number of columns),
-            %   indicating a well-posed system with a unique solution.
+            %   TF = isWellPosed(A) returns true if the matrix A is square
+            %   (number of rows equals number of columns), indicating a
+            %   well-posed system with a unique solution.
+            %
+            % Inputs:
+            %   A - Matrix to check (numeric matrix)
+            %
+            % Outputs:
+            %   TF - True if system is well-posed (logical)
             
-            arguments
-                A {mustBeNumeric, mustBeNonempty}
-            end
+            core.except.assert(~isempty(A), 'EmptyMatrix', ...
+                'Matrix cannot be empty.');
             
             TF = size(A, 1) == size(A, 2);
         end
@@ -266,13 +321,27 @@ classdef LinearApproximator < handle
             % ISOVERDETERMINED Check if a matrix represents an
             % overdetermined system.
             %
-            %   TF = isOverdetermined(A) returns true if the matrix @a A
-            %   has more rows than columns, indicating an overdetermined
-            %   system that requires least squares solution.
+            %   TF = isOverdetermined(A) returns true if the matrix A has
+            %   more rows than columns, indicating an overdetermined system
+            %   that requires least squares solution.
+            %
+            % Inputs:
+            %   A - Matrix to check (numeric matrix)
+            %
+            % Outputs:
+            %   TF - True if system is overdetermined (logical
+            %
+            % Examples:
+            %   % Check overdetermined system
+            %   A = randn(10, 5);  % More equations than unknowns
+            %   isOver = LinearApproximator.isOverdetermined(A);  % true
+            %   
+            %   % Check square system
+            %   B = randn(5, 5);
+            %   isOver = LinearApproximator.isOverdetermined(B);  % false
             
-            arguments
-                A {mustBeNumeric, mustBeNonempty}
-            end
+            core.except.assert(~isempty(A), 'EmptyMatrix', ...
+                'Matrix cannot be empty.');
             
             TF = size(A, 1) > size(A, 2);
         end
@@ -281,15 +350,28 @@ classdef LinearApproximator < handle
             % ISUNDERDETERMINED Check if a matrix represents an
             % underdetermined system.
             %
-            %   TF = isUnderdetermined(A) returns true if the matrix @a A
-            %   has fewer rows than columns, indicating an underdetermined
+            %   TF = isUnderdetermined(A) returns true if the matrix A has
+            %   fewer rows than columns, indicating an underdetermined
             %   system with multiple solutions.
+            %
+            % Inputs:
+            %   A - Matrix to check (numeric matrix)
+            %
+            % Outputs:
+            %   TF - True if system is underdetermined (logical)
             
-            arguments
-                A {mustBeNumeric, mustBeNonempty}
-            end
+            core.except.assert(~isempty(A), 'EmptyMatrix', ...
+                'Matrix cannot be empty.');
             
             TF = size(A, 1) < size(A, 2);
         end
+    end
+    
+    methods (Abstract)
+        % SETDESIGN Set up the design operator for fitting.
+        obj = setDesign(obj, varargin)
+
+        % EMBED Embed data into the latent space.
+        F = embed(obj, varargin)
     end
 end

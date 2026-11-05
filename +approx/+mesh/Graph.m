@@ -6,6 +6,21 @@ classdef Graph < handle
     %   serves as a foundation for more complex graph-based algorithms and
     %   mesh representations in computational applications.
     %
+    % Examples:
+    %   % Create empty graph
+    %   graph = Graph();
+    %   
+    %   % Create graph with vertices and edges
+    %   vertices = [0, 0; 1, 0; 1, 1; 0, 1];  % 2D square
+    %   edges = [1, 2; 2, 3; 3, 4; 4, 1];     % Square connectivity
+    %   graph = Graph(vertices, edges);
+    %   
+    %   % Query graph properties
+    %   nVerts = graph.nVertices;
+    %   nEdges = graph.nEdges;
+    %   dims = graph.nDims;
+    %
+    % Notes:
     %   Vertices are stored as an nVertices × nDims matrix where each row
     %   represents a vertex. Edges are stored as an nEdges × 2 matrix where
     %   each row contains indices of connected vertices.
@@ -14,14 +29,14 @@ classdef Graph < handle
     %   approx.mesh.SeparableGraph, approx.mesh.Grid
     
     properties (Access = public)
-        Vertices  % Matrix of vertex coordinates (nVertices × nDims)
-        Edges     % Matrix of edge connections (nEdges × 2)
+        vertices  % Matrix of vertex coordinates (nVertices × nDims)
+        edges     % Matrix of edge connections (nEdges × 2)
     end
 
     properties (Dependent)
-        NDims     % Number of spatial dimensions
-        NVertices % Number of vertices in the graph
-        NEdges    % Number of edges in the graph
+        nDims     % Number of spatial dimensions
+        nVertices % Number of vertices in the graph
+        nEdges    % Number of edges in the graph
     end
     
     methods
@@ -32,12 +47,17 @@ classdef Graph < handle
             %   or edges.
             %
             %   obj = Graph(vertices, edges) creates a graph with specified
-            %   @a vertices and @a edges.
-
-            arguments
-                vertices {mustBeNumeric} = []
-                edges {mustBeNumeric} = []
-            end
+            %   vertices and edges.
+            %
+            % Inputs:
+            %   vertices - Matrix where each row represents a vertex (optional)
+            %   edges - Matrix where each row represents an edge (optional)
+            %
+            % Outputs:
+            %   obj - Constructed Graph object
+            
+            if nargin < 1, vertices = []; end
+            if nargin < 2, edges = []; end
             
             obj.setVertices(vertices);
             obj.setEdges(edges);
@@ -47,58 +67,65 @@ classdef Graph < handle
             % SETVERTICES Set the vertex coordinates.
             %
             %   obj = setVertices(obj, vertices) updates the graph vertices
-            %   with the specified coordinate matrix @a vertices.
+            %   with the specified coordinate matrix.
+            %
+            % Inputs:
+            %   obj - The Graph object
+            %   vertices - Matrix where each row represents a vertex coordinate
+            %
+            % Outputs:
+            %   obj - The Graph object
 
-            arguments
-                obj approx.mesh.Graph
-                vertices {mustBeNumeric}
-            end
+            core.except.assert(~isempty(vertices) && ismatrix(vertices), ...
+                'InvalidVertices', 'Vertices must be a numeric matrix.');
 
-            obj.Vertices = vertices;
+            obj.vertices = vertices;
         end
 
         function obj = setEdges(obj, edges)
             % SETEDGES Set the edge connectivity.
             %
             %   obj = setEdges(obj, edges) updates the graph edges with the
-            %   specified connectivity matrix @a edges. Validates that edge 
-            %   indices reference existing vertices.
-
-            arguments
-                obj approx.mesh.Graph
-                edges {mustBeNumeric}
-            end
+            %   specified connectivity matrix. Validates that edge indices
+            %   reference existing vertices.
+            %
+            % Inputs:
+            %   obj - The Graph object
+            %   edges- Matrix where each row contains two vertex indices
+            %
+            % Outputs:
+            %   obj - The Graph object
 
             if ~isempty(edges)
                 core.except.assert(ismatrix(edges) && size(edges, 2) == 2, ...
                     'InvalidEdges', ...
                     'Edges must be a numeric matrix with 2 columns');
                 
-                n = size(obj.Vertices, 1);
+                n = size(obj.vertices, 1);
                 core.except.assert(all(edges(:) <= n & edges(:) >= 1), ...
                     'InvalidEdgeIndices', ...
                     'Edge indices must reference valid vertices');
             end
 
-            obj.Edges = edges;
+            obj.edges = edges;
         end
 
-        function n = get.NDims(obj)
+        function n = get.nDims(obj)
             % GET.NDIMS Get the number of spatial dimensions.
 
-            n = size(obj.Vertices, 2);
+            n = size(obj.vertices, 2);
         end
 
-        function n = get.NVertices(obj)
+        function n = get.nVertices(obj)
             % GET.NVERTICES Get the number of vertices.
 
-            n = size(obj.Vertices, 1);
+            n = size(obj.vertices, 1);
         end
 
-        function n = get.NEdges(obj)
+        function n = get.nEdges(obj)
             % GET.NEDGES Get the number of edges.
 
-            n = size(obj.Edges, 1);
+            n = size(obj.edges, 1);
         end
     end
 end

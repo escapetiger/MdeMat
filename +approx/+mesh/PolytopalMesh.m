@@ -27,17 +27,17 @@ classdef PolytopalMesh < approx.mesh.Mesh
     %   approx.mesh.Mesh, approx.mesh.Graph, approx.mesh.PolytopalMeshPlotter
 
     properties (Access = public)
-        Faces % Face connectivity (NFaces × NVerticesPerFace)
-        Boundary % Boundary face indices (NBoundaryFaces × 1)
-        FaceToElementTable % Face-element connectivity (sparse NFaces × NElements)
-        VertexToVertexTables % Periodic vertex mappings (cell of sparse NVertices × NVertices)
-        FaceToFaceTable % Periodic face mapping (sparse NFaces × NFaces)
+        faces % Face connectivity (nFaces × nVerticesPerFace)
+        boundary % Boundary face indices (nBoundaryFaces × 1)
+        faceToElementTable % Face-element connectivity (sparse nFaces × nElements)
+        vertexToVertexTables % Periodic vertex mappings (cell of sparse nVertices × nVertices)
+        faceToFaceTable % Periodic face mapping (sparse nFaces × nFaces)
     end
 
     properties (Dependent)
-        NFaces % Number of faces in the mesh (integer)
-        NVerticesPerFace % Number of vertices per face (integer)
-        NBoundaryFaces % Number of boundary faces (integer)
+        nFaces % Number of faces in the mesh (integer)
+        nVerticesPerFace % Number of vertices per face (integer)
+        nBoundaryFaces % Number of boundary faces (integer)
     end
 
     methods
@@ -48,58 +48,62 @@ classdef PolytopalMesh < approx.mesh.Mesh
             %   vertex coordinates and element connectivity, automatically
             %   generating face topology and ensuring proper element
             %   orientation.
-
-            arguments
-                vertices {mustBeNumeric} = []
-                elements {mustBeNumeric} = []
-            end
+            %
+            % Inputs:
+            %   vertices - Vertex coordinate matrix (nVertices × nDims)
+            %   elements - Element connectivity matrix (nElements × nVerticesPerElement)
+            %
+            % Outputs:
+            %   obj - Constructed PolytopalMesh object
 
             obj@approx.mesh.Mesh(vertices, elements);
             obj.forcePositiveOrientation();
             obj.setFaces();
-            obj.VertexToVertexTables = [];
-            obj.FaceToFaceTable = [];
+            obj.vertexToVertexTables = [];
+            obj.faceToFaceTable = [];
         end
 
-        function n = get.NFaces(obj)
+        function n = get.nFaces(obj)
             % GET.NFACES Get the number of faces in the mesh.
 
-            n = size(obj.Faces, 1);
+            n = size(obj.faces, 1);
         end
 
-        function n = get.NVerticesPerFace(obj)
+        function n = get.nVerticesPerFace(obj)
             % GET.NVERTICESPERFACE Get the number of vertices per face.
 
-            n = size(obj.Faces, 2);
+            n = size(obj.faces, 2);
         end
 
-        function n = get.NBoundaryFaces(obj)
+        function n = get.nBoundaryFaces(obj)
             % GET.NBOUNDARYFACES Get the number of boundary faces.
 
-            n = length(obj.Boundary);
+            n = length(obj.boundary);
         end
 
-        function V = findElementVertices(obj, EI)
+        function V = findElementVertices(obj, IE)
             % FINDELEMENTVERTICES Extract vertex coordinates for specified
             % elements.
             %
             %   V = findElementVertices(obj) returns vertex coordinates for
             %   all elements in the mesh.
             %
-            %   V = findElementVertices(obj, EI) returns vertex coordinates
+            %   V = findElementVertices(obj, IE) returns vertex coordinates
             %   only for the specified elements.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %   IE - Element linear indices (optional, vector)
+            %
+            % Outputs:
+            %   V - Element vertex coordinates (nDims × nVerticesPerElement × nElements)
 
-            arguments
-                obj approx.mesh.PolytopalMesh
-                EI {mustBeInteger} = []
+            if nargin < 2 || isempty(IE)
+                IE = 1:obj.nElements;
             end
-
-            if isempty(EI)
-                EI = 1:obj.NElements;
-            end
-            E = obj.Elements(EI, :).';
-            V = obj.Vertices(E(:), :);
-            V = reshape(V, obj.NVerticesPerElement, [], obj.NDims);
+            E = obj.elements(IE, :).';
+            V = obj.vertices(E(:), :);
+            V = reshape(V, obj.nVerticesPerElement, [], obj.nDims);
             V = permute(V, [3, 1, 2]);
         end
 
@@ -112,11 +116,17 @@ classdef PolytopalMesh < approx.mesh.Mesh
             %
             %   obj = setPeriodic(obj, bbox, tol) uses the specified
             %   tolerance for identifying equivalent vertices.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %   shift - Periodic shift vectors (nShifts × nDims)
+            %   tol - Numerical tolerance(optional, default: 1e-12)
+            %
+            % Outputs:
+            %   obj - The PolytopalMesh object
 
-            arguments
-                obj approx.mesh.PolytopalMesh
-                bbox {mustBeNumeric}
-                tol {mustBeNumeric} = 1e-12
+            if nargin < 3 || isempty(tol)
+                tol = 1e-12;
             end
 
             bbox = reshape(bbox, 2, []);
@@ -132,124 +142,135 @@ classdef PolytopalMesh < approx.mesh.Mesh
             obj.setFaceToFaceTable();
         end
 
-        function IEI = getInternalElements(obj)
+        function IE = getInternalElements(obj)
             % GETINTERIORELEMENTS Get linear indices of internal elements.
             %
-            %   IEI = getInternalElements(obj) computes the linear indices
+            %   IE = getInternalElements(obj) computes the linear indices
             %   of elements that do not touch the mesh boundary.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %
+            % Outputs:
+            %   IE - Linear indices of internal elements (vector)
 
-            arguments   
-                obj approx.mesh.PolytopalMesh
-            end
-
-            mask = false(obj.NFaces, 1);
-            mask(obj.Boundary) = true;
-            IEI = find(~any(obj.FaceToElementTable(mask, :), 1));
+            mask = false(obj.nFaces, 1);
+            mask(obj.boundary) = true;
+            IE = find(~any(obj.faceToElementTable(mask, :), 1));
         end
 
-        function BEI = getBoundaryElements(obj, LFI)
+        function IE = getBoundaryElements(obj, IFE)
             % GETBOUNDARYELEMENTS Get linear indices of boundary elements.
             %
-            %   BEI = getBoundaryElements(obj) computes the linear indices
+            %   IE = getBoundaryElements(obj) computes the linear indices
             %   of all elements that have at least one face on the
             %   boundary.
             %
-            %   BEI = getBoundaryElements(obj, LFI) computes the linear
-            %   indices of elements whose LFI-th face is on the boundary.
+            %   IE = getBoundaryElements(obj, IFE) computes the linear
+            %   indices of elements whose IFE-th face is on the boundary.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %   IFE - Local face index (optional, scalar)
+            %
+            % Outputs:
+            %   IE - Linear indices of boundary elements (vector)
 
-            arguments   
-                obj approx.mesh.PolytopalMesh
-                LFI {mustBeInteger, mustBePositive} = []
-            end
-
-            if isempty(LFI)
-                BEI = find(any(obj.FaceToElementTable(obj.Boundary, :), 1));
+            if nargin < 2 || isempty(IFE)
+                IE = find(any(obj.faceToElementTable(obj.boundary, :), 1));
                 return;
             end
 
-            E = obj.Elements.';
-            T = nchoosek(1:obj.NVerticesPerElement, obj.NVerticesPerFace).';
-            F = reshape(E(T(:, LFI), :), obj.NVerticesPerFace, []);
+            E = obj.elements.';
+            T = nchoosek(1:obj.nVerticesPerElement, obj.nVerticesPerFace).';
+            F = reshape(E(T(:, IFE), :), obj.nVerticesPerFace, []);
             F = sort(F, 1).';
-            [~, I] = ismember(F, obj.Faces, 'rows');
-            BEI = find(ismember(I, obj.Boundary));
+            [~, I] = ismember(F, obj.faces, 'rows');
+            IE = find(ismember(I, obj.boundary));
         end
 
-        function IEI = findInternalElements(obj, EI, LFI)
+        function JE = findInternalElements(obj, IE, IFE)
             % FINDINTERIORELEMENTS Find internal elements across faces.
             %
-            %   IEI = findInternalElements(obj, EI, LFI) finds elements
-            %   whose LFI-th face is not on the boundary within the
-            %   specified elements @a EI.
+            %   JE = findInternalElements(obj, IE, IFE) finds elements
+            %   whose IFE-th face is not on the boundary within the
+            %   specified elements @a IE.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IE - Linear indices of primary elements (vector)
+            %   IFE - Local face index (1 to 2×nDims)
+            %
+            % Outputs:
+            %   JE - Linear indices of internal elements (vector)
 
-            arguments   
-                obj approx.mesh.PolytopalMesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
-            end
-
-            E = obj.Elements(EI, :).';
-            T = nchoosek(1:obj.NVerticesPerElement, obj.NVerticesPerFace).';
-            F = reshape(E(T(:, LFI), :), obj.NVerticesPerFace, []);
+            E = obj.elements(IE, :).';
+            T = nchoosek(1:obj.nVerticesPerElement, obj.nVerticesPerFace).';
+            F = reshape(E(T(:, IFE), :), obj.nVerticesPerFace, []);
             F = sort(F, 1).';
-            [~, I] = ismember(F, obj.Faces, 'rows');
-            IEI = find(~ismember(I, obj.Boundary));
+            [~, I] = ismember(F, obj.faces, 'rows');
+            JE = find(~ismember(I, obj.boundary));
         end
 
-        function BEI = findBoundaryElements(obj, EI, LFI)
+        function JE = findBoundaryElements(obj, IE, IFE)
             % FINDBOUNDARYELEMENTS Find boundary elements across faces.
             %
-            %   BEI = findBoundaryElements(obj, EI, LFI) finds elements
-            %   whose LFI-th face is on the boundary within the specified
-            %   elements @a EI.
+            %   JE = findBoundaryElements(obj, IE, IFE) finds elements
+            %   whose IFE-th face is on the boundary within the specified
+            %   elements @a IE.
+            %
+            % Inputs:
+            %   obj - The Grid object
+            %   IE - Linear indices of primary elements (vector)
+            %   IFE - Local face index (1 to 2×nDims)
+            %
+            % Outputs:
+            %   JE - Linear indices of boundary elements (vector)
 
-            arguments   
-                obj approx.mesh.PolytopalMesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
-            end
-
-            E = obj.Elements(EI, :).';
-            T = nchoosek(1:obj.NVerticesPerElement, obj.NVerticesPerFace).';
-            F = reshape(E(T(:, LFI), :), obj.NVerticesPerFace, []);
+            E = obj.elements(IE, :).';
+            T = nchoosek(1:obj.nVerticesPerElement, obj.nVerticesPerFace).';
+            F = reshape(E(T(:, IFE), :), obj.nVerticesPerFace, []);
             F = sort(F, 1).';
-            [~, I] = ismember(F, obj.Faces, 'rows');
-            BEI = find(ismember(I, obj.Boundary));
+            [~, I] = ismember(F, obj.faces, 'rows');
+            JE = find(ismember(I, obj.boundary));
         end
 
-        function [NEI, NLFI] = findNeighborElements(obj, EI, LFI, BC)
+        function [JE, JFE] = findNeighborElements(obj, IE, IFE, BC)
             % FINDNEIGHBORELEMENTS Find neighboring elements across faces.
             %
-            %   [NEI, NLFI] = findNeighborElements(obj, EI, LFI, BC) computes
-            %   the linear indices of neighbor elements sharing the LFI-th
-            %   face of prime elements EI, with the specified boundary
+            %   [JE, JFE] = findNeighborElements(obj, IE, IFE, BC) computes
+            %   the linear indices of neighbor elements sharing the IFE-th
+            %   face of prime elements IE, with the specified boundary
             %   condition treatment.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %   IE - Linear indices of prime elements (vector)
+            %   IFE - Local face index of prime elements (scalar)
+            %   BC - Boundary condition type ('periodic' or 'dirichlet')
+            %
+            % Outputs:
+            %   JE - Linear indices of neighbor elements (vector)
+            %   JFE - Local face indices of neighbor elements (vector)
 
-            arguments   
-                obj approx.mesh.PolytopalMesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
-                BC {mustBeMember(BC, {'', 'periodic', 'dirichlet'})} = ''
-            end
-
-            E = obj.Elements.';
-            T = nchoosek(1:obj.NVerticesPerElement, obj.NVerticesPerFace).';
-            F = E(T(:, LFI), EI);
+            E = obj.elements.';
+            T = nchoosek(1:obj.nVerticesPerElement, obj.nVerticesPerFace).';
+            F = E(T(:, IFE), IE);
             F = sort(F, 1).';
-            [~, I] = ismember(F, obj.Faces, 'rows');
+            [~, I] = ismember(F, obj.faces, 'rows');
 
             switch lower(BC)
                 case 'periodic'
-                    P = any(obj.FaceToFaceTable(I, :), 2);
-                    I(P) = find(obj.FaceToFaceTable(I(P), :), 1, 'first');
+                    P = any(obj.faceToFaceTable(I, :), 2);
+                    I(P) = find(obj.faceToFaceTable(I(P), :), 1, 'first');
                 case 'dirichlet'
-                    I = setdiff(I, obj.Boundary);
+                    I = setdiff(I, obj.boundary);
             end
 
-            R = obj.FaceToElementTable(I, :);
-            R(:, EI) = 0;
-            [NLFI, NEI] = max(R, [], 2);
-            NEI(NLFI == 0) = 0;
+            R = obj.faceToElementTable(I, :);
+            R(:, IE) = 0;
+            [JFE, JE] = max(R, [], 2);
+            JE(JFE == 0) = 0;
         end
     
         function v = computeUniqueDirection(obj)
@@ -258,24 +279,26 @@ classdef PolytopalMesh < approx.mesh.Mesh
             %   v = computeUniqueDirection(obj) computes a unique unit
             %   direction vector to define the "plus" and "minus" side of a
             %   face.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %
+            % Outputs:
+            %   v - Direction vector (nDims × 1)
 
-            arguments   
-                obj approx.mesh.Mesh
-            end
-
-            nd = obj.NDims;
-            if nd == 1
+            d = obj.nDims;
+            if d == 1
                 v = 1;
                 return;
             end
 
-            outNormal = obj.computeAllOutwardNormals();
+            outN = obj.computeAllOuterNormals();
             
             while true
-                v = rand(nd,1) + 0.1; 
+                v = rand(d,1) + 0.1; 
                 u = v / norm(v);
             
-                dots = abs(outNormal.' * u);  
+                dots = abs(outN.' * u);  
                 if all(dots < 1 - 1e-12)
                     return;
                 end
@@ -294,25 +317,35 @@ classdef PolytopalMesh < approx.mesh.Mesh
     methods (Access = private)
         function obj = setVertexToVertexTables(obj, shift, tol)
             % SETVERTEXTOVERTEXTABLES Build vertex-to-vertex mapping table.
+            %
+            %   obj = setVertexToVertexTables(obj, shift, tol) constructs a
+            %   sparse matrix identifying vertices that are geometrically
+            %   equivalent under the specified periodic shifts.
+            %
+            % Inputs:
+            %   obj - The PolytopalMesh object
+            %   shift - Periodic shift vectors (nShifts × nDims)
+            %   tol - Geometric tolerance for vertex matching
+            %
+            % Outputs:
+            %   obj - The PolytopalMesh object with vertex mapping table
 
-            n = obj.NVertices;
-            V = obj.Vertices;
+            n = obj.nVertices;
+            V = obj.vertices;
 
-            obj.VertexToVertexTables = cell(1, size(shift, 1));
+            obj.vertexToVertexTables = cell(1, size(shift, 1));
             for k = 1:size(shift, 1)
                 D = pdist2(V, V-shift(k, :));
                 [I, J] = find(D < tol);
                 Tk = sparse(I, J, 1, n, n);
-                obj.VertexToVertexTables{k} = spones(Tk);
+                obj.vertexToVertexTables{k} = spones(Tk);
             end
         end
 
         function obj = setFaceToFaceTable(obj)
-            % SETFACETOFACETABLES Build face-to-face mapping table.
-            
-            F = obj.Faces; % nF × m (m = NVerticesPerFace)
-            nF = obj.NFaces;
-            m = obj.NVerticesPerFace;
+            F = obj.faces; % nF × m (m = nVerticesPerFace)
+            nF = obj.nFaces;
+            m = obj.nVerticesPerFace;
 
             %< Canonical representation of existing faces
             sortedFaces = sort(F, 2);
@@ -320,8 +353,8 @@ classdef PolytopalMesh < approx.mesh.Mesh
             faceToFace = sparse(nF, nF);
 
             %< Loop only over small number of shifts (8 in 2D, 26 in 3D)
-            for s = 1:length(obj.VertexToVertexTables)
-                Ts = obj.VertexToVertexTables{s};
+            for s = 1:length(obj.vertexToVertexTables)
+                Ts = obj.vertexToVertexTables{s};
 
                 %< Map every face's k-th vertex via this shift, in bulk
                 mappedFaces = zeros(nF, m);
@@ -351,7 +384,7 @@ classdef PolytopalMesh < approx.mesh.Mesh
                 end
             end
 
-            obj.FaceToFaceTable = spones(faceToFace);
+            obj.faceToFaceTable = spones(faceToFace);
         end
     end
 end

@@ -1,14 +1,31 @@
 function verify(flag, id, msg, varargin)
-% VERIFY Advanced verification with contextual warning reporting.
+% VERIFY Advanced verification.
 %
-%   verify(flag) throws a warning if @a flag is false.
+%   verify(flag) throws a warning if @a flag is false. 
 %
 %   verify(flag, id, msg, ...) throws a warning with the specified @a id
-%   and @a msg if @a flag is false. The @a id is automatically prefixed with
-%   module context information. Additional arguments are used for string
-%   formatting of @a msg using sprintf.
+%   and @a msg if @a flag is false.
 %
-% See also:
+% Inputs:
+%   flag     - Logical condition to check
+%   id       - Warning identifier (e.g., 'InvalidInput' or 'OutOfRange')
+%   msg      - Warning message format string
+%   varargin - Optional variables for the format string
+%
+% Outputs:
+%   NULL
+%
+% Examples:
+%   % Basic usage with simple condition
+%   core.except.verify(x > 0, 'NonPositive', 'Value should be positive.');
+%
+%   % With formatted message
+%   core.except.verify(n < 100, 'TooLarge', 'Value %d exceeds limit.', n);
+%
+%   % Default behavior (minimal arguments)
+%   core.except.verify(isreal(x));
+%
+% See Also:
 %   core.except.assert, core.except.backtrack
 
 if nargin == 1

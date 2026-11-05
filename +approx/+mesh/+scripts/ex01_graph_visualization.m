@@ -357,8 +357,8 @@ title('Edges Only');
 
 % Color-coded vertices by distance from origin
 subplot(2, 2, 3);
-distancesFromOrigin = sqrt(sum(gridGraph2D.Vertices.^2, 2));
-scatter(gridGraph2D.Vertices(:, 1), gridGraph2D.Vertices(:, 2), ...
+distancesFromOrigin = sqrt(sum(gridGraph2D.vertices.^2, 2));
+scatter(gridGraph2D.vertices(:, 1), gridGraph2D.vertices(:, 2), ...
         50, distancesFromOrigin, 'filled');
 hold('on');
 plotter.plot(gridGraph2D, ...
@@ -370,23 +370,23 @@ colorbar;
 % Custom edge styling based on edge length
 subplot(2, 2, 4);
 hold('on');
-nEdgesGrid = size(gridGraph2D.Edges, 1);
+nEdgesGrid = size(gridGraph2D.edges, 1);
 for iEdge = 1:nEdgesGrid
-    vertex1Index = gridGraph2D.Edges(iEdge, 1);
-    vertex2Index = gridGraph2D.Edges(iEdge, 2);
-    edgeStartX = gridGraph2D.Vertices(vertex1Index, 1);
-    edgeEndX = gridGraph2D.Vertices(vertex2Index, 1);
-    edgeStartY = gridGraph2D.Vertices(vertex1Index, 2);
-    edgeEndY = gridGraph2D.Vertices(vertex2Index, 2);
+    vertex1Index = gridGraph2D.edges(iEdge, 1);
+    vertex2Index = gridGraph2D.edges(iEdge, 2);
+    edgeStartX = gridGraph2D.vertices(vertex1Index, 1);
+    edgeEndX = gridGraph2D.vertices(vertex2Index, 1);
+    edgeStartY = gridGraph2D.vertices(vertex1Index, 2);
+    edgeEndY = gridGraph2D.vertices(vertex2Index, 2);
     
     % Calculate edge length and apply color coding
-    edgeLength = norm(gridGraph2D.Vertices(vertex1Index, :) - ...
-                     gridGraph2D.Vertices(vertex2Index, :));
+    edgeLength = norm(gridGraph2D.vertices(vertex1Index, :) - ...
+                     gridGraph2D.vertices(vertex2Index, :));
     plot([edgeStartX, edgeEndX], [edgeStartY, edgeEndY], '-', ...
         'Color', [0, 0.5, edgeLength*2], ...
         'LineWidth', 1 + edgeLength*3);
 end
-scatter(gridGraph2D.Vertices(:, 1), gridGraph2D.Vertices(:, 2), ...
+scatter(gridGraph2D.vertices(:, 1), gridGraph2D.vertices(:, 2), ...
         25, 'black', 'filled');
 title('Custom Edge Styling by Length');
 axis('equal');
@@ -416,12 +416,12 @@ fprintf('- Double-click to reset view\n\n');
 
 fprintf('=== Graph Statistics Summary ===\n');
 fprintf('1D Basic Graph: %d vertices, %d edges\n', ...
-        basicGraph1D.NVertices, basicGraph1D.NEdges);
+        basicGraph1D.nVertices, basicGraph1D.nEdges);
 fprintf('2D Grid Graph: %d vertices, %d edges\n', ...
-        gridGraph2D.NVertices, gridGraph2D.NEdges);
+        gridGraph2D.nVertices, gridGraph2D.nEdges);
 fprintf('3D Cube Graph: %d vertices, %d edges\n', ...
-        cubeGraph.NVertices, cubeGraph.NEdges);
+        cubeGraph.nVertices, cubeGraph.nEdges);
 fprintf('3D Random Graph: %d vertices, %d edges\n', ...
-        randomGraph3D.NVertices, randomGraph3D.NEdges);
+        randomGraph3D.nVertices, randomGraph3D.nEdges);
 fprintf('3D Sphere Graph: %d vertices, %d edges\n', ...
-        sphereGraph.NVertices, sphereGraph.NEdges);
+        sphereGraph.nVertices, sphereGraph.nEdges);

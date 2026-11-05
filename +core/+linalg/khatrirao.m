@@ -6,23 +6,26 @@ function X = khatrirao(U, varargin)
 %   (I*J)-by-K matrix where each column k is Kronecker product of k-th
 %   columns of A and B.
 %
-%   X = khatrirao(U) computes Khatri-Rao product when @a U is a cell
-%   array of matrices.
+% Inputs:
+%   U - Cell array of matrices or head input matrix
+%   varargin - Tailed input matrices
 %
-%   The Khatri-Rao product computes column-wise Kronecker products,
-%   preserving the number of columns while expanding rows. All input
-%   matrices must have the same number of columns. Operation proceeds
-%   from right to left through the input matrices.
+% Outputs:
+%   X - Khatri-Rao product matrix
 %
-% See also:
+% Examples:
+%   % Two-matrix Khatri-Rao product
+%   A = [1 2; 3 4];    % 2-by-2 matrix
+%   B = [5 6; 7 8];    % 2-by-2 matrix
+%   X = khatrirao(A, B);
+%
+%   % Sparse matrix Khatri-Rao product
+%   As = sparse([1 0; 3 4]);
+%   Bs = sparse([5 0; 0 8]);
+%   X = khatrirao(As, Bs);
+%
+% See Also:
 %   core.linalg.kronecker
-
-arguments
-    U
-end
-arguments (Repeating)
-    varargin
-end
 
 if ~iscell(U), U = [{U}, varargin]; end
 X = U{end};

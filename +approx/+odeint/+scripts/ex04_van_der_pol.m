@@ -128,7 +128,7 @@ for i = 1:n_methods
         % Get current solution for nonlinear term evaluation
         U_current = integrator.U0{1, 1};
         
-        integrator.setTimeStep(dt=dt);
+        integrator.timeline.setTimeStep(dt, 1, 1);
         
         % Set coefficients for BDF methods
         if isa(integrator, 'approx.odeint.BdfIntegrator')
@@ -139,15 +139,15 @@ for i = 1:n_methods
         if strcmp(integrator_types{i}, 'Implicit')
             % Treat nonlinear term as source (simplified implicit treatment)
             S_current = S_implicit(U_current);
-            U_new = integrator.step(L=L_implicit, S=S_current, M=[]);
+            U_new = integrator.step(L_implicit, S_current, []);
         elseif strcmp(integrator_types{i}, 'Explicit')
             % Treat everything explicitly
             F_current = F_explicit(U_current);
-            U_new = integrator.step(L=[], F=F_current, S=[], M=[]);
+            U_new = integrator.step([], F_current, [], []);
         else % IMEX
             % Split: linear part implicit, nonlinear part explicit
             F_current = F_imex(U_current);
-            U_new = integrator.step(L=L_imex, F=F_current, S=[], M=[]);
+            U_new = integrator.step(L_imex, F_current, [], []);
         end
         
         integrator.update(U_new);

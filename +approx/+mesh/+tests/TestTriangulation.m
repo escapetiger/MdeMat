@@ -32,15 +32,15 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             
-            testCase.verifyEqual(mesh.Vertices, meshCase.vertices);
-            testCase.verifyEqual(mesh.Elements, meshCase.elements);
-            testCase.verifyEqual(mesh.NDims, meshCase.nDims);
-            testCase.verifyEqual(mesh.NVerticesPerElement, meshCase.nVerticesPerElement);
+            testCase.verifyEqual(mesh.vertices, meshCase.vertices);
+            testCase.verifyEqual(mesh.elements, meshCase.elements);
+            testCase.verifyEqual(mesh.nDims, meshCase.nDims);
+            testCase.verifyEqual(mesh.nVerticesPerElement, meshCase.nVerticesPerElement);
             
             % Verify that faces and boundary are computed
-            testCase.verifyFalse(isempty(mesh.Faces));
-            testCase.verifyFalse(isempty(mesh.Boundary));
-            testCase.verifyFalse(isempty(mesh.FaceToElementTable));
+            testCase.verifyFalse(isempty(mesh.faces));
+            testCase.verifyFalse(isempty(mesh.boundary));
+            testCase.verifyFalse(isempty(mesh.faceToElementTable));
         end
         
         function testDependentProperties(testCase, meshCase)
@@ -48,13 +48,13 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             
-            testCase.verifyEqual(mesh.NDims, size(meshCase.vertices, 2));
-            testCase.verifyEqual(mesh.NVertices, size(meshCase.vertices, 1));
-            testCase.verifyEqual(mesh.NElements, size(meshCase.elements, 1));
-            testCase.verifyEqual(mesh.NVerticesPerElement, size(meshCase.elements, 2));
-            testCase.verifyEqual(mesh.NFaces, size(mesh.Faces, 1));
-            testCase.verifyEqual(mesh.NVerticesPerFace, size(mesh.Faces, 2));
-            testCase.verifyEqual(mesh.NBoundaryFaces, length(mesh.Boundary));
+            testCase.verifyEqual(mesh.nDims, size(meshCase.vertices, 2));
+            testCase.verifyEqual(mesh.nVertices, size(meshCase.vertices, 1));
+            testCase.verifyEqual(mesh.nElements, size(meshCase.elements, 1));
+            testCase.verifyEqual(mesh.nVerticesPerElement, size(meshCase.elements, 2));
+            testCase.verifyEqual(mesh.nFaces, size(mesh.faces, 1));
+            testCase.verifyEqual(mesh.nVerticesPerFace, size(mesh.faces, 2));
+            testCase.verifyEqual(mesh.nBoundaryFaces, length(mesh.boundary));
         end
         
         function testFaceGeneration(testCase, meshCase)
@@ -64,15 +64,15 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             % Verify face dimensions
             expectedNVerticesPerFace = meshCase.nDims;
-            testCase.verifyEqual(mesh.NVerticesPerFace, expectedNVerticesPerFace);
+            testCase.verifyEqual(mesh.nVerticesPerFace, expectedNVerticesPerFace);
             
             % Verify face-to-element connectivity
-            testCase.verifyEqual(size(mesh.FaceToElementTable, 1), mesh.NFaces);
-            testCase.verifyEqual(size(mesh.FaceToElementTable, 2), mesh.NElements);
+            testCase.verifyEqual(size(mesh.faceToElementTable, 1), mesh.nFaces);
+            testCase.verifyEqual(size(mesh.faceToElementTable, 2), mesh.nElements);
             
             % Verify boundary faces are subset of all faces
-            testCase.verifyTrue(all(mesh.Boundary >= 1));
-            testCase.verifyTrue(all(mesh.Boundary <= mesh.NFaces));
+            testCase.verifyTrue(all(mesh.boundary >= 1));
+            testCase.verifyTrue(all(mesh.boundary <= mesh.nFaces));
         end
         
         function testPositiveOrientation(testCase)
@@ -96,13 +96,13 @@ classdef TestTriangulation < matlab.unittest.TestCase
             graph = mesh.graphify();
             
             testCase.verifyClass(graph, 'approx.mesh.Graph');
-            testCase.verifyEqual(graph.NDims, mesh.NDims);
-            testCase.verifyEqual(graph.NVertices, mesh.NVertices);
-            testCase.verifyEqual(graph.Vertices, mesh.Vertices);
+            testCase.verifyEqual(graph.nDims, mesh.nDims);
+            testCase.verifyEqual(graph.nVertices, mesh.nVertices);
+            testCase.verifyEqual(graph.vertices, mesh.vertices);
             
             % Verify edges are created from element connectivity
-            testCase.verifyTrue(graph.NEdges > 0);
-            testCase.verifyEqual(size(graph.Edges, 2), 2);
+            testCase.verifyTrue(graph.nEdges > 0);
+            testCase.verifyEqual(size(graph.edges, 2), 2);
         end
         
         function testCollocate(testCase)
@@ -145,7 +145,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             
             % Test with specific elements
-            if mesh.NElements >= 1
+            if mesh.nElements >= 1
                 V = mesh.findElementVertices(1);
                 expectedSize = [meshCase.nDims, meshCase.nVerticesPerElement];
                 testCase.verifyEqual(size(V), expectedSize);
@@ -153,7 +153,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             % Test with all elements (default)
             VAll = mesh.findElementVertices();
-            expectedSize = [meshCase.nDims, meshCase.nVerticesPerElement, mesh.NElements];
+            expectedSize = [meshCase.nDims, meshCase.nVerticesPerElement, mesh.nElements];
             testCase.verifyEqual(size(VAll), expectedSize);
         end
         
@@ -166,16 +166,16 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             % Test no refinement
             mesh0 = mesh.refine(0);
-            testCase.verifyEqual(mesh0.NElements, mesh.NElements);
+            testCase.verifyEqual(mesh0.nElements, mesh.nElements);
             
             % Test single refinement
             mesh1 = mesh.refine(1);
-            testCase.verifyEqual(mesh1.NElements, 4);
-            testCase.verifyEqual(mesh1.NVertices, 5);
+            testCase.verifyEqual(mesh1.nElements, 4);
+            testCase.verifyEqual(mesh1.nVertices, 5);
             
             % Test double refinement
             mesh2 = mesh.refine(2);
-            testCase.verifyEqual(mesh2.NElements, 8);
+            testCase.verifyEqual(mesh2.nElements, 8);
         end
         
         function testRefine2D(testCase)
@@ -187,12 +187,12 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             % Test single refinement (1 triangle -> 4 triangles)
             mesh1 = mesh.refine(1);
-            testCase.verifyEqual(mesh1.NElements, 4);
-            testCase.verifyEqual(mesh1.NVertices, 6);
+            testCase.verifyEqual(mesh1.nElements, 4);
+            testCase.verifyEqual(mesh1.nVertices, 6);
             
             % Test double refinement (1 -> 4 -> 16)
             mesh2 = mesh.refine(2);
-            testCase.verifyEqual(mesh2.NElements, 16);
+            testCase.verifyEqual(mesh2.nElements, 16);
         end
         
         function testRefine3D(testCase)
@@ -204,8 +204,8 @@ classdef TestTriangulation < matlab.unittest.TestCase
             
             % Test single refinement (1 tetrahedron -> 8 tetrahedra)
             mesh1 = mesh.refine(1);
-            testCase.verifyEqual(mesh1.NElements, 8);
-            testCase.verifyEqual(mesh1.NVertices, 10);
+            testCase.verifyEqual(mesh1.nElements, 8);
+            testCase.verifyEqual(mesh1.nVertices, 10);
         end
         
         function testComputeMeasure(testCase)
@@ -233,7 +233,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             detJ = mesh.computeElementJacobianDeterminants();
             
-            testCase.verifyEqual(length(detJ), mesh.NElements);
+            testCase.verifyEqual(length(detJ), mesh.nElements);
             testCase.verifyTrue(all(detJ > 0)); % Positive orientation
         end
         
@@ -243,7 +243,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             J = mesh.computeElementJacobians();
             
-            expectedSize = [meshCase.nDims, meshCase.nDims, mesh.NElements];
+            expectedSize = [meshCase.nDims, meshCase.nDims, mesh.nElements];
             testCase.verifyEqual(size(J), expectedSize);
         end
         
@@ -253,13 +253,13 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(meshCase.vertices, meshCase.elements);
             invJ = mesh.computeElementInverseJacobians();
             
-            expectedSize = [meshCase.nDims, meshCase.nDims, mesh.NElements];
+            expectedSize = [meshCase.nDims, meshCase.nDims, mesh.nElements];
             testCase.verifyEqual(size(invJ), expectedSize);
             
             % Test that J * invJ = I for 2D and 3D
             if meshCase.nDims > 1
                 J = mesh.computeElementJacobians();
-                for iElement = 1:mesh.NElements
+                for iElement = 1:mesh.nElements
                     product = J(:, :, iElement) * invJ(:, :, iElement);
                     testCase.verifyEqual(product, eye(meshCase.nDims), 'AbsTol', 1e-10);
                 end
@@ -278,7 +278,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             testCase.verifyEqual(length(detJFace), meshCase.nVerticesPerElement);
             
             for iFace = 1:meshCase.nVerticesPerElement
-                testCase.verifyEqual(length(detJFace{iFace}), mesh.NElements);
+                testCase.verifyEqual(length(detJFace{iFace}), mesh.nElements);
                 testCase.verifyTrue(all(detJFace{iFace} > 0));
             end
         end
@@ -295,10 +295,10 @@ classdef TestTriangulation < matlab.unittest.TestCase
             testCase.verifyEqual(length(outN), meshCase.nVerticesPerElement);
             
             for iFace = 1:meshCase.nVerticesPerElement
-                testCase.verifyEqual(size(outN{iFace}), [meshCase.nDims, mesh.NElements]);
+                testCase.verifyEqual(size(outN{iFace}), [meshCase.nDims, mesh.nElements]);
                 
                 % Check that normals are unit vectors
-                for iElement = 1:mesh.NElements
+                for iElement = 1:mesh.nElements
                     normalMagnitude = norm(outN{iFace}(:, iElement));
                     testCase.verifyEqual(normalMagnitude, 1, 'AbsTol', 1e-10);
                 end
@@ -346,8 +346,8 @@ classdef TestTriangulation < matlab.unittest.TestCase
             testCase.verifyEqual(detJ, expectedDetJ, 'AbsTol', 1e-10);
             
             % Test that we have 4 faces
-            testCase.verifyEqual(mesh.NFaces, 4);
-            testCase.verifyEqual(mesh.NVerticesPerFace, 3);
+            testCase.verifyEqual(mesh.nFaces, 4);
+            testCase.verifyEqual(mesh.nVerticesPerFace, 3);
         end
         
         function testBoundaryDetection(testCase)
@@ -359,12 +359,12 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(vertices, elements);
             
             % Should have 5 faces (4 boundary + 1 internal)
-            testCase.verifyEqual(mesh.NFaces, 5);
-            testCase.verifyEqual(mesh.NBoundaryFaces, 4);
+            testCase.verifyEqual(mesh.nFaces, 5);
+            testCase.verifyEqual(mesh.nBoundaryFaces, 4);
             
             % Verify boundary faces have only one adjacent element
-            faceToElementTable = mesh.FaceToElementTable;
-            for iBoundary = mesh.Boundary'
+            faceToElementTable = mesh.faceToElementTable;
+            for iBoundary = mesh.boundary'
                 nAdjacentElements = sum(faceToElementTable(iBoundary, :) > 0);
                 testCase.verifyEqual(full(nAdjacentElements), 1);
             end
@@ -426,8 +426,8 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = mesh.setPeriodic(shift, 1e-12);
             
             % Verify vertex-to-vertex table is created
-            testCase.verifyFalse(isempty(mesh.VertexToVertexTables));
-            testCase.verifyFalse(isempty(mesh.FaceToFaceTable));
+            testCase.verifyFalse(isempty(mesh.vertexToVertexTables));
+            testCase.verifyFalse(isempty(mesh.faceToFaceTable));
         end
         
         function testLargeRefinement(testCase)
@@ -440,7 +440,7 @@ classdef TestTriangulation < matlab.unittest.TestCase
             % Test 3 levels of refinement
             mesh3 = mesh.refine(3);
             expectedElements = 4^3; % Each triangle becomes 4 triangles per level
-            testCase.verifyEqual(mesh3.NElements, expectedElements);
+            testCase.verifyEqual(mesh3.nElements, expectedElements);
             
             % Verify mesh is still valid
             detJ = mesh3.computeElementJacobianDeterminants();
@@ -472,22 +472,22 @@ classdef TestTriangulation < matlab.unittest.TestCase
             mesh = approx.mesh.Triangulation(vertices, elements);
             
             % Initially, transform cache should be empty
-            testCase.verifyEqual(mesh.Status, 0b110000);
+            testCase.verifyEqual(mesh.status, 0b110000);
             
             % Compute Jacobians - should set the appropriate flag
             J = mesh.computeElementJacobians();
-            testCase.verifyTrue(bitand(mesh.Status, 0b100000) > 0);
-            testCase.verifyFalse(isempty(mesh.Transform.EJac));
+            testCase.verifyTrue(bitand(mesh.status, 0b100000) > 0);
+            testCase.verifyFalse(isempty(mesh.transform.EJ));
             
             % Compute determinants - should set another flag
             detJ = mesh.computeElementJacobianDeterminants();
-            testCase.verifyTrue(bitand(mesh.Status, 0b010000) > 0);
-            testCase.verifyFalse(isempty(mesh.Transform.detEJac));
+            testCase.verifyTrue(bitand(mesh.status, 0b010000) > 0);
+            testCase.verifyFalse(isempty(mesh.transform.detEJ));
             
             % Reset cache
             mesh.resetTransform();
-            testCase.verifyEqual(mesh.Status, 0b000000);
-            testCase.verifyEmpty(mesh.Transform.EJac);
+            testCase.verifyEqual(mesh.status, 0b000000);
+            testCase.verifyEmpty(mesh.transform.EJ);
         end
     end
 end

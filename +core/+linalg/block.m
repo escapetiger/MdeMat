@@ -5,13 +5,26 @@ function S = block(As, Ms, Ns)
 %   from a cell array of matrices.
 %
 %   S = block(As, Ms, Ns) returns a block matrix from a cell array of
-%   matrices with specified row and column dimensions.
+%   matrices. 
+% 
+% Notes:
+%   Each nonempty cell in @a A corresponds to a block in @a S.
 %
-%   Each nonempty cell in @a As corresponds to a block in @a S. The
-%   function automatically detects whether to create sparse or dense
-%   output based on input matrix types. When @a Ms and @a Ns are not
-%   provided, dimensions are inferred from the first nonempty block in
-%   each row and column.
+% Inputs:
+%   As - 2D cell array of matrices
+%   Ms - Row counts for each block row (optional)
+%   Ns - Column counts for each block column (optional)
+%
+% Outputs:
+%   S  - Block matrix (sparse if all blocks are sparse)
+%
+% Examples:
+%   % Create a block matrix from sparse blocks
+%   A1 = sparse(rand(2,3));  B1 = sparse(rand(2,4));
+%   C1 = sparse(rand(3,3));  D1 = sparse(rand(3,4));
+%   As = {A1, B1; C1, D1};
+%   S1 = block(As);
+%   % S1 will be a sparse matrix of size (2+3) x (3+4) = 5x7.
 
 [nBlockRows, nBlockCols] = size(As);
 

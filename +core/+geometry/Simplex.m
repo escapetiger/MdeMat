@@ -6,76 +6,97 @@ classdef Simplex < core.geometry.Polytope
     %   the simplest possible convex polytope in any given dimensional
     %   space.
     %
-    %   Dimensional Representations:
+    % Dimensional Representations:
     %   - In 1D: A line segment (2 vertices)
     %   - In 2D: A triangle (3 vertices)
     %   - In 3D: A tetrahedron (4 vertices)
     %   - In nD: An n-simplex (n+1 vertices)
     %
+    % Examples:
+    %   % Create a 2D triangle with vertices at [0,0], [1,0], and [0,1]
+    %   V = [0, 1, 0; 0, 0, 1];
+    %   simplex = core.geometry.Simplex(V);
+    %   vol = simplex.magnitude();  % Returns 0.5 (area of the triangle)
+    %
     % See also:
     %   core.geometry.Polytope, core.geometry.Orthotope
 
     properties
-        NFaces % Number of boundaries (nDims + 1)
-        OuterNormals % Outer normals of boundaries
+        nBoundaries % Number of boundaries (nDims + 1)
+        outerNormals % Outer normals of boundaries
     end
 
     methods
         function obj = Simplex(V)
-            % SIMPLEX Construct an instance of Simplex.
+            % SIMPLEX Constructor for Simplex.
             %
             %   obj = Simplex(V) creates a simplex from the given vertices,
-            %   with strict validation of vertex configuration. The
-            %   vertices must be affinely independent and form a valid
-            %   simplex. A nd-dimensional simplex requires exactly nd+1
-            %   vertices.
+            %   with strict validation of vertex configuration. The vertices
+            %   must be affinely independent and form a valid simplex. A
+            %   d-dimensional simplex requires exactly d+1 vertices.
             %
-            %   The @a V parameter must be a matrix of size nd×(nd+1) where
-            %   each column represents a vertex. Vertices must be affinely
-            %   independent to ensure the simplex is non-degenerate.
+            % Inputs:
+            %   V - A matrix of size d×(d+1) where each column is a vertex
+            %
+            % Outputs:
+            %   obj - Constructed Simplex object
 
-            arguments
-                V {mustBeNumeric}
-            end
+            core.except.assert(nargin >= 1, 'InvalidInput', ...
+                'Vertices must be specified.');
 
             core.except.assert(ismatrix(V), 'InvalidInput', ...
                 'Vertices must be a matrix.');
 
-            [nd, nv] = size(V);
-            core.except.assert(nd+1 == nv, 'InvalidInput', ...
-                'Vertices must be of shape (%d, %d).', nd, nd+1);
+            [d, n] = size(V);
+            core.except.assert(d+1 == n, 'InvalidInput', ...
+                'Vertices must be of shape (%d, %d).', d, d+1);
 
             E = V(:, 2:end) - V(:, 1);
-            core.except.assert(rank(E) >= nd, 'InvalidInput', ...
+            core.except.assert(rank(E) >= d, 'InvalidInput', ...
                 'Vertices must be affinely independent.');
 
-            F = arrayfun(@(i) setdiff(1:nv, i), 1:nv, 'Un', 0);
+            F = arrayfun(@(i) setdiff(1:n, i), 1:n, 'Un', 0);
 
             obj@core.geometry.Polytope(V, F);
         end
 
-        function n = get.NFaces(obj)
-            % GET.NFACES Returns the number of boundaries.
+        function n = get.nBoundaries(obj)
+            % GET.NBOUNDARIES Returns the number of boundaries.
+            %
+            %   n = get.nBoundaries(obj) returns the number of boundary
+            %   faces of the simplex. A simplex in d dimensions has d+1
+            %   boundaries (faces), each corresponding to one vertex being
+            %   excluded from the full vertex set.
+            %
+            % Outputs:
+            %   n - Number of boundaries (nDims + 1)
 
-            n = obj.NDims + 1;
+            n = obj.nDims + 1;
         end
 
-        function N = get.OuterNormals(obj)
-            % GET.OUTNORMALS Returns the outward normals of boundaries.
+        function N = get.outerNormals(obj)
+            % GET.OUTERNORMALS Returns the outer normals of boundaries.
+            %
+            %   N = get.outerNormals(obj) computes the outward-pointing
+            %   normal vectors for each boundary face of the simplex. Each
+            %   normal is a unit vector perpendicular to the corresponding
+            %   face and pointing away from the simplex interior.
+            %
+            % Outputs:
+            %   N - A matrix where each column is an outer normal vector
 
-            V = obj.Vertices;
-            nd = obj.NDims;
-            normal = zeros(nd, nd+1);
-            for i = 1:(nd + 1)
-                idx = setdiff(1:(nd + 1), i);
+            V = obj.vertices;
+            d = obj.nDims;
+            N = zeros(d, d+1);
+            for i = 1:(d + 1)
+                idx = setdiff(1:(d + 1), i);
                 U = V(:, idx);
                 U0 = U(:, 1);
                 E = U(:, 2:end) - U0;
                 ni = null(E.');
                 if dot(U0-V(:, i), ni) < 0, ni = -ni; end
-                normal(:, i) = ni / norm(ni);
+                N(:, i) = ni / norm(ni);
             end
-            N = normal;
         end
 
         function m = magnitude(obj)
@@ -83,17 +104,19 @@ classdef Simplex < core.geometry.Polytope
             %
             %   m = magnitude(obj) computes the n-dimensional volume of the
             %   simplex using the determinant formula. The volume is
-            %   calculated as \f$|det(E)|/nd!\f$ where \f$E\f$ is the
-            %   matrix of edge vectors from one vertex to all others.
+            %   calculated as |det(E)| / d! where E is the matrix of edge
+            %   vectors from one vertex to all others.
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %
+            % Outputs:
+            %   m - Volume of the simplex
 
-            arguments
-                obj core.geometry.Simplex
-            end
-
-            nd = obj.NDims;
-            V = obj.Vertices;
+            d = obj.nDims;
+            V = obj.vertices;
             E = V(:, 2:end) - V(:, 1);
-            m = abs(det(E)) / factorial(nd);
+            m = abs(det(E)) / factorial(d);
         end
 
         function TF = isInside(obj, X)
@@ -103,15 +126,17 @@ classdef Simplex < core.geometry.Polytope
             %   determine if points lie strictly within the interior of the
             %   simplex. Points are inside if all barycentric coordinates
             %   are positive (greater than tolerance).
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %   X - A matrix of size d×m where each column represents a point
+            %
+            % Outputs:
+            %   TF - A logical vector indicating which points are inside
 
-            arguments
-                obj core.geometry.Simplex
-                X {mustBeNumeric}
-            end
-
-            nd = obj.NDims;
-            nx = size(X);
-            core.except.assert(nx(1) == nd, 'DimensionMismatch', ...
+            d = obj.nDims;
+            n = size(X);
+            core.except.assert(n(1) == d, 'DimensionMismatch', ...
                 'Point dimension must match geometry dimension.');
 
             tol = sqrt(eps);
@@ -126,15 +151,17 @@ classdef Simplex < core.geometry.Polytope
             %   determine if points lie exactly on the boundary faces of
             %   the simplex. Points are on the boundary if at least one
             %   barycentric coordinate is zero (within tolerance).
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %   X - A matrix of size d×m where each column represents a point
+            %
+            % Outputs:
+            %   TF - A logical vector indicating which points are on boundary
 
-            arguments
-                obj core.geometry.Simplex
-                X {mustBeNumeric}
-            end
-
-            nd = obj.NDims;
-            nx = size(X);
-            core.except.assert(nx(1) == nd, 'DimensionMismatch', ...
+            d = obj.nDims;
+            n = size(X);
+            core.except.assert(n(1) == d, 'DimensionMismatch', ...
                 'Point dimension must match geometry dimension.');
 
             tol = sqrt(eps);
@@ -143,64 +170,65 @@ classdef Simplex < core.geometry.Polytope
         end
 
         function B = cartesianToBarycentric(obj, C)
-            % CARTESIANTOBARYCENTRIC Converts Cartesian to barycentric
-            % coordinates.
+            % CARTESIANTOBARYCENTRIC Converts Cartesian to barycentric coordinates.
             %
             %   B = cartesianToBarycentric(obj, C) transforms points from
             %   Cartesian coordinates to barycentric coordinates with
             %   respect to the simplex vertices. Barycentric coordinates
             %   sum to 1 and are non-negative for interior points. Each
-            %   coordinate represents the weight of the corresponding
-            %   vertex.
+            %   coordinate represents the weight of the corresponding vertex.
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %   C - A matrix of size d×m where each column represents a point
+            %
+            % Outputs:
+            %   B - A matrix of size (d+1)×m containing barycentric coordinates
 
-            arguments
-                obj core.geometry.Simplex
-                C {mustBeNumeric}
-            end
-
-            nd = obj.NDims;
-            nx = size(C);
-            core.except.assert(nx(1) == nd, 'DimensionMismatch', ...
+            d = obj.nDims;
+            n = size(C);
+            core.except.assert(n(1) == d, 'DimensionMismatch', ...
                 'Point dimension must match the simplex dimension.');
 
-            C = reshape(C, nd, []);
-            V = obj.Vertices;
-            A = [V; ones(1, nd+1)];
+            C = reshape(C, d, []);
+            V = obj.vertices;
+            A = [V; ones(1, d+1)];
             B = [C; ones(1, size(C, 2))];
             B = A \ B;
-            nx(1) = nd + 1;
-            B = reshape(B, nx);
+            n(1) = d + 1;
+            B = reshape(B, n);
         end
 
         function C = barycentricToCartesian(obj, B)
-            % BARYCENTRICTOCARTESIAN Converts barycentric to Cartesian
-            % coordinates.
+            % BARYCENTRICTOCARTESIAN Converts barycentric to Cartesian coordinates.
             %
             %   C = barycentricToCartesian(obj, B) transforms points from
             %   barycentric coordinates back to Cartesian coordinates. The
             %   barycentric coordinates must sum to 1 and be non-negative
             %   for valid points within or on the simplex.
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %   B - A matrix of size (d+1)×m representing barycentric coordinates
+            %
+            % Outputs:
+            %   C - A matrix of size d×m where each column represents a point
 
-            arguments
-                obj core.geometry.Simplex
-                B {mustBeNumeric}
-            end
-
-            nd = obj.NDims;
-            nx = size(B);
-            core.except.assert(nx(1) == nd+1, 'DimensionMismatch', ...
-                'Barycentric coordinates must be %d', nd+1);
+            d = obj.nDims;
+            n = size(B);
+            core.except.assert(n(1) == d+1, 'DimensionMismatch', ...
+                'Barycentric coordinates must be %d', d+1);
 
             tol = sqrt(eps);
-            B = reshape(B, nd+1, []);
+            B = reshape(B, d+1, []);
             core.except.assert(all(abs(sum(B, 1)-1) <= tol), ...
                 'InvalidInput', 'Barycentric coordinates must sum to 1.');
             core.except.assert(all(B >= -tol), 'InvalidInput', ...
                 'Barycentric coordinates should be non-negative.');
-            V = obj.Vertices;
+            V = obj.vertices;
             C = V * B;
-            nx(1) = nd;
-            C = reshape(C, nx);
+            n(1) = d;
+            C = reshape(C, n);
         end
 
         function Y = transform(obj, X, V)
@@ -209,25 +237,27 @@ classdef Simplex < core.geometry.Polytope
             %
             %   Y = transform(obj, X, V) transforms points from reference
             %   Cartesian coordinates to physical Cartesian coordinates.
+            %
+            % Inputs:
+            %   obj - The Simplex object
+            %   X - Reference Cartesian coordinates (d x np matrix)
+            %   V - Vertices of physical simplex (d x (d+1) x ne array)
+            %
+            % Outputs:
+            %   Y - Physical Cartesian coordinates (d x np x ne array)
 
-            arguments
-                obj core.geometry.Simplex
-                X {mustBeNumeric}
-                V {mustBeNumeric}
-            end
-
-            nd = obj.NDims;
-            X = reshape(X, nd, []);
-            V0 = obj.Vertices;
+            d = obj.nDims;
+            X = reshape(X, d, []);
+            V0 = obj.vertices;
             b0 = V0(:, 1);
             A0 = V0(:, 2:end) - b0;
             X = A0 \ (X - b0);
-            V = reshape(V, nd, nd+1, []);
+            V = reshape(V, d, d+1, []);
             b = V(:, 1, :);
             A = V(:, 2:end, :) - b;
-            A = reshape(A, nd, nd, 1, []);
-            X = reshape(X, 1, nd, [], 1);
-            b = reshape(b, nd, 1, 1, []);
+            A = reshape(A, d, d, 1, []);
+            X = reshape(X, 1, d, [], 1);
+            b = reshape(b, d, 1, 1, []);
             Y = squeeze(sum(A .* X, 2) + b);
         end
     end

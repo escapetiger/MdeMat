@@ -15,6 +15,35 @@ classdef Triangulation < approx.mesh.PolytopalMesh
     %   and physical coordinates, where the reference simplex has vertices
     %   at the origin and unit coordinate vectors: {0, e_1, e_2, ..., e_n}.
     %
+    % Examples:
+    %   % Create 2D triangular mesh
+    %   vertices2D = [0, 0; 1, 0; 0.5, 1; 1, 1];
+    %   elements2D = [1, 2, 3; 2, 4, 3];
+    %   triMesh = Triangulation(vertices2D, elements2D);
+    %
+    %   % Create 3D tetrahedral mesh
+    %   vertices3D = [0, 0, 0; 1, 0, 0; 0, 1, 0; 0, 0, 1];
+    %   elements3D = [1, 2, 3, 4];
+    %   tetMesh = Triangulation(vertices3D, elements3D);
+    %
+    %   % Map reference coordinates to physical coordinates
+    %   xRef = [0.2; 0.3];  % Reference coordinates in triangle
+    %   xPhys = triMesh.collocate(xRef, 1);  % Map to element 1
+    %
+    %   % Perform uniform mesh refinement
+    %   refinedMesh = triMesh.refine(2);  % 2 levels: 4^2 = 16× more triangles
+    %
+    %   % Compute geometric quantities
+    %   h = triMesh.computeMeasure();           % Minimum edge length
+    %   detJ = triMesh.computeElementJacobianDeterminants([1, 2]);
+    %   graph = triMesh.graphify();             % Extract connectivity graph
+    %
+    %   % Access mesh topology
+    %   nVerts = triMesh.nVertices;       % Number of mesh vertices
+    %   nElems = triMesh.nElements;       % Number of elements
+    %   V = triMesh.findElementVertices([1, 3]);  % Vertices for elements 1,3
+    %
+    % Notes:
     %   Reference coordinates use the standard simplex with vertices at {0,
     %   e_1, e_2, ..., e_n} where e_i are unit coordinate vectors. This
     %   differs from some references that use centered or symmetric
@@ -37,43 +66,47 @@ classdef Triangulation < approx.mesh.PolytopalMesh
             %   graphObj = graphify(obj) creates a graph representation by
             %   extracting all edges (vertex pairs) from the simplex
             %   elements and eliminating duplicates.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   graphObj - Graph object with mesh vertices and edges
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
-
-            E = obj.Elements.';
-            T = nchoosek(1:obj.NVerticesPerElement, 2).';
+            E = obj.elements.';
+            T = nchoosek(1:obj.nVerticesPerElement, 2).';
             edges = reshape(E(T(:), :), 2, []);
             edges = unique(sort(edges, 1).', 'rows', 'stable');
-            graphObj = approx.mesh.Graph(obj.Vertices, edges);
+            graphObj = approx.mesh.Graph(obj.vertices, edges);
         end
 
-        function Y = collocate(obj, X, EI)
+        function Y = collocate(obj, X, IE)
             % COLLOCATE Map reference coordinates to physical coordinates.
             %
-            %   Y = collocate(obj, X, EI) transforms reference Cartesian
+            %   Y = collocate(obj, X, IE) transforms reference Cartesian
             %   coordinates to physical Cartesian coordinates using affine
             %   transformations defined by simplex element vertices.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %   X - Reference coordinates (nDims × nPoints)
+            %   IE - Element linear indices (nElements × 1)
+            %
+            % Outputs:
+            %   Y - Physical coordinates (nDims × nPoints × nElements)
 
-            arguments
-                obj approx.mesh.Triangulation
-                X {mustBeNumeric}
-                EI {mustBeInteger} = []
+            if nargin < 3 || isempty(IE)
+                IE = 1:obj.nElements;
             end
-
-            if isempty(EI)
-                EI = 1:obj.NElements;
-            end
-            nd = obj.NDims;
-            V = obj.findElementVertices(EI);
-            X = reshape(X, nd, []);
-            V = reshape(V, nd, nd+1, []);
+            d = obj.nDims;
+            V = obj.findElementVertices(IE);
+            X = reshape(X, d, []);
+            V = reshape(V, d, d+1, []);
             b = V(:, 1, :);
             A = V(:, 2:end, :) - b;
-            A = reshape(A, nd, nd, 1, []);
-            X = reshape(X, 1, nd, [], 1);
-            b = reshape(b, nd, 1, 1, []);
+            A = reshape(A, d, d, 1, []);
+            X = reshape(X, 1, d, [], 1);
+            b = reshape(b, d, 1, 1, []);
             Y = squeeze(sum(A .* X, 2) + b);
         end
 
@@ -83,21 +116,23 @@ classdef Triangulation < approx.mesh.PolytopalMesh
             %   newObj = refine(obj, nLevels) creates a refined mesh by
             %   uniformly subdividing each simplex element. The number of
             %   refinement levels determines the subdivision density.
-
-            arguments
-                obj approx.mesh.Triangulation
-                nLevels {mustBeInteger, mustBeNonnegative} = 0
-            end
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %   nLevels - Number of refinement levels (non-negative integer)
+            %
+            % Outputs:
+            %   newObj - Refined Triangulation object
 
             if nLevels == 0
                 newObj = obj;
                 return;
             end
 
-            V = obj.Vertices;
-            E = obj.Elements;
+            V = obj.vertices;
+            E = obj.elements;
             for i = 1:nLevels
-                switch obj.NDims
+                switch obj.nDims
                     case 1
                         [V, E] = refineLines(V, E);
                     case 2
@@ -115,189 +150,201 @@ classdef Triangulation < approx.mesh.PolytopalMesh
             %   h = computeMeasure(obj) returns the minimum edge length
             %   among all edges in the simplicial mesh, which serves as
             %   a characteristic measure of mesh resolution.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   h - Minimum edge length (positive scalar)
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
-
-            nd = obj.NDims;
-            T = nchoosek(1:(nd + 1), 2).';
-            E = obj.Elements(:, T(:)).';
-            V = reshape(obj.Vertices(E(:), :), 2, [], nd);
+            d = obj.nDims;
+            T = nchoosek(1:(d + 1), 2).';
+            E = obj.elements(:, T(:)).';
+            V = reshape(obj.vertices(E(:), :), 2, [], d);
             edgeLengths = sqrt(sum(squeeze(diff(V, 1, 1)).^2, 2));
             h = min(edgeLengths, [], 'all');
         end
 
-        function EJac = computeAllElementJacobians(obj)
+        function EJ = computeAllElementJacobians(obj)
             % COMPUTEALLELEMENTJACOBIANS Compute Jacobian matrices for all
             % elements.
             %
-            %   EJac = computeAllElementJacobians(obj) computes the Jacobian
+            %   EJ = computeAllElementJacobians(obj) computes the Jacobian
             %   matrix for coordinate transformation from reference to
             %   physical coordinates for every element in the mesh.
-
-            arguments
-                obj approx.mesh.Triangulation
-            end
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   EJ - Jacobian matrices (nDims × nDims × nElements)
 
             V = obj.findElementVertices();
-            EJac = permute(V(:, 2:end, :)-V(:, 1, :), [2, 1, 3]);
+            EJ = permute(V(:, 2:end, :)-V(:, 1, :), [2, 1, 3]);
         end
 
-        function detEJac = computeAllElementJacobianDeterminants(obj)
+        function detEJ = computeAllElementJacobianDeterminants(obj)
             % COMPUTEALLELEMENTJACOBIANDETERMINANTS Compute Jacobian
             % determinants for all elements.
             %
-            %   detEJac = computeAllElementJacobianDeterminants(obj) computes
+            %   detEJ = computeAllElementJacobianDeterminants(obj) computes
             %   the determinant of the Jacobian matrix for each simplex
             %   element, used in integration and volume calculations.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   detEJ - Jacobian determinants (nElements × 1)
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
-
-            EJac = obj.computeElementJacobians();
-            switch obj.NDims
+            EJ = obj.computeElementJacobians();
+            switch obj.nDims
                 case 1
-                    detEJac = EJac;
+                    detEJ = EJ;
                 case 2
-                    EJac11 = squeeze(EJac(1, 1, :));
-                    EJac12 = squeeze(EJac(1, 2, :));
-                    EJac21 = squeeze(EJac(2, 1, :));
-                    EJac22 = squeeze(EJac(2, 2, :));
-                    detEJac = EJac11 .* EJac22 - EJac12 .* EJac21;
+                    EJ11 = squeeze(EJ(1, 1, :));
+                    EJ12 = squeeze(EJ(1, 2, :));
+                    EJ21 = squeeze(EJ(2, 1, :));
+                    EJ22 = squeeze(EJ(2, 2, :));
+                    detEJ = EJ11 .* EJ22 - EJ12 .* EJ21;
                 case 3
-                    EJac11 = squeeze(EJac(1, 1, :));
-                    EJac12 = squeeze(EJac(1, 2, :));
-                    EJac13 = squeeze(EJac(1, 3, :));
-                    EJac21 = squeeze(EJac(2, 1, :));
-                    EJac22 = squeeze(EJac(2, 2, :));
-                    EJac23 = squeeze(EJac(2, 3, :));
-                    EJac31 = squeeze(EJac(3, 1, :));
-                    EJac32 = squeeze(EJac(3, 2, :));
-                    EJac33 = squeeze(EJac(3, 3, :));
-                    detEJac = EJac11 .* (EJac22 .* EJac33 - EJac23 .* EJac32) ...
-                        -EJac12 .* (EJac21 .* EJac33 - EJac23 .* EJac31) ...
-                        +EJac13 .* (EJac21 .* EJac32 - EJac22 .* EJac31);
+                    EJ11 = squeeze(EJ(1, 1, :));
+                    EJ12 = squeeze(EJ(1, 2, :));
+                    EJ13 = squeeze(EJ(1, 3, :));
+                    EJ21 = squeeze(EJ(2, 1, :));
+                    EJ22 = squeeze(EJ(2, 2, :));
+                    EJ23 = squeeze(EJ(2, 3, :));
+                    EJ31 = squeeze(EJ(3, 1, :));
+                    EJ32 = squeeze(EJ(3, 2, :));
+                    EJ33 = squeeze(EJ(3, 3, :));
+                    detEJ = EJ11 .* (EJ22 .* EJ33 - EJ23 .* EJ32) ...
+                        -EJ12 .* (EJ21 .* EJ33 - EJ23 .* EJ31) ...
+                        +EJ13 .* (EJ21 .* EJ32 - EJ22 .* EJ31);
 
                 otherwise
-                    detEJac = arrayfun(@(i) det(EJac(:, :, i)), 1:size(EJac, 3)).';
+                    detEJ = arrayfun(@(i) det(EJ(:, :, i)), 1:size(EJ, 3));
             end
         end
 
-        function invEJac = computeAllElementInverseJacobians(obj)
+        function invEJ = computeAllElementInverseJacobians(obj)
             % COMPUTEALLELEMENTINVERSEJACOBIANS Compute inverse Jacobian
             % matrices for all elements.
             %
-            %   invEJac = computeAllElementInverseJacobians(obj) computes the
+            %   invEJ = computeAllElementInverseJacobians(obj) computes the
             %   inverse of the Jacobian matrix for each element, used in
             %   gradient computations and coordinate transformations.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   invEJ - Inverse Jacobian matrices (nDims × nDims × nElements)
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
-
-            switch obj.NDims
+            switch obj.nDims
                 case 1
-                    detEJac = obj.computeElementJacobianDeterminants();
-                    invEJac = 1 ./ detEJac;
+                    detEJ = obj.computeElementJacobianDeterminants();
+                    invEJ = 1 ./ detEJ;
 
                 case 2
-                    EJac = obj.computeElementJacobians();
-                    detEJac = obj.computeElementJacobianDeterminants();
+                    EJ = obj.computeElementJacobians();
+                    detEJ = obj.computeElementJacobianDeterminants();
 
-                    EJac11 = squeeze(EJac(1, 1, :));
-                    EJac12 = squeeze(EJac(1, 2, :));
-                    EJac21 = squeeze(EJac(2, 1, :));
-                    EJac22 = squeeze(EJac(2, 2, :));
+                    EJ11 = squeeze(EJ(1, 1, :));
+                    EJ12 = squeeze(EJ(1, 2, :));
+                    EJ21 = squeeze(EJ(2, 1, :));
+                    EJ22 = squeeze(EJ(2, 2, :));
 
-                    invEJac = zeros(size(EJac));
-                    invEJac(1, 1, :) = EJac22 ./ detEJac;
-                    invEJac(1, 2, :) = -EJac12 ./ detEJac;
-                    invEJac(2, 1, :) = -EJac21 ./ detEJac;
-                    invEJac(2, 2, :) = EJac11 ./ detEJac;
+                    invEJ = zeros(size(EJ));
+                    invEJ(1, 1, :) = EJ22 ./ detEJ;
+                    invEJ(1, 2, :) = -EJ12 ./ detEJ;
+                    invEJ(2, 1, :) = -EJ21 ./ detEJ;
+                    invEJ(2, 2, :) = EJ11 ./ detEJ;
 
                 case 3
-                    EJac = obj.computeElementJacobians();
-                    detEJac = obj.computeElementJacobianDeterminants();
+                    EJ = obj.computeElementJacobians();
+                    detEJ = obj.computeElementJacobianDeterminants();
 
-                    EJac11 = squeeze(EJac(1, 1, :));
-                    EJac12 = squeeze(EJac(1, 2, :));
-                    EJac13 = squeeze(EJac(1, 3, :));
-                    EJac21 = squeeze(EJac(2, 1, :));
-                    EJac22 = squeeze(EJac(2, 2, :));
-                    EJac23 = squeeze(EJac(2, 3, :));
-                    EJac31 = squeeze(EJac(3, 1, :));
-                    EJac32 = squeeze(EJac(3, 2, :));
-                    EJac33 = squeeze(EJac(3, 3, :));
+                    EJ11 = squeeze(EJ(1, 1, :));
+                    EJ12 = squeeze(EJ(1, 2, :));
+                    EJ13 = squeeze(EJ(1, 3, :));
+                    EJ21 = squeeze(EJ(2, 1, :));
+                    EJ22 = squeeze(EJ(2, 2, :));
+                    EJ23 = squeeze(EJ(2, 3, :));
+                    EJ31 = squeeze(EJ(3, 1, :));
+                    EJ32 = squeeze(EJ(3, 2, :));
+                    EJ33 = squeeze(EJ(3, 3, :));
 
-                    invEJac = zeros(size(EJac));
-                    invEJac(1, 1, :) = (EJac22 .* EJac33 - EJac23 .* EJac32) ./ detEJac;
-                    invEJac(1, 2, :) = (EJac13 .* EJac32 - EJac12 .* EJac33) ./ detEJac;
-                    invEJac(1, 3, :) = (EJac12 .* EJac23 - EJac13 .* EJac22) ./ detEJac;
-                    invEJac(2, 1, :) = (EJac23 .* EJac31 - EJac21 .* EJac33) ./ detEJac;
-                    invEJac(2, 2, :) = (EJac11 .* EJac33 - EJac13 .* EJac31) ./ detEJac;
-                    invEJac(2, 3, :) = (EJac13 .* EJac21 - EJac11 .* EJac23) ./ detEJac;
-                    invEJac(3, 1, :) = (EJac21 .* EJac32 - EJac22 .* EJac31) ./ detEJac;
-                    invEJac(3, 2, :) = (EJac12 .* EJac31 - EJac11 .* EJac32) ./ detEJac;
-                    invEJac(3, 3, :) = (EJac11 .* EJac22 - EJac12 .* EJac21) ./ detEJac;
+                    invEJ = zeros(size(EJ));
+                    invEJ(1, 1, :) = (EJ22 .* EJ33 - EJ23 .* EJ32) ./ detEJ;
+                    invEJ(1, 2, :) = (EJ13 .* EJ32 - EJ12 .* EJ33) ./ detEJ;
+                    invEJ(1, 3, :) = (EJ12 .* EJ23 - EJ13 .* EJ22) ./ detEJ;
+                    invEJ(2, 1, :) = (EJ23 .* EJ31 - EJ21 .* EJ33) ./ detEJ;
+                    invEJ(2, 2, :) = (EJ11 .* EJ33 - EJ13 .* EJ31) ./ detEJ;
+                    invEJ(2, 3, :) = (EJ13 .* EJ21 - EJ11 .* EJ23) ./ detEJ;
+                    invEJ(3, 1, :) = (EJ21 .* EJ32 - EJ22 .* EJ31) ./ detEJ;
+                    invEJ(3, 2, :) = (EJ12 .* EJ31 - EJ11 .* EJ32) ./ detEJ;
+                    invEJ(3, 3, :) = (EJ11 .* EJ22 - EJ12 .* EJ21) ./ detEJ;
 
                 otherwise
-                    EJac = obj.computeElementJacobians();
-                    invEJac = zeros(size(EJac));
-                    for i = 1:size(EJac, 3)
-                        invEJac(:, :, i) = inv(EJac(:, :, i));
+                    EJ = obj.computeElementJacobians();
+                    invEJ = zeros(size(EJ));
+                    for i = 1:size(EJ, 3)
+                        invEJ(:, :, i) = inv(EJ(:, :, i));
                     end
             end
         end
 
-        function detFJac = computeAllFaceJacobianDeterminants(obj)
+        function detFJ = computeAllFaceJacobianDeterminants(obj)
             % COMPUTEALLFACEJACOBIANDETERMINANTS Compute face Jacobian
             % determinants for all faces.
             %
-            %   detFJac = computeAllFaceJacobianDeterminants(obj) computes
+            %   detFJ = computeAllFaceJacobianDeterminants(obj) computes
             %   Jacobian determinants for coordinate transformation on all
             %   element faces, used in boundary and interface integration.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   detFJ - Face Jacobian determinants (cell array by local face index)
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
+            d = obj.nDims;
+            detFJ = cell(1, d+1);
 
-            nd = obj.NDims;
-            detFJac = cell(1, nd+1);
-
-            for i = 1:nd + 1
+            for i = 1:d + 1
                 V = obj.findElementVertices();
-                U = V(:, setdiff(1:nd+1, i), :);
+                U = V(:, setdiff(1:d+1, i), :);
                 G = U(:, 2:end, :) - U(:, 1, :);
                 G = pagemtimes(permute(G, [2, 1, 3]), G);
-                gramDets = arrayfun(@(k) det(G(:, :, k)), 1:obj.NElements);
-                detFJac{i} = reshape(sqrt(gramDets), [], 1);
+                gramDets = arrayfun(@(k) det(G(:, :, k)), 1:obj.nElements);
+                detFJ{i} = reshape(sqrt(gramDets), [], 1);
             end
         end
 
-        function normal = computeAllOutwardNormals(obj)
+        function outN = computeAllOutwardNormals(obj)
             % COMPUTEALLOUTWARDNORMALS Compute outward normal vectors for
             % all faces.
             %
-            %   normal = computeAllOutwardNormals(obj) computes unit
-            %   outward normal vectors for all element faces, essential for
+            %   outN = computeAllOutwardNormals(obj) computes unit outward
+            %   normal vectors for all element faces, essential for
             %   boundary conditions and flux computations.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   outN - Outward normal vectors (cell array by local face index)
 
-            arguments
-                obj approx.mesh.Triangulation
-            end
+            d = obj.nDims;
+            outN = cell(1, d+1);
 
-            nd = obj.NDims;
-            normal = cell(1, nd+1);
-
-            for i = 1:nd + 1
+            for i = 1:d + 1
                 V = obj.findElementVertices();
-                U = V(:, setdiff(1:nd+1, i), :);
+                U = V(:, setdiff(1:d+1, i), :);
                 E = U(:, 2:end, :) - U(:, 1, :);
 
-                normal{i} = zeros(nd, obj.NElements);
-                for j = 1:obj.NElements
+                outN{i} = zeros(d, obj.nElements);
+                for j = 1:obj.nElements
                     nullVec = null(squeeze(E(:, :, j)).');
                     if size(nullVec, 2) > 1
                         nullVec = nullVec(:, 1);
@@ -306,7 +353,7 @@ classdef Triangulation < approx.mesh.PolytopalMesh
                     if dot(toVertex, nullVec) > 0
                         nullVec = -nullVec;
                     end
-                    normal{i}(:, j) = nullVec / norm(nullVec);
+                    outN{i}(:, j) = nullVec / norm(nullVec);
                 end
             end
         end
@@ -319,17 +366,23 @@ classdef Triangulation < approx.mesh.PolytopalMesh
             %   obj = setFaces(obj) extracts face definitions from element
             %   connectivity and builds the face-to-element mapping table
             %   for simplicial meshes.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   obj - The Triangulation object with face connectivity
 
-            nd = obj.NDims;
-            E = obj.Elements.';
-            T = nchoosek(1:nd+1, nd).';
-            F = reshape(E(T(:), :), nd, []);
+            d = obj.nDims;
+            E = obj.elements.';
+            T = nchoosek(1:d+1, d).';
+            F = reshape(E(T(:), :), d, []);
             F = sort(F, 1).';
-            [obj.Faces, ~, rows] = unique(F, 'rows', 'stable');
-            cols = kron((1:obj.NElements).', ones(nd+1, 1));
-            vals = mod(0:(length(rows) - 1), nd+1) + 1;
-            obj.FaceToElementTable = sparse(rows, cols, vals, obj.NFaces, obj.NElements);
-            obj.Boundary = find(accumarray(rows, 1) == 1);
+            [obj.faces, ~, rows] = unique(F, 'rows', 'stable');
+            cols = kron((1:obj.nElements).', ones(d+1, 1));
+            vals = mod(0:(length(rows) - 1), d+1) + 1;
+            obj.faceToElementTable = sparse(rows, cols, vals, obj.nFaces, obj.nElements);
+            obj.boundary = find(accumarray(rows, 1) == 1);
         end
 
         function obj = forcePositiveOrientation(obj)
@@ -340,23 +393,29 @@ classdef Triangulation < approx.mesh.PolytopalMesh
             %   vertices to ensure positive Jacobian determinants, which is
             %   essential for proper integration and geometric
             %   computations.
+            %
+            % Inputs:
+            %   obj - The Triangulation object
+            %
+            % Outputs:
+            %   obj - The Triangulation object with corrected orientations
 
-            detEJac = obj.computeElementJacobianDeterminants();
-            EI = find(detEJac < 0);
+            detEJ = obj.computeElementJacobianDeterminants();
+            IE = find(detEJ < 0);
 
-            if ~isempty(EI)
-                switch obj.NDims
+            if ~isempty(IE)
+                switch obj.nDims
                     case 1
-                        obj.Elements(EI, :) = obj.Elements(EI, [2, 1]);
+                        obj.elements(IE, :) = obj.elements(IE, [2, 1]);
                     case 2
-                        obj.Elements(EI, :) = obj.Elements(EI, [1, 3, 2]);
+                        obj.elements(IE, :) = obj.elements(IE, [1, 3, 2]);
 
                     case 3
-                        obj.Elements(EI, :) = obj.Elements(EI, [1, 3, 2, 4]);
+                        obj.elements(IE, :) = obj.elements(IE, [1, 3, 2, 4]);
 
                     otherwise
-                        nVerts = obj.NVerticesPerElement;
-                        obj.Elements(EI, :) = obj.Elements(EI, [1:nVerts - 2, nVerts, nVerts - 1]);
+                        nVerts = obj.nVerticesPerElement;
+                        obj.elements(IE, :) = obj.elements(IE, [1:nVerts - 2, nVerts, nVerts - 1]);
                 end
                 obj.resetTransform();
             end
@@ -373,6 +432,14 @@ function [V, E] = refineLines(V0, E0)
 %
 %   [V, E] = refineLines(V0, E0) subdivides each line segment into
 %   two segments by adding midpoint vertices.
+%
+% Inputs:
+%   V0 - Original vertices (nVertices × nDims)
+%   E0 - Original elements (nElements × 2)
+%
+% Outputs:
+%   V - Refined vertices including midpoints (nVertices + nElements × nDims)
+%   E - Refined elements (2×nElements × 2)
 
 %< Start with original vertices
 V = V0;
@@ -401,6 +468,14 @@ function [V, E] = refineTriangles(V0, E0)
 %
 %   [V, E] = refineTriangles(V0, E0) subdivides each triangle into
 %   four triangles by adding midpoint vertices on all edges.
+%
+% Inputs:
+%   V0 - Original vertices (nVertices × 2)
+%   E0 - Original triangular elements (nElements × 3)
+%
+% Outputs:
+%   V - Refined vertices including edge midpoints
+%   E - Refined triangular elements (4×nElements × 3)
 %
 % Notes:
 %   Each triangle is subdivided into 4 sub-triangles:
@@ -453,6 +528,14 @@ function [V, E] = refineTetrahedra(V0, E0)
 %
 %   [V, E] = refineTetrahedra(V0, E0) subdivides each tetrahedron into
 %   eight tetrahedra by adding midpoint vertices on all edges.
+%
+% Inputs:
+%   V0 - Original vertices (nVertices × 3)
+%   E0 - Original tetrahedral elements (nElements × 4)
+%
+% Outputs:
+%   V - Refined vertices including edge midpoints
+%   E - Refined tetrahedral elements (8×nElements × 4)
 %
 % Notes:
 %   Each tetrahedron has 6 edges, creating 6 new midpoint vertices.

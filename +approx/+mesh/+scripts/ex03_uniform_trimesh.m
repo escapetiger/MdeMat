@@ -1,6 +1,4 @@
-clear;
-close all;
-clc;
+clear; close all; clc;
 
 fprintf('Starting Mesh Validation Example...\n');
 fprintf('=======================================\n');
@@ -17,11 +15,11 @@ fprintf('Generated mesh with %d vertices and %d elements.\n', ...
 mesh = approx.mesh.Triangulation(vertices, elements);
 
 fprintf('Triangulation properties:\n');
-fprintf('  Dimensions: %d\n', mesh.NDims);
-fprintf('  Vertices: %d\n', mesh.NVertices);
-fprintf('  Elements: %d\n', mesh.NElements);
-fprintf('  Faces: %d\n', mesh.NFaces);
-fprintf('  Boundary faces: %d\n', mesh.NBoundaryFaces);
+fprintf('  Dimensions: %d\n', mesh.nDims);
+fprintf('  Vertices: %d\n', mesh.nVertices);
+fprintf('  Elements: %d\n', mesh.nElements);
+fprintf('  Faces: %d\n', mesh.nFaces);
+fprintf('  Boundary faces: %d\n', mesh.nBoundaryFaces);
 
 %% Set up periodic boundaries
 fprintf('\nStep 2: Setting up periodic boundaries...\n');
@@ -37,14 +35,14 @@ fprintf('Periodic mapping established with tolerance = %.2e\n', tolerance);
 
 % Count total vertex-to-vertex connections
 totalV2VConnections = 0;
-if ~isempty(mesh.VertexToVertexTables)
-    for iTable = 1:length(mesh.VertexToVertexTables)
-        totalV2VConnections = totalV2VConnections + nnz(mesh.VertexToVertexTables{iTable});
+if ~isempty(mesh.vertexToVertexTables)
+    for iTable = 1:length(mesh.vertexToVertexTables)
+        totalV2VConnections = totalV2VConnections + nnz(mesh.vertexToVertexTables{iTable});
     end
 end
 
 fprintf('Vertex-to-vertex connections: %d\n', totalV2VConnections);
-fprintf('Face-to-face connections: %d\n', nnz(mesh.FaceToFaceTable));
+fprintf('Face-to-face connections: %d\n', nnz(mesh.faceToFaceTable));
 
 %% Validate periodic connections
 fprintf('\nStep 3: Validating periodic connections...\n');
@@ -77,10 +75,20 @@ function [vertices, elements] = generateUniformBoxMesh(nx, ny, xRange, yRange)
 %
 %   [vertices, elements] = generateUniformBoxMesh(nx, ny, xRange, yRange)
 %   creates a uniform triangular mesh on a rectangular domain.
+%
+% Inputs:
+%   nx - Number of divisions in x-direction
+%   ny - Number of divisions in y-direction  
+%   xRange - [xMin, xMax] range in x-direction
+%   yRange - [yMin, yMax] range in y-direction
+%
+% Outputs:
+%   vertices - Vertex coordinates (nVertices × 2)
+%   elements - Element connectivity (nElements × 3)
 
 % Generate grid points
-xPoints = linspace(xRange(1), xRange(2), nx+1);
-yPoints = linspace(yRange(1), yRange(2), ny+1);
+xPoints = linspace(xRange(1), xRange(2), nx + 1);
+yPoints = linspace(yRange(1), yRange(2), ny + 1);
 [X, Y] = meshgrid(xPoints, yPoints);
 
 % Convert to vertex list
@@ -93,14 +101,14 @@ elements = [];
 for j = 1:ny
     for i = 1:nx
         % Grid indices for current cell
-        v1 = (j - 1) * (nx + 1) + i; % Bottom-left
-        v2 = (j - 1) * (nx + 1) + i + 1; % Bottom-right
-        v3 = j * (nx + 1) + i; % Top-left
-        v4 = j * (nx + 1) + i + 1; % Top-right
-
+        v1 = (j-1) * (nx+1) + i;       % Bottom-left
+        v2 = (j-1) * (nx+1) + i + 1;   % Bottom-right  
+        v3 = j * (nx+1) + i;           % Top-left
+        v4 = j * (nx+1) + i + 1;       % Top-right
+        
         % Two triangles per cell
-        elements = [elements; v1, v2, v3]; % Lower triangle
-        elements = [elements; v2, v4, v3]; % Upper triangle
+        elements = [elements; v1, v2, v3];  % Lower triangle
+        elements = [elements; v2, v4, v3];  % Upper triangle
     end
 end
 
@@ -117,47 +125,47 @@ function validatePeriodicConnections(mesh, boundingBox, tolerance)
 
 fprintf('Validating periodic vertex connections...\n');
 
-vertices = mesh.Vertices;
+vertices = mesh.vertices;
 nConnections = 0;
 
 % Define expected periodic shifts based on bounding box
 xRange = [boundingBox(1), boundingBox(2)];
 yRange = [boundingBox(3), boundingBox(4)];
-periodicShifts = [; ...
-    diff(xRange), 0; ... % Right boundary to left
-    -diff(xRange), 0; ... % Left boundary to right
-    0, diff(yRange); ... % Top boundary to bottom
-    0, -diff(yRange); ... % Bottom boundary to top
-    diff(xRange), diff(yRange); ... % Top-right to bottom-left
-    -diff(xRange), -diff(yRange); ... % Bottom-left to top-right
-    diff(xRange), -diff(yRange); ... % Bottom-right to top-left
-    -diff(xRange), diff(yRange); ... % Top-left to bottom-right
-    ];
+periodicShifts = [
+    diff(xRange),  0;            % Right boundary to left
+   -diff(xRange),  0;            % Left boundary to right
+    0,  diff(yRange);            % Top boundary to bottom
+    0, -diff(yRange);            % Bottom boundary to top
+    diff(xRange),  diff(yRange); % Top-right to bottom-left
+   -diff(xRange), -diff(yRange); % Bottom-left to top-right
+    diff(xRange), -diff(yRange); % Bottom-right to top-left
+   -diff(xRange),  diff(yRange)  % Top-left to bottom-right
+];
 
 % Test vertex-to-vertex mapping
-if ~isempty(mesh.VertexToVertexTables)
-    for iTable = 1:length(mesh.VertexToVertexTables)
-        V2V = mesh.VertexToVertexTables{iTable};
+if ~isempty(mesh.vertexToVertexTables)
+    for iTable = 1:length(mesh.vertexToVertexTables)
+        V2V = mesh.vertexToVertexTables{iTable};
         [iVertices, jVertices] = find(V2V);
-
+        
         for k = 1:length(iVertices)
             i = iVertices(k);
             j = jVertices(k);
-
+            
             if i ~= j
                 % Check if connection corresponds to a periodic shift
                 displacement = vertices(j, :) - vertices(i, :);
-
+                
                 % Find matching shift
                 shiftFound = false;
                 for s = 1:size(periodicShifts, 1)
-                    if norm(displacement-periodicShifts(s, :)) < tolerance
+                    if norm(displacement - periodicShifts(s, :)) < tolerance
                         shiftFound = true;
                         nConnections = nConnections + 1;
                         break;
                     end
                 end
-
+                
                 if ~shiftFound && norm(displacement) > tolerance
                     fprintf('Warning: Unexpected connection between vertices %d and %d\n', i, j);
                     fprintf('  Displacement: [%.6f, %.6f]\n', displacement);
@@ -170,31 +178,31 @@ end
 fprintf('Validated %d periodic vertex connections.\n', nConnections);
 
 % Test face-to-face mapping
-if ~isempty(mesh.FaceToFaceTable)
-    F2F = mesh.FaceToFaceTable;
-    faces = mesh.Faces;
+if ~isempty(mesh.faceToFaceTable)
+    F2F = mesh.faceToFaceTable;
+    faces = mesh.faces;
     nFaceConnections = 0;
-
+    
     fprintf('Validating periodic face connections...\n');
-
+    
     [iFaces, jFaces] = find(F2F);
-
+    
     for k = 1:length(iFaces)
         i = iFaces(k);
         j = jFaces(k);
-
+        
         if i ~= j
             % Check if face connection is consistent with vertex connections
             face1Vertices = faces(i, :);
             face2Vertices = faces(j, :);
-
+            
             % Check if all vertices in face1 have corresponding vertices in face2
             mappingConsistent = true;
-            if ~isempty(mesh.VertexToVertexTables)
+            if ~isempty(mesh.vertexToVertexTables)
                 for v1 = face1Vertices
                     mapped = false;
-                    for iTable = 1:length(mesh.VertexToVertexTables)
-                        V2V = mesh.VertexToVertexTables{iTable};
+                    for iTable = 1:length(mesh.vertexToVertexTables)
+                        V2V = mesh.vertexToVertexTables{iTable};
                         for v2 = face2Vertices
                             if V2V(v1, v2)
                                 mapped = true;
@@ -211,7 +219,7 @@ if ~isempty(mesh.FaceToFaceTable)
                     end
                 end
             end
-
+            
             if mappingConsistent
                 nFaceConnections = nFaceConnections + 1;
             else
@@ -219,7 +227,7 @@ if ~isempty(mesh.FaceToFaceTable)
             end
         end
     end
-
+    
     fprintf('Validated %d periodic face connections.\n', nFaceConnections);
 else
     fprintf('No face-to-face mapping table found.\n');
@@ -236,10 +244,10 @@ function testFindFunctionality(mesh)
 fprintf('Testing getInternalElements...\n');
 interiorElements = mesh.getInternalElements();
 fprintf('Found %d internal elements (out of %d total).\n', ...
-    length(interiorElements), mesh.NElements);
+    length(interiorElements), mesh.nElements);
 
 fprintf('Testing getBoundaryElements...\n');
-nFacesPerElement = mesh.NVerticesPerElement;
+nFacesPerElement = mesh.nVerticesPerElement;
 totalBoundaryElements = [];
 
 for iFace = 1:nFacesPerElement
@@ -253,7 +261,7 @@ fprintf('Total unique boundary elements: %d\n', length(uniqueBoundaryElements));
 
 % Verify interior + boundary = total
 allElements = union(interiorElements, uniqueBoundaryElements);
-if length(allElements) == mesh.NElements
+if length(allElements) == mesh.nElements
     fprintf('✓ Internal and boundary elements cover all elements.\n');
 else
     fprintf('✗ Element coverage mismatch!\n');
@@ -262,20 +270,20 @@ end
 fprintf('Testing findNeighborElements...\n');
 
 % Test with a sample of elements
-testElements = [1, ceil(mesh.NElements/2), mesh.NElements];
-testElements = testElements(testElements <= mesh.NElements);
+testElements = [1, ceil(mesh.nElements/2), mesh.nElements];
+testElements = testElements(testElements <= mesh.nElements);
 
 for iElement = testElements
     fprintf('  Element %d neighbors:\n', iElement);
-
+    
     for iFace = 1:nFacesPerElement
         try
             % Test dirichlet boundary conditions
             [neighborsDirichlet, facesDirichlet] = mesh.findNeighborElements(iElement, iFace, 'dirichlet');
-
-            % Test periodic boundary conditions
+            
+            % Test periodic boundary conditions  
             [neighborsPeriodic, facesPeriodic] = mesh.findNeighborElements(iElement, iFace, 'periodic');
-
+            
             fprintf('    Face %d: %d dirichlet, %d periodic\n', ...
                 iFace, length(neighborsDirichlet), length(neighborsPeriodic));
         catch ME
@@ -312,22 +320,22 @@ fprintf('Inverse Jacobians computed for %d elements.\n', size(invJ, 3));
 % Validate J * inv(J) = I for a few elements
 fprintf('Validating Jacobian inversion...\n');
 J = mesh.computeElementJacobians();
-testElements = [1, ceil(mesh.NElements/2), mesh.NElements];
+testElements = [1, ceil(mesh.nElements/2), mesh.nElements];
 maxError = 0;
 
 for iElement = testElements
-    if iElement <= mesh.NElements
-        if mesh.NDims == 1
+    if iElement <= mesh.nElements
+        if mesh.nDims == 1
             Ji = J(iElement);
             invJi = invJ(iElement);
             product = Ji * invJi;
-            error = abs(product-1);
+            error = abs(product - 1);
         else
             Ji = J(:, :, iElement);
             invJi = invJ(:, :, iElement);
             product = Ji * invJi;
             identity = eye(size(product));
-            error = norm(product-identity, 'fro');
+            error = norm(product - identity, 'fro');
         end
         maxError = max(maxError, error);
     end
@@ -341,7 +349,7 @@ else
 end
 
 fprintf('Computing face Jacobian determinants...\n');
-nFacesPerElement = mesh.NVerticesPerElement;
+nFacesPerElement = mesh.nVerticesPerElement;
 for iFace = 1:nFacesPerElement
     detJFace = mesh.computeFaceJacobianDeterminants([], iFace);
     fprintf('Face %d: min=%.6f, max=%.6f, mean=%.6f\n', ...
@@ -351,23 +359,23 @@ end
 fprintf('Computing outward normal vectors...\n');
 for iFace = 1:nFacesPerElement
     normals = mesh.computeOutwardNormals([], iFace);
-
+    
     % Check unit length
     normLengths = sqrt(sum(normals.^2, 1));
-    maxNormError = max(abs(normLengths-1));
-
+    maxNormError = max(abs(normLengths - 1));
+    
     fprintf('Face %d normals: max deviation from unit length = %.2e\n', ...
         iFace, maxNormError);
 end
 
 fprintf('Computing mesh measures...\n');
 detJ = mesh.computeElementJacobianDeterminants();
-elementMeasures = sum(detJ) / 2; % Divide by 2 for triangular elements
+elementMeasures = sum(detJ) / 2;  % Divide by 2 for triangular elements
 fprintf('Total mesh measure: %.6f\n', elementMeasures);
 
 % For unit square, total area should be 1
 expectedArea = 1.0;
-areaError = abs(elementMeasures-expectedArea);
+areaError = abs(elementMeasures - expectedArea);
 fprintf('Area error compared to unit square: %.6f\n', areaError);
 
 if areaError < 1e-10
@@ -389,11 +397,11 @@ figure('Name', 'Mesh Structure and Periodic Connections', ...
 
 %% Subplot 1: Basic mesh structure with boundary highlighting
 subplot(1, 3, 1);
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
 % Plot elements
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), [0.9, 0.9, 0.9], ...
         'EdgeColor', [0.5, 0.5, 0.5], 'LineWidth', 1);
@@ -401,8 +409,8 @@ for iElement = 1:mesh.NElements
 end
 
 % Highlight boundary faces
-faces = mesh.Faces;
-boundary = mesh.Boundary;
+faces = mesh.faces;
+boundary = mesh.boundary;
 for iBoundaryFace = boundary'
     faceVertices = vertices(faces(iBoundaryFace, :), :);
     plot(faceVertices(:, 1), faceVertices(:, 2), 'r-', 'LineWidth', 3);
@@ -412,8 +420,8 @@ end
 plot(vertices(:, 1), vertices(:, 2), 'ko', 'MarkerSize', 6, 'MarkerFaceColor', 'black');
 
 % Add vertex labels
-for iVertex = 1:mesh.NVertices
-    text(vertices(iVertex, 1)+0.02, vertices(iVertex, 2)+0.02, ...
+for iVertex = 1:mesh.nVertices
+    text(vertices(iVertex, 1) + 0.02, vertices(iVertex, 2) + 0.02, ...
         sprintf('%d', iVertex), 'FontSize', 8, 'FontWeight', 'bold');
 end
 
@@ -429,7 +437,7 @@ title('Mesh Structure with Boundary', 'FontSize', 14, 'FontWeight', 'bold');
 subplot(1, 3, 2);
 
 % Plot mesh structure lightly
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), [0.95, 0.95, 0.95], ...
         'EdgeColor', [0.7, 0.7, 0.7], 'LineWidth', 0.5);
@@ -440,18 +448,18 @@ end
 plot(vertices(:, 1), vertices(:, 2), 'ko', 'MarkerSize', 6, 'MarkerFaceColor', 'black');
 
 % Add periodic connections
-if ~isempty(mesh.VertexToVertexTables)
-    connectionColors = lines(length(mesh.VertexToVertexTables));
-
-    for iTable = 1:length(mesh.VertexToVertexTables)
-        V2V = mesh.VertexToVertexTables{iTable};
+if ~isempty(mesh.vertexToVertexTables)
+    connectionColors = lines(length(mesh.vertexToVertexTables));
+    
+    for iTable = 1:length(mesh.vertexToVertexTables)
+        V2V = mesh.vertexToVertexTables{iTable};
         [i, j] = find(V2V);
-
+        
         for k = 1:length(i)
-            if i(k) ~= j(k) % Avoid self-connections
+            if i(k) ~= j(k)  % Avoid self-connections
                 v1 = vertices(i(k), :);
                 v2 = vertices(j(k), :);
-
+                
                 plot([v1(1), v2(1)], [v1(2), v2(2)], '--', ...
                     'Color', connectionColors(iTable, :), 'LineWidth', 2);
             end
@@ -472,7 +480,7 @@ subplot(1, 3, 3);
 
 % Find element classifications
 interiorElements = mesh.getInternalElements();
-allElements = 1:mesh.NElements;
+allElements = 1:mesh.nElements;
 boundaryElements = setdiff(allElements, interiorElements);
 
 % Plot internal elements in blue
@@ -483,19 +491,19 @@ if ~isempty(interiorElements)
     interiorHandle = fill(elementVertices(:, 1), elementVertices(:, 2), [0.2, 0.6, 1.0], ...
         'EdgeColor', [0.1, 0.3, 0.5], 'LineWidth', 1, 'FaceAlpha', 0.8);
     hold on;
-
+    
     % Add element number
     centroid = mean(elementVertices, 1);
     text(centroid(1), centroid(2), sprintf('%d', iElement), ...
         'FontSize', 10, 'FontWeight', 'bold', 'HorizontalAlignment', 'center', ...
         'Color', 'white');
-
+    
     % Plot remaining internal elements
     for iElement = interiorElements(2:end)
         elementVertices = vertices(elements(iElement, :), :);
         fill(elementVertices(:, 1), elementVertices(:, 2), [0.2, 0.6, 1.0], ...
             'EdgeColor', [0.1, 0.3, 0.5], 'LineWidth', 1, 'FaceAlpha', 0.8);
-
+        
         % Add element number
         centroid = mean(elementVertices, 1);
         text(centroid(1), centroid(2), sprintf('%d', iElement), ...
@@ -511,19 +519,19 @@ if ~isempty(boundaryElements)
     elementVertices = vertices(elements(iElement, :), :);
     boundaryHandle = fill(elementVertices(:, 1), elementVertices(:, 2), [1.0, 0.6, 0.2], ...
         'EdgeColor', [0.5, 0.3, 0.1], 'LineWidth', 1, 'FaceAlpha', 0.8);
-
+    
     % Add element number
     centroid = mean(elementVertices, 1);
     text(centroid(1), centroid(2), sprintf('%d', iElement), ...
         'FontSize', 10, 'FontWeight', 'bold', 'HorizontalAlignment', 'center', ...
         'Color', 'white');
-
+    
     % Plot remaining boundary elements
     for iElement = boundaryElements(2:end)
         elementVertices = vertices(elements(iElement, :), :);
         fill(elementVertices(:, 1), elementVertices(:, 2), [1.0, 0.6, 0.2], ...
             'EdgeColor', [0.5, 0.3, 0.1], 'LineWidth', 1, 'FaceAlpha', 0.8);
-
+        
         % Add element number
         centroid = mean(elementVertices, 1);
         text(centroid(1), centroid(2), sprintf('%d', iElement), ...
@@ -566,20 +574,20 @@ function createValidationResultsFigure(mesh)
 figure('Name', 'Validation Results: Jacobians and Connectivity', ...
     'Position', [150, 150, 1400, 500]);
 
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
 %% Subplot 1: Jacobian determinants with colormap
 subplot(1, 3, 1);
 detJ = mesh.computeElementJacobianDeterminants();
 
 % Plot elements colored by Jacobian determinant
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), detJ(iElement), ...
         'EdgeColor', 'black', 'LineWidth', 0.8);
     hold on;
-
+    
     % Add Jacobian value text
     centroid = mean(elementVertices, 1);
     text(centroid(1), centroid(2), sprintf('%.3f', detJ(iElement)), ...
@@ -600,7 +608,7 @@ colorbar('FontSize', 10);
 subplot(1, 3, 2);
 
 % Plot mesh structure
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), [0.9, 0.9, 0.9], ...
         'EdgeColor', [0.5, 0.5, 0.5], 'LineWidth', 0.5);
@@ -609,23 +617,23 @@ end
 
 % Plot normal vectors for each face type
 scaleFactor = 0.1;
-nFacesPerElement = mesh.NVerticesPerElement;
+nFacesPerElement = mesh.nVerticesPerElement;
 normalColors = {'red', 'green', 'blue'};
 
 for iFace = 1:nFacesPerElement
     try
         normals = mesh.computeOutwardNormals([], iFace);
         boundaryElements = mesh.getBoundaryElements(iFace);
-
+        
         for iElement = boundaryElements'
-            if iElement <= mesh.NElements
+            if iElement <= mesh.nElements
                 elementVertices = vertices(elements(iElement, :), :);
-
+                
                 % Compute face center
                 faceVertexIndices = setdiff(1:nFacesPerElement, iFace);
                 faceVertices = elementVertices(faceVertexIndices, :);
                 faceCenter = mean(faceVertices, 1);
-
+                
                 % Plot normal vector
                 if size(normals, 2) >= iElement
                     normal = normals(:, iElement);
@@ -652,7 +660,7 @@ title('Outward Normal Vectors', 'FontSize', 14, 'FontWeight', 'bold');
 subplot(1, 3, 3);
 
 % Plot mesh structure lightly
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), [0.95, 0.95, 0.95], ...
         'EdgeColor', [0.7, 0.7, 0.7], 'LineWidth', 0.5);
@@ -662,36 +670,41 @@ end
 % Select sample elements for neighbor demonstration
 sampleElements = [5, 16, 25]; % Strategic selection for good visualization
 highlightColors = {[1, 0.3, 0.3], [0.3, 0.3, 1], [0.3, 1, 0.3]};
-nFacesPerElement = mesh.NVerticesPerElement;
+nFacesPerElement = mesh.nVerticesPerElement;
 
 for iSample = 1:length(sampleElements)
     iElement = sampleElements(iSample);
-    if iElement <= mesh.NElements
+    if iElement <= mesh.nElements
         color = highlightColors{iSample};
-
+        
         % Highlight the sample element
         elementVertices = vertices(elements(iElement, :), :);
         fill(elementVertices(:, 1), elementVertices(:, 2), color, ...
             'FaceAlpha', 0.9, 'EdgeColor', 'black', 'LineWidth', 2);
-
+        
         % Add element number
         centroid = mean(elementVertices, 1);
         text(centroid(1), centroid(2), sprintf('%d', iElement), ...
             'FontSize', 12, 'FontWeight', 'bold', 'HorizontalAlignment', 'center', ...
             'Color', 'white');
-
+        
         % Find and highlight neighbors with periodic boundaries
         allNeighbors = [];
         for iFace = 1:nFacesPerElement
-            [neighbors, ~] = mesh.findNeighborElements(iElement, iFace, 'periodic');
-            allNeighbors = [allNeighbors, neighbors];
-
+            try
+                [neighbors, ~] = mesh.findNeighborElements(iElement, iFace, 'periodic');
+                allNeighbors = [allNeighbors, neighbors];
+            catch ME
+                % Handle errors gracefully
+                fprintf('Warning: Could not find neighbors for element %d, face %d: %s\n', ...
+                    iElement, iFace, ME.message);
+            end
         end
-
+        
         % Remove duplicates and highlight neighbors
         uniqueNeighbors = unique(allNeighbors);
         for neighbor = uniqueNeighbors
-            if neighbor > 0 && neighbor <= mesh.NElements
+            if neighbor > 0 && neighbor <= mesh.nElements
                 neighborVertices = vertices(elements(neighbor, :), :);
                 plot(neighborVertices([1:end, 1], 1), neighborVertices([1:end, 1], 2), ...
                     'Color', color, 'LineWidth', 3);

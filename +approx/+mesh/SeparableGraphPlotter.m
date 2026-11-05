@@ -11,35 +11,51 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
     %   approx.mesh.GraphPlotter, approx.mesh.SeparableGraph
 
     methods
-        function plot(obj, graph, options)
+        function plot(obj, graph, varargin)
             % PLOT Visualize a SeparableGraph object.
             %
             %   plot(obj, graph) creates a visualization of the separable
             %   graph using memory-efficient tensor-product structure.
             %
-            %   plot(obj, graph, options) allows customization through
-            %   options structure.
-
-            arguments
-                obj
-                graph
-                options.VertexColor = 'b'
-                options.EdgeColor = 'k'
-                options.VertexSize{mustBePositive} = 36
-                options.EdgeWidth{mustBePositive} = 1
-                options.ShowVertices{mustBeNumericOrLogical} = true
-                options.ShowEdges{mustBeNumericOrLogical} = true
-                options.MaxVertices{mustBePositive} = 10000
-                options.ProjectionDims{mustBePositive, mustBeInteger} = [1, 2, 3]
-            end
+            %   plot(obj, graph, Name, Value, ...) allows customization
+            %   through name-value pair arguments.
+            %
+            % Inputs:
+            %   obj - The SeparableGraphPlotter object
+            %   graph - approx.mesh.SeparableGraph object to visualize
+            %   varargin - Name-value pairs for customization
+            %
+            % Name-Value Pairs:
+            %   'VertexColor' - Color for vertices (default: 'b')
+            %   'EdgeColor' - Color for edges (default: 'k')
+            %   'VertexSize' - Size of vertex markers (default: 36)
+            %   'EdgeWidth' - Width of edge lines (default: 1)
+            %   'ShowVertices' - Flag to show vertices (default: true)
+            %   'ShowEdges' - Flag to show edges (default: true)
+            %   'MaxVertices' - Maximum vertices before subsampling (default: 10000)
+            %   'ProjectionDims' - Dimensions for high-D projection (default: [1,2,3])
 
             %< Check if this is a SeparableGraph
             if isa(graph, 'approx.mesh.SeparableGraph')
+                %< Parse SeparableGraph-specific parameters
+                p = inputParser;
+                addParameter(p, 'VertexColor', 'b');
+                addParameter(p, 'EdgeColor', 'k');
+                addParameter(p, 'VertexSize', 36);
+                addParameter(p, 'EdgeWidth', 1);
+                addParameter(p, 'ShowVertices', true);
+                addParameter(p, 'ShowEdges', true);
+                addParameter(p, 'MaxVertices', 10000);
+                addParameter(p, 'ProjectionDims', [1, 2, 3]);
+                parse(p, varargin{:});
+
+                options = p.Results;
+
                 %< Choose visualization strategy based on graph properties
-                if graph.NTotalVertices > options.MaxVertices
+                if graph.nTotalVertices > options.MaxVertices
                     %< Large grids: use subsampling
                     obj.plotWithSubsampling(graph, options);
-                elseif graph.NDims <= 3
+                elseif graph.nDims <= 3
                     %< Small 1D/2D/3D grids: direct tensor visualization
                     obj.plotTensorDirect(graph, options);
                 else
@@ -48,18 +64,23 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
                 end
             else
                 %< Fall back to parent GraphPlotter for regular Graph objects
-                plot@approx.mesh.GraphPlotter(obj, graph, options);
+                plot@approx.mesh.GraphPlotter(obj, graph, varargin{:});
             end
         end
     end
 
     methods (Access = private)
-        function plotTensorDirect(~, graph, options)
+        function plotTensorDirect(obj, graph, options)
             % PLOTTENSORDIRECT Direct visualization using tensor structure.
             %
             %   plotTensorDirect(obj, graph, options) visualizes the
             %   separable graph directly using its tensor-product structure
             %   without expanding to full representation.
+            %
+            % Inputs:
+            %   obj - The SeparableGraphPlotter object
+            %   graph - approx.mesh.SeparableGraph object
+            %   options - Structure containing plotting options
 
             %< Prepare the plot
             holdState = ishold;
@@ -69,7 +90,7 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
             hold on;
 
             %< Plot based on dimensionality
-            switch graph.NDims
+            switch graph.nDims
                 case 1
                     plotTensor1D(graph, options);
                 case 2
@@ -84,7 +105,7 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
 
             %< Add informative title
             title(sprintf('%dD SeparableGraph: %d total vertices, %d total edges', ...
-                graph.NDims, graph.NTotalVertices, graph.NTotalEdges));
+                graph.nDims, graph.nTotalVertices, graph.nTotalEdges));
 
             %< Restore hold state
             if ~holdState
@@ -98,17 +119,22 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
             %   plotWithSubsampling(obj, graph, options) creates a
             %   subsampled version of the graph for visualization when
             %   the total number of vertices exceeds the threshold.
+            %
+            % Inputs:
+            %   obj - The SeparableGraphPlotter object
+            %   graph - approx.mesh.SeparableGraph object
+            %   options - Structure containing plotting options
 
             %< Calculate subsampling factor
-            subsampleFactor = ceil(sqrt(graph.NTotalVertices/options.MaxVertices));
+            subsampleFactor = ceil(sqrt(graph.nTotalVertices/options.MaxVertices));
 
             %< Create subsampled factors
-            subsampledVertices = cell(1, graph.NDims);
-            subsampledEdges = cell(1, graph.NDims);
+            subsampledVertices = cell(1, graph.nDims);
+            subsampledEdges = cell(1, graph.nDims);
 
-            for d = 1:graph.NDims
-                vertices = graph.Vertices{d};
-                edges = graph.Edges{d};
+            for d = 1:graph.nDims
+                vertices = graph.vertices{d};
+                edges = graph.edges{d};
 
                 %< Subsample vertices uniformly
                 n = length(vertices);
@@ -140,26 +166,29 @@ classdef SeparableGraphPlotter < approx.mesh.GraphPlotter
         end
 
         function plotWithProjection(obj, graph, options)
-            % PLOTWITHPROJECTION Visualize high-dimensional graphs using
-            % projection.
+            % PLOTWITHPROJECTION Visualize high-dimensional graphs using projection.
             %
             %   plotWithProjection(obj, graph, options) creates a
             %   lower-dimensional projection of high-dimensional separable
             %   graphs for visualization.
-
+            %
+            % Inputs:
+            %   obj - The SeparableGraphPlotter object
+            %   graph - approx.mesh.SeparableGraph object
+            %   options - Structure containing plotting options
 
             %< Validate and adjust projection dimensions
             projDims = options.ProjectionDims;
-            projDims = projDims(projDims <= graph.NDims);
+            projDims = projDims(projDims <= graph.nDims);
             projDims = projDims(1:min(3, length(projDims)));
 
             if isempty(projDims)
-                projDims = 1:min(3, graph.NDims);
+                projDims = 1:min(3, graph.nDims);
             end
 
             %< Create projected graph factors
-            projVertices = graph.Vertices(projDims);
-            projEdges = graph.Edges(projDims);
+            projVertices = graph.vertices(projDims);
+            projEdges = graph.edges(projDims);
 
             %< Create and plot projected graph
             projGraph = approx.mesh.SeparableGraph(projVertices, projEdges);
@@ -180,9 +209,14 @@ function plotTensor1D(graph, options)
 %
 %   plotTensor1D(obj, graph, options) creates a 1D
 %   visualization by plotting vertices along the x-axis.
+%
+% Inputs:
+%   obj - The SeparableGraphPlotter object
+%   graph - 1D approx.mesh.SeparableGraph object
+%   options - Structure containing plotting options
 
-vertices = graph.Vertices{1};
-edges = graph.Edges{1};
+vertices = graph.vertices{1};
+edges = graph.edges{1};
 
 %< Plot vertices
 if options.ShowVertices && ~isequal(options.VertexColor, 'none')
@@ -211,11 +245,16 @@ function plotTensor2D(graph, options)
 %   plotTensor2D(obj, graph, options) creates a 2D grid
 %   visualization using the tensor-product structure without
 %   expanding to full vertex coordinates.
+%
+% Inputs:
+%   obj - The SeparableGraphPlotter object
+%   graph - 2D approx.mesh.SeparableGraph object
+%   options - Structure containing plotting options
 
-vertices1 = graph.Vertices{1};
-vertices2 = graph.Vertices{2};
-edges1 = graph.Edges{1};
-edges2 = graph.Edges{2};
+vertices1 = graph.vertices{1};
+vertices2 = graph.vertices{2};
+edges1 = graph.edges{1};
+edges2 = graph.edges{2};
 
 %< Plot vertices using tensor product
 if options.ShowVertices && ~isequal(options.VertexColor, 'none')
@@ -260,13 +299,18 @@ function plotTensor3D(graph, options)
 %
 %   plotTensor3D(graph, options) creates a 3D grid
 %   visualization using the tensor-product structure.
+%
+% Inputs:
+%   obj - The SeparableGraphPlotter object
+%   graph - 3D approx.mesh.SeparableGraph object
+%   options - Structure containing plotting options
 
-vertices1 = graph.Vertices{1};
-vertices2 = graph.Vertices{2};
-vertices3 = graph.Vertices{3};
-edges1 = graph.Edges{1};
-edges2 = graph.Edges{2};
-edges3 = graph.Edges{3};
+vertices1 = graph.vertices{1};
+vertices2 = graph.vertices{2};
+vertices3 = graph.vertices{3};
+edges1 = graph.edges{1};
+edges2 = graph.edges{2};
+edges3 = graph.edges{3};
 
 %< Plot vertices using tensor product
 if options.ShowVertices && ~isequal(options.VertexColor, 'none')

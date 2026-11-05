@@ -17,12 +17,28 @@ classdef Sdirk3Integrator < approx.odeint.DirkIntegrator
     %   to optimize stability properties while maintaining third-order
     %   accuracy. The method requires three implicit solves per time step.
     %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Sdirk3Integrator(1.0);
+    %   U_new = integrator.step(L, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure diffusion (only linear term)
+    %   U_new = integrator.step(L, [], []);
+    %
+    %   % Pure forcing (only source term)
+    %   U_new = integrator.step([], S, []);
+    %
+    %   % With mass matrix
+    %   U_new = integrator.step(L, S, M);
+    %
     % See also:
     %   approx.odeint.DirkIntegrator, approx.odeint.Sdirk2Integrator,
     %   approx.odeint.Sdirk4Integrator
 
     properties (Constant)
-        Order = 3 % Accuracy order of the SDIRK3 method
+        ORDER = 3 % Accuracy order of the SDIRK3 method
     end
         
     methods
@@ -31,10 +47,12 @@ classdef Sdirk3Integrator < approx.odeint.DirkIntegrator
             %
             %   obj = Sdirk3Integrator(final) creates a third-order SDIRK
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Sdirk3Integrator object
             
             obj@approx.odeint.DirkIntegrator(3, final);
             

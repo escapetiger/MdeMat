@@ -1,10 +1,20 @@
 # Environment configuration
 
 # =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
 # Algorithm
 # =======================================================================
 
-OPTION=schemeName='ldg'
+# -----------------------------------------------------------------------
+# Input/Output
+# -----------------------------------------------------------------------
+OPTION=verbose=true
 
 # -----------------------------------------------------------------------
 # Time discretization
@@ -21,22 +31,23 @@ OPTION=tSplitName=''
 # tOdeIntName='sdirk3': SDIRK3 scheme
 OPTION=tOdeIntName='sdirk3'
 
-# Fixed time step
-OPTION=dt=0.1
-
 # CFL number
-# OPTION=cfl=0.5
+OPTION=cfl=0.5
 
 # -----------------------------------------------------------------------
 # Space discretization
 # -----------------------------------------------------------------------
 
+# xDiscName='ldg': local DG
+OPTION=xDiscName='ldg'
+
 # spatial order
 OPTION=xBasisOrder=3
 
-# xBasisType='modal': Modal basis 
-# xBasisType='nodal': Nodal basis
-OPTION=xBasisType='modal'
+# xBasisType='legendre': Monic Legendre basis, 
+# xBasisType='lagrange_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='lagrange_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='legendre'
 
 # xBasisPattern='Q': Qk polynomial space
 # xBasisPattern='P': Pk polynomial space
@@ -52,4 +63,4 @@ OPTION=xBasisPattern='P'
 # xPenaltyType{2,1}='central': central flux
 # xPenaltyType{2,1}='right': right flux
 # xPenaltyType{2,1}='left': left flux
-OPTION=xPenaltyType={'', 'right'; 'left', ''}
+OPTION=xPenaltyType={'boundaryw', 'right'; 'left', ''}

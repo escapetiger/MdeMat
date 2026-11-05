@@ -22,359 +22,362 @@ classdef Mesh < handle
     %
     % See also:
     %   approx.mesh.Grid, approx.mesh.PolytopalMesh
-    
+
     properties (Constant)
-        EJacMask = 0b100000
-        DetEJacMask = 0b010000
-        InvEJacMask = 0b001000
-        DetFJacMask = 0b000100
-        OutNormalMask = 0b000010
-        DirectionMask = 0b000001
+        EVAL_EJ = 0b100000
+        EVAL_DETEJ = 0b010000
+        EVAL_INVEJ = 0b001000
+        EVAL_DETFJ = 0b000100
+        EVAL_OUTN = 0b000010
+        EVAL_BETA = 0b000001
     end
-    
+
     properties (Access = public)
-        Vertices % Vertex coordinates (NVertices × NDims or cell array)
-        Elements % Element connectivity (NElements × NVerticesPerElement or cell array)
-        Transform % Transformation data cache (struct)
-        Direction % Direction vector (NDims x 1)
-        Status % Status mask
+        vertices % Vertex coordinates (nVertices × nDims or cell array)
+        elements % Element connectivity (nElements × nVerticesPerElement or cell array)
+        transform % Transformation data cache (struct)
+        direction % Direction vector (nDims x 1)
+        status % Status mask
     end
-    
+
     properties (Dependent)
-        NDims % Number of spatial dimensions (integer)
-        NVertices % Number of vertices in the mesh (integer)
-        NElements % Number of elements in the mesh (integer)
-        NVerticesPerElement % Number of vertices per element (integer)
+        nDims % Number of spatial dimensions (integer)
+        nVertices % Number of vertices in the mesh (integer)
+        nElements % Number of elements in the mesh (integer)
+        nVerticesPerElement % Number of vertices per element (integer)
     end
-    
+
     methods
         function obj = Mesh(vertices, elements)
             % MESH Constructor for Mesh base class.
             %
             %   obj = Mesh(vertices, elements) creates a mesh from vertex
             %   coordinates and element connectivity.
-            
-            arguments
-                vertices {mustBeNumericOrCell} = []
-                elements {mustBeNumericOrCell} = []
-            end
-            
-            obj.Vertices = vertices;
-            obj.Elements = elements;
+            %
+            % Inputs:
+            %   vertices - Vertex coordinate matrix or cell array
+            %   elements - Element connectivity matrix or cell array
+            %
+            % Outputs:
+            %   obj - Constructed Mesh object
+
+            obj.vertices = vertices;
+            obj.elements = elements;
             obj.resetTransform();
         end
-        
-        function n = get.NDims(obj)
+
+        function n = get.nDims(obj)
             % GET.NDIMS Get the number of spatial dimensions.
-            
-            if iscell(obj.Vertices)
-                n = length(obj.Vertices);
+
+            if iscell(obj.vertices)
+                n = length(obj.vertices);
             else
-                n = size(obj.Vertices, 2);
+                n = size(obj.vertices, 2);
             end
         end
-        
-        function n = get.NVertices(obj)
+
+        function n = get.nVertices(obj)
             % GET.NVERTICES Get the number of vertices in the mesh.
-            
-            if iscell(obj.Vertices)
-                n = prod(cellfun(@length, obj.Vertices));
+
+            if iscell(obj.vertices)
+                n = prod(cellfun(@length, obj.vertices));
             else
-                n = size(obj.Vertices, 1);
+                n = size(obj.vertices, 1);
             end
         end
-        
-        function n = get.NElements(obj)
+
+        function n = get.nElements(obj)
             % GET.NELEMENTS Get the number of elements in the mesh.
-            
-            if iscell(obj.Elements)
-                n = prod(cellfun(@(x) length(x), obj.Elements));
+
+            if iscell(obj.elements)
+                n = prod(cellfun(@(x) length(x), obj.elements));
             else
-                n = size(obj.Elements, 1);
+                n = size(obj.elements, 1);
             end
         end
-        
-        function n = get.NVerticesPerElement(obj)
+
+        function n = get.nVerticesPerElement(obj)
             % GET.NVERTICESPERELEMENT Get the number of vertices per element.
-            
-            if iscell(obj.Elements)
-                n = 2^obj.NDims;
+
+            if iscell(obj.elements)
+                n = 2^obj.nDims;
             else
-                n = size(obj.Elements, 2);
+                n = size(obj.elements, 2);
             end
         end
-        
+
         function obj = resetTransform(obj)
             % RESETTRANSFORM Reset transformation data cache.
             %
             %   obj = resetTransform(obj) clears all cached transformation
             %   data and resets the computation flags. This method should
             %   be called whenever the mesh geometry changes.
+            %
+            % Inputs:
+            %   obj - The Mesh object
+            %
+            % Outputs:
+            %   obj - The Mesh object with cleared cache
 
-            arguments   
-                obj approx.mesh.Mesh
-            end
-            
-            obj.Transform = struct( ...
-                'EJac', [], ... % Element Jacobian matrices
-                'detEJac', [], ... % Element Jacobian determinants
-                'invEJac', [], ... % Element inverse Jacobian matrices
-                'detFJac', [], ... % Face Jacobian determinants
-                'normal', []);
-            obj.Status = 0b000000; % Status mask
+            obj.transform = struct( ...
+                'EJ', [], ... % Element Jacobian matrices
+                'detEJ', [], ... % Element Jacobian determinants
+                'invEJ', [], ... % Element inverse Jacobian matrices
+                'detFJ', [], ... % Face Jacobian determinants
+                'outN', []);
+            obj.status = 0b000000; % Status mask
         end
-        
-        function EJac = computeElementJacobians(obj, EI)
+
+        function EJ = computeElementJacobians(obj, IE)
             % COMPUTEELEMENTJACOBIANS Compute element Jacobian matrices.
             %
-            %   EJac = computeElementJacobians(obj) computes Jacobian
+            %   EJ = computeElementJacobians(obj) computes Jacobian
             %   matrices for coordinate transformation from reference to
             %   physical coordinates for all elements.
             %
-            %   EJac = computeElementJacobians(obj, EI) computes Jacobian
+            %   EJ = computeElementJacobians(obj, IE) computes Jacobian
             %   matrices only for the specified elements.
             %
-            %   The Jacobian matrix \f$J_{ij} = \frac{\partial
-            %   x_i}{\partial \xi_j}\f$ where \f$x\f$ are physical
-            %   coordinates and \f$\xi\f$ are reference coordinates. For
-            %   coordinate transformations: \f$dx = J d\xi\f$.
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (optional, vector)
+            %
+            % Outputs:
+            %   EJ - Jacobian matrices (nDims × nDims × nElements)
+            %
+            % Notes:
+            %   The Jacobian matrix $J_{ij} = \frac{\partial x_i}{\partial \xi_j}$
+            %   where $x$ are physical coordinates and $\xi$ are reference
+            %   coordinates. For coordinate transformations: $dx = J d\xi$.
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
+            if ~bitand(obj.status, obj.EVAL_EJ)
+                obj.transform.EJ = obj.computeAllElementJacobians();
+                obj.status = bitor(obj.status, obj.EVAL_EJ);
             end
-            
-            if ~bitand(obj.Status, obj.EJacMask)
-                obj.Transform.EJac = obj.computeAllElementJacobians();
-                obj.Status = bitor(obj.Status, obj.EJacMask);
-            end
-            
-            if isempty(EI)
-                EJac = obj.Transform.EJac;
+
+            if nargin < 2 || isempty(IE)
+                EJ = obj.transform.EJ;
             else
-                EJac = obj.Transform.EJac(:, :, EI);
+                EJ = obj.transform.EJ(:, :, IE);
             end
         end
-        
-        function detEJac = computeElementJacobianDeterminants(obj, EI)
+
+        function detEJ = computeElementJacobianDeterminants(obj, IE)
             % COMPUTEELEMENTJACOBIANDETERMINANTS Compute element Jacobian
             % determinants.
             %
-            %   detEJac = computeElementJacobianDeterminants(obj) computes
+            %   detEJ = computeElementJacobianDeterminants(obj) computes
             %   Jacobian determinants for coordinate transformation from
             %   reference to physical coordinates for all elements.
             %
-            %   detEJac = computeElementJacobianDeterminants(obj, EI)
+            %   detEJ = computeElementJacobianDeterminants(obj, IE)
             %   computes Jacobian determinants only for the specified
             %   elements.
             %
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (optional, vector)
+            %
+            % Outputs:
+            %   detEJ - Element Jacobian determinants (vector)
+            %
+            % Notes:
             %   The Jacobian determinant appears in integration formulas:
-            %
-            %   \f[
-            %       \int_{\Omega} f(x) dx = \int_{\hat{\Omega}} f(F(\xi))
-            %       |det(J)| d\xi
-            %   \f]
-            %
-            %   where \f$F\f$ is the coordinate transformation and
-            %   \f$\hat{\Omega}\f$ is the reference element.
+            %   $\int_{\Omega} f(x) dx = \int_{\hat{\Omega}} f(F(\xi)) |det(J)| d\xi$
+            %   where $F$ is the coordinate transformation and $\hat{\Omega}$
+            %   is the reference element.
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
+            if ~bitand(obj.status, obj.EVAL_DETEJ)
+                obj.transform.detEJ = obj.computeAllElementJacobianDeterminants();
+                obj.status = bitor(obj.status, obj.EVAL_DETEJ);
             end
-            
-            if ~bitand(obj.Status, obj.DetEJacMask)
-                obj.Transform.detEJac = obj.computeAllElementJacobianDeterminants();
-                obj.Status = bitor(obj.Status, obj.DetEJacMask);
-            end
-            
-            if isempty(EI) || isscalar(obj.Transform.detEJac)
-                detEJac = obj.Transform.detEJac;
+
+            if nargin < 2 || isempty(IE) || isscalar(obj.transform.detEJ)
+                detEJ = obj.transform.detEJ;
             else
-                detEJac = obj.Transform.detEJac(EI);
+                detEJ = obj.transform.detEJ(IE);
             end
         end
-        
-        function invEJac = computeElementInverseJacobians(obj, EI)
-            % COMPUTEELEMENTINVERSEJacACOBIANS Compute element inverse
+
+        function invEJ = computeElementInverseJacobians(obj, IE)
+            % COMPUTEELEMENTINVERSEJACOBIANS Compute element inverse
             % Jacobian matrices.
             %
-            %   invEJac = computeElementInverseJacobians(obj) computes
+            %   invEJ = computeElementInverseJacobians(obj) computes
             %   inverse Jacobian matrices for coordinate transformation
             %   from physical to reference coordinates for all elements.
             %
-            %   invEJac = computeElementInverseJacobians(obj, EI) computes
+            %   invEJ = computeElementInverseJacobians(obj, IE) computes
             %   inverse Jacobian matrices only for the specified elements.
             %
-            %   The inverse Jacobian matrix appears in gradient
-            %   computations: \f$\nabla_x f = J^{-T} \nabla_\xi \f$ where
-            %   \f$\nabla_x\f$ and \f$\nabla_\xi\f$ are gradients in
-            %   physical and reference coordinates respectively.
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (optional, vector)
+            %
+            % Outputs:
+            %   invEJ - Inverse Jacobian matrices (nDims × nDims × nElements)
+            %
+            % Notes:
+            %   The inverse Jacobian matrix appears in gradient computations:
+            %   $\nabla_x f = J^{-T} \nabla_\xi f$
+            %   where $\nabla_x$ and $\nabla_\xi$ are gradients in physical
+            %   and reference coordinates respectively.
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
+            if ~bitand(obj.status, obj.EVAL_INVEJ)
+                obj.transform.invEJ = obj.computeAllElementInverseJacobians();
+                obj.status = bitor(obj.status, obj.EVAL_INVEJ);
             end
-            
-            if ~bitand(obj.Status, obj.InvEJacMask)
-                obj.Transform.invEJac = obj.computeAllElementInverseJacobians();
-                obj.Status = bitor(obj.Status, obj.InvEJacMask);
-            end
-            
-            if isempty(EI) || ismatrix(obj.Transform.invEJac)
-                invEJac = obj.Transform.invEJac;
+
+            if nargin < 2 || isempty(IE) || ismatrix(obj.transform.invEJ)
+                invEJ = obj.transform.invEJ;
             else
-                invEJac = obj.Transform.invEJac(:, :, EI);
+                invEJ = obj.transform.invEJ(:, :, IE);
             end
         end
-        
-        function detFJac = computeFaceJacobianDeterminants(obj, EI, LFI)
-            % COMPUTEFACEJacACOBIANDETERMINANTS Compute face Jacobian
+
+        function detFJ = computeFaceJacobianDeterminants(obj, IE, IFE)
+            % COMPUTEFACEJACOBIANDETERMINANTS Compute face Jacobian
             % determinants.
             %
-            %   detFJac = computeFaceJacobianDeterminants(obj, EI, LFI)
-            %   computes Jacobian determinants for coordinate
-            %   transformation on element faces for integration over
-            %   boundaries.
+            %   detFJ = computeFaceJacobianDeterminants(obj, IE, IFE)
+            %   computes Jacobian determinants for coordinate transformation
+            %   on element faces for integration over boundaries.
             %
-            %   Face Jacobian determinants are used in boundary
-            %   integration:
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (vector or [])
+            %   IFE - Local face index (scalar, 1 to nFaces)
             %
-            %   \f[
-            %       \int_{\partial\Omega} f(x) dS =
-            %       \int_{\partial\hat{\Omega}} f(F(\xi)) |det(J_F)| d\xi
-            %   \f]
+            % Outputs:
+            %   detFJ - Face Jacobian determinants (vector)
             %
-            %   where \f$\partial\Omega\f$ is the boundary and \f$J_F\f$ is
-            %   the face Jacobian.
+            % Notes:
+            %   Face Jacobian determinants are used in boundary integration:
+            %   $\int_{\partial\Omega} f(x) dS = \int_{\partial\hat{\Omega}} f(F(\xi)) |det(J_F)| d\xi$
+            %   where $\partial\Omega$ is the boundary and $J_F$ is the face Jacobian.
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
+            if ~bitand(obj.status, obj.EVAL_DETFJ)
+                obj.transform.detFJ = obj.computeAllFaceJacobianDeterminants();
+                obj.status = bitor(obj.status, obj.EVAL_DETFJ);
             end
-            
-            if ~bitand(obj.Status, obj.DetFJacMask)
-                obj.Transform.detFJac = obj.computeAllFaceJacobianDeterminants();
-                obj.Status = bitor(obj.Status, obj.DetFJacMask);
-            end
-            
-            if isempty(EI) || isscalar(obj.Transform.detFJac{LFI})
-                detFJac = obj.Transform.detFJac{LFI};
+
+            if isempty(IE) || isscalar(obj.transform.detFJ{IFE})
+                detFJ = obj.transform.detFJ{IFE};
             else
-                detFJac = obj.Transform.detFJac{LFI}(EI);
+                detFJ = obj.transform.detFJ{IFE}(IE);
             end
         end
-        
-        function normal = computeOutwardNormals(obj, EI, LFI)
+
+        function outN = computeOutwardNormals(obj, IE, IFE)
             % COMPUTEOUTWARDNORMALS Compute outward normal vectors.
             %
-            %   normal = computeOutwardNormals(obj, EI, LFI) computes
-            %   unit outward normal vectors on element faces for boundary
+            %   outN = computeOutwardNormals(obj, IE, IFE) computes unit
+            %   outward normal vectors on element faces for boundary
             %   conditions and flux computations.
             %
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (vector or [])
+            %   IFE - Local face index (scalar, 1 to nFaces)
+            %
+            % Outputs:
+            %   outN - Outward unit normal vectors (nDims × nElements)
+            %
+            % Notes:
             %   Outward normals are used in boundary conditions and flux
             %   computations. The direction is defined such that the normal
             %   points away from the element interior.
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
+            if ~bitand(obj.status, obj.EVAL_OUTN)
+                obj.transform.outN = obj.computeAllOutwardNormals();
+                obj.status = bitor(obj.status, obj.EVAL_OUTN);
             end
-            
-            if ~bitand(obj.Status, obj.OutNormalMask)
-                obj.Transform.normal = obj.computeAllOutwardNormals();
-                obj.Status = bitor(obj.Status, obj.OutNormalMask);
-            end
-            
-            if isempty(EI) || size(obj.Transform.normal{LFI}, 2) == 1
-                normal = obj.Transform.normal{LFI};
+
+            if isempty(IE) || size(obj.transform.outN{IFE}, 2) == 1
+                outN = obj.transform.outN{IFE};
             else
-                normal = obj.Transform.normal{LFI}(:, EI);
+                outN = obj.transform.outN{IFE}(:, IE);
             end
         end
-        
+
         function v = computeDirection(obj)
             % COMPUTEDIRECTION Compute a direction vector.
             %
             %   v = computeDirection(obj) computes a unit direction vector
             %   to define the "plus" and "minus" side of a face.
             %
+            % Inputs:
+            %   obj - The Mesh object
+            %
+            % Outputs:
+            %   v - Direction vector (nDims × 1)
+            %
+            % Notes:
             %   If nDims = 1, v = 1.
             %   If nDims > 1, v is a unit vector that is not parallel
             %   with any normal vectors of element boundaries.
 
-            arguments   
-                obj approx.mesh.Mesh
+            if ~bitand(obj.status, obj.EVAL_BETA)
+                obj.direction = obj.computeUniqueDirection();
+                obj.status = bitor(obj.status, obj.EVAL_BETA);
             end
-            
-            if ~bitand(obj.Status, obj.DirectionMask)
-                obj.Direction = obj.computeUniqueDirection();
-                obj.Status = bitor(obj.Status, obj.DirectionMask);
-            end
-            
-            v = obj.Direction;
+
+            v = obj.direction;
         end
-        
-        function ratio = computeFaceScalingFactors(obj, EI, LFI)
+
+        function ratio = computeFaceScalingFactors(obj, IE, IFE)
             % COMPUTEFACESCALINGFACTORS Compute face scaling factors.
             %
-            %   ratio = computeFaceScalingFactors(obj, EI, LFI) computes
+            %   ratio = computeFaceScalingFactors(obj, IE, IFE) computes
             %   face scaling factors for coordinate transformation on
             %   element faces for integration over boundaries.
+            %
+            % Inputs:
+            %   obj - The Mesh object
+            %   IE - Element linear indices (vector or [])
+            %   IFE - Local face index (scalar, 1 to nFaces)
+            %
+            % Outputs:
+            %   ratio - Face scaling factors (vector)
 
-            arguments   
-                obj approx.mesh.Mesh
-                EI {mustBeInteger} = []
-                LFI {mustBeInteger, mustBePositive} = 1
-            end
-            
-            detEJac = obj.computeElementJacobianDeterminants(EI);
-            detFJac = obj.computeFaceJacobianDeterminants(EI, LFI);
-            ratio = detFJac ./ detEJac;
+            detEJ = obj.computeElementJacobianDeterminants(IE);
+            detFJ = obj.computeFaceJacobianDeterminants(IE, IFE);
+            ratio = detFJ ./ detEJ;
         end
     end
-    
+
     methods (Abstract)
         % GRAPHIFY Convert mesh to graph representation.
         graphObj = graphify(obj)
-        
+
         % COLLOCATE Map reference coordinates to physical coordinates.
-        Y = collocate(obj, X, EI)
-        
+        Y = collocate(obj, X, IE)
+
         % REFINE Create refined mesh with smaller elements.
         newObj = refine(obj, nLevels)
-        
+
         % COMPUTEMEASURE Compute characteristic mesh size.
         h = computeMeasure(obj)
-        
+
         % COMPUTEALLELEMENTJACOBIANS Compute all element Jacobian matrices.
-        EJac = computeAllElementJacobians(obj)
-        
+        EJ = computeAllElementJacobians(obj)
+
         % COMPUTEALLELEMENTJACOBIANDETERMINANTS Compute all element
         % Jacobian determinants.
-        detEJac = computeAllElementJacobianDeterminants(obj)
-        
-        % COMPUTEALLELEMENTINVERSEJacACOBIANS Compute all element inverse
+        detEJ = computeAllElementJacobianDeterminants(obj)
+
+        % COMPUTEALLELEMENTINVERSEJACOBIANS Compute all element inverse
         % Jacobian matrices.
-        invEJac = computeAllElementInverseJacobians(obj)
-        
-        % COMPUTEALLFACEJacACOBIANDETERMINANTS Compute all face Jacobian
+        invEJ = computeAllElementInverseJacobians(obj)
+
+        % COMPUTEALLFACEJACOBIANDETERMINANTS Compute all face Jacobian
         % determinants.
-        detFJac = computeAllFaceJacobianDeterminants(obj)
-        
+        detFJ = computeAllFaceJacobianDeterminants(obj)
+
         % COMPUTEALLOUTWARDNORMALS Compute all outward normal vectors.
-        normal = computeAllOutwardNormals(obj)
-        
+        outN = computeAllOutwardNormals(obj)
+
         % COMPUTEUNIQUEDIRECTION Compute a unique direction vector.
         v = computeUniqueDirection(obj)
     end
-end
-
-
-function mustBeNumericOrCell(x)
-if ~iscell(x) && ~isnumeric(x)
-    error('Input must be numeric or cell array.');
-end
 end

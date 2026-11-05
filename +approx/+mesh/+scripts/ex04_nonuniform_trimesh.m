@@ -38,11 +38,11 @@ simplexMesh = approx.mesh.Triangulation(meshVertices, meshElements);
 
 fprintf('Triangulation created successfully.\n');
 fprintf('Mesh properties:\n');
-fprintf('  Dimensions: %d\n', simplexMesh.NDims);
-fprintf('  Vertices: %d\n', simplexMesh.NVertices);
-fprintf('  Elements: %d\n', simplexMesh.NElements);
-fprintf('  Faces: %d\n', simplexMesh.NFaces);
-fprintf('  Boundary faces: %d\n', simplexMesh.NBoundaryFaces);
+fprintf('  Dimensions: %d\n', simplexMesh.nDims);
+fprintf('  Vertices: %d\n', simplexMesh.nVertices);
+fprintf('  Elements: %d\n', simplexMesh.nElements);
+fprintf('  Faces: %d\n', simplexMesh.nFaces);
+fprintf('  Boundary faces: %d\n', simplexMesh.nBoundaryFaces);
     
 
 %% Visualize the original mesh
@@ -85,9 +85,9 @@ refinedMesh = simplexMesh.refine(1);
 
 fprintf('Mesh refinement completed.\n');
 fprintf('Refined mesh properties:\n');
-fprintf('  Vertices: %d (was %d)\n', refinedMesh.NVertices, simplexMesh.NVertices);
-fprintf('  Elements: %d (was %d)\n', refinedMesh.NElements, simplexMesh.NElements);
-fprintf('  Faces: %d (was %d)\n', refinedMesh.NFaces, simplexMesh.NFaces);
+fprintf('  Vertices: %d (was %d)\n', refinedMesh.nVertices, simplexMesh.nVertices);
+fprintf('  Elements: %d (was %d)\n', refinedMesh.nElements, simplexMesh.nElements);
+fprintf('  Faces: %d (was %d)\n', refinedMesh.nFaces, simplexMesh.nFaces);
 
 % Create figure for refined mesh comparison
 figure('Name', 'Mesh Refinement Comparison', 'Position', [150, 150, 1000, 400]);
@@ -96,13 +96,13 @@ figure('Name', 'Mesh Refinement Comparison', 'Position', [150, 150, 1000, 400]);
 subplot(1, 2, 1);
 meshPlotter.plot(simplexMesh, 'ShowElements', true, 'ElementColor', 'cyan', ...
     'ShowBoundary', true, 'BoundaryColor', 'red', 'Alpha', 0.3);
-title(sprintf('Original Mesh (%d elements)', simplexMesh.NElements));
+title(sprintf('Original Mesh (%d elements)', simplexMesh.nElements));
 
 % Plot refined mesh
 subplot(1, 2, 2);
 meshPlotter.plot(refinedMesh, 'ShowElements', true, 'ElementColor', 'blue', ...
     'ShowBoundary', true, 'BoundaryColor', 'red', 'Alpha', 0.3);
-title(sprintf('Refined Mesh (%d elements)', refinedMesh.NElements));
+title(sprintf('Refined Mesh (%d elements)', refinedMesh.nElements));
 
 
 %% Demonstrate coordinate transformation
@@ -114,7 +114,7 @@ nTestPoints = 4;
 referencePoints = [0.5 0 0.5 1/3; 0 0.5 0.5 1/3];
 
 % Select a few elements for transformation
-targetElements = 1:min(3, simplexMesh.NElements);
+targetElements = 1:min(3, simplexMesh.nElements);
 
 % Transform reference points to physical coordinates
 physicalPoints = simplexMesh.collocate(referencePoints, targetElements);
@@ -133,14 +133,14 @@ hold on;
 
 % Highlight target elements
 for iElement = targetElements
-    elementVertices = simplexMesh.Vertices(simplexMesh.Elements(iElement, :), :);
+    elementVertices = simplexMesh.vertices(simplexMesh.elements(iElement, :), :);
     fill(elementVertices(:, 1), elementVertices(:, 2), 'yellow', ...
         'FaceAlpha', 0.5, 'EdgeColor', 'red', 'LineWidth', 2);
 end
 
 % Plot transformed points
 nTargetElements = length(targetElements);
-reshapedPoints = reshape(physicalPoints, simplexMesh.NDims, nTestPoints, nTargetElements);
+reshapedPoints = reshape(physicalPoints, simplexMesh.nDims, nTestPoints, nTargetElements);
 
 for iElement = 1:nTargetElements
     elementPoints = reshapedPoints(:, :, iElement);
@@ -174,13 +174,19 @@ function quality = analyzeMeshQuality(mesh)
 %
 %   quality = analyzeMeshQuality(mesh) computes various quality metrics
 %   for a triangular mesh including element areas and shape quality.
+%
+% Inputs:
+%   mesh - Triangulation object
+%
+% Outputs:
+%   quality - Structure containing quality metrics
 
-nElements = mesh.NElements;
+nElements = mesh.nElements;
 areas = zeros(nElements, 1);
 qualities = zeros(nElements, 1);
 
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
 for iElement = 1:nElements
     % Get element vertices

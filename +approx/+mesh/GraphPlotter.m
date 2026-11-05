@@ -6,29 +6,62 @@ classdef GraphPlotter < handle
     %   and edges in 1D, 2D, and 3D spaces. The class supports various
     %   styling options for different visualization needs.
     %
+    % Examples:
+    %   % Create and plot a 2D graph
+    %   vertices = [0, 0; 1, 0; 1, 1; 0, 1];
+    %   edges = [1, 2; 2, 3; 3, 4; 4, 1];
+    %   graph = approx.mesh.Graph(vertices, edges);
+    %   plotter = approx.mesh.GraphPlotter();
+    %   plotter.plot(graph);
+    %
+    %   % Plot with custom styling
+    %   plotter.plot(graph, 'VertexColor', 'red', 'EdgeColor', 'blue', ...
+    %                'VertexSize', 50, 'EdgeWidth', 2);
+    %
+    %   % Plot vertices only
+    %   plotter.plot(graph, 'EdgeColor', 'none');
+    %
     % See also:
     %   approx.mesh.Graph, approx.mesh.MeshPlotter
 
     methods
-        function plot(obj, graph, options)
+        function plot(obj, graph, varargin)
             % PLOT Visualize a Graph object.
             %
             %   plot(obj, graph) creates a visualization of the graph with
             %   default styling options.
             %
-            %   plot(obj, graph, options) allows customization of the
-            %   visualization through options structure.
+            %   plot(obj, graph, Name, Value, ...) allows customization of
+            %   the visualization through name-value pair arguments.
+            %
+            % Inputs:
+            %   obj - The GraphPlotter object
+            %   graph - approx.mesh.Graph object to visualize
+            %   varargin - Name-value pairs for customization
+            %
+            %< Name-Value Pairs:
+            %<   'VertexColor' - Color for vertices (default: 'b')
+            %<   'EdgeColor' - Color for edges (default: 'k')
+            %<   'VertexSize' - Size of vertex markers (default: 36)
+            %<   'EdgeWidth' - Width of edge lines (default: 1)
+            %<   'ShowVertices' - Flag to show vertices (default: true)
+            %<   'ShowEdges' - Flag to show edges (default: true)
 
-            arguments
-                obj approx.mesh.GraphPlotter
-                graph approx.mesh.Graph
-                options.VertexColor = 'b'
-                options.EdgeColor = 'k'
-                options.VertexSize{mustBePositive} = 36
-                options.EdgeWidth{mustBePositive} = 1
-                options.ShowVertices{mustBeNumericOrLogical} = true
-                options.ShowEdges{mustBeNumericOrLogical} = true
-            end
+            %< Validate input
+            core.except.assert(isa(graph, 'approx.mesh.Graph'), ...
+                'InvalidInput', 'Input must be an approx.mesh.Graph object.');
+
+            %< Parse input parameters
+            p = inputParser;
+            addParameter(p, 'VertexColor', 'b');
+            addParameter(p, 'EdgeColor', 'k');
+            addParameter(p, 'VertexSize', 36);
+            addParameter(p, 'EdgeWidth', 1);
+            addParameter(p, 'ShowVertices', true);
+            addParameter(p, 'ShowEdges', true);
+            parse(p, varargin{:});
+
+            options = p.Results;
 
             %< Prepare the plot
             holdState = ishold;
@@ -38,7 +71,7 @@ classdef GraphPlotter < handle
             hold on;
 
             %< Get the dimension of the graph
-            nDims = graph.NDims;
+            nDims = graph.nDims;
 
             %< Plot based on dimension
             switch nDims
@@ -59,7 +92,7 @@ classdef GraphPlotter < handle
 
             %< Add title
             title(sprintf('%dD Graph: %d vertices, %d edges', ...
-                nDims, graph.NVertices, graph.NEdges));
+                nDims, graph.nVertices, graph.nEdges));
 
             %< Restore hold state
             if ~holdState
@@ -74,14 +107,18 @@ function plot1D(graph, options)
 %
 %   plot1D(graph, options) creates a 1D visualization by plotting vertices
 %   along the x-axis at y=0 and connecting them with edges.
+%
+% Inputs:
+%   graph - approx.mesh.Graph object with nDims == 1
+%   options - Structure containing plotting options
 
 %< Plot edges if enabled
 if options.ShowEdges && ~isequal(options.EdgeColor, 'none') && ...
-        graph.NEdges > 0
-    for iEdge = 1:graph.NEdges
-        v1 = graph.Edges(iEdge, 1);
-        v2 = graph.Edges(iEdge, 2);
-        x = [graph.Vertices(v1), graph.Vertices(v2)];
+        graph.nEdges > 0
+    for iEdge = 1:graph.nEdges
+        v1 = graph.edges(iEdge, 1);
+        v2 = graph.edges(iEdge, 2);
+        x = [graph.vertices(v1), graph.vertices(v2)];
         y = [0, 0];
         plot(x, y, '-', 'Color', options.EdgeColor, ...
             'LineWidth', options.EdgeWidth);
@@ -90,8 +127,8 @@ end
 
 %< Plot vertices if enabled
 if options.ShowVertices && ~isequal(options.VertexColor, 'none') && ...
-        graph.NVertices > 0
-    scatter(graph.Vertices, zeros(graph.NVertices, 1), ...
+        graph.nVertices > 0
+    scatter(graph.vertices, zeros(graph.nVertices, 1), ...
         options.VertexSize, options.VertexColor, 'filled');
 end
 
@@ -112,15 +149,19 @@ function plot2D(graph, options)
 %
 %   plot2D(graph, options) creates a 2D visualization by plotting vertices
 %   as points and edges as line segments in the xy-plane.
+%
+% Inputs:
+%   graph - approx.mesh.Graph object with nDims == 2
+%   options - Structure containing plotting options
 
 %< Plot edges if enabled
 if options.ShowEdges && ~isequal(options.EdgeColor, 'none') && ...
-        graph.NEdges > 0
-    for iEdge = 1:graph.NEdges
-        v1 = graph.Edges(iEdge, 1);
-        v2 = graph.Edges(iEdge, 2);
-        x = [graph.Vertices(v1, 1), graph.Vertices(v2, 1)];
-        y = [graph.Vertices(v1, 2), graph.Vertices(v2, 2)];
+        graph.nEdges > 0
+    for iEdge = 1:graph.nEdges
+        v1 = graph.edges(iEdge, 1);
+        v2 = graph.edges(iEdge, 2);
+        x = [graph.vertices(v1, 1), graph.vertices(v2, 1)];
+        y = [graph.vertices(v1, 2), graph.vertices(v2, 2)];
         plot(x, y, '-', 'Color', options.EdgeColor, ...
             'LineWidth', options.EdgeWidth);
     end
@@ -128,8 +169,8 @@ end
 
 %< Plot vertices if enabled
 if options.ShowVertices && ~isequal(options.VertexColor, 'none') && ...
-        graph.NVertices > 0
-    scatter(graph.Vertices(:, 1), graph.Vertices(:, 2), ...
+        graph.nVertices > 0
+    scatter(graph.vertices(:, 1), graph.vertices(:, 2), ...
         options.VertexSize, options.VertexColor, 'filled');
 end
 
@@ -143,16 +184,20 @@ function plot3D(graph, options)
 %   plot3D(graph, options) creates a 3D visualization by plotting vertices
 %   as points and edges as line segments in 3D space with appropriate
 %   viewing angle.
+%
+% Inputs:
+%   graph - approx.mesh.Graph object with nDims == 3
+%   options - Structure containing plotting options
 
 %< Plot edges if enabled
 if options.ShowEdges && ~isequal(options.EdgeColor, 'none') && ...
-        graph.NEdges > 0
-    for iEdge = 1:graph.NEdges
-        v1 = graph.Edges(iEdge, 1);
-        v2 = graph.Edges(iEdge, 2);
-        x = [graph.Vertices(v1, 1), graph.Vertices(v2, 1)];
-        y = [graph.Vertices(v1, 2), graph.Vertices(v2, 2)];
-        z = [graph.Vertices(v1, 3), graph.Vertices(v2, 3)];
+        graph.nEdges > 0
+    for iEdge = 1:graph.nEdges
+        v1 = graph.edges(iEdge, 1);
+        v2 = graph.edges(iEdge, 2);
+        x = [graph.vertices(v1, 1), graph.vertices(v2, 1)];
+        y = [graph.vertices(v1, 2), graph.vertices(v2, 2)];
+        z = [graph.vertices(v1, 3), graph.vertices(v2, 3)];
         plot3(x, y, z, '-', 'Color', options.EdgeColor, ...
             'LineWidth', options.EdgeWidth);
     end
@@ -160,9 +205,9 @@ end
 
 %< Plot vertices if enabled
 if options.ShowVertices && ~isequal(options.VertexColor, 'none') && ...
-        graph.NVertices > 0
-    scatter3(graph.Vertices(:, 1), graph.Vertices(:, 2), ...
-        graph.Vertices(:, 3), options.VertexSize, ...
+        graph.nVertices > 0
+    scatter3(graph.vertices(:, 1), graph.vertices(:, 2), ...
+        graph.vertices(:, 3), options.VertexSize, ...
         options.VertexColor, 'filled');
 end
 

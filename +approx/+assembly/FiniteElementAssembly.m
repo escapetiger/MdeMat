@@ -1,4 +1,4 @@
-classdef FiniteElementAssembly < handle
+classdef FiniteElementAssembly < approx.assembly.Assembly
     % FINITEELEMENTASSEMBLY Base class for finite element assembly
     % operations.
     %
@@ -21,242 +21,206 @@ classdef FiniteElementAssembly < handle
     %   system indices.
     %
     % See also:
-    %   approx.space.FiniteElementSpace
+    %   approx.assembly.Assembly, approx.space.FiniteElementSpace
 
-    properties
-        Space % Finite element space
-    end
-
-    methods
-        function obj = FiniteElementAssembly(space)
-            % FINITEELEMENTASSEMBLY Constructor for FiniteElementAssembly
-            % class.
-            %
-            %   obj = FiniteElementAssembly(space) creates a finite element
-            %   assembly object with the specified finite element space.
-            %   The constructor validates that the provided space is a
-            %   valid FiniteElementSpace object.
-
-            arguments
-                space approx.space.FiniteElementSpace
-            end
-
-            obj.Space = space;
-        end
-    end
-    
     methods (Access = protected)
-        function G = createZeros(obj, options)
+        function obj = checkValidSpace(obj)
+            % CHECKVALIDSPACE Validate that the space is a FiniteElementSpace object.
+            %
+            %   obj = checkValidSpace(obj) verifies that the space property
+            %   is a valid FiniteElementSpace object. Throws an error if the
+            %   space is not of the expected type.
+            %
+            % Outputs:
+            %   obj - The FiniteElementAssembly object (for method chaining)
+            
+            tf = isa(obj.space, 'approx.space.FiniteElementSpace');
+            core.except.assert(tf, 'InvalidInput', ...
+                'FiniteElementAssembly requires a FiniteElementSpace object.');
+        end
+
+        function G = createZeros(obj, nCols)
             % CREATEZEROS Create an all-zero sparse matrix.
             %
             %   G = createZeros(obj) creates a sparse zeros matrix as a
-            %   placeholder for assembly with square dimensions.
+            %   placeholder for assembly where nCols is the number of degrees
+            %   of freedom in trial space.
             %
-            %   G = createZeros(obj, nCols=nCols) creates a sparse zeros matrix
-            %   as a placeholder for assembly with the specified number of
-            %   columns @a nCols.
-            
-            arguments
-                obj approx.assembly.FiniteElementAssembly
-                options.nCols {mustBePositive, mustBeInteger} = []
+            %   G = createZeros(obj, nCols) creates a sparse zeros matrix as
+            %   a placeholder for assembly with the specified number of
+            %   columns nCols.
+            %
+            % Inputs:
+            %   obj - The FiniteElementAssembly object
+            %   nCols - The number of columns (optional, scalar)
+            %
+            % Outputs:
+            %   G - Sparse matrix with zeros
+
+            if nargin < 2 || isempty(nCols)
+                nCols = obj.space.nGlobalDofs;
             end
-            
-            nRows = obj.Space.NGlobalDofs;
-            if isempty(options.nCols)
-                nCols = obj.Space.NGlobalDofs;
-            else
-                nCols = options.nCols;
-            end
-            
+
+            nRows = obj.space.nGlobalDofs;
             G = sparse(nRows, nCols);
         end
-        
-        function G = createMatrix(obj, L, options)
-            % CREATEMATRIX Create global sparse matrix from local matrices.
+
+        function G = createMatrix(obj, IE, IL, JE, JL, L)
+            % CREATEMATRIX Assemble matrix contribution from local matrices.
             %
-            %   G = createMatrix(obj, L) assembles local matrices @a L to a
-            %   global sparse matrix @a G using all elements and DoFs.
+            %   G = createMatrix(obj, IE, IL, JE, JL, L) assembles local
+            %   matrices L to a global sparse matrix G with specified
+            %   elements (IE, JE) and local DoFs (IL, JL) for test space
+            %   and trial space, respectively.
             %
-            %   G = createMatrix(obj, L, TEI=TEI, TLI=TLI, SEI=SEI, SLI=SLI)
-            %   assembles with specified elements (@a TEI, @a SEI) and local
-            %   DoFs (@a TLI, @a SLI) for test space and trial space.
-            
-            arguments
-                obj approx.assembly.FiniteElementAssembly
-                L {mustBeNumeric}
-                options.TEI {mustBeInteger} = []
-                options.TLI {mustBeInteger} = []
-                options.SEI {mustBeInteger} = []
-                options.SLI {mustBeInteger} = []
-            end
-            
-            if isempty(options.TEI) && ~isempty(options.SEI)
-                TEI = options.SEI;
-                SEI = options.SEI;
-            elseif ~isempty(options.TEI) && isempty(options.SEI)
-                TEI = options.TEI;
-                SEI = options.TEI;
-            elseif isempty(options.TEI) && isempty(options.SEI)
-                TEI = 1:obj.Space.NMeshElements;
-                SEI = TEI;
+            % Inputs:
+            %   obj - The FiniteElementAssembly object
+            %   IE - Element linear indices for test space (ne x 1 vector or empty)
+            %   IL - Local DoF indices for test space (ni x 1 vector or empty)
+            %   JE - Element linear indices for trial space (ne x 1 vector or empty)
+            %   JL - Local DoF indices for trial space (nj x 1 vector or empty)
+            %   L - Local matrices (nl x nl matrix or nl x nl x ne array)
+            %
+            % Outputs:
+            %   G - Global sparse matrix (ng x ng)
+
+            if isempty(IE) && ~isempty(JE)
+                IE = JE;
+            elseif ~isempty(IE) && isempty(JE)
+                JE = IE;
+            elseif isempty(IE) && isempty(JE)
+                IE = 1:obj.space.nMeshElements;
+                JE = IE;
             else
-                TEI = options.TEI;
-                SEI = options.SEI;
-                core.except.assert(length(TEI) == length(SEI), ...
+                core.except.assert(length(IE) == length(JE), ...
                     'InvalidInput', ...
-                    'Incompatible row and column element indices.');
+                    'Incomptiable row and columen element indices.');
             end
-            ne = length(TEI);
-            
-            nl = obj.Space.NLocalDofs;
-            if isempty(options.TLI)
-                TLI = 1:nl;
-            else
-                TLI = options.TLI;
-            end
-            if isempty(options.SLI)
-                SLI = 1:nl;
-            else
-                SLI = options.SLI;
-            end
-            
+            ne = length(IE);
+
+            nl = obj.space.nLocalDofs;
+            if isempty(IL), IL = 1:nl; end
+            if isempty(JL), JL = 1:nl; end
+
             if ismatrix(L)
-                [I, J, V] = find(L(TLI, SLI));
+                [I, J, V] = find(L(IL, JL));
                 nnz = numel(V);
                 T = zeros(nnz * ne, 3);
                 if nnz == 0
                     G = obj.createZeros();
                     return;
                 end
-                T(:, 1) = obj.Space.localToGlobal(TEI, I);
-                T(:, 2) = obj.Space.localToGlobal(SEI, J);
+                T(:, 1) = obj.space.localToGlobal(IE, I);
+                T(:, 2) = obj.space.localToGlobal(JE, J);
                 T(:, 3) = repmat(V(:), ne, 1);
             else
                 L = reshape(L, nl, nl, []);
                 core.except.assert(size(L, 3) == ne, ...
                     'InvalidInput', 'Invalid local matrices.');
-                
-                ni = length(TLI);
-                nj = length(SLI);
+
+                ni = length(IL);
+                nj = length(JL);
                 T = zeros(ni*nj*ne, 3);
-                
-                [TLI, SLI] = ndgrid(TLI, SLI);
-                TLI = TLI(:);
-                SLI = SLI(:);
-                T(:, 1) = obj.Space.localToGlobal(TEI, TLI);
-                T(:, 2) = obj.Space.localToGlobal(SEI, SLI);
+
+                [IL, JL] = ndgrid(IL, JL);
+                IL = IL(:);
+                JL = JL(:);
+                T(:, 1) = obj.space.localToGlobal(IE, IL);
+                T(:, 2) = obj.space.localToGlobal(JE, JL);
                 L = reshape(L, nl^2, []);
-                KL = TLI + (SLI - 1) * nl;
-                
+                KL = IL + (JL - 1) * nl;
+
                 L = L(KL, :);
                 T(:, 3) = L(:);
             end
-            
-            ng = obj.Space.NGlobalDofs;
+
+            ng = obj.space.nGlobalDofs;
             G = core.linalg.sparseFromTriplets(T, ng, ng);
         end
-        
-        % function G = createVector(obj, L, options)
-        %     % CREATEVECTOR Create global sparse vector from local vectors.
-        %     %
-        %     %   G = createVector(obj, L) assembles local vectors @a L to a
-        %     %   global sparse vector @a G using all elements and DoFs.
-        %     %
-        %     %   G = createVector(obj, L, TEI=TEI, TLI=TLI) assembles with
-        %     %   specified elements @a TEI and local DoFs @a TLI.
-        % 
-        %     arguments
-        %         obj approx.assembly.FiniteElementAssembly
-        %         L {mustBeNumeric}
-        %         options.TEI {mustBeInteger} = []
-        %         options.TLI {mustBeInteger} = []
-        %     end
-        % 
-        %     if isempty(options.TEI)
-        %         TEI = 1:obj.Space.NMeshElements;
-        %     else
-        %         TEI = options.TEI;
-        %     end
-        %     ne = length(TEI);
-        % 
-        %     nl = obj.Space.NLocalDofs;
-        %     if isempty(options.TLI)
-        %         TLI = 1:nl;
-        %     else
-        %         TLI = options.TLI;
-        %     end
-        % 
-        %     if size(L, 2) == 1
-        %         L = reshape(L, nl, []);
-        %         L = repmat(L, 1, ne);
-        %     else
-        %         L = reshape(L, nl, ne);
-        %         core.except.assert(size(L, 2) == ne, ...
-        %             'InvalidInput', 'Invalid local vectors.');
-        %     end
-        %     L = L(TLI, :);
-        %     ni = length(TLI);
-        % 
-        %     T = zeros(ni*ne, 3);
-        %     T(:, 1) = obj.Space.localToGlobal(TEI, []);
-        %     T(:, 2) = 1;
-        %     T(:, 3) = L(:);
-        % 
-        %     ng = obj.Space.NGlobalDofs;
-        %     G = core.linalg.sparseFromTriplets(T, ng, 1);
-        % end
-        
-        function G = createVector(obj, L, options)
-            % CREATEVECTOR Create global sparse matrix from a batch of
-            % local vectors.
+
+        function G = createVector(obj, IE, IL, L)
+            % CREATEVECTOR Assemble vector contribution from local vectors.
             %
-            %   G = createVector(obj, L) assembles batched local vectors
-            %   @a L to a global sparse matrix @a G using all elements and DoFs.
+            %   G = createVector(obj, IE, IL, L) assembles local vectors L
+            %   to a global sparse vector G with specified elements IE and
+            %   local DoFs IL.
             %
-            %   G = createVector(obj, L, TEI=TEI, TLI=TLI) assembles with
-            %   specified elements @a TEI and local DoFs @a TLI. Each column
-            %   represents a different vector in the batch.
-            
-            arguments
-                obj approx.assembly.FiniteElementAssembly
-                L {mustBeNumeric}
-                options.TEI {mustBeInteger} = []
-                options.TLI {mustBeInteger} = []
-            end
-            
-            if isempty(options.TEI)
-                TEI = 1:obj.Space.NMeshElements;
+            % Inputs:
+            %   obj - The FiniteElementAssembly object
+            %   IE - Element linear indices (ne x 1 vector or empty)
+            %   IL - Local DoF indices (ni x 1 vector or empty)
+            %   L - Local vectors (nl x 1 vector or nl x ne matrix)
+            %
+            % Outputs:
+            %   G - Global sparse vector (ng x 1)
+
+            if isempty(IE), IE = 1:obj.space.nMeshElements; end
+            ne = length(IE);
+
+            nl = obj.space.nLocalDofs;
+            if isempty(IL), IL = 1:nl; end
+
+            if size(L, 2) == 1
+                L = reshape(L, nl, []);
+                L = repmat(L, 1, ne);
             else
-                TEI = options.TEI;
+                L = reshape(L, nl, ne);
+                core.except.assert(size(L, 2) == ne, ...
+                    'InvalidInput', 'Invalid local vectors.');
             end
-            ne = length(TEI);
-            
-            nl = obj.Space.NLocalDofs;
-            if isempty(options.TLI)
-                TLI = 1:nl;
+            L = L(IL, :);
+            ni = length(IL);
+
+            T = zeros(ni*ne, 3);
+            T(:, 1) = obj.space.localToGlobal(IE, []);
+            T(:, 2) = 1;
+            T(:, 3) = L(:);
+
+            ng = obj.space.nGlobalDofs;
+            G = core.linalg.sparseFromTriplets(T, ng, 1);
+        end
+
+        function G = createVectorBatch(obj, IE, IL, L)
+            % CREATEVECTORBATCH Assemble batched vector contribution.
+            %
+            %   G = createVectorBatch(obj, IE, IL, L) assembles batched
+            %   local vectors L to a global sparse matrix G with specified
+            %   elements IE and local DoFs IL. Each column represents a
+            %   different vector in the batch.
+            %
+            % Inputs:
+            %   obj - The FiniteElementAssembly object
+            %   IE - Element linear indices (ne x 1 vector or empty)
+            %   IL - Local DoF indices (ni x 1 vector or empty)
+            %   L - Batched local vectors (nl x nc matrix or nl x ne x nc array)
+            %
+            % Outputs:
+            %   G - Global sparse matrix (ng x nc)
+
+            if isempty(IE), IE = 1:obj.space.nMeshElements; end
+            ne = length(IE);
+
+            nl = obj.space.nLocalDofs;
+            if isempty(IL), IL = 1:nl; end
+
+            if ismatrix(L)
+                L = reshape(L, nl, []);
+                L = repmat(reshape(L, nl, 1, []), 1, ne, 1);
             else
-                TLI = options.TLI;
+                L = reshape(L, nl, ne, []);
+                core.except.assert(size(L, 2) == ne, ...
+                    'InvalidInput', 'Invalid local vectors.');
             end
-            
-            % if ismatrix(L)
-            %     L = reshape(L, nl, []);
-            %     L = repmat(reshape(L, nl, 1, []), 1, ne, 1);
-            % else
-            %     L = reshape(L, nl, ne, []);
-            %     core.except.assert(size(L, 2) == ne, ...
-            %         'InvalidInput', 'Invalid local vectors.');
-            % end
-            L = reshape(L, nl, ne, []);
-            L = L(TLI, :, :);
-            ni = length(TLI);
+            L = L(IL, :, :);
+            ni = length(IL);
             nc = size(L, 3);
-            
+
             T = zeros(ni*ne*nc, 3);
-            T(:, 1) = repmat(obj.Space.localToGlobal(TEI, []), nc, 1);
+            T(:, 1) = repmat(obj.space.localToGlobal(IE, []), nc, 1);
             T(:, 2) = reshape(repmat(1:nc, ni*ne, 1), [], 1);
             T(:, 3) = L(:);
-            
-            ng = obj.Space.NGlobalDofs;
+
+            ng = obj.space.nGlobalDofs;
             G = core.linalg.sparseFromTriplets(T, ng, nc);
         end
     end

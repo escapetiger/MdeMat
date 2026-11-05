@@ -18,12 +18,28 @@ classdef Ars111Integrator < approx.odeint.ImexrkIntegrator
     %   first-order accuracy. It's suitable for initial testing and
     %   problems where simplicity is preferred over high accuracy.
     %
+    % Examples:
+    %   % Basic usage
+    %   integrator = approx.odeint.Ars111Integrator(1.0);
+    %   U_new = integrator.step(L, F, S, M);
+    %   integrator.update(U_new);
+    %   integrator.advance();
+    %
+    %   % Pure implicit diffusion
+    %   U_new = integrator.step(L, [], [], []);
+    %
+    %   % Mixed implicit-explicit problem
+    %   U_new = integrator.step(L, F, [], []);
+    %
+    %   % Explicit forcing only
+    %   U_new = integrator.step([], [], S, []);
+    %
     % See also:
     %   approx.odeint.ImexrkIntegrator, approx.odeint.Ars222Integrator,
     %   approx.odeint.Ars443Integrator
 
     properties (Constant)
-        Order = 1 % Accuracy order of the ARS(1,1,1) method
+        ORDER = 1 % Accuracy order of the ARS(1,1,1) method
     end
         
     methods
@@ -32,10 +48,12 @@ classdef Ars111Integrator < approx.odeint.ImexrkIntegrator
             %
             %   obj = Ars111Integrator(final) creates an ARS(1,1,1) IMEX
             %   integrator with the specified final time.
-
-            arguments
-                final {mustBeNumeric, mustBeNonnegative}
-            end
+            %
+            % Inputs:
+            %   final - Final time for integration (positive scalar)
+            %
+            % Outputs:
+            %   obj - Constructed Ars111Integrator object
             
             obj@approx.odeint.ImexrkIntegrator(2, final);
             

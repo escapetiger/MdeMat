@@ -31,10 +31,10 @@ title('1D SeparableGraph with Uniform Vertex Distribution');
 
 % Display graph properties
 fprintf('=== 1D SeparableGraph Properties ===\n');
-fprintf('Dimensions: %d\n', separableGraph1D.NDims);
-fprintf('Vertices per dimension: %s\n', mat2str(separableGraph1D.NVertices));
-fprintf('Total vertices: %d\n', separableGraph1D.NTotalVertices);
-fprintf('Total edges: %d\n', separableGraph1D.NTotalEdges);
+fprintf('Dimensions: %d\n', separableGraph1D.nDims);
+fprintf('Vertices per dimension: %s\n', mat2str(separableGraph1D.nVertices));
+fprintf('Total vertices: %d\n', separableGraph1D.nTotalVertices);
+fprintf('Total edges: %d\n', separableGraph1D.nTotalEdges);
 
 %% 2D SeparableGraph Grid Example
 
@@ -56,10 +56,10 @@ title('2D SeparableGraph Grid Structure');
 
 % Display graph properties
 fprintf('\n=== 2D SeparableGraph Properties ===\n');
-fprintf('Dimensions: %d\n', separableGraph2D.NDims);
-fprintf('Vertices per dimension: %s\n', mat2str(separableGraph2D.NVertices));
-fprintf('Total vertices: %d\n', separableGraph2D.NTotalVertices);
-fprintf('Total edges: %d\n', separableGraph2D.NTotalEdges);
+fprintf('Dimensions: %d\n', separableGraph2D.nDims);
+fprintf('Vertices per dimension: %s\n', mat2str(separableGraph2D.nVertices));
+fprintf('Total vertices: %d\n', separableGraph2D.nTotalVertices);
+fprintf('Total edges: %d\n', separableGraph2D.nTotalEdges);
 
 %% 3D SeparableGraph Cube Example
 
@@ -83,10 +83,10 @@ view(45, 30);
 
 % Display graph properties
 fprintf('\n=== 3D SeparableGraph Properties ===\n');
-fprintf('Dimensions: %d\n', separableGraph3D.NDims);
-fprintf('Vertices per dimension: %s\n', mat2str(separableGraph3D.NVertices));
-fprintf('Total vertices: %d\n', separableGraph3D.NTotalVertices);
-fprintf('Total edges: %d\n', separableGraph3D.NTotalEdges);
+fprintf('Dimensions: %d\n', separableGraph3D.nDims);
+fprintf('Vertices per dimension: %s\n', mat2str(separableGraph3D.nVertices));
+fprintf('Total vertices: %d\n', separableGraph3D.nTotalVertices);
+fprintf('Total edges: %d\n', separableGraph3D.nTotalEdges);
 
 %% Large 3D SeparableGraph with Subsampling
 
@@ -113,10 +113,10 @@ title('Large 3D SeparableGraph (Automatically Subsampled)');
 
 % Display large graph properties
 fprintf('\n=== Large 3D SeparableGraph Properties ===\n');
-fprintf('Dimensions: %d\n', separableGraph3DLarge.NDims);
-fprintf('Vertices per dimension: %s\n', mat2str(separableGraph3DLarge.NVertices));
-fprintf('Total vertices: %d\n', separableGraph3DLarge.NTotalVertices);
-fprintf('Total edges: %d\n', separableGraph3DLarge.NTotalEdges);
+fprintf('Dimensions: %d\n', separableGraph3DLarge.nDims);
+fprintf('Vertices per dimension: %s\n', mat2str(separableGraph3DLarge.nVertices));
+fprintf('Total vertices: %d\n', separableGraph3DLarge.nTotalVertices);
+fprintf('Total edges: %d\n', separableGraph3DLarge.nTotalEdges);
 
 %% High-Dimensional SeparableGraph with Projection
 
@@ -152,10 +152,10 @@ title('4D SeparableGraph - Alternative Projection (Dims 2,3,4)');
 
 % Display 4D graph properties
 fprintf('\n=== 4D SeparableGraph Properties ===\n');
-fprintf('Dimensions: %d\n', separableGraph4D.NDims);
-fprintf('Vertices per dimension: %s\n', mat2str(separableGraph4D.NVertices));
-fprintf('Total vertices: %d\n', separableGraph4D.NTotalVertices);
-fprintf('Total edges: %d\n', separableGraph4D.NTotalEdges);
+fprintf('Dimensions: %d\n', separableGraph4D.nDims);
+fprintf('Vertices per dimension: %s\n', mat2str(separableGraph4D.nVertices));
+fprintf('Total vertices: %d\n', separableGraph4D.nTotalVertices);
+fprintf('Total edges: %d\n', separableGraph4D.nTotalEdges);
 
 %% Comparison: SeparableGraph vs Full Graph Representation
 
@@ -207,10 +207,10 @@ separableInfo = whos('separableGraphMedium');
 fullInfo = whos('fullGraphMedium');
 
 % Analyze component memory usage
-separableVerticesData = separableGraphMedium.Vertices;
-separableEdgesData = separableGraphMedium.Edges;
-fullVerticesData = fullGraphMedium.Vertices;
-fullEdgesData = fullGraphMedium.Edges;
+separableVerticesData = separableGraphMedium.vertices;
+separableEdgesData = separableGraphMedium.edges;
+fullVerticesData = fullGraphMedium.vertices;
+fullEdgesData = fullGraphMedium.edges;
 
 separableVerticesInfo = whos('separableVerticesData');
 separableEdgesInfo = whos('separableEdgesData');
@@ -300,8 +300,8 @@ for iTest = 1:nPerformanceTests
         'EdgeWidth', max(0.5, 2-gridSize/10));
     title(sprintf('%dx%dx%d Grid\n%d vertices, %d edges', ...
           gridSize, gridSize, gridSize, ...
-          separableGraphPerf.NTotalVertices, ...
-          separableGraphPerf.NTotalEdges));
+          separableGraphPerf.nTotalVertices, ...
+          separableGraphPerf.nTotalEdges));
     
     if iTest == 1
         view(45, 30);

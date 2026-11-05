@@ -6,7 +6,6 @@ use File::Basename;
 # MATLAB to C++/Doxygen Converter
 # Converts MATLAB files to C++ with proper Doxygen documentation
 # Following Richard K. Johnson's MATLAB Style Guidelines
-# Modified to handle docstrings without Inputs/Outputs/Examples sections
 
 if (@ARGV != 1) {
     die "Usage: $0 <matlab_file.m>\n";
@@ -579,38 +578,46 @@ sub generate_method_docstring {
         }
     }
     
-    # Notes
-    if ($parsed_doc->{'notes'}) {
+    # Parameters (inputs)
+    if (@{$parsed_doc->{'inputs'}}) {
         $output .= "///\n";
-        my @note_lines = split /\n/, $parsed_doc->{'notes'};
-        for my $i (0..$#note_lines) {
-            my $line = $note_lines[$i];
-            $line =~ s/^\s+|\s+$//g; # trim
-            
-            if ($i == 0) {
-                # First line gets @note tag
-                $output .= "/// \@note $line\n";
+        for my $input (@{$parsed_doc->{'inputs'}}) {
+            if ($input =~ /^(\w+)\s*-\s*(.+)$/) {
+                $output .= "/// \@param $1 - $2\n";
             } else {
-                # Subsequent lines are just regular comment lines
-                if ($line ne '') {
-                    $output .= "/// $line\n";
-                } else {
-                    # Preserve empty lines within notes
-                    $output .= "///\n";
-                }
+                $output .= "/// \@param $input\n";
             }
         }
     }
     
-    # See also references
-    if (@{$parsed_doc->{'see_also'}}) {
+    # Return values (outputs) - skip for constructors
+    my $is_constructor_method = is_constructor($method_name, $class_name);
+    if (@{$parsed_doc->{'outputs'}} && !$is_constructor_method) {
         $output .= "///\n";
-        for my $ref (@{$parsed_doc->{'see_also'}}) {
-            $ref =~ s/^\s+|\s+$//g; # trim
-            # For method docstrings, we don't have package_info, so pass empty hash
-            my $empty_package = { 'namespace' => '' };
-            my $converted_ref = convert_matlab_reference_to_cpp($ref, $empty_package);
-            $output .= "/// \@see $converted_ref\n";
+        for my $output_item (@{$parsed_doc->{'outputs'}}) {
+            if ($output_item =~ /^(\w+)\s*-\s*(.+)$/) {
+                $output .= "/// \@retval $1 - $2\n";
+            } else {
+                $output .= "/// \@retval $output_item\n";
+            }
+        }
+    }
+    
+    # Examples
+    if (@{$parsed_doc->{'examples'}}) {
+        $output .= "///\n";
+        $output .= "/// \@code\n";
+        for my $example (@{$parsed_doc->{'examples'}}) {
+            $output .= "/// $example\n";
+        }
+        $output .= "/// \@endcode\n";
+    }
+    
+    # Notes
+    if ($parsed_doc->{'notes'}) {
+        $output .= "///\n";
+        for my $line (split /\n/, $parsed_doc->{'notes'}) {
+            $output .= "/// \@note $line\n";
         }
     }
     
@@ -641,9 +648,9 @@ sub parse_docstring {
     my %parsed = (
         'brief' => '',
         'detailed' => '',
-        'inputs' => [],      # Will remain empty
-        'outputs' => [],     # Will remain empty  
-        'examples' => [],    # Will remain empty
+        'inputs' => [],
+        'outputs' => [],
+        'examples' => [],
         'notes' => '',
         'see_also' => []
     );
@@ -674,8 +681,8 @@ sub parse_docstring {
                 last;
             }
             
-            # Stop if we hit a section header (only Notes and See also remain)
-            if ($line =~ /^(Notes?|See\s+also):\s*$/i) {
+            # Stop if we hit a section header
+            if ($line =~ /^(Inputs?|Outputs?|Examples?|Notes?|See\s+Also):\s*$/i) {
                 $brief_end_index = $i - 1;
                 last;
             }
@@ -712,11 +719,20 @@ sub parse_docstring {
             next;
         }
         
-        # Detect section headers (only Notes and See also)
-        if ($line =~ /^Notes?:\s*$/i) {
+        # Detect section headers (syntax section removed)
+        if ($line =~ /^Inputs?:\s*$/i) {
+            $current_section = 'inputs';
+            next;
+        } elsif ($line =~ /^Outputs?:\s*$/i) {
+            $current_section = 'outputs';
+            next;
+        } elsif ($line =~ /^Examples?:\s*$/i) {
+            $current_section = 'examples';
+            next;
+        } elsif ($line =~ /^Notes?:\s*$/i) {
             $current_section = 'notes';
             next;
-        } elsif ($line =~ /^See\s+also:\s*$/i) {
+        } elsif ($line =~ /^See\s+Also:\s*$/i) {
             $current_section = 'see_also';
             next;
         }
@@ -729,6 +745,12 @@ sub parse_docstring {
             } else {
                 $parsed{'detailed'} .= "\n" . $line;
             }
+        } elsif ($current_section eq 'inputs') {
+            push @{$parsed{'inputs'}}, $line;
+        } elsif ($current_section eq 'outputs') {
+            push @{$parsed{'outputs'}}, $line;
+        } elsif ($current_section eq 'examples') {
+            push @{$parsed{'examples'}}, $line;
         } elsif ($current_section eq 'notes') {
             if ($parsed{'notes'} eq '') {
                 $parsed{'notes'} = $line;
@@ -785,6 +807,40 @@ sub generate_function_comment {
             $line =~ s/^\s+|\s+$//g; # trim
             $doxygen .= "/// $line\n";
         }
+    }
+    
+    # Parameters (inputs)
+    if (@{$parsed_doc->{'inputs'}}) {
+        $doxygen .= "///\n";
+        for my $input (@{$parsed_doc->{'inputs'}}) {
+            if ($input =~ /^(\w+)\s*-\s*(.+)$/) {
+                $doxygen .= "/// \@param $1 - $2\n";
+            } else {
+                $doxygen .= "/// \@param $input\n";
+            }
+        }
+    }
+    
+    # Return values (outputs) - using @retval instead of @return
+    if (@{$parsed_doc->{'outputs'}}) {
+        $doxygen .= "///\n";
+        for my $output (@{$parsed_doc->{'outputs'}}) {
+            if ($output =~ /^(\w+)\s*-\s*(.+)$/) {
+                $doxygen .= "/// \@retval $1 - $2\n";
+            } else {
+                $doxygen .= "/// \@retval $output\n";
+            }
+        }
+    }
+    
+    # Examples
+    if (@{$parsed_doc->{'examples'}}) {
+        $doxygen .= "///\n";
+        $doxygen .= "/// \@code\n";
+        for my $example (@{$parsed_doc->{'examples'}}) {
+            $doxygen .= "/// $example\n";
+        }
+        $doxygen .= "/// \@endcode\n";
     }
     
     # Notes
@@ -967,6 +1023,7 @@ sub generate_cpp_output {
         my $content_without_docstring = prepare_content_without_docstring($file_data);
         
         # Then process the content using original m2cpp.pl logic
+        # Pass the content and class signature instead of filename
         my $class_content = convert_class_content($content_without_docstring, $file_data->{'class_signature'});
         $output .= $class_content;
     } else {

@@ -74,7 +74,7 @@ PROJECT_ICON           =
 # entered, it will be relative to the location where Doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = docs
+OUTPUT_DIRECTORY       = doc
 
 # If the CREATE_SUBDIRS tag is set to YES then Doxygen will create up to 4096
 # sub-directories (in 2 levels) under the output directory of each output format
@@ -1101,18 +1101,10 @@ EXCLUDE                = dev \
                          +approx/+integrate/lebedev \
                          +core/+io/+tests \
                          +core/+chrono/+tests \
+                         +core/+data/+tests \
                          +core/+except/private \
                          +core/+geometry/+tests \
-                         +core/+linalg/+tests \
-                         +core/+except/private \
-                         distmesh \
-                         +physics/+poisson/+scripts \
-                         +physics/+diffusion/+scripts \
-                         +physics/+advection/+scripts \
-                         +physics/+vlasov/+scripts \
-                         +physics/+radiation/+scripts \
-                         +approx/+odeint/+scripts \
-                         +approx/+mesh/+scripts
+                         +core/+linalg/+tests
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1188,7 +1180,7 @@ IMAGE_PATH             =
 # need to set EXTENSION_MAPPING for the extension otherwise the files are not
 # properly processed by Doxygen.
 
-INPUT_FILTER           = "perl C:/Users/CAIYI/OneDrive/Docs/xmu/repo/MdeMat/m2cpp.pl"
+INPUT_FILTER           = "perl C:/Users/CAIYI/OneDrive/Docs/xmu/paper/MdeMat/m2cpp.pl"
 
 # The FILTER_PATTERNS tag can be used to specify filters on a per file pattern
 # basis. Doxygen will compare the file name with each pattern and apply the

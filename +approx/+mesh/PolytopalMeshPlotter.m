@@ -6,11 +6,26 @@ classdef PolytopalMeshPlotter < handle
     %   functions such as triplot, trimesh, trisurf, and vectorized
     %   plotting for maximum performance.
     %
+    % Examples:
+    %   % Create and plot a 2D simplex mesh
+    %   vertices = [0, 0; 1, 0; 0.5, 1; 1, 1];
+    %   elements = [1, 2, 3; 2, 4, 3];
+    %   mesh = approx.mesh.SimplexPolytopalMesh(vertices, elements);
+    %   plotter = approx.mesh.PolytopalMeshPlotter();
+    %   plotter.plot(mesh);
+    %
+    %   % Plot with custom styling
+    %   plotter.plot(mesh, 'ElementColor', 'cyan', 'BoundaryColor', 'red', ...
+    %                'ShowFaces', true, 'Alpha', 0.5);
+    %
+    %   % Plot only boundary and vertices
+    %   plotter.plot(mesh, 'ShowEdges', false, 'ShowElements', false);
+    %
     % See also:
     %   approx.mesh.PolytopalMesh, approx.mesh.SimplexPolytopalMesh
 
     properties (Access = protected)
-        GraphPlotter % Visualizing the mesh's graph (GraphPlotter)
+        graphPlotter % GraphPlotter for visualizing the mesh's graph (GraphPlotter)
     end
 
     methods
@@ -20,37 +35,66 @@ classdef PolytopalMeshPlotter < handle
             %   obj = PolytopalMeshPlotter() creates a mesh plotter
             %   instance with an associated graph plotter for rendering
             %   vertices and edges.
+            %
+            % Outputs:
+            %   obj - Constructed PolytopalMeshPlotter object
 
-            obj.GraphPlotter = approx.mesh.GraphPlotter();
+            obj.graphPlotter = approx.mesh.GraphPlotter();
         end
 
-        function plot(obj, mesh, options)
+        function plot(obj, mesh, varargin)
             % PLOT Visualize a PolytopalMesh object.
             %
             %   plot(obj, mesh) creates a visualization of the mesh with
             %   default styling options using fast built-in functions.
             %
-            %   plot(obj, mesh, options) allows customization of
-            %   the visualization through options structure.
+            %   plot(obj, mesh, Name, Value, ...) allows customization of
+            %   the visualization through name-value pair arguments.
+            %
+            % Inputs:
+            %   obj - The PolytopalMeshPlotter object
+            %   mesh - approx.mesh.PolytopalMesh object to visualize
+            %   varargin - Name-value pairs for customization
+            %
+            %< Name-Value Pairs:
+            %<   'VertexColor' - Color for vertices (default: 'b')
+            %<   'EdgeColor' - Color for edges (default: 'k')
+            %<   'FaceColor' - Color for faces (default: 'none')
+            %<   'ElementColor' - Color for elements (default: 'none')
+            %<   'BoundaryColor' - Color for boundary faces (default: 'r')
+            %<   'VertexSize' - Size of vertex markers (default: 36)
+            %<   'EdgeWidth' - Width of edge lines (default: 1)
+            %<   'Alpha' - Transparency for faces and elements (default: 0.3)
+            %<   'ShowVertices' - Flag to show vertices (default: true)
+            %<   'ShowEdges' - Flag to show edges (default: true)
+            %<   'ShowFaces' - Flag to show faces (default: false)
+            %<   'ShowElements' - Flag to show elements (default: false)
+            %<   'ShowBoundary' - Flag to show boundary (default: true)
+            %<   'UseFastRendering' - Use optimized built-ins (default: true)
 
-            arguments
-                obj
-                mesh approx.mesh.PolytopalMesh
-                options.VertexColor = 'b'
-                options.EdgeColor = 'k'
-                options.FaceColor = 'none'
-                options.ElementColor = 'none'
-                options.BoundaryColor = 'r'
-                options.VertexSize{mustBePositive} = 36
-                options.EdgeWidth{mustBePositive} = 1
-                options.Alpha{mustBeNonnegative, mustBeLessThanOrEqual(options.Alpha, 1)} = 0.3
-                options.ShowVertices{mustBeNumericOrLogical} = true
-                options.ShowEdges{mustBeNumericOrLogical} = true
-                options.ShowFaces{mustBeNumericOrLogical} = false
-                options.ShowElements{mustBeNumericOrLogical} = false
-                options.ShowBoundary{mustBeNumericOrLogical} = true
-                options.UseFastRendering{mustBeNumericOrLogical} = true
-            end
+            %< Validate input
+            core.except.assert(isa(mesh, 'approx.mesh.PolytopalMesh'), ...
+                'InvalidInput', 'Input must be an approx.mesh.PolytopalMesh object.');
+
+            %< Parse input parameters
+            p = inputParser;
+            addParameter(p, 'VertexColor', 'b');
+            addParameter(p, 'EdgeColor', 'k');
+            addParameter(p, 'FaceColor', 'none');
+            addParameter(p, 'ElementColor', 'none');
+            addParameter(p, 'BoundaryColor', 'r');
+            addParameter(p, 'VertexSize', 36);
+            addParameter(p, 'EdgeWidth', 1);
+            addParameter(p, 'Alpha', 0.3);
+            addParameter(p, 'ShowVertices', true);
+            addParameter(p, 'ShowEdges', true);
+            addParameter(p, 'ShowFaces', false);
+            addParameter(p, 'ShowElements', false);
+            addParameter(p, 'ShowBoundary', true);
+            addParameter(p, 'UseFastRendering', true);
+            parse(p, varargin{:});
+
+            options = p.Results;
 
             %< Prepare the plot
             holdState = ishold;
@@ -60,10 +104,10 @@ classdef PolytopalMeshPlotter < handle
             hold on;
 
             %< Get the dimension of the mesh
-            nDims = mesh.NDims;
+            nDims = mesh.nDims;
 
             %< Construct connectivity graph of mesh
-            if options.ShowEdges
+            if p.Results.ShowEdges
                 graph = mesh.graphify();
             else
                 graph = [];
@@ -94,7 +138,7 @@ classdef PolytopalMeshPlotter < handle
 
             %< Add title with mesh information
             title(sprintf('%dD PolytopalMesh: %d vertices, %d elements, %d faces (%d boundary)', ...
-                nDims, mesh.NVertices, mesh.NElements, mesh.NFaces, mesh.NBoundaryFaces));
+                nDims, mesh.nVertices, mesh.nElements, mesh.nFaces, mesh.nBoundaryFaces));
 
             %< Add legend
             addLegend(options);
@@ -112,51 +156,54 @@ classdef PolytopalMeshPlotter < handle
     end
 
     methods (Access = protected)
-        function plotPolytopalMeshFast(~, mesh, graph, options)
-            % PLOTPOLYTOPALMESHFAST Visualize mesh using optimized MATLAB
-            % functions.
+        function plotPolytopalMeshFast(obj, mesh, graph, options)
+            % PLOTPOLYTOPALMESHFAST Visualize mesh using optimized MATLAB functions.
             %
-            %   plotPolytopalMeshFast(obj, mesh, graph, options) renders
-            %   mesh components using vectorized MATLAB built-in functions
-            %   for maximum speed.
+            %   plotPolytopalMeshFast(obj, mesh, graph, options) renders mesh components
+            %   using vectorized MATLAB built-in functions for maximum speed.
+            %
+            % Inputs:
+            %   obj - The PolytopalMeshPlotter object
+            %   mesh - approx.mesh.PolytopalMesh object with nDims <= 3
+            %   graph - approx.mesh.Graph object
+            %   options - Structure containing plotting options
 
             %< Check if mesh is triangular/tetrahedral for built-in functions
             isTriangular = isTriangularPolytopalMesh(mesh);
 
             %< Plot elements using fast methods
             if options.ShowElements && ~isequal(options.ElementColor, 'none') && ...
-                    mesh.NElements > 0
+                    mesh.nElements > 0
                 plotElementsFast(mesh, options, isTriangular);
             end
 
             %< Plot faces using fast methods
             if options.ShowFaces && ~isequal(options.FaceColor, 'none') && ...
-                    mesh.NFaces > 0
+                    mesh.nFaces > 0
                 plotFacesFast(mesh, options);
             end
 
             %< Plot edges using fast methods
             if options.ShowEdges && ~isequal(options.EdgeColor, 'none') && ...
-                    graph.NEdges > 0
-                plotEdgesFast(mesh, graph.Edges, options, isTriangular);
+                    graph.nEdges > 0
+                plotEdgesFast(mesh, graph.edges, options, isTriangular);
             end
 
             %< Plot vertices using fast methods
             if options.ShowVertices && ~isequal(options.VertexColor, 'none') && ...
-                    mesh.NVertices > 0
+                    mesh.nVertices > 0
                 plotVerticesFast(mesh, options);
             end
 
             %< Plot boundary using fast methods
             if options.ShowBoundary && ~isequal(options.BoundaryColor, 'none') && ...
-                    mesh.NBoundaryFaces > 0
+                    mesh.nBoundaryFaces > 0
                 plotBoundaryFast(mesh, options);
             end
         end
 
         function plotPolytopalMeshOriginal(obj, mesh, graph, options)
-            % PLOTPOLYTOPALMESHORIGINAL Use original plotting method for
-            % compatibility.
+            % PLOTPOLYTOPALMESHORIGINAL Use original plotting method for compatibility.
 
             %< Plot vertices and edges using GraphPlotter if enabled
             if options.ShowVertices || options.ShowEdges
@@ -176,24 +223,24 @@ classdef PolytopalMeshPlotter < handle
                     graphOptions = [graphOptions, {'ShowEdges', false}];
                 end
 
-                obj.GraphPlotter.plot(graph, struct(graphOptions{:}));
+                obj.graphPlotter.plot(graph, graphOptions{:});
             end
 
             %< Plot faces if enabled
             if options.ShowFaces && ~isequal(options.FaceColor, 'none') && ...
-                    mesh.NFaces > 0
+                    mesh.nFaces > 0
                 plotFacesSlow(mesh, options.FaceColor, options.Alpha);
             end
 
             %< Plot elements if enabled
             if options.ShowElements && ~isequal(options.ElementColor, 'none') && ...
-                    mesh.NElements > 0
+                    mesh.nElements > 0
                 plotElementsSlow(mesh, options.ElementColor, options.Alpha);
             end
 
             %< Plot boundary if enabled
             if options.ShowBoundary && ~isequal(options.BoundaryColor, 'none') && ...
-                    mesh.NBoundaryFaces > 0
+                    mesh.nBoundaryFaces > 0
                 plotBoundarySlow(mesh, options.BoundaryColor, options.EdgeWidth*1.5);
             end
         end
@@ -202,7 +249,7 @@ classdef PolytopalMeshPlotter < handle
             % PLOTHIGHDIMENSIONAL Visualize a mesh with nDims > 3.
 
             %< Get vertex coordinates
-            vertices = mesh.Vertices;
+            vertices = mesh.vertices;
 
             %< Perform PCA to project to 3D
             if size(vertices, 1) > 1
@@ -219,22 +266,30 @@ classdef PolytopalMeshPlotter < handle
             end
 
             %< Create a 3D graph for visualization
-            projectedGraph = approx.mesh.Graph(projectedVertices, graph.Edges);
+            projectedGraph = approx.mesh.Graph(projectedVertices, graph.edges);
 
-            %< Create options structure
-            graphOptions = struct();
-            graphOptions.VertexColor = options.VertexColor;
-            graphOptions.VertexSize = options.VertexSize;
-            graphOptions.ShowVertices = options.ShowVertices;
-            graphOptions.EdgeColor = options.EdgeColor;
-            graphOptions.EdgeWidth = options.EdgeWidth;
-            graphOptions.ShowEdges = options.ShowEdges;
+            %< Use graph plotter to visualize
+            graphOptions = {};
 
-            obj.GraphPlotter.plot(projectedGraph, graphOptions);
+            if options.ShowVertices
+                graphOptions = [graphOptions, {'VertexColor', options.VertexColor, ...
+                    'VertexSize', options.VertexSize, 'ShowVertices', true}];
+            else
+                graphOptions = [graphOptions, {'ShowVertices', false}];
+            end
+
+            if options.ShowEdges
+                graphOptions = [graphOptions, {'EdgeColor', options.EdgeColor, ...
+                    'EdgeWidth', options.EdgeWidth, 'ShowEdges', true}];
+            else
+                graphOptions = [graphOptions, {'ShowEdges', false}];
+            end
+
+            obj.graphPlotter.plot(projectedGraph, graphOptions{:});
 
             %< Add warning about projection
             core.except.verify(0, 'DimensionReduction', ...
-                'Visualizing %dD mesh using PCA projection to 3D.', mesh.NDims);
+                'Visualizing %dD mesh using PCA projection to 3D.', mesh.nDims);
 
             %< Set 3D view
             view(3);
@@ -243,11 +298,10 @@ classdef PolytopalMeshPlotter < handle
 end
 
 function isTriangular = isTriangularPolytopalMesh(mesh)
-% ISTRIANGULARPOLYTOPALMESH Check if mesh consists of
-% triangular/tetrahedral elements.
+% ISTRIANGULARPOLYTOPALMESH Check if mesh consists of triangular/tetrahedral elements.
 
-nDims = mesh.NDims;
-nVerticesPerElement = mesh.NVerticesPerElement;
+nDims = mesh.nDims;
+nVerticesPerElement = mesh.nVerticesPerElement;
 
 % Check if elements are simplices (triangles or tetrahedra)
 expectedVertices = nDims + 1;
@@ -257,14 +311,14 @@ end
 function surfaceTriangles = getTetrahedralSurface(mesh)
 % GETTETRAHEDRALSURFACE Extract surface triangles from tetrahedral mesh.
 
-if mesh.NDims ~= 3 || size(mesh.Elements, 2) ~= 4
+if mesh.nDims ~= 3 || size(mesh.elements, 2) ~= 4
     surfaceTriangles = [];
     return;
 end
 
 % Get boundary faces which should be triangles
-if mesh.NBoundaryFaces > 0 && size(mesh.Faces, 2) == 3
-    surfaceTriangles = mesh.Faces(mesh.Boundary, :);
+if mesh.nBoundaryFaces > 0 && size(mesh.faces, 2) == 3
+    surfaceTriangles = mesh.faces(mesh.boundary, :);
 else
     surfaceTriangles = [];
 end
@@ -273,9 +327,9 @@ end
 function plotElementsFast(mesh, options, isTriangularPolytopalMesh)
 % PLOTELEMENTSFAST Plot elements using optimized functions.
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
 switch nDims
     case 1
@@ -322,9 +376,9 @@ end
 function plotFacesFast(mesh, options)
 % PLOTFACESFAST Plot faces using optimized functions.
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-faces = mesh.Faces;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+faces = mesh.faces;
 
 if nDims == 3 && size(faces, 2) == 3
     % Use trisurf for triangular faces in 3D
@@ -344,9 +398,9 @@ end
 function plotEdgesFast(mesh, edges, options, isTriangularPolytopalMesh)
 % PLOTEDGESFAST Plot edges using optimized functions.
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
 switch nDims
     case 2
@@ -406,8 +460,8 @@ end
 function plotVerticesFast(mesh, options)
 % PLOTVERTICESFAST Plot vertices using optimized functions.
 
-vertices = mesh.Vertices;
-nDims = mesh.NDims;
+vertices = mesh.vertices;
+nDims = mesh.nDims;
 
 switch nDims
     case 1
@@ -435,10 +489,10 @@ end
 function plotBoundaryFast(mesh, options)
 % PLOTBOUNDARYFAST Plot boundary using optimized functions.
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-faces = mesh.Faces;
-boundary = mesh.Boundary;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+faces = mesh.faces;
+boundary = mesh.boundary;
 
 if isempty(boundary)
     return;
@@ -481,10 +535,15 @@ end
 function plotFacesSlow(mesh, faceColor, alpha)
 % PLOTFACES Plot the faces of a mesh.
 %
-%   plotFacesSlow(mesh, faceColor, alpha) renders mesh faces as filled
-%   polygons with the specified color and transparency.
+%   plotFacesSlow(mesh, faceColor, alpha) renders mesh faces as filled polygons
+%   with the specified color and transparency.
+%
+% Inputs:
+%   mesh - approx.mesh.PolytopalMesh object
+%   faceColor - Color for faces
+%   alpha - Transparency level (0-1)
 
-nDims = mesh.NDims;
+nDims = mesh.nDims;
 
 if nDims <= 2
     % In 1D and 2D, faces are lower-dimensional and handled differently
@@ -492,10 +551,10 @@ if nDims <= 2
 end
 
 % In 3D, faces are 2D polygons
-vertices = mesh.Vertices;
-faces = mesh.Faces;
+vertices = mesh.vertices;
+faces = mesh.faces;
 
-for iFace = 1:mesh.NFaces
+for iFace = 1:mesh.nFaces
     faceVertices = vertices(faces(iFace, :), :);
 
     % Handle different face types
@@ -523,14 +582,19 @@ end
 function plotElementsSlow(mesh, elementColor, alpha)
 % PLOTELEMENTS Plot the elements of a mesh.
 %
-%   plotElementsSlow(mesh, elementColor, alpha) renders mesh elements as
-%   filled shapes with the specified color and transparency.
+%   plotElementsSlow(mesh, elementColor, alpha) renders mesh elements as filled
+%   shapes with the specified color and transparency.
+%
+% Inputs:
+%   mesh - approx.mesh.PolytopalMesh object
+%   elementColor - Color for elements
+%   alpha - Transparency level (0-1)
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-elements = mesh.Elements;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+elements = mesh.elements;
 
-for iElement = 1:mesh.NElements
+for iElement = 1:mesh.nElements
     elementVertices = vertices(elements(iElement, :), :);
 
     try
@@ -568,13 +632,18 @@ end
 function plotBoundarySlow(mesh, boundaryColor, lineWidth)
 % PLOTBOUNDARY Plot the boundary faces of a mesh.
 %
-%   plotBoundarySlow(mesh, boundaryColor, lineWidth) renders boundary faces
-%   as lines or highlighted regions.
+%   plotBoundarySlow(mesh, boundaryColor, lineWidth) renders boundary faces as
+%   lines or highlighted regions.
+%
+% Inputs:
+%   mesh - approx.mesh.PolytopalMesh object
+%   boundaryColor - Color for boundary
+%   lineWidth - Width of boundary lines
 
-nDims = mesh.NDims;
-vertices = mesh.Vertices;
-faces = mesh.Faces;
-boundary = mesh.Boundary;
+nDims = mesh.nDims;
+vertices = mesh.vertices;
+faces = mesh.faces;
+boundary = mesh.boundary;
 
 for iBoundary = 1:length(boundary)
     iFace = boundary(iBoundary);
@@ -596,9 +665,9 @@ for iBoundary = 1:length(boundary)
                 % Boundary faces in 3D
                 if size(faceVertices, 1) >= 3
                     % Plot face outline
-                    closedFaceVertices = [faceVertices; faceVertices(1, :)]; % Close the loop
-                    plot3(closedFaceVertices(:, 1), closedFaceVertices(:, 2), ...
-                        closedFaceVertices(:, 3), '-', 'Color', boundaryColor, ...
+                    faceVertices = [faceVertices; faceVertices(1, :)]; % Close the loop
+                    plot3(faceVertices(:, 1), faceVertices(:, 2), ...
+                        faceVertices(:, 3), '-', 'Color', boundaryColor, ...
                         'LineWidth', lineWidth);
                 end
         end
@@ -615,6 +684,9 @@ function addLegend(options)
 %
 %   addLegend(options) creates a legend showing only the mesh components
 %   that are currently visible based on the plotting options.
+%
+% Inputs:
+%   options - Structure containing plotting options
 
 legendItems = {};
 legendLabels = {};

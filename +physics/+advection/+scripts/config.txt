@@ -1,10 +1,15 @@
 # Environment configuration
 
 # =======================================================================
+# Filesystem
+# =======================================================================
+MATLABPATH=
+SUBDIRS=
+OPTION=outDir=assets
+
+# =======================================================================
 # Algorithm
 # =======================================================================
-
-OPTION=schemeName='uwdg'
 
 # -----------------------------------------------------------------------
 # Time discretization
@@ -19,7 +24,7 @@ OPTION=tSplitName=''
 # tOdeIntName='bdf3': BDF3 scheme
 # tOdeIntName='sdirk2': SDIRK2 scheme
 # tOdeIntName='sdirk3': SDIRK3 scheme
-OPTION=tOdeIntName='sdirk2'
+OPTION=tOdeIntName='be'
 
 # CFL number
 OPTION=cfl=0.5
@@ -28,13 +33,18 @@ OPTION=cfl=0.5
 # Space discretization
 # -----------------------------------------------------------------------
 
-# spatial order
-OPTION=xBasisOrder=2
+# xDiscName='uwdg': upwind DG
+# xDiscName='sldg': semi-Lagrangian DG
+OPTION=xDiscName='sldg'
 
-# xBasisType='modal': Modal basis 
-# xBasisType='nodal': Nodal basis
-OPTION=xBasisType='modal'
+# spatial order
+OPTION=xBasisOrder=1
+
+# xBasisType='legendre': Monic Legendre basis, 
+# xBasisType='lagrange_gauss_legendre': Lagrange basis on Gauss-Legendre nodes
+# xBasisType='lagrange_gauss_lobatto': Lagrange basis on Gauss-Lobatto nodes
+OPTION=xBasisType='legendre'
 
 # xBasisPattern='Q': Qk polynomial space
 # xBasisPattern='P': Pk polynomial space
-OPTION=xBasisPattern='Q'
+OPTION=xBasisPattern='P'

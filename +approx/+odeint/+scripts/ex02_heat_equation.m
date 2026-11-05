@@ -127,7 +127,7 @@ for i = 1:n_methods
     U_current = u0;
     tic;
     for k = 1:n_steps
-        integrator.setTimeStep(dt=dt);
+        integrator.timeline.setTimeStep(dt, 1, 1);
         
         % Set coefficients for BDF methods
         if isa(integrator, 'approx.odeint.BdfIntegrator')
@@ -136,14 +136,14 @@ for i = 1:n_methods
         
         % Call appropriate step method based on integrator type
         if strcmp(integrator_types{i}, 'Implicit')
-            U_new = integrator.step(L=L, S=S, M=[]);
+            U_new = integrator.step(L, S, []);
         elseif strcmp(integrator_types{i}, 'Explicit')
             % For explicit methods, treat diffusion as nonlinear operator
             F_eval = L * integrator.U0{1};
-            U_new = integrator.step(L=[], F=F_eval, S=[], M=[]);
+            U_new = integrator.step([], F_eval, [], []);
         else % IMEX
             % For IMEX methods, treat diffusion implicitly
-            U_new = integrator.step(L=L, F=F, S=S, M=[]);
+            U_new = integrator.step(L, F, S, []);
         end
         
         integrator.update(U_new);

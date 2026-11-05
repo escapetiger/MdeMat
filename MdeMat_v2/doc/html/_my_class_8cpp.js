@@ -1,4 +1,0 @@
-var _my_class_8cpp =
-[
-    [ "MyClass", "class_my_class.html", "class_my_class" ]
-];
