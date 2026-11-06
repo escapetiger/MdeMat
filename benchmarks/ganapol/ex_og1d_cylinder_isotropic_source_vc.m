@@ -1,5 +1,12 @@
-%% NOTE: This test is failed!!!
-clc; clear; addpath('utils');
+function result = ex_og1d_cylinder_isotropic_source_vc(options)
+arguments
+    options.Plot (1, 1) logical = true
+    options.OutputFile (1, 1) string = ""
+    options.MaxPoints (1, 1) double {mustBePositive} = Inf
+end
+oldPath = path;
+pathGuard = onCleanup(@() path(oldPath));
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% Simulation settings
 c = 0.1:0.2:0.1;        % c=c_s+c_f,
@@ -16,18 +23,20 @@ x1 = linspace(0,x0,N1); % grid points in [0,x0]
 x2 = linspace(x0,L,N2); % grid points in [x0,L] 
 x = [x1 x2];            % all grid points
 
+x = x(1:min(numel(x), options.MaxPoints));
+
 %% Solve by inverse Fourier transform
 phi0 = zeros(numel(c),numel(x));
 for j = 1:numel(c)
     fprintf('Beam source test in cylinderical geometry with c=%.1f\n',c(j));
     for i = 1:numel(x)
         fprintf('=> draw at x=%.4f\n',x(i));
-        g = @(k) fn_phi0(k,r,n,c(j),fs).*k./x(i)./(2*pi*1j);
-        phi_sp = @(z)cifft(g,sqrt(x(i).^2+z.^2),10,0.45);
-        phi0(j,i) = gaussint(@(u)phi_sp(u,j),0,20,20);
+        phi0(j,i) = ganapolReference(x(i), Geometry="cylinder", ...
+            ScatteringRatio=c(j), Phase=fs, AngularPoints=n, FourierOrder=10);
     end
 end
 
+if options.Plot
 %% Visulization
 figure(1)
 semilogy(x(2:end),phi0(1,2:end),'-', ...
@@ -44,7 +53,16 @@ ylabel('Scalar Flux','FontSize',14);
 xlim([-1/2 L+1/2]);
 ylim([1e-3 1e2]);   
 legend('Location','best');
-save('data_og1d_cylinder_isotropic_source_vc.mat');
+end
+
+result = struct('Points', x, 'Flux', phi0, 'ScatteringRatio', c, ...
+    'Phase', fs, 'AngularPoints', n, 'FourierOrder', 10);
+if options.OutputFile ~= ""
+    mdemat.tools.io.writeRecord(options.OutputFile, result);
+end
+
+end
+
 
 %% Utils
 function phi0 = fn_phi0(k,r,n,c,fs)

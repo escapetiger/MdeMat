@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "ee0d143074c4e426e96086082b142dd31c5309d2",
+  "scope": "Explicit tools cutover after namespace relocation; historical namespace evidence is unchanged.",
+  "files": {
+    "toolbox/+mdemat/+tools/+analysis/Analyzer.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/summarizeConvergence.m",
+        "toolbox/+mdemat/+common/+fem/samplingPlan.m",
+        "toolbox/+mdemat/+common/+fem/nestedSamplingPlan.m",
+        "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+        "toolbox/+mdemat/+internal/+execution/SteadyScheme.m",
+        "toolbox/+mdemat/+common/+fem/sampleField.m",
+        "toolbox/+mdemat/+internal/+execution/runConvergence.m",
+        "toolbox/+mdemat/+internal/+execution/assessState.m",
+        "toolbox/+mdemat/+internal/+execution/Scheme.m",
+        "toolbox/+mdemat/+common/+fem/referenceValues.m",
+        "toolbox/+mdemat/+tools/+analyze/weightedError.m",
+        "toolbox/+mdemat/+internal/+execution/convergenceTables.m",
+        "toolbox/+mdemat/+tools/+visual/plotConvergence.m",
+        "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+        "toolbox/+mdemat/+tools/+visual/private/createLayout.m"
+      ],
+      "tasks": [
+        "T250",
+        "T270"
+      ],
+      "disposition": "REPLACE_WITH_FUNCTIONS_AND_RECORDS"
+    },
+    "toolbox/+mdemat/+tools/+analysis/Metric.m": {
+      "targets": [
+        "builtin:cell",
+        "builtin:struct",
+        "toolbox/+mdemat/+internal/+execution/assessState.m",
+        "toolbox/+mdemat/+internal/+execution/Scheme.m"
+      ],
+      "tasks": [
+        "T250",
+        "T270"
+      ],
+      "disposition": "REMOVE_ABSTRACTION"
+    },
+    "toolbox/+mdemat/+tools/+analysis/benchmark.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/benchmark.m"
+      ],
+      "tasks": [
+        "T280"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+analysis/convergenceRates.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/convergenceRates.m"
+      ],
+      "tasks": [
+        "T250"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+analysis/memorySnapshot.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/memorySnapshot.m"
+      ],
+      "tasks": [
+        "T280"
+      ],
+      "disposition": "KEEP"
+    },
+    "toolbox/+mdemat/+tools/+analysis/weightedError.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/weightedError.m"
+      ],
+      "tasks": [
+        "T250"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+base/hasFields.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/hasFields.m"
+      ],
+      "tasks": [
+        "T210"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+base/hash.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/hash.m"
+      ],
+      "tasks": [
+        "T220"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+base/isAllClass.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/isAllClass.m"
+      ],
+      "tasks": [
+        "T210"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+base/isAllSameClass.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/isAllSameClass.m"
+      ],
+      "tasks": [
+        "T210"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+base/mustBeCellOrNumeric.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/mustBeCellOrNumeric.m"
+      ],
+      "tasks": [
+        "T210"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+base/mustBeCellOrObject.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+base/mustBeCellOrObject.m"
+      ],
+      "tasks": [
+        "T210"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+environment/ConfigParser.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+environment/Config.m",
+        "toolbox/+mdemat/+tools/+environment/readConfig.m",
+        "toolbox/+mdemat/+internal/+execution/Scheme.m"
+      ],
+      "tasks": [
+        "T230",
+        "T270"
+      ],
+      "disposition": "REPLACE_AND_SPLIT"
+    },
+    "toolbox/+mdemat/+tools/+environment/describe.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+environment/describe.m"
+      ],
+      "tasks": [
+        "T220"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+environment/projectRoot.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+environment/projectRoot.m"
+      ],
+      "tasks": [
+        "T220"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+environment/toolboxRoot.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+environment/toolboxRoot.m"
+      ],
+      "tasks": [
+        "T220"
+      ],
+      "disposition": "KEEP"
+    },
+    "toolbox/+mdemat/+tools/+environment/versionInfo.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+environment/versionInfo.m"
+      ],
+      "tasks": [
+        "T220"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+except/assert.m": {
+      "targets": [
+        "builtin:error",
+        "builtin:assert",
+        "builtin:MException"
+      ],
+      "tasks": [
+        "T210",
+        "T270"
+      ],
+      "disposition": "REPLACE_WITH_NATIVE"
+    },
+    "toolbox/+mdemat/+tools/+except/private/backtrack.m": {
+      "targets": [
+        "builtin:error",
+        "builtin:warning",
+        "builtin:MException"
+      ],
+      "tasks": [
+        "T210",
+        "T270"
+      ],
+      "disposition": "REMOVE"
+    },
+    "toolbox/+mdemat/+tools/+except/verify.m": {
+      "targets": [
+        "builtin:warning"
+      ],
+      "tasks": [
+        "T210",
+        "T270"
+      ],
+      "disposition": "REPLACE_WITH_NATIVE"
+    },
+    "toolbox/+mdemat/+tools/+io/createRunRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/createRunRecord.m",
+        "toolbox/+mdemat/+tools/+io/private/recordLimits.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+io/private/decodeArrays.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/private/decodeArrays.m",
+        "toolbox/+mdemat/+tools/+io/private/describeJsonArrays.m",
+        "toolbox/+mdemat/+tools/+io/private/primitiveSpec.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+io/private/encodeArrays.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/private/encodeArrays.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "KEEP_REFINE"
+    },
+    "toolbox/+mdemat/+tools/+io/private/packRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/private/packRecord.m",
+        "toolbox/+mdemat/+tools/+io/private/recordLimits.m",
+        "toolbox/+mdemat/+tools/+io/private/recordShape.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+io/private/unpackRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/private/unpackRecord.m",
+        "toolbox/+mdemat/+tools/+io/private/validateRecordTree.m",
+        "toolbox/+mdemat/+tools/+io/private/recordShape.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+io/readRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/readRecord.m",
+        "toolbox/+mdemat/+tools/+io/private/recordLimits.m",
+        "toolbox/+mdemat/+tools/+io/private/primitiveSpec.m",
+        "toolbox/+mdemat/+tools/+io/private/recordShape.m",
+        "toolbox/+mdemat/+tools/+io/private/describeJsonArrays.m",
+        "toolbox/+mdemat/+tools/+io/private/validateRecordTree.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+io/readStateRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+variable/State.m",
+        "toolbox/+mdemat/+internal/+execution/loadStudyState.m",
+        "toolbox/+mdemat/+internal/+execution/readCheckpoint.m",
+        "toolbox/+mdemat/+tools/+io/readRecord.m",
+        "toolbox/+mdemat/+common/+fem/SpatialState.m",
+        "toolbox/+mdemat/+common/+fem/KineticState.m",
+        "toolbox/+mdemat/+application/+plasma/HermiteState.m",
+        "toolbox/+mdemat/+application/+plasma/ApHermiteState.m",
+        "toolbox/+mdemat/+application/+radiation/MacroMicroState.m"
+      ],
+      "tasks": [
+        "T240",
+        "T270"
+      ],
+      "disposition": "MOVE_TO_OWNER"
+    },
+    "toolbox/+mdemat/+tools/+io/validateStateRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+variable/validateStateRecord.m",
+        "toolbox/+mdemat/+data/+variable/State.m",
+        "toolbox/+mdemat/+common/+fem/SpatialState.m",
+        "toolbox/+mdemat/+common/+fem/KineticState.m",
+        "toolbox/+mdemat/+data/+variable/bindStateCallbacks.m"
+      ],
+      "tasks": [
+        "T240",
+        "T270"
+      ],
+      "disposition": "MOVE_AND_SPLIT"
+    },
+    "toolbox/+mdemat/+tools/+io/writeRecord.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+io/writeRecord.m",
+        "toolbox/+mdemat/+tools/+io/private/recordLimits.m",
+        "toolbox/+mdemat/+tools/+io/private/validateRecordTree.m"
+      ],
+      "tasks": [
+        "T240"
+      ],
+      "disposition": "OPTIMIZE"
+    },
+    "toolbox/+mdemat/+tools/+timing/Record.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/Timer.m"
+      ],
+      "tasks": [
+        "T220",
+        "T270"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_VALUE"
+    },
+    "toolbox/+mdemat/+tools/+timing/Timer.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+analyze/Timer.m"
+      ],
+      "tasks": [
+        "T220",
+        "T270"
+      ],
+      "disposition": "SIMPLIFY_OWNER"
+    },
+    "toolbox/+mdemat/+tools/+visual/Database.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/selectComponent.m",
+        "builtin:struct",
+        "builtin:numel",
+        "builtin:fieldnames",
+        "builtin:isempty"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "REPLACE_WITH_VALUE_COLLECTION"
+    },
+    "toolbox/+mdemat/+tools/+visual/Dataset.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/private/validateDatasets.m",
+        "builtin:struct",
+        "builtin:isfield",
+        "builtin:fieldnames",
+        "toolbox/+mdemat/+tools/+visual/selectComponent.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "REPLACE_WITH_VALUE_RECORD"
+    },
+    "toolbox/+mdemat/+tools/+visual/FigureManager.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+        "toolbox/+mdemat/+tools/+visual/private/computeFigurePositions.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "MERGE_RESOURCE_OWNER"
+    },
+    "toolbox/+mdemat/+tools/+visual/GraphPlotter.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@Graph/Graph.m",
+        "toolbox/+mdemat/+data/+mesh/@Graph/plot.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/plotGraph.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/drawEdges.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "MOVE_AND_REMOVE_CLASS"
+    },
+    "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@PolytopalMesh/PolytopalMesh.m",
+        "toolbox/+mdemat/+data/+mesh/@PolytopalMesh/plot.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/plotGraph.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/drawEdges.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "MOVE_AND_REMOVE_CLASS"
+    },
+    "toolbox/+mdemat/+tools/+visual/SeparableGraphPlotter.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@SeparableGraph/SeparableGraph.m",
+        "toolbox/+mdemat/+data/+mesh/@SeparableGraph/plot.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/plotGraph.m",
+        "toolbox/+mdemat/+data/+mesh/+internal/drawEdges.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "MOVE_AND_REMOVE_CLASS"
+    },
+    "toolbox/+mdemat/+tools/+visual/Strategy.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/plotStyle.m",
+        "toolbox/+mdemat/+tools/+visual/plotField.m",
+        "toolbox/+mdemat/+tools/+visual/curveStyle.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_FUNCTIONS"
+    },
+    "toolbox/+mdemat/+tools/+visual/Strategy1d.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/plotField.m",
+        "toolbox/+mdemat/+tools/+visual/plotStyle.m",
+        "toolbox/+mdemat/+tools/+visual/curveStyle.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_FUNCTIONS"
+    },
+    "toolbox/+mdemat/+tools/+visual/Strategy2d.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/plotField.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_FUNCTIONS"
+    },
+    "toolbox/+mdemat/+tools/+visual/Strategy3d.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/plotField.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_FUNCTIONS"
+    },
+    "toolbox/+mdemat/+tools/+visual/StrategySlice1d.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/plotField.m",
+        "toolbox/+mdemat/+tools/+visual/plotStyle.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "REMOVE_CLASS_MERGE_FUNCTIONS"
+    },
+    "toolbox/+mdemat/+tools/+visual/TiledPlotter.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+        "toolbox/+mdemat/+tools/+visual/private/createLayout.m",
+        "toolbox/+mdemat/+tools/+visual/private/normalizeLayouts.m",
+        "toolbox/+mdemat/+tools/+visual/plotField.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "MERGE_RESOURCE_OWNER"
+    },
+    "toolbox/+mdemat/+tools/+visual/Visualizer.m": {
+      "targets": [
+        "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+        "toolbox/+mdemat/+tools/+visual/plotField.m",
+        "toolbox/+mdemat/+common/+fem/plotSamplingPlan.m",
+        "toolbox/+mdemat/+common/+fem/plotFieldSamples.m",
+        "toolbox/+mdemat/+internal/+execution/sampleObservation.m",
+        "toolbox/+mdemat/+internal/+execution/plotReferenceFields.m",
+        "toolbox/+mdemat/+internal/+execution/interpolateObservation.m",
+        "toolbox/+mdemat/+internal/+execution/configureObservation.m",
+        "toolbox/+mdemat/+tools/+visual/selectComponent.m",
+        "toolbox/+mdemat/+internal/+execution/sampledDataset.m",
+        "toolbox/+mdemat/+tools/+visual/private/validateDatasets.m",
+        "toolbox/+mdemat/+internal/+execution/configurePlotLayouts.m",
+        "toolbox/+mdemat/+internal/+execution/Scheme.m",
+        "toolbox/+mdemat/+internal/+execution/MolScheme.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270",
+        "T280"
+      ],
+      "disposition": "SIMPLIFY_RESOURCE_OWNER"
+    },
+    "toolbox/+mdemat/+data/+mesh/Graph.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@Graph/Graph.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "MOVE_OR_REPLACE"
+    },
+    "toolbox/+mdemat/+data/+mesh/SeparableGraph.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@SeparableGraph/SeparableGraph.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "MOVE_OR_REPLACE"
+    },
+    "toolbox/+mdemat/+data/+mesh/PolytopalMesh.m": {
+      "targets": [
+        "toolbox/+mdemat/+data/+mesh/@PolytopalMesh/PolytopalMesh.m"
+      ],
+      "tasks": [
+        "T260",
+        "T270"
+      ],
+      "disposition": "MOVE_OR_REPLACE"
+    },
+    "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m": {
+      "targets": [
+        "toolbox/+mdemat/+common/+fem/samplingPlan.m",
+        "toolbox/+mdemat/+common/+fem/referenceValues.m",
+        "toolbox/+mdemat/+common/+fem/sampleField.m",
+        "toolbox/+mdemat/+tools/+analyze/weightedError.m",
+        "toolbox/+mdemat/+internal/+execution/assessState.m"
+      ],
+      "tasks": [
+        "T250",
+        "T270"
+      ],
+      "disposition": "MOVE_OR_REPLACE"
+    },
+    "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m": {
+      "targets": [
+        "toolbox/+mdemat/+common/+fem/nestedSamplingPlan.m",
+        "toolbox/+mdemat/+common/+fem/sampleField.m",
+        "toolbox/+mdemat/+tools/+analyze/weightedError.m",
+        "toolbox/+mdemat/+internal/+execution/assessState.m"
+      ],
+      "tasks": [
+        "T250",
+        "T270"
+      ],
+      "disposition": "MOVE_OR_REPLACE"
+    }
+  },
+  "status": "ACCEPTED"
+}

@@ -8,6 +8,14 @@ function f = cifft(g,x,n,pe)
     if nargin<4
         pe = 0.45;
     end
+    validateattributes(x, {'double'}, {'real', 'finite', 'scalar'});
+    validateattributes(n, {'double'}, {'integer', 'nonnegative', 'scalar'});
+    validateattributes(pe, {'double'}, {'real', 'finite', 'nonnegative', 'scalar'});
+    if x == 0
+        % No oscillatory segmentation exists at the origin. Integrate once.
+        f = integral_segment(g, 0, 0);
+        return;
+    end
     a = @(j)integral_segment(g,j,x);
     if pe == 0 % without EK acceleration
         f = 0;

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "scope": "Scientific corrections after the historical lossless numeric export",
+  "originalSnapshot": "ee0d143074c4e426e96086082b142dd31c5309d2",
+  "originalsRetained": "buildUtilities/symbolic/original-resources",
+  "resources": [
+    {
+      "name": "unit_gauss_legendre_lagrange_4",
+      "beforeSHA256": "bf0a1988046f521ffbf689936ee337eb24060397ac64a6e2654ca2253580324b",
+      "afterSHA256": "47e68883b987cb07111e3eb0ce641a4970cb65b1015a1f67ca9b18184f7736b8",
+      "correction": "Correct roots of P4 on [-1/2,1/2]."
+    },
+    {
+      "name": "unit_gauss_legendre_lagrange_6",
+      "beforeSHA256": "372eb5b6f3c248ce49e390095590ed297381760a28d3f7a376e4d9d955aa54cd",
+      "afterSHA256": "6659646ee08765d2a4920194df442c0feeb6232b38138f07b0742852dfda5ae0",
+      "correction": "Correct roots of P6; displayed 34-digit node approximations, evaluated in double."
+    },
+    {
+      "name": "unit_gauss_lobatto_lagrange_6",
+      "beforeSHA256": "30a666adcd1ea4c3fc3898c571fd863f6ccd5168e433f8a3c21e023098c93dd2",
+      "afterSHA256": "6a50ef122c15e7565bc79ed15043bc3cf71c3681cf29f932d0947212fc07107f",
+      "correction": "Interior nodes are roots of derivative P5; endpoints retained."
+    }
+  ],
+  "nativeEvidence": "interpolation-correction-tests.json",
+  "exportEvidence": "interpolation-resource-export.json",
+  "additionalCorrections": [
+    "Direct Chebyshev normalized recurrence and bound object parameter.",
+    "Symbolic shifted polynomial affine transformation, physical Chebyshev normalization and canonical-coordinate Horner evaluation.",
+    "Direct Fourier physical-interval mapping."
+  ],
+  "note": "Historical basis-resources.json describes the original export equivalence; it is not a certificate for the corrected node definitions. Final package validation uses current resources and independent identities."
+}

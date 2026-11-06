@@ -1,0 +1,14 @@
+# Optional developer documentation. Run from the repository root.
+PROJECT_NAME = MdeMat
+OUTPUT_DIRECTORY = outputs/documentation
+INPUT = toolbox/+mdemat
+FILE_PATTERNS = *.m
+RECURSIVE = YES
+EXTRACT_ALL = YES
+SOURCE_BROWSER = YES
+GENERATE_HTML = YES
+GENERATE_LATEX = NO
+INPUT_FILTER = "perl buildUtilities/documentation/m2cpp.pl"
+EXCLUDE = toolbox/+mdemat/+internal/+lebedev
+QUIET = YES
+WARN_LOGFILE = outputs/documentation/warnings.log

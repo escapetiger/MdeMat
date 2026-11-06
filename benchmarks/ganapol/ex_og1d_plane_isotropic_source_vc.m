@@ -1,4 +1,12 @@
-clc; clear; addpath('utils');
+function result = ex_og1d_plane_isotropic_source_vc(options)
+arguments
+    options.Plot (1, 1) logical = true
+    options.OutputFile (1, 1) string = ""
+    options.MaxPoints (1, 1) double {mustBePositive} = Inf
+end
+oldPath = path;
+pathGuard = onCleanup(@() path(oldPath));
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% Simulation settings
 c = 0.1:0.2:0.9;      % c=c_s+c_f,
@@ -12,17 +20,25 @@ L = 5;                % sptial length
 N = 200;              % number of grid points
 x = linspace(0,L,N);  % grid points
 
+x = x(1:min(numel(x), options.MaxPoints));
+
 %% Solve by inverse Fourier transform
 phi0 = zeros(numel(c),numel(x));
 for j = 1:numel(c)
     fprintf('Isotropic source test with c=%.1f\n',c(j));
     for i = 1:numel(x)
         fprintf('=> draw at x=%.4f\n',x(i));
-        g = @(k) fn_phi0(k,r,n,c(j),fs);
-        phi0(j,i) = cifft(g,x(i),10,0.45);
+        if x(i) == 0
+            % Every c<1 retains the uncollided E1(abs(x))/2 singularity.
+            phi0(j,i) = Inf;
+        else
+            g = @(k) fn_phi0(k,r,n,c(j),fs);
+            phi0(j,i) = cifft(g,x(i),10,0.45);
+        end
     end
 end
 
+if options.Plot
 %% Visulization
 figure(1)
 semilogy(x(2:end),phi0(1,2:end),'-', ...
@@ -39,7 +55,16 @@ ylabel('Scalar Flux','FontSize',14);
 xlim([-1 L+1]);
 ylim([1e-4 1e1]);
 legend('Location','best');
-save('data_og1d_plane_isotropic_source_vc.mat');
+end
+
+result = struct('Points', x, 'Flux', phi0, 'ScatteringRatio', c, ...
+    'Phase', fs, 'AngularPoints', n, 'FourierOrder', 10);
+if options.OutputFile ~= ""
+    mdemat.tools.io.writeRecord(options.OutputFile, result);
+end
+
+end
+
 
 %% Utils
 function phi0 = fn_phi0(k,r,n,c,fs)

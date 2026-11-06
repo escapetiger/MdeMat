@@ -1,0 +1,498 @@
+{
+  "mode": "required",
+  "release": "2025b",
+  "capturedUTC": "05-Nov-2026 10:39:41",
+  "passed": 55,
+  "failed": 6,
+  "incomplete": 3,
+  "results": [
+    {
+      "name": "TestSpacePersistence/basesAndFunctionCompositionsRetainValuesAndAxes",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 1.2824548,
+      "diagnostics": "Error occurred in TestSpacePersistence/basesAndFunctionCompositionsRetainValuesAndAxes and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'obj.IsNormalized'.\n    \n    Error in mdemat.common.spectral.ChebyshevBasis/computeCoefficients (line 34)\n                if obj.IsNormalized\n                ^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.spectral.OrthogonalPolynomialBasis/evalImpl (line 63)\n                [a, b, ~] = obj.computeCoefficients(0);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.data.function.Function/eval (line 59)\n                Y = obj.evalImpl(X);\n                ^^^^^^^^^^^^^^^^^^^^\n    Error in TestSpacePersistence/basesAndFunctionCompositionsRetainValuesAndAxes (line 34)\n                    testCase.verifyEqual(rebuilt.eval(points), original.eval(points), 'AbsTol', 2e-13);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSpacePersistence/allConcreteGeometryAndMeshKindsRetainTopology",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.3488968,
+      "diagnostics": "Error occurred in TestSpacePersistence/allConcreteGeometryAndMeshKindsRetainTopology and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:class:abstract'\n    --------------\n    Error Details:\n    --------------\n    Abstract classes cannot be instantiated. Class 'mdemat.data.mesh.Mesh' defines abstract methods and/or properties.\n    \n    Error in TestSpacePersistence/allConcreteGeometryAndMeshKindsRetainTopology (line 51)\n                    mdemat.data.mesh.Mesh(vertices, [1, 2, 3; 1, 3, 4]), ...\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSpacePersistence/rulesAndNumericQuadratureRetainCoordinatesAndWeights",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4379395,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSpacePersistence/everyElementKindAndSpaceCompositeRetainsEvaluation",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 2.1109129,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSpacePersistence/unknownVersionsTagsAndFieldsAreRejected",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1258468,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestStatePersistence/everyStateKindRoundtripsWithItsActualRepresentation",
+      "passed": false,
+      "failed": true,
+      "incomplete": false,
+      "duration": 4.6501728999999994,
+      "diagnostics": "Verification failed in TestStatePersistence/everyStateKindRoundtripsWithItsActualRepresentation.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> Classes do not match.\n        \n        Actual Class:\n            uint8\n        Expected Class:\n            double\n    \n    Actual Value:\n      uint8\n    \n       0\n    Expected Value:\n         0\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\unit\\persistence\\TestStatePersistence.m (TestStatePersistence.everyStateKindRoundtripsWithItsActualRepresentation) at 56\nVerification failed in TestStatePersistence/everyStateKindRoundtripsWithItsActualRepresentation.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> Classes do not match.\n        \n        Actual Class:\n            uint8\n        Expected Class:\n            double\n    \n    Actual Value:\n      uint8\n    \n       0\n    Expected Value:\n         0\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\unit\\persistence\\TestStatePersistence.m (TestStatePersistence.everyStateKindRoundtripsWithItsActualRepresentation) at 56"
+    },
+    {
+      "name": "TestStatePersistence/callbacksRequireExplicitOmissionAndRebinding",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1566065,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestStatePersistence/overwriteAndInvalidSnapshotLeaveExistingDataIntact",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1910252,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestStatePersistence/invalidDofPackingAndWrongStateKindAreRejected",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1254685,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestStatePersistence/opaqueLegacyMatFilesAreNotLoaded",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0951101,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGraphRendering/graphCoordinatesAndHoldArePreservedInSupportedDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 3.6295624,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGraphRendering/separableCoordinatesFallbackAndSamplingRespectTheBudget",
+      "passed": false,
+      "failed": true,
+      "incomplete": false,
+      "duration": 1.1327879,
+      "diagnostics": "Verification failed in TestGraphRendering/separableCoordinatesFallbackAndSamplingRespectTheBudget.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          0          1           Inf     \n    \n    Actual Value:\n         1\n    Expected Value:\n         0\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\unit\\tools\\TestGraphRendering.m (TestGraphRendering.separableCoordinatesFallbackAndSamplingRespectTheBudget) at 45"
+    },
+    {
+      "name": "TestGraphRendering/polytopeRenderersPreserveMeshGeometryAndCallerFigures",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 1.2402745,
+      "diagnostics": "Error occurred in TestGraphRendering/polytopeRenderersPreserveMeshGeometryAndCallerFigures and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'self.plotEdgesVectorized'.\n    \n    Error in mdemat.tools.visual.PolytopalMeshPlotter>plotEdgesFast (line 392)\n            self.plotEdgesVectorized(vertices, edges, options, nDims);\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.tools.visual.PolytopalMeshPlotter/plotPolytopalMeshFast (line 144)\n                    plotEdgesFast(mesh, graph.Edges, options, isTriangular);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.tools.visual.PolytopalMeshPlotter/plot (line 80)\n                            obj.plotPolytopalMeshFast(mesh, graph, options);\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestGraphRendering/polytopeRenderersPreserveMeshGeometryAndCallerFigures (line 66)\n                        plotter.plot(mesh,UseFastRendering=fast,ShowFaces=true,FaceColor='c', ...\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestDgAssemblyIdentities/polynomialWeakDerivativesIncludeEachFaceExactlyOnce",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.2928243,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/upwindPreservesPeriodicConstantsAndPhysicalMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3604883,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/constantWeightedAndPointwisePathsRespectAdjointSigns",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.467698,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/boundaryPenaltyDampsTheWeakGradientNullMode",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1263286,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/constantTensorCallbacksMatchNumericMatricesAndDirichletLoads",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1552941,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/standardStagesSolveTheirFullTriangularSystem",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4777234,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/equilibriumStagesSolveTheirAffineSystem",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.117294,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/equilibriumGaugeUsesPhysicalWeightedIntegral",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1751459,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4943804,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/quadraticDirichletFieldsAreExactInOneAndTwoDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3963406,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/nonuniformPeriodicSolutionHasThePhysicalGauge",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1809247,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/rejectsIncompatiblePeriodicDataAndUnknownProblemFields",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.054662,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/smoothPeriodicFieldsConvergeInOneAndTwoDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4103148,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonPreservesEveryGradientComponent",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0498349,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonNeedsNoReferenceSolution",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0415351,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonRecoversManufacturedQuadraticAndItsGradient",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1856309,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/periodicPoissonUsesPhysicalMeanOnNonuniformMesh",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.114696,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/observationHistoryUsesTimeIntervalAndPackedOffsets",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2389938,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationCopyPreservesStateWithoutAliasingWeights",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0850782,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroReconstructionAppliesScaling",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0413309,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroFitAndReconstructionAreInverse",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0530359,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/derivedRadiationHistoryIsReconstructedWithoutStateMutation",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0747907,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/stateCoefficientsAcceptEvaluationCallbacks",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0938152,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAssemblyIdentities/componentAxesAndElementSubsets",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1371524,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAssemblyIdentities/discreteIntegrationByPartsIncludesFaceMeasure",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1317418,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAssemblyIdentities/sourceProjectionAndMultiplicationAreComplexLinear",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0850406,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAssemblyIdentities/physicalErrorNormsOnANonuniformMesh",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1389775,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAssemblyIdentities/hermiteTemperatureUsesPhysicalVelocityNodes",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0364159,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGeometryIdentities/planeOffsetAndNormalScaling",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0440173,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGeometryIdentities/sharedEndpointDoesNotHideCollinearOverlap",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0631551,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGeometryIdentities/nonuniformMapsAndRefinementPreservePhysicalMeasure",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0645728,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGeometryIdentities/sphericalCoordinatesPreserveTranslationAndRadius",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0517529,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestLowRankDynamics/exactRankEvolutionAndSmallSingularValue",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2686936,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestLowRankDynamics/projectedFlowHasFirstOrderTimeRefinement",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1480385,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestLowRankDynamics/adaptiveGrowthDropAndPortableRestart",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1242846,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestLowRankDynamics/slabTransportMatchesDenseAndPreservesMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1875142,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestLowRankDynamics/kineticCheckpointRestartsTheSameAdaptiveTrajectory",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1356252,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/polynomialExactnessOnPhysicalIntervals",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2460626,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/ambientVolumeAndFaceMeasureAreDistinct",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0575949,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/standardGaussianMoments",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1526809,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/periodicModesIntegrateToZero",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0461408,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/sphericalPhysicalMomentsInAllSupportedDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0645937,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/monteCarloCosineCoordinatesPreserveTheAzimuth",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.149078,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestQuadratureIdentities/maxwellianFirstDerivativeMatchesIndependentDifference",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0323827,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSpatialAssessment/physicalNormsIncludeNonuniformJacobianAndAllComponents",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0901103,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSpatialAssessment/nestedComparisonAlignsActualFineAndCoarseCoordinates",
+      "passed": false,
+      "failed": true,
+      "incomplete": false,
+      "duration": 0.6434055,
+      "diagnostics": "Verification failed in TestSpatialAssessment/nestedComparisonAlignsActualFineAndCoarseCoordinates.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts         Actual          Expected          Error             RelativeError       AbsoluteTolerance\n            _____    __________    _________________    ________    __________________    __________________    _________________\n                                                                                                                                 \n              2        (2,1)       0.516649865318219      0.5       0.0166498653182185    0.0332997306364371          5e-12      \n              3        (3,1)       0.870036232062195      0.5       0.370036232062195     0.740072464124391           5e-12      \n    \n    Actual Value:\n       0.500000000000000   0.750000000000000\n       0.516649865318219   0.750000000000000\n       0.870036232062195   0.750000000000002\n    Expected Value:\n       0.500000000000000   0.750000000000000\n       0.500000000000000   0.750000000000000\n       0.500000000000000   0.750000000000000\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\numerical\\TestSpatialAssessment.m (TestSpatialAssessment.nestedComparisonAlignsActualFineAndCoarseCoordinates) at 29"
+    },
+    {
+      "name": "TestSpatialAssessment/analyzerReportsIndependentComponentRatesAndDrawsTheSameData",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.8682816,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSpatialAssessment/sequenceReductionAndMissingSamplerAreExplicit",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1357138,
+      "diagnostics": ""
+    }
+  ]
+}

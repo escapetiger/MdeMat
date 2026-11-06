@@ -1,0 +1,154 @@
+{
+  "mode": "required",
+  "release": "2025b",
+  "capturedUTC": "05-Nov-2026 11:51:26",
+  "passed": 8,
+  "failed": 10,
+  "incomplete": 10,
+  "results": [
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex01_periodic)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 2.3167798,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex01_periodic) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:validators:mustBePositive'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.visual.FigureManager/createFigures (line 66)\n    Invalid argument at position 1. Value must be positive.\n    \n    Error in mdemat.tools.visual.Visualizer/initialize (line 352)\n                        figureHandles = obj.FigureManager.createFigures(nPlotters);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.SteadyScheme/run (line 44)\n                visualizer.initialize();\n                ^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.SteadyScheme/converge (line 98)\n                    state = obj.run(state);\n                    ^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_periodic (line 94)\n        xMesh = mdemat.data.mesh.UniformGrid(config.xBBox, config.nx);\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex02_dirichlet)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.8218376,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex02_dirichlet) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:validators:mustBePositive'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.visual.FigureManager/createFigures (line 66)\n    Invalid argument at position 1. Value must be positive.\n    \n    Error in mdemat.tools.visual.Visualizer/initialize (line 352)\n                        figureHandles = obj.FigureManager.createFigures(nPlotters);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.SteadyScheme/run (line 44)\n                visualizer.initialize();\n                ^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.SteadyScheme/converge (line 98)\n                    state = obj.run(state);\n                    ^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex02_dirichlet (line 97)\n        xMesh = mdemat.data.mesh.UniformGrid(config.xBBox, config.nx);\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex01_periodic)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2276893,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex01_periodic) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.hyperbolic.AdvectionScheme\n    \n    Error in mdemat.solver.hyperbolic.UwdgScheme (line 46)\n                obj@mdemat.solver.hyperbolic.AdvectionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_periodic (line 51)\n        case 'sldg'\n        ^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex02_dirichlet)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2053852,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex02_dirichlet) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.hyperbolic.AdvectionScheme\n    \n    Error in mdemat.solver.hyperbolic.UwdgScheme (line 46)\n                obj@mdemat.solver.hyperbolic.AdvectionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex02_dirichlet (line 51)\n        case 'sldg'\n        ^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex03_discontinuous)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2273357,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex03_discontinuous) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.hyperbolic.AdvectionScheme\n    \n    Error in mdemat.solver.hyperbolic.UwdgScheme (line 46)\n                obj@mdemat.solver.hyperbolic.AdvectionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex03_discontinuous (line 53)\n        case 'sldg'\n        ^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex01_periodic)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2549546,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex01_periodic) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.parabolic.DiffusionScheme\n    \n    Error in mdemat.solver.parabolic.LdgScheme (line 44)\n                obj@mdemat.solver.parabolic.DiffusionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_periodic (line 56)\n    % Construct and configure scheme\n    ^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex02_dirichlet)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2054677,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex02_dirichlet) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.parabolic.DiffusionScheme\n    \n    Error in mdemat.solver.parabolic.LdgScheme (line 44)\n                obj@mdemat.solver.parabolic.DiffusionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex02_dirichlet (line 55)\n    % Construct and configure scheme\n    ^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex03_inhomogenous)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.1643669,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex03_inhomogenous) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:tools:environment:ConfigParser:InvalidConfig'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.environment.ConfigParser/validateConfig (line 93)\n    Configuration parameter cfl is invalid.\n    \n    Error in mdemat.tools.environment.ConfigParser/setConfig (line 79)\n                obj.validateConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/setConfig (line 70)\n                obj.Configuration.setConfig(name, value);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/loadFromStruct (line 125)\n                    obj.setConfig(name, value);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme/load (line 102)\n                    obj.loadFromStruct(options.config);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.Scheme (line 51)\n                obj.load(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.OdeScheme (line 54)\n                obj@mdemat.internal.execution.Scheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.solver.parabolic.DiffusionScheme\n    \n    Error in mdemat.solver.parabolic.LdgScheme (line 44)\n                obj@mdemat.solver.parabolic.DiffusionScheme(file=options.file, config=options.config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex03_inhomogenous (line 46)\n    % Construct and configure scheme\n    ^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex01_convergence)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 1.3059996,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex01_convergence) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:validators:mustBePositive'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.visual.FigureManager/createFigures (line 66)\n    Invalid argument at position 1. Value must be positive.\n    \n    Error in mdemat.tools.visual.Visualizer/initialize (line 352)\n                        figureHandles = obj.FigureManager.createFigures(nPlotters);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme/run (line 46)\n                visualizer.initialize();\n                ^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme/converge (line 204)\n                    state = obj.run(state);\n                    ^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_convergence>run (line 267)\n    \n    \n    Error in ex01_convergence (line 94)\n    if options.Smoke\n    ^^^^^^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex02_isotropic_dirichlet)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 3.1873025,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex03_gaussian)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.8045112,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex04_beam)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.645064,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_convergence)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 1.7189449,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_convergence) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:validators:mustBePositive'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.tools.visual.FigureManager/createFigures (line 66)\n    Invalid argument at position 1. Value must be positive.\n    \n    Error in mdemat.tools.visual.Visualizer/initialize (line 352)\n                        figureHandles = obj.FigureManager.createFigures(nPlotters);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme/run (line 46)\n                visualizer.initialize();\n                ^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme/converge (line 204)\n                    state = obj.run(state);\n                    ^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_convergence>run (line 149)\n    [state, result] = scheme.converge(state);\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex01_convergence (line 47)\n        [config, scheme, state, result] = run(config, options); %#ok<ASGLU>\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_time_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.8986372,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_reference_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.5785177,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_order_diagnostics)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.5020107,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex02_asymptotic_preserving)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.0416361,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex03_collision)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3967153,
+      "diagnostics": ""
+    }
+  ]
+}

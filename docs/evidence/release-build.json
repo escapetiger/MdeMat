@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "recordedUTC": "2026-11-05T13:40:11.144565+00:00",
+  "status": "PASS",
+  "scope": "Native Windows MATLAB R2025b. DistMesh follow-up completed with a new successful top-level buildtool package, measured required suite/analyzer gates, independently inspected artifact and a fresh installed-artifact check. Earlier development attempts remain historical.",
+  "artifact": "release/MdeMat-1.0.0.mltbx",
+  "artifactSHA256": "f70fbb232af83a76196289ad4325630fbe97b07b6cfcf3585cd6135a06c4d523",
+  "nativeAndIndependentPythonSHA256Match": true,
+  "attempts": [
+    {
+      "step": "initializeProject / verifyNativeProject / buildtool package",
+      "processExitCode": 1,
+      "outcome": "Project API mismatch before tests",
+      "diagnostic": "PathFolder exposes File, not Folder; corrected from local official R2025b API source."
+    },
+    {
+      "step": "initializeProject / verifyNativeProject / buildtool package",
+      "processExitCode": 1,
+      "requiredPassed": 723,
+      "requiredFailed": 3,
+      "requiredIncomplete": 3,
+      "statementCoverage": 0.85652,
+      "outcome": "Required gate refused packaging",
+      "diagnostic": "New plane-origin branch was mistakenly inserted into sphere with undefined x; moved to the intended plane evaluate branch.",
+      "evidence": "pre-release-first-build.json"
+    },
+    {
+      "step": "initializeProject / verifyNativeProject / buildtool package",
+      "processExitCode": 1,
+      "requiredPassed": 726,
+      "requiredFailed": 0,
+      "requiredIncomplete": 0,
+      "statementCoverage": 0.85652,
+      "outcome": "Required/analyzer passed; package created, post-package SHA report failed",
+      "diagnostic": "An extra EOF probe made MATLAB ferror report normal end-of-file. Digest helper now reads the known file size in complete checked chunks.",
+      "evidence": "final-required-tests.json"
+    },
+    {
+      "step": "packageToolboxArtifact(Overwrite=true)",
+      "processExitCode": 0,
+      "outcome": "Real packageToolbox succeeded; final native SHA independently matches Python",
+      "evidence": "package-report.json"
+    },
+    {
+      "step": "fresh external verifyPackageArtifact",
+      "processExitCode": 0,
+      "checksPassed": 17,
+      "outcome": "Scientific checks passed; repeated because destructor lifecycle warning followed explicit cleanup",
+      "diagnostic": "Replaced nested mutable cleanup workspace with captured registration/settings values and non-nested cleanup helpers."
+    },
+    {
+      "step": "fresh external verifyPackageArtifact",
+      "processExitCode": 0,
+      "checksPassed": 17,
+      "outcome": "PASS without cleanup lifecycle warning",
+      "cleanupComplete": true,
+      "temporaryWorkRemoved": true,
+      "evidence": "installed-package.json"
+    },
+    {
+      "step": "DistMesh follow-up: buildtool package",
+      "processExitCode": 0,
+      "requiredPassed": 729,
+      "requiredFailed": 0,
+      "requiredIncomplete": 0,
+      "statementCoverage": 0.85667,
+      "outcome": "PASS; unmodified official MIT snapshot and runtime files included.",
+      "evidence": "final-required-tests.json"
+    },
+    {
+      "step": "DistMesh follow-up: fresh external verifyPackageArtifact",
+      "processExitCode": 0,
+      "checksPassed": 18,
+      "outcome": "PASS; bundled mesh generation, geometry/refinement, state isolation and all prior family checks.",
+      "cleanupComplete": true,
+      "temporaryWorkRemoved": true,
+      "evidence": "installed-package.json"
+    }
+  ],
+  "limits": [
+    "No hosted GitHub Actions execution is claimed.",
+    "Physical uninstallation of Symbolic Math Toolbox was not performed; archive metadata has no mandatory optional-product requirement.",
+    "Doxygen HTML generation remains unavailable; bundled DistMesh circle integration is now verified.",
+    "UNC filesystem watcher warnings occurred at the checkout frontend; project and installed execution were actually verified in native Windows temporary directories."
+  ]
+}

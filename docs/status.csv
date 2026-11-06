@@ -1,0 +1,84 @@
+section,metric,value,scope,evidence
+snapshot,original_files,350,Pinned v4 snapshot; includes removed origins and developer references,evidence/baseline.json
+snapshot,original_matlab_files,310,Original full analyzer request; historical,evidence/baseline.json
+cleanup,removed_files,13,Actually removed; recoverable from pinned v4,evidence/cleanup.json
+cleanup,legacy_files_removed,12,Outside migration; removed by cleanup instruction,evidence/cleanup.json
+cleanup,legacy_directories_removed,3,Actual empty directory removals,evidence/cleanup.json
+cleanup,gaussian_origins_consolidated,1,Retained scenarios follow canonical/helper migration,evidence/cleanup.json
+unit_baseline,executedInstances,495,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,passed,467,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,failed,28,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,incomplete,15,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,failedAndIncomplete,15,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,sumCaseDurationSeconds,48.6043728,Historical original suite; Incomplete overlaps Failed; no full cleanup rerun,evidence/baseline.json
+unit_baseline,status,FAILED,Historical; does not certify the cleaned tree,evidence/baseline.json
+gaussian_targeted,defaultMatchesOriginal,true,Executed native Windows MATLAB check,evidence/cleanup.json
+gaussian_targeted,varyNvMatchesOriginal,true,Executed native Windows MATLAB check,evidence/cleanup.json
+gaussian_targeted,varyNuMatchesDesktopVariant,true,Executed native Windows MATLAB check,evidence/cleanup.json
+gaussian_targeted,charInputMatchesVariant,true,Executed native Windows MATLAB check,evidence/cleanup.json
+gaussian_targeted,double4By2Contract,true,Executed native Windows MATLAB check,evidence/cleanup.json
+gaussian_targeted,invalidNameRejected,true,Executed native Windows MATLAB check,evidence/cleanup.json
+v4_final_required,passed,729,Historical pre-tools snapshot. Native Windows MATLAB R2025b; full required suite and real statement coverage,evidence/final-required-tests.json
+v4_final_required,failed,0,Historical pre-tools snapshot. Native Windows MATLAB R2025b; full required suite and real statement coverage,evidence/final-required-tests.json
+v4_final_required,incomplete,0,Historical pre-tools snapshot. Native Windows MATLAB R2025b; full required suite and real statement coverage,evidence/final-required-tests.json
+v4_final_required,statementCoverage,0.85667,Historical pre-tools snapshot. Native Windows MATLAB R2025b; full required suite and real statement coverage,evidence/final-required-tests.json
+v4_final_required,minimumCoverage,0.8,Historical pre-tools snapshot. Native Windows MATLAB R2025b; full required suite and real statement coverage,evidence/final-required-tests.json
+v4_final_symbolic,passed,4,Historical pre-tools snapshot. Explicit optional Symbolic capability; native Windows MATLAB R2025b,evidence/final-symbolic-tests.json
+v4_final_symbolic,failed,0,Historical pre-tools snapshot. Explicit optional Symbolic capability; native Windows MATLAB R2025b,evidence/final-symbolic-tests.json
+v4_final_symbolic,incomplete,0,Historical pre-tools snapshot. Explicit optional Symbolic capability; native Windows MATLAB R2025b,evidence/final-symbolic-tests.json
+v4_final_analyzer,errors,0,Historical pre-tools snapshot. Factory analyzer configuration; all warnings reviewed individually,evidence/final-analyzer.json;evidence/analyzer-review.json
+v4_final_analyzer,warnings,82,Historical pre-tools snapshot. Factory analyzer configuration; all warnings reviewed individually,evidence/final-analyzer.json;evidence/analyzer-review.json
+v4_migration,originRows,346,Historical pre-tools snapshot. Structural closure; numerical acceptance is separate,evidence/migration-audit.json
+v4_migration,currentFiles,2400,Historical pre-tools snapshot. Structural closure; numerical acceptance is separate,evidence/migration-audit.json
+v4_migration,currentMatlabFiles,496,Historical pre-tools snapshot. Structural closure; numerical acceptance is separate,evidence/migration-audit.json
+v4_migration,declarationFilesCompared,297,Historical pre-tools snapshot. Structural closure; numerical acceptance is separate,evidence/migration-audit.json
+v4_migration,unexplainedDeclarationGaps,0,Historical pre-tools snapshot. Pinned v4 origins; explicit consolidations recorded,evidence/migration-audit.json
+tasks,done,46,"Authorized v4 migration, tools refinement and analyze namespace consolidation complete",tasks.csv;issues.csv
+release,version,2.0.0,Fresh built and installed local artifact,evidence/tools-package-report.json;evidence/tools-installed-package.json
+release,payloadFiles,403,Explicit staged payload excludes developer docs/tests/benchmarks/build/Git,evidence/tools-package-report.json;evidence/tools-installed-package.json
+release,installedChecks,23,Fresh separate native process; all families and cleanup,evidence/tools-package-report.json;evidence/tools-installed-package.json
+project,members,870,Native Windows copy; all members exist and cleanup passed,evidence/tools-native-project.json
+lowrank,costStudy,COMPLETED,Time/rank/storage and total-call cost; dense faster at measured small size,evidence/lowrank-study.json;optimization.md
+tasks,planned,0,"Authorized v4 migration, tools refinement and analyze namespace consolidation complete",tasks.csv;tools-plan.md
+tasks,total,46,"Authorized v4 migration, tools refinement and analyze namespace consolidation complete",tasks.csv
+tools_review,files,44,Every current tools file including private helpers; exact path-set reconciliation,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,base_files,6,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,except_files,3,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,environment_files,5,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,timing_files,2,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,io_files,9,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,analysis_files,6,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,visual_files,13,Read-only source/consumer/test review,tools-file-review.csv;evidence/tools-layer-audit.json
+tools_review,nativeProbesExecuted,21,"Windows MATLAB R2025b; observations/contract probes, not fixed regression passes",evidence/tools-layer-audit.json;evidence/runToolsReview.m
+tools_review,nativeProbeHarnessErrors,0,All final probes executed; intentional candidate errors are captured observations,evidence/tools-layer-audit.json
+tools_review,productionFilesChanged,0,This planning audit; source hashes unchanged,evidence/tools-layer-audit.json
+tools_design_review,files,44,Second full review of unchanged tools sources and affected callers; exact current file-set match,tools-plan.md;tools-file-review.csv;evidence/tools-design-review.json
+tools_design_review,nativeProbesExecuted,15,"Windows MATLAB R2025b; defects, contract demonstrations and temporary external-method prototype; not repaired regression passes",tools-plan.md;tools-file-review.csv;evidence/tools-design-review.json
+tools_design_review,nativeProbeHarnessErrors,0,All final probes executed; expected candidate errors captured as observations,tools-plan.md;tools-file-review.csv;evidence/tools-design-review.json
+tools_design_review,productionFilesChanged,0,This design-only revision; tools hashes match the prior review,tools-plan.md;tools-file-review.csv;evidence/tools-design-review.json
+tools_design_review,targetToolClasses,Config;Timer;Visualizer,"Implemented Config value, Timer/Visualizer resource owners; accepted by current tools gates",tools-plan.md;tools-file-review.csv;evidence/tools-design-review.json
+tasks,in_progress,0,"Authorized v4 migration, tools refinement and analyze namespace consolidation complete",tasks.csv;tools-plan.md
+tools_required,passed,737,Final native Windows MATLAB R2025b; complete current required suite and statement coverage,evidence/tools-required-tests.json;evidence/tools-coverage.xml.gz
+tools_required,failed,0,Final native Windows MATLAB R2025b; complete current required suite and statement coverage,evidence/tools-required-tests.json;evidence/tools-coverage.xml.gz
+tools_required,incomplete,0,Final native Windows MATLAB R2025b; complete current required suite and statement coverage,evidence/tools-required-tests.json;evidence/tools-coverage.xml.gz
+tools_required,statementCoverage,0.86713,Final native Windows MATLAB R2025b; complete current required suite and statement coverage,evidence/tools-required-tests.json;evidence/tools-coverage.xml.gz
+tools_required,minimumCoverage,0.8,Final native Windows MATLAB R2025b; complete current required suite and statement coverage,evidence/tools-required-tests.json;evidence/tools-coverage.xml.gz
+tools_symbolic,passed,4,Explicit available Symbolic Math Toolbox capability,evidence/tools-symbolic-tests.json
+tools_symbolic,failed,0,Explicit available Symbolic Math Toolbox capability,evidence/tools-symbolic-tests.json
+tools_symbolic,incomplete,0,Explicit available Symbolic Math Toolbox capability,evidence/tools-symbolic-tests.json
+tools_analyzer,errors,0,Factory configuration; every warning individually reviewed with source/report SHA,evidence/tools-analyzer.json;evidence/tools-analyzer-review.json
+tools_analyzer,warnings,86,Factory configuration; every warning individually reviewed with source/report SHA,evidence/tools-analyzer.json;evidence/tools-analyzer-review.json
+migration,originRows,346,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,currentFiles,2630,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,currentMatlabFiles,537,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,declarationFilesCompared,297,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,toolsBaselineFilesCompared,44,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,exactCapabilityMappings,260,Current structural closure; runtime acceptance is separate,evidence/tools-migration-audit.json
+migration,unexplainedDeclarationGaps,0,Current scoped v4/tool declarations; explicit replacements,evidence/tools-migration-audit.json
+tools_implementation,toolClasses,3,Actual value Config plus handle Timer and Visualizer; original design snapshot remains historical,evidence/tools-implementation-verification.json
+tools_implementation,copiedPayloadSourceMatches,402,Every copied file in final actual artifact matched current explicit source bytes,evidence/tools-implementation-verification.json
+tools_performance,validatedCases,21,"Warmup/repetitions, exact case scope and snapshots in report; no hardware thresholds",evidence/tools-study.json
+tools_performance,graph-batch-0_medianSeconds,0.2061762,"Create edge artists, drawnow, capture endpoints/count and delete owned artists; axes reused",evidence/tools-study.json
+tools_performance,graph-batch-0_artists,128,Same independent edge endpoints; actual native graphics object count,evidence/tools-study.json
+tools_performance,graph-batch-1_medianSeconds,0.0917437,"Create edge artists, drawnow, capture endpoints/count and delete owned artists; axes reused",evidence/tools-study.json
+tools_performance,graph-batch-1_artists,1,Same independent edge endpoints; actual native graphics object count,evidence/tools-study.json

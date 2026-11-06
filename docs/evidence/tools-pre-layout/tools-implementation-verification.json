@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "capturedUTC": "2026-11-05T18:44:44.187817+00:00",
+  "status": "PASS",
+  "version": "2.0.0",
+  "scope": "Entire tools redesign and all affected v4 data/execution/solver/application/example/test/help/build consumers; legacy and v1-v3 excluded.",
+  "sourceAPI": "Value Config; value observations/styles/datasets; Timer and Visualizer resource owners; data-owned external plot methods; no old tools proxy classes.",
+  "compatibility": "Valid numericRecord/runRecord v1 remain supported; execution reads checkpoint envelopes v1/v2 and projects saved model identities. Source APIs intentionally change in major version 2.0.0.",
+  "implementationGates": {
+    "required": "tools-required-tests.json",
+    "symbolic": "tools-symbolic-tests.json",
+    "analyzer": "tools-analyzer.json",
+    "warningReview": "tools-analyzer-review.json",
+    "capabilities": "tools-capability-map.json",
+    "modeRegression": "tools-mode-convergence-tests.json",
+    "package": "tools-package-report.json",
+    "installed": "tools-installed-package.json",
+    "project": "tools-native-project.json",
+    "performance": "tools-study.json"
+  },
+  "repairs": [
+    {
+      "area": "base/diagnostics",
+      "behavior": "All-element field/function predicates, scalar native assertion conditions, explicit complete error identifiers and full checked factor counts.",
+      "tests": [
+        "tests/unit/tools/TestBaseTools.m",
+        "tests/migrated/core/geometry/TestSphere.m"
+      ]
+    },
+    {
+      "area": "configuration",
+      "behavior": "Transactional value updates, pure restricted parser, owner validators, static non-owning predicates and frozen numeric input bindings; observation and derived workspace are separate.",
+      "tests": [
+        "tests/unit/tools/TestConfig.m",
+        "tests/migrated/physics/scheme/TestConfigParser.m",
+        "tests/migrated/physics/scheme/TestSchemeHierarchy.m"
+      ]
+    },
+    {
+      "area": "timing/hash/environment",
+      "behavior": "Single active timing token with failure cancellation and value snapshots, opt-in diagnostic matrix hashing, bounded explicit environment metadata.",
+      "tests": [
+        "tests/migrated/core/chrono/TestTimer.m",
+        "tests/unit/TestLinearAlgebra.m"
+      ]
+    },
+    {
+      "area": "IO/state/checkpoint",
+      "behavior": "Strict flags, exact numeric/string/sparse/complex shapes, resource budgets and MAT commit inventory; State and checkpoint responsibilities separated, automatic accepted-step identities unique.",
+      "tests": [
+        "tests/unit/tools/TestRecordIO.m",
+        "tests/unit/tools/TestRunRecord.m",
+        "tests/numerical/TestObservationExecution.m"
+      ]
+    },
+    {
+      "area": "physical assessment",
+      "behavior": "Common FEM owns physical/nested sampling; pure weighted reductions keep spatial/component/sequence norms distinct; plasma owns physical F with independent velocity bases and nonconstant AP scale.",
+      "tests": [
+        "tests/unit/tools/TestAnalysis.m",
+        "tests/numerical/TestPlasmaAssessment.m",
+        "tests/numerical/TestSpatialAssessment.m"
+      ]
+    },
+    {
+      "area": "convergence",
+      "behavior": "Empty component selections do not solve; owner-adapted references determine actual levels; scoped Analysis timing restored. All-mode identity stays stable across growing velocity spaces; resolved IDs remain explicit, long/colliding table keys preserve full identities. Component selectors reject text arrays, implicit character-code conversion, complex IDs and nonvector arrays before indexing.",
+      "tests": [
+        "tests/numerical/TestRetainedControllers.m",
+        "tests/numerical/TestModeConvergence.m"
+      ]
+    },
+    {
+      "area": "graphics",
+      "behavior": "Graph methods move to data; plain typed views preserve original component IDs and paired x/v geometry. Visualizer alone owns graphics resources, layouts, rollback and veto/reset; time interpolation uses paired accepted frames.",
+      "tests": [
+        "tests/unit/tools/TestGraphRendering.m",
+        "tests/unit/tools/TestFieldRendering.m",
+        "tests/unit/tools/TestConvergenceRendering.m",
+        "tests/numerical/TestPlotExecution.m",
+        "tests/numerical/TestObservationExecution.m"
+      ]
+    },
+    {
+      "area": "consumer compatibility",
+      "behavior": "Every retained study uses new observation/style/configuration APIs without weakening scientific test equations or tolerances; numerical problem/solve entrypoints remain observer-free.",
+      "tests": [
+        "tests/regression/solvers/TestRetainedStudies.m",
+        "tests/regression/solvers/TestSolverContracts.m",
+        "tests/regression/solvers/TestHermiteForce.m"
+      ]
+    }
+  ],
+  "developmentExceptions": {
+    "resolved": [
+      "Normal MATLAB EOF was distinguished from read failure.",
+      "Vector assertion conditions were explicitly reduced before native assert.",
+      "Nested steady Assembly and controller timing intervals were separated.",
+      "Steady smoke studies no longer receive time-only keys; kinetic studies get bounded time horizons.",
+      "AP Psi/Q and Hermite P/E identities remain distinct.",
+      "Benchmark cell payloads are explicitly wrapped as one record value.",
+      "Native console logs use raw file capture rather than assuming their encoding.",
+      "Cached MATLAB class dependency paths are mapped only for SHA-256-identical members of the explicit staged payload; other external/changed dependencies remain errors."
+    ],
+    "unresolvedProductDefects": [],
+    "nonblockingEnvironmentWarnings": [
+      "Windows/WSL UNC change-notification and project-opening warnings remain environment-specific observations; the native-drive copied project, source suites and fresh installation passed. Exact warning cause is not established."
+    ]
+  },
+  "evidenceBoundary": "Native Windows MATLAB R2025b. Passing checks cover the declared numerical regimes and fixtures; they do not prove arbitrary-parameter stability, full-line physical-F quadrature exactness, or other platforms. Historical design probes and v4 acceptance are preserved separately.",
+  "artifactIntegrity": {
+    "status": "PASS",
+    "artifactSHA256": "d96edc39f3e13a0a87bbaa36dfc44a335ade2b80a095187b054f8ef143add889",
+    "copiedPayloadFilesCompared": 402,
+    "generatedManifestMatches": true,
+    "method": "Read every manifest payload from fsroot in the actual .mltbx ZIP and compare exact bytes with its explicit current source; compare generated manifest structurally."
+  }
+}

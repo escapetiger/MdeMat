@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "capturedUTC": "2026-11-06T02:01:13.825781+00:00",
+  "scope": "Developer structural checks in an isolated copy; no native runtime acceptance is declared.",
+  "auditScriptSha256": "f8f04ab94855a365b9e5630ffb33317616392d9eed69b329f29676e54c810cd4",
+  "checks": [
+    {
+      "name": "Live layout map resolves all origins; repeated refresh is byte-identical",
+      "result": "PASS"
+    },
+    {
+      "name": "Missing real relocated Timer fails without retiring its ledger origin",
+      "result": "PASS"
+    },
+    {
+      "name": "Only absent new generated XML is retired explicitly",
+      "result": "PASS"
+    },
+    {
+      "name": "Independent accepted snapshot refresh is idempotent",
+      "result": "PASS"
+    },
+    {
+      "name": "A source mutation invalidates the relocated Timer acceptance",
+      "result": "PASS"
+    }
+  ],
+  "isolation": "Only copied sources, copied ledgers and fixture acceptance were changed; original Git objects were read through a symlink. Temporary copy removed.",
+  "runtimeAcceptance": "SEPARATE_NATIVE_EVIDENCE_REQUIRED"
+}

@@ -1,14 +1,11 @@
-function res = binom(k,j)
-    m = numel(k); n = numel(j);
-    k = k(:); j = j(:);
-    diff = k-j'; diff(diff<0) = 0;
-    fk = factorial(k);
-    fj = factorial(j);
-    fkj = factorial(diff);
-    res = fk./(fj'.*fkj);
-    if m>1 && n>1
-        res = tril(res);
-    elseif m == 1 || n == 1
-        res = res(:).';
-    end
+function res = binom(k, j)
+%BINOM Pairwise binomial coefficients; j>k gives zero.
+validateattributes(k, {'double'}, {'vector', 'integer', 'nonnegative', 'finite'});
+validateattributes(j, {'double'}, {'vector', 'integer', 'nonnegative', 'finite'});
+k = k(:); j = j(:).';
+valid = j <= k;
+res = zeros(numel(k), numel(j));
+values = exp(gammaln(k+1)-gammaln(j+1)-gammaln(max(k-j, 0)+1));
+res(valid) = round(values(valid));
+if isvector(res), res = res(:).'; end
 end

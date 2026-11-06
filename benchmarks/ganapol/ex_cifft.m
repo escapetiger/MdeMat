@@ -1,4 +1,7 @@
-clc; clear; addpath('utils');
+function result = ex_cifft()
+oldPath = path;
+pathGuard = onCleanup(@() path(oldPath));
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% alternating series
 % N = 50;
@@ -54,7 +57,7 @@ J5 = integral(h5,0,n2*pi);
 n1 = 10; n2 = 1000;
 x = 1;
 g6 = @(k)-1j*pi./(2*k.^(3/2)).*sqrt(abs(k));
-h6 = @(k)sqrt(k).*sin(100*x*k)/2;
+h6 = @(k)sin(x*k)./(2*k);
 I6 = cifft(g6,x,n1,0.45);
 J6 = integral(h6,0,n2*pi);
 
@@ -81,3 +84,7 @@ g9 = @(k)-1j*pi*exp(-(abs(k)+1/abs(k))).*sign(k)./sqrt(abs(k));
 h9 = @(k)exp(-(k+1./k))./sqrt(k).*sin(k*x);
 I9 = cifft(g9,x,n1,0.45);
 J9 = integral(h9,0,n2*pi);
+result = struct('Computed', [I1,I2,I3,I4,I5,I6,I7,I8,I9], ...
+    'Comparison', [J1,J2,J3,J4,J5,J6,J7,J8,J9], ...
+    'UnconvergedComparisons', [5,6]);
+end

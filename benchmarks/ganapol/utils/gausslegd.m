@@ -13,6 +13,19 @@ function [x, w, T] = gausslegd(n, a, b, normalized)
         end
     end
     
+    validateattributes(n, {'double'}, {'scalar', 'positive', 'integer'});
+    validateattributes(a, {'double'}, {'scalar', 'finite', 'real'});
+    validateattributes(b, {'double'}, {'scalar', 'finite', 'real'});
+    if b < a || (normalized && b == a)
+        error('mdemat:ganapol:Interval', 'Require an ordered interval of positive length when normalized.');
+    end
+    if n == 1
+        x = (a+b)/2;
+        w = b-a;
+        if normalized, w = 1; end
+        T = 0;
+        return;
+    end
     beta = 0.5*(1-(2*(1:n-1)).^(-2)).^(-0.5);
     T = diag(beta, 1) + diag(beta, -1);
     [V, D] = eig(T);

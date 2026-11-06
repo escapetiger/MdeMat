@@ -1,0 +1,154 @@
+{
+  "mode": "required",
+  "release": "2025b",
+  "capturedUTC": "05-Nov-2026 10:10:30",
+  "passed": 7,
+  "failed": 11,
+  "incomplete": 11,
+  "results": [
+    {
+      "name": "TestHermiteForce/standardStagesSolveTheirFullTriangularSystem",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 1.7922419,
+      "diagnostics": "Error occurred in TestHermiteForce/standardStagesSolveTheirFullTriangularSystem and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.Sdirk2Integrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.application.plasma.VlasovScheme\n    \n    Error in mdemat.application.plasma.DghsScheme\n    \n    Error in HermiteForceProbe\n    \n    Error in TestHermiteForce/standardStagesSolveTheirFullTriangularSystem (line 9)\n                scheme = HermiteForceProbe();\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestHermiteForce/equilibriumStagesSolveTheirAffineSystem",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2658053,
+      "diagnostics": "Error occurred in TestHermiteForce/equilibriumStagesSolveTheirAffineSystem and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.Sdirk2Integrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.application.plasma.VlasovScheme\n    \n    Error in mdemat.application.plasma.ApDghsScheme\n    \n    Error in ApHermiteForceProbe\n    \n    Error in TestHermiteForce/equilibriumStagesSolveTheirAffineSystem (line 35)\n                scheme = ApHermiteForceProbe();\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestHermiteForce/equilibriumGaugeUsesPhysicalWeightedIntegral",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.1635221,
+      "diagnostics": "Error occurred in TestHermiteForce/equilibriumGaugeUsesPhysicalWeightedIntegral and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.Sdirk2Integrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.application.plasma.VlasovScheme\n    \n    Error in mdemat.application.plasma.ApDghsScheme\n    \n    Error in ApHermiteForceProbe\n    \n    Error in TestHermiteForce/equilibriumGaugeUsesPhysicalWeightedIntegral (line 60)\n                scheme = ApHermiteForceProbe();\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.1177466,
+      "diagnostics": "Error occurred in TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.Sdirk2Integrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in mdemat.application.plasma.VlasovScheme\n    \n    Error in mdemat.application.plasma.DghsScheme\n    \n    Error in TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian (line 91)\n                scheme = mdemat.application.plasma.DghsScheme(config=config);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestPoissonInterface/quadraticDirichletFieldsAreExactInOneAndTwoDimensions",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 2.3458158,
+      "diagnostics": "Error occurred in TestPoissonInterface/quadraticDirichletFieldsAreExactInOneAndTwoDimensions and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:linalg:ConvergenceFailed'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.common.linalg.LinearSolver/direct (line 238)\n    Direct solve failed its residual check (0.176777).\n    \n    Error in mdemat.common.linalg.LinearSolver/solve (line 205)\n                    [x, stats] = obj.direct(obj.Rhs, stats);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.solver.elliptic.solvePoisson (line 77)\n    [packed, statistics] = linear.solve(A=matrix, b=rhs);\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestPoissonInterface/quadraticDirichletFieldsAreExactInOneAndTwoDimensions (line 20)\n                        [solution, report] = mdemat.solver.elliptic.solvePoisson( ...\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestPoissonInterface/nonuniformPeriodicSolutionHasThePhysicalGauge",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.2530806,
+      "diagnostics": "Error occurred in TestPoissonInterface/nonuniformPeriodicSolutionHasThePhysicalGauge and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:linalg:ConvergenceFailed'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.common.linalg.LinearSolver/direct (line 238)\n    Direct solve failed its residual check (2.61939).\n    \n    Error in mdemat.common.linalg.LinearSolver/solve (line 205)\n                    [x, stats] = obj.direct(obj.Rhs, stats);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.solver.elliptic.solvePoisson (line 77)\n    [packed, statistics] = linear.solve(A=matrix, b=rhs);\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestPoissonInterface/nonuniformPeriodicSolutionHasThePhysicalGauge (line 43)\n                    [solution, report] = mdemat.solver.elliptic.solvePoisson( ...\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestPoissonInterface/rejectsIncompatiblePeriodicDataAndUnknownProblemFields",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2534994,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/smoothPeriodicFieldsConvergeInOneAndTwoDimensions",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.0933062,
+      "diagnostics": "Error occurred in TestPoissonInterface/smoothPeriodicFieldsConvergeInOneAndTwoDimensions and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:linalg:ConvergenceFailed'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.common.linalg.LinearSolver/direct (line 238)\n    Direct solve failed its residual check (1.37986).\n    \n    Error in mdemat.common.linalg.LinearSolver/solve (line 205)\n                    [x, stats] = obj.direct(obj.Rhs, stats);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.solver.elliptic.solvePoisson (line 77)\n    [packed, statistics] = linear.solve(A=matrix, b=rhs);\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestPoissonInterface/smoothPeriodicFieldsConvergeInOneAndTwoDimensions (line 85)\n                        solution = mdemat.solver.elliptic.solvePoisson(problem, space, method=method);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSolverContracts/poissonPreservesEveryGradientComponent",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.5649648,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonNeedsNoReferenceSolution",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0900737,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonRecoversManufacturedQuadraticAndItsGradient",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.3925643,
+      "diagnostics": "Error occurred in TestSolverContracts/poissonRecoversManufacturedQuadraticAndItsGradient and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:linalg:ConvergenceFailed'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.common.linalg.LinearSolver/direct (line 238)\n    Direct solve failed its residual check (7.94056).\n    \n    Error in mdemat.common.linalg.LinearSolver/solve (line 205)\n                    [x, stats] = obj.direct(obj.Rhs, stats);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.solver.elliptic.LdgScheme/step (line 70)\n                        W = obj.Solver.solve(A=obj.A, b=obj.b);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestSolverContracts/poissonRecoversManufacturedQuadraticAndItsGradient (line 36)\n                ldg.step(state);\n                ^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSolverContracts/periodicPoissonUsesPhysicalMeanOnNonuniformMesh",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.12688,
+      "diagnostics": "Error occurred in TestSolverContracts/periodicPoissonUsesPhysicalMeanOnNonuniformMesh and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'mdemat:linalg:ConvergenceFailed'\n    --------------\n    Error Details:\n    --------------\n    Error using mdemat.common.linalg.LinearSolver/direct (line 238)\n    Direct solve failed its residual check (49.6952).\n    \n    Error in mdemat.common.linalg.LinearSolver/solve (line 205)\n                    [x, stats] = obj.direct(obj.Rhs, stats);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.solver.elliptic.LdgScheme/step (line 65)\n                        W = obj.Solver.solve(A=obj.A, b=obj.b);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestSolverContracts/periodicPoissonUsesPhysicalMeanOnNonuniformMesh (line 63)\n                ldg.step(state);\n                ^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSolverContracts/observationHistoryUsesTimeIntervalAndPackedOffsets",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.0672783,
+      "diagnostics": "Error occurred in TestSolverContracts/observationHistoryUsesTimeIntervalAndPackedOffsets and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.BeIntegrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in MolHistoryProbe\n    \n    Error in TestSolverContracts/observationHistoryUsesTimeIntervalAndPackedOffsets (line 84)\n                probe = MolHistoryProbe(config=struct('dt', 0.1));\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSolverContracts/radiationCopyPreservesStateWithoutAliasingWeights",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2388576,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroReconstructionAppliesScaling",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1555053,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroFitAndReconstructionAreInverse",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0736555,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/derivedRadiationHistoryIsReconstructedWithoutStateMutation",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.059347,
+      "diagnostics": "Error occurred in TestSolverContracts/derivedRadiationHistoryIsReconstructedWithoutStateMutation and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:undefinedVarOrClass'\n    --------------\n    Error Details:\n    --------------\n    Unable to resolve the name 'approx.odeint.BeIntegrator'.\n    \n    Error in mdemat.internal.execution.OdeScheme (line 60)\n                    odeInts{iOdeInt} = approx.odeint.(cls)(obj.Config.tFinal);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.MolScheme\n    \n    Error in MolHistoryProbe\n    \n    Error in TestSolverContracts/derivedRadiationHistoryIsReconstructedWithoutStateMutation (line 169)\n                probe = MolHistoryProbe(config=struct('dt', 0.1));\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestSolverContracts/stateCoefficientsAcceptEvaluationCallbacks",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1054274,
+      "diagnostics": ""
+    }
+  ]
+}

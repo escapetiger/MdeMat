@@ -1,0 +1,854 @@
+{
+  "schemaVersion": 1,
+  "kind": "mdemat.analyzerReview",
+  "reviewedUTC": "2026-11-05T13:32:00.581406+00:00",
+  "reviewedReport": "docs/evidence/final-analyzer.json",
+  "reviewedReportSHA256": "ff613b1e6522ee726456b012b0a67be8c6036e5846813e45e8a50537f381bc45",
+  "nativeCapturedUTC": "05-Nov-2026 13:28:00",
+  "release": "2025b",
+  "errors": 0,
+  "warnings": 82,
+  "classification": {
+    "project": {
+      "INUSA": 4,
+      "STISA": 1,
+      "NASGU": 1,
+      "UNRCH": 2,
+      "INUSD": 18,
+      "DEFNU": 1
+    },
+    "vendor": {
+      "ASGLU": 38,
+      "NBRAK1": 1,
+      "DINLN": 6,
+      "DUALC": 1,
+      "NASGU": 3,
+      "INUSD": 2,
+      "ALIGN": 4
+    }
+  },
+  "scope": "Every warning is visible and individually classified. DistMesh runtime files are now included in native analysis; their reviewed upstream warnings are retained without source modification or suppression. Numeric integration is independently tested; arbitrary upstream geometries and future releases are not certified.",
+  "cleanup": "Removed 48 confirmed unused bindings/redundant brackets/incorrect block-end alignment after the prior native scan; preserved refCheck=false sentinel and retained research presets/templates. The actual new native scan contains only the reviewed warnings.",
+  "records": [
+    {
+      "file": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "checkID": "INUSA",
+      "line": 282,
+      "argumentOrExpression": "obj",
+      "context": "function C = combine(obj, CLhs, CRhs)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "combine is a public instance method on the Space interface. The typed receiver preserves object validation and dispatch, although the concatenation formula uses no object fields.",
+      "sourceSHA256": "8e3bab538beb29f21d5910447a03a38bd83e5da381d45035d26cfc721c644470"
+    },
+    {
+      "file": "toolbox/+mdemat/+common/+ode/snapshotIntegrator.m",
+      "checkID": "STISA",
+      "line": 57,
+      "argumentOrExpression": "strcmp",
+      "context": "function description = solverSettings(solver)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The exact LinearSolver class whitelist is intentional. isa would admit arbitrary subclasses with additional mutable state that has no registered plain-value checkpoint schema.",
+      "sourceSHA256": "1d47033538306de6101f6640c972cfd2c5649b0343d57f8eb82061237a0f880a"
+    },
+    {
+      "file": "toolbox/+mdemat/+common/+quadrature/GaussHermiteRule.m",
+      "checkID": "INUSA",
+      "line": 42,
+      "argumentOrExpression": "options",
+      "context": "function [x, w] = generate1d(~, np, options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The shared quadrature call protocol supplies lower/upper. Normal-weight Hermite quadrature is defined on the full real line and intentionally ignores these bounds, as its native help states.",
+      "sourceSHA256": "15667670c5fc0de65ca7928f7c4ff362f363e2ae7f5a6bbaae86878819623674"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0006.m",
+      "checkID": "ASGLU",
+      "line": 36,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0006 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "64d19434c16dec6a12e7ae6451f65664557ba2aeffa1666cf72cfb82a467ac60"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0014.m",
+      "checkID": "ASGLU",
+      "line": 38,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0014 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "b3a6e8b331ace0c5bb0e18d8c8baab26e7b2ae1ab689a7c51520d0dd43330d2f"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0026.m",
+      "checkID": "ASGLU",
+      "line": 40,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0026 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "8a6f78915a07fafc8bf597850400e3dc060dd9446e914827be7ccb5c8cf42381"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0038.m",
+      "checkID": "ASGLU",
+      "line": 41,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0038 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "a7c946f8696ced52bfb7272d7c1b87a26520117e1e2c91084bed3ea0dbce674d"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0050.m",
+      "checkID": "ASGLU",
+      "line": 43,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0050 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "4c104168acd0d3f9bae9afeac013a7119bebfc5963d47bb75ce832f38f13e6f1"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0074.m",
+      "checkID": "ASGLU",
+      "line": 46,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0074 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "d2547df578851efa8c345493b01753718daa014979bb06bf6e89c1c58aa48c65"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0086.m",
+      "checkID": "ASGLU",
+      "line": 47,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0086 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "44b04b2476c51363398c88318350384ec7f560066b8f6749e09b7445ecc57fab"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0110.m",
+      "checkID": "ASGLU",
+      "line": 50,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0110 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "fe11526d31ff9c46bbd6cc9a2fc612b6bfa24ca472bdf04be6c96a3cd6a40669"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0146.m",
+      "checkID": "ASGLU",
+      "line": 53,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0146 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "47df8d331d3abae5e3a9a36835a6e2c156c85a9da1a9a186f9e15b5de5fb351c"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0170.m",
+      "checkID": "ASGLU",
+      "line": 56,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0170 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "c2309085deb95a027ef77812d0fba6db492515f327d7f9cc0560c3fe6200d5b2"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0194.m",
+      "checkID": "ASGLU",
+      "line": 59,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0194 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "fc716e294c0e8dc6049daa326d80dfa0f6d310a5f5bd1c6d421df6b09096e538"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0230.m",
+      "checkID": "ASGLU",
+      "line": 63,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0230 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "1eab9ddbedd7baa8c08fcd07a6fcb2637242d7eb0f3b7e99e5a393aaff519e7a"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0266.m",
+      "checkID": "ASGLU",
+      "line": 66,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0266 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "b01a6f17c81554ecaacf6bf8860d87ee045770b62889a032b372cdc6662e311a"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0302.m",
+      "checkID": "ASGLU",
+      "line": 70,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0302 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "ecb93c617e52d544ee6c0da45b8be00f306d140bcb9cc022808761092de8159f"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0350.m",
+      "checkID": "ASGLU",
+      "line": 74,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0350 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "7e398d775b4f04ddd561d5691d183ce95ca5cf657ffec53a55f9bd10923b5a03"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0434.m",
+      "checkID": "ASGLU",
+      "line": 83,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0434 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "70ca26c21f743e6f0dcedf2ddff61b31457db2f1bd94228f15a73121df1b6e2d"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0590.m",
+      "checkID": "ASGLU",
+      "line": 98,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0590 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "5984f5b0966408e4fb107eef1dbd58e97550f66c2cc0c9f8c447ac98a9a478f9"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0770.m",
+      "checkID": "ASGLU",
+      "line": 115,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0770 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "b80b321ffb7c207e79dcd366b11200631a313a9622bdeac98a73a02947cbe4a7"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld0974.m",
+      "checkID": "ASGLU",
+      "line": 134,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld0974 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "a3b6385977db18d848f7105d066240205d611ae959d9fe55d66adbeff5329e33"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld1202.m",
+      "checkID": "ASGLU",
+      "line": 155,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld1202 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "55ab87e9fb8cf1f3139bf65c93fc52072e416d19545e81277ef8ec76bc1302e7"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld1454.m",
+      "checkID": "ASGLU",
+      "line": 178,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld1454 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "91f48108b05c7dcf8e1d2331328fa5c72ecd37d38a13ae46fb2c8391bbc832e5"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld1730.m",
+      "checkID": "ASGLU",
+      "line": 203,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld1730 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "5e6a978a2fab053a18b2de0645afdad8cf3b6532ce2431727aaf37375078693f"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld2030.m",
+      "checkID": "ASGLU",
+      "line": 230,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld2030 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "ed74020e33db2d92eeb368561a67a412097bb8775b49f82244a676370a3e2587"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld2354.m",
+      "checkID": "ASGLU",
+      "line": 259,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld2354 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "b125b2d176f03e2651f09b722d7d4ea7bfbe1f6a05e324301b1878bf31c06b1c"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld2702.m",
+      "checkID": "ASGLU",
+      "line": 290,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld2702 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "f4e31c4cadd9779f66d6d2cc512a396f6930bfa2c86db833c544dea2bdaa503b"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld3074.m",
+      "checkID": "ASGLU",
+      "line": 323,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld3074 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "42d6976e6f0b0308da060b31b686aad12b7c4529300110bcffa16ccbfe19e066"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld3470.m",
+      "checkID": "ASGLU",
+      "line": 358,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld3470 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "4191955c4a69abdaa2075609e978ab6f3330d5a6874f61c46fc7b2c87d5afb86"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld3890.m",
+      "checkID": "ASGLU",
+      "line": 395,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld3890 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "da38ba3e72e910b78a43cd31f89f6df02058ec4f98f6d79c02f294d1371d2140"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld4334.m",
+      "checkID": "ASGLU",
+      "line": 434,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld4334 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "1b77b181aa6e41fbd080d69c0778ceda8c453c30365070d933d67443c0b969b2"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld4802.m",
+      "checkID": "ASGLU",
+      "line": 475,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld4802 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "33b4aeffbe2c01b0a62894b0322192f34c13a0d012341f98e3bba01e9fc33fcd"
+    },
+    {
+      "file": "toolbox/+mdemat/+internal/+lebedev/ld5810.m",
+      "checkID": "ASGLU",
+      "line": 563,
+      "argumentOrExpression": "n",
+      "context": "function [ x, y, z, w ] = ld5810 ( )",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The final gen_oh orbit call returns the shared cursor n along with x/y/z/w. The final cursor is no longer needed. Preserve the vendor generator signature/body and LGPL provenance rather than rewrite its numerical source for this harmless final binding.",
+      "sourceSHA256": "a511cd943f2ee66c24b00de911ece4f5092fe169df43c408107f0a51ee1a82ba"
+    },
+    {
+      "file": "toolbox/+mdemat/+tools/+visual/GraphPlotter.m",
+      "checkID": "INUSA",
+      "line": 23,
+      "argumentOrExpression": "obj",
+      "context": "function plot(obj, graph, options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "plot remains the existing public instance method. Its typed receiver preserves GraphPlotter validation/dispatch even though the plotting algorithm itself is stateless.",
+      "sourceSHA256": "c68efb0d86774103d2ee567c447a3dcabccd4b5244081a25324bb88de32d1d9a"
+    },
+    {
+      "file": "toolbox/examples/parabolic/ex03_inhomogenous.m",
+      "checkID": "INUSA",
+      "line": 110,
+      "argumentOrExpression": "options",
+      "context": "function f = uBcImpl(x, options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "uBcImpl accepts the shared boundary evaluation option t. This particular retained Dirichlet model prescribes time-independent endpoint values 1 and 0; accepting t is necessary when generic stage sampling supplies it.",
+      "sourceSHA256": "ae5fad6900228bc9c2eee297b1830bfca023e502ee72fe4957b76cbc2c32d00c"
+    },
+    {
+      "file": "toolbox/examples/plasma/ex01_reference_convergence.m",
+      "checkID": "NASGU",
+      "line": 148,
+      "argumentOrExpression": "refErr",
+      "context": "function [state, result] = ex01_reference_convergence(options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "refErr=NaN is the required sentinel for the retained refCheck=false user preset: no half-resolution reference is computed, and the later nearRef comparison must then flag no rows. The default refCheck=true overwrites the sentinel, which produces this static warning.",
+      "sourceSHA256": "bd97761c1fbd95ade4777f5122b6e69eb96f3e7f80d7956a215591a90a03f77b"
+    },
+    {
+      "file": "toolbox/examples/plasma/ex03_collision.m",
+      "checkID": "UNRCH",
+      "line": 83,
+      "argumentOrExpression": "loadOptions = options;",
+      "context": "function [state, result] = ex03_collision(options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=1 intentionally recomputes this collision study. The preserved override=0 preset loads an existing named checkpoint with explicit callback rebinding; deleting that branch would drop the retained reuse workflow.",
+      "sourceSHA256": "084cae1b5007fae60eba86a96cd14d5e520d1beeaf2b8ab0bb6b4608e5fe05ef"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex01_convergence.m",
+      "checkID": "INUSD",
+      "line": 279,
+      "argumentOrExpression": "v",
+      "context": "function f = fInitFsImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The free-streaming initial condition is isotropic: (1+0.05*cos(omega*x))*E. It accepts the kinetic initial-condition velocity slot v without using it.",
+      "sourceSHA256": "a9b3e15e93765485ad26ef9704a8d580338e51dc3d2000964c01ab2c184bec0a"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex01_convergence.m",
+      "checkID": "INUSD",
+      "line": 332,
+      "argumentOrExpression": "config",
+      "context": "function C = scatteringDsImpl(x, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The manufactured diffusive test fixes scattering to one. Its retained config-bearing factory/implementation signature is shared with the other physical coefficient components, even though this constant coefficient reads only the sample count.",
+      "sourceSHA256": "a9b3e15e93765485ad26ef9704a8d580338e51dc3d2000964c01ab2c184bec0a"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex01_convergence.m",
+      "checkID": "INUSD",
+      "line": 340,
+      "argumentOrExpression": "config",
+      "context": "function C = absorptionDsImpl(x, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The manufactured diffusive test fixes absorption to zero. Its retained config-bearing factory/implementation signature is shared with the other physical coefficient components, even though this coefficient reads only the sample count.",
+      "sourceSHA256": "a9b3e15e93765485ad26ef9704a8d580338e51dc3d2000964c01ab2c184bec0a"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "UNRCH",
+      "line": 105,
+      "argumentOrExpression": "plt.time = config.tFinal;",
+      "context": "function [state, result] = ex02_isotropic_dirichlet(options)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "INUSD",
+      "line": 315,
+      "argumentOrExpression": "v",
+      "context": "function f = fInitImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "INUSD",
+      "line": 315,
+      "argumentOrExpression": "config",
+      "context": "function f = fInitImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "INUSD",
+      "line": 323,
+      "argumentOrExpression": "v",
+      "context": "function f = fBcImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "INUSD",
+      "line": 323,
+      "argumentOrExpression": "t",
+      "context": "function f = fBcImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "checkID": "INUSD",
+      "line": 335,
+      "argumentOrExpression": "config",
+      "context": "function C = fScatteringImpl(x, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The default override=0 selects the saved reference time 4.0. The retained recompute preset override=1 selects config.tFinal. Both plotting-time choices are kept because they correspond to different original study workflows.",
+      "sourceSHA256": "7a42e91f07150ed9c589734c752ea22a343affaa1cf0f7c64f0c1979a058c547"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "INUSD",
+      "line": 331,
+      "argumentOrExpression": "v",
+      "context": "function f = fInitImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The Gaussian initial distribution is isotropic in velocity; v remains the named kinetic callback slot while x and config determine the normalized spatial Gaussian.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "DEFNU",
+      "line": 338,
+      "argumentOrExpression": "fBc",
+      "context": "function h = fBc(config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "fBc is the original zero-Dirichlet boundary template for the Gaussian study. The default periodic preset does not bind it. Its factory and zero boundary formula are retained as an explicitly identified v4 scenario component, not an empty placeholder.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "INUSD",
+      "line": 342,
+      "argumentOrExpression": "v",
+      "context": "function f = fBcImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The preserved alternate Dirichlet boundary is identically zero, independent of v/t/config. It retains the original kinetic boundary callback coordinate slots and uses x only for output size.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "INUSD",
+      "line": 342,
+      "argumentOrExpression": "t",
+      "context": "function f = fBcImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The preserved alternate Dirichlet boundary is identically zero, independent of v/t/config. It retains the original kinetic boundary callback coordinate slots and uses x only for output size.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "INUSD",
+      "line": 342,
+      "argumentOrExpression": "config",
+      "context": "function f = fBcImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The preserved alternate Dirichlet boundary is identically zero, independent of v/t/config. It retains the original kinetic boundary callback coordinate slots and uses x only for output size.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex03_gaussian.m",
+      "checkID": "INUSD",
+      "line": 350,
+      "argumentOrExpression": "config",
+      "context": "function C = fScatteringImpl(x, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "This retained scattering component has a fixed formula in physical x (one, or the beam-case step 10*double(x(1,:)>0.5)). The existing config-bearing coefficient factory is retained; this particular formula does not use its config parameter.",
+      "sourceSHA256": "d7c5d2c52807bb69eaed3697edf2453dcf97cd5b32a4e864356ab472d8e4d576"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex04_beam.m",
+      "checkID": "INUSD",
+      "line": 321,
+      "argumentOrExpression": "v",
+      "context": "function f = fInitImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The retained model has zero initial distribution, independent of velocity and configuration. The original kinetic callback component keeps its x/v/config coordinate slots; x sets the returned sample count.",
+      "sourceSHA256": "b6da11fe6dff0342fbeb7ed02f98d21e8042d1460e8ac66d659bde05b36c7500"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex04_beam.m",
+      "checkID": "INUSD",
+      "line": 321,
+      "argumentOrExpression": "config",
+      "context": "function f = fInitImpl(x, v, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The retained model has zero initial distribution, independent of velocity and configuration. The original kinetic callback component keeps its x/v/config coordinate slots; x sets the returned sample count.",
+      "sourceSHA256": "b6da11fe6dff0342fbeb7ed02f98d21e8042d1460e8ac66d659bde05b36c7500"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex04_beam.m",
+      "checkID": "INUSD",
+      "line": 329,
+      "argumentOrExpression": "t",
+      "context": "function f = fSourceImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The original beam source is a fixed spatial Gaussian times a fixed von Mises angular profile, stationary in t. The original source callback keeps its time/config slots; the stated kappa, direction and width are local research constants.",
+      "sourceSHA256": "b6da11fe6dff0342fbeb7ed02f98d21e8042d1460e8ac66d659bde05b36c7500"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex04_beam.m",
+      "checkID": "INUSD",
+      "line": 329,
+      "argumentOrExpression": "config",
+      "context": "function f = fSourceImpl(x, v, t, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The original beam source is a fixed spatial Gaussian times a fixed von Mises angular profile, stationary in t. The original source callback keeps its time/config slots; the stated kappa, direction and width are local research constants.",
+      "sourceSHA256": "b6da11fe6dff0342fbeb7ed02f98d21e8042d1460e8ac66d659bde05b36c7500"
+    },
+    {
+      "file": "toolbox/examples/radiation/ex04_beam.m",
+      "checkID": "INUSD",
+      "line": 344,
+      "argumentOrExpression": "config",
+      "context": "function C = fScatteringImpl(x, config)",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "This retained scattering component has a fixed formula in physical x (one, or the beam-case step 10*double(x(1,:)>0.5)). The existing config-bearing coefficient factory is retained; this particular formula does not use its config parameter.",
+      "sourceSHA256": "b6da11fe6dff0342fbeb7ed02f98d21e8042d1460e8ac66d659bde05b36c7500"
+    },
+    {
+      "file": "third_party/distmesh/src/boundedges.m",
+      "checkID": "ASGLU",
+      "line": 13,
+      "argumentOrExpression": "[foo,ix,jx]=unique(edges,'rows');",
+      "context": "edges=sort(edges,2);\n[foo,ix,jx]=unique(edges,'rows');\nvec=histc(jx,1:max(jx));",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "91c067cced8952fed763e5b2d3228b4f053e0ee20255556ba9c0d2b25a3561a4"
+    },
+    {
+      "file": "third_party/distmesh/src/circumcenter.m",
+      "checkID": "NBRAK1",
+      "line": 17,
+      "argumentOrExpression": "s=[-dp1(2),dp2(2);dp1(1),-dp2(1)]\\[-mid1+mid2]';",
+      "context": "  \n  s=[-dp1(2),dp2(2);dp1(1),-dp2(1)]\\[-mid1+mid2]';\n  ",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Upstream expression uses redundant brackets; native analyzer classifies a style warning, and original source bytes are preserved.",
+      "sourceSHA256": "466969018bf2ddf53af79b3cb76ffcf66012ede0c48685b27356725ccbb485e9"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 8,
+      "argumentOrExpression": "fx=inline(vectorize(maple(['diff(',fin,',x)'])),'x','y');",
+      "context": "\nfx=inline(vectorize(maple(['diff(',fin,',x)'])),'x','y');\nfy=inline(vectorize(maple(['diff(',fin,',y)'])),'x','y');",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 9,
+      "argumentOrExpression": "fy=inline(vectorize(maple(['diff(',fin,',y)'])),'x','y');",
+      "context": "fx=inline(vectorize(maple(['diff(',fin,',x)'])),'x','y');\nfy=inline(vectorize(maple(['diff(',fin,',y)'])),'x','y');\nfxx=inline(vectorize(maple(['diff(',fin,',x$2)'])),'x','y');",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 10,
+      "argumentOrExpression": "fxx=inline(vectorize(maple(['diff(',fin,',x$2)'])),'x','y');",
+      "context": "fy=inline(vectorize(maple(['diff(',fin,',y)'])),'x','y');\nfxx=inline(vectorize(maple(['diff(',fin,',x$2)'])),'x','y');\nfyy=inline(vectorize(maple(['diff(',fin,',y$2)'])),'x','y');",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 11,
+      "argumentOrExpression": "fyy=inline(vectorize(maple(['diff(',fin,',y$2)'])),'x','y');",
+      "context": "fxx=inline(vectorize(maple(['diff(',fin,',x$2)'])),'x','y');\nfyy=inline(vectorize(maple(['diff(',fin,',y$2)'])),'x','y');\nfxy=inline(vectorize(maple(['diff(diff(',fin,',x),y)'])),'x','y');",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 12,
+      "argumentOrExpression": "fxy=inline(vectorize(maple(['diff(diff(',fin,',x),y)'])),'x','y');",
+      "context": "fyy=inline(vectorize(maple(['diff(',fin,',y$2)'])),'x','y');\nfxy=inline(vectorize(maple(['diff(diff(',fin,',x),y)'])),'x','y');\nf=inline(vectorize(fin),'x','y');",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/dexpr.m",
+      "checkID": "DINLN",
+      "line": 13,
+      "argumentOrExpression": "f=inline(vectorize(fin),'x','y');",
+      "context": "fxy=inline(vectorize(maple(['diff(diff(',fin,',x),y)'])),'x','y');\nf=inline(vectorize(fin),'x','y');\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream dexpr legacy expression helper uses inline, supported by the target R2025b but deprecated for future releases. MdeMat circle meshing does not call dexpr; future MATLAB compatibility is unverified.",
+      "sourceSHA256": "e986cbd8ae7b5439fb192d94f3d32d5068406157f4fbe6a96c09817e38ed8c78"
+    },
+    {
+      "file": "third_party/distmesh/src/distmeshnd.m",
+      "checkID": "DUALC",
+      "line": 70,
+      "argumentOrExpression": "view(2),axis equal,axis off,drawnow",
+      "context": "      trimesh(t,p(:,1),p(:,2),zeros(N,1))\n      view(2),axis equal,axis off,drawnow\n    elseif dim==3",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The optional upstream ND display uses comma-separated axis/view/drawnow commands. Its original syntax is retained; the MdeMat integration tests the separate distmesh2d workflow.",
+      "sourceSHA256": "c8a8af3fc706e72acc359d88cbc925f18e08d7ed6d429e0bfed26161b150c482"
+    },
+    {
+      "file": "third_party/distmesh/src/distmeshsurface.m",
+      "checkID": "NASGU",
+      "line": 56,
+      "argumentOrExpression": "pmid=(p(t(:,1),:)+p(t(:,2),:)+p(t(:,3),:))/3;    % Compute centroids",
+      "context": "    [t,t2t,t2n]=trisurfupd(t,t2t,t2n,p);             % Update triangles\n    pmid=(p(t(:,1),:)+p(t(:,2),:)+p(t(:,3),:))/3;    % Compute centroids\n    % 4. Describe each bar by a unique pair of nodes",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused upstream temporary/diagnostic assignment retained to preserve the exact licensed snapshot.",
+      "sourceSHA256": "4919147e883474e382e6254d1b76842ac75932afe62dbf6c46694fe6489183f2"
+    },
+    {
+      "file": "third_party/distmesh/src/dpoly.m",
+      "checkID": "NASGU",
+      "line": 5,
+      "argumentOrExpression": "np=size(p,1);",
+      "context": "\nnp=size(p,1);\nnvs=size(pv,1)-1;",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused upstream temporary/diagnostic assignment retained to preserve the exact licensed snapshot.",
+      "sourceSHA256": "bb8e99e5233ffc00c6e812165976156f795e972f071c499210b2bbfc758fac0b"
+    },
+    {
+      "file": "third_party/distmesh/src/dpoly.m",
+      "checkID": "NASGU",
+      "line": 6,
+      "argumentOrExpression": "nvs=size(pv,1)-1;",
+      "context": "np=size(p,1);\nnvs=size(pv,1)-1;\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused upstream temporary/diagnostic assignment retained to preserve the exact licensed snapshot.",
+      "sourceSHA256": "bb8e99e5233ffc00c6e812165976156f795e972f071c499210b2bbfc758fac0b"
+    },
+    {
+      "file": "third_party/distmesh/src/fixmesh.m",
+      "checkID": "ASGLU",
+      "line": 11,
+      "argumentOrExpression": "[foo,ix,jx]=unique(round(p/snap)*snap,'rows');",
+      "context": "snap=max(max(p,[],1)-min(p,[],1),[],2)*ptol;\n[foo,ix,jx]=unique(round(p/snap)*snap,'rows');\np=p(ix,:);",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "2bb6b5e079d91649126e78cf9fc32bb4a6ec76008a8a544a7ee54f0a8005ec9a"
+    },
+    {
+      "file": "third_party/distmesh/src/fixmesh.m",
+      "checkID": "ASGLU",
+      "line": 17,
+      "argumentOrExpression": "[pix,ix1,jx1]=unique(t);",
+      "context": "    \n    [pix,ix1,jx1]=unique(t);\n    t=reshape(jx1,size(t));",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "2bb6b5e079d91649126e78cf9fc32bb4a6ec76008a8a544a7ee54f0a8005ec9a"
+    },
+    {
+      "file": "third_party/distmesh/src/hmatrix.m",
+      "checkID": "INUSD",
+      "line": 1,
+      "argumentOrExpression": "function h=hmatrix(p,xx,yy,dd,hh,varargin)",
+      "context": "function h=hmatrix(p,xx,yy,dd,hh,varargin)\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Upstream uniform sizing callback signature is retained for compatibility with the vendor mesh API.",
+      "sourceSHA256": "f26c13772e0e59f20dc89ed15b6cfa5fceb7b26a52213af83b900386b6dcf649"
+    },
+    {
+      "file": "third_party/distmesh/src/hmatrix3d.m",
+      "checkID": "INUSD",
+      "line": 1,
+      "argumentOrExpression": "function h=hmatrix3d(p,xx,yy,zz,dd,hh,varargin)",
+      "context": "function h=hmatrix3d(p,xx,yy,zz,dd,hh,varargin)\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Upstream uniform sizing callback signature is retained for compatibility with the vendor mesh API.",
+      "sourceSHA256": "57a8f534aad31625b3c27df30b17c5eb2717c09e051529e6246259d53ffefec1"
+    },
+    {
+      "file": "third_party/distmesh/src/mkt2t.m",
+      "checkID": "ASGLU",
+      "line": 28,
+      "argumentOrExpression": "[foo,foo,jx]=unique(edges,'rows');",
+      "context": "edges=sort(edges,2);\n[foo,foo,jx]=unique(edges,'rows');\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "b027971db2eade50dcc4c530b80e48360fb6d5c5fc10432fdfe0449fda1e4278"
+    },
+    {
+      "file": "third_party/distmesh/src/mkt2t.m",
+      "checkID": "ASGLU",
+      "line": 28,
+      "argumentOrExpression": "[foo,foo,jx]=unique(edges,'rows');",
+      "context": "edges=sort(edges,2);\n[foo,foo,jx]=unique(edges,'rows');\n",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "b027971db2eade50dcc4c530b80e48360fb6d5c5fc10432fdfe0449fda1e4278"
+    },
+    {
+      "file": "third_party/distmesh/src/surftri.m",
+      "checkID": "ASGLU",
+      "line": 14,
+      "argumentOrExpression": "[foo,ix,jx]=unique(faces,'rows');",
+      "context": "faces=sort(faces,2);\n[foo,ix,jx]=unique(faces,'rows');\nvec=histc(jx,1:max(jx));",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "0f2d81d045462199caa99fbeb9b2e08f2823a4ae5bd06144e840bb2eb9550480"
+    },
+    {
+      "file": "third_party/distmesh/src/trisurfupd.m",
+      "checkID": "ALIGN",
+      "line": 92,
+      "argumentOrExpression": "if n1 == 1; tix11 = 2; tix12 = 3;",
+      "context": "                    % --- PREPARE FLIP ---\n                    if n1 == 1; tix11 = 2; tix12 = 3;\n                    elseif n1 == 2; tix11 = 3; tix12 = 1;",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream trisurf update implementation retains original indentation; formatting is preserved with the pinned source rather than globally auto-fixed.",
+      "sourceSHA256": "773e17ff1230804536697d27861d75a349106d8bc25bbabe6bdc26f32f903847"
+    },
+    {
+      "file": "third_party/distmesh/src/trisurfupd.m",
+      "checkID": "ALIGN",
+      "line": 98,
+      "argumentOrExpression": "if n2 == 1; tix21 = 2; tix22 = 3;",
+      "context": "                    \n                    if n2 == 1; tix21 = 2; tix22 = 3;\n                    elseif n2 == 2; tix21 = 3; tix22 = 1;",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream trisurf update implementation retains original indentation; formatting is preserved with the pinned source rather than globally auto-fixed.",
+      "sourceSHA256": "773e17ff1230804536697d27861d75a349106d8bc25bbabe6bdc26f32f903847"
+    },
+    {
+      "file": "third_party/distmesh/src/trisurfupd.m",
+      "checkID": "ALIGN",
+      "line": 107,
+      "argumentOrExpression": "if tix12 == 1; nt1_1 = t(t2,n2);",
+      "context": "                    nt1_1 = ti1; nt1_2 = ti2; nt1_3 = ti3;\n                    if tix12 == 1; nt1_1 = t(t2,n2);\n                    elseif tix12 == 2; nt1_2 = t(t2,n2);",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream trisurf update implementation retains original indentation; formatting is preserved with the pinned source rather than globally auto-fixed.",
+      "sourceSHA256": "773e17ff1230804536697d27861d75a349106d8bc25bbabe6bdc26f32f903847"
+    },
+    {
+      "file": "third_party/distmesh/src/trisurfupd.m",
+      "checkID": "ALIGN",
+      "line": 112,
+      "argumentOrExpression": "if tix22 == 1; nt2_1 = t(t1,n1);",
+      "context": "                    nt2_1 = tj1; nt2_2 = tj2; nt2_3 = tj3;\n                    if tix22 == 1; nt2_1 = t(t1,n1);\n                    elseif tix22 == 2; nt2_2 = t(t1,n1);",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "The upstream trisurf update implementation retains original indentation; formatting is preserved with the pinned source rather than globally auto-fixed.",
+      "sourceSHA256": "773e17ff1230804536697d27861d75a349106d8bc25bbabe6bdc26f32f903847"
+    },
+    {
+      "file": "third_party/distmesh/src/uniref.m",
+      "checkID": "ASGLU",
+      "line": 26,
+      "argumentOrExpression": "[pair,pairi,pairj]=unique(sort(pair,2),'rows');",
+      "context": "    pair=[t(:,[1,2]);t(:,[1,3]);t(:,[2,3])];\n    [pair,pairi,pairj]=unique(sort(pair,2),'rows');\n    pmid=(p(pair(:,1),:)+p(pair(:,2),:))/2;",
+      "decision": "RETAINED_JUSTIFIED",
+      "reason": "Unused outputs retained byte-identically in pinned upstream source; no MdeMat API or numerical change is introduced.",
+      "sourceSHA256": "b4c048eccda3f8c41bafde9b614478745a4ee667b7588d3528c2d962e8fe86fd"
+    }
+  ]
+}

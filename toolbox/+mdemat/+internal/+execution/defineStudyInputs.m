@@ -1,0 +1,93 @@
+function defineStudyInputs(scheme, family)
+%DEFINESTUDYINPUTS Declare the retained study's explicit input vocabulary.
+%   Called by the owning family's setup. Existing owner defaults/predicates
+%   take precedence. This is a fixed list, never an unknown-key escape hatch.
+%   Empty defaults defer operation-specific model/mesh requirements. Lengths
+%   such as nx/omega versus nDims are checked by their model/mesh operation.
+arguments
+    scheme (1, 1) mdemat.internal.execution.Scheme
+    family {mustBeTextScalar, mustBeMember(family, {'spatial', 'radiation', 'plasma'})}
+end
+definitions = { ...
+    'nDims', [], @positiveIntegerScalar; ...
+    'nx', [], @positiveIntegerVector; ...
+    'xBBox', [], @boundingBox; ...
+    'id', '', @textScalar; ...
+    'schemeName', '', @textScalar; ...
+    'L', [], @positiveFiniteScalar; ...
+    'saveAsRef', false, @booleanScalar; ...
+    'omega', [], @finiteRealVector; ...
+    'ampl', [], @(value) finiteRealVector(value) && numel(value) == 2; ...
+    'lambda', [], @finiteRealScalar};
+switch char(family)
+    case 'radiation'
+        definitions = [definitions; { ...
+            'E', [], @positiveFiniteScalar; ...
+            'tau0', Inf, @positiveTimeScale}];
+    case 'plasma'
+        definitions = [definitions; { ...
+            'kappa', [], @finiteRealScalar; ...
+            'delta', [], @finiteRealScalar; ...
+            'alpha1', [], @(value) finiteRealScalar(value) && value >= 0; ...
+            'alpha2', [], @(value) finiteRealScalar(value) && value >= 0; ...
+            'tau', Inf, @positiveTimeScale; ...
+            'tau0', Inf, @positiveTimeScale; ...
+            'cInf', [], @positiveFiniteScalar; ...
+            'dSqrtRhoInf', [], @(value) isempty(value) || ...
+                isa(value, 'function_handle') || finiteRealScalar(value); ...
+            'vBasisType', 'hermite', @(value) textScalar(value) && strcmpi(value, 'hermite'); ...
+            'useSplitting', true, @booleanScalar; ...
+            'useSemiImplicit', false, @booleanScalar}];
+end
+for index = 1:size(definitions, 1)
+    name = definitions{index, 1};
+    if ~scheme.hasConfig(name)
+        scheme.addConfig(name, default=definitions{index, 2}, ...
+            validator=definitions{index, 3});
+    end
+end
+end
+
+function tf = finiteRealScalar(value)
+tf = isnumeric(value) && isreal(value) && isscalar(value) && isfinite(value);
+end
+
+function tf = positiveFiniteScalar(value)
+tf = finiteRealScalar(value) && value > 0;
+end
+
+function tf = positiveIntegerScalar(value)
+tf = positiveFiniteScalar(value) && value == fix(value);
+end
+
+function tf = finiteRealVector(value)
+tf = isnumeric(value) && isreal(value) && isvector(value) && ...
+    ~isempty(value) && all(isfinite(value));
+end
+
+function tf = positiveIntegerVector(value)
+tf = finiteRealVector(value) && all(value > 0) && all(value == fix(value));
+end
+
+function tf = boundingBox(value)
+tf = finiteRealVector(value) && mod(numel(value), 2) == 0;
+if tf
+    value = value(:);
+    tf = all(value(1:2:end) < value(2:2:end));
+end
+end
+
+function tf = positiveTimeScale(value)
+% Inf represents the collisionless limit; NaN and complex scales are invalid.
+tf = isnumeric(value) && isreal(value) && isscalar(value) && value > 0;
+end
+
+function tf = textScalar(value)
+tf = (ischar(value) && (isrow(value) || isempty(value))) || ...
+    (isstring(value) && isscalar(value) && ~ismissing(value));
+end
+
+function tf = booleanScalar(value)
+tf = (islogical(value) || isnumeric(value)) && isreal(value) && isscalar(value) && ...
+    isfinite(value) && (value == 0 || value == 1);
+end

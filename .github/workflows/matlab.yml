@@ -1,0 +1,95 @@
+name: MATLAB R2025b
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MLM_LICENSE_TOKEN: ${{ secrets.MLM_LICENSE_TOKEN }}
+
+jobs:
+  required:
+    name: Windows required tests and coverage
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+      - name: Analyze all toolbox source
+        uses: matlab-actions/run-command@v3
+        with:
+          command: buildtool analyzer
+      - name: Required tests including migrated v4 tests; measured 80 percent gate
+        uses: matlab-actions/run-command@v3
+        with:
+          command: buildtool test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: required-checks
+          path: outputs/checks/
+
+  numerical:
+    name: Independent numerical and solver checks
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+      - uses: matlab-actions/run-command@v3
+        with:
+          command: buildtool numerical
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: numerical-checks
+          path: outputs/checks/
+
+  symbolic:
+    name: Explicit optional symbolic capability
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+          products: Symbolic_Math_Toolbox
+      - uses: matlab-actions/run-command@v3
+        with:
+          command: buildtool symbolic
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: symbolic-checks
+          path: outputs/checks/
+
+  package:
+    name: Installable artifact from native temporary directory
+    runs-on: windows-latest
+    needs: [required, numerical, symbolic]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+      - name: Build the gated artifact
+        uses: matlab-actions/run-command@v3
+        with:
+          command: addpath('buildUtilities'); packageToolboxArtifact(Overwrite=true)
+      - name: Verify in a new MATLAB process after packaging exits
+        uses: matlab-actions/run-command@v3
+        with:
+          command: buildtool verifyPackage
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: toolbox-artifact
+          path: |
+            release/
+            outputs/checks/

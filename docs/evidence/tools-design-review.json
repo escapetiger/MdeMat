@@ -1,0 +1,3623 @@
+{
+  "schemaVersion": 1,
+  "scope": "Second complete tools design review. Proposed API changes and new observations only; production sources unchanged.",
+  "capturedUTC": "2026-11-05T16:35:45.538874+00:00",
+  "priorEvidence": "tools-layer-audit.json",
+  "priorEvidenceUnmodified": true,
+  "files": [
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "sha256": "c251dcfade0f78ec9539c2c660d86bc28983bb75b9cb3754385523a7f27a03a4"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Metric.m",
+      "sha256": "f1afab7b27a4d9487e9928bbbd74b4af093ae53c6a4163ff322e42d1049c8ee0"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/benchmark.m",
+      "sha256": "3eb090ed580b71af219b45f7bdb6079722731edeb783b0208e6b4ba8de1ac3d7"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/convergenceRates.m",
+      "sha256": "a768f097493e158c7bb7e156bef793b07aee9e2da5e664e65985c249d65af9bc"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/memorySnapshot.m",
+      "sha256": "336e5c422321b33d3e3a0c194fc747ea4fda1c043b03a64ef4727e8f372751b2"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/weightedError.m",
+      "sha256": "db01836a1ea07b38c74c3a0040db40f7b34c8ef97b043e8c11936fcc946dee6d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hasFields.m",
+      "sha256": "7f506a3864087bb3545a1cd6406345f32a653c22a974d0c63661b0f64ddf5fdf"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hash.m",
+      "sha256": "a05708abcc5dcb0cebd908a408292c6dae555dd3b06a002afbc78540fc2c0d51"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/isAllClass.m",
+      "sha256": "8807b6f7e91060e86dee8bbaff6f279cf2de3979bcb884d1d4aecc2bc4fb06cb"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/isAllSameClass.m",
+      "sha256": "311985f27846ce0fea19834f5adaba77f8ed3012ea59558daa61f54bcb106a54"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/mustBeCellOrNumeric.m",
+      "sha256": "17b3f41f7bbdcb33c26751d6bca382be3c0a9f2b25b4b7150c2dfe1d2031d8d7"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/mustBeCellOrObject.m",
+      "sha256": "06870812bd8b859035c2c020973d1e585751d60d076ed33c3efccdf9bae12b68"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "sha256": "75115f98b7293f270de49300ffb9c9afc1b19ab371ee6942391405e6a6bf27d5"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/describe.m",
+      "sha256": "0dc6e9fb4091978f5311754aec085b662ccba236c69a21771a7f4e5212f2159c"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/projectRoot.m",
+      "sha256": "734a32cbfc2a500f5a31ed9c9c7c1c1c4569afdd705d2cd2e4b7160f4065bf3b"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/toolboxRoot.m",
+      "sha256": "42d3d0018698917f54fd3ef3317b0f4952562533a176ddd1f0a5969a63aa966a"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/versionInfo.m",
+      "sha256": "ca20017e73a5b7b25683279fb1cb2091ccba678f49ff8e07ebabc9f2387b066c"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+except/assert.m",
+      "sha256": "544c31a803c4e14e46e80bb1acb0209384daf41fc72ded6f60c6275dbd92235d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+except/private/backtrack.m",
+      "sha256": "095617245b310bb5995efdf82e0fe1d65fb3e0774474681b6f0066eadf791f0f"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+except/verify.m",
+      "sha256": "3023dc9db077c0474df3d0855059c8bae1d506eeac015fb84d4b372aa7fb1bd0"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/createRunRecord.m",
+      "sha256": "2d92fc33e2808cf7301df37885f29ac617710e3a62e5546ac925d57b5fe41dee"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/private/decodeArrays.m",
+      "sha256": "6b6b2173f71e8fba783e81d300af163adf451daf6aa2639d888b2a7501461b36"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/private/encodeArrays.m",
+      "sha256": "e5fa8bcdeff83869b406679a0de117f41401e5418834cae558f5669e3f0b2887"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/private/packRecord.m",
+      "sha256": "188e7e47ae4d1e01c2e8c26bdfb9ce5c9a22c58e15533663b2475bf33473eb01"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/private/unpackRecord.m",
+      "sha256": "6f542a4952646e70adb7d7c23418a072f11428dc4eeba0e756cc8c872e160f7b"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/readRecord.m",
+      "sha256": "dd6a54bc78de02cb55ef18d57e9426fccaa5baa6c90106076df2d145e092794e"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/readStateRecord.m",
+      "sha256": "7713fe290714209030e22569a1b2afbb06260ac15b98ac97cc79844d24653c6d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/validateStateRecord.m",
+      "sha256": "db073bce877b615a39a4abd453f728b423f047b0b51fda2f3c0ae07e114964d5"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/writeRecord.m",
+      "sha256": "6ae559a480916dcf59be1bf3898edcd9860587d1389b2cc8b136acbf8970b7e8"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Record.m",
+      "sha256": "9aa0166a9992308a2dbe877b9bb44f381b51c7d99fa906c3b5eaad85052407a1"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "sha256": "be360d4466f362b6e800ce59065460d36d0c358de985c473266e99f604c716cc"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "sha256": "3fae5efaaff79b5ecd324441baa5458fdc7eedf1c2c799db25347e2de0e9de54"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "sha256": "35cbdcee17fca8a4776c230489235c89ff7d95d49648ff8fcccd124418a765c4"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "sha256": "90b55af6820cad7820a1cb50ca0cb7b8d13ce730141f91012a298098a7e8e9a5"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/GraphPlotter.m",
+      "sha256": "c68efb0d86774103d2ee567c447a3dcabccd4b5244081a25324bb88de32d1d9a"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "sha256": "41b8713e6c61cca52aca7e8e7ce1e79d1115d492896024173683a91b1312bb28"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/SeparableGraphPlotter.m",
+      "sha256": "b46d9760a03c15c5105f824cbd156321afdce2c0589a79c42449b200f911cbfa"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "sha256": "af862e34847a2b897e7c884a8fb528c71a1652ac014516b0548ebccc89b69db8"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "sha256": "1f9c85edd06ab0d1347c4533badbfb7f4ab9efb87c3b3b5a3e445d0663ca30cd"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy2d.m",
+      "sha256": "a045b7507caa75aa2b42250d31238b5f53cb272f1c50dc8f46b67815e2f13d2e"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy3d.m",
+      "sha256": "c2e6ef82e23a8d00483d0f9d52ea3c40917a8da6db0772f66a8a424f01278399"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/StrategySlice1d.m",
+      "sha256": "2e8ecf855e33db4ccac5d392ed412527075a15cc4c81c637f236c1494a8c5640"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "sha256": "85744da2f361e691da6699ba845b1b88f998c77316cd8eb82da13d09931b622c"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "sha256": "1f05028135a51f7fc38a2bed0869039d58f3bbdc88c832210969bc66dd969920"
+    }
+  ],
+  "counts": {
+    "files": 44,
+    "nativeProbesExecuted": 15,
+    "nativeProbeHarnessErrors": 0
+  },
+  "native": {
+    "Scope": "Design-review observations and contract demonstrations; no source repairs.",
+    "MatlabRelease": "2025b",
+    "Computer": "PCWIN64",
+    "CapturedUTC": "05-Nov-2026 16:17:18",
+    "Probes": [
+      {
+        "Name": "config_partial_update",
+        "Executed": true,
+        "Observation": {
+          "RejectedIdentifier": "mdemat:tools:environment:ConfigParser:InvalidConfig",
+          "FirstValueAfterFailure": 2,
+          "SecondValueAfterFailure": 1,
+          "ExpectedUncommittedFirstValue": 1
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "config_integrator_divergence",
+        "Executed": true,
+        "Observation": {
+          "ConfiguredFinal": 2,
+          "RuntimeFinal": 1,
+          "ConfiguredMethod": [
+            "fe"
+          ],
+          "RuntimeClass": "mdemat.common.ode.BeIntegrator"
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "config_paths_collision",
+        "Executed": true,
+        "Observation": {
+          "Identifier": "MATLAB:UNIQUE:InputClass",
+          "Value": {},
+          "Note": "OPTION paths and parser-produced resource paths occupy the same key namespace."
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "analysis_selected_sequence",
+        "Executed": true,
+        "Observation": {
+          "ReportedCount": 2,
+          "ResultNames": [
+            "U2"
+          ],
+          "DrawIdentifier": "MATLAB:badsubscript",
+          "ExpectedAggregateCount": 1
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "fem_unknown_reduction",
+        "Executed": true,
+        "Observation": {
+          "Accepted": true,
+          "Identifier": "",
+          "ReturnedShape": [
+            1,
+            8
+          ],
+          "ReturnedNumel": 8
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "graph_isolated_subsample",
+        "Executed": true,
+        "Observation": {
+          "Identifier": "mdemat:data:mesh:SeparableGraph:InvalidEdges",
+          "Vertices": 200,
+          "Edges": 0
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "visual_field_coordinate_collision",
+        "Executed": true,
+        "Observation": {
+          "CoordinatesBefore": [
+            0.5,
+            1
+          ],
+          "SameSlotAfterFieldUpdate": [
+            5,
+            6
+          ],
+          "CoordinateSlotWasOverwritten": true
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "checkpoint_nested_exact",
+        "Executed": true,
+        "Observation": {
+          "Identifier": "mdemat:persistence:UnsupportedConfiguration",
+          "Note": "This nested exact form is admitted by RadiationScheme."
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "checkpoint_observer_identity",
+        "Executed": true,
+        "Observation": {
+          "SameNumericalDt": true,
+          "IdentityEqual": false,
+          "ObservationFieldsIncluded": [
+            "dt",
+            "components"
+          ]
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "rates_adjacent_large_scales",
+        "Executed": true,
+        "Observation": {
+          "StrictlyDecreasing": true,
+          "LogDifference": 0,
+          "ActualRate": "Inf",
+          "Defined": true,
+          "FiniteLog1pReference": 4078196191092450.0
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "vlasov_ignored_exact",
+        "Executed": true,
+        "Observation": {
+          "ConfiguredExactIsFunction": true,
+          "RegisteredReferenceFields": [],
+          "HasExact": false
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "container_handle_alias",
+        "Executed": true,
+        "Observation": {
+          "DatabaseChangedThroughReturnedHandle": 9,
+          "StructCopyStillSharesEmbeddedHandle": true,
+          "Classification": "Ownership demonstration; a value struct is not a recursive deep copy."
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "external_method_inheritance",
+        "Executed": true,
+        "Observation": {
+          "ExternalMethodRecognized": true,
+          "InheritedBySubclass": true,
+          "ExplicitAxesRespected": true
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "checkpoint_filename_collision",
+        "Executed": true,
+        "Observation": {
+          "AcceptedTimes": [
+            0.11,
+            0.14
+          ],
+          "Names": [
+            "t0p1",
+            "t0p1"
+          ],
+          "NamesUnique": false,
+          "Scope": "Reproduces the filename conversion only; no Gaussian simulation or real checkpoint was written."
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      },
+      {
+        "Name": "mixed_norm_definitions",
+        "Executed": true,
+        "Observation": {
+          "WeightedGlobalL1": 1,
+          "LegacySequenceL1": 0.7071067811865476,
+          "WeightedGlobalLInf": 1,
+          "LegacySequenceMax": 1.4142135623730951,
+          "Classification": "Distinct norm definitions; this does not by itself establish an existing calculation bug."
+        },
+        "HarnessError": "",
+        "Diagnostic": ""
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "F18",
+      "summary": "Scheme struct patches and file/patch/configure sequence lack a complete candidate transaction.",
+      "classification": "Native reproduced struct-patch partial commit; wider sequence confirmed statically.",
+      "probeNames": [
+        "config_partial_update"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+          "lines": [
+            96,
+            106,
+            121,
+            126
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F19",
+      "summary": "Config method/final time diverge from the previously constructed integrator.",
+      "classification": "Native reproduced.",
+      "probeNames": [
+        "config_integrator_divergence"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/OdeScheme.m",
+          "lines": [
+            57,
+            68,
+            145,
+            159
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+          "lines": [
+            69,
+            70,
+            96,
+            106
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F20",
+      "summary": "OPTION paths and parser-produced resource paths share the same key.",
+      "classification": "Native reproduced.",
+      "probeNames": [
+        "config_paths_collision"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+          "lines": [
+            122,
+            141,
+            142
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F21",
+      "summary": "Selected numeric components with sequence reduction have incorrect result identity/count and draw fails.",
+      "classification": "Native observed aggregation shape/count mismatch, wrong U2 result label and draw index error.",
+      "probeNames": [
+        "analysis_selected_sequence"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+          "lines": [
+            404,
+            411,
+            463,
+            473,
+            510,
+            527,
+            543,
+            553
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F22",
+      "summary": "Unknown FEM reduction names return raw samples instead of rejecting an invalid norm.",
+      "classification": "Absolute path reproduced natively; relative path has matching static fallback.",
+      "probeNames": [
+        "fem_unknown_reduction"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m",
+          "lines": [
+            44,
+            46,
+            155,
+            156
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m",
+          "lines": [
+            59,
+            63,
+            181,
+            182
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F23",
+      "summary": "Isolated-factor graph subsampling loses the required empty-edge shape.",
+      "classification": "Native reproduced, including ShowEdges=false.",
+      "probeNames": [
+        "graph_isolated_subsample"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+visual/SeparableGraphPlotter.m",
+          "lines": [
+            129,
+            143
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+          "lines": [
+            52,
+            55
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F24",
+      "summary": "Coordinates and physical fields occupy the same Dataset.Data namespace.",
+      "classification": "Native reproduced physical field x overwriting coordinates; v conflict is statically equivalent.",
+      "probeNames": [
+        "visual_field_coordinate_collision"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+          "lines": [
+            139,
+            164,
+            456
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+          "lines": [
+            116,
+            123
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F25",
+      "summary": "Checkpoint identity includes observation settings and rejects supported nested exact callbacks.",
+      "classification": "Native reproduced descriptors; no full simulation/restore claimed for these probes.",
+      "probeNames": [
+        "checkpoint_nested_exact",
+        "checkpoint_observer_identity"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/checkpointConfiguration.m",
+          "lines": [
+            8,
+            16,
+            30,
+            31
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+application/+radiation/RadiationScheme.m",
+          "lines": [
+            54,
+            55
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+          "lines": [
+            154,
+            155
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F26",
+      "summary": "Adjacent large positive scales can have equal rounded logs and return Inf with Defined=true.",
+      "classification": "Native reproduced; finite log1p reference computed independently of the current log-difference implementation.",
+      "probeNames": [
+        "rates_adjacent_large_scales"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+analysis/convergenceRates.m",
+          "lines": [
+            21,
+            27
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F27",
+      "summary": "Vlasov exact function handles pass validation but are not registered with observers.",
+      "classification": "Native reproduced configuration and empty observer reference registry.",
+      "probeNames": [
+        "vlasov_ignored_exact"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+application/+plasma/VlasovScheme.m",
+          "lines": [
+            35,
+            36,
+            60,
+            65,
+            73,
+            78
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F28",
+      "summary": "Checkpoint filename time rounding maps distinct accepted times to the same name.",
+      "classification": "Only the exact source conversion was reproduced; no real checkpoint or Gaussian run was attempted.",
+      "probeNames": [
+        "checkpoint_filename_collision"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+          "lines": [
+            366,
+            374,
+            387,
+            396
+          ]
+        },
+        {
+          "path": "toolbox/examples/radiation/ex03_gaussian.m",
+          "lines": [
+            78
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "F29",
+      "summary": "Reference identity is unnecessary for sample containers; value copies may still embed handles; sequence norms differ from global component norms.",
+      "classification": "Design and mathematical contract demonstrations, not automatic proof of incorrect existing norm definitions.",
+      "probeNames": [
+        "container_handle_alias",
+        "mixed_norm_definitions"
+      ],
+      "sourceReferences": [
+        {
+          "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+          "lines": [
+            1,
+            17,
+            18
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+          "lines": [
+            1,
+            51,
+            83
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+          "lines": [
+            543,
+            553
+          ]
+        },
+        {
+          "path": "toolbox/+mdemat/+tools/+analysis/weightedError.m",
+          "lines": [
+            31,
+            45
+          ]
+        }
+      ],
+      "status": "PLANNED"
+    }
+  ],
+  "affectedReferenceCandidates": [
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApDghsScheme.m",
+      "line": 322,
+      "text": "strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApDghsScheme.m",
+      "line": 350,
+      "text": "strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApDghsScheme.m",
+      "line": 688,
+      "text": "mdemat.tools.except.assert(0, 'InvalidOdeInt', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApDghsScheme.m",
+      "line": 922,
+      "text": "mdemat.tools.except.assert(0, 'InvalidDealiasingType', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApHermiteState.m",
+      "line": 229,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/ApHermiteState.m",
+      "line": 238,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'ap-hermite', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/DghsScheme.m",
+      "line": 283,
+      "text": "strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/DghsScheme.m",
+      "line": 442,
+      "text": "mdemat.tools.except.assert(0, 'InvalidOdeInt', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/DghsScheme.m",
+      "line": 564,
+      "text": "mdemat.tools.except.assert(0, 'InvalidDealiasingType', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/HermiteState.m",
+      "line": 161,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+plasma/HermiteState.m",
+      "line": 170,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'hermite', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+radiation/MacroMicroState.m",
+      "line": 651,
+      "text": "mdemat.tools.except.assert(0, 'InvalidMesh', 'Only support grid!');"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+radiation/MacroMicroState.m",
+      "line": 956,
+      "text": "mdemat.tools.except.assert(isa(obj.XDisc.Mesh, 'mdemat.data.mesh.Grid'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+radiation/MacroMicroState.m",
+      "line": 1263,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+application/+radiation/MacroMicroState.m",
+      "line": 1272,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'macro-micro', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/CompiledFunction.m",
+      "line": 210,
+      "text": "mdemat.tools.except.assert(m <= maxOrder, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 90,
+      "text": "mdemat.tools.except.assert(size(X, 1) >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 97,
+      "text": "mdemat.tools.except.assert(size(X, 2) == nq, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 119,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 135,
+      "text": "mdemat.tools.except.assert(false, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 190,
+      "text": "mdemat.tools.except.assert(~isempty(D), 'EmptyDesign', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 194,
+      "text": "mdemat.tools.except.assert(size(F, 1) == m, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 201,
+      "text": "mdemat.tools.except.assert(size(D, 1) >= size(D, 2), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 223,
+      "text": "mdemat.tools.except.assert(~isempty(M), 'EmptyMass', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 227,
+      "text": "mdemat.tools.except.assert(size(F, 1) == m, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/LinearApproximator.m",
+      "line": 234,
+      "text": "mdemat.tools.except.assert(size(M, 1) >= size(M, 2), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/ModalApproximator.m",
+      "line": 42,
+      "text": "mdemat.tools.except.assert(size(X, 1) >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/ModalApproximator.m",
+      "line": 49,
+      "text": "mdemat.tools.except.assert(np == nq, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/ModalApproximator.m",
+      "line": 80,
+      "text": "mdemat.tools.except.assert(~isempty(D), 'EmptyDesign', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/NodalApproximator.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert(size(X, 1) >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/NodalApproximator.m",
+      "line": 57,
+      "text": "mdemat.tools.except.assert(size(X, 2) > 0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/NodalApproximator.m",
+      "line": 81,
+      "text": "mdemat.tools.except.assert(~isempty(D), 'EmptyDesign', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert(isValidFactors, 'InvalidFactor', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 116,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, 'NotWellDefined', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 121,
+      "text": "mdemat.tools.except.assert(isValidCellInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 127,
+      "text": "mdemat.tools.except.assert(isValidInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 133,
+      "text": "mdemat.tools.except.assert(isValidNumericInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 143,
+      "text": "mdemat.tools.except.assert(isValidOutput, 'InvalidOutput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 167,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 172,
+      "text": "mdemat.tools.except.assert(isValidOrder, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 177,
+      "text": "mdemat.tools.except.assert(isValidCellInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 183,
+      "text": "mdemat.tools.except.assert(isValidInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 189,
+      "text": "mdemat.tools.except.assert(isValidNumericInput, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+approximation/SeparableFunction.m",
+      "line": 199,
+      "text": "mdemat.tools.except.assert(isValidOutput, 'InvalidOutput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m",
+      "line": 1,
+      "text": "classdef FiniteElementAbsoluteMetric < mdemat.tools.analysis.Metric"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m",
+      "line": 49,
+      "text": "obj@mdemat.tools.analysis.Metric(reductions = options.reductions);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m",
+      "line": 101,
+      "text": "mdemat.tools.except.assert(0, 'InvalidGeometry', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementAssembly.m",
+      "line": 105,
+      "text": "mdemat.tools.except.assert(length(TEI) == length(SEI), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementAssembly.m",
+      "line": 136,
+      "text": "mdemat.tools.except.assert(size(L, 3) == ne, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m",
+      "line": 1,
+      "text": "classdef FiniteElementRichardsonMetric < mdemat.tools.analysis.Metric"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m",
+      "line": 63,
+      "text": "obj@mdemat.tools.analysis.Metric(reductions=options.reductions);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m",
+      "line": 125,
+      "text": "mdemat.tools.except.assert(0, 'InvalidGeometry', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementSpace.m",
+      "line": 63,
+      "text": "mdemat.tools.except.assert(isa(obj.Element, 'mdemat.common.fem.L2Element'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementSpace.m",
+      "line": 258,
+      "text": "mdemat.tools.except.assert(isnumeric(X) && size(X, 1) == obj.NDims, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementSpace.m",
+      "line": 260,
+      "text": "mdemat.tools.except.assert(size(X, 2) == obj.Element.Volume.NPoints * ne, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/FiniteElementSpace.m",
+      "line": 274,
+      "text": "mdemat.tools.except.assert(false, 'UnsupportedProjector', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/KineticState.m",
+      "line": 90,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/KineticState.m",
+      "line": 99,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'kinetic', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/ScaledAffineSpace.m",
+      "line": 54,
+      "text": "mdemat.tools.except.assert(isempty(scales) || ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/ScaledAffineSpace.m",
+      "line": 104,
+      "text": "mdemat.tools.except.assert(sG ~= 0, 'ZeroDirectionScale', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SpatialState.m",
+      "line": 108,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SpatialState.m",
+      "line": 117,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'spatial', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 66,
+      "text": "mdemat.tools.except.assert(isempty(w) || length(w) == obj.Lhs.NDofs, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 81,
+      "text": "mdemat.tools.except.assert(isempty(w) || length(w) == obj.Rhs.NDofs, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 169,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Lhs), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 193,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Rhs), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 218,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Rhs), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+fem/SumSpace.m",
+      "line": 243,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Lhs), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 68,
+      "text": "mdemat.tools.except.assert(all(size(X1) == size(X2)), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 74,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 80,
+      "text": "mdemat.tools.except.assert(prod(m(2:end)) == numel(b), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 83,
+      "text": "mdemat.tools.except.assert(m(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 88,
+      "text": "mdemat.tools.except.assert(all(lengths > 0 & isfinite(lengths)), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentByPlaneIntersector.m",
+      "line": 97,
+      "text": "mdemat.tools.except.assert(nL == nP || nL <= 1 || nP == 1, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentBySegmentIntersector.m",
+      "line": 61,
+      "text": "mdemat.tools.except.assert(all(size(X1) == size(X2) ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentBySegmentIntersector.m",
+      "line": 68,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentBySegmentIntersector.m",
+      "line": 102,
+      "text": "mdemat.tools.except.assert(0, 'CoincidentSegments', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+geometry/SegmentBySegmentIntersector.m",
+      "line": 163,
+      "text": "mdemat.tools.except.assert(upper-lower <= parameterTolerance, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 21,
+      "text": "LhsHash % Hash of current LHS matrix for change detection"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 56,
+      "text": "obj.LhsHash = [];"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 81,
+      "text": "obj.LhsHash = newHash;"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 111,
+      "text": "mdemat.tools.except.verify(~isempty(obj.Lhs), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 277,
+      "text": "mdemat.tools.except.assert(f == 0, 'ConvergenceFailed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/LinearSolver.m",
+      "line": 314,
+      "text": "mdemat.tools.except.assert(f == 0, 'ConvergenceFailed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 32,
+      "text": "mdemat.tools.except.assert(found, 'EmptyBlockRow', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 47,
+      "text": "mdemat.tools.except.assert(found, 'EmptyBlockColumn', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert(numel(Ms) == nBlockRows, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 57,
+      "text": "mdemat.tools.except.assert(numel(Ns) == nBlockCols, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 71,
+      "text": "mdemat.tools.except.assert(rowCount == Ms(iRow), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+linalg/block.m",
+      "line": 76,
+      "text": "mdemat.tools.except.assert(colCount == Ns(jCol), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+lowrank/weightedQr.m",
+      "line": 17,
+      "text": "error('mdemat:lowrank:Metric', 'Metric must be Hermitian positive definite.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+lowrank/weightedQr.m",
+      "line": 21,
+      "text": "error('mdemat:lowrank:Metric', 'Metric must be positive definite.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 183,
+      "text": "mdemat.tools.except.assert(0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 281,
+      "text": "mdemat.tools.except.assert(isscalar(t), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 293,
+      "text": "mdemat.tools.except.assert(0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 323,
+      "text": "mdemat.tools.except.assert(length(t) >= 2, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 329,
+      "text": "mdemat.tools.except.assert(0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 358,
+      "text": "mdemat.tools.except.assert(length(t) >= 2, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+ode/OdeIntegrator.m",
+      "line": 362,
+      "text": "mdemat.tools.except.assert(0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/ClosedNewtonCotesRule.m",
+      "line": 41,
+      "text": "mdemat.tools.except.assert(a <= b, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/GaussLegendreRule.m",
+      "line": 40,
+      "text": "mdemat.tools.except.assert(a <= b, 'InvalidInput', 'a <= b is required.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/GaussLobattoRule.m",
+      "line": 40,
+      "text": "mdemat.tools.except.assert(a <= b, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/GaussTrapezoidalRule.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert(numel(np) == 1 && np == 2, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/GaussTrapezoidalRule.m",
+      "line": 60,
+      "text": "mdemat.tools.except.assert(numel(np) == k, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/IntegrationRule.m",
+      "line": 48,
+      "text": "mdemat.tools.except.assert(obj.NDims == geometry.NDims, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 114,
+      "text": "mdemat.tools.except.assert(~isempty(options.nodes), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 143,
+      "text": "mdemat.tools.except.assert(~isempty(options.nodes), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 173,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Nodes), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 184,
+      "text": "mdemat.tools.except.assert(isnumeric(omega) && numel(omega) == obj.NPoints, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 204,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Nodes), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 207,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Weights), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 223,
+      "text": "mdemat.tools.except.assert(~isempty(values), 'InvalidState', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/Integrator.m",
+      "line": 228,
+      "text": "mdemat.tools.except.assert(size(values, 2) == obj.NPoints, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/LebedevRule.m",
+      "line": 53,
+      "text": "mdemat.tools.except.assert(geometry.NDims == 3, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/LebedevRule.m",
+      "line": 56,
+      "text": "mdemat.tools.except.assert(ismember(np, obj.AvailableParams), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/MultiLevelIntegrator.m",
+      "line": 106,
+      "text": "mdemat.tools.except.assert(isa(geometry, 'mdemat.data.geometry.Orthotope'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/MultiLevelIntegrator.m",
+      "line": 171,
+      "text": "mdemat.tools.except.assert(isscalar(options.levelIndex) && ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/OrthotopeRule.m",
+      "line": 67,
+      "text": "mdemat.tools.except.assert(length(np) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+quadrature/PeriodicTrapezoidalRule.m",
+      "line": 41,
+      "text": "mdemat.tools.except.assert(a <= b, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+symbolic/SphericalHarmonicBasis.m",
+      "line": 40,
+      "text": "mdemat.tools.except.assert(numel(variables) == 2, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+symbolic/SymbolicFunction.m",
+      "line": 58,
+      "text": "mdemat.tools.except.assert(isCompilable, 'NotCompilable', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+symbolic/SymbolicFunction.m",
+      "line": 125,
+      "text": "mdemat.tools.except.assert(isfile(fileName), 'FileNotFound', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+common/+symbolic/SymbolicFunction.m",
+      "line": 129,
+      "text": "mdemat.tools.except.assert(isfield(loadedData, 'metadata'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Composition.m",
+      "line": 46,
+      "text": "mdemat.tools.except.assert(rhs.NCodims == lhs.NDims, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Composition.m",
+      "line": 73,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, 'NotWellDefined', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Composition.m",
+      "line": 77,
+      "text": "mdemat.tools.except.assert(size(X, 1) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Composition.m",
+      "line": 116,
+      "text": "mdemat.tools.except.assert(sum(order) == 1, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 50,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, 'NotWellDefined', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 54,
+      "text": "mdemat.tools.except.assert(size(X, 1) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 62,
+      "text": "mdemat.tools.except.assert(size(Y, 1) == nc, 'InvalidOutput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 83,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 88,
+      "text": "mdemat.tools.except.assert(isValidOrder, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 91,
+      "text": "mdemat.tools.except.assert(size(X, 1) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 99,
+      "text": "mdemat.tools.except.assert(size(dY, 1) == nc, 'InvalidOutput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 120,
+      "text": "mdemat.tools.except.assert(obj.IsWellDefined, 'NotWellDefined', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 124,
+      "text": "mdemat.tools.except.assert(size(X, 1) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 169,
+      "text": "mdemat.tools.except.assert(nc == 1, 'NotScalarValued', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 194,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Function.m",
+      "line": 203,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Linear.m",
+      "line": 37,
+      "text": "mdemat.tools.except.assert(ismatrix(A), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Linear.m",
+      "line": 42,
+      "text": "mdemat.tools.except.assert(isempty(options.b) || length(options.b) == nCodims, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Product.m",
+      "line": 42,
+      "text": "mdemat.tools.except.assert(lhs.NDims == rhs.NDims, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+function/Product.m",
+      "line": 49,
+      "text": "mdemat.tools.except.assert(compatible, 'BroadcastIncompatible', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 88,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 110,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 155,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 161,
+      "text": "mdemat.tools.except.assert(isInDomain, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 208,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 213,
+      "text": "mdemat.tools.except.assert(all(S(1, :) >= 0), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 217,
+      "text": "mdemat.tools.except.assert(isAngleInRange, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 221,
+      "text": "mdemat.tools.except.assert(isAngleInRange, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Ball.m",
+      "line": 251,
+      "text": "mdemat.tools.except.assert(nDims >= 1, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Geometry.m",
+      "line": 49,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Geometry.m",
+      "line": 68,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Geometry.m",
+      "line": 87,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Orthotope.m",
+      "line": 42,
+      "text": "mdemat.tools.except.assert(mod(length(bbox), 2) == 0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Orthotope.m",
+      "line": 51,
+      "text": "mdemat.tools.except.assert(all(lower <= upper), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Orthotope.m",
+      "line": 152,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Orthotope.m",
+      "line": 181,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 31,
+      "text": "mdemat.tools.except.assert(ismatrix(V), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 36,
+      "text": "mdemat.tools.except.assert(nv >= (nd + 1), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 39,
+      "text": "mdemat.tools.except.assert(all(ismember(F{i}, 1:nv)), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 41,
+      "text": "mdemat.tools.except.assert(length(F{i}) >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 64,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 94,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Polytope.m",
+      "line": 96,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Faces), 'MissingFaces', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 41,
+      "text": "mdemat.tools.except.assert(ismatrix(V), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 45,
+      "text": "mdemat.tools.except.assert(nd+1 == nv, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 49,
+      "text": "mdemat.tools.except.assert(rank(E) >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 114,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 137,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 163,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 191,
+      "text": "mdemat.tools.except.assert(nx(1) == nd+1, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 196,
+      "text": "mdemat.tools.except.assert(all(abs(sum(B, 1)-1) <= tol), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Simplex.m",
+      "line": 198,
+      "text": "mdemat.tools.except.assert(all(B >= -tol), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 96,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 116,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 145,
+      "text": "mdemat.tools.except.assert(nx(1) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 148,
+      "text": "mdemat.tools.except.assert(obj.isOnBoundary(C), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 201,
+      "text": "mdemat.tools.except.assert(nx(1) == nd-1, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 208,
+      "text": "mdemat.tools.except.assert(isAngleInRange, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 212,
+      "text": "mdemat.tools.except.assert(isAngleInRange, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+geometry/Sphere.m",
+      "line": 244,
+      "text": "mdemat.tools.except.assert(nDims >= 1, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/CachedMultiIndexer.m",
+      "line": 65,
+      "text": "mdemat.tools.except.assert(size(M, 2) == nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/CachedMultiIndexer.m",
+      "line": 69,
+      "text": "mdemat.tools.except.assert(~isempty(C), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/CachedMultiIndexer.m",
+      "line": 92,
+      "text": "mdemat.tools.except.assert(~isempty(C), 'MissingCache', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/CachedMultiIndexer.m",
+      "line": 97,
+      "text": "mdemat.tools.except.assert(all(I), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/L1MultiIndexer.m",
+      "line": 37,
+      "text": "mdemat.tools.except.assert(a >= nd, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/L1MultiIndexer.m",
+      "line": 41,
+      "text": "mdemat.tools.except.assert(b >= a, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/LxMultiIndexer.m",
+      "line": 42,
+      "text": "mdemat.tools.except.assert(all(b >= a), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 76,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Shape), 'MissingShape', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 115,
+      "text": "mdemat.tools.except.assert(ismember(options.pad, obj.ValidPads), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 118,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Shape), 'MissingShape', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 122,
+      "text": "mdemat.tools.except.assert(ismatrix(M) && size(M, 2) == nd, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 167,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Shape), 'MissingShape', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 171,
+      "text": "mdemat.tools.except.assert(all(L <= upper), 'IndexOutOfBounds', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+index/MultiIndexer.m",
+      "line": 194,
+      "text": "mdemat.tools.except.assert(length(F) == nd, 'DimensionMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/DynamicTimeline.m",
+      "line": 88,
+      "text": "mdemat.tools.except.assert(0, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/DynamicTimeline.m",
+      "line": 111,
+      "text": "mdemat.tools.except.assert(~obj.IsExhausted, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/Graph.m",
+      "line": 73,
+      "text": "mdemat.tools.except.assert(ismatrix(edges) && size(edges, 2) == 2, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/Graph.m",
+      "line": 78,
+      "text": "mdemat.tools.except.assert(isreal(edges) && all(isfinite(edges(:))) && ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+      "line": 39,
+      "text": "mdemat.tools.except.assert(length(V) == length(E), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+      "line": 47,
+      "text": "mdemat.tools.except.assert( ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert( ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+      "line": 58,
+      "text": "mdemat.tools.except.assert(isreal(e) && all(isfinite(e(:))) && ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 36,
+      "text": "mdemat.tools.except.assert(nargin >= 1 && nargin <= 2, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 43,
+      "text": "mdemat.tools.except.assert(isvector(nodes) && isnumeric(nodes), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 47,
+      "text": "mdemat.tools.except.assert(all(diff(nodes) > 0), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 57,
+      "text": "mdemat.tools.except.assert(isscalar(nSteps) && nSteps > 0 && mod(nSteps, 1) == 0, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 61,
+      "text": "mdemat.tools.except.assert(isscalar(finalTime) && finalTime >= 0, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+mesh/StaticTimeline.m",
+      "line": 79,
+      "text": "mdemat.tools.except.assert(~obj.IsExhausted, 'TimeExceeded', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+tensor/MatrixFactors.m",
+      "line": 106,
+      "text": "error('mdemat:tensor:Metric', 'Metric must be Hermitian positive definite.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+tensor/MatrixFactors.m",
+      "line": 110,
+      "text": "error('mdemat:tensor:Metric', 'Metric must be positive definite.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+variable/Separable.m",
+      "line": 113,
+      "text": "mdemat.tools.except.verify(isa(factory, 'function_handle'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+variable/Separable.m",
+      "line": 123,
+      "text": "mdemat.tools.except.verify(isequal(k{:}), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+variable/State.m",
+      "line": 160,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+data/+variable/State.m",
+      "line": 170,
+      "text": "record = mdemat.tools.io.validateStateRecord(record, 'base', options.callbacks);"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+      "line": 130,
+      "text": "'configuration', mdemat.internal.execution.checkpointConfiguration(obj.Config));"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+      "line": 155,
+      "text": "mdemat.internal.execution.checkpointConfiguration(obj.Config))"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+      "line": 272,
+      "text": "validator=@(x) isempty(x) || isa(x, 'mdemat.tools.analysis.Analyzer'));"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/MolScheme.m",
+      "line": 314,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Config.cfl) || ~isempty(obj.Config.dt), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/OdeScheme.m",
+      "line": 152,
+      "text": "mdemat.tools.except.assert(iscell(obj.Config.tOdeIntName) && ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/OdeScheme.m",
+      "line": 220,
+      "text": "mdemat.tools.except.assert(false, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/OdeScheme.m",
+      "line": 234,
+      "text": "mdemat.tools.except.assert(false, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 19,
+      "text": "Configuration mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 45,
+      "text": "obj.Configuration = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 137,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 149,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 161,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 173,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 185,
+      "text": "mdemat.tools.except.assert(0, 'NotImplemented', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/Scheme.m",
+      "line": 207,
+      "text": "obj.setConfig('analyzer', mdemat.tools.analysis.Analyzer());"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/SteadyScheme.m",
+      "line": 153,
+      "text": "validator=@(x) isempty(x) || isa(x, 'mdemat.tools.analysis.Analyzer'));"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/checkpointConfiguration.m",
+      "line": 1,
+      "text": "function description = checkpointConfiguration(config)"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/loadStudyState.m",
+      "line": 5,
+      "text": "record = mdemat.tools.io.readStateRecord(filename);"
+    },
+    {
+      "path": "toolbox/+mdemat/+internal/+execution/studyConfig.m",
+      "line": 7,
+      "text": "config.analyzer = mdemat.tools.analysis.Analyzer();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 1,
+      "text": "classdef Analyzer < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 56,
+      "text": "function obj = Analyzer(options)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 88,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 110,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 126,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 145,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 174,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 190,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 207,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 224,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 244,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 267,
+      "text": "mdemat.tools.except.assert(strcmp(vRed, 'sequence'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 292,
+      "text": "mdemat.tools.except.assert(false, 'UnknownVRed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 312,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 332,
+      "text": "mdemat.tools.except.assert(strcmp(vRed, 'sequence'), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 353,
+      "text": "mdemat.tools.except.assert(n0 <= n, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 370,
+      "text": "mdemat.tools.except.assert(false, 'UnknownVRed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 388,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 429,
+      "text": "obj mdemat.tools.analysis.Analyzer"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 437,
+      "text": "mdemat.tools.except.verify(0, 'NoData', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 443,
+      "text": "mdemat.tools.except.assert(all(obj.Resolutions > 0), 'InvalidResolutions', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Analyzer.m",
+      "line": 599,
+      "text": "mdemat.tools.except.assert(length(names) == nTypes, 'SizeMismatch', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Metric.m",
+      "line": 1,
+      "text": "classdef Metric < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Metric.m",
+      "line": 20,
+      "text": "function obj = Metric(options)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+analysis/Metric.m",
+      "line": 47,
+      "text": "obj mdemat.tools.analysis.Metric"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hasFields.m",
+      "line": 12,
+      "text": "mdemat.tools.except.assert(isstruct(s), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hasFields.m",
+      "line": 16,
+      "text": "mdemat.tools.except.assert(isValidF, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hasFields.m",
+      "line": 33,
+      "text": "mdemat.tools.except.assert(validCellContents, 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hash.m",
+      "line": 52,
+      "text": "mdemat.tools.except.assert(0, 'UnsupportedMethod', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/hash.m",
+      "line": 68,
+      "text": "mdemat.tools.except.assert(0, 'Unsupportedformat', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/mustBeCellOrNumeric.m",
+      "line": 10,
+      "text": "mdemat.tools.except.assert(iscell(x) || isnumeric(x), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+base/mustBeCellOrObject.m",
+      "line": 10,
+      "text": "mdemat.tools.except.assert(iscell(x) || isobject(x), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 1,
+      "text": "classdef ConfigParser < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 14,
+      "text": "function obj = ConfigParser()"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 21,
+      "text": "obj mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 24,
+      "text": "values = mdemat.tools.environment.ConfigParser.parseFile(file);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 37,
+      "text": "obj mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 44,
+      "text": "error('mdemat:tools:environment:ConfigParser:InvalidValidator', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 53,
+      "text": "obj mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 61,
+      "text": "obj mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 66,
+      "text": "error('mdemat:tools:environment:ConfigParser:ConfigNotFound', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 74,
+      "text": "obj mdemat.tools.environment.ConfigParser"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 93,
+      "text": "error('mdemat:tools:environment:ConfigParser:InvalidConfig', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 107,
+      "text": "error('mdemat:tools:environment:ConfigParser:FileOpenError', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 132,
+      "text": "error('mdemat:tools:environment:ConfigParser:DirectoryNotFound', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 144,
+      "text": "error('mdemat:tools:environment:ConfigParser:UnknownSetting', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 155,
+      "text": "error('mdemat:tools:environment:ConfigParser:InvalidOption', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 163,
+      "text": "error('mdemat:tools:environment:ConfigParser:InvalidOption', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+environment/ConfigParser.m",
+      "line": 358,
+      "text": "error('mdemat:tools:environment:ConfigParser:UnsupportedExpression', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/readStateRecord.m",
+      "line": 1,
+      "text": "function record = readStateRecord(file)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+io/validateStateRecord.m",
+      "line": 1,
+      "text": "function record = validateStateRecord(record, kind, callbacks)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Record.m",
+      "line": 51,
+      "text": "obj mdemat.tools.timing.Record"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 47,
+      "text": "obj.Records = arrayfun(@(k) mdemat.tools.timing.Record(options.names{k}), 1:n);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 49,
+      "text": "obj.Records = mdemat.tools.timing.Record.empty(0, 1);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 95,
+      "text": "mdemat.tools.except.assert(0, 'recordAlreadyActive', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 138,
+      "text": "mdemat.tools.except.assert(idx > 0, 'RecordNotFound', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 148,
+      "text": "mdemat.tools.except.assert(obj.Records(idx).IsActive, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 171,
+      "text": "mdemat.tools.except.verify(0, 'ResetWhileActive', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 248,
+      "text": "newRecord = mdemat.tools.timing.Record(recordName);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 257,
+      "text": "mdemat.tools.except.assert(isRunning, 'NoActiveRecord', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+timing/Timer.m",
+      "line": 284,
+      "text": "newRecord = mdemat.tools.timing.Record(recordName);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 1,
+      "text": "classdef Database < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 14,
+      "text": "Datasets % Structure containing named Dataset objects"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 24,
+      "text": "function obj = Database()"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 58,
+      "text": "obj mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 60,
+      "text": "dataset mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 73,
+      "text": "obj mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 94,
+      "text": "obj mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 99,
+      "text": "mdemat.tools.except.assert(~isempty(tokens), 'InvalidInput', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 105,
+      "text": "database = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 132,
+      "text": "error('mdemat:tools:visual:Database:InvalidCoordinates', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Database.m",
+      "line": 152,
+      "text": "newDataset = mdemat.tools.visual.Dataset(type=dataset.Type, data=data);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 1,
+      "text": "classdef Dataset < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 22,
+      "text": "function obj = Dataset(options)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 50,
+      "text": "obj mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 66,
+      "text": "obj mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 85,
+      "text": "obj mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 99,
+      "text": "obj mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Dataset.m",
+      "line": 112,
+      "text": "obj mdemat.tools.visual.Dataset"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "line": 1,
+      "text": "classdef FigureManager < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "line": 38,
+      "text": "function obj = FigureManager()"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "line": 65,
+      "text": "obj mdemat.tools.visual.FigureManager"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "line": 123,
+      "text": "obj mdemat.tools.visual.FigureManager"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/FigureManager.m",
+      "line": 127,
+      "text": "mdemat.tools.except.assert(figureIndex <= obj.NFigures, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/GraphPlotter.m",
+      "line": 1,
+      "text": "classdef GraphPlotter < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/GraphPlotter.m",
+      "line": 23,
+      "text": "obj mdemat.tools.visual.GraphPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/GraphPlotter.m",
+      "line": 55,
+      "text": "mdemat.tools.except.assert(false, 'UnsupportedDimension', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 1,
+      "text": "classdef PolytopalMeshPlotter < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 13,
+      "text": "GraphPlotter % Visualizing the mesh's graph (GraphPlotter)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 17,
+      "text": "function obj = PolytopalMeshPlotter()"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 24,
+      "text": "obj.GraphPlotter = mdemat.tools.visual.GraphPlotter();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 183,
+      "text": "obj.GraphPlotter.plot(graph, graphOptions{:});"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 244,
+      "text": "obj.GraphPlotter.plot(projectedGraph, args{:});"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 247,
+      "text": "mdemat.tools.except.verify(0, 'DimensionReduction', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 531,
+      "text": "warning('mdemat:tools:visual:PolytopalMeshPlotter:FacePlotFailed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 577,
+      "text": "mdemat.tools.except.verify(0, 'ElementPlotFailed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/PolytopalMeshPlotter.m",
+      "line": 622,
+      "text": "mdemat.tools.except.verify(0, 'BoundaryPlotFailed', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/SeparableGraphPlotter.m",
+      "line": 1,
+      "text": "classdef SeparableGraphPlotter < mdemat.tools.visual.GraphPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/SeparableGraphPlotter.m",
+      "line": 52,
+      "text": "plot@mdemat.tools.visual.GraphPlotter(obj, graph, args{:});"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 1,
+      "text": "classdef Strategy < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 200,
+      "text": "obj mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 234,
+      "text": "obj mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 269,
+      "text": "obj mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 306,
+      "text": "obj mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy.m",
+      "line": 308,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 1,
+      "text": "classdef Strategy1d < mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 28,
+      "text": "function obj = Strategy1d()"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 34,
+      "text": "obj@mdemat.tools.visual.Strategy();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 46,
+      "text": "obj mdemat.tools.visual.Strategy1d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 64,
+      "text": "obj mdemat.tools.visual.Strategy1d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 66,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy1d.m",
+      "line": 122,
+      "text": "obj mdemat.tools.visual.Strategy1d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy2d.m",
+      "line": 1,
+      "text": "classdef Strategy2d < mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy2d.m",
+      "line": 33,
+      "text": "obj mdemat.tools.visual.Strategy2d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy2d.m",
+      "line": 35,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy3d.m",
+      "line": 1,
+      "text": "classdef Strategy3d < mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy3d.m",
+      "line": 32,
+      "text": "obj mdemat.tools.visual.Strategy3d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Strategy3d.m",
+      "line": 34,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/StrategySlice1d.m",
+      "line": 1,
+      "text": "classdef StrategySlice1d < mdemat.tools.visual.Strategy1d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/StrategySlice1d.m",
+      "line": 28,
+      "text": "obj mdemat.tools.visual.StrategySlice1d"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/StrategySlice1d.m",
+      "line": 30,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 1,
+      "text": "classdef TiledPlotter < handle"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 29,
+      "text": "Strategy % Rendering strategy object"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 33,
+      "text": "function obj = TiledPlotter(nRows, nCols)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 50,
+      "text": "obj.Strategy = [];"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 63,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 64,
+      "text": "strategy mdemat.tools.visual.Strategy"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 67,
+      "text": "obj.Strategy = strategy;"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 79,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 86,
+      "text": "mdemat.tools.except.assert(nRows <= nTotalRows && nCols <= nTotalCols, ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 100,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 119,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 125,
+      "text": "mdemat.tools.except.assert(~isempty(obj.FigObj) && isvalid(obj.FigObj), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 155,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 173,
+      "text": "obj mdemat.tools.visual.TiledPlotter"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 174,
+      "text": "database mdemat.tools.visual.Database"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 179,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Axes), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 181,
+      "text": "mdemat.tools.except.assert(~isempty(obj.FigObj) && isvalid(obj.FigObj), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 190,
+      "text": "mdemat.tools.except.assert(~isempty(obj.Strategy), ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 191,
+      "text": "'EmptyStrategy', 'Strategy must be set first.');"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 199,
+      "text": "mdemat.tools.except.verify(false, 'InvalidAxisIdx', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 206,
+      "text": "switch obj.Strategy.NDims"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 209,
+      "text": "obj.Strategy.render(ax, group, variable);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 212,
+      "text": "obj.Strategy.render(axes, group, variable);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 218,
+      "text": "if isempty(obj.Strategy)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 222,
+      "text": "switch obj.Strategy.NDims"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/TiledPlotter.m",
+      "line": 283,
+      "text": "mdemat.tools.except.assert(placed, 'BadAxisSpec', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 26,
+      "text": "FigureManager % Figure manager for automatic positioning (FigureManager)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 27,
+      "text": "Database % Centralized data management (Database)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 57,
+      "text": "obj.FigureManager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 58,
+      "text": "obj.Database = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 112,
+      "text": "mdemat.tools.except.assert(0, 'InvalidGeometry', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 129,
+      "text": "datasetNames = obj.Database.DatasetNames;"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 130,
+      "text": "for j = 1:obj.Database.NDatasets"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 132,
+      "text": "dataset = obj.Database.getDataset(datasetName);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 155,
+      "text": "datasetNames = obj.Database.DatasetNames;"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 156,
+      "text": "for j = 1:obj.Database.NDatasets"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 158,
+      "text": "dataset = obj.Database.getDataset(datasetName);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 243,
+      "text": "dataset = mdemat.tools.visual.Dataset(type=type, data=data);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 244,
+      "text": "obj.Database.setDataset(name, dataset);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 280,
+      "text": "strategyObj = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 283,
+      "text": "nCols = length(fieldnames(obj.Database.Datasets));"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 286,
+      "text": "strategyObj = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 289,
+      "text": "nCols = length(fieldnames(obj.Database.Datasets));"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 292,
+      "text": "strategyObj = mdemat.tools.visual.Strategy3d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 298,
+      "text": "strategyObj = mdemat.tools.visual.StrategySlice1d();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 300,
+      "text": "mdemat.tools.except.assert(false, 'InvalidStrategy', ..."
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 304,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(nRows, nCols);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 351,
+      "text": "if nPlotters > 0 && isempty(obj.FigureManager.FigureHandles)"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 352,
+      "text": "figureHandles = obj.FigureManager.createFigures(nPlotters);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 354,
+      "text": "figureHandles = obj.FigureManager.FigureHandles;"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 413,
+      "text": "datasetNames = obj.Database.DatasetNames;"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 416,
+      "text": "dataset = obj.Database.getDataset(datasetName);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 477,
+      "text": "plotter.render(obj.Database, titleText);"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 500,
+      "text": "obj.FigureManager.closeAll();"
+    },
+    {
+      "path": "toolbox/+mdemat/+tools/+visual/Visualizer.m",
+      "line": 502,
+      "text": "obj.Database.Datasets = struct();"
+    },
+    {
+      "path": "toolbox/examples/elliptic/ex01_periodic.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/elliptic/ex02_dirichlet.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/geometry/ex01_graph_visualization.m",
+      "line": 28,
+      "text": "plotter = mdemat.tools.visual.GraphPlotter();"
+    },
+    {
+      "path": "toolbox/examples/geometry/ex02_separable_graph_visualization.m",
+      "line": 26,
+      "text": "plotter = mdemat.tools.visual.SeparableGraphPlotter();"
+    },
+    {
+      "path": "toolbox/examples/geometry/ex02_separable_graph_visualization.m",
+      "line": 177,
+      "text": "regularPlotter = mdemat.tools.visual.GraphPlotter();"
+    },
+    {
+      "path": "toolbox/examples/geometry/ex04_nonuniform_trimesh.m",
+      "line": 83,
+      "text": "meshPlotter = mdemat.tools.visual.PolytopalMeshPlotter();"
+    },
+    {
+      "path": "toolbox/examples/hyperbolic/ex01_periodic.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/hyperbolic/ex02_dirichlet.m",
+      "line": 31,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/hyperbolic/ex03_discontinuous.m",
+      "line": 34,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/hyperbolic/ex03_discontinuous.m",
+      "line": 120,
+      "text": "dataset = visualizer.Database.getDataset(scheme.getConfig('xId'));"
+    },
+    {
+      "path": "toolbox/examples/parabolic/ex01_periodic.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/parabolic/ex02_dirichlet.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/parabolic/ex03_inhomogenous.m",
+      "line": 30,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex01_convergence.m",
+      "line": 25,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex01_order_diagnostics.m",
+      "line": 59,
+      "text": "config0 = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex01_reference_convergence.m",
+      "line": 82,
+      "text": "config0 = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex01_time_convergence.m",
+      "line": 23,
+      "text": "config0 = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex02_asymptotic_preserving.m",
+      "line": 25,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex02_asymptotic_preserving.m",
+      "line": 52,
+      "text": "strategy1d = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex02_asymptotic_preserving.m",
+      "line": 53,
+      "text": "strategy2d = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex03_collision.m",
+      "line": 25,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex03_collision.m",
+      "line": 67,
+      "text": "strategy1d = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/plasma/ex03_collision.m",
+      "line": 68,
+      "text": "strategy2d = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex00_func_approx.m",
+      "line": 169,
+      "text": "strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex01_convergence.m",
+      "line": 25,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "line": 25,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "line": 111,
+      "text": "plt.strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex02_isotropic_dirichlet.m",
+      "line": 113,
+      "text": "plt.strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex03_gaussian.m",
+      "line": 26,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex03_gaussian.m",
+      "line": 111,
+      "text": "plt.strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex03_gaussian.m",
+      "line": 416,
+      "text": "strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex03_gaussian.m",
+      "line": 489,
+      "text": "strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex04_beam.m",
+      "line": 27,
+      "text": "config = mdemat.tools.environment.ConfigParser.parseFile(common);"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex04_beam.m",
+      "line": 110,
+      "text": "plt.strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "toolbox/examples/radiation/ex04_beam.m",
+      "line": 398,
+      "text": "strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "tests/migrated/core/chrono/TestTimer.m",
+      "line": 232,
+      "text": "record = mdemat.tools.timing.Record('TestRecord');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 50,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 59,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 75,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 90,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 106,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 126,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 128,
+      "text": "independent = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 138,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 146,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 164,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 184,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 201,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 221,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 230,
+      "text": "'mdemat:tools:environment:ConfigParser:ConfigNotFound');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 236,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestConfigParser.m",
+      "line": 250,
+      "text": "'mdemat:tools:environment:ConfigParser:InvalidConfig');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestSchemeHierarchy.m",
+      "line": 16,
+      "text": "testCase.verifyClass(scheme.Configuration, 'mdemat.tools.environment.ConfigParser');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestSchemeHierarchy.m",
+      "line": 48,
+      "text": "testCase.verifyClass(scheme.Configuration, 'mdemat.tools.environment.ConfigParser');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestSchemeHierarchy.m",
+      "line": 85,
+      "text": "'mdemat:tools:environment:ConfigParser:InvalidConfig');"
+    },
+    {
+      "path": "tests/migrated/physics/scheme/TestSchemeHierarchy.m",
+      "line": 90,
+      "text": "'mdemat:tools:environment:ConfigParser:InvalidConfig');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 17,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 18,
+      "text": "testCase.verifyClass(db, 'mdemat.tools.visual.Database');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 24,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 25,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'numeric');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 38,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 41,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'numeric', 'data', testData);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 45,
+      "text": "testCase.verifyClass(processedDb, 'mdemat.tools.visual.Database');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 48,
+      "text": "testCase.verifyClass(processedDataset, 'mdemat.tools.visual.Dataset');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 55,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 58,
+      "text": "dataset1 = mdemat.tools.visual.Dataset('type', 'exact', 'data', testData1);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 62,
+      "text": "dataset2 = mdemat.tools.visual.Dataset('type', 'numeric', 'data', testData2);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 76,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 78,
+      "text": "'mdemat:tools:visual:Database:InvalidInput');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 82,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 85,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'numeric', 'data', testData);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 93,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 96,
+      "text": "dataset1 = mdemat.tools.visual.Dataset('type', 'fixed', 'data', data1);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 100,
+      "text": "dataset2 = mdemat.tools.visual.Dataset('type', 'numeric', 'data', data2);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 120,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 123,
+      "text": "dataset1 = mdemat.tools.visual.Dataset('type', 'fixed', 'data', data1);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDatabase.m",
+      "line": 127,
+      "text": "dataset2 = mdemat.tools.visual.Dataset('type', 'numeric', 'data', data2);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 17,
+      "text": "dataset = mdemat.tools.visual.Dataset();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 24,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'fixed');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 28,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'exact');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 31,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'numeric');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 37,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'fixed', 'data', data);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 43,
+      "text": "testCase.verifyError(@() mdemat.tools.visual.Dataset('type', 'invalid'), ..."
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 45,
+      "text": "testCase.verifyError(@() mdemat.tools.visual.Dataset('type', 123), ..."
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 50,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'fixed');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 63,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'exact');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 71,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'numeric');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 82,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'fixed');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 97,
+      "text": "dataset = mdemat.tools.visual.Dataset();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestDataset.m",
+      "line": 107,
+      "text": "dataset = mdemat.tools.visual.Dataset('type', 'exact', 'data', data);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 14,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 15,
+      "text": "testCase.verifyClass(manager, 'mdemat.tools.visual.FigureManager');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 24,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 33,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 42,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 55,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 72,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 92,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 105,
+      "text": "'mdemat:tools:visual:FigureManager:InvalidIndex');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 110,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 121,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 140,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestFigureManager.m",
+      "line": 156,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 14,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(2, 3);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 15,
+      "text": "testCase.verifyClass(plotter, 'mdemat.tools.visual.TiledPlotter');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 20,
+      "text": "testCase.verifyEmpty(plotter.Strategy);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 25,
+      "text": "testCase.verifyError(@() mdemat.tools.visual.TiledPlotter(0, 2), ..."
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 27,
+      "text": "testCase.verifyError(@() mdemat.tools.visual.TiledPlotter(2.5, 2), ..."
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 29,
+      "text": "testCase.verifyError(@() mdemat.tools.visual.TiledPlotter(2, 0), ..."
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 35,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(1, 1);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 36,
+      "text": "strategy = mdemat.tools.visual.Strategy();"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 38,
+      "text": "testCase.verifyEqual(plotter.Strategy, strategy);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 43,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(3, 3);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 56,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(2, 2);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestTiledPlotter.m",
+      "line": 66,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(1, 1);"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestVisualizer.m",
+      "line": 27,
+      "text": "testCase.verifyClass(vis.FigureManager, 'mdemat.tools.visual.FigureManager');"
+    },
+    {
+      "path": "tests/migrated/physics/visual/TestVisualizer.m",
+      "line": 28,
+      "text": "testCase.verifyClass(vis.Database, 'mdemat.tools.visual.Database');"
+    },
+    {
+      "path": "tests/numerical/TestRelativeAnalysis.m",
+      "line": 34,
+      "text": "analyzer = mdemat.tools.analysis.Analyzer(nLevels=2);"
+    },
+    {
+      "path": "tests/numerical/TestRetainedControllers.m",
+      "line": 22,
+      "text": "analyzer = mdemat.tools.analysis.Analyzer(nLevels=2);"
+    },
+    {
+      "path": "tests/numerical/TestSpatialAssessment.m",
+      "line": 35,
+      "text": "observer = mdemat.tools.analysis.Analyzer(nLevels=3);"
+    },
+    {
+      "path": "tests/numerical/TestSpatialAssessment.m",
+      "line": 68,
+      "text": "observer = mdemat.tools.analysis.Analyzer(nLevels=2);"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 13,
+      "text": "values = mdemat.tools.environment.ConfigParser.parseFile(file);"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 25,
+      "text": "testCase.verifyError(@() mdemat.tools.environment.ConfigParser.parseFile(file), ..."
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 26,
+      "text": "'mdemat:tools:environment:ConfigParser:UnsupportedExpression');"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 30,
+      "text": "parser = mdemat.tools.environment.ConfigParser();"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 36,
+      "text": "'mdemat:tools:environment:ConfigParser:InvalidConfig');"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 49,
+      "text": "values = mdemat.tools.environment.ConfigParser.parseFile(file);"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 84,
+      "text": "database = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 85,
+      "text": "database.setDataset('sample', mdemat.tools.visual.Dataset(type='numeric', data=data));"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 107,
+      "text": "values = visualizer.Database.getDataset('solution');"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 125,
+      "text": "dataset = visualizer.Database.getDataset('solution');"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 128,
+      "text": "testCase.verifyEqual(visualizer.FigureManager.FigureHandles, {});"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 141,
+      "text": "plotter = mdemat.tools.visual.TiledPlotter(2, 2);"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 150,
+      "text": "plotter.render(mdemat.tools.visual.Database(), 'Owned panels', renderFn=@drawSamples);"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 170,
+      "text": "screen = mdemat.tools.visual.FigureManager.getScreenSize();"
+    },
+    {
+      "path": "tests/regression/contracts/TestContractRegressions.m",
+      "line": 175,
+      "text": "manager = mdemat.tools.visual.FigureManager();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 6,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 7,
+      "text": "db.setDataset('EXACT',mdemat.tools.visual.Dataset(type='exact', ..."
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 9,
+      "text": "db.setDataset('NUMERIC',mdemat.tools.visual.Dataset(type='numeric', ..."
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 11,
+      "text": "strategy = mdemat.tools.visual.Strategy1d();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 33,
+      "text": "strategy = mdemat.tools.visual.Strategy2d();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 47,
+      "text": "strategy = mdemat.tools.visual.Strategy3d();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 58,
+      "text": "strategy = mdemat.tools.visual.StrategySlice1d();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 65,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 66,
+      "text": "db.setDataset('DATA',mdemat.tools.visual.Dataset(type='exact', ..."
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 81,
+      "text": "db = mdemat.tools.visual.Database();"
+    },
+    {
+      "path": "tests/unit/tools/TestFieldRendering.m",
+      "line": 83,
+      "text": "db.setDataset(sprintf('DATA%d',factor),mdemat.tools.visual.Dataset(type='numeric', ..."
+    },
+    {
+      "path": "tests/unit/tools/TestGraphRendering.m",
+      "line": 7,
+      "text": "plotter = mdemat.tools.visual.GraphPlotter();"
+    },
+    {
+      "path": "tests/unit/tools/TestGraphRendering.m",
+      "line": 26,
+      "text": "'mdemat:tools:visual:GraphPlotter:UnsupportedDimension');"
+    },
+    {
+      "path": "tests/unit/tools/TestGraphRendering.m",
+      "line": 34,
+      "text": "plotter = mdemat.tools.visual.SeparableGraphPlotter();"
+    },
+    {
+      "path": "tests/unit/tools/TestGraphRendering.m",
+      "line": 61,
+      "text": "plotter = mdemat.tools.visual.PolytopalMeshPlotter();"
+    }
+  ],
+  "referenceMethod": "Lexical references outside full-line comments; strings and inline comments can remain. Not a complete dynamic call graph. All source areas and semantic owners were also reviewed manually.",
+  "classRelocationsAndSamplingImpacts": [
+    {
+      "current": "toolbox/+mdemat/+data/+mesh/Graph.m",
+      "target": "toolbox/+mdemat/+data/+mesh/@Graph/Graph.m",
+      "reason": "The original classdef moves with external plot.m; complete class name remains unchanged."
+    },
+    {
+      "current": "toolbox/+mdemat/+data/+mesh/SeparableGraph.m",
+      "target": "toolbox/+mdemat/+data/+mesh/@SeparableGraph/SeparableGraph.m",
+      "reason": "The original classdef moves with external plot.m; complete class name remains unchanged."
+    },
+    {
+      "current": "toolbox/+mdemat/+data/+mesh/PolytopalMesh.m",
+      "target": "toolbox/+mdemat/+data/+mesh/@PolytopalMesh/PolytopalMesh.m",
+      "reason": "The original classdef moves with external plot.m; complete class name remains unchanged."
+    },
+    {
+      "current": "toolbox/+mdemat/+common/+fem/FiniteElementAbsoluteMetric.m",
+      "target": "common.fem samplingPlan/nestedSamplingPlan/sampleField plus tools numeric functions",
+      "reason": "Concrete sampling and physical norm capabilities are retained without Metric inheritance."
+    },
+    {
+      "current": "toolbox/+mdemat/+common/+fem/FiniteElementRichardsonMetric.m",
+      "target": "common.fem samplingPlan/nestedSamplingPlan/sampleField plus tools numeric functions",
+      "reason": "Concrete sampling and physical norm capabilities are retained without Metric inheritance."
+    }
+  ],
+  "proposedToolClasses": [
+    {
+      "name": "mdemat.tools.environment.Config",
+      "semantics": "value",
+      "reason": "Private key-to-Value/Validator pair invariants and atomic replacement."
+    },
+    {
+      "name": "mdemat.tools.timing.Timer",
+      "semantics": "handle",
+      "reason": "Owns active wall-clock interval and cumulative records."
+    },
+    {
+      "name": "mdemat.tools.visual.Visualizer",
+      "semantics": "handle",
+      "reason": "Owns figures, layouts, axes and created graphics artists."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "Methods in Separate Files, MATLAB R2025b",
+      "url": "https://www.mathworks.com/help/releases/R2025b/matlab/matlab_oop/methods-in-separate-files.html",
+      "usedFor": "@Class organization, external method rules, constructors/getters remaining in classdef."
+    },
+    {
+      "title": "Comparison of Handle and Value Classes, MATLAB R2025b",
+      "url": "https://www.mathworks.com/help/releases/R2025b/matlab/matlab_oop/comparing-handle-and-value-classes.html",
+      "usedFor": "Value versus handle identity; explicit value reassignment and resource ownership; no claim of recursive deep copying."
+    }
+  ],
+  "limits": [
+    "No implementation fix, release rebuild, full-suite rerun or new accepted artifact in this design turn.",
+    "Performance mechanisms are candidates, not measured speed/memory improvements.",
+    "Temporary external-method prototype does not certify migration of the real project classes or @Class packaging.",
+    "No >2GB allocation, full Gaussian checkpoint run or whole-project dynamic graph/SCC proof was performed.",
+    "Source API removals are planned; existing file compatibility is separately mapped.",
+    "Probes capture expected errors and contract behavior; execution counts are not passing repaired tests."
+  ],
+  "documentBackup": "/home/yicai/.cache/mdemat-tools-design/2026-11-06-before/planning-documents.tar.gz",
+  "planningValidation": {
+    "checkedUTC": "2026-11-05T16:38:44.828426+00:00",
+    "exactToolsFileSet": true,
+    "allFileRowsHaveTargetDesignCompatibilityAndVerification": true,
+    "sourceHashesMatchPriorReview": true,
+    "sourceFilesChanged": 0,
+    "newTasksAllPlanned": true,
+    "dependenciesExistAndAreAcyclic": true,
+    "statusKeysUnique": true,
+    "localLinksChecked": 59,
+    "brokenLocalLinks": 0,
+    "nativeProbesExecuted": 15,
+    "nativeProbeHarnessErrors": 0,
+    "reviewCorrections": [
+      "Explicit Config constructor import preserves owner validators and declared custom keys.",
+      "All numerical bindings freeze at constructor completion; partial-instance initialize versus resume is explicit.",
+      "Tensor conversion and synchronized value permutation owned by common.fem sampling adapter.",
+      "Stable DatasetIds bind axes and palette across missing samples.",
+      "Uncommitted built-in graphics cleaned; callbacks run only on dedicated owner axes and return verified owned handles.",
+      "Endpoint preservation requires feasible vertex budget.",
+      "Legacy checkpoint identity is projected before comparison; explicit State.save filenames remain caller-owned.",
+      "Old source-interface removals are separated from wire-format compatibility and capability preservation."
+    ],
+    "independentFinalReviews": {
+      "foundations": "No remaining design blockers after Config extension/freeze clarification.",
+      "visual": "No remaining design blockers after tensor adaptation, stable dataset/axis identity, callback cleanup and feasible budgets.",
+      "analysisAndIO": "No remaining design blockers after legacy checkpoint identity normalization and naming ownership clarification."
+    },
+    "finalCheckedUTC": "2026-11-05T16:40:15.683279+00:00"
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "mode": "required",
+  "release": "2025b",
+  "capturedUTC": "05-Nov-2026 10:36:13",
+  "passed": 25,
+  "failed": 3,
+  "incomplete": 1,
+  "results": [
+    {
+      "name": "TestDgAssemblyIdentities/polynomialWeakDerivativesIncludeEachFaceExactlyOnce",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 2.6007613,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/upwindPreservesPeriodicConstantsAndPhysicalMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3972145,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator",
+      "passed": false,
+      "failed": true,
+      "incomplete": false,
+      "duration": 2.8782698,
+      "diagnostics": "Verification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts          Actual               Expected               Error           RelativeError    AbsoluteTolerance\n            _____    __________    __________________    __________________    __________________    _____________    _________________\n                                                                                                                                       \n              1        (1,1)       1                     -1                    2                          -2                1e-11      \n              2        (2,1)       -0.450806661517033    0.450806661517033     -0.901613323034067         -2                1e-11      \n              3        (3,1)       -3.54919333848296     3.54919333848296      -7.09838667696593          -2                1e-11      \n              4        (1,2)       -0.281754163448146    0.281754163448146     -0.563508326896292         -2                1e-11      \n              5        (2,2)       0.127016653792583     -0.127016653792583    0.254033307585166          -2                1e-11      \n              6        (3,2)       0.999999999999999     -0.999999999999999    2                          -2                1e-11      \n              7        (1,3)       -2.21824583655186     2.21824583655186      -4.43649167310371          -2                1e-11      \n              8        (2,3)       1                     -1                    2                          -2                1e-11      \n              9        (3,3)       7.87298334620741      -7.87298334620741     15.7459666924148           -2                1e-11      \n    \n    Actual Value:\n       1.000000000000001  -0.281754163448146  -2.218245836551855\n      -0.450806661517033   0.127016653792583   1.000000000000000\n      -3.549193338482964   0.999999999999999   7.872983346207412\n    Expected Value:\n      -1.000000000000001   0.281754163448146   2.218245836551855\n       0.450806661517033  -0.127016653792583  -1.000000000000000\n       3.549193338482964  -0.999999999999999  -7.872983346207412\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58\nVerification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts         Actual              Expected               Error          RelativeError    AbsoluteTolerance\n            _____    __________    _________________    _________________    _________________    _____________    _________________\n                                                                                                                                    \n              2        (2,1)       -5.16397779494322    5.16397779494322     -10.3279555898864         -2                1e-11      \n              3        (3,1)       5.16397779494322     -5.16397779494322    10.3279555898864          -2                1e-11      \n              4        (1,2)       1.29099444873581     -1.29099444873581    2.58198889747161          -2                1e-11      \n              5        (2,2)       3.87298334620742     -3.87298334620742    7.74596669241483          -2                1e-11      \n              6        (3,2)       -1.2909944487358     1.2909944487358      -2.58198889747161         -2                1e-11      \n              7        (1,3)       -1.29099444873581    1.29099444873581     -2.58198889747162         -2                1e-11      \n              8        (2,3)       1.29099444873581     -1.29099444873581    2.58198889747161          -2                1e-11      \n              9        (3,3)       -3.87298334620741    3.87298334620741     -7.74596669241483         -2                1e-11      \n    \n    Actual Value:\n                       0   1.290994448735807  -1.290994448735808\n      -5.163977794943223   3.872983346207417   1.290994448735807\n       5.163977794943216  -1.290994448735804  -3.872983346207413\n    Expected Value:\n                       0  -1.290994448735807   1.290994448735808\n       5.163977794943223  -3.872983346207417  -1.290994448735807\n      -5.163977794943216   1.290994448735804   3.872983346207413\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58\nVerification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts          Actual               Expected               Error          RelativeError    AbsoluteTolerance\n            _____    __________    __________________    __________________    _________________    _____________    _________________\n                                                                                                                                      \n             22        (4,4)       2                     -2                    4                         -2                1e-11      \n             23        (5,4)       -0.901613323034067    0.901613323034067     -1.80322664606813         -2                1e-11      \n             24        (6,4)       -7.09838667696593     7.09838667696593      -14.1967733539319         -2                1e-11      \n             28        (4,5)       -0.563508326896292    0.563508326896292     -1.12701665379258         -2                1e-11      \n             29        (5,5)       0.254033307585166     -0.254033307585166    0.508066615170333         -2                1e-11      \n             30        (6,5)       2                     -2                    4                         -2                1e-11      \n             34        (4,6)       -4.43649167310371     4.43649167310371      -8.87298334620742         -2                1e-11      \n             35        (5,6)       2                     -2                    4                         -2                1e-11      \n             36        (6,6)       15.7459666924148      -15.7459666924148     31.4919333848296          -2                1e-11      \n    \n    Actual Value:\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0   2.000000000000001  -0.563508326896292  -4.436491673103711\n                       0                   0                   0  -0.901613323034067   0.254033307585166   2.000000000000000\n                       0                   0                   0  -7.098386676965928   1.999999999999999  15.745966692414823\n    Expected Value:\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0\n                       0                   0                   0  -2.000000000000001   0.563508326896292   4.436491673103711\n                       0                   0                   0   0.901613323034067  -0.254033307585166  -2.000000000000000\n                       0                   0                   0   7.098386676965928  -1.999999999999999 -15.745966692414823\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58\nVerification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts          Actual               Expected               Error           RelativeError    AbsoluteTolerance\n            _____    __________    __________________    __________________    __________________    _____________    _________________\n                                                                                                                                       \n             1         (1,1)       2                     -2                    4                          -2                1e-11      \n             2         (2,1)       -11.2295689129205     11.2295689129205      -22.459137825841           -2                1e-11      \n             3         (3,1)       3.2295689129205       -3.2295689129205      6.45913782584101           -2                1e-11      \n             7         (1,2)       2.01848057057532      -2.01848057057532     4.03696114115064           -2                1e-11      \n             8         (2,2)       8                     -8                    16                         -2                1e-11      \n             9         (3,2)       -0.58198889747161     0.58198889747161      -1.16397779494322          -2                1e-11      \n             13        (1,3)       -7.01848057057533     7.01848057057533      -14.0369611411507          -2                1e-11      \n             14        (2,3)       4.58198889747161      -4.58198889747161     9.16397779494323           -2                1e-11      \n             15        (3,3)       8                     -8                    16                         -2                1e-11      \n             19        (1,4)       -2                    2                     -4                         -2                1e-11      \n             20        (2,4)       0.901613323034067     -0.901613323034067    1.80322664606813           -2                1e-11      \n             21        (3,4)       7.09838667696593      -7.09838667696593     14.1967733539319           -2                1e-11      \n             23        (5,4)       -10.3279555898864     10.3279555898864      -20.6559111797729          -2                1e-11      \n             24        (6,4)       10.3279555898864      -10.3279555898864     20.6559111797729           -2                1e-11      \n             25        (1,5)       4.43649167310371      -4.43649167310371     8.87298334620742           -2                1e-11      \n             26        (2,5)       -2                    2                     -4                         -2                1e-11      \n             27        (3,5)       -15.7459666924148     15.7459666924148      -31.4919333848296          -2                1e-11      \n             28        (4,5)       2.58198889747161      -2.58198889747161     5.16397779494323           -2                1e-11      \n             29        (5,5)       7.74596669241483      -7.74596669241483     15.4919333848297           -2                1e-11      \n             30        (6,5)       -2.58198889747161     2.58198889747161      -5.16397779494322          -2                1e-11      \n             31        (1,6)       0.563508326896292     -0.563508326896292    1.12701665379258           -2                1e-11      \n             32        (2,6)       -0.254033307585166    0.254033307585166     -0.508066615170333         -2                1e-11      \n             33        (3,6)       -2                    2                     -4                         -2                1e-11      \n             34        (4,6)       -2.58198889747162     2.58198889747162      -5.16397779494323          -2                1e-11      \n             35        (5,6)       2.58198889747161      -2.58198889747161     5.16397779494323           -2                1e-11      \n             36        (6,6)       -7.74596669241483     7.74596669241483      -15.4919333848297          -2                1e-11      \n    \n    Actual Value:\n       2.000000000000001   2.018480570575321  -7.018480570575328  -2.000000000000001   4.436491673103711   0.563508326896292\n     -11.229568912920513   8.000000000000000   4.581988897471614   0.901613323034067  -2.000000000000000  -0.254033307585166\n       3.229568912920504  -0.581988897471610   7.999999999999998   7.098386676965928 -15.745966692414823  -1.999999999999999\n                       0                   0                   0                   0   2.581988897471613  -2.581988897471617\n                       0                   0                   0 -10.327955589886447   7.745966692414835   2.581988897471613\n                       0                   0                   0  10.327955589886432  -2.581988897471609  -7.745966692414825\n    Expected Value:\n      -2.000000000000001  -2.018480570575321   7.018480570575328   2.000000000000001  -4.436491673103711  -0.563508326896292\n      11.229568912920513  -8.000000000000000  -4.581988897471614  -0.901613323034067   2.000000000000000   0.254033307585166\n      -3.229568912920504   0.581988897471610  -7.999999999999998  -7.098386676965928  15.745966692414823   1.999999999999999\n                       0                   0                   0                   0  -2.581988897471613   2.581988897471617\n                       0                   0                   0  10.327955589886447  -7.745966692414835  -2.581988897471613\n                       0                   0                   0 -10.327955589886432   2.581988897471609   7.745966692414825\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58\nVerification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts          Actual              Expected               Error          RelativeError    AbsoluteTolerance\n            _____    __________    __________________    _________________    _________________    _____________    _________________\n                                                                                                                                     \n             61        (7,7)       3                     -3                   6                         -2                1e-11      \n             62        (8,7)       -1.3524199845511      1.3524199845511      -2.7048399691022          -2                1e-11      \n             63        (9,7)       -10.6475800154489     10.6475800154489     -21.2951600308978         -2                1e-11      \n             70        (7,8)       -0.845262490344438    0.845262490344438    -1.69052498068888         -2                1e-11      \n             71        (8,8)       0.38104996137775      -0.38104996137775    0.762099922755499         -2                1e-11      \n             72        (9,8)       3                     -3                   6                         -2                1e-11      \n             79        (7,9)       -6.65473750965556     6.65473750965556     -13.3094750193111         -2                1e-11      \n             80        (8,9)       3                     -3                   6                         -2                1e-11      \n             81        (9,9)       23.6189500386222      -23.6189500386222    47.2379000772445          -2                1e-11      \n    \n    Actual Value:\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0   3.000000000000001  -0.845262490344438  -6.654737509655565\n                       0                   0                   0                   0                   0                   0  -1.352419984551100   0.381049961377750   3.000000000000000\n                       0                   0                   0                   0                   0                   0 -10.647580015448892   2.999999999999998  23.618950038622231\n    Expected Value:\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0                   0                   0                   0\n                       0                   0                   0                   0                   0                   0  -3.000000000000001   0.845262490344438   6.654737509655565\n                       0                   0                   0                   0                   0                   0   1.352419984551100  -0.381049961377750  -3.000000000000000\n                       0                   0                   0                   0                   0                   0  10.647580015448892  -2.999999999999998 -23.618950038622231\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58\nVerification failed in TestDgAssemblyIdentities/constantWeightedAndPointwisePathsMatchAdjointOperator.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index    Subscripts          Actual               Expected               Error           RelativeError    AbsoluteTolerance\n            _____    __________    __________________    __________________    __________________    _____________    _________________\n                                                                                                                                       \n             1         (1,1)       3                     -3                    6                          -2                1e-11      \n             2         (2,1)       -16.8443533693808     16.8443533693808      -33.6887067387615          -2                1e-11      \n             3         (3,1)       4.84435336938076      -4.84435336938076     9.68870673876151           -2                1e-11      \n             10        (1,2)       3.02772085586298      -3.02772085586298     6.05544171172597           -2                1e-11      \n             11        (2,2)       12                    -12                   24                         -2                1e-11      \n             12        (3,2)       -0.872983346207415    0.872983346207415     -1.74596669241483          -2                1e-11      \n             19        (1,3)       -10.527720855863      10.527720855863       -21.055441711726           -2                1e-11      \n             20        (2,3)       6.87298334620742      -6.87298334620742     13.7459666924148           -2                1e-11      \n             21        (3,3)       12                    -12                   24                         -2                1e-11      \n             28        (1,4)       -3                    3                     -6                         -2                1e-11      \n             29        (2,4)       1.3524199845511       -1.3524199845511      2.7048399691022            -2                1e-11      \n             30        (3,4)       10.6475800154489      -10.6475800154489     21.2951600308978           -2                1e-11      \n             31        (4,4)       3                     -3                    6                          -2                1e-11      \n             32        (5,4)       -16.8443533693808     16.8443533693808      -33.6887067387615          -2                1e-11      \n             33        (6,4)       4.84435336938076      -4.84435336938076     9.68870673876151           -2                1e-11      \n             37        (1,5)       6.65473750965557      -6.65473750965557     13.3094750193111           -2                1e-11      \n             38        (2,5)       -3                    3                     -6                         -2                1e-11      \n             39        (3,5)       -23.6189500386222     23.6189500386222      -47.2379000772445          -2                1e-11      \n             40        (4,5)       3.02772085586298      -3.02772085586298     6.05544171172597           -2                1e-11      \n             41        (5,5)       12                    -12                   24                         -2                1e-11      \n             42        (6,5)       -0.872983346207415    0.872983346207415     -1.74596669241483          -2                1e-11      \n             46        (1,6)       0.845262490344438     -0.845262490344438    1.69052498068888           -2                1e-11      \n             47        (2,6)       -0.38104996137775     0.38104996137775      -0.762099922755499         -2                1e-11      \n             48        (3,6)       -3                    3                     -6                         -2                1e-11      \n             49        (4,6)       -10.527720855863      10.527720855863       -21.055441711726           -2                1e-11      \n             50        (5,6)       6.87298334620742      -6.87298334620742     13.7459666924148           -2                1e-11      \n             51        (6,6)       12                    -12                   24                         -2                1e-11      \n             58        (4,7)       -3                    3                     -6                         -2                1e-11      \n             59        (5,7)       1.3524199845511       -1.3524199845511      2.7048399691022            -2                1e-11      \n             60        (6,7)       10.6475800154489      -10.6475800154489     21.2951600308978           -2                1e-11      \n             62        (8,7)       -15.4919333848297     15.4919333848297      -30.9838667696593          -2                1e-11      \n             63        (9,7)       15.4919333848296      -15.4919333848296     30.9838667696593           -2                1e-11      \n             67        (4,8)       6.65473750965557      -6.65473750965557     13.3094750193111           -2                1e-11      \n             68        (5,8)       -3                    3                     -6                         -2                1e-11      \n             69        (6,8)       -23.6189500386222     23.6189500386222      -47.2379000772445          -2                1e-11      \n             70        (7,8)       3.87298334620742      -3.87298334620742     7.74596669241484           -2                1e-11      \n             71        (8,8)       11.6189500386223      -11.6189500386223     23.2379000772445           -2                1e-11      \n             72        (9,8)       -3.87298334620741     3.87298334620741      -7.74596669241483          -2                1e-11      \n             76        (4,9)       0.845262490344438     -0.845262490344438    1.69052498068888           -2                1e-11      \n             77        (5,9)       -0.38104996137775     0.38104996137775      -0.762099922755499         -2                1e-11      \n             78        (6,9)       -3                    3                     -6                         -2                1e-11      \n             79        (7,9)       -3.87298334620743     3.87298334620743      -7.74596669241485          -2                1e-11      \n             80        (8,9)       3.87298334620742      -3.87298334620742     7.74596669241484           -2                1e-11      \n             81        (9,9)       -11.6189500386222     11.6189500386222      -23.2379000772445          -2                1e-11      \n    \n    Actual Value:\n       3.000000000000002   3.027720855862983 -10.527720855862992  -3.000000000000002   6.654737509655567   0.845262490344438                   0                   0                   0\n     -16.844353369380769  12.000000000000000   6.872983346207421   1.352419984551100  -3.000000000000001  -0.381049961377750                   0                   0                   0\n       4.844353369380757  -0.872983346207415  11.999999999999998  10.647580015448892 -23.618950038622234  -2.999999999999998                   0                   0                   0\n                       0                   0                   0   3.000000000000002   3.027720855862983 -10.527720855862992  -3.000000000000002   6.654737509655567   0.845262490344438\n                       0                   0                   0 -16.844353369380769  12.000000000000000   6.872983346207421   1.352419984551100  -3.000000000000001  -0.381049961377750\n                       0                   0                   0   4.844353369380757  -0.872983346207415  11.999999999999998  10.647580015448892 -23.618950038622234  -2.999999999999998\n                       0                   0                   0                   0                   0                   0                   0   3.872983346207421  -3.872983346207426\n                       0                   0                   0                   0                   0                   0 -15.491933384829668  11.618950038622254   3.872983346207420\n                       0                   0                   0                   0                   0                   0  15.491933384829647  -3.872983346207413 -11.618950038622236\n    Expected Value:\n      -3.000000000000002  -3.027720855862983  10.527720855862992   3.000000000000002  -6.654737509655567  -0.845262490344438                   0                   0                   0\n      16.844353369380769 -12.000000000000000  -6.872983346207421  -1.352419984551100   3.000000000000001   0.381049961377750                   0                   0                   0\n      -4.844353369380757   0.872983346207415 -11.999999999999998 -10.647580015448892  23.618950038622234   2.999999999999998                   0                   0                   0\n                       0                   0                   0  -3.000000000000002  -3.027720855862983  10.527720855862992   3.000000000000002  -6.654737509655567  -0.845262490344438\n                       0                   0                   0  16.844353369380769 -12.000000000000000  -6.872983346207421  -1.352419984551100   3.000000000000001   0.381049961377750\n                       0                   0                   0  -4.844353369380757   0.872983346207415 -11.999999999999998 -10.647580015448892  23.618950038622234   2.999999999999998\n                       0                   0                   0                   0                   0                   0                   0  -3.872983346207421   3.872983346207426\n                       0                   0                   0                   0                   0                   0  15.491933384829668 -11.618950038622254  -3.872983346207420\n                       0                   0                   0                   0                   0                   0 -15.491933384829647   3.872983346207413  11.618950038622236\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestDgAssemblyIdentities.m (TestDgAssemblyIdentities.constantWeightedAndPointwisePathsMatchAdjointOperator) at 58"
+    },
+    {
+      "name": "TestDgAssemblyIdentities/boundaryPenaltyDampsTheWeakGradientNullMode",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1348776,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestDgAssemblyIdentities/constantTensorCallbacksMatchNumericMatricesAndDirichletLoads",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.1177764,
+      "diagnostics": "Error occurred in TestDgAssemblyIdentities/constantTensorCallbacksMatchNumericMatricesAndDirichletLoads and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:badsubscript'\n    --------------\n    Error Details:\n    --------------\n    Index in position 2 exceeds array bounds. Index must not exceed 1.\n    \n    Error in mdemat.common.fem.AdjointAssembly/assemblePointwiseFaceMatrix (line 381)\n                        coefficient12 = ratio(element)*normal(d, element);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assemblePointwiseInternalFluxMatrix (line 361)\n                G = obj.assemblePointwiseFaceMatrix(field, EI, LFI, false, varargin{:});\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assemblePointwiseFluxMatrix (line 335)\n                        GF = obj.assemblePointwiseInternalFluxMatrix(field, EI, LFI, varargin{:});\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assembleMatrix (line 100)\n                    GF = obj.assemblePointwiseFluxMatrix(field, options.args{:});\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestDgAssemblyIdentities/constantTensorCallbacksMatchNumericMatricesAndDirichletLoads (line 95)\n                actual = assembly.assembleMatrix(callback);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestEvolutionInterfaces/completedStepRestartMatchesUninterruptedTrajectories",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 2.3405272,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestEvolutionInterfaces/rejectsIntermediateStageRestart",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1871449,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestEvolutionInterfaces/upwindPeriodicTransportConvergesAndConservesMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4695611,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestEvolutionInterfaces/semiLagrangianUsesTheExistingTransferKernel",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3447648,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestEvolutionInterfaces/periodicDiffusionMatchesItsDecayAndMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2393861,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/standardStagesSolveTheirFullTriangularSystem",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.6475295,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/equilibriumStagesSolveTheirAffineSystem",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1422451,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/equilibriumGaugeUsesPhysicalWeightedIntegral",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1696561,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian",
+      "passed": false,
+      "failed": true,
+      "incomplete": false,
+      "duration": 0.7018549,
+      "diagnostics": "Verification failed in TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index           Actual                 Expected                  Error               RelativeError       AbsoluteTolerance\n            _____    ____________________    ____________________    _____________________    ___________________    _________________\n                                                                                                                                      \n              1      0.00253045651741158     0.00247461592265887     5.58405947527151e-05     0.0225653582204049           1e-11      \n              2      0.00201926450786572     0.00197396571708423     4.5298790781498e-05      0.0229481142400029           1e-11      \n              3      0.00067478711540727     0.00070774092569755     -3.29538102902793e-05    -0.0465619679373494          1e-11      \n              4      -0.00155300814487702    -0.00157451454653485    2.15064016578258e-05     -0.013659068253867           1e-11      \n              5      -0.00167726212873645    -0.00164024071329318    -3.70214154432724e-05    0.0225707209577446           1e-11      \n              6      0.00136621105651696     0.001345794566375       2.04164901419542e-05     0.0151705844651666           1e-11      \n    \n    Actual Value:\n      6×1 sparse double column vector (6 nonzeros)\n    \n       (1,1)      0.002530456517412\n       (2,1)      0.002019264507866\n       (3,1)      0.000674787115407\n       (4,1)     -0.001553008144877\n       (5,1)     -0.001677262128736\n       (6,1)      0.001366211056517\n    Expected Value:\n      6×1 sparse double column vector (6 nonzeros)\n    \n       (1,1)      0.002474615922659\n       (2,1)      0.001973965717084\n       (3,1)      0.000707740925698\n       (4,1)     -0.001574514546535\n       (5,1)     -0.001640240713293\n       (6,1)      0.001345794566375\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestHermiteForce.m (TestHermiteForce.vlasovPoissonMatchesPositiveLaplacian) at 98\nVerification failed in TestHermiteForce/vlasovPoissonMatchesPositiveLaplacian.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    verifyEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> The error was not within absolute tolerance.\n    --> Failure table:\n            Index          Actual                Expected                  Error               RelativeError       AbsoluteTolerance\n            _____    ___________________    ___________________    _____________________    ___________________    _________________\n                                                                                                                                    \n              1      0.0019742829751554     0.00223782807443584    -0.000263545099280439    -0.117768251409072           1e-11      \n              2      0.00882645555644662    0.00856291045716619    0.000263545099280425     0.0307775143274874           1e-11      \n              3      0.00998509969930747    0.00964472337463182    0.000340376324675642     0.0352914553849125           1e-11      \n              4      0.00751737134540902    0.00785774767008467    -0.00034037632467565     -0.0433172887405765          1e-11      \n              5      -0.0102907601660411    -0.0107215444579303    0.00043078429188919      -0.0401793131185083          1e-11      \n              6      -0.0139524266470993    -0.0135216423552101    -0.000430784291889195    0.0318588733951544           1e-11      \n    \n    Actual Value:\n      6×1 sparse double column vector (6 nonzeros)\n    \n       (1,1)      0.001974282975155\n       (2,1)      0.008826455556447\n       (3,1)      0.009985099699307\n       (4,1)      0.007517371345409\n       (5,1)     -0.010290760166041\n       (6,1)     -0.013952426647099\n    Expected Value:\n      6×1 sparse double column vector (6 nonzeros)\n    \n       (1,1)      0.002237828074436\n       (2,1)      0.008562910457166\n       (3,1)      0.009644723374632\n       (4,1)      0.007857747670085\n       (5,1)     -0.010721544457930\n       (6,1)     -0.013521642355210\n    ------------------\n    Stack Information:\n    ------------------\n    In \\\\wsl.localhost\\ubuntu\\home\\yicai\\Projects\\MdeMat\\tests\\regression\\solvers\\TestHermiteForce.m (TestHermiteForce.vlasovPoissonMatchesPositiveLaplacian) at 99"
+    },
+    {
+      "name": "TestPoissonInterface/quadraticDirichletFieldsAreExactInOneAndTwoDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3450706,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/nonuniformPeriodicSolutionHasThePhysicalGauge",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1465977,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/rejectsIncompatiblePeriodicDataAndUnknownProblemFields",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0595753,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestPoissonInterface/smoothPeriodicFieldsConvergeInOneAndTwoDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3942215,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonPreservesEveryGradientComponent",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0417414,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonNeedsNoReferenceSolution",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0405812,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/poissonRecoversManufacturedQuadraticAndItsGradient",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1731392,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/periodicPoissonUsesPhysicalMeanOnNonuniformMesh",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1038291,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/observationHistoryUsesTimeIntervalAndPackedOffsets",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2192343,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationCopyPreservesStateWithoutAliasingWeights",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1954426,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroReconstructionAppliesScaling",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0727482,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/radiationMicroFitAndReconstructionAreInverse",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0586269,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/derivedRadiationHistoryIsReconstructedWithoutStateMutation",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0858177,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestSolverContracts/stateCoefficientsAcceptEvaluationCallbacks",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1052469,
+      "diagnostics": ""
+    }
+  ]
+}

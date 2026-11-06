@@ -1,0 +1,314 @@
+{
+  "mode": "required",
+  "release": "2025b",
+  "capturedUTC": "05-Nov-2026 12:00:21",
+  "passed": 37,
+  "failed": 1,
+  "incomplete": 1,
+  "results": [
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex01_periodic)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 4.4738319,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=elliptic_ex02_dirichlet)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.833887,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex01_periodic)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.1625203,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex02_dirichlet)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.6119144,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=hyperbolic_ex03_discontinuous)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4887269,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex01_periodic)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.5536219,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex02_dirichlet)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4485237,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=parabolic_ex03_inhomogenous)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4854201,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex01_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.8456634,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex02_isotropic_dirichlet)",
+      "passed": false,
+      "failed": true,
+      "incomplete": true,
+      "duration": 0.5338066,
+      "diagnostics": "Error occurred in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex02_isotropic_dirichlet) and it did not run to completion.\n    ---------\n    Error ID:\n    ---------\n    'MATLAB:UndefinedFunction'\n    --------------\n    Error Details:\n    --------------\n    Unrecognized function or variable 'nl'.\n    \n    Error in mdemat.application.radiation.MacroMicroState/lazyTraceEvaluateMixed (line 960)\n                K = bsxfun(@plus, (EI(:).' - 1)*nl, (1:nl).');\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MacroMicroState/lazyTraceEvaluate (line 609)\n                    obj.lazyTraceEvaluateMixed( ...\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MacroMicroState/macroTraceEvaluate (line 843)\n                    obj.lazyTraceEvaluate(i, f, x=options.x, v=options.v, t=options.t);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MmDgScheme>@(x,LFI)state.macroTraceEvaluate(LFI,obj.Config.bc,x=x,t=t) (line 698)\n                fU = @(x, LFI) state.macroTraceEvaluate(LFI, obj.Config.bc, x=x, t=t);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.FiniteElementSpace>evaluateField (line 377)\n    values = field(coordinates, args{:});\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.FiniteElementSpace/feval (line 185)\n                Y = evaluateField(f, X, options.args);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assembleConstantBoundaryFluxVector (line 804)\n                        U = obj.Space.feval(func, xRef, EI=EI, args = [LFI, varargin]); % (nq*ne, nc)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assembleConstantFluxVector (line 752)\n                        GF = obj.assembleConstantBoundaryFluxVector(field, func, EI, LFI, mode, varargin{:});\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.fem.AdjointAssembly/assembleVector (line 144)\n                    G = obj.assembleConstantFluxVector(field, func, options.mode, options.args{:});\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MmDgScheme/addBc (line 700)\n                    bU = obj.AdjAmb.assembleVector(eye(nd), fU, mode='face');\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MmDgScheme/setSourceTerm/computeS (line 658)\n                        S = obj.addBc(state, t, S);\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MmDgScheme>@(W,t)computeS(W,t) (line 645)\n                    obj.S = @(W, t) computeS(W, t);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.ode.OdeIntegrator/evalOp (line 348)\n                            Oe = O(U, te);\n                            ^^^^^^^^^^^^^^\n    Error in mdemat.common.ode.DirkIntegrator/setRhs (line 278)\n                    Se = obj.evalOp(S, U1, t);\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.ode.DirkIntegrator/stage (line 314)\n                obj.setRhs(i, F, S, M, C, dt, [t0+obj.c(i)*dt, t0], U1);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.common.ode.DirkIntegrator/step (line 120)\n                    U1 = obj.stage(i, options.L, options.F, options.S, options.M, ...\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.application.radiation.MmDgScheme/step (line 183)\n                W = obj.TDisc.step(L=obj.L, S=obj.S, M=obj.M);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in mdemat.internal.execution.compute (line 33)\n        state = scheme.step(state);\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex02_isotropic_dirichlet>run (line 293)\n        result = mdemat.internal.execution.compute(scheme, state);\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in ex02_isotropic_dirichlet (line 93)\n        [config, scheme, state, result] = run(config, options); %#ok<ASGLU>\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    Error in TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults (line 27)\n                [state, result] = factory(Smoke=true);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex03_gaussian)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.8534068,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=radiation_ex04_beam)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.5274562,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 2.4999362,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_time_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4138737,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_reference_convergence)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3775253,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex01_order_diagnostics)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4446805,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex02_asymptotic_preserving)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.7777883,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestRetainedStudies/originalEntryRunsItsRealModelAndReturnsAcceptedResults(entry=plasma_ex03_collision)",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2767895,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAngularStudies/fourierProjectionAndNodalResidualUseTheSameAngleChart",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.7468801,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAngularStudies/continuousTransportReferenceConvergesAcrossAllRetainedStudies",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2785303,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestAngularStudies/controlledPlotsPreserveExistingFiguresAndOutputIsExplicit",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 6.7344601999999991,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/uniformEquilibriumUsesEveryVelocityRepresentation",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.400381,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/homogeneousScatteringAbsorptionAndSourceMatchExactSolution",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.7280621,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/diffusionScalingHasAnIndependentTelegraphReference",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2229564,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/pureMicroFreeStreamingAndTimeDependentInflow",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4707238,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/uniformEquilibriumInTwoAndThreeSpatialDimensions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.5489818,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/angularFiltersDampHigherModesAndPreserveMass",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2553195,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/densityLimiterUsesPhysicalSamplesAndPreservesAdmissibleMeans",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2164043,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/problemRecordsRejectUnknownMissingAndIncompatibleSchema",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1081812,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/angularRepresentationBoundsPreserveReducedAndSphericalSpaces",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.4040515,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestApplicationRadiation/radialVelocityKernelGradientsHaveTheCorrectDirection",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0309701,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/inverseTransformAtOriginIsIntegratedOnce",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2743582,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/combinatoricsQuadratureAndExtrapolation",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.0589131,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/collisionlessPlaneSphereCylinderHaveCorrectNormalization",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.3715885,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/beamAndStepRecoverIndependentCollisionlessSolutions",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.2556751,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/scatteringReferenceConverges",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 0.1759363,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/allDriversMatchNumericHistoricalFixturesWithoutGraphics",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 5.5836024,
+      "diagnostics": ""
+    },
+    {
+      "name": "TestGanapolReferences/scatteringCylinderMatchesIndependentContinuousSpectrum",
+      "passed": true,
+      "failed": false,
+      "incomplete": false,
+      "duration": 1.9821935000000002,
+      "diagnostics": ""
+    }
+  ]
+}
